@@ -1,0 +1,64 @@
+---
+title: "HW5: King County general election results, 2012"
+author: "YOUR NAME"
+date: "May 11, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instructions
+
+> Questions for you to answer are as quoted blocks of text. Put your code used to address these questions and interpretation below each block.
+
+# Getting the data in
+
+> Download the data from <https://www.dropbox.com/s/ekujui9p0rjtz4r/King2012general-ecanvass.txt?dl=0>. It is a plain text file of data, about 60 MB in size. Save it somewhere on your computer, and read the file into R. You will want to use the `cache=TRUE` chunk option for this (and potentially other chunks).
+
+[YOUR WORK]
+
+# Inspecting the data
+
+> Describe the data in its current state. How many rows are there? What variables on the data? What kinds of values do they take (don't list them all if there are many)? Are the column types sensible?
+
+[YOUR WORK]
+
+# The quantities of interest
+
+> We are interested in turnout rates for each of these races in each precinct. We will measure turnout as times votes were counted (including for a candidate, blank, write-in, or "over vote") out of registered voters.
+
+> We are also interested in differences between precincts in Seattle and precincts elsewhere in King County. Again, these data are not documented, so you will have to figure out how to do this.
+
+> Finally, we will want to look at precinct-level support for the Democratic candidates in King County in 2012 for the following contests:
+
+> * President (and Vice-President)
+> * Governor
+> * Lieutenant Governor
+
+> We will measure support as the percentage of votes in a precinct for the Democratic candidate out of all votes for candidates or write-ins. Do not include blank votes or "over votes" (where the voter indicated multiple choices) in the overall vote count for the denominator.
+
+> Use `dplyr`, `tidyr`, or any other tools you like to get the data to one row per precinct with the following columns (at minimum):
+
+> * Precinct identifier
+> * Indicator for whether the precinct is in Seattle or not
+> * Precinct size in terms of registered voters
+> * Turnout rate
+> * Percentage Democratic support for President
+> * Percentage Democratic support for Governor
+> * Percentage Democratic support for Lieutenant Governor
+
+[YOUR DATA WRANGLING WORK]
+
+# Graphing the results
+
+> Make a scatterplot where the horizontal axis is number of registered voters in the precinct, and the vertical axis is turnout rate. Color the precincts in Seattle one color, and use a different color for other precincts. Do you observe anything?
+
+[YOUR TURNOUT RATE PLOT]
+
+> Now let's visualize the Democratic support rates for the three races within each precinct for sufficently large precincts. Limit the data to precincts with at least 500 registered voters. Make a line plot where the horizontal axis indicates precincts, and the vertical axis shows the Democratic support rates. There should be three lines in different colors (one for each race of interest).
+
+> *Do not* label the precincts on the horizontal axis (you will probably have to search to figure out how). You should, however, arrange them on the axis in order from smallest to largest in terms of support for the Democratic candidate for president --- that is, the line plotting percentage support for Obama should be smoothly increasing from left to right. (Hint: you will probably want to add a new column to the data giving the order to plot these in.) The order of the lines in the legend should follow the order of the lines at the right edge of the plot.
+
+[YOUR DEMOCRATIC SUPPORT PLOT]

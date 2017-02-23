@@ -1,0 +1,373 @@
+CSSS 508, Week 10
+===
+author: Rebecca Ferrell
+date: June 1, 2016
+transition: rotate
+width: 1100
+height: 750
+
+
+
+Topics
+===
+
+* Scraping the web with `rvest`
+* Mining text with `tm`
+* What next?
+
+
+Web scraping with rvest
+===
+type: section
+
+
+Wait, isn't that Argus Filch?
+===
+
+![harry potter and game of thrones](https://pbs.twimg.com/media/Bt4B0NAIYAAbGMu.jpg)
+
+
+Game of Thrones x Harry Potter
+===
+
+We'll use the package `rvest` ("harvest") to grab [IMDb](http://www.imdb.com) casts for Game of Thrones and Harry Potter to identify all overlapping actors.
+
+```{r warning=FALSE, message=FALSE}
+# install.packages("rvest")
+library(rvest)
+```
+
+First, try out [SelectorGadget](https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html).
+```{r pull_got, cache=TRUE}
+# pull full Game of Thrones cast page
+got_page <- read_html("http://www.imdb.com/title/tt0944947/fullcredits")
+got_cast_raw <- got_page %>%
+    html_nodes(".itemprop .itemprop , .character div") %>%
+    html_text()
+```
+
+
+Cleaning up the Game of Thrones cast
+===
+
+```{r}
+head(got_cast_raw)
+```
+
+Pattern appears to be: [actor name], [messy character info], repeat.
+
+
+Cleaning up the Game of Thrones cast
+===
+
+Make a data frame:
+
+```{r}
+got_cast_df <- data.frame(matrix(got_cast_raw, ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
+colnames(got_cast_df) <- c("Actor", "char_info")
+head(got_cast_df, 3)
+```
+
+
+Clean up the character column
+===
+
+We want to trim initial whitespace, extract the character, and move the episode count to a new column.
+
+```{r warning=FALSE, message=FALSE}
+library(stringr); library(dplyr)
+got_cast <- got_cast_df %>%
+    mutate(char_info = str_trim(char_info),
+           GoT_character = str_trim(str_extract(char_info, "^.*\\n")),
+           Episodes = as.numeric(str_extract(str_extract(char_info, "[0-9]* episode"), "[0-9]*"))) %>%
+    select(-char_info)
+```
+
+
+Scraping Harry Potter actors
+===
+
+We'll want to loop over all eight films to do this!
+
+```{r}
+HP_URLs <- c("http://www.imdb.com/title/tt0241527/fullcredits", "http://www.imdb.com/title/tt0295297/fullcredits", "http://www.imdb.com/title/tt0304141/fullcredits", "http://www.imdb.com/title/tt0330373/fullcredits", "http://www.imdb.com/title/tt0373889/fullcredits", "http://www.imdb.com/title/tt0417741/fullcredits", "http://www.imdb.com/title/tt0926084/fullcredits", "http://www.imdb.com/title/tt1201607/fullcredits")
+```
+
+Harry Potter scraping
+===
+
+Looping game plan:
+
+1. Create a list with a spot for each film
+2. Scrape the cast into the spot for each film
+3. Reshape the character vector into a matrix
+4. Combine the casts of all the films
+5. Remove whitespace, etc.
+
+```{r}
+HP_cast_list <- vector("list", length(HP_URLs))
+```
+
+
+Looping
+===
+
+Consolidate the work done for GoT into a loop for HP:
+```{r HP_loop, warning=FALSE, cache=TRUE}
+for(i in seq_along(HP_URLs)) {
+    HP_cast_list[[i]] <- read_html(HP_URLs[i]) %>%
+        html_nodes(".itemprop .itemprop , .character div") %>%
+        html_text() %>%
+        matrix(ncol = 2, byrow = TRUE) %>%
+        data.frame(stringsAsFactors = FALSE)
+    colnames(HP_cast_list[[i]]) <- c("Actor", "HP_character")
+}
+HP_cast <- bind_rows(HP_cast_list, .id = "HP_film") %>%
+    mutate_each(funs(str_trim))
+```
+
+Who was in both?
+===
+incremental: true
+
+```{r}
+both_GoT_HP <- HP_cast %>%
+    inner_join(got_cast, by = "Actor") %>%
+    arrange(desc(Episodes), Actor)
+```
+
+* ![aragog pycelle](http://assets.cdn.moviepilot.de/files/b9494cbab8d744871de233c28109d0406548a64732c5f2baf993d88bf4d0/limit/1000/1000/daGWgAqX.jpg)
+
+
+Other ways of getting data off the web
+===
+
+Specialized packages for specific services:
+
+* `twitteR` (Twitter REST API), `streamR` (Twitter streaming API), `Rfacebook`
+    + Require you get a key to run queries -- store in separate file and pull in, do not hardcode/share with others!
+    + Rate limiting can be challenge, use `Sys.sleep(seconds)` if needed to slow code down
+    
+General API access:
+
+* `httr` for HTTP requests and responses
+* `jsonlite` for parsing JSON, `XML` for XML
+
+Many tutorials just a Google search away!
+    
+
+
+Text mining with tm
+===
+type: section
+
+
+Text mining terminology
+===
+
+* `tm`: R package for performing text mining
+* Term: word
+* Document: collection of terms
+* Corpus: a collection of documents (plural: corpora)
+* Dictionary: set of relevant terms
+
+
+My first corpus
+===
+
+We can make a toy corpus manually by creating a character vector, running `VectorSource` on it to read it in, and then `VCorpus` to corpus-ify:
+
+```{r}
+library(tm)
+UW_tweets <- c("Remembering and honoring those who made the ultimate sacrifice while serving our country. #MemorialDay2016", "VIDEO: This spring @UW students taught literacy arts to #Colville Reservation students. Check out book they made!", "Enjoy the long weekend, Huskies! And to those studying for finals: Good luck and hang in there!", ".@UWBuerk & @UWFosterSchool–hosted biz plan competition awards $85,000 to students for new ventures. http://ow.ly/3PtI300F87Y  #UWinnovates")
+toy_corpus <- VCorpus(VectorSource(UW_tweets))
+```
+
+
+Accessing corpus entries
+===
+
+A corpus is just a fancy list of documents, and you can access a document as a list entry:
+
+```{r}
+toy_corpus[[3]]
+as.character(toy_corpus[[3]])
+```
+
+
+Text files as documents
+===
+
+You will more likely be making corpora from sources like Twitter or reading in data from text files. 
+
+We'll import a sample of emails from the [Enron corpus](http://bailando.sims.berkeley.edu/enron_email.html) assembled by UC Berkeley students. First, let's download a ZIP file with the text files and unzip it.
+
+```{r eval=FALSE}
+download.file("https://www.dropbox.com/s/qrd1j44qnlzg68a/enron_sample_emails.zip?dl=1", destfile = "enron_emails.zip", mode = "wb")
+unzip("enron_emails.zip", exdir = "enron_emails")
+```
+
+```{r}
+length(list.files("enron_emails/enron_sample_emails"))
+```
+
+
+Reading in text files
+===
+
+Make a corpus where each document is an email in the Enron subsample:
+
+```{r cache=TRUE}
+enron_corpus <- VCorpus(DirSource(directory = "enron_emails/enron_sample_emails", mode = "text"))
+as.character(enron_corpus[[3]])
+```
+
+Transformations (maps)
+===
+
+Let's change to lowercase, remove "stopwords" and header terms, remove punctuation, numbers, and whitespace, and "stem" the words:
+
+```{r cache=TRUE}
+# install.packages("SnowballC") # may solve errors
+enron_stripped <- enron_corpus %>%
+    tm_map(content_transformer(str_to_lower)) %>%
+    tm_map(removeWords, stopwords("english")) %>%
+    tm_map(removeWords, c("javamail.evans@thyme", "message-id", "date", "subject", "mime-version", "content-type", "text/plain", "charset=us-ascii", "content-transfer-encoding", "x-", "x-cc", "x-bcc", "x-folder", "x-origin", "x-filename")) %>%
+    tm_map(removePunctuation) %>%
+    tm_map(removeNumbers) %>%
+    tm_map(stripWhitespace) %>%
+    tm_map(stemDocument)
+```
+
+Word clouds
+===
+
+```{r, fig.width = 10, fig.height = 4, dpi=300, out.width="1100px", out.height="440px"}
+library(wordcloud)
+wordcloud(enron_stripped, min.freq = 2, max.words = 80)
+```
+
+
+Filtering to emails with California
+===
+
+We'll write a function that takes the content of the documents and looks for any instance of `"california"`, then use it with `tm_filter`:
+
+```{r, cache=TRUE}
+doc_word_search <- function(x, pattern) {
+    any(str_detect(content(x), pattern = pattern))
+}
+cali_emails <- enron_stripped %>%
+    tm_filter(doc_word_search, pattern = "california")
+length(cali_emails)
+```
+
+
+Term-Document Matrices
+===
+
+We can look for patterns across the documents by constructing a `TermDocumentMatrix`:
+
+```{r, cache=TRUE}
+enron_tdm <- TermDocumentMatrix(enron_stripped)
+str(enron_tdm)
+```
+
+What does the matrix look like?
+===
+
+Too big to view at once, but we can look at snippets with `inspect`:
+
+```{r}
+inspect(enron_tdm[1:5, 1:5])
+```
+
+Removing sparse words
+===
+
+We could focus on words that appear in at least 40% of documents.
+
+```{r}
+enron_tdm_sparse <- removeSparseTerms(enron_tdm, 0.60)
+inspect(enron_tdm_sparse)
+```
+
+
+Favorite dictionary words
+===
+
+Or we can make make a term-document matrix focusing on words in a dictionary and look at just those columns:
+
+```{r}
+inspect(TermDocumentMatrix(enron_stripped, list(dictionary = c("california", "utah", "texas")))[, 1:5])
+```
+
+
+Most frequent words
+===
+
+Which terms appear at least 200 times?
+
+```{r}
+findFreqTerms(enron_tdm, 200)
+```
+
+
+Word associations
+===
+
+Which words co-occur frequently with "california"?
+```{r}
+findAssocs(enron_tdm, "california", 0.90)
+```
+
+
+What else might you do?
+===
+
+* Use the `tidytext` package to work in a "tidy" way
+* Make more visualizations of word frequencies or relationships in `ggplot2`
+* Use hierarchical clustering to group together terms
+* Fit topic models to find overarching topics
+* Use `NLP` package to find bigrams (two-word phrases)
+* Use `qdap` package to classify document sentiment (positive, negative) and look for relationships
+
+(Please social science responsibly!)
+
+
+Wrapping up the course
+===
+type: section
+
+
+What you've learned
+===
+
+A lot!
+
+* How to get data into R from a variety of formats
+* How to do "data janitor" work to manipulate and clean data
+* How to make pretty visualizations
+* How to automate with loops and functions
+* How to fit linear regression models
+* How to combine text, calculations, plots, and tables into dynamic R Markdown reports 
+
+
+What comes next?
+===
+
+* Doing statistical inference
+    + Functions for hypothesis testing, hierarchical/mixed effect models, machine learning, survey design, etc. straightforward to use...once data are clean
+    + Access output by working with list structures (like with linear regression HW)
+* Practice, practice, practice!
+    + Replicate analyses you've done in Excel, SPSS, Stata
+    + Think about data using `dplyr` verbs, tidy data principles
+    + R Markdown for documenting cleaning and analysis start-to-finish
+* More advanced
+    + Using version control (git) in RStudio
+    + Interactive Shiny web apps
+    
+
+Thank you!
+===
+type: section

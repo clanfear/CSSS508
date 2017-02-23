@@ -1,0 +1,12 @@
+base
+methods
+datasets
+utils
+grDevices
+graphics
+stats
+stringr
+readr
+dplyr
+ggplot2
+ggmap

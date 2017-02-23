@@ -1,0 +1,10 @@
+base
+knitr
+xml2
+rvest
+stringr
+dplyr
+NLP
+tm
+RColorBrewer
+wordcloud

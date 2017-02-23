@@ -1,0 +1,7 @@
+base
+stringr
+readr
+dplyr
+ggplot2
+ggmap
+ggrepel

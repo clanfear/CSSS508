@@ -1,0 +1,302 @@
+---
+title: "Week 2 HW Hall of Fame"
+author: "Rebecca Ferrell"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here are some examples of plots students created for the Week 2 homework on `ggplot2` practice using the `gapminder` data. (I have edited the graphs and code slightly.) All of these have something extra special going for them and looking at their code will give you useful tips to help you make more effective data visualizations.
+
+
+```{r load_libraries, warning=FALSE, message=FALSE}
+# core libraries for this assignment
+library(ggplot2)
+library(dplyr)
+library(gapminder)
+
+# bonus fun feature libraries
+library(ggthemes)
+library(grid)
+library(gridExtra)
+library(scales)
+library(plotly)
+```
+
+# Smart x-axis label formatting
+
+Many of you ran into an issue where the labels on your x-axis were overlapping a bit. This graph uses options in the `theme` layer on `axis.text.x` to rotate labels by 90 degrees and shrink the text.
+
+```{r saul_rotate_x_labels}
+ggplot(data = gapminder %>%
+           filter(continent == "Americas"),
+       aes(x = year, y= lifeExp, group = country)) +
+    geom_point(color = "dodgerblue") +
+    geom_line() +
+    facet_wrap( ~ country) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90,
+                                     vjust = 0.5,
+                                     size = 8)) +
+    xlab("Year") +
+    ylab("Life expectancy") +
+    ggtitle("Life expectancy in the Americas") 
+```
+
+# Dropping the legend and manual colors
+
+While it's great that `ggplot2` automatically gives us a legend for mapped aesthetics, sometimes it can be redundant when we are faceting. This shows one way of dropping an unneeded legend with `guides(color = FALSE)` to drop a color scale (several of the other graphs show other ways) and using some rich color choices with angled x-axis labels for clarity.
+
+```{r mia_nolegend}
+ggplot(data = gapminder,
+       aes(x = year, y = gdpPercap,
+           group = country, color = continent)) +
+    geom_line(alpha = 0.5) +
+    facet_wrap( ~ continent) +
+    xlab("Year") +
+    ylab("GDP per capita") +
+    ggtitle("GDP per capita over time") +
+    guides(color = FALSE) +
+    theme_bw()+
+    theme(axis.text.x = element_text(angle = 45)) +
+    scale_color_manual(name = "Continent",
+                       values = c("Africa" = "darkred",
+                                  "Americas" = "dodgerblue",
+                                  "Asia" = "darkslategray4",
+                                  "Europe" = "darkorchid1",
+                                  "Oceania" = "deeppink3"))
+```
+
+# Histograms
+
+We didn't look at histograms in class, but this is a nice example showing a histogram over time with a manually set count of bins.
+
+```{r katie_histograms}
+Asia <- gapminder %>%
+           filter(continent == "Asia")
+
+ggplot(Asia, aes(x = lifeExp)) +
+    geom_histogram(bins = 10, colour="black", fill = "white") + 
+    facet_wrap( ~ year) + 
+    xlab("years") +
+    ylab("count of countries") +
+    ggtitle("Life Expectancy Over Time in Asia") +
+    theme_bw()
+```
+
+
+# Density plots and formatting the legend
+
+We also didn't look at density plots in class, but this plot shows the distribution of life expectancy within each continent and how it shifts rightward over time using small multiples with semi-transparent density layers. This features a legend with a custom formatted background and title.
+
+```{r demi_density}
+ggplot(data = gapminder,
+       aes(x = lifeExp, fill=continent)) +
+    geom_density(alpha = 0.5) +
+    xlab("Life Expectancy") +
+    ylab("Density") +
+    ggtitle("Life Expectancy by Continent") +
+    theme_minimal(base_size = 10) +
+    facet_wrap( ~ year) +
+    theme(legend.title = element_text(color = "seagreen",
+                                      size = 16,
+                                      face = "bold"),
+          legend.background = element_rect(fill = "gray90",
+                                           size = 0.5,
+                                           linetype = "dashed"))
+```
+
+# Boxplots with a flipped coordinate axis
+
+Boxplots are another useful univariate visualization tool not covered in class. This graph takes presents boxplots horiztionally rather than the default vertical display using `coord_flip`, as well as changing the order of the countries to be reverse alphabetical. You will see in Lecutre 5 how to control this sorting by other criteria -- here, I'd suggest reordering by the maximum life expectancy instead so you get a nice cascade effect and avoid the "Alabama first" problem. This also uses *The Economist* theme from `ggthemes` and has a number of other customizations to title size and gridlines.
+
+```{r guy_boxplot, warning=FALSE}
+ggplot(Asia, aes(x = country, y = lifeExp)) +
+    geom_boxplot(outlier.shape = 5) + 
+    scale_x_discrete(limits = rev(levels(Asia$lifeExp))) +
+    scale_y_continuous(breaks = seq(0, 80, 20),
+                       limits = c(30, 90)) +
+    labs(y = "Life Expectancy in Years") + 
+    coord_flip() +
+    ggtitle("Box Plot Summary of Life Expectancy in Asia from 1957-2007") +
+    theme_economist() +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.title = element_text(size = rel(1.2),
+                                    face = "bold",
+                                    vjust = 1.5),
+          axis.ticks.y = element_blank(),
+          axis.title.y = element_blank())
+```
+
+# Scatterplot alternative to histograms and boxplots
+
+This plot shows another way of showing univariate summary information, but this time using a jittered scatterplot instead of a histogram, density plot, or boxplot. Jittered scatterplots can be very effective for visualizing small datasets because they don't reduce the data down to a smaller set of summary numbers. I dropped a redundant legend using `theme` and rotated the x-axis labels to reduce overlaps.
+
+```{r connor_jitterplot}
+ggplot(data = gapminder,
+       aes(x = continent, y = gdpPercap, color = continent)) +
+    geom_point(position = position_jitter(width = 0.5, height = 0)) +
+    xlab("Continent") +
+    ylab("GDP per Capita") +
+    ggtitle("GDP per capita over time by continent") +
+    facet_wrap( ~ year, ncol = 4) +
+    theme_bw() +
+    theme(legend.position = "none",
+          axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+# Smaller writing and reduced "ink"
+
+This plot is a variation on the one we saw at the end of Lecture 2. It effectively compares the observed life expectancy trends within Asian countries to a rolling smoothed average of them (a loess line), which helps the countries with dips like Cambodia, China, and Iraq stand out. This also uses smaller writing overall in the `theme_minimal` layer to keep everything from overlapping, and sparsely labeled axes to reduce chart "ink".
+
+```{r mitchell_smoother}
+ggplot(Asia,
+       aes(x = year, y = lifeExp, group = country)) +
+    xlab("Year") +
+    ylab("Life Expectancy") +
+    geom_line(alpha = 0.75,
+              aes(color = "Actual", size = "Actual")) +
+    geom_line(stat ="smooth", method = "loess", alpha = 0.5,
+              aes(group = country, color = "Average", size = "Average")) +
+    facet_wrap( ~ country, nrow = 5) + 
+    scale_color_manual(name = "Unit",
+                       values = c("Actual" = "orange",
+                                  "Average" = "navyblue")) +
+    scale_size_manual(name = "Unit",
+                      values = c("Actual" = 3,
+                                 "Average" = 1)) +
+    scale_x_log10(breaks = c(1950, 1970, 1990, 2010)) +
+    theme_minimal(base_size = 8) +
+    theme(legend.position = c(0.85, 0.1))
+```
+
+# Manual graph annotation without a legend
+
+This graph uses an `annotate` layer of text to directly label lines with the country names. It also uses a theme from `ggthemes` to make the graph look it came from *The Economist*, drops legends using `show.legend = FALSE` in the layers, while hiding gridlines and tweaking title size with arguments to `theme`.
+
+```{r guy_manual_annotate}
+ggplot(gapminder %>%
+           filter(country %in% c("Afghanistan", "Pakistan")),
+       aes(x = year , y = lifeExp)) +
+    geom_line(aes(linetype = country, color = country),
+              show.legend = FALSE) +
+    geom_point(aes(size = country),
+               shape = 21, fill = "white", show.legend = FALSE) +
+    annotate("text", x = c(1975, 1985), y = c(56, 43), size = 6,
+             label = c("Pakistan", "Afghanistan")) +
+    scale_size_manual(values = c(3, 3)) +
+    labs(x = "Year", y = "Life Expectancy") +
+    ggtitle("Life Expectancy in Afghanistan Vs. Pakistan") +
+    theme_economist_white() +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.title = element_text(size = rel(1.2),
+                                    face = "bold",
+                                    vjust = 1.5))
+```
+
+# Custom grobs for multiple plots and graph notes {.tabset}
+
+One student explored using the `grid` and `gridExtra` packages in R to great effect to make slick-looking plots with notes right on the graph. This was discussed on the Homework 2 Canvas forum. I've included two of her examples here.
+
+## Multiple plots and a note
+
+Note that each of the two plots are stored as objects, and then put together using `grid.arrange` from the `gridExtra` package. This also uses the `comma` option the `scales` package provides to `scale_y_log10` to format the numbers on the axis more nicely.
+
+```{r jordan_multiplot, warning=FALSE}
+p1 <- ggplot(data = Asia,
+             aes(x = year, y = lifeExp, group = country)) +
+    geom_line(alpha = 0.5) +
+    geom_line(stat = "smooth", method = "loess",
+              aes(group = continent, color = "Continent", size = "Continent"),
+              alpha = 0.5) +
+    scale_x_continuous(breaks = seq(1952, 2007, 5)) +
+    xlab("Year") +
+    ylab("Life Expectancy (years)") +
+    ggtitle("Life Expectancy") + 
+    theme_bw() +
+    theme(legend.position = "none")
+
+p2 <- ggplot(data = Asia,
+             aes(x = year, y = gdpPercap, group = country)) +
+    geom_line(alpha = 0.5) +
+    geom_line(stat = "smooth", method = "loess",
+              aes(group = continent, color = "Continent", size = "Continent"),
+              alpha = 0.5) +
+    scale_y_log10(labels = comma,
+                  breaks = c(1000, 2000, 3000, 5000, 10000, 20000, 80000)) +
+    scale_x_continuous(breaks = seq(1952, 2007, 5)) +
+    xlab("Year") +
+    ylab("Log GDP per Capita (2007 dollars)") +
+    ggtitle("Log GDP per Capita") + 
+    theme_bw() +
+    theme(legend.position = "none")
+
+grid.arrange(p1, p2, ncol = 2,
+             bottom = textGrob("NOTE: Red line denotes average across all countries.",
+                               x = 0, y = 0.5,
+                               just = "left",
+                               gp = gpar(fontsize = 10)))
+```
+
+## Bubble plot
+
+This plot makes the size of each hollowed-out point proportional to the population, which is sometimes called a *bubble plot*. It also uses colors in a palette of similar ones for visual appeal.
+
+```{r jordan_bubble}
+CustomColors <- c('brown','brown1', 'brown2', 'brown3', 'brown4', 'coral1', 'coral2', 'coral3', 'coral4','darkgoldenrod', 'darkgoldenrod1', 'darkgoldenrod2', 'darkgoldenrod3', 'darkgoldenrod4', 'darkorange', 'darkorange1', 'darkorange2', 'darkorange3', 'darkorange4', 'darkred', 'darksalmon', 'gold1', 'gold2', 'gold3', 'gold4', 'orange', 'orange1', 'orange2', 'orange3', 'orange4', 'orangered', 'orangered1', 'orangered2', 'orangered3', 'orangered4', 'salmon', 'salmon1', 'salmon2', 'salmon3', 'salmon4')
+
+p3 <- ggplot(data = Asia,
+             aes(x = gdpPercap, y = lifeExp, color = country)) +
+    geom_point(shape = 21, aes(size = pop)) +
+    scale_shape(solid = FALSE) +
+    xlab("GDP per capita (2007 $)") + ylab("Life Expectancy (years)") +
+    scale_x_continuous(label = comma) +
+    theme_bw() +
+    theme(legend.position = "none") +
+    scale_color_manual(values = CustomColors)
+
+grid.arrange(p3, ncol=1,
+               bottom = textGrob("NOTE: Diameters of circles are proportional to country's population size. Color of circles correspond to country.",
+                            x = 0,
+                            y = 0.5,
+                            just = "left",
+                            gp = gpar(fontsize = 10)))
+```
+
+# 3D interactive plots
+
+One student experimented with the `plotly` package for looking at data in 3D interactively. Try dragging the graph around in RStudio's Viewer pane or in your browser. This makes use of some data structures and functions we haven't seen yet, such as lists, which we will talk about in Lecture 4. Very cool! You can learn more about `plotly` [here](https://cran.r-project.org/web/packages/plotly/vignettes/intro.html). `ggvis` is another package that works with `ggplot2` to make interactive graphics is that's something you want to explore.
+
+```{r qimin_plotly}
+Europe <- gapminder %>%
+    filter(continent == "Europe")
+Europe$Year <- cut(Europe$year,
+                   breaks = c(1950, 1960, 1970, 1980, 1990, 2000, 2010),
+                   labels = c("1950-1960",
+                              "1960-1970",
+                              "1970-1980",
+                              "1980-1990",
+                              "1990-2000",
+                              "2000-2010"))
+font <- list(family = "Courier New, monospace",
+             size = 12,
+             color = "#7f7f7f")
+x_scene <- list(title = "Life Expectancy", titlefont = font)
+y_scene <- list(title = "GDP per Capita", titlefont = font)
+z_scene <- list(title = "Year", titlefont = font)
+plot_ly(Europe,
+        x = lifeExp, y = gdpPercap, z = Year,
+        type = "scatter3d",
+        mode = "markers", color = Year) %>%
+    layout(title = "GDP per Capita vs. Life Expectancy vs. Year in Europe",
+           scene = list(xaxis = x_scene, yaxis = y_scene, zaxis = z_scene))
+```
