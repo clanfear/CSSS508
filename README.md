@@ -4,7 +4,7 @@
 
 Charles Lanfear
 
-Department of Statistics
+Department of Sociology
 
 University of Washington
 
