@@ -537,9 +537,11 @@ What's Up with Cars?
 ========================================================
 incremental: true
 
-In the sample R Markdown document you are working on, `cars` is a built-in data frame, a type of data mentioned earlier. You can look at it in a couple of ways:
+In the sample R Markdown document you are working on, we can load the built-in data
+`cars`, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.
 
-`View(cars)`: pops up a spreadsheet-looking viewer (“interactive” use only, don't put in R Markdown document!) or
+`data(cars)` loads this dataframe into the Global Environment.
+`View(cars)` pops up a viewer pane ("interactive" use only, don't put in R Markdown document!) or
 
 ```{r}
 head(cars) # prints first 6 rows, see tail() too
