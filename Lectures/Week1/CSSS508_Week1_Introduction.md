@@ -1,7 +1,7 @@
 CSSS508 Introduction
 ========================================================
 author: Charles Lanfear
-date: March 21, 2017
+date: March 28, 2017
 autosize: true
 transition: linear
 
@@ -73,15 +73,17 @@ Don't be Goofus:
 
 > tried lm(y~x) but it iddn't work wat do
 
-Instead, be Gallant:
-> ```{ }
+Instead, be Gallant: 
+
+> ```
 y <- seq(1:10) + rnorm(10)
 x <- seq(0:10)
-model <- lm(y~x)
+model <- lm(y ~ x)
 ```
-Running the block above gives me the following error, anyone know why?
-```{ }
-Error in model.frame.default(formula = y ~ x, drop.unused.levels = TRUE) : variable lengths differ (found for 'x')
+> Running the block above gives me the following error, anyone know why?
+```
+Error in model.frame.default(formula = y ~ x, drop.unused.levels = TRUE) : 
+  variable lengths differ (found for 'x')
 ```
 
 
@@ -382,7 +384,7 @@ Making R Markdown Documents
 ### Subsubheader
 
 > Block quote from
-famous person
+> famous person
 
 ***
 
@@ -396,14 +398,19 @@ famous person
 
 `### Subsubheader`
 
-\> Block quote from famous person
+```
+> Block quote from
+> famous person
+```
 
 More R Markdown Syntax
 ========================================================
 
+left: 30%
+
 1. Ordered lists
 1. Are real easy
-  + Even with sublists
+  1. Even with sublists
   
 * Unordered lists
 * Are also real easy
@@ -413,13 +420,16 @@ More R Markdown Syntax
 
 ![pictures aren't bad either](http://depts.washington.edu/uwcreate/img/UW_W-Logo_smallRGB.gif)
 
+
 ***
-```{}
+
+```
 1. Ordered lists
 1. Are real easy
   + Even with sublists
 ```
-```{}
+
+```
 * Unordered lists
 * Are also real easy
   + Also even with sublists
@@ -428,6 +438,7 @@ More R Markdown Syntax
 `[URLs are trivial](http://www.uw.edu)`
 
 `![pictures aren't bad either](http://depts.washington.edu/uwcreate/img/UW_W-Logo_smallRGB.gif)`
+
 
 Formulae and Syntax in Markdown
 ========================================================
@@ -481,12 +492,12 @@ For day-to-day use, plain vanilla R Markdown does the job.
 R code and R Markdown
 ========================================================
 
-Lines of R code make up what are called chunks. Code is sandwiched between sets of three backticks and {r}.
+Lines of R code make up what are called **chunks**. Code is sandwiched between sets of three backticks and `{r}`.
 
-    ```{r echo=FALSE}
+    ```{r}
     data(cars)
     summary(cars)
-    ```
+    ```
 
 
 
@@ -522,25 +533,12 @@ Playing with Chunk Options
 ========================================================
 Try adding or changing the chunk options (separated by commas) for the two chunks in `my_first_Rmd.Rmd` and re-knitting to check what happens.
 
-You can also name your chunks by putting something after the r before the chunk options.
 
+You can also name your chunks by putting something after the `r` before the chunk options.
 
-    ```{r echo=FALSE}
+    ```{r summarize_cars, echo=FALSE}
     summary(cars)
-    ```
-    
-
-```
-     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-```
-
-
+    ```
 After you name your chunks, look what happens in the dropdown on the bottom left of your editor pane.
 
 
@@ -548,23 +546,23 @@ In-line R code
 ========================================================
 incremental: true
 
-Sometimes we want to insert a value directly into our text. We do that using code in single backticks starting off with r.
+Sometimes we want to insert a value directly into our text. We do that using code in single backticks starting off with `r`.
 
-Four score and seven years ago is the same as `` `r 4*20 + 7` ``.
+
+
+`Four score and seven years ago is the same as` `` `r 4*20 + 7` `` `years.`
 
 Four score and seven years ago is the same as 87 years.
 
 Maybe we've saved a variable in a chunk we want to reference in the text:
 
-
 ```r
 x <- sqrt(77) # <- is how we assign variables
 ```
 
-The value of ``x`` rounded to the nearest two decimals is `` `r round(x, 2)` ``.
+`The value of ` `` `x` `` `rounded to the nearest two decimals is` `` `r round(x, 2)` ``.
 
 The value of `x` rounded to the nearest two decimals is 8.77.
-
 
 This is Amazing!
 ========================================================
@@ -572,13 +570,14 @@ incremental: true
 
 Having R dump values directly into your document protects you from silly mistakes:
 
-* Never wonder “how did I come up with this quantity?” ever again — just look at your formula in your .Rmd file
-* Consistency, no “find/replace” mishaps: reference a variable in-line throughout your document without manually updating if the calculation changes (e.g. reporting sample sizes)
-* You are more likely to make a typo in a “hard-coded” number than you are to write R code that somehow runs but gives you the wrong thing
+* Never wonder "how did I come up with this quantity?" ever again --- just look at your formula in your .Rmd file
+* Consistency, no "find/replace" mishaps: reference a variable in-line throughout your document without manually updating if the calculation changes (e.g. reporting sample sizes)
+* You are more likely to make a typo in a "hard-coded" number than you are to write R code that somehow runs but gives you the wrong thing
 
 
-Example: Keeping Document Date Current
-========================================================
+Example: keeping document date current
+===
+
 In your YAML header, make the date come from R's `Sys.time()` function by changing:
 
 `date: "March 30, 2016"`
@@ -599,9 +598,11 @@ What's Up with Cars?
 ========================================================
 incremental: true
 
-In the sample R Markdown document you are working on, `cars` is a built-in data frame, a type of data mentioned earlier. You can look at it in a couple of ways:
+In the sample R Markdown document you are working on, we can load the built-in data
+`cars`, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.
 
-`View(cars)`: pops up a spreadsheet-looking viewer (“interactive” use only, don't put in R Markdown document!) or
+`data(cars)` loads this dataframe into the Global Environment.
+`View(cars)` pops up a viewer pane ("interactive" use only, don't put in R Markdown document!) or
 
 
 ```r
