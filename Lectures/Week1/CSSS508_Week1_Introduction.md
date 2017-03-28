@@ -527,7 +527,7 @@ Chunks have options that control what happens with its code, such as:
 * `warning=FALSE, message=FALSE`: suppresses R warnings or messages from the document, e.g. about versions
 * `eval=FALSE`: show R code in the document without running it
 * `cache=TRUE`: saves results of running that chunk so if it takes a while, you won't have to re-run it each time you re-knit the document
-* `fig.height=5, fig.width=51: modify the dimensions of any plots that are generated in the chunk (units are in inches)
+* `fig.height=5, fig.width=51`: modify the dimensions of any plots that are generated in the chunk (units are in inches)
 
 
 Playing with Chunk Options
