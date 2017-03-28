@@ -794,7 +794,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>CSSS508 Introduction</h1><p>Charles Lanfear<br/>March 21, 2017</p>
+<h1>CSSS508 Introduction</h1><p>Charles Lanfear<br/>March 28, 2017</p>
 
 <div class="slideContent" >
 
@@ -898,17 +898,18 @@ hljs.initHighlightingOnLoad();
 <p>tried lm(y~x) but it iddn&#39;t work wat do</p>
 </blockquote>
 
-<p class="fragment">Instead, be Gallant:</p>
+<p class="fragment">Instead, be Gallant: </p>
 
 <blockquote class="fragment">
 <pre class="fragment"><code>y &lt;- seq(1:10) + rnorm(10)
 x &lt;- seq(0:10)
-model &lt;- lm(y~x)
+model &lt;- lm(y ~ x)
 </code></pre>
 
 <p class="fragment">Running the block above gives me the following error, anyone know why?</p>
 
-<pre class="fragment"><code>Error in model.frame.default(formula = y ~ x, drop.unused.levels = TRUE) : variable lengths differ (found for &#39;x&#39;)
+<pre class="fragment"><code>Error in model.frame.default(formula = y ~ x, drop.unused.levels = TRUE) : 
+  variable lengths differ (found for &#39;x&#39;)
 </code></pre>
 </blockquote>
 
@@ -1257,7 +1258,9 @@ famous person</p>
 
 <p><code>### Subsubheader</code></p>
 
-<p>&gt; Block quote from famous person</p>
+<pre><code>&gt; Block quote from
+&gt; famous person
+</code></pre>
 
 </div>
 
@@ -1265,13 +1268,15 @@ famous person</p>
 <section data-transition="linear" data-transition-speed="default">
 <h3>More R Markdown Syntax</h3>
 <div class="column column1 slideContent" >
+<p>left: 30%</p>
+
 <ol>
 <li>Ordered lists</li>
 <li>Are real easy
 
-<ul>
+<ol>
 <li>Even with sublists</li>
-</ul></li>
+</ol></li>
 </ol>
 
 <ul>
@@ -1375,12 +1380,12 @@ z &lt;- y^2
 <section data-transition="linear" data-transition-speed="default">
 <h3>R code and R Markdown</h3>
 <div class="slideContent" >
-<p>Lines of R code make up what are called chunks. Code is sandwiched between sets of three backticks and {r}.</p>
+<p>Lines of R code make up what are called <strong>chunks</strong>. Code is sandwiched between sets of three backticks and <code>{r}</code>.</p>
 
-<pre><code>```{r echo=FALSE}
+<pre><code>```{r}
 data(cars)
 summary(cars)
-```
+```
 </code></pre>
 
 <pre><code class="r">data(cars)
@@ -1421,20 +1426,11 @@ summary(cars)
 <div class="slideContent" >
 <p>Try adding or changing the chunk options (separated by commas) for the two chunks in <code>my_first_Rmd.Rmd</code> and re-knitting to check what happens.</p>
 
-<p>You can also name your chunks by putting something after the r before the chunk options.</p>
+<p>You can also name your chunks by putting something after the <code>r</code> before the chunk options.</p>
 
-<pre><code>```{r echo=FALSE}
+<pre><code>```{r summarize_cars, echo=FALSE}
 summary(cars)
-```
-</code></pre>
-
-<pre><code>     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
+```
 </code></pre>
 
 <p>After you name your chunks, look what happens in the dropdown on the bottom left of your editor pane.</p>
@@ -1445,9 +1441,9 @@ summary(cars)
 <section data-transition="linear" data-transition-speed="default">
 <h3>In-line R code</h3>
 <div class="slideContent" >
-<p>Sometimes we want to insert a value directly into our text. We do that using code in single backticks starting off with r.</p>
+<p>Sometimes we want to insert a value directly into our text. We do that using code in single backticks starting off with <code>r</code>.</p>
 
-<p class="fragment">Four score and seven years ago is the same as <code>`r 4*20 + 7`</code>.</p>
+<p class="fragment"><code>Four score and seven years ago is the same as</code> <code>`r 4*20 + 7`</code> <code>years.</code></p>
 
 <p class="fragment">Four score and seven years ago is the same as 87 years.</p>
 
@@ -1456,7 +1452,7 @@ summary(cars)
 <pre class="fragment"><code class="r">x &lt;- sqrt(77) # &lt;- is how we assign variables
 </code></pre>
 
-<p class="fragment">The value of <code>x</code> rounded to the nearest two decimals is <code>`r round(x, 2)`</code>.</p>
+<p class="fragment"><code>The value of</code> <code>`x`</code> <code>rounded to the nearest two decimals is</code> <code>`r round(x, 2)`</code>.</p>
 
 <p class="fragment">The value of <code>x</code> rounded to the nearest two decimals is 8.77.</p>
 
@@ -1469,16 +1465,16 @@ summary(cars)
 <p>Having R dump values directly into your document protects you from silly mistakes:</p>
 
 <ul>
-<li class="fragment">Never wonder “how did I come up with this quantity?” ever again — just look at your formula in your .Rmd file</li>
-<li class="fragment">Consistency, no “find/replace” mishaps: reference a variable in-line throughout your document without manually updating if the calculation changes (e.g. reporting sample sizes)</li>
-<li class="fragment">You are more likely to make a typo in a “hard-coded” number than you are to write R code that somehow runs but gives you the wrong thing</li>
+<li class="fragment">Never wonder &ldquo;how did I come up with this quantity?&rdquo; ever again &mdash; just look at your formula in your .Rmd file</li>
+<li class="fragment">Consistency, no &ldquo;find/replace&rdquo; mishaps: reference a variable in-line throughout your document without manually updating if the calculation changes (e.g. reporting sample sizes)</li>
+<li class="fragment">You are more likely to make a typo in a &ldquo;hard-coded&rdquo; number than you are to write R code that somehow runs but gives you the wrong thing</li>
 </ul>
 
 </div>
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Example: Keeping Document Date Current</h3>
+<h3>Example: keeping document date current</h3>
 <div class="slideContent" >
 <p>In your YAML header, make the date come from R&#39;s <code>Sys.time()</code> function by changing:</p>
 
@@ -1503,9 +1499,11 @@ summary(cars)
 <section data-transition="linear" data-transition-speed="default">
 <h3>What&#x27;s Up with Cars?</h3>
 <div class="slideContent" >
-<p>In the sample R Markdown document you are working on, <code>cars</code> is a built-in data frame, a type of data mentioned earlier. You can look at it in a couple of ways:</p>
+<p>In the sample R Markdown document you are working on, we can load the built-in data
+<code>cars</code>, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.</p>
 
-<p class="fragment"><code>View(cars)</code>: pops up a spreadsheet-looking viewer (“interactive” use only, don&#39;t put in R Markdown document!) or</p>
+<p class="fragment"><code>data(cars)</code> loads this dataframe into the Global Environment.
+<code>View(cars)</code> pops up a viewer pane (&ldquo;interactive&rdquo; use only, don&#39;t put in R Markdown document!) or</p>
 
 <pre class="fragment"><code class="r">head(cars) # prints first 6 rows, see tail() too
 </code></pre>
