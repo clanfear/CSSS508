@@ -400,11 +400,12 @@ left: 30%
 Formulae and Syntax in Markdown
 ========================================================
 
-You can put some math $y= \left( \frac{2}{3} \right)^2$ right up in there
+You can put some math $y= \left( \frac{2}{3} \right)^2$ right up in there.
 
 $$\frac{1}{n} \sum_{i=1}^{n} x_i = \bar{x}_n$$
 
 Or a sentence with `code-looking font`.
+
 
 ```
 y <- 1:5
@@ -417,7 +418,7 @@ z <- y^2
 
 `$$\frac{1}{n} \sum_{i=1}^{n} x_i = \bar{x}_n$$`
 
-`Or a sentence with `code-looking font`.`
+`` Or a sentence with `code-looking font`. ``
 
 
     ```
@@ -467,12 +468,12 @@ Chunk options
 ========================================================
 Chunks have options that control what happens with its code, such as:
 
-* echo=FALSE: keeps R code from being shown in the document
-* results='hide': hides R's (non-plot) output from the document
-* warning=FALSE, message=FALSE: suppresses R warnings or messages from the document, e.g. about versions
-* eval=FALSE: show R code in the document without running it
-* cache=TRUE: saves results of running that chunk so if it takes a while, you won't have to re-run it each time you re-knit the document
-* fig.height=5, fig.width=5: modify the dimensions of any plots that are generated in the chunk (units are in inches)
+* `echo=FALSE`: keeps R code from being shown in the document
+* `results='hide'`: hides R's (non-plot) output from the document
+* `warning=FALSE, message=FALSE`: suppresses R warnings or messages from the document, e.g. about versions
+* `eval=FALSE`: show R code in the document without running it
+* `cache=TRUE`: saves results of running that chunk so if it takes a while, you won't have to re-run it each time you re-knit the document
+* `fig.height=5, fig.width=51: modify the dimensions of any plots that are generated in the chunk (units are in inches)
 
 
 Playing with Chunk Options
