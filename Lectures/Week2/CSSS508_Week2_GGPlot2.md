@@ -6,8 +6,110 @@ width: 1100
 height: 750
 transition: rotate
 
-Gapminder data
+
+But First, Some Useful Stuff
 ========================================================
+type: section
+
+
+Comments
+========================================================
+incremental: true
+
+You may have noticed that sometimes I have written code that looks like this:
+
+```r
+new.object <- 1:10 # Making vector of 1 to 10 
+```
+`#` is known as the *commenting symbol* in R!
+
+Anything written on the same line *after* `#` will not be run by R. This is useful for
+annotating your code to remind you (or others) what you are doing in a section.
+
+
+Saving Files
+========================================================
+incremental: true
+
+You can save an R object on your computer as a file to open later:
+
+```r
+save(new.object, file="new_object.RData")
+```
+
+You can open saved files in R as well:
+
+```r
+load("new_object.RData")
+```
+
+But where are these files being saved and loaded from?
+
+
+Working Directories
+========================================================
+incremental: true
+
+R saves files and looks for files to open in your current **working directory**. You
+can ask R what this is:
+
+
+```r
+getwd()
+```
+
+```
+[1] "C:/Users/cclan/OneDrive/GitHub/CSSS508/Lectures/Week2"
+```
+
+Similarly, we can set a working directory like so:
+
+
+```r
+setwd("C:/Users/cclan/Documents")
+```
+
+
+Managing Files
+========================================================
+incremental: true
+
+When managing R projects, it is normally best to give each project (such as a homework
+assignment) its own folder. I use the following system:
+
+* Every class or project has its own folder
+* Each assignment or task has a folder inside that, which is the working directory for that item.
+* .Rmd and .R files are named clearly
+
+For example, this presentation is located and named this:
+`GitHub/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.Rpres`
+
+You can use whatever system you want, but be consistent so your projects are organized! 
+You don't want to lose work by losing or overwriting files!
+
+
+Clarifications on Files
+========================================================
+incremental: true
+
+We mainly work with three types of file in this class:
+
+* `.Rmd`: These are **markdown** *syntax* files, where you write code to make documents.
+* `.R`: These are **R** *syntax* files, where you write code to process and analyze data without making a document.
+* `.html` or `.pdf`: These are the documents created when you *knit* a markdown document.
+
+Make sure you understand the difference between the uses of these file types! Please
+ask for clarification if needed!
+
+
+Now, on to Plotting!
+========================================================
+type: section
+
+
+Gapminder Data
+========================================================
+incremental: true
 
 
 
@@ -22,7 +124,7 @@ Load the package and data:
 library(gapminder)
 ```
 
-Check Out gapminder
+Check Out Gapminder
 ========================================================
 
 The data frame we will work with is called `gapminder`, available once you have loaded the package. Let's see its structure:
@@ -69,7 +171,7 @@ This will install a large number of R packages we will use throughout the term, 
 `dplyr` is a very useful and powerful package that we will talk more about soon, but today we're just going to use it for "filtering" data.
 
 
-Loading `dplyr`
+Loading dplyr
 ========================================================
 
 
@@ -110,10 +212,12 @@ package `gapminder' was built under R version 3.2.3
 ```
 Chunk option `warning=FALSE` will hide this.
 
-`magrittr` and Pipes
-========================================================
 
-`dplyr` allows us to use `magrittr` operators to "pipe"" data between functions. So instead of nesting functions like this:
+magrittr and Pipes
+========================================================
+incremental: true
+
+`dplyr` allows us to use `magrittr` operators to "pipe" data between functions. So instead of nesting functions like this:
 
 
 ```r
@@ -135,6 +239,7 @@ gapminder$pop %>% mean() %>% log()
 [1] 17.20333
 ```
 
+Read this as, "send `gapminder$pop` to `mean()`, then send the output of that to `log()`."
 In essence, pipes read "left to right" while nested functions read "inside to out."
 This may be confusing... we'll cover it more later!
 
@@ -241,7 +346,7 @@ Base Plots from Last Week
 plot(lifeExp ~ year, data = China, xlab = "Year", ylab = "Life expectancy", main = "Life expectancy in China", col = "red", cex = 3, pch = 16)
 ```
 
-![plot of chunk unnamed-chunk-10](CSSS508_Week2_GGPlot2-figure/unnamed-chunk-10-1.png)
+![plot of chunk unnamed-chunk-15](CSSS508_Week2_GGPlot2-figure/unnamed-chunk-15-1.png)
 
 
 ggplot2
@@ -267,7 +372,7 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
     geom_point()
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="1100px" height="450px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" width="1100px" height="450px" />
 
 
 Axis labels, points, no gray background
@@ -282,7 +387,7 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
     theme_bw()
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="1100px" height="400px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="1100px" height="400px" />
 
 
 Color observations by some attribute
@@ -297,7 +402,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) +
     theme_bw()
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="1100px" height="400px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="1100px" height="400px" />
 
 Segment observations by some attribute
 ========================================================
@@ -312,7 +417,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country, color = con
     theme_bw()
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="1100px" height="350px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="1100px" height="350px" />
 
 Layers
 ========================================================
@@ -382,7 +487,7 @@ Showing a stored graph
 lifeExp_by_year
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" width="1100px" height="500px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-22-1.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="1100px" height="500px" />
 
 
 
@@ -395,7 +500,7 @@ lifeExp_by_year +
     geom_line(aes(group = country))
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="1100px" height="550px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="1100px" height="550px" />
 
 
 Lab Break!
@@ -418,7 +523,7 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
     geom_point()
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="1100px" height="500px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" width="1100px" height="500px" />
 
 
 Fixing Overplotting with Jitter
@@ -430,7 +535,7 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
     geom_point(position = position_jitter(width = 0.5, height = 2))
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="1100px" height="450px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" width="1100px" height="450px" />
 
 
 Changing the axes
@@ -455,7 +560,7 @@ ggplot(data = China, aes(x = year, y = gdpPercap)) +
     ggtitle("Chinese GDP per capita")
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-21-1.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" width="1100px" height="350px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-26-1.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" width="1100px" height="350px" />
 
 
 Fonts Too Small?
@@ -469,7 +574,7 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
     theme_gray(base_size = 30)
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-22-1.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="1100px" height="450px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-27-1.png" title="plot of chunk unnamed-chunk-27" alt="plot of chunk unnamed-chunk-27" width="1100px" height="450px" />
 
 
 Text and Tick Adjustments
@@ -508,7 +613,7 @@ lifeExp_by_year +
     scale_color_manual(name = "Which\ncontinent\nare we\nlooking at?", values = c("Africa" = "seagreen", "Americas" = "turquoise1", "Asia" = "royalblue", "Europe" = "violetred1", "Oceania" = "yellow"))
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="1100px" height="450px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-28-1.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" width="1100px" height="450px" />
 
 
 Fussy Manual Legend Example Code
@@ -529,7 +634,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 Fussy Manual Legend Example Result!
 ========================================================
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" width="1100px" height="500px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="1100px" height="500px" />
 
 Observation: one could use `filter` to identify the countries with dips in life expectancy and investigate.
 
@@ -561,6 +666,6 @@ Homework
 ========================================================
 type: section
 
-Pick some relationship to look at in the Gapminder data and write up a .Rmd file investigating that question graphically. You might work with a subset of the data (e.g. just Africa). Upload both the .Rmd file and the .html file to Canvas. Include 4 to 8 graphs. All titles, axes, and legends should be labelled clearly (no raw variable names). You must have at least one graph with `facet_wrap` or `facet_grid`. You must include at least one manually specified legend. You can use other `geoms` like histograms, bar charts, add vertical or horizontal lines, etc.
+Pick some relationship to look at in the Gapminder data and write up a .Rmd file investigating that question graphically. You might work with a subset of the data (e.g. just Africa). Upload both the `.Rmd` file and the `.html` file to Canvas. Include 4 to 8 graphs. All titles, axes, and legends should be labelled clearly (no raw variable names). You must have at least one graph with `facet_wrap` or `facet_grid`. You must include at least one manually specified legend. You can use other `geoms` like histograms, bar charts, add vertical or horizontal lines, etc. [You may find this data visualization cheat sheet helpful](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf).
 
-Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Use chunk options `echo` and `results` to limit the code/output you show in the .html.
+Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Use chunk options `echo` and `results` to limit the code/output you show in the `.html`.

@@ -6,8 +6,101 @@ width: 1100
 height: 750
 transition: rotate
 
-Gapminder data
+
+But First, Some Useful Stuff
 ========================================================
+type: section
+
+
+Comments
+========================================================
+incremental: true
+
+You may have noticed that sometimes I have written code that looks like this:
+```{r}
+new.object <- 1:10 # Making vector of 1 to 10 
+```
+`#` is known as the *commenting symbol* in R!
+
+Anything written on the same line *after* `#` will not be run by R. This is useful for
+annotating your code to remind you (or others) what you are doing in a section.
+
+
+Saving Files
+========================================================
+incremental: true
+
+You can save an R object on your computer as a file to open later:
+```{r}
+save(new.object, file="new_object.RData")
+```
+
+You can open saved files in R as well:
+```{r}
+load("new_object.RData")
+```
+
+But where are these files being saved and loaded from?
+
+
+Working Directories
+========================================================
+incremental: true
+
+R saves files and looks for files to open in your current **working directory**. You
+can ask R what this is:
+
+```{r}
+getwd()
+```
+
+Similarly, we can set a working directory like so:
+
+```{r}
+setwd("C:/Users/cclan/Documents")
+```
+
+
+Managing Files
+========================================================
+incremental: true
+
+When managing R projects, it is normally best to give each project (such as a homework
+assignment) its own folder. I use the following system:
+
+* Every class or project has its own folder
+* Each assignment or task has a folder inside that, which is the working directory for that item.
+* .Rmd and .R files are named clearly
+
+For example, this presentation is located and named this:
+`GitHub/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.Rpres`
+
+You can use whatever system you want, but be consistent so your projects are organized! 
+You don't want to lose work by losing or overwriting files!
+
+
+Clarifications on Files
+========================================================
+incremental: true
+
+We mainly work with three types of file in this class:
+
+* `.Rmd`: These are **markdown** *syntax* files, where you write code to make documents.
+* `.R`: These are **R** *syntax* files, where you write code to process and analyze data without making a document.
+* `.html` or `.pdf`: These are the documents created when you *knit* a markdown document.
+
+Make sure you understand the difference between the uses of these file types! Please
+ask for clarification if needed!
+
+
+Now, on to Plotting!
+========================================================
+type: section
+
+
+Gapminder Data
+========================================================
+incremental: true
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 setwd("C:/Users/cclan/OneDrive/GitHub/CSSS508/Lectures/Week2")
@@ -23,7 +116,7 @@ Load the package and data:
 library(gapminder)
 ```
 
-Check Out gapminder
+Check Out Gapminder
 ========================================================
 
 The data frame we will work with is called `gapminder`, available once you have loaded the package. Let's see its structure:
@@ -59,7 +152,7 @@ This will install a large number of R packages we will use throughout the term, 
 `dplyr` is a very useful and powerful package that we will talk more about soon, but today we're just going to use it for "filtering" data.
 
 
-Loading `dplyr`
+Loading dplyr
 ========================================================
 
 ```{r, message=TRUE}
@@ -82,10 +175,12 @@ package `gapminder' was built under R version 3.2.3
 ```
 Chunk option `warning=FALSE` will hide this.
 
-`magrittr` and Pipes
-========================================================
 
-`dplyr` allows us to use `magrittr` operators to "pipe"" data between functions. So instead of nesting functions like this:
+magrittr and Pipes
+========================================================
+incremental: true
+
+`dplyr` allows us to use `magrittr` operators to "pipe" data between functions. So instead of nesting functions like this:
 
 ```{r}
 log(mean(gapminder$pop))
@@ -97,6 +192,7 @@ We can pipe them like this:
 gapminder$pop %>% mean() %>% log()
 ```
 
+Read this as, "send `gapminder$pop` to `mean()`, then send the output of that to `log()`."
 In essence, pipes read "left to right" while nested functions read "inside to out."
 This may be confusing... we'll cover it more later!
 
@@ -451,6 +547,6 @@ Homework
 ========================================================
 type: section
 
-Pick some relationship to look at in the Gapminder data and write up a .Rmd file investigating that question graphically. You might work with a subset of the data (e.g. just Africa). Upload both the .Rmd file and the .html file to Canvas. Include 4 to 8 graphs. All titles, axes, and legends should be labelled clearly (no raw variable names). You must have at least one graph with `facet_wrap` or `facet_grid`. You must include at least one manually specified legend. You can use other `geoms` like histograms, bar charts, add vertical or horizontal lines, etc.
+Pick some relationship to look at in the Gapminder data and write up a .Rmd file investigating that question graphically. You might work with a subset of the data (e.g. just Africa). Upload both the `.Rmd` file and the `.html` file to Canvas. Include 4 to 8 graphs. All titles, axes, and legends should be labelled clearly (no raw variable names). You must have at least one graph with `facet_wrap` or `facet_grid`. You must include at least one manually specified legend. You can use other `geoms` like histograms, bar charts, add vertical or horizontal lines, etc. [You may find this data visualization cheat sheet helpful](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf).
 
-Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Use chunk options `echo` and `results` to limit the code/output you show in the .html.
+Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Use chunk options `echo` and `results` to limit the code/output you show in the `.html`.
