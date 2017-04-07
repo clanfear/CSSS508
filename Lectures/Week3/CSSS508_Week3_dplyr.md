@@ -234,6 +234,11 @@ Helper Functions for select()
 ![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr-figure/dys_vars.PNG)
 
 
+```r
+DYS %>% select(starts_with("married"))
+DYS %>% select(ends_with("18))
+```
+
 
 Renaming Columns with select()
 ====================================================================================
@@ -653,7 +658,7 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
 Wind Gusts and Delays
 ====================================================================================
 
-<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" width="1100px" height="600px" />
+<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-26-1.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" width="1100px" height="600px" />
 
 Redo After Removing Extreme Outliers, Just Trend
 ====================================================================================
@@ -673,7 +678,7 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
 Wind Gusts and Delays: Mean Trend
 ====================================================================================
 
-<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-27-1.png" title="plot of chunk unnamed-chunk-27" alt="plot of chunk unnamed-chunk-27" width="1100px" height="600px" />
+<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-28-1.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" width="1100px" height="600px" />
 
 
 Lab Break!

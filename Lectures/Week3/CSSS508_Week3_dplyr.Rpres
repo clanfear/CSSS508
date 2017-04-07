@@ -143,6 +143,10 @@ Helper Functions for select()
 
 ![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr-figure/dys_vars.PNG)
 
+```{r, eval=FALSE}
+DYS %>% select(starts_with("married"))
+DYS %>% select(ends_with("18))
+```
 
 
 Renaming Columns with select()
