@@ -1,0 +1,12 @@
+---
+title: 'CSSS508: HW3'
+author: "Charles Lanfear"
+date: "April 13, 2017"
+output: html_document
+---
+
+Pick something to look at in the `nycflights13` data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: `mutate`, `summarize`, `group_by`, and joins. *Include at least one formatted plot or table* (use "nice" variable names and rounded values).
+
+This time, *include all your code in your output document*, using comments and line breaks separating commands so that it is clear to a peer what you are doing. You must write up your observations in words as well. 
+
+### DUE: 11:59 PM, Tuesday April 18th, 2017

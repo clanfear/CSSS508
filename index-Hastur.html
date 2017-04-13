@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>CSSS 508 (UW)</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-75041061-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>CSSS508</h1>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/clanfear/CSSS508">View the Project on GitHub <small>clanfear/CSSS508</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/clanfear/CSSS508/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/clanfear/CSSS508/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/clanfear/CSSS508">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>Welcome to CSSS 508: Introduction to R for Social Scientists</h3>
+        <h4>University of Washington, Spring 2017</h4>
+        <h4>Instructor: Charles Lanfear, PhD student, UW Sociology</h4>
+
+<p><a href="https://canvas.uw.edu/courses/1138076">Canvas page for course (enrolled students only)</a></p>
+<p><a href="https://clanfear.github.io/CSSS508/docs/syllabus.html">Syllabus</a></p>
+<b>Helpful resources:</b>
+<ul>
+    <li><a href="http://r4ds.had.co.nz/">R for Data Science</a> online textbook by Garrett Grolemund and Hadley Wickham. One of many good R texts available, but importantly it is free and focuses on the <a href="http://tidyverse.org/">tidyverse</a> collection of R packages which form the backbone of this course.</li>
+    <li><a href="http://adv-r.had.co.nz/">Advanced R</a> online textbook by Hadley Wickham. A great source for more in-depth and advanced R programming.</li>
+    <li><a href="http://stat545-ubc.github.io/topics.html">Jenny Bryan's materials for STAT545 at UBC</a>. CSSS508 is based on Rebecca Ferrell's abbreviated version of Bryan's course, so more explanations can be found on her page.</li>
+    <li><a href="https://clanfear.github.io/CSSS508/docs/CSSCR.html">Instructions for using RStudio in the CSSCR lab</a> (hopefully week 1 only; I would prefer you become comfortable using your own computers!)</li>
+    <li><a href="https://clanfear.github.io/CSSS508/docs/homework.html">Homework Instructions</a> and grading rubric.</li>
+    <li><a href="https://clanfear.github.io/CSSS508/docs/peer_review.html">Peer Review Instructions</a> and suggestions for reading code.</li>
+</ul>
+
+<b>Weekly lecture notes and links:</b>
+<ol>
+    <li><a href="https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_Introduction.html">Slides for week 1: Course logistics, R/RStudio, making R Markdown documents</a></li>
+    <ul>
+        <li><a href="https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html">Homework 1</a></li>
+        <li>Homework 1 Key 1: <a href="https://clanfear.github.io/CSSS508/Homework/HW1/homework_1_key_1.html">HTML</a>, <a href="https://clanfear.github.io/CSSS508/Homework/HW1/homework_1_key_1.Rmd">RMD </a></li>
+        <li>Homework 1 Key 2: <a href="https://clanfear.github.io/CSSS508/Homework/HW1/homework_1_key_2.html">HTML</a>, <a href="https://clanfear.github.io/CSSS508/Homework/HW1/homework_1_key_2.Rmd">RMD </a></li>
+        <li><a href="https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/CSSS508_Week1_Introduction.Rpres">R code for week 1 slides</a></li>
+        <li><a href="https://cran.r-project.org/">Get R</a></li>
+        <li><a href="https://www.rstudio.com/">Get RStudio</a></li>
+        <li><a href="http://rmarkdown.rstudio.com/">RMarkdown documentation</a></li>
+        <ul>
+            <li><a href="http://rmarkdown.rstudio.com/html_document_format.html">HTML document options (global formatting, etc.)</a></li>
+            <li><a href="http://rmarkdown.rstudio.com/pdf_document_format.html">PDF document options</a> (requires LaTeX installation to output PDFs)</li>
+            <li><a href="http://rmarkdown.rstudio.com/word_document_format.html">Word document options</a> (but please do not use Word output for this class!)</li>
+        </ul>
+        <li><a href="https://www.rstudio.com/resources/cheatsheets/">Useful RStudio cheatsheets</a> on R Markdown, RStudio shortcuts, etc.</li>
+        <li><a href="http://rapporter.github.io/pander/"><code>Pander</code> documentation</a> for making tables, etc.</li>
+        <li><a href="http://www.cookbook-r.com/Graphs/Shapes_and_line_types/">Shapes and line types</a> and <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">color names (PDF)</a> in base R</li>
+    </ul>
+    <li><a href="https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.html">Slides for week 2: plotting with <code>ggplot2</code></a></li>
+    <ul>
+        <li><a href="https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html">Homework 2</a></li>
+        <li><a href="https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.Rpres">R code in week 2 slides</a></li>
+        <li><strong><a href="http://r4ds.had.co.nz/data-visualisation.html">R for Data Science: Visualization</a></strong></li>
+        <li><a href="http://docs.ggplot2.org/current/"><code>ggplot2</code> documentation</a></li>
+        <li><a href="http://www.cookbook-r.com/Graphs/">Cookbook for R graph reference</a></li>
+        <li><a href="http://shiny.stat.ubc.ca/r-graph-catalog/">R graph catalog at UBC</a></li>
+        <li><a href="https://github.com/jrnold/ggthemes"><code>ggthemes</code> package</a></li>
+        <li><a href="https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html"><code>cowplot</code> package</a> for publication ready graphs, multiple plots in single image, etc.</li>
+        <li><a href="https://github.com/dgrtwo/gganimate"><code>gganimate</code> for easy animations</a> (saving GIFs requires <a href="http://www.imagemagick.org/script/index.php">ImageMagick</a> or <a href="http://www.graphicsmagick.org/">GraphicsMagick</a>)</li>
+        <li><a href="http://vita.had.co.nz/papers/layered-grammar.html">Hadley Wickham on the grammar of graphics</a></li>
+        <li><a href="http://motioninsocial.com/tufte/">Tufte in R</a> (if that's your sort of thing)</li>
+        <li><a href="http://clanfear.github.io/CSSS508/Lectures/caption_demo.html">Caption demonstration with <code>gridExtra</code> or R Markdown</a></li>
+    </ul>
+    <li><a href="https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html">Slides for week 3: manipulating and summarizing data with <code>dplyr</code></a></li>
+    <ul>
+        <li><a href="https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.Rpres">R code in week 3 slides</a></li>
+        <li><a href="http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history">A cautionary tale about Excel</a></li>
+        <li><code>dplyr</code> stuff:</li>
+        <ul>
+            <li><a href="http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf"><code>dplyr</code> cheatsheets</a> with diagrams to help you remember functions</li>
+            <li><a href="https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html">Introduction to <code>dplyr</code></a></li>
+            <li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html">Window functions in <code>dplyr</code></a></li>
+            <li><a href="https://cran.rstudio.com/web/packages/dplyr/vignettes/two-table.html">Joining data in <code>dplyr</code></a></li>
+            <li><a href="https://cran.r-project.org/web/packages/sqldf/index.html">More advanced joins: <code>sqldf</code> for easy SQL in R</a></li>
+        </ul>
+        <li><a href="https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf"><code>nycflights13</code> documentation</a></li>
+    </ul>
+    <li>Slides for week 4: R data structures (Not up yet)</li>
+    <ul>
+        <li>R code in week 4 slides (Not up yet)</li>
+        <li><a href="http://swirlstats.com/students.html">Setting up <code>swirl</code> for practice</a></li>
+        <li>Homework:</li>
+        <ul>
+            <li>Homework 4: R Markdown template (Not up yet) (you will download this, fill in and submit on Canvas)</li>
+        <li><a href="https://en.wikipedia.org/wiki/Linear_regression">Wikipedia reference on linear regression for more background on HW</a></li>
+        </ul>
+    </ul>
+    <li>Slides for week 5: data import, export, and cleaning with <code>readr</code>, <code>tidyr</code>, and <code>lubridate</code> (Not up yet)</li>
+    <ul>
+        <li>Homework due in 2 weeks:</li>
+        <ul>
+            <li><Homework 5: R Markdown template (you will download this, fill in and submit on Canvas)</li>
+            <li><a href="https://www.dropbox.com/s/ekujui9p0rjtz4r/King2012general-ecanvass.txt?dl=0">2012 general election voting data for King County (60 MB download)</a></li>
+        </ul>
+        <li>Data in-class:</li>
+        <ul>
+            <li>R code in week 5 slides (Not up yet)</li>
+            <li><a href="https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv">Billboard Hot 100 data from 2000</a></li>
+            <li><a href="https://raw.githubusercontent.com/clanfear/CSSS508/master/Seattle_Police_Department_911_Incident_Response.csv">One day of Seattle Police Department incident data</a></li>
+        </ul>
+        <li>Data import and export:</li>
+        <ul>
+            <li><a href="https://cran.r-project.org/web/packages/readr/readr.pdf"><code>readr</code> documentation</a></li>
+            <li><a href="https://cran.r-project.org/web/packages/readr/vignettes/column-types.html">Column types in <code>readr</code></a></li>
+            <li><a href="http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">Using <code>dput</code> when asking for help</a></li>
+            <li><a href="https://github.com/hadley/readxl"><code>readxl</code></a> and <a href="https://cran.r-project.org/web/packages/openxlsx/vignettes/Introduction.pdf"><code>openxlsx</code></a> packages for Excel</li>
+        </ul>
+        <li>General data access and cleaning:</li>
+        <ul>
+            <li><a href="http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html">New York Times article on "data janitor" work</a></li>
+            <li><a href="http://qz.com/572338/the-quartz-guide-to-bad-data/">Quartz guide to bad data</a>: a must read!</li>
+            <li><a href="http://www.asdfree.com/">Lots of resources on survey data sources and analysis in R</a></li>
+            <li><a href="https://ropensci.org/packages/">rOpenSci</a> (many packages for accessing particular data sources in R)</li>
+            <li><a href="https://github.com/jbryer/qualtrics">Qualtrics API package</a> and <a href="https://github.com/cloudyr/Rmonkey"><code>Rmonkey</code> for Survey Monkey</a></li>
+        </ul>
+        <li>Tidying:</li>
+        <ul>
+            <li><a href="https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html"><code>tidyr</code> vignette</a></li>
+            <li><a href="http://varianceexplained.org/r/tidy-genomics/"> Tidy genomics</a> (a walkthough of tidy data preparation and analysis)</li>
+        </ul>
+        <li>Dates and times:</li>
+        <ul>
+            <li><a href="https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html"><code>lubridate</code> vignette</a></li>
+        </ul>
+        <li>Factors:</li>
+        <ul>
+            <li><a href="http://stat545-ubc.github.io/block014_factors.html">Lots on factors from Jenny Bryan</a></li>
+        </ul>
+    </ul>
+    <li>Slides for week 6: looping with <code>for</code> loops Not up yet)</li>
+    <ul>
+        <li>R code in week 6 slides (Not up yet)</li>
+      <li><b>Homework:</b> To Be Determined </li>
+    </ul>
+    <li>Slides for week 7: vectorization, functions, and function-centric ways to loop (Not up yet)</li>
+    <ul>
+        <li>R code in week 7 slides (Not up yet)</li>
+        <li>Homework due in 2 weeks:</li>
+        <ul>
+            <li>Homework 6: R Markdown template (Not up yet)</li>
+            <li><a href="https://s3.amazonaws.com/pronto-data/open_data_year_one.zip">Pronto! bike share data from fall 2014 through fall 2015</a></li>
+        </ul>
+        <li><a href="http://www.burns-stat.com/pages/Tutor/R_inferno.pdf">The R Inferno by Patrick Burns [PDF]</a>: "Circles" 2, 3, and 4 are relevant after this week's material, and Circle 8 covers a lot of miscellaneous R weird things that may trip you up.</li>
+        <li><a href="http://r4ds.had.co.nz/functions.html">Reference material on writing functions</a> with lots of examples</li>
+        <li><a href="http://adv-r.had.co.nz/Style.html">Code style guide</a> for writing functions, etc.</li>
+        <li><a href="http://www.talyarkoni.org/blog/2012/06/08/r-the-master-troll-of-statistical-languages/">R, the master troll of statistical languages</a> (to read if you feel a bit frustrated!)</li>
+    </ul>
+    <li>Slides for week 8: functions to work with strings and character data (Not up yet)</li>
+    <ul>
+        <li>R code in week 8 slides (Not up yet)</li>
+        <li><a href="https://www.dropbox.com/s/lu4tom4wldh76o5/seattle_restaurant_inspections.csv?raw=1">Seattle restaurant inspection data since 2012</a> (CSV, about 16 MB) from King County</li>
+        <li><a href="https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html"><code>stringr</code> vignette</li>
+        <li><a href="http://regexr.com">Site for regular expression testing</a> with a good cheatsheet and hover explanations</li>
+        <li><a href="https://trinkerrstuff.wordpress.com/2013/09/15/paste-paste0-and-sprintf-2">Blog post explaining <code>paste</code></a> for combining strings</li>
+    </ul>
+    <li>Slides for week 9: mapping and labels in <code>ggplot2</code> (Not up yet)</li>
+    <ul>
+        <li>R code in week 9 slides (Not up yet)</li>
+        <li>Lab in-class/homework due next week:</li>
+        <ul>
+            <li><a href="https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/template-lab-HW7.Rmd">Homework 7: R Markdown template</a> (you will download this, fill in and submit on Canvas), <a href="https://clanfear.github.io/CSSS508/Homework/template-lab-HW7.html">HTML version</a></li>
+            <li><a href="https://www.dropbox.com/s/lu4tom4wldh76o5/seattle_restaurant_inspections.csv?raw=1">Seattle restaurant inspection data since 2012</a> (CSV, about 16 MB) from King County</li>
+        </ul>
+        <li><a href="https://github.com/dkahle/ggmap"><code>ggmap</code> package examples</a></li>
+        <li><a href="http://vita.had.co.nz/papers/ggmap.pdf">More in depth <code>ggmap</code> examples</a></li>
+        <li><a href="https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html"><code>ggrepel</code> package vignette</a></li>
+    </ul>
+    <li>Slides for week 10: web scraping and text mining (Not up yet)</li>
+    <ul>
+        <li>R code in week 10 slides (Not up yet)</li>
+        <li><a href="https://github.com/hadley/rvest"><code>rvest</code></a> for harvesting web data:</li>
+        <ul>
+            <li><a href="https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html">SelectorGadget for getting tags</a></li>
+            <li><a href="http://francojc.github.io/web-scraping-with-rvest/">Good demo on State of the Union speeches</a>  by Jerid Francom</li>
+            <li><a href="https://rpubs.com/Radcliffe/superbowl">Another demo pulling Superbowl scores</a> by David Radcliffe</li>
+        </ul>
+        <li><a href="https://cran.r-project.org/web/packages/tm/index.html"><code>tm</code> package for text mining</a>:</li>
+        <ul>
+            <li><a href="https://cran.r-project.org/web/packages/tm/vignettes/tm.pdf"><code>tm</code> vignette</a></li>
+            <li><a href="http://www.rdatamining.com/docs/text-mining-with-r">Slides by Yanchang Zhao on <code>tm</code> and Twitter data</a></li>
+            <li><a href="https://github.com/juliasilge/tidytext"><code>tidytext</code> for tidy text analysis</a></li>
+            <li><a href="https://github.com/kbenoit/quanteda"><code>quanteda</code> package for another set of tools</a></li>
+        </ul>
+        <li>Social media data extraction tools:</li>
+        <ul>
+            <li><a href="https://cran.r-project.org/web/packages/twitteR/index.html"><code>twitteR</code> package for accessing Twitter in R</a></li>
+            <li><a href="http://bigcomputing.blogspot.com/2016/02/the-twitter-r-package-by-jeff-gentry-is.html">Setting up API keys and secrets</a></li>
+            <li><a href="http://geoffjentry.hexdump.org/twitteR.pdf"><code>twitteR</code> functions</a></li>
+            <li><a href="https://github.com/pablobarbera/streamR"><code>streamR</code> for the streaming Twitter API</a></li>
+            <li><a href="https://github.com/pablobarbera/Rfacebook"><code>Rfacebook</code></a></li>
+        </ul>
+        <li><a href="http://shiny.rstudio.com/gallery/">Shiny for interactive R apps</a></li>
+    </ul>
+</ol>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/clanfear">clanfear</a> using course
+        material from <a href="https://github.com/rebeccaferrell">rebeccaferrell</a> with permission.</p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
