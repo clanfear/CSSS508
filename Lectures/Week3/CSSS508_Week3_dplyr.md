@@ -236,7 +236,7 @@ Helper Functions for select()
 
 ```r
 DYS %>% select(starts_with("married"))
-DYS %>% select(ends_with("18))
+DYS %>% select(ends_with("18"))
 ```
 
 
