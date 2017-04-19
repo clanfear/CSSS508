@@ -1233,7 +1233,11 @@ Homework
 ====================================================================================
 type:section
 
-For homework, you'll be filling in a template R Markdown file that will walk you through performing multiple linear regression "by hand" and comparing it with what you get using `lm()`. It will involve simulating data (which I will do for you), matrix math, column and row names, accessing list elements.
+For homework, you'll be filling in a template R Markdown file that will walk you through 
+creating, accessing, and manipulating R data structures. You will fill in values in 
+the R Markdown document and knit it to check your answers. If you get an error, check
+to see if undoing your last edit solves the problem; coding an assignment to handle
+all possible mistakes is really hard! This assignment is also long, so **start early**.
 
 
 An Aside from People with Statistics Training

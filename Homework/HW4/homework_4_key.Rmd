@@ -1,0 +1,357 @@
+---
+title: 'CSSS508: HW4'
+author: "Charles Lanfear"
+date: "April 19, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# DO NOT EDIT ANY PART OF THIS CHUNK
+# Do examine the code if you're interested how it works!
+knitr::opts_chunk$set(echo = TRUE, warning=TRUE, message=TRUE)
+library(tidyverse)
+set.seed(7)
+test_x <- function(x=NULL, class="omit", dims="omit", numeric="omit",
+                   nam_pos="omit", nam_val="omit", c_pos="omit", c_val="omit",
+                   na_check="omit"){
+  if(is.null(x)){
+    return(message("No code entered yet.\n"))
+  } else {
+  class_x  <- ifelse(class!="omit", class(x)==class, TRUE)
+  num_x    <- ifelse(numeric!="omit", is.numeric(x)==numeric, TRUE)
+  dim_x    <- ifelse(all(dims!="omit"),
+                    ifelse(is.null(dim(x)), length(x)==dims, all(dim(x)==dims) ),
+                  TRUE)
+  names_x  <- ifelse(nam_val!="omit" & nam_pos!="omit",
+                    ifelse(is.null(names(x)), FALSE, names(x)[nam_pos]==nam_val), TRUE)
+  if(any(c_val=="omit") | any(c_pos=="omit")){ check_x <- TRUE
+  } else {
+    if(length(c_pos)==1 & class_x!="list"){ check_x <- x[c_pos]==c_val
+     } else {
+      if(class=="matrix" | class=="data.frame"){ check_x <- x[ c_pos[1], c_pos[2] ]==c_val
+        } else {
+         if(class=="list" & length(c_pos)==2){ check_x <- x[[ c_pos[1] ]][[ c_pos[2] ]]==c_val
+          } else {
+           if(class=="list" & length(c_pos)==3){ check_x <- x[[ c_pos[1] ]][[c_pos[2] ]][[ c_pos[3] ]]==c_val 
+           }
+        }
+      }
+    }
+  } 
+  if (all(na_check!="omit") & is.null(dim(x))){
+    na_x     <- any(is.na(x[na_check])==TRUE)==FALSE
+  } else {
+    if (all(na_check!= "omit") & is.null(dim(x))==FALSE & length(na_check)==2 ){
+    na_x     <- any(is.na(x[na_check[1], na_check[2]])==TRUE)==FALSE
+    } else {
+      if (all(na_check!= "omit") & is.null(dim(x))==FALSE & length(na_check)==1){
+      na_x     <- any(is.na(x[, na_check])==TRUE)==FALSE
+      } else {na_x <- TRUE}
+    }
+  }
+  if (all(c(class_x, dim_x, names_x, num_x, na_x, check_x)==TRUE)){
+    message("Good job on ", deparse(substitute(x)), "!\n")
+    } else {
+      message("Oh no, check your code for \"", deparse(substitute(x)), "\"\n")
+        if (dim_x==FALSE)   message("- Wrong length or dimensions!\n")
+        if (class_x==FALSE) message("- Wrong object class!\n")
+        if (names_x==FALSE) message("- Wrong object names!\n")
+        if (num_x==FALSE)   message("- Should this be numeric?\n")
+        if (na_x==FALSE)    message("- You seem to have data missing!\n")
+        if (check_x==FALSE) message("- You seem to have an incorrect value somewhere!\n")
+      }
+  }
+}
+```
+
+
+# Instructions
+For this assignment you will practice creating, examining, and combining different 
+data structures in R. This assignment is different from others in that it takes a 
+worksheet format with built-in error checking. Each time you complete an answer, if 
+you knit the document it should check your answer (but don't remove "NULL" on an answer
+before you want it checked or you'll get an error!) For this reason, you should re-knit
+every time you answer a question, so that if something goes wrong, you know the last edit
+caused the issue!
+
+You will need to do the following:
+
+1) Fill in **code** as needed in the designated locations in code chunks.
+    + You will not need to create new code chunks or edit chunk options.
+    + Instructions in chunks will be shown as comments (after `#`); *remove* and *replace* the comments with your code:
+    + Where you are assigning things to objects, replace the "NULL" values with your code.
+    + Some answers may require multiple lines of code, so add as necessary.
+    + Do not modify chunks labeled with "`# DO NOT EDIT`"; these are used to test your code.
+2) Fill in **text** as block quotes (use `>`) in designated locations to answer questions.
+    + Be brief and specific. If you reference a single value or short (<10 element) vector, use in-line R code. If the answer can be clearly and
+    accurately answered without referencing any values, you can do so. When I bold a word in a question, take it to mean I want you to reference a value or values.
+    + Do not directly reference matrices, lists, or data frames in text (don't display them). They can be big!
+    + You should not *need* to include any code *chunks* in this section, but you can if you need.
+
+**Example for Code Questions:**
+```{r example_1}
+# Ex) Create a vector of the numbers 1, 5, 3, 2, 4.
+example <- NULL
+# You would write this:
+example <- c(1,5,3,2,4)
+```
+
+
+**Example for Text Questions:**
+ 1) "How do atomic vectors differ from lists?"
+ 
+> An atomic vector is a one dimensional object where every element is the same type of data.
+> Lists are one dimensional but elements can be different data types.
+
+# Problems
+
+## 1: Coding with (Atomic) Vectors
+```{r vectors_1}
+# 1) Use "seq()"" to create a vector of 10 numbers evenly spaced from 0 to 15.
+vec_num <- seq(1,15, length.out=10)
+
+# 2) Use ":" to create an integer vector of the numbers 11 through 20.
+vec_int <- 11:20
+
+# 3) Use "LETTERS" and "[ ]" to create a vector of the last 10 capital letters.
+vec_cha <- LETTERS[17:26]
+
+# 4) Use letters and "[ ]" to create a factor variable using the first ten lower case letters.
+vec_fac <- factor(letters[1:10])
+
+# 5) Use "c()" to combine "vec_cha" and "vec_fac" into "vec_let". Do not convert it to a factor!
+vec_let <- c(vec_cha, vec_fac)
+
+# 6) Use "c()" and [ ] to combine the first 4 elements of "vec_num" with the last
+# 4 elements of "vec_int" to create "vec_ni".
+vec_ni <- c(vec_num[1:4], vec_int[-(1:6)])
+
+# 7) Use "rev()" to reverse the order of "vec_fac".
+fac_vec <- rev(vec_fac)
+
+```
+*How'd you do?*
+```{r vectors_1_check, echo=FALSE, message=TRUE, collapse=TRUE, comment=''}
+# DO NOT EDIT ANY PART OF THIS CHUNK
+test_x(vec_num, class="numeric",   dims=10, c_pos=10, c_val=15)
+test_x(vec_int, class="integer",   dims=10, c_pos=5,  c_val=15)
+test_x(vec_cha, class="character", dims=10, c_pos=3,  c_val="S")
+test_x(vec_fac, class="factor",    dims=10, c_pos=7,  c_val="g")
+test_x(vec_let, class="character", dims=20, c_pos=19, c_val="9")
+test_x(vec_ni,  class="numeric",   dims=8,  c_pos=5,  c_val=17)
+test_x(fac_vec, class="factor", dims=10, c_pos=4, c_val="g")
+```
+
+### Questions about Vectors: 
+
+1) If you used `c()` to combine `vec_int` with `vec_fac`, what *class* of vector would you get? Why?
+2) Consider this code:
+```{r vectors_2, echo=TRUE}
+new_vec <- c(TRUE, FALSE, TRUE, TRUE) 
+
+```
+   + What **class** of vector is this?
+   + In words, what happens to its values when you try to convert it to numeric? To character? To numeric and then character?
+   + What about to character and then numeric?
+  
+## 2: Coding with Matrices
+```{r matrices_1}
+# 1) Use matrix() to create a matrix with 10 rows and four columns filled with NA
+mat_empty <- matrix(NA, nrow=10, ncol=4)
+
+# 2) Assign "vec_num" to the first column of "mat_1"" below.
+mat_1 <- mat_empty # DO NOT EDIT THIS LINE
+mat_1[ ,1] <- vec_num # Place your code here!
+
+# 3) Assign "vec_int" to the second column of "mat_2" below
+mat_2 <- mat_1 # DO NOT EDIT THIS LINE
+mat_2[ ,2] <- vec_int
+
+# 4) Assign "vec_cha" and "vec_fact"" to the third and foruth columns of "mat_3" using one assignment operator.
+mat_3 <- mat_2 # DO NOT EDIT THIS LINE
+mat_3[ ,c(3,4)] <- c(vec_cha, vec_fac)
+
+# 5) Select the fourth row from "mat_3"" and assign it to "row_4"" as a vector.
+row_4 <- mat_3[4, ]
+
+# 6) Assign the element in the 6th row and 2nd column of "mat_3"" to "val_6_2" as a numeric value.
+val_6_2 <- as.numeric(mat_3[6,2])
+
+# 7) Use "cbind()" to combine "vec_num", "vec_int", "vec_cha", and "vec_fac" into "mat_4".
+mat_4 <- cbind(vec_num, vec_int, vec_cha, vec_fac)
+
+# 8) Next, transpose mat_4, then select only the first four columns and assign to mat_t
+mat_t <- t(mat_4)[,1:4]
+
+# 9)  Then use rbind() to add the rows from mat_3 to this and assign the combination to mat_big.
+mat_big <- rbind(mat_t, mat_3)
+
+```
+
+*How'd you do?*
+```{r matrices_1_test, echo=FALSE, message=TRUE, collapse=TRUE, comment=''}
+# DO NOT EDIT ANY PART OF THIS CHUNK
+test_x(mat_empty, class="matrix", dims=c(10,4))
+test_x(mat_1, class="matrix", dims=c(10,4), numeric=TRUE, na_check=1)
+test_x(mat_2, class="matrix", dims=c(10,4), numeric=TRUE, na_check=2)
+test_x(mat_3, class="matrix", dims=c(10,4), numeric=FALSE, na_check=3, c_pos=c(2,3), c_val="R")
+test_x(row_4, class="character", dims=4, numeric=FALSE, na_check=1, c_pos=2, c_val=14)
+test_x(val_6_2, class="numeric", dims=1, numeric=TRUE, na_check=1, c_pos=1, c_val=16)
+test_x(mat_4, class="matrix", dims=c(10,4), numeric=FALSE, na_check=3, c_pos=c(5,3), c_val="U")
+test_x(mat_t, class="matrix", dims=c(4,4), numeric=FALSE, na_check=2, c_pos=c(2,2), c_val="12")
+test_x(mat_big, class="matrix", dims=c(14,4), numeric=FALSE, na_check=3, c_pos=c(2,3), c_val="13")
+```
+
+### Questions about Matrices: 
+
+1) Note the column names on mat_4. What do you get when you try to get `names()` from `mat_4`?
+What about `colnames()`? What about `rownames()`? Can you guess why you get all these results?
+2) Consider the code below:
+```{r matrices_2, echo=TRUE}
+mat_letters <- matrix(letters, ncol=2) 
+```
+
+   + This matrix goes from `"a"` to `"m"` in the first column and `"n"` to `"z"` in the second. 
+    What would be an easty way to make the matrix go in alphabetical order left to right, top to bottom?
+
+3) Consider the code below:
+```{r matrices_3, echo=TRUE}
+math_mat <- matrix(1:5, nrow=5, ncol=5)
+math_vec <- 1:5
+```
+
+   + Without showing your code (use the console), look at `math_mat` and `math_vec`. When you add `math_mat + math_vec`, what happens?
+   + Without showing your code (use the console), what is the difference between the results from `math_mat %*% math_vec` and from `math_mat * math_vec`. Can you tell what is happening?
+   
+   
+## 3: Lists
+```{r lists_1}
+# 1) Use list() to create a list that contains vec_num and row_4, and assign the names
+#   "vec_num" and "row_4" to the two elements of list_1.
+list_1 <- list(vec_num, row_4)
+names(list_1) <- c("vec_num", "row_4")
+
+# 3) Using "$", extract "row_4" from "list_1" and assign it to the object "row_4_2".
+row_4_2 <- list_1$row_4
+
+# 2) Create another list that contains val_6_2 and mat_big.
+list_2 <- list(val_6_2, mat_big)
+
+# 3) Combine those two lists together using c() into list_3
+list_3 <- c(list_1, list_2)
+
+# 4) Use unlist() to turn list_3 into a vector and assign it to vector_3
+vector_3 <- unlist(list_3)
+
+# 5) Use as.list() to convert vector_3 into list_big
+list_big <- as.list(vector_3)
+
+# 6) Now copy list_3 as list_4 and use [[]] to assign list_3 as the last (fifth) element of list_4.
+list_4 <- list_3
+list_4[[5]] <- list_3
+
+# 7) Select the third element of the the fifth element of list_4 and assign it 
+# to element_5_3 using [[]].
+element_5_3 <- list_4[[5]][[3]]
+
+# 8) Lastly, repeat the previous assignment of the third element of the fifth element, but
+# extract the element as a list rather than scalar using [ ].
+list_5_3 <- list_4[[5]][3]
+```
+
+*How'd you do?*
+```{r lists_1_test, echo=FALSE, message=TRUE, collapse=TRUE, comment=''}
+# DO NOT EDIT ANY PART OF THIS CHUNK
+test_x(list_1, class="list", dims=2, na_check=2, c_pos=c(2,3), c_val="T", nam_pos = 2, nam_val="row_4")
+test_x(row_4_2, dim=4, c_pos=2, c_val="14")
+test_x(list_2, class="list", dims=2, na_check=2, c_pos=c(2,16), c_val=12)
+test_x(list_3, class="list", dims=4, na_check=2, c_pos=c(4,3), c_val="Q")
+test_x(vector_3, class="character", dims=71, c_pos=29, c_val="15")
+test_x(list_big, class="list", dims=71, c_pos=29, c_val="15")
+test_x(list_4, class="list", dims=5, c_pos=c(5,4,17), c_val="R")
+test_x(element_5_3, class="numeric", dims=1, c_pos=1, c_val=16)
+test_x(list_5_3, class="list", dims=1, c_pos=c(1,1), c_val=16)
+```
+
+### Questions About Lists: 
+Many functions in R produce lists as output because they produce objects with 
+different types of data and of different lengths. For instance, consider the linear
+regression saved to `lm.output` below. Don't worry if you are not familiar with 
+regression, we're just concerned with what the function produces!
+
+```{r lm, echo=TRUE}
+lm.output <- lm(mpg ~ wt, data=mtcars)
+lm.output
+```
+1) **How many elements** does this call to `lm()` produce?
+2) What are the **dimensions** of the `model` element?
+3) What are the **values** of the `coefficients` for the `intercept` and `wt`? Remember
+to call on them from `lm.output` object for your answer!
+
+
+## 4: Coding with Data Frames
+```{r data_frames_1}
+# 1) Use "data.frame" to combine "vec_num", "vec_int" into "df_1".
+df_1 <- data.frame(vec_num, vec_int)
+
+# 2) Use "$" to extract vec_num from df_1, reverse it, and assign it to vec_num_2.
+vec_num_2 <- rev(df_1$vec_num)
+
+# 3) Use "$" to add fac_vec from Problem 1 to df_2 as a new column with the name "factor_vector".
+df_2 <- df_1
+df_2$number_vector <- vec_num_2
+
+# 4) Combine df_2 with itself using "rbind()" to create df_3
+df_3 <- rbind(df_2, df_2)
+
+
+# 4) Create a new data frame "df_3"" using data.frame() that contains the following named colums (in order):
+    # "y" that contains 20 numbers evenly spaced from 31 to 125
+    # "x" that has 20 numbers between 0 and 10 generated using runif()
+    # "color" that consists of 20 values sampled from col_vec below using sample().
+col_vec <- colors()
+df_4 <- data.frame(y=seq(31, 125, length.out=20),
+                   x=runif(20, 0, 10),
+                   color=sample(col_vec, 20))
+      # This code here should produce a plot of those values with those colors!
+df_4 %>% ggplot(aes(x, y, color=color)) + geom_point() + theme(legend.position="none")
+
+# 5) Use cbind() to combine df_4 and df_2 into df_5.
+df_5 <- cbind(df_4, df_2)
+
+# 6) Now use data.frame() to combine df_4 with df_2
+df_6 <- data.frame(df_4, df_2)
+
+```
+
+*How'd you do?*
+```{r data_frames_1_test, echo=FALSE, message=TRUE, collapse=TRUE, comment=''}
+# DO NOT EDIT ANY PART OF THIS CHUNK
+test_x(df_1, class="data.frame", dims=c(10,2), c_pos=c(3,2), c_val=13)
+test_x(vec_num_2, class="numeric", dims=10, c_pos=10, c_val=1)
+test_x(df_2, class="data.frame", dims=c(10,3), c_pos=c(1,3), c_val=15, nam_pos=3, nam_val="number_vector")
+test_x(df_3, class="data.frame", dims=c(20,3), c_pos=c(11,3), c_val=15)
+test_x(df_4, class="data.frame", dims=c(20,3), c_pos=c(13,3), c_val="deeppink4", nam_pos=2, nam_val="x")
+test_x(df_5, class="data.frame", dims=c(20,6), nam_pos=5, nam_val="vec_int")
+test_x(df_6, class="data.frame", dims=c(20,6), nam_pos=4, nam_val="vec_num")
+```
+
+### Questions About Data Frames: 
+1) Use `lapply(df_1, class)` to get a list that indicates the class of each column
+in `df_1`. Do you see anything unusual about `vec_cha`? Get help on data frames with
+`?data.frame` and explain in a sentence what you could do to modify this behavior.
+
+2) Use `names()`, `colnames()`, and `rownames()` on df_1. How does this compare to the behavior
+of these functions on lists and matrices?
+
+3) Similarly, how do the results of `length()` and `dim()` differ between data frames,
+lists, matrices, and vectors?
+
+3) Using the console, use `==` to test to see if `cbind()` and `data.frame()` in questions 5 and 6 produce the same result. Optional: If you want to make this cleaner, integrate the `any()` function, which could allow you to show this result in-line in your answer.
+
+4) As a final question, which won't be graded strictly, use between three sentences and a paragraph to 
+describe the differences and similarities between (this is mainly to help you think them through!):
+    + Vectors and lists.
+    + Data frames and matrices
+    + Lists and data frames.
+
