@@ -8,7 +8,7 @@ test_x <- function(x=NULL, class="omit", dims="omit", numeric="omit",
                    nam_pos="omit", nam_val="omit", c_pos="omit", c_val="omit",
                    na_check="omit"){
   if(is.null(x)){
-    return(message("No code entered yet.\n"))
+    return(message("No code entered yet."))
   } else {
   class_x  <- ifelse(class!="omit", class(x)==class, TRUE)
   num_x    <- ifelse(numeric!="omit", is.numeric(x)==numeric, TRUE)
@@ -72,7 +72,8 @@ You will need to do the following:
 1) Fill in **code** as needed in the designated locations in code chunks.
     + You will not need to create new code chunks or edit chunk options.
     + Instructions in chunks will be shown as comments (after `#`); *remove* and *replace* the comments with your code:
-    + Where you are assigning things to objects, replace the "NULL" values with your code.
+    + Where you are assigning things to objects, replace the "NULL" values with your code. See code example 1 for an example!
+    + You may need to add elements, such as for subsetting, to objects on the left side of operators. See code example 2 for an example!
     + Some answers may require multiple lines of code, so add as necessary.
     + Do not modify chunks labeled with "`# DO NOT EDIT`"; these are used to test your code.
 2) Fill in **text** as block quotes (use `>`) in designated locations to answer questions.
@@ -83,10 +84,17 @@ You will need to do the following:
 
 **Example for Code Questions:**
 ```{r example_1}
-# Ex) Create a vector of the numbers 1, 5, 3, 2, 4.
+# Ex 1) Create a vector of the numbers 1, 5, 3, 2, 4.
 example <- NULL
 # You would write this:
 example <- c(1,5,3,2,4)
+
+# Ex 2) Add the number 10 to the sixth position of example2
+example2 <- example
+example2 <- NULL
+
+# You would write:
+example2[6] <- 10
 ```
 
 
@@ -150,16 +158,19 @@ new_vec <- c(TRUE, FALSE, TRUE, TRUE)
 ## 2: Coding with Matrices
 ```{r matrices_1}
 # 1) Use matrix() to create a matrix with 10 rows and four columns filled with NA
-mat_empty <- matrix(NA, nrow=10, ncol=4)
+mat_empty <- NULL
 
 # 2) Assign "vec_num" to the first column of "mat_1"" below.
 mat_1 <- mat_empty # DO NOT EDIT THIS LINE; add code below it.
+mat_1 <- NULL
 
 # 3) Assign "vec_int" to the second column of "mat_2" below
 mat_2 <- mat_1 # DO NOT EDIT THIS LINE; add code below it.
+mat_2 <- NULL
 
 # 4) Assign "vec_cha" and "vec_fact"" to the third and foruth columns of "mat_3" using one assignment operator.
 mat_3 <- mat_2 # DO NOT EDIT THIS LINE; add code below it.
+mat_3 <- NULL
 
 # 5) Select the fourth row from "mat_3"" and assign it to "row_4"" as a vector.
 row_4 <- NULL
@@ -287,7 +298,7 @@ vec_num_2 <- NULL
 
 # 3) Use "$" to add fac_vec from Problem 1 to df_2 as a new column with the name "factor_vector".
 df_2 <- df_1 # DO NOT EDIT THIS LINE; add code below it.
-
+df_2 <- NULL
 
 # 4) Combine df_2 with itself using "rbind()" to create df_3
 df_3 <- NULL

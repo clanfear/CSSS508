@@ -162,34 +162,34 @@ example2[6] &lt;- 10</code></pre>
 <div id="coding-with-atomic-vectors" class="section level2">
 <h2>1: Coding with (Atomic) Vectors</h2>
 <pre class="r"><code># 1) Use &quot;seq()&quot;&quot; to create a vector of 10 numbers evenly spaced from 0 to 15.
-vec_num &lt;- NULL
+vec_num &lt;- seq(1,15, length.out=10)
 
 # 2) Use &quot;:&quot; to create an integer vector of the numbers 11 through 20.
-vec_int &lt;- NULL
+vec_int &lt;- 11:20
 
 # 3) Use &quot;LETTERS&quot; and &quot;[ ]&quot; to create a vector of the last 10 capital letters.
-vec_cha &lt;- NULL
+vec_cha &lt;- LETTERS[17:26]
 
 # 4) Use letters and &quot;[ ]&quot; to create a factor variable using the first ten lower case letters.
-vec_fac &lt;- NULL
+vec_fac &lt;- factor(letters[1:10])
 
 # 5) Use &quot;c()&quot; to combine &quot;vec_cha&quot; and &quot;vec_fac&quot; into &quot;vec_let&quot;. Do not convert it to a factor!
-vec_let &lt;- NULL
+vec_let &lt;-  c(vec_cha, vec_fac)
 
 # 6) Use &quot;c()&quot; and [ ] to combine the first 4 elements of &quot;vec_num&quot; with the last
 # 4 elements of &quot;vec_int&quot; to create &quot;vec_ni&quot;.
-vec_ni &lt;- NULL
+vec_ni &lt;- c(vec_num[1:4], vec_int[-(1:6)])
 
 # 7) Use &quot;rev()&quot; to reverse the order of &quot;vec_fac&quot;.
-fac_vec &lt;- NULL</code></pre>
+fac_vec &lt;- rev(vec_fac)</code></pre>
 <p><em>How’d you do?</em></p>
-<pre><code>No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.</code></pre>
+<pre><code>Good job on vec_num!
+Good job on vec_int!
+Good job on vec_cha!
+Good job on vec_fac!
+Good job on vec_let!
+Good job on vec_ni!
+Good job on fac_vec!</code></pre>
 <div id="questions-about-vectors" class="section level3">
 <h3>Questions about Vectors:</h3>
 <ol style="list-style-type: decimal">
@@ -207,44 +207,44 @@ No code entered yet.</code></pre>
 <div id="coding-with-matrices" class="section level2">
 <h2>2: Coding with Matrices</h2>
 <pre class="r"><code># 1) Use matrix() to create a matrix with 10 rows and four columns filled with NA
-mat_empty &lt;- NULL
+mat_empty &lt;- mat_empty &lt;- matrix(NA, nrow=10, ncol=4)
 
 # 2) Assign &quot;vec_num&quot; to the first column of &quot;mat_1&quot;&quot; below.
 mat_1 &lt;- mat_empty # DO NOT EDIT THIS LINE; add code below it.
-mat_1 &lt;- NULL
+mat_1[ ,1] &lt;- vec_num
 
 # 3) Assign &quot;vec_int&quot; to the second column of &quot;mat_2&quot; below
 mat_2 &lt;- mat_1 # DO NOT EDIT THIS LINE; add code below it.
-mat_2 &lt;- NULL
+mat_2[ ,2] &lt;- vec_int
 
 # 4) Assign &quot;vec_cha&quot; and &quot;vec_fact&quot;&quot; to the third and foruth columns of &quot;mat_3&quot; using one assignment operator.
 mat_3 &lt;- mat_2 # DO NOT EDIT THIS LINE; add code below it.
-mat_3 &lt;- NULL
+mat_3[ ,c(3,4)] &lt;- c(vec_cha, vec_fac)
 
 # 5) Select the fourth row from &quot;mat_3&quot;&quot; and assign it to &quot;row_4&quot;&quot; as a vector.
-row_4 &lt;- NULL
+row_4 &lt;- mat_3[4, ]
 
 # 6) Assign the element in the 6th row and 2nd column of &quot;mat_3&quot;&quot; to &quot;val_6_2&quot; as a numeric value.
-val_6_2 &lt;- NULL
+val_6_2 &lt;- as.numeric(mat_3[6,2])
 
 # 7) Use &quot;cbind()&quot; to combine &quot;vec_num&quot;, &quot;vec_int&quot;, &quot;vec_cha&quot;, and &quot;vec_fac&quot; into &quot;mat_4&quot;.
-mat_4 &lt;- NULL
+mat_4 &lt;- cbind(vec_num, vec_int, vec_cha, vec_fac)
 
 # 8) Next, transpose mat_4, then select only the first four columns and assign to mat_t
-mat_t &lt;- NULL
+mat_t &lt;- t(mat_4)[,1:4]
 
 # 9)  Then use rbind() to add the rows from mat_3 to this and assign the combination to mat_big.
-mat_big &lt;- NULL</code></pre>
+mat_big &lt;- rbind(mat_t, mat_3)</code></pre>
 <p><em>How’d you do?</em></p>
-<pre><code>No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.</code></pre>
+<pre><code>Good job on mat_empty!
+Good job on mat_1!
+Good job on mat_2!
+Good job on mat_3!
+Good job on row_4!
+Good job on val_6_2!
+Good job on mat_4!
+Good job on mat_t!
+Good job on mat_big!</code></pre>
 <div id="questions-about-matrices" class="section level3">
 <h3>Questions about Matrices:</h3>
 <ol style="list-style-type: decimal">
@@ -270,43 +270,45 @@ math_vec &lt;- 1:5</code></pre>
 <h2>3: Lists</h2>
 <pre class="r"><code># 1) Use list() to create a list that contains vec_num and row_4, and assign the names
 #   &quot;vec_num&quot; and &quot;row_4&quot; to the two elements of list_1.
-list_1 &lt;- NULL
+list_1 &lt;- list(vec_num, row_4)
+names(list_1) &lt;- c(&quot;vec_num&quot;, &quot;row_4&quot;)
 
 # 3) Using &quot;$&quot;, extract &quot;row_4&quot; from &quot;list_1&quot; and assign it to the object &quot;row_4_2&quot;.
-row_4_2 &lt;- NULL
+row_4_2 &lt;- list_1$row_4
 
 # 2) Create another list that contains val_6_2 and mat_big.
-list_2 &lt;- NULL
+list_2 &lt;- list(val_6_2, mat_big)
 
 # 3) Combine those two lists together using c() into list_3
-list_3 &lt;- NULL
+list_3 &lt;- c(list_1, list_2)
 
 # 4) Use unlist() to turn list_3 into a vector and assign it to vector_3
-vector_3 &lt;- NULL
+vector_3 &lt;- unlist(list_3)
 
 # 5) Use as.list() to convert vector_3 into list_big
-list_big &lt;- NULL
+list_big &lt;- as.list(vector_3)
 
 # 6) Now copy list_3 as list_4 and use [[]] to assign list_3 as the last (fifth) element of list_4.
-list_4 &lt;- NULL
+list_4 &lt;- list_3
+list_4[[5]] &lt;- list_3
 
 # 7) Select the third element of the the fifth element of list_4 and assign it 
 # to element_5_3 using [[]].
-element_5_3 &lt;- NULL
+element_5_3 &lt;- list_4[[5]][[3]]
 
 # 8) Lastly, repeat the previous assignment of the third element of the fifth element, but
 # extract the element as a list rather than scalar using [ ].
-list_5_3 &lt;- NULL</code></pre>
+list_5_3 &lt;- list_4[[5]][3]</code></pre>
 <p><em>How’d you do?</em></p>
-<pre><code>No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.</code></pre>
+<pre><code>Good job on list_1!
+Good job on row_4_2!
+Good job on list_2!
+Good job on list_3!
+Good job on vector_3!
+Good job on list_big!
+Good job on list_4!
+Good job on element_5_3!
+Good job on list_5_3!</code></pre>
 <div id="questions-about-lists" class="section level3">
 <h3>Questions About Lists:</h3>
 <p>Many functions in R produce lists as output because they produce objects with different types of data and of different lengths. For instance, consider the linear regression saved to <code>lm.output</code> below. Don’t worry if you are not familiar with regression, we’re just concerned with what the function produces!</p>
@@ -329,41 +331,43 @@ lm.output</code></pre>
 <div id="coding-with-data-frames" class="section level2">
 <h2>4: Coding with Data Frames</h2>
 <pre class="r"><code># 1) Use &quot;data.frame&quot; to combine &quot;vec_num&quot;, &quot;vec_int&quot; into &quot;df_1&quot;.
-df_1 &lt;- NULL
+df_1 &lt;- data.frame(vec_num, vec_int)
 
 # 2) Use &quot;$&quot; to extract vec_num from df_1, reverse it, and assign it to vec_num_2.
-vec_num_2 &lt;- NULL
+vec_num_2 &lt;- rev(df_1$vec_num)
 
 # 3) Use &quot;$&quot; to add fac_vec from Problem 1 to df_2 as a new column with the name &quot;factor_vector&quot;.
 df_2 &lt;- df_1 # DO NOT EDIT THIS LINE; add code below it.
-
+df_2$number_vector &lt;- vec_num_2
 
 # 4) Combine df_2 with itself using &quot;rbind()&quot; to create df_3
-df_3 &lt;- NULL
+df_3 &lt;- rbind(df_2, df_2)
 
 # 5) Create a new data frame &quot;df_3&quot;&quot; using data.frame() that contains the following named colums (in order):
     # &quot;y&quot; that contains 20 numbers evenly spaced from 31 to 125
     # &quot;x&quot; that has 20 numbers between 0 and 10 generated using runif()
     # &quot;color&quot; that consists of 20 values sampled from col_vec below using sample().
 col_vec &lt;- colors() # DO NOT EDIT THIS LINE; add code below it.
-df_4 &lt;- NULL
+df_4 &lt;- data.frame(y=seq(31, 125, length.out=20),
+                   x=runif(20, 0, 10),
+                   color=sample(col_vec, 20))
 
     # This code here should produce a plot of those values with those colors!
-if(is.null(df_4)==FALSE) df_4 %&gt;% ggplot(aes(x, y, color=color)) + geom_point() + theme(legend.position=&quot;none&quot;)
-
-# 5) Use cbind() to combine df_4 and df_2 into df_5.
-df_5 &lt;- NULL
+if(is.null(df_4)==FALSE) df_4 %&gt;% ggplot(aes(x, y, color=color)) + geom_point() + theme(legend.position=&quot;none&quot;)</code></pre>
+<p><img src="data:image/png;base64,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" width="672" /></p>
+<pre class="r"><code># 5) Use cbind() to combine df_4 and df_2 into df_5.
+df_5 &lt;- cbind(df_4, df_2)
 
 # 6) Now use data.frame() to combine df_4 with df_2
-df_6 &lt;- NULL</code></pre>
+df_6 &lt;- data.frame(df_4, df_2)</code></pre>
 <p><em>How’d you do?</em></p>
-<pre><code>No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.
-No code entered yet.</code></pre>
+<pre><code>Good job on df_1!
+Good job on vec_num_2!
+Good job on df_2!
+Good job on df_3!
+Good job on df_4!
+Good job on df_5!
+Good job on df_6!</code></pre>
 <div id="questions-about-data-frames" class="section level3">
 <h3>Questions About Data Frames:</h3>
 <ol style="list-style-type: decimal">
