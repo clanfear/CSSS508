@@ -1,10 +1,3 @@
----
-title: 'CSSS508: HW4'
-author: "Charles Lanfear"
-date: "April 19, 2017"
-output: html_document
----
-
 ```{r setup, include=FALSE}
 # DO NOT EDIT ANY PART OF THIS CHUNK
 # Do examine the code if you're interested how it works!
@@ -157,19 +150,16 @@ new_vec <- c(TRUE, FALSE, TRUE, TRUE)
 ## 2: Coding with Matrices
 ```{r matrices_1}
 # 1) Use matrix() to create a matrix with 10 rows and four columns filled with NA
-mat_empty <- NULL
+mat_empty <- matrix(NA, nrow=10, ncol=4)
 
 # 2) Assign "vec_num" to the first column of "mat_1"" below.
-mat_1 <- mat_empty # DO NOT EDIT THIS LINE
-mat_1[ ,1] <- NULL # Place your code here!
+mat_1 <- mat_empty # DO NOT EDIT THIS LINE; add code below it.
 
 # 3) Assign "vec_int" to the second column of "mat_2" below
-mat_2 <- mat_1 # DO NOT EDIT THIS LINE
-mat_2[ ,2] <- NULL
+mat_2 <- mat_1 # DO NOT EDIT THIS LINE; add code below it.
 
 # 4) Assign "vec_cha" and "vec_fact"" to the third and foruth columns of "mat_3" using one assignment operator.
-mat_3 <- mat_2 # DO NOT EDIT THIS LINE
-mat_3[ ,c(3,4)] <- NULL
+mat_3 <- mat_2 # DO NOT EDIT THIS LINE; add code below it.
 
 # 5) Select the fourth row from "mat_3"" and assign it to "row_4"" as a vector.
 row_4 <- NULL
@@ -247,7 +237,6 @@ list_big <- NULL
 
 # 6) Now copy list_3 as list_4 and use [[]] to assign list_3 as the last (fifth) element of list_4.
 list_4 <- NULL
-list_4[[5]] <- NULL
 
 # 7) Select the third element of the the fifth element of list_4 and assign it 
 # to element_5_3 using [[]].
@@ -297,8 +286,8 @@ df_1 <- NULL
 vec_num_2 <- NULL
 
 # 3) Use "$" to add fac_vec from Problem 1 to df_2 as a new column with the name "factor_vector".
-df_2 <- df_1 # DO NOT EDIT THIS LINE
-df_2$number_vector <- NULL
+df_2 <- df_1 # DO NOT EDIT THIS LINE; add code below it.
+
 
 # 4) Combine df_2 with itself using "rbind()" to create df_3
 df_3 <- NULL
@@ -307,7 +296,7 @@ df_3 <- NULL
     # "y" that contains 20 numbers evenly spaced from 31 to 125
     # "x" that has 20 numbers between 0 and 10 generated using runif()
     # "color" that consists of 20 values sampled from col_vec below using sample().
-col_vec <- colors()
+col_vec <- colors() # DO NOT EDIT THIS LINE; add code below it.
 df_4 <- NULL
 
     # This code here should produce a plot of those values with those colors!
