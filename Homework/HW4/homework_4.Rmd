@@ -19,6 +19,9 @@ test_x <- function(x=NULL, class="omit", dims="omit", numeric="omit",
                     ifelse(is.null(names(x)), FALSE, names(x)[nam_pos]==nam_val), TRUE)
   if(any(c_val=="omit") | any(c_pos=="omit")){ check_x <- TRUE
   } else {
+    if (dim_x==FALSE){
+      check_x <- FALSE
+    } else {
     if(length(c_pos)==1 & class_x!="list"){ check_x <- x[c_pos]==c_val
      } else {
       if(class=="matrix" | class=="data.frame"){ check_x <- x[ c_pos[1], c_pos[2] ]==c_val
@@ -26,11 +29,12 @@ test_x <- function(x=NULL, class="omit", dims="omit", numeric="omit",
          if(class=="list" & length(c_pos)==2){ check_x <- x[[ c_pos[1] ]][[ c_pos[2] ]]==c_val
           } else {
            if(class=="list" & length(c_pos)==3){ check_x <- x[[ c_pos[1] ]][[c_pos[2] ]][[ c_pos[3] ]]==c_val 
-           }
+            }
+          }
         }
       }
     }
-  } 
+  }
   if (all(na_check!="omit") & is.null(dim(x))){
     na_x     <- any(is.na(x[na_check])==TRUE)==FALSE
   } else {
@@ -51,7 +55,7 @@ test_x <- function(x=NULL, class="omit", dims="omit", numeric="omit",
         if (names_x==FALSE) message("- Wrong object names!\n")
         if (num_x==FALSE)   message("- Should this be numeric?\n")
         if (na_x==FALSE)    message("- You seem to have data missing!\n")
-        if (check_x==FALSE) message("- You seem to have an incorrect value somewhere!\n")
+        if (check_x==FALSE) message("- You seem to have an incorrect or misplaced value somewhere!\n")
       }
   }
 }
@@ -108,7 +112,7 @@ example2[6] <- 10
 
 ## 1: Coding with (Atomic) Vectors
 ```{r vectors_1}
-# 1) Use "seq()"" to create a vector of 10 numbers evenly spaced from 0 to 15.
+# 1) Use "seq()" to create a vector of 10 numbers evenly spaced from 0 to 15.
 vec_num <- NULL
 
 # 2) Use ":" to create an integer vector of the numbers 11 through 20.
@@ -123,7 +127,7 @@ vec_fac <- NULL
 # 5) Use "c()" to combine "vec_cha" and "vec_fac" into "vec_let". Do not convert it to a factor!
 vec_let <- NULL
 
-# 6) Use "c()" and [ ] to combine the first 4 elements of "vec_num" with the last
+# 6) Use "c()" and "[ ]"" to combine the first 4 elements of "vec_num" with the last
 # 4 elements of "vec_int" to create "vec_ni".
 vec_ni <- NULL
 
@@ -168,23 +172,23 @@ mat_1 <- NULL
 mat_2 <- mat_1 # DO NOT EDIT THIS LINE; add code below it.
 mat_2 <- NULL
 
-# 4) Assign "vec_cha" and "vec_fact"" to the third and foruth columns of "mat_3" using one assignment operator.
+# 4) Assign "vec_cha" and "vec_fac" to the third and fourth columns of "mat_3" using one assignment operator.
 mat_3 <- mat_2 # DO NOT EDIT THIS LINE; add code below it.
 mat_3 <- NULL
 
-# 5) Select the fourth row from "mat_3"" and assign it to "row_4"" as a vector.
+# 5) Select the fourth row from "mat_3" and assign it to the object "row_4" as a vector.
 row_4 <- NULL
 
-# 6) Assign the element in the 6th row and 2nd column of "mat_3"" to "val_6_2" as a numeric value.
+# 6) Assign the element in the 6th row and 2nd column of "mat_3" to "val_6_2" as a numeric value.
 val_6_2 <- NULL
 
 # 7) Use "cbind()" to combine "vec_num", "vec_int", "vec_cha", and "vec_fac" into "mat_4".
 mat_4 <- NULL
 
-# 8) Next, transpose mat_4, then select only the first four columns and assign to mat_t
+# 8) Next, first transpose mat_4, then select only the first four columns and assign to mat_t
 mat_t <- NULL
 
-# 9)  Then use rbind() to add the rows from mat_3 to this and assign the combination to mat_big.
+# 9)  Then use rbind() to add the rows from mat_3 to this and assign this combination to mat_big.
 mat_big <- NULL
 
 ```
@@ -227,34 +231,34 @@ math_vec <- 1:5
    
 ## 3: Lists
 ```{r lists_1}
-# 1) Use list() to create a list that contains vec_num and row_4, and assign the names
-#   "vec_num" and "row_4" to the two elements of list_1.
+# 1) Use "list()" to create a list that contains "vec_num" and "row_4", and assign the names
+#   "vec_num" and "row_4" to these two elements of "list_1".
 list_1 <- NULL
 
 # 3) Using "$", extract "row_4" from "list_1" and assign it to the object "row_4_2".
 row_4_2 <- NULL
 
-# 2) Create another list that contains val_6_2 and mat_big.
+# 2) Create another list that contains "val_6_2" and "mat_big".
 list_2 <- NULL
 
-# 3) Combine those two lists together using c() into list_3
+# 3) Combine those two lists together using "c()" and assign them to "list_3"
 list_3 <- NULL
 
-# 4) Use unlist() to turn list_3 into a vector and assign it to vector_3
+# 4) Use "unlist()" to turn "list_3" into a vector and assign it to "vector_3"
 vector_3 <- NULL
 
-# 5) Use as.list() to convert vector_3 into list_big
+# 5) Use "as.list()" to convert "vector_3" into a list and assign it to "list_big"
 list_big <- NULL
 
-# 6) Now copy list_3 as list_4 and use [[]] to assign list_3 as the last (fifth) element of list_4.
+# 6) Now copy "list_3" as "list_4" and use "[[ ]]" to assign "list_3" as the last (fifth) element of "list_4".
 list_4 <- NULL
 
-# 7) Select the third element of the the fifth element of list_4 and assign it 
-# to element_5_3 using [[]].
+# 7) Select the third element (that is, the sub-element) of the the fifth element of "list_4" and assign it 
+# to element_5_3 using "[[ ]]".
 element_5_3 <- NULL
 
 # 8) Lastly, repeat the previous assignment of the third element of the fifth element, but
-# extract the element as a list rather than scalar using [ ].
+# extract the element as a list rather than scalar using "[ ]" and assign it to "list_5_3".
 list_5_3 <- NULL
 ```
 
@@ -290,33 +294,33 @@ to call on them from `lm.output` object for your answer!
 
 ## 4: Coding with Data Frames
 ```{r data_frames_1}
-# 1) Use "data.frame" to combine "vec_num", "vec_int" into "df_1".
+# 1) Use "data.frame()" to combine "vec_num" and "vec_int" into "df_1".
 df_1 <- NULL
 
-# 2) Use "$" to extract vec_num from df_1, reverse it, and assign it to vec_num_2.
+# 2) Use "$" to extract "vec_num" from "df_1", reverse it with "rev()", and assign it to "vec_num_2".
 vec_num_2 <- NULL
 
-# 3) Use "$" to add fac_vec from Problem 1 to df_2 as a new column with the name "factor_vector".
+# 3) Use "$" to add "vec_num_2" to "df_2" as a new column with the name "number_vector".
 df_2 <- df_1 # DO NOT EDIT THIS LINE; add code below it.
 df_2 <- NULL
 
-# 4) Combine df_2 with itself using "rbind()" to create df_3
+# 4) Combine "df_2" with itself using "rbind()" to create "df_3"
 df_3 <- NULL
 
-# 5) Create a new data frame "df_3"" using data.frame() that contains the following named colums (in order):
+# 5) Create a new data frame "df_3" using "data.frame()" that contains the following named columns (in order):
     # "y" that contains 20 numbers evenly spaced from 31 to 125
-    # "x" that has 20 numbers between 0 and 10 generated using runif()
-    # "color" that consists of 20 values sampled from col_vec below using sample().
+    # "x" that has 20 numbers between 0 and 10 generated using "runif()" (get help with ?runif)
+    # "color" that consists of 20 values sampled from "col_vec "below using "sample()".
 col_vec <- colors() # DO NOT EDIT THIS LINE; add code below it.
 df_4 <- NULL
 
     # This code here should produce a plot of those values with those colors!
 if(is.null(df_4)==FALSE) df_4 %>% ggplot(aes(x, y, color=color)) + geom_point() + theme(legend.position="none")
 
-# 5) Use cbind() to combine df_4 and df_2 into df_5.
+# 5) Use "cbind()" to combine "df_4" and "df_2" into "df_5".
 df_5 <- NULL
 
-# 6) Now use data.frame() to combine df_4 with df_2
+# 6) Now use "data.frame()" to combine "df_4" with "df_2"
 df_6 <- NULL
 
 ```
@@ -325,7 +329,7 @@ df_6 <- NULL
 ```{r data_frames_1_test, echo=FALSE, message=TRUE, collapse=TRUE, comment=''}
 # DO NOT EDIT ANY PART OF THIS CHUNK
 test_x(df_1, class="data.frame", dims=c(10,2), c_pos=c(3,2), c_val=13)
-test_x(vec_num_2, class="numeric", dims=10, c_pos=10, c_val=1)
+test_x(vec_num_2, class="numeric", dims=10, c_pos=10, c_val=0)
 test_x(df_2, class="data.frame", dims=c(10,3), c_pos=c(1,3), c_val=15, nam_pos=3, nam_val="number_vector")
 test_x(df_3, class="data.frame", dims=c(20,3), c_pos=c(11,3), c_val=15)
 test_x(df_4, class="data.frame", dims=c(20,3), c_pos=c(13,3), c_val="deeppink4", nam_pos=2, nam_val="x")
