@@ -354,7 +354,7 @@ of these functions on lists and matrices?
 3) Similarly, how do the results of `length()` and `dim()` differ between data frames,
 lists, matrices, and vectors?
 
-3) Using the console, use `==` to test to see if `cbind()` and `data.frame()` in questions 5 and 6 produce the same result. Optional: If you want to make this cleaner, integrate the `any()` function, which could allow you to show this result in-line in your answer.
+3) Using the console, use `==` to test to see if `cbind()` and `data.frame()` in questions 5 and 6 produce the same result. Optional: If you want to make this cleaner, integrate either `all()` or `any()` functions, which could allow you to show this result in-line in your answer.
 
 4) As a final question, which won't be graded strictly, use between three sentences and a paragraph to 
 describe the differences and similarities between (this is mainly to help you think them through!):
