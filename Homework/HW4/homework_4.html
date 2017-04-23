@@ -233,7 +233,7 @@ mat_4 &lt;- NULL
 # 8) Next, first transpose mat_4, then select only the first four columns and assign to mat_t
 mat_t &lt;- NULL
 
-# 9)  Then use rbind() to add the rows from mat_3 to this and assign this combination to mat_big.
+# 9)  Then use rbind() to add the rows from mat_3 to this (mat_3 first, mat_t second_ and assign this combination to mat_big.
 mat_big &lt;- NULL</code></pre>
 <p><em>How’d you do?</em></p>
 <pre><code>No code entered yet.
@@ -278,7 +278,7 @@ row_4_2 &lt;- NULL
 # 2) Create another list that contains &quot;val_6_2&quot; and &quot;mat_big&quot;.
 list_2 &lt;- NULL
 
-# 3) Combine those two lists together using &quot;c()&quot; and assign them to &quot;list_3&quot;
+# 3) Combine list_1 and list_2 together using &quot;c()&quot; and assign them to &quot;list_3&quot;
 list_3 &lt;- NULL
 
 # 4) Use &quot;unlist()&quot; to turn &quot;list_3&quot; into a vector and assign it to &quot;vector_3&quot;
@@ -367,7 +367,7 @@ No code entered yet.</code></pre>
 <div id="questions-about-data-frames" class="section level3">
 <h3>Questions About Data Frames:</h3>
 <ol style="list-style-type: decimal">
-<li>First, let’s add <code>vec_cha</code> to df_1 to make a new data frame and then use <code>lapply(df_cha, class)</code> to get a list that indicates the class of each column in <code>df_1</code> (you’ll need to run this yourself).:</li>
+<li>First, let’s add <code>vec_cha</code> to df_1 to make a new data frame and then use <code>lapply(df_cha, class)</code> to get a list that indicates the class of each column in <code>df_1</code> (you’ll need to run this yourself in the console or turn eval=TRUE):</li>
 </ol>
 <pre class="r"><code>df_cha &lt;- data.frame(df_1, vec_cha)
 lapply(df_cha, class)</code></pre>
