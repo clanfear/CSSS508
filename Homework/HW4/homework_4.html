@@ -367,7 +367,11 @@ No code entered yet.</code></pre>
 <div id="questions-about-data-frames" class="section level3">
 <h3>Questions About Data Frames:</h3>
 <ol style="list-style-type: decimal">
-<li><p>Use <code>lapply(df_1, class)</code> to get a list that indicates the class of each column in <code>df_1</code>. Do you see anything unusual about <code>vec_cha</code>? Get help on data frames with <code>?data.frame</code> and explain in a sentence what you could do to modify this behavior.</p></li>
+<li>First, let’s add <code>vec_cha</code> to df_1 to make a new data frame:</li>
+</ol>
+<pre class="r"><code>df_cha &lt;- data.frame(df_1, vec_cha)</code></pre>
+<p>Use <code>lapply(df_cha, class)</code> to get a list that indicates the class of each column in <code>df_1</code>. Do you see anything unusual about <code>df_cha$vec_cha</code>, say if we get <code>class(vec_cha)</code>? Get help on data frames with <code>?data.frame</code> and explain in a sentence what you could do to modify this behavior.</p>
+<ol start="2" style="list-style-type: decimal">
 <li><p>Use <code>names()</code>, <code>colnames()</code>, and <code>rownames()</code> on df_1. How does this compare to the behavior of these functions on lists and matrices?</p></li>
 <li><p>Similarly, how do the results of <code>length()</code> and <code>dim()</code> differ between data frames, lists, matrices, and vectors?</p></li>
 <li><p>Using the console, use <code>==</code> to test to see if <code>cbind()</code> and <code>data.frame()</code> in questions 5 and 6 produce the same result. Optional: If you want to make this cleaner, integrate the <code>any()</code> function, which could allow you to show this result in-line in your answer.</p></li>

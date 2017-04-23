@@ -338,8 +338,12 @@ test_x(df_6, class="data.frame", dims=c(20,6), nam_pos=4, nam_val="vec_num")
 ```
 
 ### Questions About Data Frames: 
-1) Use `lapply(df_1, class)` to get a list that indicates the class of each column
-in `df_1`. Do you see anything unusual about `vec_cha`? Get help on data frames with
+1) First, let's add `vec_cha` to df_1 to make a new data frame:
+```{r data_frames_2}
+df_cha <- data.frame(df_1, vec_cha)
+```
+Use `lapply(df_cha, class)` to get a list that indicates the class of each column
+in `df_1`. Do you see anything unusual about `df_cha$vec_cha`, say if we get `class(vec_cha)`? Get help on data frames with
 `?data.frame` and explain in a sentence what you could do to modify this behavior.
 
 2) Use `names()`, `colnames()`, and `rownames()` on df_1. How does this compare to the behavior
