@@ -8,7 +8,7 @@ test_x <- function(x=NULL, class="omit", dims="omit", numeric="omit",
                    nam_pos="omit", nam_val="omit", c_pos="omit", c_val="omit",
                    na_check="omit"){
   if(is.null(x)){
-    return(message("No code entered yet."))
+    return(message("No code entered for ", deparse(substitute(x)), " yet.\n"))
   } else {
   class_x  <- ifelse(class!="omit", class(x)==class, TRUE)
   num_x    <- ifelse(numeric!="omit", is.numeric(x)==numeric, TRUE)
