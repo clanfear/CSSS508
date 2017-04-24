@@ -250,7 +250,9 @@ vector_3 <- NULL
 # 5) Use "as.list()" to convert "vector_3" into a list and assign it to "list_big"
 list_big <- NULL
 
-# 6) Now copy "list_3" as "list_4" and use "[[ ]]" to assign "list_3" as the last (fifth) element of "list_4".
+# 6) Now copy "list_3" as "list_4" and use "[[ ]]" to assign "list_3" as the last (fifth) element of "list_4";
+# that is, you should have a list object with five elements named "list_4" that contains the same four
+# elements as "list_3" plus a fifth element that is -all- four elements of "list_3" as one object.
 list_4 <- NULL
 
 # 7) Select the third element (that is, the sub-element) of the the fifth element of "list_4" and assign it 
