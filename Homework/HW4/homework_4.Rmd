@@ -309,7 +309,7 @@ df_2 <- NULL
 # 4) Combine "df_2" with itself using "rbind()" to create "df_3"
 df_3 <- NULL
 
-# 5) Create a new data frame "df_3" using "data.frame()" that contains the following named columns (in order):
+# 5) Create a new data frame "df_4" using "data.frame()" that contains the following named columns (in order):
     # "y" that contains 20 numbers evenly spaced from 31 to 125
     # "x" that has 20 numbers between 0 and 10 generated using "runif()" (get help with ?runif)
     # "color" that consists of 20 values sampled from "col_vec "below using "sample()".
