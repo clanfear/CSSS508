@@ -1,7 +1,7 @@
 CSSS508 Introduction
 ========================================================
 author: Charles Lanfear
-date: March 28, 2017
+date: April 24, 2017
 autosize: true
 transition: linear
 
