@@ -876,7 +876,7 @@ Dropping Unused Levels
 incremental: true
 
 After subsetting you can end up with fewer *realized* levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your whole data using `droplevels()`.
-
+ 
 
 
 
