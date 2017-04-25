@@ -1509,7 +1509,7 @@ billboard_trajectories &lt;- ggplot(
     head(7)
 </code></pre>
 
-<pre class="fragment"><code># A tibble: 7 × 3
+<pre class="fragment"><code># A tibble: 7 Ã— 3
                artist                   track weeks_at_1
                 &lt;chr&gt;                   &lt;chr&gt;      &lt;int&gt;
 1     Destiny&#39;s Child Independent Women Pa...         11
@@ -1542,7 +1542,7 @@ billboard_2000 %&gt;% arrange(artist, track, week) %&gt;%
     select(artist, date.entered, week, date, rank) %&gt;% head(4)
 </code></pre>
 
-<pre class="fragment"><code># A tibble: 4 × 5
+<pre class="fragment"><code># A tibble: 4 Ã— 5
   artist date.entered  week       date  rank
    &lt;chr&gt;       &lt;date&gt; &lt;dbl&gt;     &lt;date&gt; &lt;int&gt;
 1  2 Pac   2000-02-26     1 2000-02-26    87
@@ -1834,29 +1834,43 @@ jayz_good_legend &lt;- ggplot(jayz, aes(x = week, y = rank, group = track, color
 <div class="slideContent" >
 <p>After subsetting you can end up with fewer <em>realized</em> levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your whole data using <code>droplevels()</code>.</p>
 
-<pre class="fragment"><code>processing file: CSSS508_week5_data_import_export_cleaning.Rpres
-
-Attaching package: &#39;dplyr&#39;
-
-The following objects are masked from &#39;package:stats&#39;:
-
-    filter, lag
-
-The following objects are masked from &#39;package:base&#39;:
-
-    intersect, setdiff, setequal, union
-
-
-Attaching package: &#39;lubridate&#39;
-
-The following object is masked from &#39;package:base&#39;:
-
-    date
-
-Quitting from lines 726-730 (CSSS508_week5_data_import_export_cleaning.Rpres) 
-Error: `f` must be a factor (or character vector).
-Execution halted
+<pre class="fragment"><code class="r">jayz_biggest &lt;- jayz %&gt;% filter(track %in% c(&quot;I Just Wanna Love U ...&quot;, &quot;Big Pimpin&#39;&quot;))
+levels(jayz_biggest$track)
 </code></pre>
+
+<pre class="fragment"><code>[1] &quot;I Just Wanna Love U ...&quot; &quot;Big Pimpin&#39;&quot;            
+[3] &quot;Anything&quot;                &quot;Do It Again (Put Ya ...&quot;
+[5] &quot;Hey Papi&quot;               
+</code></pre>
+
+<pre class="fragment"><code class="r">jayz_biggest &lt;- jayz_biggest %&gt;% droplevels(.)
+levels(jayz_biggest$track)
+</code></pre>
+
+<pre class="fragment"><code>[1] &quot;I Just Wanna Love U ...&quot; &quot;Big Pimpin&#39;&quot;            
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>forcats</h3>
+<div class="slideContent" >
+<p>The <code>tidyverse</code> family of packages includes a relatively new package called <code>forcats</code> (an anagram of &ldquo;factors&rdquo;) that is&hellip; for cat(egorical)s.</p>
+
+<p>This package replaces the functionally of the base factor functions used above with somewhat more logical and uniform syntax.</p>
+
+<p>I&#39;ve used them above and showed the <code>base</code> equivalents. To find more, <a href="https://cran.r-project.org/web/packages/forcats/forcats.pdf">look at the <code>forcats</code> manual</a>.</p>
+
+</div>
+
+</section>
+<section data-state="section" data-transition="linear" data-transition-speed="default">
+<h2>Homework: Be a data janitor!</h2>
+<div class="slideContent" >
+<p>Vote tallies in King County from the 2012 general election are in a 60 MB tab-delimited text file downloaded from the <a href="https://wei.sos.wa.gov/agency/osos/en/press_and_research/PreviousElections/2012/General-Election/Data/Documents/Forms/AllItems.aspx?RootFolder=%2Fagency%2Fosos%2Fen%2Fpress_and_research%2FPreviousElections%2F2012%2FGeneral-Election%2FData%2FDocuments%2FPrecinct_Results&amp;FolderCTID=0x0120008B9C603856A5C84E89934BDF6A72C2ED&amp;View=%7BDF1C73C5-333F-4F68-8713-AD3007138C66%7D">WA Secretary of State</a>.</p>
+
+<p>The data have no documentation, so show your detective work to answer questions about the data and clean it up in an R Markdown template on the course website.</p>
 
 </div>
 

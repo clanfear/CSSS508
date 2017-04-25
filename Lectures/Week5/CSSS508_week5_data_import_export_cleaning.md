@@ -560,7 +560,7 @@ Charting the Charts of 2000: Beauty!
 
 Observation: There appears to be censoring around week 20 for songs falling out of the top 50 that I'd want to follow up on.
 
-
+ 
 Which Songs Were #1 the Most Weeks?
 ====================================================================================
 incremental: true
@@ -575,7 +575,7 @@ billboard_2000 %>%
 ```
 
 ```
-# A tibble: 7 × 3
+# A tibble: 7 Ã— 3
                artist                   track weeks_at_1
                 <chr>                   <chr>      <int>
 1     Destiny's Child Independent Women Pa...         11
@@ -607,7 +607,7 @@ billboard_2000 %>% arrange(artist, track, week) %>%
 ```
 
 ```
-# A tibble: 4 × 5
+# A tibble: 4 Ã— 5
   artist date.entered  week       date  rank
    <chr>       <date> <dbl>     <date> <int>
 1  2 Pac   2000-02-26     1 2000-02-26    87
@@ -878,29 +878,41 @@ incremental: true
 After subsetting you can end up with fewer *realized* levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your whole data using `droplevels()`.
  
 
-
+```r
+jayz_biggest <- jayz %>% filter(track %in% c("I Just Wanna Love U ...", "Big Pimpin'"))
+levels(jayz_biggest$track)
+```
 
 ```
-processing file: CSSS508_week5_data_import_export_cleaning.Rpres
-
-Attaching package: 'dplyr'
-
-The following objects are masked from 'package:stats':
-
-    filter, lag
-
-The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union
-
-
-Attaching package: 'lubridate'
-
-The following object is masked from 'package:base':
-
-    date
-
-Quitting from lines 726-730 (CSSS508_week5_data_import_export_cleaning.Rpres) 
-Error: `f` must be a factor (or character vector).
-Execution halted
+[1] "I Just Wanna Love U ..." "Big Pimpin'"            
+[3] "Anything"                "Do It Again (Put Ya ..."
+[5] "Hey Papi"               
 ```
+
+```r
+jayz_biggest <- jayz_biggest %>% droplevels(.)
+levels(jayz_biggest$track)
+```
+
+```
+[1] "I Just Wanna Love U ..." "Big Pimpin'"            
+```
+
+
+forcats
+====================================================================================
+
+The `tidyverse` family of packages includes a relatively new package called `forcats` (an anagram of "factors") that is... for cat(egorical)s.
+
+This package replaces the functionally of the base factor functions used above with somewhat more logical and uniform syntax.
+
+I've used them above and showed the `base` equivalents. To find more, [look at the `forcats` manual](https://cran.r-project.org/web/packages/forcats/forcats.pdf).
+
+
+Homework: Be a data janitor!
+====================================================================================
+type: section
+
+Vote tallies in King County from the 2012 general election are in a 60 MB tab-delimited text file downloaded from the [WA Secretary of State](https://wei.sos.wa.gov/agency/osos/en/press_and_research/PreviousElections/2012/General-Election/Data/Documents/Forms/AllItems.aspx?RootFolder=%2Fagency%2Fosos%2Fen%2Fpress_and_research%2FPreviousElections%2F2012%2FGeneral-Election%2FData%2FDocuments%2FPrecinct_Results&FolderCTID=0x0120008B9C603856A5C84E89934BDF6A72C2ED&View={DF1C73C5-333F-4F68-8713-AD3007138C66}).
+
+The data have no documentation, so show your detective work to answer questions about the data and clean it up in an R Markdown template on the course website.

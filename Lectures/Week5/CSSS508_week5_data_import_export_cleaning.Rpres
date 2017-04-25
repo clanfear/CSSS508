@@ -474,7 +474,7 @@ billboard_trajectories
 
 Observation: There appears to be censoring around week 20 for songs falling out of the top 50 that I'd want to follow up on.
 
-
+ 
 Which Songs Were #1 the Most Weeks?
 ====================================================================================
 incremental: true
@@ -725,9 +725,10 @@ After subsetting you can end up with fewer *realized* levels than before, but ol
 ```{r}
 jayz_biggest <- jayz %>% filter(track %in% c("I Just Wanna Love U ...", "Big Pimpin'"))
 levels(jayz_biggest$track)
-jayz_biggest <- jayz_biggest %>% fct_drop(.) # same as droplevels()
+jayz_biggest <- jayz_biggest %>% droplevels(.)
 levels(jayz_biggest$track)
 ```
+
 
 forcats
 ====================================================================================
