@@ -242,31 +242,31 @@ math_vec <- 1:5
 #   "vec_num" and "row_4" to these two elements of "list_1".
 list_1 <- NULL
 
-# 3) Using "$", extract "row_4" from "list_1" and assign it to the object "row_4_2".
+# 2) Using "$", extract "row_4" from "list_1" and assign it to the object "row_4_2".
 row_4_2 <- NULL
 
-# 2) Create another list that contains "val_6_2" and "mat_big".
+# 3) Create another list that contains "val_6_2" and "mat_big".
 list_2 <- NULL
 
-# 3) Combine list_1 and list_2 together using "c()" and assign them to "list_3"
+# 4) Combine list_1 and list_2 together using "c()" and assign them to "list_3"
 list_3 <- NULL
 
-# 4) Use "unlist()" to turn "list_3" into a vector and assign it to "vector_3"
+# 5) Use "unlist()" to turn "list_3" into a vector and assign it to "vector_3"
 vector_3 <- NULL
 
-# 5) Use "as.list()" to convert "vector_3" into a list and assign it to "list_big"
+# 6) Use "as.list()" to convert "vector_3" into a list and assign it to "list_big"
 list_big <- NULL
 
-# 6) Now copy "list_3" as "list_4" and use "[[ ]]" to assign "list_3" as the last (fifth) element of "list_4";
+# 7) Now copy "list_3" as "list_4" and use "[[ ]]" to assign "list_3" as the last (fifth) element of "list_4";
 # that is, you should have a list object with five elements named "list_4" that contains the same four
 # elements as "list_3" plus a fifth element that is -all- four elements of "list_3" as one object.
 list_4 <- NULL
 
-# 7) Select the third element (that is, the sub-element) of the the fifth element of "list_4" and assign it 
+# 8) Select the third element (that is, the sub-element) of the the fifth element of "list_4" and assign it 
 # to element_5_3 using "[[ ]]".
 element_5_3 <- NULL
 
-# 8) Lastly, repeat the previous assignment of the third element of the fifth element, but
+# 9) Lastly, repeat the previous assignment of the third element of the fifth element, but
 # extract the element as a list rather than scalar using "[ ]" and assign it to "list_5_3".
 list_5_3 <- NULL
 ```
