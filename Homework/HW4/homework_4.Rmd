@@ -1,3 +1,10 @@
+---
+title: 'CSSS508: HW4'
+author: "Charles Lanfear"
+date: "April 25, 2017"
+output: html_document
+---
+
 ```{r setup, include=FALSE}
 # DO NOT EDIT ANY PART OF THIS CHUNK
 # Do examine the code if you're interested how it works!
@@ -127,7 +134,7 @@ vec_fac <- NULL
 # 5) Use "c()" to combine "vec_cha" and "vec_fac" into "vec_let". Do not convert it to a factor!
 vec_let <- NULL
 
-# 6) Use "c()" and "[ ]"" to combine the first 4 elements of "vec_num" with the last
+# 6) Use "c()" and "[ ]" to combine the first 4 elements of "vec_num" with the last
 # 4 elements of "vec_int" to create "vec_ni".
 vec_ni <- NULL
 
@@ -164,7 +171,7 @@ new_vec <- c(TRUE, FALSE, TRUE, TRUE)
 # 1) Use matrix() to create a matrix with 10 rows and four columns filled with NA
 mat_empty <- NULL
 
-# 2) Assign "vec_num" to the first column of "mat_1"" below.
+# 2) Assign "vec_num" to the first column of "mat_1" below.
 mat_1 <- mat_empty # DO NOT EDIT THIS LINE; add code below it.
 mat_1 <- NULL
 
@@ -188,7 +195,7 @@ mat_4 <- NULL
 # 8) Next, first transpose mat_4, then select only the first four columns and assign to mat_t
 mat_t <- NULL
 
-# 9)  Then use rbind() to add the rows from mat_3 to this (mat_3 first, mat_t second_ and assign this combination to mat_big.
+# 9)  Then use rbind() to add the rows from mat_3 to this (mat_t first, mat_3 second) and assign this combination to mat_big.
 mat_big <- NULL
 
 ```
