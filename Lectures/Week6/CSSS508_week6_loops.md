@@ -10,7 +10,7 @@ height: 750
 Programming with Goofus and Gallant
 ====================================================================================
 
-![Goofus and Gallant](http://the-toast.net/wp-content/uploads/2014/09/Goofus.jpg)
+![Goofus and Gallant](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops-figure/Goofus.jpg)
 
 
 Goofus Approach to Repetitive Data Analysis
@@ -670,7 +670,7 @@ for(position in 1:length(my_vector)) {
 
 ```
    user  system elapsed 
-   0.77    0.02    0.78 
+   0.77    0.00    0.78 
 ```
 
 
@@ -688,7 +688,7 @@ new_vector <- my_vector + 1
 
 ```
    user  system elapsed 
-   0.06    0.00    0.06 
+   0.03    0.03    0.06 
 ```
 
 ```r
@@ -697,7 +697,7 @@ for_time / vec_time
 
 ```
    user  system elapsed 
-   12.8     Inf    13.0 
+   25.7     0.0    13.0 
 ```
 
 Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
