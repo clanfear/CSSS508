@@ -1201,6 +1201,20 @@ str_detect(phone_test_examples, area_code_206_pattern)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
+<h3>str_view()</h3>
+<div class="slideContent" >
+<p><code>stringr</code> also has a function called <code>str_view()</code> that allows you to see in the viewer pane <em>exactly</em>
+what text is being selected with a regular expression.</p>
+
+<pre class="fragment"><code class="r">str_view(phone_test_examples, area_code_206_pattern)
+</code></pre>
+
+<p class="fragment">Just be careful to not load an entire long vector / variable or it may crash RStudio!</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
 <h3>How Many Rows Have Non-206 Numbers?</h3>
 <div class="slideContent" >
 <pre class="fragment"><code class="r">restaurants %&gt;% mutate(has_206_number = str_detect(Phone, area_code_206_pattern)) %&gt;% group_by(has_206_number) %&gt;% tally()

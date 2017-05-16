@@ -416,6 +416,19 @@ str_detect(phone_test_examples, area_code_206_pattern)
 * `\\(?` means look for a left parenthesis (`\\(`), but it's optional (`?`)
 * `206` is the literal character to look for after the optional parenthesis
 
+str_view()
+====================================================================================
+incremental: true
+
+`stringr` also has a function called `str_view()` that allows you to see in the viewer pane *exactly*
+what text is being selected with a regular expression.
+
+
+```r
+str_view(phone_test_examples, area_code_206_pattern)
+```
+
+Just be careful to not load an entire long vector / variable or it may crash RStudio!
 
 How Many Rows Have Non-206 Numbers?
 ====================================================================================
