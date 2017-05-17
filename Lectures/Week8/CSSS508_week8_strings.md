@@ -206,7 +206,7 @@ stringr
 `stringr` is yet another R package from the Tidyverse (like `ggplot2`, `dplyr`, `tidyr`, `lubridate`, `readr`). It provides functions to:
 
 * Replace some basic string functions like `paste` and `nchar` in a way that's a bit less touchy with missing values or factors
-* Removing whitespace or pad it out
+* Remove whitespace or pad it out
 * Perform tasks related to **pattern matching**: Detect, locate, extract, match, replace, split.
     + Functions use **regular expressions** to describe patterns
     + Base R versions for these exist but are more confusing to use
@@ -234,7 +234,7 @@ str_sub("Washington", 1, -3)
 [1] "Washingt"
 ```
 
-* `str_c()` ("string concatenate") is just like `paste()` but where default is `sep = ""` (like `paste0()`)
+* `str_c()` ("string combine") is just like `paste()` but where default is `sep = ""` (like `paste0()`)
 
 
 ```r
@@ -356,14 +356,14 @@ to a string input, and then can do things with **matches** we find.
 * **Literal characters** are defined snippets to search for like `SEA` or `206`
 * **Metacharacters** let us be flexible in describing patterns:
     + backslash `\`, caret `^`, dollar sign `$`, period `.`, pipe `|`, question mark `?`, asterisk `*`, plus sign `+`, parentheses `(` and `)`, square brackets `[` and `]`, curly braces `{` and `}`
-    + To treat a metacharacter as a literal character, need to **escape** it with two preceding backslashs `\\`, e.g. to match `(206)` including the parentheses, you'd use `\\(206\\)` in your regex
+    + To treat a metacharacter as a literal character, you must **escape** it with two preceding backslashs `\\`, e.g. to match `(206)` including the parentheses, you'd use `\\(206\\)` in your regex
 
 
 Simple regex Searches with str_detect()
 ====================================================================================
 incremental: true
 
-I want to get inspections for coffee shops. I'll say a coffee shop is anything that has "COFFEE", "ESPRESSO", or "ROASTER" in the name. The `regex` for this is `COFFEE|ESPRESSO|ROASTER` because `|` is a metacharacter that means "OR". Use the `str_detect()` function, which returns `TRUE` if it finds what you're looking for and `FALSE` if it doesn't:
+I want to get inspections for coffee shops. I'll say a coffee shop is anything that has "COFFEE", "ESPRESSO", or "ROASTER" in the name. The `regex` for this is `COFFEE|ESPRESSO|ROASTER` because `|` is a metacharacter that means "OR". Use the `str_detect()` function, which returns `TRUE` if it finds what you're looking for and `FALSE` if it doesn't (similar to `grepl()`):
 
 
 ```r
@@ -388,8 +388,7 @@ Let's take each unique business identifier, keep the most recent inspection scor
 
 
 ```r
-recent_coffee_scores <- coffee %>% select(Business_ID, Name, Inspection_Score, Date) %>% group_by(Business_ID) %>% filter(Date == max(Date)) %>% distinct(.keep_all=TRUE)
-hist(recent_coffee_scores$Inspection_Score, xlab = "Most recent inspection score", main = "Most recent inspection scores\nfor Seattle coffee shops")
+with(coffee %>% select(Business_ID, Name, Inspection_Score, Date) %>% group_by(Business_ID) %>% filter(Date == max(Date)) %>% distinct(.keep_all=TRUE), hist(Inspection_Score, xlab = "Most recent inspection score", main = "Most recent inspection scores\nfor Seattle coffee shops"))
 ```
 
 <img src="CSSS508_week8_strings-figure/coffee_histogram-1.png" title="plot of chunk coffee_histogram" alt="plot of chunk coffee_histogram" width="1100px" height="330px" />
@@ -399,7 +398,7 @@ Looking for Patterns with str_detect()
 ====================================================================================
 incremental: true
 
-Let's look for phone numbers whose first three digits are 206 using `str_detect()`. We will want it to work whether they have parentheses around the beginning or not, but NOT to match 206 occurring elsewhere:
+Let's look for phone numbers whose first three digits are "206" using `str_detect()`. We will want it to work whether they have parentheses around the beginning or not, but NOT to match "206" occurring elsewhere:
 
 
 ```r
@@ -428,7 +427,9 @@ what text is being selected with a regular expression.
 str_view(phone_test_examples, area_code_206_pattern)
 ```
 
-Just be careful to not load an entire long vector / variable or it may crash RStudio!
+This will generate a small web page in the viewer pane (but not in Markdown docs).
+Just be careful to not load an entire long vector / variable or it may crash RStudio
+as it tries to render a massive page!
 
 How Many Rows Have Non-206 Numbers?
 ====================================================================================
@@ -524,7 +525,7 @@ Let's break down `"^[0-9]*-?[A-Z]? (1/2 )?"`:
 * `*` means potentially match more digits after that
 * `-?` means optionally (`?`) match a hyphen (`-`)
 * `[A-Z]?` means optionally match (`?`) a letter (`[A-Z]`)
-* Then we match a space (` `)
+* Then we match a space ( )
 * `(1/2 )?` optionally matches a 1/2 followed by a space since this is apparently a thing with some address numbers
 
 
@@ -652,6 +653,9 @@ Next week
 
 Homework 6 assigned last week is due next week, and peer reviews due the week after.
 
-In class next week, you'll be working on a lab on *mapping* the restaurant inspection data,
+
+**The end is nigh**: In class next week, you'll be working on a lab on *mapping* the restaurant inspection data,
 which serves as an *optional* final homework due in week 10. If you turn it in, I
 will grade it myself and give you feedback and **bonus points** based on the standard grading rubric (0 to 3).
+
+*You will have nothing assigned or due in dead week or finals week.*
