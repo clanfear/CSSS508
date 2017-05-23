@@ -1,0 +1,11 @@
+base
+knitr
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+ggmap
+ggrepel

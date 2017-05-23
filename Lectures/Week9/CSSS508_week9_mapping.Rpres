@@ -12,7 +12,20 @@ Today
 
 * `ggmap` for mashing up maps with `ggplot2`
 * Labeling points and `ggrepel`
+* Mapping with raw `ggplot2`
 * Lab: visualizing restaurant safety over space and time
+
+
+Mapping in R: A quick plug
+====================================================================================
+
+![](CSSS508_week9_mapping-figure/bivand.jpg)
+
+***
+
+If you are interested in mapping, GIS, and geospatial analysis in R, *acquire this book*.
+
+You may also consider taking Jon Wakefield's **CSSS 554: Statistical Methods for Spatial Data**, however it is challenging and focuses more heavily on statistics than mapping.
 
 
 ggmap
@@ -177,18 +190,19 @@ qmplot(data = downtown_seattle_incidents, x = Longitude, y = Latitude, maptype =
 ggplot without ggmap
 ====================================================================================
 
-It is also common (and easy) to plot geospatial data using standard ggplot2 functions.
+It is also common (and easy) to plot geospatial data using standard `ggplot2` functions. Just provide `x` and `y`
+coordinates to use to draw points or lines.
 
-You need only provide ggmap the following:
-* Longitude for the x aesthetic
-* Latitude for the y aesthetic
+You need only provide ggplot the following:
+* Longitude for the `x` aesthetic
+* Latitude for the `y` aesthetic
 * Data to fill polygons if making a chloropleth
 
-```{r}
-load("http://clanfear.github.com/CSSS508/Lectures/Week9/sea_tract_data.RData")
+```{r, messages=FALSE, cache=TRUE}
+sea_tract_data <- read_csv("https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week9/sea_tract_data.csv")
 ```
 
-ggplot without ggmap
+Chloropleth Using geom_polygon()
 ====================================================================================
 ```{r ggplot_alone_1, eval=FALSE}
 ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=con_disdvntg))  +
@@ -199,6 +213,49 @@ ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=con_disdvntg))  +
           element_blank(), axis.ticks = element_blank(), axis.line = element_blank()) +
   labs(title="Concentrated Disadvantage", fill="Disadvantage\n")
 ```
+
+Chloropleths Using geom_polygon()
+====================================================================================
+```{r ggplot_alone_2, echo=FALSE, message = FALSE, cache=TRUE, fig.width = 10, fig.height = 6, dpi=300, out.width="1100px", out.height="660px"}
+ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=con_disdvntg))  +
+  geom_polygon()  + scale_fill_gradient(low="white", high="darkred") +
+  coord_equal() + geom_path(color = "black", linetype=1) +
+  theme(axis.title=element_blank(), axis.text = element_blank(), panel.grid.major = 
+          element_blank(), panel.grid.minor = element_blank(), panel.background = 
+          element_blank(), axis.ticks = element_blank(), axis.line = element_blank()) +
+  labs(title="Concentrated Disadvantage", fill="Disadvantage\n")
+```
+
+Chloropleths Using geom_polygon()
+====================================================================================
+```{r ggplot_alone_3, echo=FALSE, message = FALSE, cache=TRUE, fig.width = 10, fig.height = 6, dpi=300, out.width="1100px", out.height="660px"}
+ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=mean.inform.soc.control))  +
+  geom_polygon()  +
+  scale_fill_gradient(low="white", high="darkblue") +
+  coord_equal() +
+  geom_path(color = "black", linetype=1) +
+  theme(axis.title=element_blank(), axis.text = element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.ticks = element_blank(),
+        axis.line = element_blank()) +
+  labs(title="Collective Efficacy", fill="CE\n")
+```
+
+Chloropleths Using geom_polygon()
+====================================================================================
+```{r ggplot_alone_4, echo=FALSE, message = FALSE, cache=TRUE, fig.width = 10, fig.height = 6, dpi=300, out.width="1100px", out.height="660px"}
+ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=log.violent.crime.0305))  +
+  geom_polygon()  +
+  scale_fill_gradient(low="white", high="darkred") +
+  coord_equal() +
+  geom_path(color = "black", linetype=1) +
+  theme(axis.title=element_blank(), axis.text = element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.ticks = element_blank(),
+        axis.line = element_blank()) +
+  labs(title="Violent Crime", fill="ln(Crime)\n")
+```
+
 
 Lab/Homework Exercise
 ====================================================================================
