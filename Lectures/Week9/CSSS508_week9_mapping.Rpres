@@ -184,6 +184,22 @@ You need only provide ggmap the following:
 * Latitude for the y aesthetic
 * Data to fill polygons if making a chloropleth
 
+```{r}
+load("http://clanfear.github.com/CSSS508/Lectures/Week9/sea_tract_data.RData")
+```
+
+ggplot without ggmap
+====================================================================================
+```{r ggplot_alone_1, eval=FALSE}
+ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=con_disdvntg))  +
+  geom_polygon()  + scale_fill_gradient(low="white", high="darkred") +
+  coord_equal() + geom_path(color = "black", linetype=1) +
+  theme(axis.title=element_blank(), axis.text = element_blank(), panel.grid.major = 
+          element_blank(), panel.grid.minor = element_blank(), panel.background = 
+          element_blank(), axis.ticks = element_blank(), axis.line = element_blank()) +
+  labs(title="Concentrated Disadvantage", fill="Disadvantage\n")
+```
+
 Lab/Homework Exercise
 ====================================================================================
 type: section
