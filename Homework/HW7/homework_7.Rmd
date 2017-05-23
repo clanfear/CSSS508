@@ -14,7 +14,7 @@ output:
 
 You will probably want to have the following libraries loaded (you can add more in if needed):
 
-```{r load_libraries}
+```{r load_libraries, include=FALSE}
 library(tidyverse)
 library(lubridate)
 library(stringr)
@@ -26,8 +26,8 @@ library(ggmap)
 > Last week we saw data from health inspections of restaurants in Seattle since 2012 and used them to practice working with character/string data and regular expressions. Load in the data directly from the URL (this will work because a CSV is just a text file) and use `cache=TRUE` so that we don't have to repeat this each time we re-knit:
 
 ```{r load_restaurant_data, cache=TRUE}
-restaurants <- read_csv("https://www.dropbox.com/s/lu4tom4wldh76o5/seattle_restaurant_inspections.csv?raw=1",
-                        col_types = "cDcccccnnciclccic")
+restaurants <- read_csv("https://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.csv",  col_types = "ccccccccnnccicccciccciD")
+
 ```
 
 > As a reminder of what these data look like:
@@ -36,20 +36,14 @@ restaurants <- read_csv("https://www.dropbox.com/s/lu4tom4wldh76o5/seattle_resta
 str(restaurants)
 ```
 
-> There are often multiple rows per `Business_ID` per `Date`, such as when an establishment is given violation points for multiple problems. The `Result` and `Score` columns will have the same values on those rows for the same restaurant and date, but details of the violation type ("red" or "blue"), violation description, and violation points will differ from row to row, with different violations on different rows. Keep this duplication in mind as you work. You will need to drop extra rows to get one row per business per date, or even one row per business. You can do this using the `dplyr` concepts we've studied like the `distinct` function, or `group_by` and `summarize` or `filter` to collapse over multiple rows.
+> There are often multiple rows per `Business_ID` per `Date`, such as when an establishment is given violation points for multiple problems. The `Result` and `Score` columns will have the same values on those rows for the same restaurant and date, but details of the violation type ("red" or "blue"), violation description, and violation points will differ from row to row, with different violations on different rows. Keep this duplication in mind as you work. You will need to drop extra rows to get one row per business per date, or even one row per business. You can do this using the `dplyr` concepts we've studied like the `distinct()` function, or `group_by()` and `summarize()` or `filter()` to collapse over multiple rows.
 
 
 # Preparing the data
 
-## Fixing longitude
-
-> For some reason, negative signs weren't stored with the `Longitude` variable (Seattle's longitude should be around -122 degrees, not 122 degrees). Overwrite the `Longitude` column by taking `Longitude` and multiplying it by -1.
-
-[YOUR CODE HERE]
-
 ## Restaurants only
 
-> There are grocery scores without seating, school cafeterias, and other less relevant businesses in the data. We only want to look at restaurants. Identify and only keep businesses whose `Description` *starts with* `Seating`, e.g. `"Seating 51-150 - Risk Category III"`. Call this new data frame with the rows filtered `restaurants_only`.
+> There are grocery stores without seating, school cafeterias, and other less relevant businesses in the data. We only want to look at restaurants. Identify and only keep businesses whose `Description` *starts with* `Seating`, e.g. `"Seating 51-150 - Risk Category III"`. Call this new data frame with the rows filtered `restaurants_only`.
 
 [YOUR CODE HERE]
 
@@ -82,7 +76,7 @@ str(restaurants)
 
 ## The U District
 
-> Now repeat the plot, but zoomed in on the U District area. Add some text labels using `Label_40` for businesses whose scores were 40 or higher on their most recent inspection. See the [`ggplot2` docs on `geom_text` and `geom_label`](http://docs.ggplot2.org/current/geom_text.html) for how you can get these to look good, perhaps trying out the [`ggrepel` package](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html) to avoid overlaps.
+> Now repeat the plot, but zoomed in on the U District area. Add some text labels using `Label_40` for businesses whose scores were 40 or higher on their most recent inspection. See the [`ggplot2` docs on `geom_text()` and `geom_label()`](http://docs.ggplot2.org/current/geom_text.html) for how you can get these to look good, perhaps trying out the [`ggrepel` package](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html) to avoid overlaps.
 
 [YOUR CODE AND PLOT HERE]
 
@@ -98,7 +92,7 @@ str(restaurants)
 
 ## Sub-sampling the data
 
-> Now we want to look at inspection scores over time for restaurants, but there are far too many to visualize. Pick something more limited to investigate and subset the `scores_over_time` data to include somewhere between around 5 and 25 establishments. To do this, you'll want to make a vector that has just the `Business_ID` or `Name` values of restaurants of interest, and then `filter` the `scores_over_time` data based on this. Some examples of angles you could choose for doing this subsetting:
+> Now we want to look at inspection scores over time for restaurants, but there are far too many to visualize. Pick something more limited to investigate and subset the `scores_over_time` data to include somewhere between around 5 and 25 establishments. To do this, you'll want to make a vector that has just the `Business_ID` or `Name` values of restaurants of interest, and then `filter()` the `scores_over_time()` data based on this. Some examples of angles you could choose for doing this subsetting:
 
 > * Restaurants in your ZIP code
 > * Your favorite chain restaurant
@@ -119,6 +113,6 @@ str(restaurants)
 
 ## Plotting time trends
 
-> Now make a longitudinal plot! You should use `facet_wrap` by restaurant name so that you have one panel per restaurant. The x axis should be the `Date` (maybe reformatted using [`scale_x_date`](http://docs.ggplot2.org/current/scale_date.html) to avoid extra clutter) and the y axis should be the `Score`. Use a `geom_line` layer to show the trend in scores for each restaurant. Do you observe anything interesting about the scores for the restaurants you've chosen? (This doesn't involve any new skills, just a refresher on `ggplot2` practice!)
+> Now make a longitudinal plot! You should use `facet_wrap()` by restaurant name so that you have one panel per restaurant. The x axis should be the `Date` (maybe reformatted using [`scale_x_date`](http://docs.ggplot2.org/current/scale_date.html) to avoid extra clutter) and the y axis should be the `Score`. Use a `geom_line` layer to show the trend in scores for each restaurant. Do you observe anything interesting about the scores for the restaurants you've chosen? (This doesn't involve any new skills, just a refresher on `ggplot2` practice!)
 
 [YOUR CODE, PLOT, OBSERVATIONS HERE]
