@@ -1,0 +1,267 @@
+---
+title: "Lab/HW 7 Key: visualizing temporal and spatial data"
+author: "Rebecca Ferrell"
+date: "June 3, 2016"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Instructions
+
+> Fill in this lab worksheet at your own pace. Knit it periodically to check that things are working the same way they are when you are working in RStudio interactively. Ask questions, consult with others, use Google, etc. At the end of the class session, email what you have to yourself so you don't lose progress, and finish it by the last class session on June 1. You will submit this as Homework 7 on Canvas  (both Rmd and HTML files). These will be evaluated by Rebecca rather than peer reviewed.
+
+You will want to have the following libraries loaded (you can add more in if needed):
+
+```{r load_libraries, warning=FALSE, message=FALSE}
+library(stringr)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(ggmap)
+library(ggrepel)
+```
+
+# Background
+
+> Last week we saw data from health inspections of restaurants in Seattle since 2012 and used them to practice working with character/string data and regular expressions. Load in the data directly from the URL (this will work because a CSV is just a text file) and use `cache=TRUE` so that we don't have to repeat this each time we re-knit:
+
+```{r load_restaurant_data, cache=TRUE}
+restaurants <- read_csv("https://www.dropbox.com/s/lu4tom4wldh76o5/seattle_restaurant_inspections.csv?raw=1",
+                        col_types = "cDcccccnnciclccic")
+```
+
+> As a reminder of what these data look like:
+
+```{r show_restaurants}
+str(restaurants)
+```
+
+> There are often multiple rows per `Business_ID` per `Date`, such as when an establishment is given violation points for multiple problems. The `Result` and `Score` columns will have the same values on those rows for the same restaurant and date, but details of the violation type ("red" or "blue"), violation description, and violation points will differ from row to row, with different violations on different rows. Keep this duplication in mind as you work. You will need to drop extra rows to get one row per business per date, or even one row per business. You can do this using the `dplyr` concepts we've studied like the `distinct` function, or `group_by` and `summarize` or `filter` to collapse over multiple rows.
+
+
+# Preparing the data
+
+## Fixing longitude
+
+> For some reason, negative signs weren't stored with the `Longitude` variable (Seattle's longitude should be around -122 degrees, not 122 degrees). Overwrite the `Longitude` column by taking `Longitude` and multiplying it by -1.
+
+```{r fix_longitude, cache=TRUE}
+restaurants <- restaurants %>%
+    mutate(Longitude = -1 * Longitude)
+```
+
+Note that if you didn't do this, you were probably getting plots of Northern China instead of Seattle!
+
+## Restaurants only
+
+> There are grocery scores without seating, school cafeterias, and other less relevant businesses in the data. We only want to look at restaurants. Identify and only keep businesses whose `Description` *starts with* `Seating`, e.g. `"Seating 51-150 - Risk Category III"`. Call this new data frame with the rows filtered `restaurants_only`.
+
+```{r restaurants_only, cache=TRUE}
+restaurants_only <- restaurants %>%
+    filter(str_sub(Description, 1, 7) == "Seating")
+```
+
+
+## Scores over time
+
+> Now make a data frame using `restaurants_only` called `scores_over_time` with exactly one row per `Business_ID` per inspection `Date`, with the business `Name`, its `Address` and `ZIP`, its `Longitude` and `Latitude`, and the value of `Score` on each inspection date. With data structured this way, you will be able analyze trends over time for each establishment. There should no longer be duplicate rows for when an establishment has multiple violations on a single date.
+
+```{r scores_over_time, cache=TRUE}
+scores_over_time <- restaurants_only %>%
+    select(Business_ID, Name, Date, Address, ZIP, Longitude, Latitude, Score) %>%
+    distinct(Business_ID, Date) %>%
+    arrange(Business_ID, Date)
+```
+
+
+## Preparing to label bad scores
+
+> In order to label restaurants with bad scores (say, 40 and above), you'll want to make a column called `Label_40` on `scores_over_time`. It should have the `Name` if the `Score` is greater than or equal to 40, and be blank (i.e. `""`) if the `Score` is below that. Use `mutate` and `ifelse` to make this `Label_40` column.
+
+
+```{r construct_labels, cache=TRUE}
+scores_over_time <- scores_over_time %>%
+    mutate(Label_40 = ifelse(Score >= 40, Name, ""))
+```
+
+
+## Most recent scores
+
+> We'll also want to look at just the most recent scores for each restaurant. Make a data frame called `recent_scores` from `scores_over_time` that has one row per `Business_ID`, with the business `Name`, its `Address` and `ZIP`, `Longitude` and `Latitude`, the most recent value of `Score`, the `Date` of that score, and `Label_40`. The slides from last week pertaining to looking at the most recent inspections of coffee shops have code that might help.
+
+```{r most_recent_scores, cache=TRUE}
+recent_scores <- scores_over_time %>%
+    group_by(Business_ID) %>%
+    filter(Date == max(Date))
+```
+
+# Map-making
+
+# Mapping the recent scores
+
+> Now, use the `ggmap` package and the longitude and latitude information to plot the most recent inspection scores for restaurants on top of a map of Seattle. Experiment with zoom levels to get the right region bounds. Try coloring and/or sizing the points according to their most recent inspection score (bigger points = higher score). You can use [`scale_color_gradient`](http://docs.ggplot2.org/current/scale_gradient.html) to set the colors so that establishments with lower scores are white or gray, and establishments with higher scores are red, and [`scale_size`](http://docs.ggplot2.org/current/scale_size.html) to set the sizes. Play with these options and map settings until you get something you think looks good.
+
+```{r all_seattle_map, message=FALSE, warning=FALSE, cache=TRUE}
+qmplot(data = recent_scores,
+       x = Longitude, y = Latitude,
+       # map color and size to Score
+       color = Score, size = Score,
+       alpha = I(0.20)) +
+    ggtitle("Recent Seattle health inspection scores") +
+    # low is a light gray, high is a red color
+    scale_color_gradient(low = "#BBBBBB", high = "#AA0011") +
+    # small points to large points (but not too large)
+    scale_size(range = c(0.24, 4)) +
+    # combine color and size into same legend with guides
+    guides(color = guide_legend(),
+           size = guide_legend())
+```
+
+I used `message=FALSE, warning=FALSE` in the chunk above to suppress all the map-making downloading messages.
+
+## The U District
+
+> Now repeat the plot, but zoomed in on the U District area. Add some text labels using `Label_40` for businesses whose scores were 40 or higher on their most recent inspection. See the [`ggplot2` docs on `geom_text` and `geom_label`](http://docs.ggplot2.org/current/geom_text.html) for how you can get these to look good, perhaps trying out the [`ggrepel` package](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html) to avoid overlaps.
+
+
+```{r udistrict_map, message=FALSE, warning=FALSE, cache=TRUE}
+# subset to udistrict:
+
+# query the map server
+ud_map <- get_map(location = "burke museum university of washington", zoom = 15)
+# grab the bounding box coordinate data frame
+ud_bb <- attributes(ud_map)[["bb"]]
+# subset the data based on bounding box
+ud_recent_scores <- recent_scores %>%
+    filter(ud_bb[["ll.lat"]] <= Latitude &
+               Latitude <= ud_bb[["ur.lat"]] &
+               ud_bb[["ll.lon"]] <= Longitude &
+               Longitude <= ud_bb[["ur.lon"]])
+
+qmplot(data = ud_recent_scores,
+       x = Longitude, y = Latitude,
+       # map color and size to Score
+       color = Score, size = Score,
+       alpha = I(0.5)) +
+    ggtitle("Recent U District health inspection scores") +
+    scale_color_gradient(low = "#BBBBBB", high = "#AA0011") +
+    scale_size(range = c(0.24, 4)) +
+    guides(color = guide_legend(),
+           size = guide_legend()) +
+    # for labels, use just a subset of the data where the label is there
+    geom_label_repel(data = ud_recent_scores %>%
+                         filter(Label_40 != ""),
+                     aes(label = Label_40),
+                     size = 3,
+                     fill = "black",
+                     color = "white")
+```
+
+## Capitol Hill
+
+> Repeat the above, but for Capitol Hill instead.
+
+```{r caphill_map, message=FALSE, warning=FALSE, cache=TRUE}
+# subset to capitol hill:
+
+ch_map <- get_map(location = "cal anderson park", zoom = 15)
+ch_bb <- attributes(ch_map)[["bb"]]
+ch_recent_scores <- recent_scores %>%
+    filter(ch_bb[["ll.lat"]] <= Latitude &
+               Latitude <= ch_bb[["ur.lat"]] &
+               ch_bb[["ll.lon"]] <= Longitude &
+               Longitude <= ch_bb[["ur.lon"]])
+
+qmplot(data = ch_recent_scores,
+       x = Longitude, y = Latitude,
+       color = Score, size = Score,
+       alpha = I(0.5)) +
+    ggtitle("Recent Capitol Hill health inspection scores") +
+    scale_color_gradient(low = "#BBBBBB", high = "#AA0011") +
+    scale_size(range = c(0.24, 4)) +
+    guides(color = guide_legend(),
+           size = guide_legend()) +
+    geom_label_repel(data = ch_recent_scores %>%
+                         filter(Label_40 != ""),
+                     aes(label = Label_40),
+                     size = 3,
+                     fill = "black",
+                     color = "white")
+```
+
+# Scores over time
+
+
+## Sub-sampling the data
+
+> Now we want to look at inspection scores over time for restaurants, but there are far too many to visualize. Pick something more limited to investigate and subset the `scores_over_time` data to include somewhere between around 5 and 25 establishments. To do this, you'll want to make a vector that has just the `Business_ID` or `Name` values of restaurants of interest, and then `filter` the `scores_over_time` data based on this. Some examples of angles you could choose for doing this subsetting:
+
+> * Restaurants in your ZIP code
+> * Your favorite chain restaurant
+> * Diners
+> * Coffee shops in a part of the city
+> * A cuisine based on words in restaurant names (e.g. "Pho")
+> * Restaurants that have had a really bad score at some time -- did they have previous bad scores, or were they mostly without problems before? 
+
+> The string pattern matching tools from last week could be helpful depending on the criteria you choose.
+
+I will look at [hipster restaurants whose names are "Something and Something"](http://www.hipsterbusiness.name/).
+
+```{r hipster_subsample}
+hipster_restaurants <- scores_over_time %>%
+    filter(str_detect(Name, "^[A-Z]* (AND|\\+|&) [A-Z]*$")) %>%
+    # remove a few insufficiently hip or non-restaurant entries
+    filter(!(Name %in% c("MCCORMICK & SCHMICKS",
+                         "BARNES & NOBLE",
+                         "BEAN & BAGEL",
+                         "RROLLS AND SUSHI",
+                         "TERIYAKI & WOK",
+                         "BEVERAGES & MORE",
+                         "BURGERS & MORE",
+                         "HARRIED AND HUNGRY",
+                         "MILSTEAD & COMPANY",
+                         "MILSTEAD AND COMPANY")))
+```
+
+## Mapping your subsample
+
+> Make a plot, appropriately cropped, showing the locations of the restaurants you've chosen with a dot for each restaurant and text labels.
+
+I'll keep just the most recent scores for these restaurants for plotting.
+
+```{r hipster_map, message=FALSE, warning=FALSE, cache=TRUE}
+hipster_recent_scores <- hipster_restaurants %>%
+    group_by(Business_ID) %>%
+    filter(Date == max(Date))
+
+qmplot(data = hipster_recent_scores,
+       x = Longitude, y = Latitude,
+       color = I("firebrick")) +
+    ggtitle("Something & Something restaurants") +
+    geom_label_repel(aes(label = Name),
+                     size = 3,
+                     fill = "black",
+                     color = "white")
+```
+
+It looks like most of these restaurants are in Ballard or Downtown.
+
+## Plotting time trends
+
+> Now make a longitudinal plot! You should use `facet_wrap` by restaurant name so that you have one panel per restaurant. The x axis should be the `Date` (maybe reformatted using [`scale_x_date`](http://docs.ggplot2.org/current/scale_date.html) to avoid extra clutter) and the y axis should be the `Score`. Use a `geom_line` layer to show the trend in scores for each restaurant. Do you observe anything interesting about the scores for the restaurants you've chosen? (This doesn't involve any new skills, just a refresher on `ggplot2` practice!)
+
+```{r hipster_time_scores, warning=FALSE, message=FALSE}
+ggplot(data = hipster_restaurants,
+       aes(x = Date, y = Score, group = Name)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap( ~ Name, ncol = 3) +
+    scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+    ggtitle("Trendy restaurant health inspection trends") +
+    # add a reference line for scary scores
+    geom_hline(yintercept = 40, color = "firebrick")
+```
+
+Yikes! Many of these restaurants have had inspections hit near the 40 point reference line. It doesn't look previously getting a moderately bad score tends to lead to lower future scores, either.
