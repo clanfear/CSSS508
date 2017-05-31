@@ -1,0 +1,24 @@
+Message-ID: <8351810.1075852727717.JavaMail.evans@thyme>
+Date: Wed, 24 Oct 2001 07:11:06 -0700 (PDT)
+From: ina.rangel@enron.com
+To: john.arnold@enron.com
+Subject: Confidential - Voicemail Messages
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: Rangel, Ina </O=ENRON/OU=NA/CN=RECIPIENTS/CN=IRANGEL>
+X-To: Arnold, John </O=ENRON/OU=NA/CN=RECIPIENTS/CN=Jarnold>
+X-cc: 
+X-bcc: 
+X-Folder: \JARNOLD (Non-Privileged)\Arnold, John\Inbox
+X-Origin: Arnold-J
+X-FileName: JARNOLD (Non-Privileged).pst
+
+These were the messages in your voicemail:
+
+1.  10/18/01 - Margaret Allen ....needed your advice on whether her sister should take job with Cal-Pine or Kinder Morgan
+
+2. 10/19/01 - Adrianne Engler ....regarding candidantes that you were suppose to phone interview.  (you have sent her an email since this)
+
+3. 10/23/01 - Bob Shults(X3-0397)....they met with Nymex last week and are getting ready send the proposal ont eh document you saw last week.  He wants to make sure that you 
+                                        are okay with this and dont have any issues.  

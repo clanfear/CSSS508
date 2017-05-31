@@ -1,0 +1,3631 @@
+Message-ID: <31290720.1075848154649.JavaMail.evans@thyme>
+Date: Tue, 27 Mar 2001 19:42:00 -0800 (PST)
+From: suzanne_nimocks@mckinsey.com
+To: skean@enron.com
+Subject: California Power Crisis Update (No. 10)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: <Suzanne_Nimocks@mckinsey.com>
+X-To: SKean@enron.com
+X-cc: 
+X-bcc: 
+X-Folder: \Steven_Kean_June2001_4\Notes Folders\Discussion threads
+X-Origin: KEAN-S
+X-FileName: skean.nsf
+
+We have been pulling together these weekly(sometimes more often) summaries
+for internal purposes.  Would you find it helpful to be on the distribution
+list?  Hope you are doing well.  Look forward to touching base soon.
+----- Forwarded by Suzanne Nimocks/HOU/NorthAmerica/MCKINSEY on 03/28/2001
+03:41 AM -----
+       Memorandum
+
+    TO:   Pru Sheppard
+    BCC:  Suzanne Nimocks
+
+
+   FROM:   Pru Sheppard
+       B. Venki Venkateshwara
+      DATE:    March 27, 2001
+
+       California Power Crisis Update (No. 10)
+
+      DEVELOPMENTS THIS WEEK, 3/23/2001
+
+          The weeks highlights include:
+
+
+      ?   Continued indications that the issue of market power and possible
+      remedies for it is likely to remain a high profile issue in
+      California and elsewhere (both retroactively and prospectively)
+      ?   An ironical situation with respect to QFs in which QF power under
+      contract is effectively being released into the market at higher
+      prices
+      ?   A court order requiring Reliant to continue to sell power to the
+      ISO even if it is not being paid in a full and timely manner
+      ?   Another Stage 3 emergency and rolling blackouts
+
+      Market power
+
+
+          There are continued indications that the issue of market power
+      will not be settled simply.  This week there was a lengthy and
+      politically influential front page story in the New York Times about
+      FERCs passive approach to policing generators (Critics Say U.S.
+      Energy Agency Is Weak in Oversight of Utilities). The story was by
+      Jeff Gerth and Joseph Kahn. (Jeff Gerth's 1992 story on the
+      Whitewater deal is viewed by journalists to have been the origin of
+      what eventually became a multi-year investigation of Bill Clinton.)
+
+
+          The key issues are familiar:
+
+
+      ?   Does market power exist to a degree that warrants remedies such
+      as price caps, refunds, and so on?
+      ?   If so, what is the basis for asserting that market power exists
+      and what is the remedy?  (See the discussion in the New York Times
+      article on the "good hours" vs. "bad hours" approach and the
+      associated political decision not to deal with "good hours").
+      ?   Can market power be used as leverage to eventually settle
+      generator bills in California at something less than 100 cents on the
+      dollar.   (The California ISO filed a complaint claiming $6 billion
+      in overcharges this week.)
+
+      The QF irony
+
+
+          Through the 1990s, QF contracts were projected to be the source
+      of stranded costs because they were priced "way above market."  In
+      recent months, in California, they look like a bargain (although some
+      are not such great bargains because a portion of their price is tied
+      to gas).  You would think that the utilities would request QFs to
+      maximize their output.  But credit problems have created an ironical
+      situation.  The facts:
+
+
+      ?   PG&E and Edison have not been paying the QFs fully and promptly
+      for some time.
+      ?   The QFs form a creditors committee and threaten to push PG&E and
+      Edison into bankruptcy. (Some gas-fired QFs had to shut down because
+      they did not have money to pay for the gas.)
+      ?   Last week's court decision allows MidAmerican/CalEnergy to
+      essentially sell its power to others even though the QF contract
+      "dedicates" the output to the purchasing utility.
+      ?   CalEnergy does so immediately, selling to El Paso.
+
+      The Reliant Order
+
+
+          A court ordered Reliant to continue to sell to the ISO, when
+      requested, regardless of whether Reliant had been paid fully and
+      promptly for past deliveries to the ISO.  Reliant announced it will
+      appeal the order.
+
+
+          This is somewhat of a contrast to the QF situation except that
+      the circumstances governing the 2 situations are probably different.
+      The QF contracts pre-date the ISO and are with the utilities and most
+      likely make no reference to providing power during emergencies.  In
+      fact, many QF contracts have the opposite provision: authority for
+      the utility to cut takes during so-called "light load" periods.
+
+
+      Stage 3 emergency and rolling blackouts--again
+
+
+          There was another Stage 3 emergency in California ? with rolling
+      blackouts this week.  This prompted everyone to wonder why this was
+      happening in March.  Among the factors:
+
+
+      ?   Increased demand from summer-like temperatures
+      ?   Cutbacks in imports
+      ?   Loss of 1400 MW due to a transformer fire at an Edison plant
+      ?   Loss of about 3100 MW from QF plants that were forced to shutdown
+      because they could not afford gas bills  (VV)
+
+
+      MARKET COMMENTARY
+
+      (For easier printing of all the articles in this section use the file
+      at the end of the section)
+
+
+      Critics Say U.S. Energy Agency Is Weak in Oversight of Utilities
+      By JEFF GERTH and JOSEPH KAHN
+      03/23/2001
+      The New York Times
+      Page 1, Column 1
+      c. 2001 New York Times Company
+
+      WASHINGTON, March 22 -- The pressure was intense when federal
+      regulators met
+      privately last month to debate remedies for soaring electricity
+      prices in
+      California.
+      Officials of the Federal Energy Regulatory Commission, the agency
+      whose mandate
+      is to ensure ''just and reasonable'' electricity rates nationwide,
+      had evidence
+      that a few companies had been selling electricity to California at
+      prices far
+      above the cost of generating it. The agency faced an imminent
+      deadline to
+      challenge those prices or let the companies possibly pocket hundreds
+      of millions
+      of dollars in unfair profits.
+
+      An internal memorandum laid out two choices. The agency could audit
+      and punish
+      ''bad actors,'' the companies that were exploiting the market. Or it
+      could
+      identify ''bad hours,'' when electricity shortages were most acute
+      and spiking
+      prices were arguably nobody's fault, and order refunds for only the
+      most
+      exorbitant prices.
+      ''It may be easier to identify bad hours than bad actors,'' the
+      memorandum said.
+
+      The commission took the easier way. It decided not to investigate
+      reports of
+      abuses by companies, but issued an order that could require them to
+      refund to
+      the state utilities up to $124 million collected during a relatively
+      few ''bad
+      hours'' in January and February. That is hundreds of millions of
+      dollars less
+      than California might have claimed, since the most potential
+      overcharging
+      occurred during ''good hours,'' when power was more plentiful but
+      prices were
+      often just as extreme. The order ignored those hours.
+      Today, in a criticism of the agency's lack of aggressiveness,
+      California
+      regulators estimated that generators had charged $6.2 billion above
+      competitive
+      levels over 10 months. They urged the agency to dig deeper, hoping it
+      would
+      demand more refunds or other stiff remedies. But the agency's track
+      record --
+      one of complacency in the eyes of state officials -- leaves
+      California
+      regulators skeptical that Washington will confront the big power
+      producers.
+      The small, obscure agency, tucked behind the rail yard of Union
+      Station here,
+      has largely soft-pedaled its role as the electricity industry's top
+      cop, even
+      though it has wide authority to keep power companies in line. To keep
+      rates
+      reasonable, it can impose price caps, strip companies of the right to
+      charge
+      market rates, force them to return excessive profits and even suspend
+      deregulation altogether.
+      Instead, the agency has largely left it to private companies to pry
+      open the
+      $250 billion electricity industry, which has historically been
+      controlled by
+      monopoly utilities and state officials. The agency's defenders,
+      including its
+      chairman, Curt Hebert Jr., a fierce advocate of unfettered markets,
+      say that its
+      largely hands-off approach reflects the delicate balancing of
+      competing
+      interests -- a commitment to protect consumers while not stifling
+      market forces.
+
+      But politicians, utility executives, energy economists and local
+      regulators say
+      California's rolling blackouts and skyrocketing electricity prices
+      are the signs
+      of a market running amok. They accuse the agency of standing aside as
+      companies
+      manipulate their way to windfall profits. The agency's critics, who
+      include one
+      of its own commissioners and numerous staff members, say that its
+      enforcement
+      mission has been blunted by free-market passions and the influence of
+      industry
+      insiders in its ranks.
+      When the agency began its first national investigation of high
+      electricity
+      prices last year, it named a newly recruited industry insider, Scott
+      Miller, to
+      lead the effort. Mr. Miller and his colleagues said in their report
+      that there
+      was ''insufficient data'' in California to prove any profiteering by
+      generating
+      companies. Yet his own former employer, PG&E Energy Trading, was at
+      the time a
+      subject of a civil antitrust investigation by the Justice Department
+      that
+      focused on electricity market abuses in New England.
+      The agency has given state regulators a lead role in monitoring local
+      power
+      markets. Yet even as these regulators have urged the agency to be
+      more
+      aggressive in investigating suspicions that companies have abused
+      their power in
+      California, New England, the Midwest and the mid-Atlantic, they have
+      frequently
+      been ignored or rebuffed.
+      Critics say that the agency began deregulation before it was ready or
+      willing to
+      make sure the markets worked effectively. They accuse it of showing
+      favoritism
+      to industry -- allowing companies, for example, to ignore
+      requirements to file
+      detailed reports of market transactions that are critical to proving
+      accusations
+      of market abuses.
+      ''We need to wake up to the fact that this is a dysfunctional market
+      that is
+      being gamed and manipulated by those who participate in it,'' said
+      William
+      Massey, a commissioner of the agency who has become one of its
+      leading critics.
+      The agency's inaction, the critics say, leads to ''gaming'' --
+      jockeying for
+      profits that does not necessarily involve illegality -- and outright
+      market
+      manipulation. Consumers and utilities are the victims, paying
+      billions of
+      dollars more for electricity than if the markets were truly
+      competitive.
+      Agency officials acknowledge that enforcement of market rules to curb
+      gaming and
+      manipulation had not been a high priority in previous years. But they
+      defended
+      their recent California order as proof that they intend to keep
+      markets free of
+      abuse. They add that the agency is also pressuring two generators to
+      refund
+      almost $11 million for possibly manipulating the California market
+      last spring.
+      Agency officials and some outside analysts say that poorly conceived
+      deregulation plans by states, a shortage of power plants, rising
+      natural gas
+      prices, and even the weather have had more impact on electricity
+      prices than
+      abuses by companies or any failings by the agency. They say the
+      agency must
+      balance the competing interests of generators, local regulators and
+      utility
+      companies if it is to keep deregulation on track.
+      ''We're trying to craft a system that gives breathing room to develop
+      a market,
+      but not so much room that undue market power punishes consumers,''
+      Mr. Hebert
+      said.
+      Fight Over Deregulation
+      Today's debate traces back to the 1930's, when President Franklin D.
+      Roosevelt
+      backed legislation to break up utility monopolies. The Federal Power
+      Act of 1935
+      gave the Federal Power Commission a mandate to ensure ''just and
+      reasonable''
+      electricity rates. The Federal Power Commission was abolished in 1977
+      and
+      replaced by the Federal Energy Regulatory Commission, an independent
+      agency with
+      1,200 employees that also oversees oil pipelines and the natural gas
+      market. The
+      president appoints the chairman and four commissioners -- two
+      Democrats and two
+      Republicans with staggered terms of five years. Two Republican seats
+      are
+      currently unfilled.
+      The deregulation of the electricity markets began in the late 1980's,
+      after the
+      agency had begun opening the gas markets. By 1996, the commissioners
+      issued a
+      landmark order that forced utility companies to open their
+      transmission lines to
+      other utilities and electricity wholesalers. The commission and many
+      private
+      economists expected that by prying open protected markets,
+      electricity prices
+      would immediately fall.
+      That possibility set off a deregulation frenzy, most prominently in
+      California,
+      New York, New England and the mid-Atlantic states. Generating
+      companies rushed
+      to expand in the new, borderless market.
+      But the agency's balancing act has grown more difficult as
+      electricity
+      deregulation has spread nationwide. Congress has forced it to trim
+      its staff in
+      recent years. Officials complain that investigating abuses in
+      electricity
+      markets strains their resources.
+      And as the California crisis has worsened, the commissioners have
+      begun sparring
+      publicly among themselves about what to do. This week, Mr. Massey, a
+      Democratic
+      commissioner, and Mr. Hebert (pronounced AY-bear), a Republican, sat
+      side by
+      side before a House panel and argued diametrically opposed positions.
+      Mr. Hebert
+      said high prices in California ''were sending the right signals to
+      get supply
+      there.'' Mr. Massey called the prices that generators were charging
+      ''unlawful''
+      and said that his agency, by not reining them in, ''is simply not
+      doing its
+      job.''
+      The agency's leadership has been in flux for months. Congressional
+      and industry
+      officials in Washington say President Bush is considering replacing
+      Mr. Hebert,
+      whom he named to the top post less than two months ago, with Pat
+      Wood, who runs
+      the Texas public utility commission. A White House spokeswoman had no
+      comment on
+      the reports.
+      Though Mr. Hebert's positions are not far from those of the Bush
+      administration,
+      his relations with California leaders may have made his position
+      tenuous. Mr.
+      Hebert, a Mississippian who is a close ally of the Senate majority
+      leader, Trent
+      Lott, has warred with California politicians who have proposed new
+      solutions to
+      the crisis there.
+      Mr. Hebert, who has served as a commissioner since 1997, has often
+      taken the
+      most ideologically free-market position of any commissioner. He
+      flatly rejects
+      the idea of price caps on electricity as hopelessly ineffective and
+      contrary to
+      market forces. When Gov. Gray Davis outlined a plan to have the state
+      buy
+      transmission lines to relieve utility companies' debt, Mr. Hebert's
+      response was
+      dismissive. ''It's not in the interest of the American public,'' he
+      pronounced.
+      Even as new electricity markets opened in the summer of 1999, they
+      started
+      producing nasty shocks. The mid-Atlantic region experienced some
+      early
+      volatility.
+      As the turmoil grew, economists began raising the alarm about a
+      phenomenon
+      called ''market power,'' the ability of energy traders in the new
+      national
+      market to sustain prices above the competitive level. Proving such
+      abuses is
+      difficult, because it requires comparing tens of thousands of
+      separate
+      electricity transactions with the costs of the generators that
+      initiated them.
+      Joseph Bowring, who heads the market monitoring unit of the nonprofit
+      entity
+      that operates the mid-Atlantic transmission system, said that power
+      companies
+      there had exercised some market power. But only the Federal Energy
+      Regulatory
+      Commission, not local regulators, had the authority to collect the
+      data to
+      determine how much market power had been exercised and whether it had
+      been
+      abusive or not, he said.
+      Mr. Bowring said he talked to agency officials about doing so. In the
+      end, Mr.
+      Bowring and several agency officials said, the agency chose not to
+      investigate.
+      The decision roiled some agency officials.
+      Ron Rattey, a veteran agency economist, wrote a memorandum last June
+      describing
+      the staff as ''impotent in our ability to monitor, foster, and ensure
+      competitive electric power markets.'' The staff, the memorandum said,
+      did not
+      even enforce a requirement that power companies file detailed
+      quarterly reports
+      listing essentially every sale they make. Such data would have been
+      useful to
+      Mr. Bowring.
+      Local-Federal Clash
+      Local regulators who want to ensure competitive prices often have to
+      act on
+      their own. Monitors in New England have intervened about 600 times
+      since 1999 to
+      correct prices they determined had been caused, at least in part, by
+      market
+      manipulation.
+      The federal agency has sometimes chastised them for interfering too
+      much.
+      The industry, not surprisingly, shares that view. One vocal critic
+      was Mr.
+      Miller. Before the agency recruited him last July to head its
+      division of energy
+      markets, he was director of policy coordination for the national
+      energy-trading
+      unit of PG&E Corporation, the California holding company whose assets
+      also
+      include Pacific Gas and Electric, the California utility.
+      Although the utility has lost billions of dollars during California's
+      crisis,
+      Mr. Miller's former unit has become one of the most profitable new
+      energy
+      traders nationwide. PG&E Energy Trading, by several estimates, is now
+      the
+      second-largest seller of electricity in New England.
+      The company has had a rocky relationship with regulators. They
+      intervened
+      several times in 1999 and 2000 to retroactively cancel auctions they
+      said
+      produced excessive profits for PG&E and other companies. Mr. Miller
+      denounced
+      the practice, though he acknowledged in public testimony that his
+      company
+      sometimes charged ''very high'' prices when it could.
+      ''One person's predatory pricing is another person's competitive
+      advantage,''
+      Mr. Miller said at a public hearing on deregulation in Texas in 1999.
+      New
+      England regulators too often acted as ''judge, jury and executioner''
+      when
+      overseeing the market, he said.
+      One year later, Mr. Miller and his new colleagues at the federal
+      agency got a
+      chance to examine New England's problems from the regulators'
+      perspective. Their
+      Nov. 1 report attributed New England's frequent price gyrations to
+      technical and
+      regulatory flaws.
+      As Mr. Miller's team was preparing its report, the Justice
+      Department, whose
+      threshold for stepping into possible industry wrongdoing is far
+      higher than the
+      agency's, began looking into whether price spikes in New England
+      pointed to
+      unlawful monopoly power or collusion, people contacted by the
+      department during
+      that inquiry said.
+      One subject of the civil inquiry is possible price manipulation in
+      one of New
+      England's ancillary services markets, people contacted by the
+      department said.
+      They said the department was examining whether PG&E and two other
+      companies
+      tried to corner that market for several months early last year. PG&E
+      confirmed
+      that the Justice Department had contacted it, but denies wrongdoing
+      and says it
+      has cooperated with the department's requests.
+      Mr. Miller has declined to comment on his role at PG&E or at the
+      agency. His
+      supervisors defended his work and said they had detected no conflict
+      of interest
+      between his work at PG&E and his duties at the agency.
+      Those duties brought Mr. Miller to California last August. With
+      electricity
+      prices there soaring, he and his colleagues sat down with several
+      utility
+      executives at the agency's San Francisco office.
+      One executive, Gary Stern, director of market monitoring for Southern
+      California
+      Edison, wanted the agency to stop what he suspected were market
+      abuses by power
+      generators. He provided a road map to help investigators figure out
+      how power
+      companies traded power contracts -- and whether they had manipulated
+      the
+      markets.
+      But when Mr. Miller and his team approached 11 generators and
+      marketers --
+      including his old employer -- a few weeks later, they did it their
+      way. They
+      asked eight questions, many of them imprecise, like: ''Describe your
+      strategy
+      for bidding generation resources into market.''
+      This question, Mr. Stern said in a recent interview, ''was equivalent
+      to asking
+      a suspected burglar how he spent his day.''
+      Some agency officials also thought the team should probe deeper. Mr.
+      Rattey
+      recommended that Mr. Miller seek the quarterly pricing reports that
+      marketers
+      were supposed to file. But his suggestion was not adopted, agency
+      records show.
+      Daniel Larcamp, Mr. Miller's supervisor, said ''there might have been
+      more
+      information that could have been obtained'' in the California
+      inquiry. But he
+      said the commission gave the staff only three months to finish,
+      making it
+      impossible to collect and analyze the reams of data involved.
+      For Mr. Miller, agency documents show, the investigation was so
+      time-consuming
+      that he had no time to fill out the financial disclosure form
+      required of new
+      federal employees. Mr. Miller submitted his form in late January,
+      after a
+      reporter requested it. Agency lawyers approved the form, but only
+      after he
+      provided additional information about his job and compensation from
+      PG&E. The
+      lawyers said Mr. Miller's participation had been permissible because
+      PG&E was
+      not the subject of the investigation.
+      When the staff report was issued on Nov. 1, it found high prices and
+      problems in
+      the design of the California market. But while the companies ''had
+      the potential
+      to exercise market power,'' the commission said, there was
+      ''insufficient data''
+      to prove that they did.
+      Some marketers saw the report as an exoneration.
+      ''This has been looked at several times, most notably by the FERC and
+      nobody has
+      found any evidence of market manipulation and profiteering,'' Rob
+      Doty, the
+      chief financial officer of Dynegy Inc., told a reporter earlier this
+      year.
+      California Inquiry
+      The agency has recently shown signs of wanting to apply pressure on
+      generators.
+      But its early efforts show how it is treading on new and uncertain
+      turf.
+      When the California crisis grew severe last December, the commission
+      issued a
+      refund order, a shot across the bow for generators charging high
+      prices. It
+      required them to submit detailed data any time they sold electricity
+      in
+      California for more than $150 per megawatt hour, considered at the
+      time a fair
+      estimate of the highest costs any of them faced.
+      It also told generators that for the next several months, they could
+      be forced
+      to give refunds if the agency found that they had charged excessive
+      prices. The
+      commission also said that it would examine bidding practices and
+      strategies for
+      withholding generating capacity to ferret out any efforts to
+      artificially raise
+      prices.
+      When the agency's own 60-day deadline for examining market data in
+      January
+      approached, however, it became clear that staff members had not made
+      any
+      detailed examination. Instead, staff members said, the agency
+      scrambled to forge
+      a last-minute compromise that would allow it to issue a statement
+      opposing high
+      prices in the state without a time-consuming investigation.
+      During this scramble, a senior staff member, Kevin Kelly, suggested
+      focusing on
+      bad hours instead of bad actors.
+      ''Our attempts to find illegal behavior or legal 'misbehavior' by
+      sellers ('bad
+      actors') always seems to fail,'' his memorandum said. It said that
+      the agency
+      could more easily blame high prices on acute shortages during the
+      most critical
+      hours.
+      The suggestion won the day. The commission decided to limit its order
+      to the
+      hours when California declared a Stage 3 emergency, when supplies are
+      critically
+      low.
+      Mr. Stern of Southern California Edison and several private-sector
+      economists
+      have attacked the economic logic of that order. They said that the
+      commission
+      has focused on times when prices might be legitimately high. The
+      bigger worry:
+      Generators can and often do sustain artificially high prices when
+      supplies are
+      not as tight, they say.
+      Mr. Massey, the Democratic commissioner, dissented from the decision
+      for those
+      reasons. Because most high-priced transactions in January and
+      February did not
+      occur during bad hours, he argued, the commission effectively chose
+      to bless as
+      ''just and reasonable'' the hefty profits generators are making from
+      the
+      California crisis.
+      ''The problem with my agency is that we're so carried away with the
+      rhetoric of
+      markets that we've gotten sloppy,'' Mr. Massey said. ''We're talking
+      about
+      electricity. It's the juice of the economy, so it's got to be
+      available and
+      reasonably priced.''
+
+
+      Williams defends pricing of electricity
+      03/23/2001
+      Associated Press Newswires
+      Copyright 2001. The Associated Press. All Rights Reserved.
+
+      TULSA, Okla. (AP) - Williams Cos. Inc. says it can justify the rates
+      it charged
+      for wholesale power, despite accusations from federal regulators that
+      it sold
+      over-priced electricity to California.
+      Federal regulators claim Williams Energy Marketing and Trading Co., a
+      unit of
+      Tulsa-based Williams, owes California more than $40 million in
+      refunds for power
+      it sold to the state's Independent System Operator.
+
+      The Federal Energy Regulatory Commission says that Williams is one of
+      several
+      power providers responsible for $124 million in overcharges from
+      transactions in
+      January and February.
+      The Independent System Operator, which manages the state's power
+      grid, claims
+      the state was overcharged $6.2 billion by 21 wholesale power
+      providers,
+      including Williams, between May and February.
+      Williams says the rates it charged California were fair and were
+      based on
+      production costs and market conditions.
+      "Williams is confident that it performed within the guidelines
+      established by
+      the ISO," said Williams spokeswoman Paula Hall Collins. "We felt like
+      we had
+      worked within the regulations set up by ISO."
+      According to the commission, power prices levied by Williams in
+      January and
+      February exceeded federal price ceilings based on the cost of natural
+      gas and
+      other market conditions.
+      However, the price ceilings were established after the ISO accepted
+      Williams'
+      power prices, Collins said.
+      The commission will review Williams' explanation and either accept
+      the
+      justification or order the company to pay refunds.
+
+
+
+      Allegheny Energy makes big California connection
+      03/23/2001
+      Associated Press Newswires
+      Copyright 2001. The Associated Press. All Rights Reserved.
+
+      HAGERSTOWN, Md. (AP) - Allegheny Energy Inc. said Thursday it has
+      agreed to sell
+      $4.5 billion worth of power to California's electricity-purchasing
+      agency over
+      the next 10 years.
+      The company said the contract call for Allegheny to provide up to
+      1,000
+      megawatts that the Hagerstown-based company has secured from western
+      generating
+      plants through its new energy trading division, Allegheny Energy
+      Global Markets
+      - formerly Merrill Lynch Global Energy Markets.
+
+      "This is a win-win for both the state of California and Allegheny
+      Energy. It
+      provides a long-term source of fixed-price energy and should help to
+      stabilize
+      prices in California," said Michael P. Morrell, president of the
+      Allegheny
+      Energy Supply division.
+      Allegheny Energy is the parent of Allegheny Power, which delivers
+      electric
+      energy and natural gas to parts of Maryland, Ohio, Pennsylvania,
+      Virginia and
+      West Virginia.
+
+
+      Williams plans expansion of pipeline to help power Calif.
+      03/23/2001
+      Associated Press Newswires
+      Copyright 2001. The Associated Press. All Rights Reserved.
+
+      SALT LAKE CITY (AP) - The Williams Cos. plans to expands its Kern
+      River
+      pipeline, which runs through Utah, to provide more natural gas for
+      generating
+      plants in California.
+      Williams' gas pipeline unit in Salt Lake City said Thursday that it
+      plans to
+      construct nearly 700 miles of additional pipeline that will run
+      parallel to its
+      existing Kern River line.
+
+      Construction on the $1 billion project is expected to begin next year
+      and is
+      scheduled for completion in May 2003, said Kirk Morgan, director of
+      business
+      development for Kern River pipeline.
+      "Shippers are seeking more access to natural gas from the Rocky
+      Mountain basin,
+      where producers are aggressively stepping up production," Morgan
+      said.
+      The new pipeline is expected to deliver about 900 million cubic feet
+      of natural
+      gas per day to markets in Utah, Nevada and California.
+      Most of the gas will be used for generating plants planned in
+      California. If all
+      of the pipeline's capacity were used to generate electricity, it
+      could produce
+      about 5,400 megawatts. "That is enough to light around 4.5 million
+      homes,"
+      Morgan said.
+      The original Kern River line was completed in 1992. It enters Utah
+      from Wyoming
+      then crosses into the Salt Lake Valley near Bountiful. It turns south
+      near the
+      Salt Lake City International Airport then runs the length of the
+      state before
+      passing into southern Nevada and winding up near Bakersfield, Calif.
+      It currently transports 700 million cubic feet of natural gas per
+      day. Williams,
+      based in Tulsa, Okla., recently filed an emergency application with
+      federal
+      regulators to install additional pumping stations on the line to
+      increase its
+      capacity by 135 million cubic feet per day. That $81 million pumping
+      station
+      project should be completed by July 1.
+      During the 2002 construction period, the Kern River project will
+      employ between
+      1,500 and 1,800 people. The company estimates annual property taxes
+      it pays to
+      Utah counties will increase from $3.5 million to about $7 million.
+      Questar will be one of the customers on the new pipeline, Morgan
+      said.
+      The utility wants to supply additional gas to southern Utah cities,
+      including
+      St. George and Cedar City.
+      "Our own pipelines serving southern Utah are at full capacity so this
+      is an
+      opportunity to transport additional gas into those areas from
+      company-owned
+      supplies in Wyoming," said Questar Gas spokeswoman Audra Sorensen.
+
+
+
+      Calif Energy Commission OKs 3 Pwr Plants Worth 2,076 MW
+      03/23/2001
+      Dow Jones Energy Service
+      (Copyright (c) 2001, Dow Jones & Company, Inc.)
+
+      (This article was originally published Thursday)
+
+      LOS ANGELES -(Dow Jones)- The California Energy Commission Wednesday
+      approved
+      three power plants worth 2,076 megawatts, two of which are scheduled
+      to come on
+      line by the end of 2002, a CEC spokesman said Thursday.
+
+      The plants approved include BP Amoco PLC (BP) unit ARCO Western
+      Energy's 500
+      megawatt Western Midway Sunset Project, slated to come on line in
+      October 2002;
+      Caithness Energy's 520 MW Blythe Power Plant, to come on line by Dec.
+      31, 2002;
+      and Thermo Ecotek's 1,056 MW Mountainview Power Plant, scheduled to
+      come on line
+      in April 2003.
+      All three of the new plants will be natural gas-fired combined-cycle
+      plants.
+      The $550 million Mountainview plant will be located in Southern
+      California, near
+      San Bernadino. The $300 million Western Midway-Sunset plant will be
+      located in
+      central Kern County, while the $250 million Blythe plant will be
+      located in the
+      city of Blythe in Riverside County.
+      The latest approvals bring to 13 the total number of plants approved
+      since April
+      1999 by the CEC, a spokesman said. Those plants will supply 8,405 MW
+      to the
+      state, which has seen rolling blackouts and spiking wholesale power
+      prices in
+      the last six months, in part due to lack of supply.
+      -By Jessica Berthold, Dow Jones Newswires; 323-658-3872;
+      jessica.berthold@dowjones.com
+
+
+      Some CalEnergy Power Could Be Sold Outside Calif - CEO
+      03/23/2001
+      Dow Jones Energy Service
+      (Copyright (c) 2001, Dow Jones & Company, Inc.)
+
+      (This article was originally published Thursday)
+
+      LOS ANGELES -(Dow Jones)- Some of CalEnergy Operating Corp's power
+      could end up
+      being sold outside of California, though that is not the company's
+      intent,
+      CalEnergy Chairman and CEO David Sokol said in a conference call
+      Thursday.
+
+      CalEnergy, an affiliate of MidAmerican Energy Holdings Co, which is
+      majority
+      owned by Warren Buffett's Berkshire-Hathaway (BRKA), was given legal
+      authority
+      Thursday to suspend 270 megawatts of power delivery to Edison
+      International
+      (EIX) utility Southern California Edison and sell on the open market,
+      because
+      SoCal Edison has not paid its bills since November.
+      CalEnergy stopped supplying power to SoCal Ed immediately following
+      the court
+      ruling.
+      "We stopped supplying power at 1 PM (PST) and have been selling to
+      parties that
+      will pay since then....We are selling it to marketers; our current
+      marketing
+      agent is El Paso Corp (EPG) and they will sell it for us," Sokol
+      said.
+      Sokol added that while it was his company's intention to have its
+      power sold to
+      California, that could not be guaranteed.
+      "We leave the energy selling to El Paso....We've directed them that
+      we would
+      like the power to stay in California but we can't stop them," from
+      selling out
+      of state, Sokol said.
+      Wholesale prices on the open market are about $400-$500 a
+      megawatt-hour, three
+      times more than what the company had received under its contract with
+      SoCal Ed.
+      The court's ruling did not address the $45 million SoCal Ed still
+      owes CalEnergy
+      for November and December power, and Sokol said that his company's
+      separate
+      lawsuit on that matter sought to attach the utility's assets as
+      payment for that
+      debt.
+      Sokol said the court's ruling had "significant implications" for the
+      entire
+      community of small, independent generators, known as qualifying
+      facilities or
+      QFs, who have not received payment from SoCal Ed.
+      "Edison's own lawyer said it best....that every QF in the state will
+      begin to
+      mitigate if the judge allowed us (to sell on the open market)," Sokol
+      said.
+      Sokol said his company was prepared to push SoCal Ed into involuntary
+      bankruptcy
+      Friday if CalEnergy hadn't won the case, but said he couldn't
+      speculate whether
+      other QFs may be more or less inclined to do so as a result of the
+      court
+      outcome.
+      A group of renewable power suppliers, owed more than $100 million
+      from SoCal Ed,
+      said late Wednesday they want state lawmakers to release them for
+      their supply
+      contracts with PG&E Corp. (PCG) unit Pacific Gas & Electric and SoCal
+      Ed until
+      the utilities are restored to financial stability.
+      The utilities claim close to $13 billion in undercollections due to
+      an inability
+      to pass high wholesale power costs to customers under a rate freeze.
+      In a statement, SoCal Ed said it opposed CalEnergy's bid to suspend
+      its QF
+      contract because the utility believed Gov. Gray Davis and state
+      regulators are
+      close to resolving "very legitimate financial concerns of CalEnergy
+      and other QF
+      suppliers."
+      SoCal Ed said it was concerned that CalEnergy's request to sell to
+      third parties
+      would lead to a major supply shortage in California.
+      The utility said it has informed the QFs that it is working to
+      resolve the issue
+      without giving unfair advantage to one class of creditors.
+      While many of the state's large power suppliers have been paid by on
+      a forward
+      basis for the power they sell into California, the QFs, which make up
+      one-third
+      of the state's total power supply, haven't been paid by SoCal Ed
+      since November.
+      PG&E has made partial payments to its QFs.
+      -By Jessica Berthold, Dow Jones Newswires; 323-658-3872,
+      jessica.berthold@dowjones.com
+      (Jason Leopold contributed to this article.)
+
+
+      California and the West Judge Frees Small Firm From Edison Contract
+      KEN ELLINGWOOD; DAN MORAIN
+      TIMES STAFF WRITERS
+      03/23/2001
+      Los Angeles Times
+      Home Edition
+      A-3
+      Copyright 2001 / The Times Mirror Company
+
+      El CENTRO -- California's balance of electrical power shifted
+      slightly Thursday
+      when an Imperial County judge temporarily freed a small geothermal
+      energy
+      producer from its contract with Southern California Edison, allowing
+      it to sell
+      power on the open market.
+      The ruling by Superior Court Judge Donal B. Donnelly could lead to a
+      mass exodus
+      by hundreds of small energy producers that have been selling power to
+      the
+      state's financially troubled utilities for months without getting
+      paid.
+
+      At the same time, it may have staved off plans by a group of the
+      small
+      generators to send Edison into involuntary bankruptcy as early as
+      today.
+      In Sacramento, energy legislation pushed by Gov. Gray Davis passed in
+      the state
+      Senate but foundered in the Assembly. The measure was intended to
+      ensure that
+      the state gets repaid for the electricity that it has been buying on
+      behalf of
+      Edison and Pacific Gas & Electric, which say they lack the cash and
+      credit to
+      purchase power. The bill also was supposed to guarantee that the
+      small,
+      alternative energy producers--which together provide nearly a third
+      of the
+      state's power--get paid. But Assembly Republicans opposed it, saying
+      it hadn't
+      been given sufficient scrutiny.
+      The impact of the small producers was made clear in Imperial County,
+      where
+      Edison's failure to pay CalEnergy, the county's biggest property
+      taxpayer, had
+      outsize implications. CalEnergy had put county officials on notice
+      that it was
+      about to miss a $3.8-million property tax payment. The uncertainty
+      had prompted
+      the tiny Calipatria Unified School District to postpone a bond issue
+      for badly
+      needed school repairs.
+      Among CalEnergy Chairman David Sokol's first acts after the judge's
+      ruling
+      Thursday was to promise Imperial County Supervisor Wally J.
+      Leimgruber that the
+      company would pay its property taxes on time.
+      "That is great news," Leimgruber said.
+      Within hours of its court victory, CalEnergy had stopped transmitting
+      geothermal
+      power to Edison and begun selling it to El Paso Energy, a marketing
+      company that
+      purchased the energy at prevailing rates and resold it on the spot
+      market.
+      Some of the more than 700 other small energy producers in the state
+      said they
+      were considering similar action against Edison and Pacific Gas &
+      Electric.
+      "We absolutely need the right to sell to third parties," said Dean
+      Vanech,
+      president of Delta Power, a New Jersey company that owns five small
+      gas-fired
+      plants in California and is owed tens of millions of dollars by
+      Edison.
+      Sokol praised the Imperial County judge and said his company simply
+      wanted the
+      authority to sell its power "to a credit-worthy company that, in
+      fact, pays for
+      the power."
+      An Edison spokesman said the company was disappointed with the
+      ruling, but
+      sympathized with CalEnergy and other small producers because
+      "California's power
+      crisis has placed [them] in financial distress, just as it has placed
+      utilities
+      in financial distress."
+      Edison expressed concern that the ruling would prompt CalEnergy and
+      other small
+      producers to sell their power out of state. Sokol said CalEnergy had
+      specifically told El Paso Energy that it hoped its power would remain
+      in
+      California, "but if someone wants to pay a higher price out of state,
+      we can't
+      stop them."
+      Sokol said that Edison still owes CalEnergy $140 million and that the
+      company--along with seven other small producers--had been prepared to
+      file a
+      petition in federal bankruptcy court in Los Angeles today forcing the
+      utility
+      into involuntary bankruptcy. He said his company no longer intends to
+      do so, and
+      he believed--but wasn't certain--that the other companies would
+      shelve their
+      plans.
+      Edison filed papers Thursday with the federal Securities and Exchange
+      Commission
+      showing that it owed $840 million to various small electricity
+      producers, many
+      of which rely on renewable energy sources such as geothermal steam,
+      solar energy
+      or wind.
+      The alternative energy producers--and utilities--strenuously objected
+      to the
+      legislation considered in Sacramento on Thursday. The bill, spelling
+      out how the
+      utilities are to pay the state and the small producers, passed the
+      Senate on a
+      27-9 vote, the exact two-thirds margin required. But it stalled in
+      the Assembly
+      on a 46-23 party-line vote, well short of two-thirds.
+      "When I was a citizen back in Lancaster, I heard these stories about
+      pieces of
+      legislation that were cooked up late at night, that . . . were cut
+      and pasted
+      together and were rammed through by the Legislature," Assemblyman
+      George Runner
+      (R-Lancaster) said. "That's exactly what we have before us."
+      The alternative electricity generators, including oil companies,
+      warned that
+      they would lose money under the Davis proposal, while representatives
+      of Edison
+      and PG&E, which have amassed billions in debt in the worsening energy
+      crisis,
+      said the legislation would push them deeper into the hole.
+      "There isn't enough money," Edison attorney Ann Cohn testified at a
+      Senate
+      hearing on the bill Thursday. "It is a very simple question: Dollars
+      going out
+      cannot be greater than dollars coming in."
+      The bill, AB 8X, combined several proposals. First, it sought to
+      clarify earlier
+      legislation by spelling out that Edison and PG&E must pay the state
+      all money
+      collected from consumers for electricity that the state has been
+      buying.
+      Additionally, the bill would turn over to the California Public
+      Utilities
+      Commission the thorny issue of how much to pay alternative energy
+      producers for
+      their electricity.
+      Wind, solar and geothermal producers might agree to the prices
+      offered by the
+      administration. But most of the alternative energy producers,
+      including Chevron
+      and British Petroleum, use natural gas to generate electricity
+      through
+      "cogeneration," a process of creating steam for both electric
+      generation and
+      heat. With natural gas prices high, they contend, they would lose
+      money at the
+      prices Davis is offering.
+      *
+      Ellingwood reported from El Centro, Morain from Sacramento. Times
+      staff writers
+      Mitchell Landsberg in Los Angeles and Jenifer Warren, Nancy Vogel and
+      Carl
+      Ingram in Sacramento contributed to this story.
+      (BEGIN TEXT OF INFOBOX / INFOGRAPHIC)
+      Power Points
+      Background
+      The state Legislature approved electricity deregulation with a
+      unanimous vote in
+      1996. The move was expected to lower power bills in California by
+      opening up the
+      energy market to competition. Relatively few companies, however,
+      entered that
+      market to sell electricity, giving each that did considerable
+      influence over the
+      price. Meanwhile, demand has increased in recent years while no major
+      power
+      plants have been built. These factors combined last year to push up
+      the
+      wholesale cost of electricity. But the state's biggest
+      utilities--Pacific Gas &
+      Electric and Southern California Edison--are barred from increasing
+      consumer
+      rates. So the utilities have accumulated billions of dollars in debt
+      and,
+      despite help from the state, have struggled to buy enough
+      electricity.
+      *
+      Daily Developments
+      * Overcharges by major electricity suppliers were estimated at $6.3
+      billion, up
+      from the $5.5 billion first thought, California's power grid operator
+      said.
+      * Electricity producers denied that they have profiteered and argued
+      that
+      Cal-ISO's figures don't take into account all their costs.
+      * A Superior Court judge's ruling Thursday freeing a small producer
+      from its
+      contract with Edison could lead to a mass exodus by small energy
+      producers that
+      have been selling to the utilities without getting paid.
+      *
+      Verbatim
+      "If these guys have such high costs ... how come they're making so
+      much money?"
+      --Gary Stern, Edison's director of market monitoring and analysis,
+      referring to
+      power producers
+      Complete package and updates at www.latimes.com/power
+
+
+      Grid Operator Says California Paid Too Much for Power
+      By Rebecca Smith and John R. Emshwiller
+      Staff Reporters of The Wall Street Journal
+      03/23/2001
+      The Wall Street Journal
+      A2
+      (Copyright (c) 2001, Dow Jones & Company, Inc.)
+
+      California's electric-grid operator said power suppliers may have
+      overcharged
+      the state and its utilities by $6.2 billion, or a total of 30%, in a
+      10-month
+      period, and has asked federal regulators to step up their policing of
+      electricity markets.
+      Meanwhile, a California state judge handed down a decision involving
+      small power
+      producers that could result in more electricity being made available
+      in the
+      energy-starved state, but likely at greater cost to the state
+      government.
+
+      The $6.2 billion figure was contained in a market analysis by the
+      California
+      Independent System Operator filed yesterday with the Federal Energy
+      Regulatory
+      Commission. The ISO says it isn't seeking a refund -- for the May
+      through
+      February period -- because its analysis lacked important market data.
+      For example, it estimated costs for 21 suppliers based on published
+      prices for
+      natural gas, not on specific data showing what each generator
+      actually paid for
+      the fuel. "We don't know how much gas actually was purchased at
+      spot-market
+      prices," said Anjali Sheffrin, the ISO's head of market analysis.
+      Charles Robinson, general counsel for the ISO, said FERC needs to
+      become "more
+      aggressive about market-power mitigation." The ISO's filing, he said,
+      was
+      intended to push the agency in that direction, since FERC is
+      responsible for
+      policing deregulated electricity and natural-gas markets.
+      He said that if the FERC doesn't act, the state of California may
+      find ways to
+      discipline the market, such as through the state attorney general's
+      office. The
+      attorney general has been investigating the state's electricity
+      market for many
+      months but hasn't brought any court action.
+      Dynegy Inc., a big owner of power plants in California, said it will
+      provide
+      additional information to FERC supporting its position that the
+      prices it has
+      charged for power have been "just and reasonable." The Houston
+      company was one
+      of 13 energy suppliers that the FERC this month ordered to pay
+      refunds totaling
+      $124 million or "show cause" why it should be excused. Dynegy said
+      the FERC
+      analysis was flawed, because it used "inaccurate" prices for natural
+      gas and
+      pollution credits.
+      While big power producers such as Dynegy came under attack, small
+      power
+      producers won a potentially significant victory in a state court in
+      Southern
+      California's Imperial County. A judge granted 10 geothermal plants
+      operated by
+      the CalEnergy Co. unit of MidAmerican Energy Holdings Co., a unit of
+      Berkshire
+      Hathaway Inc., of Omaha, Neb., permission to suspend deliveries of
+      electricity
+      to Southern California Edison Co. and instead seek other buyers.
+      These plants, known as "qualifying facilities," are under long-term
+      contract to
+      Edison and other utilities but haven't been paid for months. Edison,
+      a unit of
+      Edison International, of Rosemead, Calif., says it has been unable to
+      pay
+      hundreds of millions of dollars in power bills to CalEnergy and
+      others because
+      it has been driven to the brink of insolvency by the state's failed
+      utility-deregulation plan.
+      While the CalEnergy case involves only about 320 megawatts of power,
+      the
+      repercussions could be far greater. Collectively, hundreds of
+      qualifying
+      facilities, or QFs, produce as much as 30% of California's
+      electricity needs.
+      QFs totaling 3,000 megawatts cut their production in recent weeks for
+      lack of
+      payment. This loss of output was a significant cause of the blackouts
+      that hit
+      California this week.
+      Observers believe the CalEnergy court decision could give other QFs
+      an
+      opportunity to sell power in the open market, presumably to the state
+      government
+      that now is California's biggest energy buyer. An hour after the
+      court decision
+      yesterday, some 400 megawatts of power came back into the market, the
+      ISO said.
+      However, additional QF power sales on the open market could
+      substantially
+      increase the state's tab. Already, the state has allocated more than
+      $4 billion
+      for electricity purchases.
+      Separately, Edison said in a Securities and Exchange Commission
+      filing that its
+      unpaid power bills could contribute to a write-off of as much as $2.7
+      billion
+      for 2000. Because of uncertainty caused by the energy crisis, the
+      company hasn't
+      yet reported year-end earnings.
+
+
+
+      Power regulators debate who should be exempted from blackouts
+      By KAREN GAUDETTE
+      Associated Press Writer
+      03/22/2001
+      Associated Press Newswires
+      Copyright 2001. The Associated Press. All Rights Reserved.
+
+      SAN FRANCISCO (AP) - State power regulators said Thursday they are
+      working to
+      exempt all California hospitals, regardless of size, from rolling
+      blackouts.
+      The Public Utilities Commission met with representatives from
+      hospitals and
+      investor-owned utilities after Los Angeles lawyer David Huard filed
+      an emergency
+      motion with the PUC on behalf of more than 500 hospitals throughout
+      the state.
+
+      Under PUC rules, hospitals with more than 100 beds are exempt from
+      losing
+      electricity during power emergencies. But during rolling blackouts
+      Monday, at
+      least a dozen hospitals from Long Beach to Clearlake were forced to
+      use their
+      backup generators.
+      Pacific Gas and Electric Co. and Southern California Edison Co. say
+      they blacked
+      out those hospitals specifically because they have backup generators.
+      Both
+      utilities said the temporary blackouts were part of their overall
+      efforts to
+      spread the burden of blackouts over more of their customers.
+      Linda Ziegler, director of business and regulatory planning for SoCal
+      Edison,
+      said the utility is following state law and will implement new
+      guidelines if the
+      PUC changes them.
+      But hospitals say there is a 10-second lapse before emergency
+      generators kick
+      in, which could harm patients in the midst of delicate surgical
+      procedures such
+      as organ transplants or brain surgery.
+      "You wouldn't fly a plane with only your emergency backup systems in
+      place,"
+      said Ann Mosher, a spokeswoman for California Pacific Medical Center
+      in San
+      Francisco. "Backup generators are just that, they're not designed to
+      keep the
+      hospital up and running at full capacity."
+      Ziegler said that power still goes out for reasons beyond the energy
+      crisis,
+      from incidents like lightning or a knocked-down power pole.
+      "If it's a serious problem for the hospital it's certainly something
+      they should
+      be address just from an ongoing basis," she said.
+      The exemption would cover all hospitals within the territory of the
+      state's
+      investor owned utilities PG&E, Southern California Edison and San
+      Diego Gas and
+      Electric.
+      Hospitals within the range of municipally owned utilities, such as
+      the Los
+      Angeles Department of Water and Power, are separately regulated.
+      For more than two decades, prisons, hospitals with more than 100 beds
+      and
+      emergency services such as fire and police departments have been
+      classified as
+      "essential" services, and are exempted from blackouts by order of
+      state power
+      regulators.
+      After rolling blackouts began darkening the state in January, many
+      other public
+      service groups began seeking relief from power interruptions,
+      including transit
+      systems, schools and water districts.
+      ---
+      On the Net:
+      http://www.cpuc.ca.gov
+
+
+
+      Federal Judge Orders Reliant To Keep Selling Pwr To Calif
+      03/22/2001
+      Dow Jones Energy Service
+      (Copyright (c) 2001, Dow Jones & Company, Inc.)
+
+      SACRAMENTO, Calif. (AP)--A federal judge issued a preliminary
+      injunction
+      Wednesday ordering a major electricity wholesaler to continue selling
+      to
+      California despite its fear that it will not get paid.
+      U.S. District Judge Frank C. Damrell Jr. said Californians were at
+      risk of
+      irreparable harm if Reliant Energy (REI) stopped selling power to the
+      Independent System Operator, which oversees the state's power grid.
+      The ISO buys
+      last-minute power on behalf of utilities to fill gaps in supply.
+
+      Damrell dismissed Reliant's attempt to force the state Department of
+      Water
+      Resources to back the ISO's purchases for the state's two biggest
+      utilities. The
+      state has been spending about $50 million a day on power for Pacific
+      Gas and
+      Electric Co. and Southern California Edison, both denied credit by
+      suppliers
+      after amassing billions of dollars in debts.
+      The judge said he had no authority to force the DWR to pay for that
+      power.
+      Gov. Gray Davis has said the state isn't responsible for purchasing
+      the costly
+      last-minute power ISO buys for Edison and PG&E, despite a law
+      authorizing state
+      power purchases on the utilities' behalf.
+      ISO attorney Charles Robinson said the ruling gives ISO operators "a
+      tool to
+      assist them in keeping the lights on in California."
+      "Had the decision gone the other way, one could expect other
+      generators to
+      simply ignore emergency orders," Robinson said.
+      Damrell's preliminary injunction will remain in effect until the
+      Federal Energy
+      Regulatory Commission rules on the matter.
+      Damrell denied the ISO's request for preliminary injunctions against
+      three other
+      wholesalers - Dynegy Inc. (DYN), AES Corp. (AES) and Williams Cos.
+      (WMB) - which
+      agreed to continue selling to the ISO pending the FERC ruling.
+      Spokesmen for Reliant, Dynegy, AES and Williams were out of the
+      office Wednesday
+      night and didn't immediately return calls from The Associated Press
+      seeking
+      comment on the ruling.
+      The ISO went to court in February after a federal emergency order
+      requiring the
+      power sales expired. The judge then issued a temporary restraining
+      order,
+      requiring the sales, but dropped it after the suppliers agreed to
+      continue sales
+      to California pending his Wednesday ruling.
+      The ISO said it would lose about 3,600 megawatts if the suppliers
+      pulled out,
+      enough power for about 2.7 million households. One megawatt is enough
+      for
+      roughly 750 homes.
+      Grid officials said Reliant's share alone is about 3,000 megawatts.
+      Reliant said
+      the amount at issue actually is less than a fourth of that, because
+      most of its
+      output is already committed under long-term contracts.
+      Reliant, which currently provides about 9% of the state's power,
+      worries it
+      won't get paid due to the financial troubles of PG&E and Edison. PG&E
+      and Edison
+      say that together they have lost about $13 billion since June due to
+      soaring
+      wholesale electricity costs that California's 1996 deregulation law
+      bars them
+      from passing onto customers.
+
+
+      Calif Small Pwr Producers To Shut Plants If Rates Capped
+      By Jason Leopold
+      Of DOW JONES NEWSWIRES
+      03/22/2001
+      Dow Jones Energy Service
+      (Copyright (c) 2001, Dow Jones & Company, Inc.)
+
+      LOS ANGELES -(Dow Jones)- Many of California's independent power
+      producers late
+      Wednesday threatened to take their small power plants offline this
+      week if state
+      lawmakers pass legislation that would cap the rates the generators
+      charge for
+      electricity they sell directly to the state's three investor-owned
+      utilities.
+      At issue is a bill that would repeal a section of the state's Public
+      Utilities
+      Code, which links the 688 so-called qualifying facilities'
+      electricity rates to
+      the monthly border price of natural gas.
+
+      Lawmakers, however, are poised to pass the legislation.
+      State regulators are then expected to approve a measure that would
+      restructure
+      the fluctuating rates the QFs charge PG&E Corp. (PCG) unit Pacific
+      Gas &
+      Electric, Edison International (EIX) unit Southern California Edison,
+      and Sempra
+      Energy (SRE) unit San Diego Gas & Electric from $170 a megawatt-hour
+      to
+      $69-$79/MWh, regardless of the price of natural gas.
+      Whereas each of the 688 QF contracts differed, largely because
+      natural gas
+      prices are higher in Southern California than Northern California,
+      the state
+      wants the QFs to sign a general contract with the utilities.
+      The cogeneration facilities, which produce about 5,400 megawatts of
+      electricity
+      in the state, said the rates are too low and they won't sign new
+      supply
+      contracts with the utilities.
+      "For $79/MWh, natural gas would have to be $6 per million British
+      thermal unit
+      at
+ the Southern California border," said Tom Lu, executive director
+      of
+      Carson-based Watson Cogeneration Company, the state's largest QF,
+      generating 340
+      MW. "Our current gas price at the border is $12.50."
+      Other gas-fired QFs said the state could face another round of
+      rolling blackouts
+      if lawmakers and state regulators pass the legislation, which is
+      expected to be
+      heard on the Senate floor Thursday, and allow it to be implemented by
+      Public
+      Utilities Commission next week.
+      Lu, whose company is half-owned by BP Amoco PLC (BP) and is owed $100
+      million by
+      SoCal Ed, said the proposals by the PUC and the Legislature "will
+      only make
+      things worse."
+      David Fogarty, spokesman for Western States Petroleum Association,
+      whose members
+      supply California with more than 2,000 MW, said the utilities need to
+      pay the
+      QFs more than $1 billion for electricity that was already produced.
+      State Loses 3,000 MW QF Output Due Of Financial Reasons
+
+
+      The QFs represent about one-third, or 9,700 MW, of the state's total
+      power
+      supply. Roughly 5,400 MW are produced by natural gas-fired
+      facilities. The rest
+      is generated by wind, solar power and biomass.
+      About 3,000 MW of gas-fired and renewable QF generation is offline in
+      California
+      because the power plant owners haven't been paid hundreds of millions
+      of dollars
+      from cash-strapped utilities SoCal Ed and PG&E for nearly four
+      months.
+      Several small power plant owners owed money by SoCal Ed have
+      threatened to drag
+      the utility into involuntary bankruptcy if the utility continues to
+      default on
+      payments and fails to agree to supply contracts at higher rates.
+      The defaults have left many of the renewable and gas-fired QFs unable
+      to operate
+      their power plants because they can't afford to pay for the natural
+      gas to run
+      their units. Others continue to produce electricity under their
+      contracts with
+      the state's utilities but aren't being paid even on a forward basis.
+      The California Independent System Operator, keeper of the state's
+      electricity
+      grid, said the loss of the QF generation was the primary reason
+      rolling
+      blackouts swept through the state Monday and Tuesday.
+      Gov. Gray Davis, recognizing the potential disaster if additional QFs
+      took their
+      units offline, held marathon meetings with key lawmakers Monday and
+      Tuesday to
+      try and hammer out an agreement that would get the QFs paid on a
+      forward basis
+      and set rates of $79/MWh and $69/MWh for five and 10 year contracts.
+      He also
+      said he would direct the PUC to order the utilities to pay the QFs
+      for power
+      they sell going forward.
+      "After next week the QF problem will be behind us," Davis said
+      Tuesday. "We want
+      to get the QFs paid...the QFs are dropping like flies...and when that
+      happens
+      the lights go out."
+      But this just makes the problem worse, said Assemblyman Dean Florez,
+      D-Shafter,
+      a member of the Assembly energy committee.
+      "I don't know how we are going to keep the lights on," Florez said in
+      an
+      interview. "Many of these congenerators are in my district. They said
+      if the
+      legislation doesn't change they are going offline. This compounds the
+      issue of
+      rolling blackouts, especially now when we need every megawatt."
+      Davis, who didn't meet with people representing the QFs, said he was
+      handing the
+      QF issue to the PUC because lawmakers failed to pass legislation that
+      would have
+      set a five-year price for natural gas and allow the QFs to sign
+      individual
+      contracts with the utilities. In addition, SOCal Ed opposed the
+      legislation,
+      saying the rates should be below $50/MWh.
+      Some renewable power producers said they aren't vehemently opposed to
+      the new
+      rate structure because it guarantees them a higher rate than what was
+      originally
+      proposed.
+      QFs Want Third Party Supply Contracts
+
+
+      John Wood, who represents the SoCal Ed Gas Fired Creditors Committee,
+      one of a
+      handful of groups that have formed since January to explore options
+      on getting
+      paid by the utilities, said his group of gas-fired QF creditors want
+      to be
+      released from their supply contracts and sell to third parties.
+      "Under our plan, we would be permitted to sell electricity to third
+      parties
+      (including the state Department of Water Resources) until a
+      resolution to the
+      crisis can be accomplished," wood said.
+      Hal Dittmer, president of Sacramento-based Wellhead Electric in
+      Sacramento,
+      which is owed $8 million by PG&E, has 85 MW of gas-fired generation
+      units
+      offline.
+      Under the state's plan, Dittmer said he risks going out of business.
+      "I can't buy natural gas for what I would be paid under this
+      decision," he said.
+      "The state needs to quit kidding themselves that they don't need to
+      raise
+      electricity rates. All of this is being driven by an artificial
+      construct that
+      California can avoid raising rates."
+
+      -By Jason Leopold, Dow Jones Newswires; 323-658-3874;
+      jason.leopold@dowjones.com
+
+
+      Power Strain Eases but Concerns Mount Energy: Officials say summer
+      prices will be high, and a state report shows that contracts with
+      generators are far short of goals.
+      DAN MORAIN; JENIFER WARREN
+      TIMES STAFF WRITERS
+      03/22/2001
+      Los Angeles Times
+      Home Edition
+      A-3
+      Copyright 2001 / The Times Mirror Company
+
+      SACRAMENTO -- California's fragile electricity system stabilized
+      Wednesday, but
+      a Davis administration report suggested troubles ahead because the
+      state could
+      be forced to buy most of its power for the coming summer on the
+      costly and
+      volatile spot market.
+      After two days of statewide blackouts, power plants that had been
+      shut down were
+      cranked up. Unseasonable heat tapered off. The operators of the
+      statewide power
+      grid relaxed their state of emergency.
+
+      But plenty of ominous signs remained. Many small producers remained
+      shut down,
+      skeptical about Gov. Gray Davis' plan for utilities to pay them.
+      State Controller Kathleen Connell issued a sharp warning about the
+      high cost of
+      the state's foray into the power business and announced that she will
+      block an
+      administration request that she transfer $5.6 billion into an account
+      that could
+      be tapped to pay for state purchases of electricity.
+      And a report from the administration summarizing contracts between
+      Davis and
+      independent power generators showed that the state has signed
+      contracts for only
+      2,247 megawatts of electricity, significantly less than the 6,000 to
+      7,000
+      megawatts previously claimed.
+      While there are agreements in principle for the full amount, the
+      report notes
+      that generators can back out of the contracts for a variety of
+      reasons,
+      including the state's failure to sell bonds to finance power
+      purchased by July
+      1. The Legislature has approved plans to sell $10 billion in bonds,
+      but none
+      have yet been issued.
+      "We are exposed enormously this summer," Senate Energy Committee
+      chairwoman
+      Debra Bowen (D-Marina del Rey) said after looking at the report. "We
+      owe the
+      people the truth about how difficult this summer is going to be. We
+      don't have a
+      power fairy."
+      Perhaps most significant, the report suggests that the contracts fall
+      significantly short of Davis' stated goal of buying no more than 5%
+      of the
+      state's summer needs on the spot electricity market, where prices can
+      be many
+      times those of long-term contracts.
+      After reading the report, Frank Wolak, a Stanford University
+      economist who
+      studies the California electricity market, said the numbers suggested
+      that the
+      state's long-term contracts will cover less than half of what the
+      state will
+      need this summer.
+      "We're definitely short this summer, next summer and the summer of
+      2003," he
+      said.
+      California was forced to start buying electricity in December--at a
+      cost of $50
+      million a day--because producers refused to sell to Southern
+      California Edison
+      and Pacific Gas & Electric. The two utilities amassed billions of
+      dollars in
+      debt when prices for wholesale power soared on the spot market.
+      Vikram Budhraja, a consultant retained by Davis to negotiate deals
+      with
+      generators, said the report represents a "work in progress." He said
+      the state
+      may yet sign new contracts.
+      However, Wolak said the contract figures confirm what he and others
+      have been
+      dreading: that summer is going to be rife with rolling blackouts
+      unless serious
+      steps to cut demand are taken immediately.
+      Wolak and other experts say large industrial customers must be
+      switched to
+      real-time meters and pricing to persuade them to use the bulk of
+      their energy at
+      times of low demand.
+      The head of the Energy Foundation, a San Francisco-based nonprofit
+      that promotes
+      sustainable sources of power, made the same proposal to Davis on
+      Wednesday.
+      "The government need not ask customers to swelter in the dark this
+      summer,"
+      foundation President Hal Harvey argued in a letter.
+      He also proposed a crash campaign to boost sales of efficient
+      appliances and
+      lightbulbs. He said the state needs to take over the utilities'
+      contracts with
+      alternative energy providers to ensure they stay in business, and
+      sign new
+      contracts for 1,500 megawatts of new wind power--the cheapest,
+      fastest and
+      cleanest source of new supply.
+      Davis had proposed a formula Tuesday to force private utilities to
+      pay the
+      alternative producers, some of which have not been paid since
+      November. But some
+      of them warned Wednesday that Davis' plan offers them little
+      incentive to turn
+      on their generators.
+      Alternative energy producers supply more than a quarter of the
+      electricity
+      consumed in California.
+      Many producers generate electricity from wind, sun and geothermal
+      sources. But
+      most of them generate power using natural gas--and the cost of
+      natural gas has
+      been soaring. Several natural gas users said Davis' plan, which caps
+      rates,
+      won't cover their fuel costs.
+      Davis assumes that the price of natural gas will fall. But small
+      generators say
+      they don't have sufficient purchasing power or sophistication to
+      gamble on
+      future prices.
+      The Public Utilities Commission is expected to approve Davis'
+      proposal next
+      week. It offers producers two choices: 7.9 cents a kilowatt-hour if
+      they agree
+      to supply power for five years, or 6.9 cents a kilowatt-hour over 10
+      years.
+      "The price of natural gas is higher than that," said Marty Quinn,
+      executive vice
+      president and chief operating officer of Ridgewood Power LLC, which
+      owns three
+      natural gas-fired co-generation plants. "If we operate, we'll lose
+      money."
+      Ridgewood is not operating, having been cut off by gas suppliers. The
+      company
+      sued PG&E last month seeking overdue payments and release from its
+      contracts
+      with the utility.
+      A hearing is scheduled in El Centro today in another lawsuit filed by
+      a small
+      energy producer, an Imperial Valley geothermal producer that sued
+      Edison for
+      refusing to let it break its contract and sell on the open market.
+      CalEnergy
+      says Edison owes it about $140 million for energy sold since
+      November.
+      A company spokesman, Jay Lawrence, said CalEnergy was going ahead
+      with its suit
+      despite Davis' proposal. "We've had promises before," he said.
+      In other developments:
+      * A federal judge in Sacramento on Wednesday ordered Reliant Energy
+      of Houston,
+      a major producer, to continue selling power to California during
+      emergencies,
+      despite the company's argument that it may not be fully reimbursed.
+      The order
+      will remain in effect for 60 days or until the U.S. Federal Energy
+      Regulatory
+      Commission decides a related case.
+      * Connell said the state budget surplus has shrunk to $3.2 billion
+      because the
+      state has spent roughly $2.8 billion on electricity. She criticized
+      the
+      administration for withholding basic information about state
+      finances, and said
+      she will begin an audit on Monday of the Department of Water
+      Resources, which is
+      responsible for purchasing power.
+      Davis' aides said Connell took her action because the Democratic
+      governor
+      endorsed one of Connell's foes this week in the race for Los Angeles
+      mayor,
+      former Assembly Speaker Antonio Villaraigosa. A Connell aide scoffed
+      at the
+      notion.
+      * Sen. Dianne Feinstein (D-Calif.) said she "never has had a
+      response" from
+      President Bush after writing him last month for an appointment to
+      discuss the
+      California energy crisis.
+      In a wide-ranging lunch talk with reporters in Washington, she
+      deplored the fact
+      that "huge, huge profits are being made" in the California crisis,
+      and said "an
+      appropriate federal role" would be to guarantee a reliable source of
+      power until
+      the state can get nine new generators online.
+      *
+      Times staff writers Mitchell Landsberg in Los Angeles and Robert L.
+      Jackson in
+      Washington contributed to this report.
+      (BEGIN TEXT OF INFOBOX / INFOGRAPHIC)
+      Power Points
+      Daily Developments
+      * Wholesale electricity suppliers overcharged by about $5.5 billion
+      between May
+      and last month, and that money should be refunded to taxpayers and
+      utilities,
+      according to a Cal-ISO report.
+      * The state may have to buy most of its power for summer on the
+      costly spot
+      market, which could drive consumers' bills up, a Davis administration
+      report
+      concludes.
+      * State Controller Kathleen Connell said she will block a request by
+      the Davis
+      administration for $5.6 billion for state purchases of electricity.
+      Verbatim
+      "We owe the people the truth about how difficult this summer is going
+      to be. We
+      don't have a power fairy."
+      Debra Bowen (D-Marina del Rey), Senate Energy Committee chairwoman
+
+
+      CPUC Must Address Rates In QF Repayment Order - SoCal Ed
+      03/21/2001
+      Dow Jones Energy Service
+      (Copyright (c) 2001, Dow Jones & Company, Inc.)
+
+      LOS ANGELES -(Dow Jones)- Any order from the California Public
+      Utilities
+      Commission requiring utilities to pay small, independent generators
+      going
+      forward must determine how that could be done within the existing
+      rate
+      structure, a spokesman for Edison International (EIX) utility
+      Southern
+      California Edison said Wednesday.
+      The utility was responding to a PUC proposed decision that would
+      require
+      utilities to pay small generators, called qualifying facilities, $79
+      a megawatt
+      hour within 15 days of electricity delivery. The decision will be
+      voted March 27
+      by the CPUC.
+
+      "We're still reviewing (the decision) and should have more to say in
+      a day or
+      two. To the extent that the commission orders us to pay going forward
+      of course
+      we will. But it needs to address how we will pay the QFs," a SoCal
+      Edison
+      spokesman said.
+      SoCal Edison and PG&E Corp. (PCG) unit Pacific Gas & Electric Co. are
+      struggling
+      under nearly $13 billion in uncollected power costs due to an
+      inability to pass
+      high wholesale power costs to customers under a rate freeze.
+      Gov. Gray Davis Tuesday blasted the utilities for not having paid
+      their QF bills
+      in full since December. Pacific Gas & Electric Co. has made some
+      partial
+      payments to QFs, but SoCal Edison has paid nothing. Together, they
+      owe the QFs
+      about $1 billion, but the order doesn't address that debt.
+      An Edison executive said, in reaction to the governor's sharp
+      comments, that the
+      company simply doesn't have the money to pay creditors.
+      "The root problem here is there just isn't enough money in the
+      current rate base
+      to pay our bills," said Edison Senior Vice President of Public
+      Affairs Bob
+      Foster. "We understand the financial distress (the QFs) face; we are
+      facing
+      financial distress ourselves."
+      The proposed PUC order would also require the state's investor-owned
+      utilities
+      to offer the small generators five- and 10-year contracts for power
+      for $79/MWh
+      and $69/MWh, respectively.
+      The QFs "may be able to live with" the PUC proposal, but the five-
+      and 10-year
+      contract prices may be inadequate if natural gas prices at one of the
+      California
+      borders are high, said Jan Smutny-Jones, president of the Independent
+      Energy
+      Producers Association. Natural gas prices into California are
+      currently higher
+      than anywhere in the country.
+      But some say the proposed decision may not be enough to prevent the
+      QFs from
+      filing involuntary bankruptcy proceedings against the utilities for
+      the money
+      they are still owed.
+      "There's still a lot of skepticism. To say our position has changed
+      based on the
+      CPUC decision or the governor's announcement is not accurate. A lot
+      still has to
+      happen," said Jay Lawrence, a spokesman for a renewable creditors
+      committee.
+      -By Jessica Berthold, Dow Jones Newswires; 323-658-3872;
+      jessica.berthold@dowjones.com -0- 22/03/01 01-27G
+
+
+
+      State Says It's Accelerating Plan to Buy Power Utilities' Grid
+      Government: Talks with Edison are reported near completion, but
+      agreement with heavily indebted PG&E has a way to go.
+      RONE TEMPEST; DAN MORAIN
+      TIMES STAFF WRITERS
+      03/21/2001
+      Los Angeles Times
+      Home Edition
+      A-22
+      Copyright 2001 / The Times Mirror Company
+
+      SACRAMENTO -- As blackouts hit California for a second day Tuesday, a
+      key
+      consultant to Gov. Gray Davis said negotiations to buy the power grid
+      owned by
+      the state's largest utilities "are proceeding at an accelerated
+      pace."
+      Wall Street consultant Joseph Fichera said talks with Southern
+      California Edison
+      could be wrapped up within days, although those with PG&E are much
+      less
+      advanced.
+
+      The administration and PG&E have not reached even an agreement in
+      principle, he
+      said. PG&E, which has more debt than Edison, says its transmission
+      lines are
+      more extensive than those of its Southern California counterpart.
+      The state wants to buy the utilities' transmission lines and other
+      assets for
+      about $7 billion to provide cash to the utilities, help stabilize the
+      electricity supply and ease the power crunch that has plagued
+      California for
+      months. To research the grid purchase, Fichera said, the state has
+      had to pore
+      over 80,000 documents just to assess the utilities' liabilities.
+      "We are working at a good pace," said Fichera, chief executive of the
+      New York
+      firm Saber Partners. " . . . If we get to a deal-breaker, it might be
+      longer."
+      By making Fichera, who is also a consultant to the Texas Public
+      Utilities
+      Commission, available to reporters Tuesday, the Davis administration
+      was clearly
+      trying to reassure the public that progress is being made on the
+      governor's plan
+      to pull the state out of the crisis.
+      Since mid-January, when the big utilities' credit failed and
+      suppliers stopped
+      selling to them, the state has spent nearly $3 billion buying
+      electricity from a
+      handful of large suppliers in Texas, Oklahoma, Georgia and North
+      Carolina. Not a
+      cent has gone to the hundreds of alternative energy suppliers in
+      California who
+      provide about a quarter of the state's electricity.
+      The Monday and Tuesday blackouts occurred partly because many of the
+      cash-strapped alternative suppliers, including solar, biomass and
+      wind power
+      units, cut their normal supply to the system in half. They say Edison
+      and PG&E
+      have not paid them since November; the utilities say they are out of
+      cash.
+      Assemblyman Fred Keeley (D-Boulder Creek) said the plight of the
+      alternative
+      suppliers has dragged on because of the complexity of dealing with
+      "almost 700
+      individual contractors."
+      Another delaying factor, said Keeley, who with state Sen. Jim Battin
+      (R-La
+      Quinta) worked for almost three months to come up with a legislative
+      plan to
+      lower the small producers' prices, was "the huge enmity . . .
+      manifested between
+      the utilities and the qualifying facilities. These people just don't
+      like each
+      other."
+      This week's blackouts provided two painful lessons for the Davis
+      administration:
+
+      * When it comes to electricity, size doesn't matter--every kilowatt
+      counts.
+      During peak use, a small wind power facility in Riverside County can
+      make the
+      difference between full power and blackouts.
+      * There is no such thing as a partial solution. Unless the whole
+      energy equation
+      is balanced, the parts don't work.
+      For the Davis plan to work, several key elements need to come
+      together or
+      utility customers will almost certainly face rate increases above the
+      19%
+      already set in motion * The cost of power purchased by the state must
+      be reduced
+      through long-term contracts with the big out-of-state producers.
+      These contracts, the details of which the Davis administration has
+      kept
+      confidential, are still being negotiated by Davis consultant Vikram
+      Budhraja of
+      the Pasadena firm Electric Power Group. The administration says it
+      has concluded
+      40 contracts with generators, about half of which have been signed.
+      According to the most recent statistics released by the Department of
+      Water
+      Resources, which buys power for the state, current prices are still
+      well above
+      the rate state Treasurer Phil Angelides says is necessary for a
+      planned
+      $10-billion bond offering to succeed.
+      The bonds, set for sale in May, will be used to reimburse the state
+      for the
+      money it will have spent by that time to buy electricity. The state
+      is currently
+      spending at a rate of $58 million a day to buy power. If prices stay
+      high, the
+      $10 billion in bonds will not cover the state's power purchases by
+      the end of
+      the summer.
+      Angelides says he cannot proceed with bridge financing for the bonds
+      until the
+      Public Utilities Commission devises a formula to guarantee that a
+      portion of
+      utility bills will be dedicated to bond repayment. Angelides has
+      estimated that,
+      under the January law that put the state in the power buying
+      business, the state
+      must be reimbursed $2.5 billion annually, and that $1.3 billion is
+      needed to
+      service the debt.
+      PUC Administrative Law Judge Joseph R. DeUlloa is expected to
+      announce his
+      ruling on the reimbursement rate later this week, leading to a PUC
+      vote on the
+      matter as early as next week.
+      * The rates charged for electricity by the alternative producers,
+      known as
+      qualifying facilities, must be cut at least in half, down from an
+      average of
+      more than 17 cents per kilowatt-hour. In his news conference Tuesday,
+      Davis said
+      he will ask the PUC to set QF rates at 6.9 cents for 10-year
+      contracts and 7.5
+      cents for five-year contracts.
+      Meanwhile, PUC Chairman Loretta Lynch, a Davis appointee, said
+      Tuesday that the
+      commission will vote next week on a proposed order requiring Southern
+      California
+      Edison and Pacific Gas & Electric to pay the QFs for electricity in
+      the future.
+      Lynch said a recent PUC assessment showed that the utilities have
+      enough cash on
+      hand for that.
+      "We are trying to make sure the folks providing the power get paid,"
+      Lynch said.
+      "The qualified facilities have demonstrated that they haven't been
+      paid and that
+      it is impairing their ability to provide power."
+      The utilities contend that if they pay the small providers what they
+      owe them,
+      there will not be enough money left to pay other creditors.
+      "There is not enough money in the current rate structure to pay the
+      [alternative
+      producers], pay the [Department of Water Resources] and pay the
+      utilities for
+      their generation," said John Nelson, a spokesman for PG&E.
+      * The utilities must sell to the state the power they produce
+      themselves, mainly
+      from hydro and nuclear sources, at a rate only slightly above the
+      cost of
+      producing it. This is tied to the ongoing negotiations between the
+      Davis
+      administration and the utilities to restore the near-bankrupt
+      utilities to
+      solvency.
+      *
+      Times staff writers Julie Tamaki, Miguel Bustillo and Tim Reiterman
+      contributed
+      to this report.
+
+
+      Davis OKs Subsidy of Pollution Fees Smog: As part of secret deal to
+      get long-term energy contracts, state would pay for some of the
+      credits that allow excess power plant emissions. Critics renew call
+      for full disclosure.
+      DAN MORAIN
+      TIMES STAFF WRITER
+      03/21/2001
+      Los Angeles Times
+      Home Edition
+      A-23
+      Copyright 2001 / The Times Mirror Company
+
+      SACRAMENTO -- As part of his closed-door negotiations to buy
+      electricity, Gov.
+      Gray Davis has agreed to relieve some generators from having to pay
+      potentially
+      millions of dollars in fees for emitting pollutants into the air,
+      Davis said
+      Tuesday.
+      Davis announced two weeks ago that his negotiators had reached deals
+      with 20
+      generators to supply $43 billion worth of power during the next 10
+      years.
+
+      However, the Democratic governor has refused to release any of the
+      contracts or
+      detail various terms, contending that release of such information
+      would hamper
+      the state's ability to negotiate deals with other generators and
+      therefore
+      ultimately would raise prices Californians pay for electricity.
+      Sources familiar with the negotiations, speaking on condition of
+      anonymity, said
+      the agreement reached with Dynegy Inc., a power company based in
+      Houston, is one
+      that includes language requiring that the state pay the cost of
+      credits that
+      allow emissions. Dynegy spokesman Steve Stengel declined to discuss
+      the
+      company's deal with the state.
+      "We couldn't get them to sign contracts; it was a sticking point,"
+      Davis said of
+      the decision to pay the fees of some generators. "We had to lock down
+      some power
+      so we were not totally dependent on the spot market."
+      The fees in question are part of an emission trading system known as
+      RECLAIM.
+      Under the system, companies are allotted a certain amount of
+      allowable
+      pollution. If their operations pollute more, companies are required
+      to purchase
+      credits on an open market. Currently the credits cost about $45 per
+      pound of
+      pollution--an amount that can lead to a bill of well over $10 million
+      a year for
+      a power plant.
+      The South Coast Air Quality Management District, which regulates
+      pollution in
+      the Los Angeles Basin, is considering steps to significantly lower
+      the cost of
+      the system--a step that could considerably cut the state's potential
+      cost, Davis
+      said.
+      Senate Energy Committee Chairwoman Debra Bowen (D-Marina del Rey)
+      defended the
+      decision to cover the power company's costs.
+      "It is a question of whether it brings down the price of power," she
+      said. "If
+      it brings down the price of power, I don't have a problem with it."
+      Nevertheless, word that the contracts could bind the state to pay
+      pollution fees
+      caused some critics of Davis' policy to renew calls for Davis to
+      reconsider the
+      secrecy surrounding the power negotiations. The payment provision
+      underscores
+      the fact that the contracts involve more than merely the prices the
+      state will
+      pay for its megawatts, the critics note.
+      "The Legislature should have known about it," said Senate President
+      Pro Tem John
+      Burton (D-San Francisco). "It is going to cost taxpayers money. It
+      makes you
+      wonder. . . . This was a policy issue that was never discussed with
+      the
+      Legislature."
+      V. John White, a lobbyist for the Sierra Club, who also represents
+      alternative
+      energy producers, called the contract proposal "a horrible
+      precedent."
+      "Until we know exactly what the state has agreed to and how much of a
+      subsidy
+      this represents, we can't determine how serious the breach of
+      principle this
+      is," White said.
+      Another critic of the secrecy of the negotiations, Terry Francke,
+      general
+      counsel for the California First Amendment Coalition, said the
+      provision in
+      question "raises the possibility that there are other [concessions]"
+      that have
+      not yet come to light.
+      In the summer, when demand for power is highest, some generators
+      probably will
+      exceed pollution limits set by regional air quality management
+      districts.
+      To avert blackouts, state officials might ask the companies to keep
+      plants
+      running. In such cases, some sources familiar with aspects of the
+      contracts
+      said, the contract language could be interpreted to suggest that the
+      state would
+      cover any fines--although Davis said Tuesday the state will not cover
+      the cost
+      of fines.
+      A recent Dynegy filing with the Securities and Exchange Commission
+      underscores
+      the rising cost of pollution-related measures. The company, which is
+      partners
+      with NRG Energy in three California plants in El Segundo, Long Beach
+      and
+      Carlsbad in San Diego County, said its "aggregate expenditures for
+      compliance
+      with laws related to the regulation of discharge of materials into
+      the
+      environment" rose to $14.3 million in 2000, from $3.6 million in
+      1999.
+      A South Coast Air Quality Management spokesman said Dynegy's
+      facilities appear
+      to be fairly clean--although Sierra Club lobbyist White said Dynegy
+      has been
+      seeking a permit at one of its plants to burn fuel oil, which is
+      dirtier than
+      natural gas.
+      Davis said he intends to "make this information public," but he added
+      that "we
+      do not want to put the public's interest in jeopardy by asking them
+      to pay
+      higher prices."
+      "Nobody likes the notion that [the administration is] not being fully
+      forthcoming," Davis said. "But I also have a corollary responsibility
+      that I
+      don't stick these generators with a higher rate."
+
+
+      FERC ORDERS WILLIAMS ENERGY AND AES TO EXPLAIN THEIR REFUSAL TO MAKE
+      CERTAIN RMR UNITS AVAILABLE TO CALIFORNIA ISO LAST YEAR
+      03/21/2001
+      Foster Electric Report
+      5
+      (c) Copyright 2001, Foster Associates, Inc.
+
+      Following a preliminary, non-public investigation, FERC directed AES
+      Southland
+      Inc. and Williams Energy Marketing & Trading Co. (IN01-3) on March 14
+      to show
+      cause why they did not violate section 205 of the Federal Power Act
+      (FPA) by
+      failing to provide power to the California ISO from two reliability
+      must-run
+      (RMR) generator units during a period in April and May 2000. The
+      investigation
+      responded to a matter referred by the Cal-ISO. If a violation is
+      found, Williams
+      Energy and AES could be required to refund excess profits of $10.9
+      million (as
+      calculated by FERC) and face restrictions on their market-based rate
+      authority
+      for a year.
+      The show cause order involves two generation units (Alamitos 4 and
+      Huntington
+      Beach 2), owned and operated by AES. Williams Energy markets all
+      output from the
+      Alamitos and Huntington Beach plants, including the two units at
+      issue here,
+      pursuant to a tolling agreement filed with the Commission. The
+      Cal-ISO
+      designated the two units as RMR units that it could call on when
+      necessary to
+      provide energy and ancillary service essential to the reliability of
+      the
+      California transmission network. The Cal-ISO makes both a fixed
+      payment to the
+      RMR owner or operator to compensate for the RMR unit's availability
+      and a
+      variable payment for the RMR unit's output (if the unit is not
+      otherwise
+      participating in the market). Williams Energy and the Cal-ISO
+      executed RMR
+      agreements, filed as rate schedules with the Commission, allowing the
+      Cal-ISO to
+      dispatch units "solely for purposes of meeting local reliability
+      needs or
+      managing intra-zonal congestion." The ISO may dispatch a non-RMR unit
+      if the
+      designated RMR unit is not available. Under its RMR agreement with
+      the ISO,
+      Williams is paid the greater of its contract price or marginal cost
+      for
+      operating RMR units. However, if a non-RMR unit has to be dispatched
+      because a
+      designated RMR unit is unavailable, Williams will be paid its bid
+      price, not the
+      RMR contract price.
+
+      During the April to May 2000 period, the Cal-ISO sought to dispatch
+      both
+      Alamitos 4 and Huntington Beach 2 as RMR units to provide voltage
+      support.
+      However, according to the FERC order, Williams Energy refused to make
+      Alamitos 4
+      available from April 25 through May 5, and to make Huntington Beach 2
+      available
+      from May 6 through May 11, "for reasons not directly related to the
+      necessary
+      and timely maintenance of the units." Consequently, the Cal-ISO was
+      forced to
+      dispatch non-RMR units at a higher cost, namely, Williams Energy's
+      bid price for
+      service provided by the replacement units.
+      By contrast, if the RMR units had not experienced outages and been
+      available
+      from April 25 through May 11, Williams Energy would have received
+      either (1) the
+      market revenues only from the respective units, which would have
+      resulted in no
+      payments for RMR output from the ISO to Williams Energy, or (2)
+      Williams
+      Energy's variable cost for operating the RMR units less the market
+      revenues from
+      the respective units' output. Accordingly, FERC observed, Williams
+      Energy had "a
+      financial incentive to prolong any outages of Alamitos 4 and
+      Huntington Beach 2
+      in April and May 2000."
+      The bid price for the non-RMR units was at or near the Cal-ISO's
+      then-effective
+      bid cap of $750/MWh, FERC continued. Therefore, Williams Energy
+      received
+      payments from the Cal-ISO of more than $11.3 million, or about $10.3
+      million
+      greater than the estimated average variable operating cost of the
+      non-RMR units
+      (approximately $63/MWh) during the period in question. This indicates
+      a refund
+      amount, including interest, of nearly $10.9 million.
+      The information in this order and a non-public appendix, the
+      Commission
+      declared, suggests that AES declared outages at the two RMR units and
+      maintained
+      Huntington Beach 2 in a manner inconsistent with good utility
+      practice, and that
+      Williams Energy took action to extend the outage at Alamitos 4 and to
+      make
+      Huntington Beach 2 unavailable for "pretextual reasons."
+      Based on this information coupled with Williams Energy's financial
+      incentive not
+      to make the Alamitos 4 and Huntington Beach 2 units available, FERC
+      found
+      serious questions about whether (1) AES and Williams Energy violated
+      applicable
+      RMR contracts and tariffs on file with the Commission pursuant to FPA
+      section
+      205 when they refused to make Alamitos 4 and Huntington Beach 2
+      available for
+      dispatch by the Cal-ISO; (2) whether Williams acted inconsistently
+      with its
+      market-based rate authority and the market monitoring information
+      protocols of
+      the Cal-ISO's tariff regarding the unavailability of the RMR units
+      during the
+      period at issue; and (3) whether AES violated a tolling agreement on
+      file with
+      the Commission pursuant to section 205.
+      The Commission identified two remedies for these potential
+      violations: a refund
+      by Williams Energy and/or AES of revenues received greater than the
+      amount that
+      would have collected from the ISO if the RMR units had been
+      available, and a
+      condition on Williams Energy's market-based rate authority.
+      Specifically, for a
+      one-year period, if an RMR unit were not available when dispatched by
+      the
+      Cal-ISO, a non-RMR unit dispatched in its place would only receive
+      payment
+      according to the terms of the applicable RMR contract. In other
+      words, Williams
+      Energy would not receive the bid price for operation of the
+      substitute, non- RMR
+      unit.
+      The Commission directed Williams Energy and AES to show cause, within
+      20 days,
+      why they should not be found to have committed the above-described
+      violations
+      and why the specified remedies should not be imposed.
+      Further, to ensure procurement of all relevant information, the
+      Commission
+      instituted a formal, non-public investigation into the operation,
+      maintenance
+      and sales of power from the Alamitos and Huntington Beach plants in
+      2000 and
+      2001.
+
+
+      Calif Consumers Failing To Conserve Pwr Despite Blackouts
+      03/20/2001
+      Dow Jones Energy Service
+      (Copyright (c) 2001, Dow Jones & Company, Inc.)
+
+      LOS ANGELES -(Dow Jones)- California consumers haven't been
+      conserving enough
+      electricity to relieve strain on the power grid and reduce demand in
+      the state,
+      a spokesman with the Independent System Operator said Tuesday.
+      The ISO said that despite two straight days of statewide rolling
+      blackouts,
+      consumers aren't using less electricity, which means additional
+      megawatts will
+      be taken off the grid. As a result, blackouts could last longer and
+      impact
+      additional communities, the ISO said.
+
+      ISO spokesman Pat Dorinson said Monday "conservation in California is
+      no longer
+      an option," but consumers in the state aren't heeding the call to
+      reduce
+      consumption.
+      Conservation efforts during rolling blackouts Monday and Tuesday were
+      far less
+      than Jan. 17 and Jan. 18, when blackouts swept through Northern
+      California due
+      to transmission constraints. Jim Detmers, the ISO's vice president of
+      operation,
+      said consumers saved the state about 1,000 megawatts of electricity,
+      enough
+      power for 1 million houses.
+      The ISO said conservation efforts Monday were about 500 MW or less.
+      "We would be very happy if we saw the same amount this time," Detmers
+      said.
+      The state's Energy Commission said consumers think it's no longer
+      important to
+      save electricity until blackouts are imposed.
+      "People have been saving generally, but it isn't a big bump from hour
+      to hour,"
+      a spokesman for the Energy Commission said.
+      Gov. Gray Davis launched a massive conservation campaign this month,
+      promising
+      consumers a rebate on their summer electricity bill if they save at
+      least 20% of
+      electricity, compared with last summer.
+      The governor said he believes conservation this summer will amount to
+      possibly
+      saving 5,000 MW and averting the chance of rolling blackouts.
+      -By Jason Leopold; Dow Jones Newswires; 323-658-3874;
+      jason.leopold@dowjones.com
+
+
+      Gas Co.'s Success Opens Debate Southern California energy supplier
+      has reaped
+      millions of dollars in state incentives for keeping down its costs.
+      Though
+      consumers get a share of the windfall, regulators are asking whether
+      they should
+      get more of the bonus, which is expected to be huge this year, as a
+      form of
+      price relief. The natural gas provider says it deserves to keep its
+      reward.
+      TIM REITERMAN
+      TIMES STAFF WRITER
+      03/18/2001
+      Los Angeles Times
+      Home Edition
+      C-1
+      Copyright 2001 / The Times Mirror Company
+
+      SAN FRANCISCO -- While consumers suffer soaring energy bills and the
+      big
+      electric utilities lurch toward insolvency, the news is not all dire
+      at Southern
+      California Gas Co.
+      Through vigorous deal making, the Sempra Energy subsidiary has
+      consistently
+      beaten the volatile natural gas market during the last year, and the
+      company
+      stands to reap millions of dollars in savings through a state
+      incentive program
+      that rewards utilities for keeping costs down.
+
+      For several years, the utility has been splitting the savings 50-50
+      with
+      ratepayers whenever the company's gas costs fall slightly below
+      market levels.
+      Those savings, Gas Co. executives acknowledged, have shot to
+      unprecedented
+      heights during the state's power crisis.
+      Now, in this climate of high consumer gas bills and runaway market
+      prices,
+      regulators are taking another look at the program. The question
+      before the
+      Public Utilities Commission: Should Gas Co. ratepayers, who endured
+      huge bill
+      increases this winter, get a bigger share of the savings?
+      The total windfall under the incentive program has in some years
+      exceeded $20
+      million. But the amount for the last 12 months is expected to
+      multiply many
+      times over, company executives said, partly because the Gas Co. has
+      done so well
+      in the wild market by selling, lending and trading gas as well as
+      buying it.
+      "The recent market conditions . . . could possibly result in some
+      unintended
+      consequences that result in shared savings of benefits that may be
+      more
+      appropriately allocated entirely to ratepayers," the PUC's consumer
+      protection
+      arm, the Office of Ratepayer Advocates, reported Oct. 30, even before
+      the latest
+      upward market spirals.
+      Gas Co. representatives express frustration, saying they have done
+      what the
+      state has requested under its gas-cost incentive program: Buy
+      smarter, and pass
+      the savings along to its 5 million residential and small-business
+      customers. The
+      company contends it has worked hard to keep bills down and should be
+      rewarded
+      for taking risks to obtain gas at the lowest possible cost.
+      "The PUC, every time we do well, raises the bar on us," said Jim
+      Harrigan,
+      director of gas acquisition. "I don't necessarily agree with it."
+      By virtue of its purchasing power and storage and pipeline capacity,
+      the Gas Co.
+      has become a big player in the regional natural gas market. In the
+      company's
+      bustling trading room at its Los Angeles headquarters, 15 employees
+      track price
+      movements, pipeline supplies and even the weather via computer, while
+      cutting
+      deals and arranging gas shipments.
+      Although the Gas Co. buys the commodity for its customers, the
+      company also
+      sells to marketers, other utilities and producers. State officials
+      say the
+      number of transactions by the company has risen steeply to 10,000 to
+      20,000 a
+      year, including gas sales along California's border, where prices
+      have rocketed.
+
+      The PUC created the cost incentive program for the state's three
+      major gas
+      utilities--San Diego Gas & Electric Co. in 1993, Southern California
+      Gas the
+      next year and PG&E Corp.'s Pacific Gas & Electric Co. in 1997. Like
+      Southern
+      California Gas, SDG&E is a subsidiary of Sempra Energy.
+      The program was designed to give utilities added motivation for
+      obtaining gas at
+      the best price for customers. It replaced lengthy and contentious
+      reviews by the
+      PUC, which assessed whether utilities had purchased gas at reasonable
+      prices and
+      sometimes ordered them to return millions of dollars to customers.
+      An annual audit of the Gas Co. program and a staff evaluation
+      requested by the
+      PUC recently concluded that the program has achieved many of its
+      goals, but it
+      also proposed adjustments that would give customers a greater share
+      of the
+      rewards.
+      "These incentives were designed in less volatile times," said program
+      supervisor
+      Mark Pocta of the Office of Ratepayer Advocates, which conducted the
+      audit.
+      "There is a question of how much should go to ratepayers and
+      shareholders." His
+      office also plans to assess whether the Gas Co.'s trading had any
+      negative
+      effects on the gas market, resulting in diminished supplies or higher
+      prices for
+      other utilities and their customers.
+      Under the program, the Gas Co. shares risks and rewards with its
+      ratepayers, but
+      since the program was launched, it has consistently produced awards.
+      If the cost
+      of gas is 0.5% or more below a benchmark based on monthly gas market
+      indexes,
+      the company and its customers split the savings 50-50.
+      California's gas utilities are not allowed to profit on their raw
+      commodity
+      costs; they merely pass along those costs to ratepayers with no
+      markup. The
+      savings under the incentive program are automatically reflected in
+      consumers'
+      monthly gas bills but are not itemized.
+      At the end of the year, the utilities request their share of the
+      savings, and
+      the PUC has routinely granted approval. Then the companies, and thus
+      their
+      shareholders, are paid through customer utility bills.
+      The resulting bill increases typically have been modest, less than
+      1%. But as
+      the awards increase, regulators say, the effect on customers will
+      become more
+      significant unless the present structure is changed.
+      "There's no question, when you start to talk about $100 million [or
+      more in
+      savings], and add [the company's award] into rates in a year, it will
+      make a
+      noticeable difference," said Los Angeles economist Jeff Leitzinger,
+      president of
+      Econ One, who has done consulting for the Gas Co.
+      Still, he said, ratepayers should bear in mind that they already
+      benefit from
+      below-market gas and transportation costs.
+      In the early years of the program, records show, the Gas Co.'s awards
+      went from
+      zero to $3.2 million, $10.6 million, $2 million and $7.7 million.
+      Last year's
+      award of $9.8 million is awaiting PUC approval.
+      This year's proposed award, covering the period through the end of
+      this month,
+      has not yet been submitted by the Gas Co. But the utility has
+      provided monthly
+      figures and oral updates on a confidential basis to PUC officials,
+      who declined
+      to provide figures.
+      Harrigan of the Gas Co. said the savings are expected to multiply
+      "many times
+      over," largely because the company was well-equipped for the market
+      fluctuations
+      and tried to insulate its customers from high gas prices.
+      "Any trading company, especially one with assets like we have, has
+      benefited
+      from volatility in the market," he said.
+      Harrigan said, however, that he does not believe the company's level
+      of activity
+      has adversely affected the market and that its trading pales in
+      volume to that
+      of unregulated energy companies.
+      Anne Smith, the Gas Co.'s vice president of customer service and
+      marketing, said
+      the utility will not release figures for this year's incentive
+      program until
+      they are filed with the PUC in June.
+      "I don't want to interrupt that process," Smith said, noting that the
+      PUC
+      ultimately will determine the company's award. "I think they need to
+      focus on
+      what [the Gas Co.] has done for the ratepayers. It has been immense."
+      Although the typical monthly gas bill has risen to $80 from $50 a
+      year ago, Gas
+      Co. customers tend to have lower rates than those of other California
+      utilities.
+
+      The company's gas procurement cost in February was 66 cents per
+      therm, or 100
+      cubic feet. That's more than twice last year's cost but only about
+      half what
+      sister company SDG&E paid for its 740,000 customers in February. It's
+      also much
+      lower than the $1.09 per therm PG&E pays.
+      "We were as upset about the overall [gas price] increase as anyone
+      else,"
+      Harrigan said. "I would rather see the prices of a year ago, even
+      though we
+      managed to do a little better in the [recent] environment."
+      When it comes to keeping down costs, regulators say, the Gas Co. has
+      advantages
+      over other utilities in the marketplace. For one, the company has so
+      much
+      pipeline capacity at major gas basins that it purchases a relatively
+      small
+      portion of its needs--about 10% to 15%--at the California border,
+      where prices
+      in December briefly rose to the equivalent of $6 per therm, or 20
+      times those a
+      year earlier.
+      This presents opportunities.
+      "At the beginning of the month, they forecast a certain amount of gas
+      they have
+      to buy," said Pocta of the Office of Ratepayer Advocates. "If they go
+      out and
+      buy and do not need to use as much because the weather is more
+      moderate than
+      expected, they can either inject the gas into storage or they can
+      make sales at
+      the border."
+      With gas price run-ups like those seen in the last year, Pocta said,
+      "there is a
+      question: Should that benefit be shared, or flow entirely to
+      ratepayers?"
+      Customers, he pointed out, may be entitled to additional benefits
+      because they
+      pay for the interstate and intrastate pipeline capacity and the gas
+      storage that
+      give the company the flexibility to make advantageous deals.
+      "By the same token, we want [the Gas Co.] . . . to go into the market
+      and
+      generate cost savings that can be passed on to the customers," he
+      added. "We
+      want them to have incentives. The question is how to balance them."
+      Under deregulation, the Gas Co. adopted the nontraditional role of
+      marketer,
+      according to a PUC Energy Division report in January. The company
+      makes gas
+      sales at various locations. It engages in exchanges. It makes futures
+      transactions to help stabilize costs.
+      "They look for ways to lower the gas cost," said Richard Myers,
+      program
+      supervisor at the Energy Division. "Before they were lots more
+      risk-averse. Now
+      they feel they can take risks and make money for shareholders, and it
+      is a
+      benefit for ratepayers at the same time."
+      The incentive programs are tailored to individual utilities, so it is
+      difficult
+      to compare them. Records show that the shared savings at SDG&E, a
+      much smaller
+      utility, declined steadily from $9.2 million in the 1996-97 cycle to
+      $560,000 in
+      1999-2000.
+      Spokesman Ed Van Herik said the falloff largely represents a drop in
+      gas
+      purchases, especially as the company sold off its own gas-fired
+      electricity-generating plants. He said the company does not yet know
+      how much
+      savings have accrued in the last year.
+      In an annual report to the PUC in February, PG&E said it had no
+      savings under
+      the incentive program and thus it is not entitled to any award for
+      the 1999-2000
+      cycle.
+      The Utility Reform Network, a San Francisco-based consumer advocacy
+      group, said
+      it will closely watch the PUC's evaluation of the incentive program
+      at the Gas
+      Co.
+      "We want to make sure, given the dramatic changes in the gas market
+      and prices,
+      ratepayers are not left out of the [additional] benefits," TURN
+      attorney Marcel
+      Hawiger said. "We'll look to see whether the mechanism should be
+      changed."
+      Severin Borenstein, director of the Energy Institute at UC Berkeley,
+      said the
+      program should be changed to provide more incentive for utilities to
+      enter
+      long-term contracts that would smooth out volatility in the market.
+      "Unfortunately, under the system," he said, "the only incentive is to
+      beat the
+      [spot] market."
+
+
+      Use this file to download and print all the articles in this section
+      (See attached file: Dow Jones
+      Interactive-california-03233001-selected.doc)
+
+
+
+      IMPLICATIONS FOR OTHER MARKETS
+
+      (For easier printing of all the articles in this section use the file
+      at the end of the section)
+
+
+
+      New York:   New York at the crossroads
+      Wednesday, March 21, 2001
+
+
+      Energy Insight
+
+
+
+      (Embedded image moved to file: pic24389.pcx)
+
+
+
+      By Dave Todd
+
+
+
+      dtodd@ftenergy.com
+
+
+
+      U.S. Energy Secretary Spencer Abraham declared this week that the Big
+      Apple is on the verge of being bitten hard by power cuts and rising
+      energy prices.
+
+
+      Delivering the keynote address at the U.S. Chamber of Commerce's
+      national energy summit in Washington Monday, Abraham said,
+      "California is not the only state facing a mismatch between supply
+      and demand," what with "electricity shortages predicted for New York
+      City and Long Island this summer" and low capacity margins
+      threatening electricity reliability elsewhere across the country. But
+      how likely is it that New Yorkers will face blackouts of the sort
+      confronting Californians?
+
+
+      Not very, says energy trade specialist Edward Krapels, managing
+      director of Boston-based METIS Trading Advisors. Krapels, a
+      consultant helping major Northeastern utilities, such as Consolidated
+      Edison, design market-hedging programs, adamantly decried what he
+      said are facile comparisons between conditions in New York and
+      California, there being "more differences than there are
+      similarities" between those two industrial cornerstones of the
+      country's economy in respect to energy security management.
+
+
+      "First of all, New York has a more varied portfolio of energy
+      generation sources than California," he said. California has hydro,
+      nuclear and gas, but when it lost a lot of hydro, the state needed
+      gas to pick up the slack, and the "capacity just wasn't there." In
+      New York's case, the state has oil and coal still in the mix and its
+      overall dependence on gas is much lower than California's, Krapels
+      added.
+
+
+      New York avoids making same mistakes
+
+
+      Portfolio diversity is one pillar of any effective plan to help New
+      York avoid the same errors made in redesigning California's
+      marketplace. New York's Independent System Operator (ISO), in a new
+      report warning that the state is at an "energy crossroads" in terms
+      of its capacity adequacy in the immediate future, argues that a
+      concerted effort is required to arrest declining in-state generation
+      capacity reserve margins, and a strategy must be put in place,
+      whether or not new generation comes on-line, in accordance with
+      current anticipated scenarios.
+
+
+      A measure of New York's essential difficulty is that, between 1995
+      and 2000, statewide demand for electricity grew 2,700 MW, while
+      generating capacity expanded by only 1,060 MW. With no major new
+      generating plants in downstate New York fully approved, the gap is
+      expected to continue to widen. To avoid "a replication of
+      California's market meltdown" the New York ISO calculates the state's
+      daily generating capacity needs to grow by 8,600 MW by 2005, with
+      more than half of that located in New York City and on Long Island.
+      Expressing concern this may be too big a burden for the current
+      bureaucratic process to bear, the ISO wants to see a state-appointed
+      ombudsman named to help would-be merchant power plant investors plow
+      through red tape.
+
+
+      "Increasing New York's generating capacity will also lessen the
+      state's escalating and risky reliance on out-of-state sources of
+      electricity," the ISO added. "Since 1999, New York State has been
+      unable to cover its reserve requirements from in-state sources."
+
+
+      Not everyone agrees with that analysis, insofar as it argues for
+      circling the wagons inward. Some analysts believe the ultimate
+      solution lies not in tying in more inwardly dedicated power, but in
+      expanding the marketplace by breaking down inter-jurisdictional
+      barriers. In any case, New York energy regulatory authorities and
+      those responsible elsewhere in the U.S. Northeast, such as PJM
+      (Pennsylvania-New Jersey-Maryland) Interconnection and the New
+      England Power Pool, are in vastly better shape in terms of
+      "cross-border" cooperation than California and its neighbors in that
+      efforts are being made among various authorities toward developing an
+      integrated regional electricity market. In California, by contrast,
+      the state's focus?for example, in the case of new gas-fired power
+      plant development?has been to ensure dedicated supply to the
+      California market alone, rather than on a regional marketplace.
+
+
+
+
+      (Embedded image moved to file: pic05075.pcx)
+
+      The New York ISO's new broad-based analysis of market-restructuring
+      needs argues that the relatively stronger health of its reformed
+      environment is "due in large part to the ability of New York's
+      utilities to enter into long-term power contracts."
+
+
+      What needs to be done most, it says, is to move aggressively to build
+      some of the more than 29,000 MW of "proposed new generation in the
+      siting pipeline."
+
+
+      In the meantime, the 30,200 MW of electricity New Yorkers used on a
+      peak day last summer shouldn't be eclipsed on too many days this
+      coming summer (given early long-range weather forecasts). Demand,
+      however, is expected to increase at an annual average rate of up to
+      1.4%.
+
+
+      So while New York City, the rest of the state and adjacent parts
+      might breathe easy this year, it could be a brief rest from the fray.
+      Meanwhile, a 4% shortfall is still being planned for this summer that
+      is not yet provided for, as authorities hurriedly seek to arrange new
+      generation plants around Manhattan, on Long Island and even on barges
+      offshore.
+
+
+      One way or another, whether it is the weather or the politics of
+      siting new energy facilities, it's going to be a hot time in the
+      city.
+
+
+      Long-term solutions hit brick wall
+
+
+      Meanwhile, attempts at longer-term solutions continue to run into
+      trouble. Last week, Connecticut state regulators came out against a
+      proposal to run a new underwater cable under Long Island Sound that
+      Hydro-Quebec subsidiary TransEnergie U.S. Ltd. wants to build to pump
+      more juice into Long Island Power Authority's load pocket. Despite
+      strong promises from TransEnergie to be diligent in avoiding damage
+      to oyster beds in Long Island Sound, the proposal failed to convince
+      authorities, who were persuaded the pipeline project could lead to
+      diversion of electricity from Connecticut.
+
+
+      In similar fashion, private companies wanting to build 10 small
+      independent power plants and temporary generators offshore New York
+      City are running into intense opposition from environmental groups
+      and citizen orga
+nizations?some of whom have taken their cases to the
+      state assembly in Albany.
+
+
+      The David vs. Goliath nature of such controversies has further
+      alerted energy companies to the difficulties of addressing complex
+      energy supply issues that may ultimately devolve to people not
+      wanting things in their backyard, regardless of what the alternative
+      might mean to their fellow citizens or the greater public good.
+
+
+      But suddenly, in New York, California's troubles?while still distant
+      in their intensity? may not be so far away. By some estimates, this
+      summer's bills for Consolidated Edison customers could be up as much
+      as one third or more over last year's charges.
+
+
+      Letting the time slip when it comes to building new infrastructure
+      isn't going to make the pain go away.
+
+
+
+      NEW YORK:  NY-ISO REPORT SAYS STATE NEEDS 4,000 - 5,000 MW OF NEW
+      GENERATION SOON TO AVOID SEVERE SHORTAGES; NY-ISO ALSO ASKS FERC TO
+      EXTEND BID CAP AND TEMPORARY EMERGENCY PROCEDURES
+      03/21/2001
+      Foster Electric Report
+      2
+      (c) Copyright 2001, Foster Associates, Inc.
+
+      Raising the specter of an East Coast version of the California
+      crisis, the New
+      York Independent System Operator, Inc. (NY-ISO) is warning of serious
+      electricity shortages, air quality deterioration and stunted economic
+      growth
+      without immediate approval of between 4,000-5,000 MW of new
+      generating capacity
+      in the state. Of this amount, 2,000-3,000 MW is needed to serve New
+      York City.
+      Another 8,600 MW of new capacity will have to be built by 2005, the
+      NY-ISO said
+      in a recent report, Power Alert: New York's Energy Crossroads.
+      "New York is heading towards a very serious situation unless it acts
+      immediately
+      to get new supply sited within its borders," said NY-ISO president
+      William
+      Museler in a statement accompanying the report. "This report is
+      essentially a
+      caution light at New York's energy crossroads."
+
+      Sources in the New York Public Service Commission have downplayed the
+      NY-ISO's
+      warning, asserting that a process for bringing on new generation is
+      well
+      underway, with more than 85 projects in the approval pipeline.
+      In a related development, the NY-ISO asked FERC to approve a proposed
+      tariff
+      amendment (ER01-1517) extending existing bids caps in some of its
+      markets until
+      10/31/02, and a separate and related amendment (ER01-1489) extending
+      the
+      NY-ISO's so-called temporary extraordinary procedures (TEP) that
+      allow the ISO
+      to make price adjustments and take other corrective actions if it
+      finds evidence
+      of market power abuse.
+      The NY-ISO Report --The NY-ISO likened the situation in New York to
+      that faced
+      by California, where a relentless increase in demand has not been met
+      with an
+      equal increase in supply. The NY-ISO said that between 1995 and 2000,
+      statewide
+      demand for electricity rose by 2,700 MW, while generating capacity
+      increased by
+      only 1,060 MW. With no major new generating plants in downstate New
+      York fully
+      approved for construction at this time and generation demand in the
+      state
+      expected to grow around 1.3 percent annually for the next several
+      years, the
+      NY-ISO said this gap will continue to widen.
+      The inevitable result of this trend is large rate increases for New
+      York's power
+      consumers. The NY-ISO's modeling suggests that "by 2005, statewide
+      prices are
+      likely to be more than 20-25 percent lower in the case in which new
+      plants are
+      built than in the case where they are not." In New York City, "the
+      price to
+      consumers of electric power could be reduced by as much as 28 percent
+      when
+      compared to the case of no new supply or load management programs."
+      Besides large rate increases, the NY-ISO asserted that a failure to
+      site and
+      build new plants in New York will threaten power reliability in the
+      state and
+      lead to increasing reliance on out-of-state resources. The report
+      said that if
+      no new in-state generation comes on line in the next five years, the
+      state's
+      generation reserve margins will shrink from the current 14.9 percent
+      above peak
+      demand "to a dangerously low 8.4 percent by 2005." Pointing to
+      California's
+      situation, the report added that increased reliance on power imports
+      "can
+      subject electrical suppliers and customers in New York to
+      transmission
+      restrictions and political and economic considerations beyond the
+      control or
+      influence of responsible New York State entities."
+      To avoid these harsh consequences, the NY-ISO said New York's new
+      siting law,
+      known as the Article X process, needs to be modified. Since the law
+      was passed
+      18 months ago, the report noted that only two plants have been
+      approved (both
+      upstate) and neither has yet been built. The problem, according to
+      the NY-ISO,
+      is that the siting process "requires the cooperation of multiple
+      state
+      agencies." To expedite the process, the report suggested the "clear
+      designation
+      of a lead agency and the adoption of an `ombudsman program' to
+      expedite and
+      coordinate the work of the agencies responsible for the Article X
+      process must
+      be made." The NY-ISO added that an expedited approval process would
+      improve the
+      environment because older, more polluting power plants would be
+      replaced by
+      cleaner gas-fired units.
+      On a more positive note, the NY-ISO reported that New York's
+      restructured power
+      market "is far healthier than that in California, due in large part
+      to the
+      ability of New York `s utilities to enter long-term power contracts.
+      The basic
+      structure of the New York market will also reduce unwarranted price
+      spikes and
+      other market disruptions through mitigation programs which
+      automatically correct
+      price spikes due to market power abuses."
+      "Nevertheless, California `s experience raises a caution flag for all
+      New
+      Yorkers," the report continued. "The deregulated market in New York
+      cannot
+      achieve lower costs through competition without an increase in
+      generating
+      capacity similar in magnitude to the recommendations of this report,
+      along with
+      simultaneous efforts to institute greater conservation, better load
+      management
+      and alternative energy supply initiatives. Additionally, closer
+      integration with
+      regional suppliers of power is both inevitable and beneficial."
+      The report also recommended (1) accelerating conservation, real-time
+      metering
+      and price-sensitive load programs; and (2) upgrading the state's and
+      the
+      Northeast's transmission infrastructure.
+      The Proposed Tariff Amendments -- New York's Article X siting process
+      and
+      continuing tight supplies were also cited in the NY-ISO's request to
+      extend from
+      4/30/01 until 10/31/02 its $1,000/MWh bid caps. FERC first approved
+      the
+      1,000/MWh bid caps in July 2000 (see REPORT No.197, pg.6), and
+      subsequently
+      extended them.
+      The NY-ISO's board "is sensitive to the Commission's concerns about
+      undue
+      intervention in energy markets," the filing related. "Nevertheless,
+      the NY-ISO
+      is submitting this request because it believes that delays in New
+      York state's
+      `Article X' process for licensing and siting new generating capacity
+      is
+      inhibiting supply from increasing to match continued demand growth. .
+      . .
+      Moreover, although the NY-ISO proposes to implement several
+      demand-side measures
+      this summer, it is not yet clear whether they will make demand
+      sufficiently
+      price-responsive to avoid periods of high prices that would not occur
+      if there
+      were an efficient demand-side response."
+      Thus, the NY-ISO insisted that the requested extension is needed to
+      provide more
+      time for the development of additional generation and to gauge the
+      effectiveness
+      of the NY-ISO's proposed demand-side response mechanisms "in order to
+      avoid
+      exposing consumers to price spikes that are not a product of the
+      interplay of
+      competitive market forces."
+      Other problems cited in the NY-ISO's filing which keep New York's
+      power market
+      from being fully competitive include continuing capacity and
+      operating
+      constraints at the state's Central-East interface, and questions over
+      adequate
+      gas supply.
+      "The NY-ISO remains acutely aware that taking steps to deal with
+      price
+      abnormalities can have undesirable consequences," the filing
+      continued.
+      "Nevertheless, the NY-ISO believes that the $1,000/MWh cap that has
+      been used in
+      the PJM's markets since inception does not appear to have had an
+      adverse impact
+      there. . . . The permanent bid caps in PJM, and the interim bid caps
+      in ISO New
+      England (proposed for extension through the end of 2001) also make
+      continuation
+      of the NY-ISO's bid caps more important in order to maintain
+      uniformity across
+      the Northeastern markets. The NY-ISO also continues to believe that
+      suppliers
+      will not be materially harmed by the continuation of bid caps, which
+      are likely
+      to come into effect very rarely and are set at levels that prevent
+      only
+      artificially high run-ups in prices."
+      The NY-ISO's request to extend its TEP procedures (which also were
+      previously
+      extended) through 10/31/02 cited similar problems with New York's
+      power markets,
+      but claimed that the NY-ISO "has made great strides" toward
+      eliminating market
+      design and software flaws. "The TEPs were, and remain, an
+      indispensable tool for
+      responding to and correcting market flaws and other instances where
+      the markets
+      are not operating as the NY-ISO and the Commission intended," the
+      filing
+      insisted.
+
+
+      MASSACHUSETTS:  Attorney general says summer poses electricity
+      concerns
+      By JOHN McELHENNY
+      Associated Press Writer
+      03/19/2001
+      Associated Press Newswires
+      Copyright 2001. The Associated Press. All Rights Reserved.
+
+      BOSTON (AP) - The state's top consumer advocate warned that
+      Massachusetts may
+      see "California-type" electricity blackouts this summer when
+      temperatures rise
+      and residents turn on air conditioners and fans.
+      "It would be a mistake to feel this is a cold weather problem," said
+      Attorney
+      General Thomas Reilly in an interview with The Associated Press. "Our
+      major
+      problem will come this summer."
+
+      State deregulation of the electric industry has been among the
+      factors blamed
+      for local power outages in California, and on Monday, California for
+      the first
+      time suffered rolling blackouts across the entire state.
+      Massachusetts relaxed regulations on its own electric industry in
+      1998 to
+      attract more companies to stir competition. But that hasn't happened
+      yet,
+      largely because the current high cost of oil and gas make it
+      expensive to
+      produce electricity.
+      "The promise of deregulation was that there was going to be
+      competition," said
+      Reilly, a Democrat. "That competition in the wholesale market is not
+      happening."
+
+      Hot summer weather drives up electricity use as residents turn on air
+      conditioners and fans, and Reilly said a few particularly hot days
+      could strain
+      the grid that provides the region's power.
+      A spokeswoman for the region's power grid said electricity use is
+      expected to
+      rise 1.5 to 2 percent this year, but the region should have enough
+      power because
+      of six new power plants that have begun generating electricity in the
+      past 18
+      months.
+      "The situation is unlike California because we have new generation
+      coming on
+      line that is outpacing demand," said Ellen Foley, spokeswoman for ISO
+      New
+      England Inc., which manages the grid of 330 generators connected by
+      8,000 miles
+      of high voltage transmission lines.
+      Still, a particularly hot day and an unforeseen power generation
+      breakdown could
+      prompt ISO to ask residents to conserve electricity, a situation that
+      arose once
+      last summer, Foley said.
+      In order to avoid any power outages and protect consumers, Reilly
+      repeated calls
+      for electric companies to build more power lines and to offer more
+      options for
+      new customers who have signed up since deregulation. Those customers
+      typically
+      pay more than long-term customers.
+      Electric transmission companies should also be allowed to enter into
+      two-year
+      contracts with suppliers, instead of the six-month contracts many
+      have now, to
+      avoid short-term price spikes for consumers, Reilly said.
+      The Attorney General's Office acts as an advocate for consumers.
+      Michael Monahan, a spokesman for NSTAR, which provides electricity to
+      more than
+      1 million customers, is upgrading some of its power lines and last
+      year built a
+      new line to Cape Cod, but currently has no lines under construction.
+      "I wholeheartedly concur with the attorney general that it's
+      something we have
+      to focus on," Monahan said, but he added, "The indications I see are
+      that we
+      have an ample supply of electricity."
+      California's statewide outages were ordered on Monday after a
+      transformer fire,
+      high demand and a lack of electricity imports pushed power reserves
+      to near
+      zero.
+      California partially deregulated its electric industry in 1996, two
+      years before
+      Massachusetts.
+      ---
+      On the Net:
+      Attorney General's Office: http://www.ago.state.ma.us
+      NSTAR: http://www.nstaronline.com
+      ISO New England Inc.: http://www.iso-ne.com
+
+
+      NEVADA:  Discussion of bill stopping power plant sales to continue
+      Wednesday
+      By JOHN WILKERSON
+      Associated Press Writer
+      03/19/2001
+      Associated Press Newswires
+      Copyright 2001. The Associated Press. All Rights Reserved.
+
+      CARSON CITY, Nev. (AP) - Lawmakers hit more delays Monday in trying
+      to pass a
+      measure that pulls the plug on the sale of Nevada power plants to
+      avoid
+      California-style energy problems.
+      "The goal of this bill is only stopping the divestiture of power
+      plants and
+      making sure it's constitutional," said Senate Commerce and Labor
+      Chairman
+      Randolph Townsend, R-Reno. "And that's not as easy as it sounds."
+
+      Townsend's comment just before his committee began working on SB253
+      was
+      prophetic - witnesses kept bringing up the need for more flexibility
+      in the
+      measure.
+      Translation: Don't kill all deals by stopping Reno-based Sierra
+      Pacific Power
+      and Las Vegas-based Nevada Power from selling their Nevada power
+      plants until
+      June 2003 - and possibly until 2006.
+      Pete Ernaut, a lobbyist for Reliant Energy which has been trying to
+      buy a power
+      plant, said unforeseen market changes could make a plant sale before
+      2003 a deal
+      that would be in the public's interest.
+      "If you put a two-year moratorium on these plants, all these deals
+      are going to
+      go away," he said. "When the cow leaves the barn, it's difficult to
+      catch."
+      Townsend had hoped to wrap up committee work on SB253 on Monday. Now
+      it's up for
+      review again Wednesday in the Commerce and Labor Committee.
+      Reliant isn't the only company trying to keep power plant purchases
+      alive.
+      Earlier this month, executives of Pinnacle West Energy told the
+      committee that
+      it's in the public's interest to allow Sierra Pacific Resources to
+      sell its
+      Harry Allen power plant.
+      The Harry Allen plant produces about 72 megawatts out of the 2,900
+      megawatts of
+      energy that Nevada utilities generate. Pinnacle has plans to expand
+      that to 700
+      megawatts by 2004.
+      Other provisions not strictly related to the plant divestitures, such
+      as ways in
+      which Sierra Pacific and Nevada Power can recover the cost of undoing
+      the sales
+      contracts, don't have to be included in SB253, Townsend said.
+      Townsend said the other concerns dealing with the energy crisis and
+      utility
+      deregulation can be handled in later bills - but the power plant sale
+      issue must
+      be handled now.
+      Nevada's PUC and the Federal Energy Regulatory Commission had
+      directed Sierra
+      Pacific and Nevada Power to sell the plants as a condition of the
+      companies'
+      merger in 1999 under the parent company Sierra Pacific Resources.
+      Critics of the plant sales say the plants generate about half the      
+state's
+      electricity - and if they're sold, the unregulated new owners could
+      sell the
+      power to other states and put Nevada into the energy dilemma
+      California faces of
+      shrinking supply and rising prices.
+      The Southern Nevada Water Authority has presented an analysis stating
+      that rate
+      payers will save from $1.7 billion to $3.5 billion by July 2001 if
+      the power
+      plant sales are stopped.
+      Nevada's Consumer Advocate's Office previously had projected a
+      conservative
+      estimate of $915 million in savings.
+
+
+      MAINE:  Panel of experts would review impact of energy deregulation
+      By GLENN ADAMS
+      Associated Press Writer
+      03/19/2001
+      Associated Press Newswires
+      Copyright 2001. The Associated Press. All Rights Reserved.
+
+      AUGUSTA, Maine (AP) - In the wake of rolling blackouts in California
+      and rate
+      spikes in their home state, Maine's top legislators proposed a study
+      Monday into
+      the effects of deregulation of the energy industry.
+      "Deregulation of electricity is a new idea and we still have a lot to
+      learn,"
+      Senate President Michael Michaud said as he called for the analysis.
+
+      A panel of industry insiders, elected officials and consumers would
+      study issues
+      such as what standard rate consumers can expect and the likelihood of
+      energy
+      shortfalls over the next three years, and whether Maine consumers are
+      vulnerable
+      to anti-competitive activities.
+      In addition, the Blue Ribbon Commission would look into whether
+      changes in
+      Maine's deregulation law are needed to encourage more generating
+      capacity,
+      improve conservation and spur competition.
+      The study is being proposed as consumers remain mindful of a power
+      crisis in
+      California that resulted from high wholesale energy costs, a consumer
+      rate cap
+      and too few power plants in that deregulated state.
+      Maine's deregulation law is designed to avoid such pitfalls, said
+      Rep. William
+      Savage, D-Buxton, House chairman of the Legislature's Utilities
+      Committee.
+      Maine's law does not cap consumer prices, as California's does, and
+      the state
+      has more than enough generating facilities to meet the state's energy
+      needs,
+      Savage said.
+      Since Maine's deregulation law took effect in March 2000, Bangor
+      Hydro-Electric
+      Co. rates have increased 19 percent. The Public Utilities Commission
+      approved a
+      residential standard rate increase as recently as last month.
+      Federal energy regulators are reviewing their decision to allow steep
+      fee
+      increases for utilities and power wholesalers that fail to arrange
+      enough
+      capacity to meet customers' peak load. Gov. Angus King and all four
+      members of
+      Maine's congressional delegation oppose the hike.
+      The PUC has approved standard rate increases for energy delivered by
+      Central
+      Maine Power Co. to medium-sized and large industrial users.
+      On the other hand, some towns and school districts are saving money
+      on energy
+      through deals they can get in the deregulated market.
+      In the meantime, legislation has been introduced in response to some
+      of the
+      changes that have occurred in Maine's deregulated energy industry.
+      One would use some of the money from the sale of power-generating
+      assets to
+      offset an increase in rates paid by large industrial users, said Sen.
+      Norman
+      Ferguson, R-Hanover, Senate chairman of the Utilities Committee.
+      Supporters of the utility study that was proposed Monday said they
+      are not
+      looking to make changes in Maine's deregulation law, but if it needs
+      fixing it
+      could be done during next year's session.
+      The lawmakers' primary interest is to find out how trends in a new
+      environment
+      designed to encourage competition will affect consumers, and to try
+      to identify
+      what consumers can expect in the few years ahead.
+      House Speaker Michael Saxl, D-Portland, said the Legislature "has a
+      fundamental
+      public policy interest in making sure rate-payers and businesses are
+      protected
+      against exorbitant rate hikes."
+      Michaud, D-East Millinocket, said he's interested in finding out how
+      future
+      changes in electric prices and availability might affect businesses
+      and
+      consumers in northern Maine.
+      "The economy in my part of the state is the most vulnerable, and I
+      want to make
+      certain we are leaving no stone unturned in our effort to prevent any
+      shocks to
+      the economy in northern, western and eastern Maine," Michaud added.
+      The commission would include House and Senate members from each
+      party, a utility
+      executive, and representatives of energy producers, providers, a
+      large
+      commercial consumer and individual consumers.
+
+
+      OREGON:  State Senate moves to combat energy crisis
+      03/16/2001
+      Associated Press Newswires
+      Copyright 2001. The Associated Press. All Rights Reserved.
+
+      SALEM, Ore. (AP) - In an attempt to avoid a California-like energy
+      crisis, the
+      Oregon Senate approved a bill Friday that would quicken the process
+      of siting
+      power plants that use gas and renewable resources.
+      "It's important for Oregon. It makes sure that energy will be
+      available to
+      everyone," said Sen. Lee Beyer, D-Springfield.
+
+      The measure, SB843, would shorten the siting process for power plants
+      that use
+      gas and renewable resources, like wind, from a year and a half to a
+      matter of
+      months.
+      The speeded-up process would be in effect for two years.
+      "If we can act now, we can actually start to solve power supply
+      problems by this
+      summer," said Sen. Jason Atkinson, R-Jacksonville
+      California's strict regulations on the construction of new power
+      plants has
+      contributed to its current shortage and legislators took note. Beyer
+      said though
+      California was definitely a wake-up call, the measure is a reaction
+      to the
+      larger power picture in the Northwest.
+      With low rainfall, hydroelectric generators will have trouble meeting
+      demand,
+      Beyer said. Gas-fired and wind plants could come online as soon as
+      this fall and
+      would provide relief.
+      "We are not in a position to sit back and do nothing about the energy
+      crisis the
+      Northwest and the country are experiencing," said Senate Minority
+      Leader Kate
+      Brown, D-Portland.
+      Conservationists, however, caution that lawmakers should be careful
+      not to rush
+      to provide power at the expense of environmental standards.
+
+
+
+      WISCONSIN:  Two utilities to add 975 megawatts in plan to avoid
+      energy crisis
+      By The Associated Press
+      03/22/2001
+      Associated Press Newswires
+      Copyright 2001. The Associated Press. All Rights Reserved.
+
+      Plans of two state utilities to add 975 megawatts to Wisconsin's
+      electric power
+      grid as a way of avoiding an energy crisis similar to California's
+      were
+      questioned Thursday by a consumer advocate who said too many power
+      plants may be
+      in the works.
+      "Certainly nobody wants to see blackouts like you have in California
+      but there
+      is the danger Wisconsin could be overbuilding," said Steve Hiniker,
+      executive
+      director of the Citizens' Utility Board, which represents consumer
+      interests in
+      utility rate cases. He noted that plant construction costs ultimately
+      are born
+      by the utility customers.
+
+      Alliant Energy Corp. announced its proposal Wednesday - in a filing
+      with the
+      state Public Service Commission - to spend $1 billion to build one
+      coal and two
+      gas-fired power plants.
+      Alliant has proposed building a 500 megawatt coal-fired plant and a
+      100 megawatt
+      natural-gas fired plant by 2006. It also wants to build a 200
+      megawatt natural
+      gas-fired facility in 2011. Wisconsin has not built a coal-fired
+      plant in more
+      than two decades.
+      Alliant has not determined the plants' locations.
+      Also, Madison Gas & Electric, the state's smallest investor-owned
+      utility, said
+      Wednesday that it had signed deals to buy 175 megawatts of power from
+      three
+      generating plants in Wisconsin and Illinois.
+      "Three out of the four past summers, we've had public appeals for
+      conservation
+      due to shortages somewhere in the state. We need to take steps to
+      avoid that,
+      and the California situation makes that even more clear," said
+      Alliant spokesman
+      Chris Schoenherr. "Getting more iron in the ground will give us more
+      flexibility
+      in the state to be able to react."
+      Alliant acknowledged the new plants will probably mean rate
+      increases, but it
+      was too early to say how much rates would go up.
+      California's problems, which this week resulted in the first
+      deliberate
+      blackouts since World War II, stemmed from underestimating the
+      state's power
+      needs, forcing utilities to sell their power plants but not allowing
+      them to
+      secure long-term supply contracts, and freezing rates, among other
+      things.
+      But Wisconsin's situation is far different.
+      The state has moved slower than California toward deregulation, and
+      there has
+      been no desire here to speed up the process in recent years as power
+      reliability
+      became a problem.
+      The PSC estimates that Wisconsin will need an additional 3,000
+      megawatts of
+      power over the next decade.
+      Hiniker said Wisconsin needs to coordinate its planning to avoid
+      overbuilding.
+      The costs of new power plants are passed on to ratepayers, meaning
+      electric
+      bills will increase as new generation is added. In addition,
+      coal-generated
+      power plants are a major source of air pollution in the state.
+      "We don't have the advance planning that has kept Wisconsin from
+      overbuilding in
+      the past," said Hiniker. "This is something the PSC should be doing."
+      MG&E's deals are:
+      -A 10-year contract to buy 75 megawatts from Calpine Energy Services
+      starting in
+      May 2004. The power will come from the natural gas-fired plant Rock
+      River Energy
+      Center, near Beloit.
+      Calpine Energy Services is a unit of San Jose, Calif.-based Calpine
+      Energy Corp.
+      The plant is being built by Northbrook, Ill.-based SkyGen Energy LLC,
+      which
+      Calpine bought last year from SkyGen President Michael Polsky and
+      Wisvest Corp.,
+      a unit of Wisconsin Energy Corp.
+      -A 10-year contract to buy 50 megawatts of power from the Rainy River
+      Energy
+      Corp. starting in May 2002. The power is coming from a natural
+      gas-fired plant
+      near Joliet, Ill. owned by LS Power Co. Rainy River is a unit of
+      Duluth-based
+      Minnesota Power Inc.
+      -A five-year contract to buy 50 megawatts from an El Paso Merchant
+      Energy plant
+      near Cordova, Ill., in western Illinois.
+      The owner of the natural gas facility is the Cordova Energy Center
+      Co., which is
+      a unit of Iowa-based MidAmerican Energy Holdings.
+      Alliant also offered support in the Wednesday filing for a $7 billion
+      plan of
+      Milwaukee-based Wisconsin Energy, which includes five new power
+      plants in Oak
+      Creek and Pleasant Prairie.
+      --
+      On the Net:
+      CUB: http://www.wiscub.org/
+      Alliant Energy: http://www.alliant-energy.com
+      Wisconsin Public Service Commission: http://www.psc.state.wi.us
+      Wisconsin Energy: http://www.wisenergy.com/
+      Madison Gas & Electric: http://www.mge.com
+
+
+
+      Use this file to download and print all the articles in this section
+      (See attached file: Dow Jones
+      Interactive-california-03233001-implications.doc)
+
+
+
+      If you wish to be removed from the distribution list for this update
+      please contact Pru Sheppard - DC.
+
+
+
+
+      All recipients of this message have been Bcc'd as part of industry
+      best practice for broadcast emails.
+
+
+
+
+
+
+
++-------------------------------------------------------------+
+| This message may contain confidential and/or privileged     |
+| information.  If you are not the addressee or authorized to |
+| receive this for the addressee, you must not use, copy,     |
+| disclose or take any action based on this message or any    |
+| information herein.  If you have received this message in   |
+| error, please advise the sender immediately by reply e-mail |
+| and delete this message.  Thank you for your cooperation.   |
++-------------------------------------------------------------+
+ - Dow Jones Interactive-california-03233001-selected.doc
+ - pic24389.pcx
+ - pic05075.pcx
+ - Dow Jones Interactive-california-03233001-implications.doc

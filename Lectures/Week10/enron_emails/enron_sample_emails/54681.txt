@@ -1,0 +1,21 @@
+Message-ID: <9426657.1075863429954.JavaMail.evans@thyme>
+Date: Tue, 3 Jul 2001 14:19:26 -0700 (PDT)
+From: j.kaminski@enron.com
+To: vincek@cs.stanford.edu
+Subject: address
+Cc: vkaminski@aol.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Bcc: vkaminski@aol.com
+X-From: Kaminski, Vince J </O=ENRON/OU=NA/CN=RECIPIENTS/CN=VKAMINS>
+X-To: 'vincek@cs.stanford.edu'
+X-cc: 'vkaminski@aol.com'
+X-bcc: 
+X-Folder: \VKAMINS (Non-Privileged)\Kaminski, Vince J\Sent Items
+X-Origin: Kaminski-V
+X-FileName: VKAMINS (Non-Privileged).pst
+
+ JOSEPH  KOOTHRAPPALLY
+ (713) 853-6819
+ jkoothr@enron.com

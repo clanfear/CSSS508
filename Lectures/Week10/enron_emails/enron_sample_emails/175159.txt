@@ -1,0 +1,91 @@
+Message-ID: <25789789.1075847578389.JavaMail.evans@thyme>
+Date: Thu, 24 May 2001 00:51:00 -0700 (PDT)
+From: steven.kean@enron.com
+To: sarah.novosel@enron.com
+Subject: Re: Presidential Power Question
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: Steven J Kean
+X-To: Sarah Novosel
+X-cc: 
+X-bcc: 
+X-Folder: \Steven_Kean_June2001_1\Notes Folders\All documents
+X-Origin: KEAN-S
+X-FileName: skean.nsf
+
+thanks
+
+
+From: Sarah Novosel on 05/23/2001 02:54 PM
+To: Richard Shapiro/NA/Enron@Enron, Steven J Kean/NA/Enron@Enron, James D 
+Steffes/NA/Enron@Enron
+cc: Linda Robertson/NA/Enron@ENRON 
+
+Subject: Presidential Power Question
+
+I spoke with Donna Bobbish this morning about Steve's question -- does the 
+President have broader authority to take action during times of crisis.  
+Donna sent me this quick write up about what she has looked into so far.  
+Because these questions go beyond a FERC practitioner's expertise, we asked 
+Donna to work with a Constitutional Law expert at V&E to determine whether, 
+and under what circumstances, the President's authority may be extended 
+beyond the authorities discussed in the memo.  
+
+We will let you know what we learn from that further research.
+
+Sarah
+
+
+----- Forwarded by Sarah Novosel/Corp/Enron on 05/23/2001 03:48 PM -----
+
+	"Bobbish, Donna J." <dbobbish@velaw.com>
+	05/23/2001 12:16 PM
+		 
+		 To: "'snovose@enron.com'" <snovose@enron.com>
+		 cc: 
+		 Subject: Presidential Power Question
+
+
+Sarah:  In response to Steve's inquiry, I did look into this question
+briefly when you first gave me the assignment.  I read an interesting law
+review article  on "The Imposition of Martial Law in the United States," for
+a discussion of presidential powers.  There is no general emergency
+authority granted the President in the U.S.  Constitution.  Also, the
+article discussed the famous "Truman steel mills case," Youngstown Sheet &
+Tube Co. v. Sawyer, 343 U.S. 579 (1952), in which the Supreme Court declared
+unconstitutional President Truman's seizure of the steel mills during the
+Korean War.  In that case, in light of a threatened national-wide strike in
+the national steel industry, President Truman, concerned about the national
+defense, issued an Executive Order directing the Secretary of Commerce to
+take possession of most of the steel mills and keep them running.  The
+Supreme Court said that if the President had authority to take such  an
+action, he had to derive it either from an act of Congress or the
+Constitution itself.  Since the Supreme Court could not find any seizure
+authority, it invalidated the President's action.  The Supreme Court also
+rejected the argument that the President had any powers that could be
+implied from the aggregate of his powers under the Constitution.
+
+Based on the Truman steel mills case, I thought it the wiser course of
+action to look for specific authorities given to the President by statute
+which might prove useful.
+
+I could look into this question further, if you would like, but we would be
+entering "martial law-type" legal territory, where the President would be
+acting outside of specific Constitutional or congressional authority (which
+has been described a "zone of twilight"), and in light of the Truman steel
+mills case, I don't know how fruitful that might be.
+
+Please let me know if you would like me to do anything more.  Thank you.
+Donna
+          ++++++CONFIDENTIALITY NOTICE+++++
+The information in this email may be confidential and/or privileged.  This
+email is intended to be reviewed by only the individual or organization
+named above.  If you are not the intended recipient or an authorized
+representative of the intended recipient, you are hereby notified that any
+review, dissemination or copying of this email and its attachments, if any,
+or the information contained herein is prohibited.  If you have received
+this email in error, please immediately notify the sender by return email
+and delete this email from your system.  Thank You
+
+

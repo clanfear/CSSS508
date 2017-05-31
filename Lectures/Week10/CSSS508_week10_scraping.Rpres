@@ -1,0 +1,518 @@
+CSSS 508, Week 10: Social Media and Text Mining
+====================================================================================
+author: Charles Lanfear
+date: May 31st, 2017
+transition: linear
+width: 1100
+height: 900
+
+
+Topics
+====================================================================================
+
+* Collecting Twitter data with `twitteR`, `streamR`, and `SocialMediaLab`
+* Mining text with `tm`
+* Wrapping up the course
+
+Collecting Twitter Data
+====================================================================================
+type: section
+
+Some Terminology
+====================================================================================
+incremental: true
+
+* Application Program Interface (API): A type of computer interface that exists as the
+"native" method of communication between computers, often via http (usable via `httr` package).
+   + R packages that interface with websites and databases typically use APIs.
+* XML and JSON: File formats commonly used for commucation via APIs.
+   + Can be parsed with the `jsonlite` and `XML` packages.
+* Scrape: The act of extracting data from sources designed to be human readable rather
+than machine readable.
+   + Technically if one goes through an API, it is not *scraping* data.
+   + R can be used to scrape from sources without an API but technical knowledge is required.
+* Rate Limit: A web service's limit to the number of pieces of data you can download in
+a given period of time (use `Sys.sleep()` to deal with this).
+
+Twitter
+====================================================================================
+incremental: true
+
+Twitter has two APIs for obtaining data from tweets and users:
+
+* Twitter REST API
+    + Allows reading and writing Twitter data.
+    + Can obtain tweets from specific dates and places easily, but doesn't get *everything*
+    + Good for obtaining lots of data, data over time, etc.
+* Twitter Streaming API:
+    + Obtains tweets as they are being posted.
+    + Only gives you tweets that were posted while you are watching.
+    + Good for following trends, live events, etc.
+
+Set Up
+====================================================================================
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+opts_knit$set(root.dir="C:/Users/cclan/OneDrive/GitHub/CSSS508/Lectures/Week10/")
+setwd("C:/Users/cclan/OneDrive/GitHub/CSSS508/Lectures/Week10/")
+library(SocialMediaLab)
+library(tidyverse)
+library(twitteR)
+library(ROAuth)
+library(grid)
+library(stringr)
+library(streamR)
+
+api_key <- "avrgYoCNkyXngB6XZP1ykfzK8"
+api_secret <- "J67v86aHpcSai9bm89QoxZqGzJslYbIBAmVnypHt4ThMMpPB3w"
+access_token <- "3874714518-zHGNavxH2NCvFKNi1CPKVfWpOpLjWFpUPGTUEax"
+access_token_secret <- "XKzS0bHQ7bkTJxAHQe8OM7ehecarv0xkncVTH5xG60WCG"
+
+reqURL <- "https://api.twitter.com/oauth/request_token"
+accessURL<- "https://api.twitter.com/oauth/access_token"
+authURL<- "https://api.twitter.com/oauth/authorize"
+
+load("twitCred.Rdata")
+```
+
+```{r false_Setup, eval=FALSE}
+library(SocialMediaLab); library(tidyverse); library(stringr); library(twitteR); library(ROAuth); library(grid); library(streamR)
+
+api_key <- "API KEY GOES HERE"
+api_secret <- "API SECRET GOES HERE"
+access_token <- "ACCESS TOKEN GOES HERE"
+access_token_secret <- "ACCESS TOKEN SECRET GOES HERE"
+
+reqURL <- "https://api.twitter.com/oauth/request_token"
+accessURL<- "https://api.twitter.com/oauth/access_token"
+authURL<- "https://api.twitter.com/oauth/authorize"
+```
+
+
+Social Media Lab
+====================================================================================
+type: section
+
+
+Social Media Lab
+====================================================================================
+incremental: true
+
+Social Media Lab provides a "one-stop shop" for accessing social media data and 
+transforming it for network analysis techniques. It works with:
+
+* Twitter (Tweets from REST API)
+* Facebook (Pages and public posts)
+* Instagram (Public pictures and comments)
+* YouTube (Videos and comments)
+
+Data from all of these can be collected and analyzed using the same syntax!
+[See this introduction to see exactly how much it can do](http://www.academia.edu/19064267/Absolute_Beginners_Guide_to_the_SocialMediaLab_package_in_R).
+
+SML Work Flow
+====================================================================================
+incremental: true
+
+Social Media Lab has a simple workflow for collecting data:
+
+1. `Authenticate()` using your credentials
+2. Pipe authentication to...
+3. `Collect()` where you can specify search parameters.
+4. Then either...
+   + Use the data as they are for text analysis
+   + Use `Create` to generate network data
+
+It will perform the search and process the data into a usable data frame. This beats
+handling `JSON` files yourself!
+
+
+Twitter's REST API
+====================================================================================
+
+```{r REST_API, include=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+tweets_Trump <- Authenticate("twitter", api_key, api_secret,
+                             access_token, access_token_secret) %>%
+  Collect(searchTerm="Trump", language="en", verbose=TRUE) %>%
+  as_tibble()
+```
+
+```{r REST_API_display, eval=FALSE}
+tweets_Trump <- Authenticate("twitter", api_key, api_secret, access_token, access_token_secret) %>% Collect(searchTerm="Trump", language="en", verbose=TRUE) %>% as_tibble()
+
+tweets_Trump %>% arrange(retweetCount) %>% select(text)
+```
+
+```{r REST_API_eval, echo=FALSE}
+tweets_Trump %>% arrange(retweetCount) %>%
+  select(text)
+```
+
+Twitter's REST API 2
+====================================================================================
+
+```{r REST_API_2, include=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+tweets_UW <- Authenticate("twitter", api_key, api_secret,
+                                access_token, access_token_secret) %>%
+  Collect(geocode="47.6552083,-122.30833,2mi", searchTerm=" ",
+          language="en", verbose=TRUE)
+
+tweets_UW %>% arrange(retweetCount) %>%
+  select(text)
+```
+
+```{r REST_API_2_display, eval=FALSE}
+tweets_UW <- Authenticate("twitter", api_key, api_secret,
+                                access_token, access_token_secret) %>%
+  Collect(geocode="47.6552083,-122.30833,2mi", searchTerm=" ",
+          language="en", verbose=TRUE)
+
+tweets_UW %>% arrange(retweetCount) %>% select(text)
+```
+
+
+```{r REST_API_2_eval, echo=FALSE}
+tweets_UW %>% arrange(retweetCount) %>% select(text)
+```
+
+
+Twitter Stream with streamR
+====================================================================================
+
+There are a few packages that can access the Twitter Stream API including `streamR`.
+Since the Stream API is less commonly used in Social Science, the packages are a bit 
+"rough around the edges" and require more finicky setup.
+
+
+streamR Setup
+====================================================================================
+
+```{r streamR_setup, eval=FALSE}
+download.file(url="http://curl.haxx.se/ca/cacert.pem", destfile="cacert.pem")
+twitCred<- OAuthFactory$new(consumerKey=api_key,
+                            consumerSecret=api_secret,
+                            requestURL=reqURL,
+                            accessURL=accessURL,
+                            authURL=authURL)
+
+# insert the number in the R console after you run this
+twitCred$handshake(cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+
+# Then save this so you don't need to do it again
+save(twitCred, file = "twitCred.Rdata")
+```
+
+
+streamR
+====================================================================================
+incremental: true
+
+`sampleStream()` downloads streaming tweets of no particular topic.
+
+```{r samplestream, eval=FALSE}
+tweets_stream <- sampleStream("", timeout=10, oauth=twitCred)
+```
+
+`filterStream()` downloads streaming tweets based on search parameters.
+
+```{r filterStream, eval=FALSE}
+tweets_Trump  <- filterStream("", track="Trump", timeout=10, oauth=twitCred)
+```
+
+streamR
+====================================================================================
+incremental: true
+
+Once you've streamed data in you need to parse it from JSON format into a data frame 
+for it to be particularly useful.
+
+```{r parsing, eval=FALSE}
+tweets_from_stream <- parseTweets(tweets_stream, verbose = FALSE)
+as_tibble(tweets_from_stream) %>% arrange(followers_count) %>% select(name)
+```
+
+```{r real_parsing, eval=TRUE, echo=FALSE}
+load("tweets_from_stream.RData")
+as_tibble(tweets_from_stream) %>% arrange(followers_count) %>% select(name)
+```
+
+
+Using streamR
+====================================================================================
+
+Since it collects tweets in real time, the streaming API tends to be most useful when you leave it running *for a long time*.
+
+You can use it to monitor events as they're happening, or to catch a "snapshot" in time.
+
+I let it run for 1200 seconds to replicate an example by the package author, Pablo Barbera, 
+in which tweets in the US are collected and then mapped in ggplot.
+
+
+Using streamR
+====================================================================================
+
+```{r big_stream, eval=FALSE}
+filterStream("tweetsUS.json", locations = c(-125, 25, -66, 50), timeout = 1200, 
+             oauth = twitCred)
+tweets.df <- parseTweets("tweetsUS.json", verbose = FALSE)
+map.data <- map_data("state")
+points <- data.frame(x = as.numeric(tweets.df$lon), y = as.numeric(tweets.df$lat))
+points <- points[points$y > 25, ]
+ggplot(map.data) + geom_map(aes(map_id = region), map = map.data, fill = "white", 
+                            color = "grey20", size = 0.25) + expand_limits(x = map.data$long, y = map.data$lat) + 
+  theme(axis.line = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(), 
+        axis.title = element_blank(), panel.background = element_blank(), panel.border = element_blank(), 
+        panel.grid.major = element_blank(), plot.background = element_blank(), 
+        plot.margin = unit(0 * c(-1.5, -1.5, -1.5, -1.5), "lines")) + 
+  geom_point(data = points, aes(x = x, y = y), size = 1, alpha = 1/5, color = "darkblue")
+```
+
+
+Using streamR
+====================================================================================
+
+```{r big_stream_actual, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE, out.width="1100px", out.height="600px"}
+load("twitter_map.Rdata")
+twitter_map
+```
+
+
+Using Twitter Data
+====================================================================================
+
+Remember, Twitter data can be challenging to make sense of, so it is most useful when
+approached using text analysis techniques.
+
+But even they might not help:
+
+![](covfefe.PNG)
+
+
+
+
+Text Mining with tm
+====================================================================================
+type: section
+
+
+Text Mining Terminology
+====================================================================================
+
+* `tm`: R package for performing text mining
+* **Term**: A word
+* **Document**: A collection of *terms*
+* **Corpus**: A collection of *documents* (plural: corpora)
+* **Dictionary**: A set of relevant *terms*
+
+
+My First Corpus
+====================================================================================
+
+We can make a basic corpus manually by creating a character vector, running `VectorSource()` on it to read it in, and then `VCorpus()` to corpus-ify:
+
+```{r tm, warning=FALSE, message=FALSE}
+library(tm)
+UW_tweets <- c("Remembering and honoring those who made the ultimate sacrifice while serving our country. #MemorialDay2016", "VIDEO: This spring @UW students taught literacy arts to #Colville Reservation students. Check out book they made!", "Enjoy the long weekend, Huskies! And to those studying for finals: Good luck and hang in there!", ".@UWBuerk & @UWFosterSchool–hosted biz plan competition awards $85,000 to students for new ventures. http://ow.ly/3PtI300F87Y  #UWinnovates")
+toy_corpus <- VCorpus(VectorSource(UW_tweets))
+```
+
+
+Accessing Corpus Entries
+====================================================================================
+
+A corpus is just a fancy list of documents, and you can access a document as a list entry:
+
+```{r}
+toy_corpus[[3]]
+as.character(toy_corpus[[3]])
+```
+
+
+Text Files as Documents
+====================================================================================
+
+You will more likely be making corpora from sources like Twitter or reading in data from text files. 
+
+We'll import a sample of emails from the [Enron corpus](http://bailando.sims.berkeley.edu/enron_email.html) assembled by UC Berkeley students. First, let's download a ZIP file with the text files and unzip it.
+
+```{r eval=FALSE}
+download.file("http://clanfear.github.io/CSSS508/Lectures/Week10/enron_sample_emails.zip", destfile = "enron_emails.zip", mode = "wb")
+unzip("enron_emails.zip", exdir = "enron_emails")
+```
+
+```{r}
+length(list.files("enron_emails/enron_sample_emails"))
+```
+
+
+Reading in Text Files
+====================================================================================
+
+Make a corpus where each document is an email in the Enron subsample:
+
+```{r cache=TRUE}
+enron_corpus <- VCorpus(DirSource(directory = "enron_emails/enron_sample_emails", mode = "text"))
+as.character(enron_corpus[[3]])
+```
+
+Transformations (maps)
+====================================================================================
+
+Let's change to lowercase, remove "stopwords" and header terms, remove punctuation, numbers, and whitespace, and "stem" the words:
+
+```{r cache=TRUE}
+# install.packages("SnowballC") # may solve errors
+enron_stripped <- enron_corpus %>%
+    tm_map(content_transformer(str_to_lower)) %>%
+    tm_map(removeWords, stopwords("english")) %>%
+    tm_map(removeWords, c("javamail.evans@thyme", "message-id", "date", "subject", "mime-version", "content-type", "text/plain", "charset=us-ascii", "content-transfer-encoding", "x-", "x-cc", "x-bcc", "x-folder", "x-origin", "x-filename")) %>%
+    tm_map(removePunctuation) %>%
+    tm_map(removeNumbers) %>%
+    tm_map(stripWhitespace) %>%
+    tm_map(stemDocument)
+```
+
+Word clouds
+====================================================================================
+
+```{r, fig.width = 10, fig.height = 4, dpi=300, out.width="1100px", out.height="440px"}
+library(wordcloud); library(RColorBrewer)
+wordcloud(enron_stripped, min.freq = 2, max.words = 80)
+```
+
+
+Filtering to Emails with California
+====================================================================================
+
+We'll write a function that takes the content of the documents and looks for any instance of `"california"`, then use it with `tm_filter()`:
+
+```{r, cache=TRUE}
+doc_word_search <- function(x, pattern) {
+    any(str_detect(content(x), pattern = pattern))
+}
+cali_emails <- enron_stripped %>%
+    tm_filter(doc_word_search, pattern = "california")
+length(cali_emails)
+```
+
+
+Term-Document Matrices
+====================================================================================
+
+We can look for patterns across the documents by constructing a `TermDocumentMatrix()`:
+
+```{r, cache=TRUE}
+enron_tdm <- TermDocumentMatrix(enron_stripped)
+str(enron_tdm)
+```
+
+What Does the Matrix Look Like?
+====================================================================================
+
+Too big to view at once, but we can look at snippets with `inspect()`:
+
+```{r}
+inspect(enron_tdm[1:5, 1:5])
+```
+
+Removing Sparse Words
+====================================================================================
+
+We could focus on words that appear in at least 40% of documents.
+
+```{r}
+enron_tdm_sparse <- removeSparseTerms(enron_tdm, 0.60)
+inspect(enron_tdm_sparse)
+```
+
+
+Favorite Dictionary Words
+====================================================================================
+
+Or we can make make a term-document matrix focusing on words in a dictionary and look at just those columns:
+
+```{r}
+inspect(TermDocumentMatrix(enron_stripped, list(dictionary = c("california", "utah", "texas")))[, 1:5])
+```
+
+
+Most Frequent Words
+====================================================================================
+
+Which terms appear at least 200 times?
+
+```{r}
+findFreqTerms(enron_tdm, 200)
+```
+
+
+Word Associations
+====================================================================================
+
+Which words co-occur frequently with "california"?
+```{r}
+findAssocs(enron_tdm, "california", 0.90)
+```
+
+
+What Else Might You Do?
+====================================================================================
+
+* Use the `tidytext` package to work in a "tidy" way
+* Make more visualizations of word frequencies or relationships in `ggplot2`
+* Use hierarchical clustering to group together terms
+* Fit topic models to find overarching topics
+* Use `NLP` package to find bigrams (two-word phrases)
+* Use `qdap` package to classify document sentiment (positive, negative) and look for relationships
+
+(Please social science responsibly!)
+
+
+Wrapping up the Course
+====================================================================================
+type: section
+
+
+What You've Learned
+====================================================================================
+
+A lot!
+
+* How to get data into R from a variety of formats
+* How to do "data janitor" work to manipulate and clean data
+* How to make pretty visualizations
+* How to automate with loops and functions
+* How to combine text, calculations, plots, and tables into dynamic R Markdown reports 
+
+
+What Comes Next?
+====================================================================================
+
+* Statistical inference (e.g. more CSSS courses)
+    + Functions for hypothesis testing, hierarchical/mixed effect models, machine learning, survey design, etc. are straightforward to use... once data are clean
+    + Access output by working with list structures (like from regression models)
+* Practice, practice, practice!
+    + Replicate analyses you've done in Excel, SPSS, or Stata
+    + Think about data using `dplyr` verbs, tidy data principles
+    + R Markdown for documenting cleaning and analysis start-to-finish
+* More advanced projects
+    + Using version control (git) in RStudio
+    + Interactive Shiny web apps
+    
+
+Course Plugs
+====================================================================================
+
+If you...
+
+* have no stats background yet - **SOC504: Applied Social Statistics**
+* liked today - **SOC590: Big Data and Population Processes**
+* have (only) finished SOC506 - **CSSS510: Maximum Likelihood**
+* want to master visualization - **CSSS569: Visualizing Data**
+* study events or durations - **CSSS544: Event History Analysis**
+* want to use network data - **CSSS567: Social Network Analysis**
+* want to map - **CSSS554: Spatial Statistics**
+
+Thank you!
+====================================================================================
+type: section
