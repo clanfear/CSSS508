@@ -64,10 +64,10 @@ library(grid)
 library(stringr)
 library(streamR)
 
-api_key <- "avrgYoCNkyXngB6XZP1ykfzK8"
-api_secret <- "J67v86aHpcSai9bm89QoxZqGzJslYbIBAmVnypHt4ThMMpPB3w"
-access_token <- "3874714518-zHGNavxH2NCvFKNi1CPKVfWpOpLjWFpUPGTUEax"
-access_token_secret <- "XKzS0bHQ7bkTJxAHQe8OM7ehecarv0xkncVTH5xG60WCG"
+api_key <- "API KEY GOES HERE"
+api_secret <- "API SECRET GOES HERE"
+access_token <- "ACCESS TOKEN GOES HERE"
+access_token_secret <- "ACCESS TOKEN SECRET GOES HERE"
 
 reqURL <- "https://api.twitter.com/oauth/request_token"
 accessURL<- "https://api.twitter.com/oauth/access_token"
