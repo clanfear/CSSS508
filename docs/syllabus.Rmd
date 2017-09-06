@@ -3,7 +3,7 @@ title: 'CSSS508: Introduction to R for Social Scientists'
 subtitle: "University of Washington"
 author: "[Charles Lanfear](mailto:clanfear@uw.edu)"
 date: "Autumn 2017"
-output: html_document
+output: pdf_document
 ---
 
 ## Class Time

@@ -1,9 +1,11 @@
 CSSS508 Introduction
 ========================================================
 author: Charles Lanfear
-date: April 24, 2017
-autosize: true
+date: September 04, 2017
+width: 1100
+height: 750
 transition: linear
+
 
 
 Course Goals
@@ -12,8 +14,8 @@ incremental: true
 
 * Develop intermediate data management and analysis skills in R
 * Learn basic programming
-* Introduce reproducible research
-* Prepare you for statistics courses
+* Introduce reproducible research practices
+* Prepare you for statistics and CSSS courses
 
 Who is this guy?
 ========================================================
@@ -22,7 +24,7 @@ incremental: true
 Chuck Lanfear
 
 * Instructor (*not professor*)
-* 3rd Year Sociology PhD student
+* 4th Year Sociology PhD student
 * Research:
   + Quantitative Sociology
   + Computational Demography
@@ -37,7 +39,7 @@ Logistics
 
 Location: 
 * Lecture: SAV117 on Wednesdays, 3:30-5:20
-* Optional Lab: SAV117 on Fridays, 11:30-12:20
+* Optional Lab: SAV117 on Mondays, 3:30-5:20
 * Office Hours: SAV252 by Appointment
 
 Materials: http://clanfear.github.io/CSSS508
@@ -52,11 +54,11 @@ Grading:
 Peer grading, really?
 ========================================================
 
-Yes, peer grading…
+Yes, peer grading...
 
-* **40 students, no TA**
+* **30 students, no TA**
 * You will write your reports better knowing others will see them
-* Learn new tricks from reading others' code; “appreciate the little things”
+* Learn new tricks from reading others' code; "appreciate the little things"
 
 Format:
 * Randomly assigned peers, turnaround time: 1 week (due before next class)
@@ -86,6 +88,20 @@ Error in model.frame.default(formula = y ~ x, drop.unused.levels = TRUE) :
   variable lengths differ (found for 'x')
 ```
 
+Searching in R Slides
+========================================================
+incremental: true
+
+I do not provide PowerPoint or PDF slides. If you want to search a lecture for a particular item, use the slide browser:
+
+1. Open the `.html` file for the slides.
+2. Hit `Esc`
+   * This opens up a viewer for the entire lecture
+   * You can browse left and right with the arrow keys
+3. To search for text, hit `Ctrl+F` or `⌘+F` and enter the search term
+4. Browse through the slides to see where that text is highlighted.
+
+If you must take notes directly on course slides, use an add-on like Beanote for Chrome or Skitch for Safari.
 
 Rough schedule
 ========================================================
@@ -99,8 +115,8 @@ incremental: true
 6. Loops and Functions
 7. Vectorization and Functions
 8. Strings / Text Processing
-9. Requests (or Mapping)
-10. Requests (or Web Scraping)
+9. Geospatial Data and Maps
+10. Social Media Data and Text Mining
 
 
 R and RStudio
@@ -116,18 +132,19 @@ R is a programming language built for statistical computing.
 
 If one already knows Stata or similar software, why use R?
 
-* R is free, so you don't need a terminal server.
+* R is *free*, so you don't need a terminal server.
 * R has a *very* large community.
 * R can handle virtually any data format.
 * R is object oriented and makes replication easy.
-* R can do *everything*.
+* R is a *language* so it can do *everything*.
+* R is a good stepping stone to other languages like Python.
 
 
 R Studio
 ========================================================
 incremental: true
 
-R Studio is a "front-end" for R that can make your life easier.
+R Studio is a "front-end" or integrated development encironment (IDE) for R that can make your life *easier*.
 
 RStudio can:
 
@@ -147,7 +164,7 @@ Killer feature of R/RStudio is ease of making R Markdown files:
   + No rerunning, recopying, or repasting
   + Easy for collaborators to understand
   + Show as little or as much of the code as you want
-* Make presentations (like this one!), webpages, reports in html, Word formats
+* Make: presentations (like this one!); webpages; reports in html; Word docs
 * Works with LaTeX for PDFs for more formatting control
 
 We'll get back to this soon!
@@ -173,8 +190,8 @@ incremental: true
 
 There are several ways to run R code in RStudio:
 
-1. Highlight lines in the editor window and click **Run** or hit *Cntl-Enter* or *Command-Enter* to run them all.
-2. Type individual lines in the console and press *Enter*.
+1. Highlight lines in the **editor** window and click **Run** or hit *Cntl-Enter* or *Command-Enter* to run them all.
+2. Type individual lines in the **console** and press *Enter*.
 3. In R Markdown documents, click within a code block ("chunk") and
 click on a choice in the **Chunks** dropdown.
 
@@ -192,7 +209,7 @@ R as a Calculator
 ========================================================
 incremental: true
 
-In the console, type 123 + 456 + 789 and hit *Enter*.
+In the **console**, type 123 + 456 + 789 and hit *Enter*.
 
 ```r
 123 + 456 + 789
@@ -203,7 +220,7 @@ In the console, type 123 + 456 + 789 and hit *Enter*.
 ```
 The [1] in the output indicates what line of output is shown.
 
-Now in your blank R document in the editor, try typing the line sqrt(400) and either
+Now in your blank R document in the **editor**, try typing the line sqrt(400) and either
 clicking **Run** or hitting *Cntl-Enter*.
 
 ```r
@@ -229,7 +246,7 @@ and look at the **Help** panel on the right.
 ```
 
 **Arguments** are the inputs to a function. In this case, the only argument to `sqrt()`
-is a number or a set of numbers `x`.
+is a number or a vector of numbers `x`.
 
 Help files provide documentation on how to use functions and what functions produce.
 
@@ -237,14 +254,14 @@ Creating Objects
 ========================================================
 incremental: true
 
-R stores everything as objects, including data, functions, models, and output.
+R stores everything as an **object**, including data, functions, models, and output.
 
 Creating an object is done using the assignment operator `<-`
 
 ```r
 new.object <- 144
 ```
-You can call on an object by typing its name.
+You can display or "call" an object by using its name.
 
 ```r
 new.object
@@ -259,7 +276,7 @@ Using Objects
 ========================================================
 incremental: true
 
-The name represents the information stored in that object, so you can treat the object
+The **name** represents the information stored in that **object**, so you can treat the object's name
 as if it were the values stored inside.
 
 ```r
@@ -290,6 +307,8 @@ Creating Vectors
 ========================================================
 incremental: true
 
+A **vector** is a series of **elements**, such as numbers.
+
 You can create a vector and store it as an object in the same way. To do this, use the
 function `c()` which stands for "concatenate".
 
@@ -318,7 +337,7 @@ sqrt(new.object)
 More Complex Objects
 ========================================================
 
-The same principles can be used to create more complex objects like matrices, arrays, and data frames (objects which look like matrices but can hold numerical and text information).
+The same principles can be used to create more complex objects like **matrices**, **arrays**, **lists**, and **data frames** (lists which look like matrices but can hold numerical and text information).
 
 Most data sets you will work with will be read into R and stored as a data frame.
 
@@ -335,7 +354,7 @@ Making R Markdown Documents
 
 Let's try making an R Markdown file:
 
-1. Choose File > New File > R Markdown…
+1. Choose File > New File > R Markdown...
 2. Make sure HTML output is selected and click OK
 3. Save the file somewhere, call it my_first_Rmd.Rmd
 4. Click the Knit HTML button
@@ -473,7 +492,7 @@ z <- y^2
 Your Turn
 ========================================================
 
-Now try editing and re-knitting `my_first_Rmd.Rmd` to give it some pizzazz: add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equation…
+Now try editing and re-knitting `my_first_Rmd.Rmd` to give it some pizzazz: add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equationâ¦
 
 * [Ways to modify the overall document appearance](http://rmarkdown.rstudio.com/html_document_format.html)
 * [Ways to format parts of your document](http://rmarkdown.rstudio.com/authoring_basics.html)
@@ -576,7 +595,7 @@ Having R dump values directly into your document protects you from silly mistake
 * You are more likely to make a typo in a "hard-coded" number than you are to write R code that somehow runs but gives you the wrong thing
 
 
-Example: keeping document date current
+Example: Keeping document date current
 ===
 
 In your YAML header, make the date come from R's `Sys.time()` function by changing:
@@ -655,7 +674,7 @@ Drawing Ugly Pictures of Cars
 
 
 ```r
-hist(cars$speed)
+hist(cars$speed) # Histogram
 ```
 
 ![plot of chunk unnamed-chunk-7](CSSS508_Week1_Introduction-figure/unnamed-chunk-7-1.png)
@@ -677,8 +696,8 @@ Drawing Slightly Less Ugly Pictures
 
 ```r
 hist(cars$dist,
-     xlab = "Distance (ft)",
-     main = "Observed stopping distances of cars")
+     xlab = "Distance (ft)", # X axis label
+     main = "Observed stopping distances of cars") # Title
 ```
 
 ***
@@ -719,7 +738,7 @@ plot(dist ~ speed, data = cars,
      xlab = "Speed (mph)",
      ylab = "Stopping distance (ft)",
      main = "Speeds and stopping distances of cars",
-     pch = 16)
+     pch = 16) # Point size
 abline(h = dist_mean, col = "firebrick")
 abline(v = speed_mean, col = "cornflowerblue")
 ```
@@ -733,7 +752,7 @@ Swiss Time
 ========================================================
 incremental: true
 
-Let's *switch gears* to the `swiss` data frame built in to R.
+Let's switch gears to the `swiss` data frame built in to R.
 
 First, use `?swiss` to see what things mean.
 
@@ -813,7 +832,7 @@ Write up a .Rmd file showing some exploratory analyses of the Swiss fertility da
 
 Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. You must use in-line R calculations/references at least once (e.g. with functions like `nrow`, `mean`, `sd`, `cor`, `median`, `min`, `quantile`) and *may not hard-code any numbers referenced in your text*.
 
-Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text — *not as printed code and output* — and rounded so as not to be absurdly precise.
+Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text *not as printed code and output* and rounded so as not to be absurdly precise (say, two or three digits).
 
 
 Grading Rubric

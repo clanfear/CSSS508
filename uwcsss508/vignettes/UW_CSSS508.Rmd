@@ -1,0 +1,12 @@
+---
+title: "UW CSSS508"
+author: "Charles Lanfear"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{UW CSSS508}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+

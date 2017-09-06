@@ -1,0 +1,19 @@
+Package: uwcsss508
+Type: Package
+Title: Material for CSSS508, University of Washington
+Version: 0.1.0
+Authors@R: person("Charles", "Lanfear", email = "clanfear@uw.edu",
+  role = c("aut", "cre"))
+Description: A compilation of course material for CSSS508: Introduction to R
+    for Social Scientists at the University of Washington. Includes learnr
+    based exercises covering topics for each week.
+License: GNU GPLv3
+URL: https://github.com/clanfear/CSSS508
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr,
+    learnr,
+    knitr
+VignetteBuilder:
+    knitr
