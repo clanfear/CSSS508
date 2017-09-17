@@ -1,10 +1,10 @@
 CSSS508, Week2: ggplot2
 ========================================================
 author: Charles Lanfear
-date: April 5, 2017
-width: 1100
-height: 750
-transition: rotate
+date: October 4, 2017
+width: 1600
+height: 900
+transition: linear
 
 
 But First, Some Useful Stuff

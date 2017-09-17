@@ -1,10 +1,10 @@
 CSSS508, Week2: ggplot2
 ========================================================
 author: Charles Lanfear
-date: April 5, 2017
-width: 1100
-height: 750
-transition: rotate
+date: October 4, 2017
+width: 1600
+height: 900
+transition: linear
 
 
 But First, Some Useful Stuff
@@ -86,6 +86,8 @@ For example, this presentation is located and named this:
 
 You can use whatever system you want, but be consistent so your projects are organized! 
 You don't want to lose work by losing or overwriting files!
+
+For large projects containing many files, I recommend using RStudio's built in project management system found in the top right of the RStudio window.
 
 
 Clarifications on Files
@@ -253,18 +255,18 @@ gapminder %>% filter(country == "Oman")
 ```
 
 ```
-# A tibble: 12 × 6
+# A tibble: 12 x 6
    country continent  year lifeExp     pop gdpPercap
     <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
-1     Oman      Asia  1952  37.578  507833  1828.230
-2     Oman      Asia  1957  40.080  561977  2242.747
-3     Oman      Asia  1962  43.165  628164  2924.638
-4     Oman      Asia  1967  46.988  714775  4720.943
-5     Oman      Asia  1972  52.143  829050 10618.039
-6     Oman      Asia  1977  57.367 1004533 11848.344
-7     Oman      Asia  1982  62.728 1301048 12954.791
-8     Oman      Asia  1987  67.734 1593882 18115.223
-9     Oman      Asia  1992  71.197 1915208 18616.707
+ 1    Oman      Asia  1952  37.578  507833  1828.230
+ 2    Oman      Asia  1957  40.080  561977  2242.747
+ 3    Oman      Asia  1962  43.165  628164  2924.638
+ 4    Oman      Asia  1967  46.988  714775  4720.943
+ 5    Oman      Asia  1972  52.143  829050 10618.039
+ 6    Oman      Asia  1977  57.367 1004533 11848.344
+ 7    Oman      Asia  1982  62.728 1301048 12954.791
+ 8    Oman      Asia  1987  67.734 1593882 18115.223
+ 9    Oman      Asia  1992  71.197 1915208 18616.707
 10    Oman      Asia  1997  72.499 2283635 19702.056
 11    Oman      Asia  2002  74.193 2713462 19774.837
 12    Oman      Asia  2007  75.640 3204897 22316.193
@@ -301,7 +303,7 @@ gapminder %>%
 ```
 
 ```
-# A tibble: 4 × 6
+# A tibble: 4 x 6
   country continent  year lifeExp     pop gdpPercap
    <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
 1    Oman      Asia  1982  62.728 1301048  12954.79
@@ -323,7 +325,7 @@ head(China, 4)
 ```
 
 ```
-# A tibble: 4 × 6
+# A tibble: 4 x 6
   country continent  year  lifeExp       pop gdpPercap
    <fctr>    <fctr> <int>    <dbl>     <int>     <dbl>
 1   China      Asia  1952 44.00000 556263527  400.4486
@@ -666,6 +668,6 @@ Homework
 ========================================================
 type: section
 
-Pick some relationship to look at in the Gapminder data and write up a .Rmd file investigating that question graphically. You might work with a subset of the data (e.g. just Africa). Upload both the `.Rmd` file and the `.html` file to Canvas. Include 4 to 8 graphs. All titles, axes, and legends should be labelled clearly (no raw variable names). You must have at least one graph with `facet_wrap` or `facet_grid`. You must include at least one manually specified legend. You can use other `geoms` like histograms, bar charts, add vertical or horizontal lines, etc. [You may find this data visualization cheat sheet helpful](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf).
+Pick some relationship to look at in the Gapminder data and write up a .Rmd file investigating that question graphically. You might work with a subset of the data (e.g. just Africa). Upload both the `.Rmd` file and the `.html` file to Canvas. Include 4 to 8 graphs. All titles, axes, and legends should be labelled clearly (no raw variable names). You must have at least one graph with `facet_wrap()` or `facet_grid()`. You must include at least one manually specified legend. You can use other `geoms` like histograms, bar charts, add vertical or horizontal lines, etc. [You may find this data visualization cheat sheet helpful](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf).
 
 Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Use chunk options `echo` and `results` to limit the code/output you show in the `.html`.

@@ -693,13 +693,13 @@ Installing Tutorial Package
 ========================================================
 incremental: true
 
-This term I am introducing a tutorial package to complement lectures and homeworks. It features interactive webpages on which you can run R code and receive basic feedback.
+This term I am introducing a tutorial package to complement lectures and homeworks. It features interactive webpages built using the `learnr` and `checkr` packages, on which you can run R code and receive basic feedback.
 
-If you want to make use of these tutorials, run the following code in your R console:
+If you want to make use of these tutorials, run the following code in your R console to install the package:
 
 ```{r, eval=FALSE}
 install.packages(c("learnr", "dplyr"))
-install.packages("http://clanfear.github.io/CSSS508/uwcsss508.zip", repos = NULL)
+install.packages("https://github.com/clanfear/CSSS508/raw/master/uwcsss508_0.1.0.zip", repos = NULL)
 ```
 
 You can run tutorial 1 using the following code. Change the number in the first argument to access later tutorials.
@@ -710,7 +710,8 @@ library(uwcsss508)
 run_tutorial("tutorial_1", "uwcsss508")
 ```
 
-Note the tutorial package has been in development for less than a month, so it will be updated frequently and may have bugs. Let me know if you have issues!
+Note that the tutorial package has been in development for less than a month, so it will be updated frequently and may have bugs. Let me know if you have issues!
+
 
 Making Tables
 ========================================================

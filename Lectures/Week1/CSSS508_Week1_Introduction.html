@@ -1685,12 +1685,35 @@ abline(v = speed_mean, col = &quot;cornflowerblue&quot;)
 <div class="slideContent" >
 <p>Let&#39;s make a table that looks a little less code-y in the output. To do this, we&#39;ll want to install a <strong>package</strong> called <code>pander</code>.</p>
 
-<p class="fragment">In the console: <code>install.packages(&quot;pander&quot;, repos = &quot;http://cran.us.r-project.org&quot;)</code>.</p>
+<p class="fragment">In the console: <code>install.packages(&quot;pander&quot;)</code>.</p>
 
 <ul>
-<li class="fragment"><p class="fragment">You can leave off the <code>repos</code> argument if you configure your default repository settings: <em>Preferences &gt; Packages &gt; CRAN mirror</em>.</p></li>
-<li class="fragment"><p class="fragment">Once you install a package, you don&#39;t need to re-install it until you update R. Consequently, **you should not include <code>install.packages()</code> in any markdown document or R script.</p></li>
+<li class="fragment">Note that unlike the <code>library()</code> command, the name of a package to be installed must be in quotes. This is because the name here is a search term (text, not an object!) while for <code>library()</code> it is an actual R object.</li>
+<li class="fragment">Once you install a package, you don&#39;t need to re-install it until you update R. Consequently, **you should not include <code>install.packages()</code> in any markdown document or R script.</li>
 </ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Installing Tutorial Package</h3>
+<div class="slideContent" >
+<p>This term I am introducing a tutorial package to complement lectures and homeworks. It features interactive webpages built using the <code>learnr</code> and <code>checkr</code> packages, on which you can run R code and receive basic feedback.</p>
+
+<p class="fragment">If you want to make use of these tutorials, run the following code in your R console to install the package:</p>
+
+<pre class="fragment"><code class="r">install.packages(c(&quot;learnr&quot;, &quot;dplyr&quot;))
+install.packages(&quot;https://github.com/clanfear/CSSS508/raw/master/uwcsss508_0.1.0.zip&quot;, repos = NULL)
+</code></pre>
+
+<p class="fragment">You can run tutorial 1 using the following code. Change the number in the first argument to access later tutorials.</p>
+
+<pre class="fragment"><code class="r">library(learnr)
+library(uwcsss508)
+run_tutorial(&quot;tutorial_1&quot;, &quot;uwcsss508&quot;)
+</code></pre>
+
+<p class="fragment">Note that the tutorial package has been in development for less than a month, so it will be updated frequently and may have bugs. Let me know if you have issues!</p>
 
 </div>
 

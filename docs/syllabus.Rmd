@@ -3,7 +3,7 @@ title: 'CSSS508: Introduction to R for Social Scientists'
 subtitle: "University of Washington"
 author: "[Charles Lanfear](mailto:clanfear@uw.edu)"
 date: "Autumn 2017"
-output: pdf_document
+output: html_document
 ---
 
 ## Class Locations
@@ -71,7 +71,7 @@ has a large number of students but no teaching assistant, so students are both e
 and expected to assist one another with technical problems, both in and out of class.
 Diagnosing problems inothers' code is a very effective way to improve your understanding of programming.
 
-[Tutorial Package](https://clanfear.github.io/CSSS508/uwcsss508.zip)
+[Tutorial Package](https://github.com/clanfear/CSSS508/raw/master/uwcsss508_0.1.0.zip)
 
 This course also features an R package containing interactive tutorials for practicing
 concepts from lecture. Completion of tutorials is recommended to check your understanding
