@@ -1,14 +1,14 @@
 ---
 title: 'CSSS508: HW1'
 author: "Charles Lanfear"
-date: "March 29, 2017"
+date: "September 27, 2017"
 output: html_document
 ---
 
-Write up a .Rmd file showing some exploratory analyses of the Swiss fertility data. Upload both the .Rmd file and the .html file to Canvas.
+Write up a .Rmd file showing some exploratory analyses of the Swiss fertility data. Upload both the `.Rmd` file and the `.html` file to Canvas. You must upload *both* for credit.
 
-Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. You must use in-line R calculations/references at least once (e.g. with functions like `nrow`, `mean`, `sd`, `cor`, `median`, `min`, `quantile`) and *may not hard-code any numbers referenced in your text*.
+Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. with functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`, `quantile()`) and *may not hard-code any numbers referenced in your text*.
 
-Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text--*not as printed code and output*--and rounded so as not to be absurdly precise.
+Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text--*not as printed code and output*--and rounded so as not to be absurdly precise (1 to 3 digits).
 
-### DUE: 11:59 PM, Tuesday, April 4th, 2017
+### DUE: 11:59 PM, Tuesday, October 3rd, 2017

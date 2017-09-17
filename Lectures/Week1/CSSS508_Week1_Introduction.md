@@ -1,9 +1,9 @@
 CSSS508 Introduction
 ========================================================
 author: Charles Lanfear
-date: September 04, 2017
-width: 1100
-height: 750
+date: September 27, 2017
+width: 1600
+height: 900
 transition: linear
 
 
@@ -40,7 +40,7 @@ Logistics
 Location: 
 * Lecture: SAV117 on Wednesdays, 3:30-5:20
 * Optional Lab: SAV117 on Mondays, 3:30-5:20
-* Office Hours: SAV252 by Appointment
+* Office Hours: SAV240 by Appointment
 
 Materials: http://clanfear.github.io/CSSS508
 
@@ -64,18 +64,18 @@ Format:
 * Randomly assigned peers, turnaround time: 1 week (due before next class)
 * You'll get a rubric and are expected to leave constructive comments
 * High scoring assignments will be adapted into keys (with your permission)
-* Talk to me if you want more feedback
+* Email me if you want more feedback
 
 
 Getting Help on the Mailing List
 ========================================================
 incremental: true
 
-Don't be Goofus:
+Don't ask like this:
 
 > tried lm(y~x) but it iddn't work wat do
 
-Instead, be Gallant: 
+Instead, ask like this: 
 
 > ```
 y <- seq(1:10) + rnorm(10)
@@ -778,12 +778,36 @@ incremental: true
 
 Let's make a table that looks a little less code-y in the output. To do this, we'll want to install a **package** called `pander`.
 
-In the console: `install.packages("pander", repos = "http://cran.us.r-project.org")`.
+In the console: `install.packages("pander")`.
 
-* You can leave off the `repos` argument if you configure your default repository settings: *Preferences > Packages > CRAN mirror*.
+* Note that unlike the `library()` command, the name of a package to be installed must be in quotes. This is because the name here is a search term (text, not an object!) while for `library()` it is an actual R object.
+* Once you install a package, you don't need to re-install it until you update R. Consequently, **you should not include `install.packages()` in any markdown document or R script.
 
-* Once you install a package, you don't need to re-install it until you update R.
 
+Installing Tutorial Package
+========================================================
+incremental: true
+
+This term I am introducing a tutorial package to complement lectures and homeworks. It features interactive webpages on which you can run R code and receive basic feedback.
+
+If you want to make use of these tutorials, run the following code in your R console:
+
+
+```r
+install.packages(c("learnr", "dplyr"))
+install.packages("http://clanfear.github.io/CSSS508/uwcsss508.zip", repos = NULL)
+```
+
+You can run tutorial 1 using the following code. Change the number in the first argument to access later tutorials.
+
+
+```r
+library(learnr)
+library(uwcsss508)
+run_tutorial("tutorial_1", "uwcsss508")
+```
+
+Note the tutorial package has been in development for less than a month, so it will be updated frequently and may have bugs. Let me know if you have issues!
 
 Making Tables
 ========================================================
@@ -796,14 +820,14 @@ pander(summary(swiss), style = "rmarkdown", split.tables = 120)
 
 
 
-|   Fertility   |  Agriculture  |  Examination  |   Education   |    Catholic     |  Infant.Mortality  |
-|:-------------:|:-------------:|:-------------:|:-------------:|:---------------:|:------------------:|
-| Min.   :35.00 | Min.   : 1.20 | Min.   : 3.00 | Min.   : 1.00 | Min.   :  2.150 |   Min.   :10.80    |
-| 1st Qu.:64.70 | 1st Qu.:35.90 | 1st Qu.:12.00 | 1st Qu.: 6.00 | 1st Qu.:  5.195 |   1st Qu.:18.15    |
-| Median :70.40 | Median :54.10 | Median :16.00 | Median : 8.00 | Median : 15.140 |   Median :20.00    |
-| Mean   :70.14 | Mean   :50.66 | Mean   :16.49 | Mean   :10.98 | Mean   : 41.144 |   Mean   :19.94    |
-| 3rd Qu.:78.45 | 3rd Qu.:67.65 | 3rd Qu.:22.00 | 3rd Qu.:12.00 | 3rd Qu.: 93.125 |   3rd Qu.:21.70    |
-| Max.   :92.50 | Max.   :89.70 | Max.   :37.00 | Max.   :53.00 | Max.   :100.000 |   Max.   :26.60    |
+|   Fertility   |  Agriculture  |  Examination  |   Education   |    Catholic     | Infant.Mortality |
+|:-------------:|:-------------:|:-------------:|:-------------:|:---------------:|:----------------:|
+| Min.   :35.00 | Min.   : 1.20 | Min.   : 3.00 | Min.   : 1.00 | Min.   :  2.150 |  Min.   :10.80   |
+| 1st Qu.:64.70 | 1st Qu.:35.90 | 1st Qu.:12.00 | 1st Qu.: 6.00 | 1st Qu.:  5.195 |  1st Qu.:18.15   |
+| Median :70.40 | Median :54.10 | Median :16.00 | Median : 8.00 | Median : 15.140 |  Median :20.00   |
+| Mean   :70.14 | Mean   :50.66 | Mean   :16.49 | Mean   :10.98 | Mean   : 41.144 |  Mean   :19.94   |
+| 3rd Qu.:78.45 | 3rd Qu.:67.65 | 3rd Qu.:22.00 | 3rd Qu.:12.00 | 3rd Qu.: 93.125 |  3rd Qu.:21.70   |
+| Max.   :92.50 | Max.   :89.70 | Max.   :37.00 | Max.   :53.00 | Max.   :100.000 |  Max.   :26.60   |
 
 
 Data Look a Little Nicer This Way
@@ -816,23 +840,26 @@ pander(head(swiss, 5), style = "rmarkdown", split.tables = 120)
 
 
 
-|       &nbsp;       |  Fertility  |  Agriculture  |  Examination  |  Education  |  Catholic  |  Infant.Mortality  |
-|:------------------:|:-----------:|:-------------:|:-------------:|:-----------:|:----------:|:------------------:|
-|   **Courtelary**   |    80.2     |      17       |      15       |     12      |    9.96    |        22.2        |
-|    **Delemont**    |    83.1     |     45.1      |       6       |      9      |   84.84    |        22.2        |
-|  **Franches-Mnt**  |    92.5     |     39.7      |       5       |      5      |    93.4    |        20.2        |
-|    **Moutier**     |    85.8     |     36.5      |      12       |      7      |   33.77    |        20.3        |
-|   **Neuveville**   |    76.9     |     43.5      |      17       |     15      |    5.16    |        20.6        |
+|      &nbsp;      | Fertility | Agriculture | Examination | Education | Catholic | Infant.Mortality |
+|:----------------:|:---------:|:-----------:|:-----------:|:---------:|:--------:|:----------------:|
+|  **Courtelary**  |   80.2    |     17      |     15      |    12     |   9.96   |       22.2       |
+|   **Delemont**   |   83.1    |    45.1     |      6      |     9     |  84.84   |       22.2       |
+| **Franches-Mnt** |   92.5    |    39.7     |      5      |     5     |   93.4   |       20.2       |
+|   **Moutier**    |   85.8    |    36.5     |     12      |     7     |  33.77   |       20.3       |
+|  **Neuveville**  |   76.9    |    43.5     |     17      |    15     |   5.16   |       20.6       |
+
 
 
 Homework
 ========================================================
 
-Write up a .Rmd file showing some exploratory analyses of the Swiss fertility data. Upload both the .Rmd file and the .html file to Canvas.
+Write up a .Rmd file showing some exploratory analyses of the Swiss fertility data. Upload both the `.Rmd` file and the `.html` file to Canvas. You must upload *both* for credit.
 
-Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. You must use in-line R calculations/references at least once (e.g. with functions like `nrow`, `mean`, `sd`, `cor`, `median`, `min`, `quantile`) and *may not hard-code any numbers referenced in your text*.
+Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. with functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`, `quantile()`) and *may not hard-code any numbers referenced in your text*.
 
-Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text *not as printed code and output* and rounded so as not to be absurdly precise (say, two or three digits).
+Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text--*not as printed code and output*--and rounded so as not to be absurdly precise (1 to 3 digits).
+
+### DUE: 11:59 PM, Tuesday, October 3rd, 2017
 
 
 Grading Rubric
@@ -841,8 +868,8 @@ incremental: true
 
 0: Didn't turn anything in.
 
-1: Turned in but low effort, ignoring many directions
+1: Turned in but low effort, ignoring many directions.
 
-2: Decent effort, followed directions with some minor issues
+2: Decent effort, followed directions with some minor issues.
 
 3: Nailed it!

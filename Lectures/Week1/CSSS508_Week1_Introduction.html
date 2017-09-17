@@ -794,7 +794,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>CSSS508 Introduction</h1><p>Charles Lanfear<br/>September 04, 2017</p>
+<h1>CSSS508 Introduction</h1><p>Charles Lanfear<br/>September 27, 2017</p>
 
 <div class="slideContent" >
 
@@ -849,7 +849,7 @@ hljs.initHighlightingOnLoad();
 <ul>
 <li>Lecture: SAV117 on Wednesdays, 3:30-5:20</li>
 <li>Optional Lab: SAV117 on Mondays, 3:30-5:20</li>
-<li>Office Hours: SAV252 by Appointment</li>
+<li>Office Hours: SAV240 by Appointment</li>
 </ul>
 
 <p>Materials: <a href="http://clanfear.github.io/CSSS508">http://clanfear.github.io/CSSS508</a></p>
@@ -883,7 +883,7 @@ hljs.initHighlightingOnLoad();
 <li>Randomly assigned peers, turnaround time: 1 week (due before next class)</li>
 <li>You&#39;ll get a rubric and are expected to leave constructive comments</li>
 <li>High scoring assignments will be adapted into keys (with your permission)</li>
-<li>Talk to me if you want more feedback</li>
+<li>Email me if you want more feedback</li>
 </ul>
 
 </div>
@@ -892,13 +892,13 @@ hljs.initHighlightingOnLoad();
 <section data-transition="linear" data-transition-speed="default">
 <h3>Getting Help on the Mailing List</h3>
 <div class="slideContent" >
-<p>Don&#39;t be Goofus:</p>
+<p>Don&#39;t ask like this:</p>
 
 <blockquote class="fragment">
 <p>tried lm(y~x) but it iddn&#39;t work wat do</p>
 </blockquote>
 
-<p class="fragment">Instead, be Gallant: </p>
+<p class="fragment">Instead, ask like this: </p>
 
 <blockquote class="fragment">
 <pre class="fragment"><code>y &lt;- seq(1:10) + rnorm(10)
@@ -1689,7 +1689,7 @@ abline(v = speed_mean, col = &quot;cornflowerblue&quot;)
 
 <ul>
 <li class="fragment"><p class="fragment">You can leave off the <code>repos</code> argument if you configure your default repository settings: <em>Preferences &gt; Packages &gt; CRAN mirror</em>.</p></li>
-<li class="fragment"><p class="fragment">Once you install a package, you don&#39;t need to re-install it until you update R.</p></li>
+<li class="fragment"><p class="fragment">Once you install a package, you don&#39;t need to re-install it until you update R. Consequently, **you should not include <code>install.packages()</code> in any markdown document or R script.</p></li>
 </ul>
 
 </div>
@@ -1835,11 +1835,13 @@ pander(summary(swiss), style = &quot;rmarkdown&quot;, split.tables = 120)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Homework</h3>
 <div class="slideContent" >
-<p>Write up a .Rmd file showing some exploratory analyses of the Swiss fertility data. Upload both the .Rmd file and the .html file to Canvas.</p>
+<p>Write up a .Rmd file showing some exploratory analyses of the Swiss fertility data. Upload both the <code>.Rmd</code> file and the <code>.html</code> file to Canvas. You must upload <em>both</em> for credit.</p>
 
-<p>Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. You must use in-line R calculations/references at least once (e.g. with functions like <code>nrow</code>, <code>mean</code>, <code>sd</code>, <code>cor</code>, <code>median</code>, <code>min</code>, <code>quantile</code>) and <em>may not hard-code any numbers referenced in your text</em>.</p>
+<p>Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include <em>at least</em> one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. with functions like <code>nrow()</code>, <code>mean()</code>, <code>sd()</code>, <code>cor()</code>, <code>median()</code>, <code>min()</code>, <code>quantile()</code>) and <em>may not hard-code any numbers referenced in your text</em>.</p>
 
-<p>Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options <code>echo</code> and <code>results</code> to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text <em>not as printed code and output</em> and rounded so as not to be absurdly precise (say, two or three digits).</p>
+<p>Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options <code>echo</code> and <code>results</code> to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text&ndash;<em>not as printed code and output</em>&ndash;and rounded so as not to be absurdly precise (1 to 3 digits).</p>
+
+<h3>DUE: 11:59 PM, Tuesday, October 3rd, 2017</h3>
 
 </div>
 
@@ -1849,9 +1851,9 @@ pander(summary(swiss), style = &quot;rmarkdown&quot;, split.tables = 120)
 <div class="slideContent" >
 <p>0: Didn&#39;t turn anything in.</p>
 
-<p class="fragment">1: Turned in but low effort, ignoring many directions</p>
+<p class="fragment">1: Turned in but low effort, ignoring many directions.</p>
 
-<p class="fragment">2: Decent effort, followed directions with some minor issues</p>
+<p class="fragment">2: Decent effort, followed directions with some minor issues.</p>
 
 <p class="fragment">3: Nailed it!</p>
 
@@ -1912,8 +1914,8 @@ function commandsForSlide(indexh) {
       transition: 'linear',
       transitionSpeed: 'default',
       rtl: false,
-      width: 1100,
-      height: 750,
+      width: 1600,
+      height: 900,
     
       dependencies: []
     });

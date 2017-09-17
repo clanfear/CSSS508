@@ -1,0 +1,137 @@
+---
+title: "CSSS508: Tutorial 1"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(checkr)
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
+tutorial_options(exercise.timelimit = 10)
+```
+
+## Introduction
+
+The following tutorial asks you to answer questions and basic operators and functions in R. You can enter code into text boxes and run them as if they were the R console. In fact, the code you enter there really is running in your R console in the background where you can't see it! This is possible using [an R package called `shiny`](https://shiny.rstudio.com/) for creating interactive webpages; after you're done with this course you will be able to make these yourself with a little extra research and tinkering!
+
+Here is an example text box for entering code. You can enter code here and click `Run Code` to execute it just as if you were using the console in RStudio. Note that code with incorrect syntax can produce errors or even crash this document if it is severe enough (but your progress won't be lost!).
+
+```{r intro_1, exercise=TRUE}
+
+```
+
+To continue to the first section, click "Next Topic" below. You can freely browse between tutorial sections with the navigation bar on the left as well. SO long as you use the same computer, your progress on these tutorials will be saved. To delet all answers, use the `Start Over` link under the navigation bar on the left.
+
+## Getting help in R
+
+If you are not sure how a function works, you can get help using `?function_name` where `function_name` is the name of the function you are interested in. Note you do not include the parantheses after a function when searching for help. You can also get help for operators like `+` or `^`, but you need to put them in backticks (e.g. `` ?`+` ``). 
+
+1. Use the help function, `?`, to get information on the `sqrt()` function. 
+```{r help_1, exercise=TRUE}
+
+```
+
+```{r help_1-check}
+test_1 <- find_call("?whatever", "you need to use the `?` symbol to call for help.")
+test_2 <- find_call("?sqrt", "you should use ?sqrt.")
+USER_CODE %>% test_1 %>% test_2
+```
+
+2. Use the help function, `?`, to get information on the `*` (multiplication) operator. 
+```{r help_2, exercise=TRUE}
+
+```
+
+
+```{r help_2-check}
+test_1 <- find_call("?whatever", "you need to use the `?` symbol to call for help.")
+test_2 <- find_call("?`*`", "you should use ?`*`; don't forget the backticks!")
+USER_CODE %>% test_1 %>% test_2
+```
+
+Whenever you use a new function, it is always a good idea to use `?` to get information on it. Many functions are very complex, with many possible arguments and options. It isn't worth trying to remember every argument for complex functions, so use `?` frequently.
+
+## Using R for math
+
+R can be used as a general purpose calculator by typing straight into the console.
+
+1. Write the R code required to add two plus two; this uses the `+` operator:
+```{r math_1, exercise=TRUE}
+
+```
+
+
+```{r math_1-check}
+test_1 <- find_call("whatever + whatever", "you need to use the `+` symbol.")
+test_2 <- find_call("2 + 2", "it should be 2 + 2.")
+USER_CODE %>% test_1 %>% test_2
+```
+
+2. Use `sqrt()` to get the square root of 529.
+```{r math_2, exercise=TRUE}
+
+```
+
+
+```{r math_2-check}
+test_1 <- find_call("sqrt(whatever)", "you need to use the `sqrt()` function.")
+test_2 <- find_call("sqrt(529)", "we are looking for the root of 529")
+USER_CODE %>% test_1 %>% test_2
+```
+
+3. Use the carer ( `^` ) operator to get the square of 15.
+```{r math_3, exercise=TRUE}
+
+```
+
+
+```{r math_3-check}
+test_1 <- find_call("whatever^whatever", "you need to use the `^` operator.")
+test_2 <- find_call("15^2", "we are looking for the square of 15")
+USER_CODE %>% test_1 %>% test_2
+```
+
+
+## Creating Objects
+
+1. Use the assignment operator, `<-`, to assign a value of `1` to an object named `one`.
+```{r objects_1, exercise=TRUE}
+
+```
+
+
+```{r objects_1-check}
+test_1 <- find_call("whatever <- whatever", "you need to use the `<-` operator.")
+test_2 <- find_assignment("one", "the new object should be named `one`.")
+test_3 <- find_call("one <- 1", "1 should be assigned to `one`.")
+USER_CODE %>% test_1 %>% test_2 %>% test_3
+```
+
+2. Use `c()` (the concatentate or combine function) to combine the numbers `1`, `2`, and `3` into a vector.
+```{r objects_2, exercise=TRUE}
+
+```
+
+
+```{r objects_2-check}
+test_1 <- find_call("c(whatever)", "you need to use the `c()` function.")
+test_2 <- check_value(agrees(is.vector(x)), "the result should be a vector.")
+test_3 <- check_value(agrees(length(x)==3), "the result should have three elements.")
+test_4 <- find_call("c(1,2,3)", "you need to combine 1, 2, and 3.")
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4
+```
+
+3. Use `c()` and `<-` to combine the numbers `5`, `6`, and `7` into a vector and assign it to an object named `vec_num`.
+```{r objects_3, exercise=TRUE}
+
+```
+
+
+```{r objects_3-check}
+test_1 <- find_call("c(whatever)", "you need to use the `c()` function.")
+test_2 <- find_call("whatever <- whatever", "you need to use the `<-` operator.")
+test_3 <- check_value(match_vector(c(5,6,7)), "you need to assign `5,6,7` to `vec_num`.")
+USER_CODE %>% test_1 %>% test_2 %>% test_3
+```

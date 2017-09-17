@@ -6,14 +6,17 @@ date: "Autumn 2017"
 output: pdf_document
 ---
 
-## Class Time
+## Class Locations
 **Lecture**
 
 [Savery 117](https://www.washington.edu/maps/#!/sav): Wednesdays 3:30-5:20
 
-**Optional Lab**
+**Lab (Optional but highly recommended)**
 
 [Savery 117](https://www.washington.edu/maps/#!/sav): Mondays 3:30-5:20
+
+**My Office**
+[Savery 240](https://www.washington.edu/maps/#!/sav): By appointment
 
 # Overview
 This course is intended to give students a foundational understanding of programming
@@ -51,7 +54,7 @@ available in full after the term has ended as a reference.
 ### Labs
 Lab time is scheduled in the same room as lectures ([Savery 117](https://www.washington.edu/maps/#!/sav))
 on Mondays from 3:30 to 5:20. Attendance is optional for labs and this time should be considered a form of extended
-office hours and collaborative work time. You are encouraged to attend and ask questions
+office hours and collaborative work time. You are highly encouraged to attend and ask questions
 about homework, lectures, or programming in R in general.
 
 ### Extra Help
@@ -67,6 +70,13 @@ will be answered with a response to the class mailing list. Please note that thi
 has a large number of students but no teaching assistant, so students are both encouraged
 and expected to assist one another with technical problems, both in and out of class.
 Diagnosing problems inothers' code is a very effective way to improve your understanding of programming.
+
+[Tutorial Package](https://clanfear.github.io/CSSS508/uwcsss508.zip)
+
+This course also features an R package containing interactive tutorials for practicing
+concepts from lecture. Completion of tutorials is recommended to check your understanding
+but is not required. The package is in an early stage of development, so please email
+me if you find bugs or problems. Installation instructions are found in the Week 1 slides.
 
 # Course Requirements
 This course is graded as credit / no credit. To pass you need to receive 
@@ -155,5 +165,5 @@ the last two weeks reserved for topics requested by students.
 6. Loops
 7. Vectorization and Writing Functions
 8. Manipulating Text and Regular Expressions
-9. Spatial Data and Mapping / Student Requests
-10. Social Media Data / Student Requests
+9. Spatial Data and Mapping
+10. Social Media Data

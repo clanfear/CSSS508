@@ -13,6 +13,10 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr,
+    ggplot2,
+    lubridate,
+    readr,
+    stringr,
     learnr,
     knitr
 VignetteBuilder:
