@@ -1,5 +1,5 @@
 ---
-title: "CSSS508:Tutorial 4"
+title: "CSSS508: Tutorial 4"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---

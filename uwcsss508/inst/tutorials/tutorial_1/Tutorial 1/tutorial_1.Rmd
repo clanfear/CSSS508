@@ -55,7 +55,7 @@ Whenever you use a new function, it is always a good idea to use `?` to get info
 
 ## Using R for math
 
-R can be used as a general purpose calculator by typing straight into the console.
+R can be used as a general purpose calculator by typing straight into the console. This is straightforward: Type numbers and symbols in just as you would write them out as algebra. R will follow a standard order of operations. If performing multiple mathematical operations, it is a good idea to use parenthesis to make the order of operations explicit.
 
 1. Write the R code required to add two plus two; this uses the `+` operator:
 ```{r math_1, exercise=TRUE}
@@ -81,7 +81,7 @@ test_2 <- find_call("sqrt(529)", "we are looking for the root of 529")
 USER_CODE %>% test_1 %>% test_2
 ```
 
-3. Use the carer ( `^` ) operator to get the square of 15.
+3. Use the caret ( `^` ) operator to get the square of 15.
 ```{r math_3, exercise=TRUE}
 
 ```
@@ -93,8 +93,32 @@ test_2 <- find_call("15^2", "we are looking for the square of 15")
 USER_CODE %>% test_1 %>% test_2
 ```
 
+4. Use the caret ( `^` ) and `+` operators with parenthesis to get the square of 15 plus 34 (do the addition first).
+```{r math_4, exercise=TRUE}
+
+```
+
+
+```{r math_4-check}
+test_1 <- find_call("whatever^whatever", "you need to use the `^` operator.")
+test_2 <- find_call("whatever+whatever", "you need to use the `+` operator.")
+test_3 <- find_call("(whatever)", "be sure to use parenthesis.")
+test_4 <- find_call("15+34", "you should check your values.")
+test_5 <- find_call("(15+34)^2", "we are looking for the square of 15 + 34: 2401")
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4 %>% test_5
+```
 
 ## Creating Objects
+
+In R you create objects by assigning a value to an object name using the *assignment operator*: `<-`
+
+For example, to make an object called `test_constant` with a value of `42`, you would enter:
+
+```
+test_constant <- 42
+```
+
+For more information on the assignment operator, you can enter `` ?`<-` `` into the R console. Note that `->` also works as an assigment operator but it is not commonly used or considered "good style" in R. Similarly `=` can be used for assignment but this is considered a very bad practice as it leads to confusion between assignment and function arguments (which follow an `=` sign). You should always use `<-` for assignment, except special cases inside functions where you must use `assign()` for technical reasons.
 
 1. Use the assignment operator, `<-`, to assign a value of `1` to an object named `one`.
 ```{r objects_1, exercise=TRUE}
@@ -109,7 +133,7 @@ test_3 <- find_call("one <- 1", "1 should be assigned to `one`.")
 USER_CODE %>% test_1 %>% test_2 %>% test_3
 ```
 
-2. Use `c()` (the concatentate or combine function) to combine the numbers `1`, `2`, and `3` into a vector.
+2. Use `c()` (the concatentate or combine function) to combine the numbers `1`, `2`, and `3` into a vector. Don't assign this to anything, just display it below.
 ```{r objects_2, exercise=TRUE}
 
 ```

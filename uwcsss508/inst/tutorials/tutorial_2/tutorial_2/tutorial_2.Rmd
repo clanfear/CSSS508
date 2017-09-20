@@ -1,0 +1,147 @@
+---
+title: "CSSS508: Tutorial 2"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(learnr)
+library(checkr)
+library(ggplot2)
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
+tutorial_options(exercise.timelimit = 10)
+data(mpg)
+```
+
+
+## Introduction
+
+This tutorial on `ggplot2` compliments [Lecture 2: Data Visualization with ggplot2](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.html) and includes examples from the [Data Visualisation chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html). That chapter is strongly recommended reading. You many also find [RStudio's ggplot2 cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf) useful when creating plots.
+
+First, we will work with the `mpg` dataset included with `ggplot2` that contains technical data on a number of popular car models over a 10 year period. If you have `ggplot2` loaded in your R console or script (using `library(ggplot2)` or `library(tidyverse)`), you can load these data with `data(mpg)` or call on them directly with `mpg` as seen below. You can run the code in the box below to view and explore the `mpg` data.
+
+```{r data_1, exercise=TRUE}
+mpg
+```
+
+## Basic Data Manipulation
+
+Before we can produce any visualizations of data, we need our data to be organized and formatted in a useful way. Later in the course we will delve into cleaning and reshaping data. For now, we mainly need to know how to subset our data. We will do this using the `dplyr` package, specifically using functions like `select()` and `filter()`. We will chain these functions together using the pipe operator: `%>%`
+
+### Selecting Variables (Columns)
+
+The pipe operator, `%>%`, is used to send data or the output of a function from its left side to a function on its right side:
+
+```
+<INPUT> %>% <FUNCTION>
+```
+
+Whatever is on the left side--or the output of a function on the left side--becomes the *first argument* of the function on the right. You can chain pipes together to perform many operations in a row. Look in the lecture or *R for Data Science* for examples. We will work with `%>%` extensively this term.
+
+The `select()` function in `dplyr` is used to choose which variables (columns) we want to keep in a dataframe, while dropping all other variables. In the block below, I have subsetted the `mpg` data down to include only `displ` and `hwy`. The end result is a dataframe with all the rows of data but only the `displ` and `hwy` columns. Edit this code to produce a dataframe from `mpg` that includes only the `manufacturer`, `model`, and `class` variables. 
+
+```{r dplyr_select_1, exercise=TRUE}
+mpg %>% select(displ, hwy)
+
+```
+
+```{r dplyr_select_1-check}
+test_1 <- find_call("select(whatever)", "be sure to use `select()`.")
+test_2 <- check_value(agrees(length(names(x)) == 3), "you should have selected 3 variables.")
+test_3 <- check_value(agrees( all(sort(names((x))) %in% sort( names( mpg %>% select(manufacturer, model, class ) ) ) ) ), "make sure you've selected the right variables.")
+USER_CODE %>% test_1 %>% test_2 %>% test_3
+```
+
+You can also use `select()` to rename variables when you select them. Here is an example:
+
+```{r dplyr_select_2, exercise=TRUE}
+mpg %>% select(displacement=displ, highway=hwy)
+
+```
+
+The `rename()` function works exactly like the above use of `select()` except that it does not drop variables.
+
+```{r dplyr_select_3, exercise=TRUE}
+mpg %>% rename(displacement=displ, highway=hwy)
+
+```
+
+### Filtering Cases (Rows)
+
+The `filter()` function in `dplyr` is used to choose which cases (rows) we want to keep in a dataframe, while dropping (filtering out) unwanted cases. You can use *logical operators* like `&` ("and") and `|` ("or") to filter multiple ways at once. For example, in the block below I have subsetted `mpg` to include only cars from the year `2008` and with a value of `hwy` greater than `25`. Try changing the filter statements to select cases where `displ` is greater than `2.0` and `cty` is under `20`.
+
+```{r dplyr_2, exercise=TRUE}
+mpg %>% filter(year==2008 & hwy > 25)
+
+```
+
+```{r dplyr_2-check}
+test_1 <- find_call("filter(whatever)", "be sure to use `filter()`.")
+test_2 <- check_value(agrees(nrow(x) == nrow(mpg %>% filter(displ > 2.0 & cty < 20))), "you should have selected 167 rows.")
+USER_CODE %>% test_1 %>% test_2
+```
+
+We can also use the `|` (or) operator for filtering. The code below selects all cars made by either Toyota or Subaru. Note that because the manufacturer names are *character* data, not numbers, they must be put into quotes. This tells R to read them as a piece of character data rather than as an object name.
+
+```{r dplyr_3, exercise=TRUE}
+mpg %>% filter(manufacturer=="toyota" | manufacturer=="subaru")
+
+```
+
+Since both filtering statements above are using the same variable, you could accomplish the same task using `%in%` with a vector of manufacturer names. 
+
+```{r dplyr_4, exercise=TRUE}
+mpg %>% filter(manufacturer %in% c("toyota", "subaru"))
+
+```
+
+## Scatterplots
+
+Here is an example `ggplot2` plot that depicts a scatterplot with engine displacement (size of the engine) on the x-axis (horizontal) and highway gas mileage on the y-axis (vertical). We see immediately that on average, larger engines get lower gas mileage. In the below code window that produces the plot, you can edit the variables to alter the plot. For example, you might change `hwy` to `cty` to view city gas mileage or replace `displ` with `year` to look at gas mileage over time or `cyl` to see how the number of cylinders impacts mileage. Note that these plots convey less information because the variables are *categorical*; other types of plots work better for categorical variables.
+
+```{r ggplot_1, exercise=TRUE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+Note the structure of the two lines of code that draw the plot above:
+
+* `ggplot(data = mpg)` initializes a plot using the `mpg` data but doesn't plot anything yet.
+* `geom_point( )` defines the type of plot as "point" (a scatterplot).
+* `mapping = aes(x = displ, y = hwy)` is an argument to `geom_point()` that "maps" `displ` to the x-axis (`x = displ`) and `hwy` to the y-axis (`y = hwy`).
+* Note that mapping *data* to a visual property (like position on the plot) requires the use of the `aes( )` function as seen above.
+
+Together, these can be interpreted as saying "use the `mpg` data and draw points where the vertical position of the point is defined by `hwy` and the horizontal position is defined by `displ`."
+
+In general, basic `ggplot2` plots take this form: `ggplot(data = <DATA>) + <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))` where you provide:
+
+* A dataframe for `<DATA>`
+* A *type* of plot (such as scatterplot or bar plot) for `<GEOM_FUNCTION>`
+* Mappings for `<MAPPINGS>` that tell ggplot how data should be translated into a visual effect.
+
+For more information on these components and their argument, you can enter `?ggplot`, `?geom_point`, or `?aes` into your R console. More detailed discussion can be found in the lecture and suggested chapter on the first page of this tutorial.
+
+## Facets and Color
+
+Sometimes we want to highlight or separate subsets of our data without removing them from the visualization; we don't want to filter them out, just set them apart. We can do this using `ggplot` options like facets and color coding. `facet_wrap()` takes a `ggplot` object and separates it into multiple plots where each plot contains all observations with a given value of some variable. We typically facet by some catregorical variable with relatively few categories (so we don't get too many plots). Faceting is good when we have a cagegorical variable that influences the relationship between our `x` and `y` variables, but most values still overlap.
+
+```{r ggplot_2, exercise=TRUE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + facet_wrap(~drv)
+```
+
+`facet_wrap(~drv)` indicates we want to create multiple plots (facets) that wrap across the screen in order according to the values of the `drv` variable (values seen at top of plots). We can also facet into grids using `facet_grid()` instead.
+
+
+Alternatively, we might want to keep all data in the same plot but color code the points by another variable. This is good when there is less overlap or when clear "regions" emerge on a plot.
+
+```{r ggplot_3, exercise=TRUE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color=cyl))
+```
+
+`color=cyl` indicates we want to color code the points (we're using `geom_point()`) according to the value of `cyl`.
+
+In the above two plots, try changing the variables used to facet and color code the data. Experiment to see what looks good, looks bad, or even breaks entirely.
