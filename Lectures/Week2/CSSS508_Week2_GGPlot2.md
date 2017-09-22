@@ -108,6 +108,7 @@ Now, on to Plotting!
 ========================================================
 type: section
 
+<img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/CSSS508_Week2_GGPlot2-figure/ggplot2unit.jpg" alt="GGPlot2 Unit" align="middle" style="width: 800px;"/>
 
 Gapminder Data
 ========================================================
