@@ -1,10 +1,10 @@
 CSSS508, Week 3: dplyr
 ====================================================================================
 author: Charles Lanfear
-date: April 12, 2017
+date: October 11, 2017
 transition: linear
-width: 1100
-height: 750
+width: 1600
+height: 900
 
 
 Death to Spreadsheets
@@ -25,7 +25,7 @@ type: section
 Filtering Rows (subsetting)
 ====================================================================================
 
-Recall last week we used the `filter` command to subset data like so:
+Recall last week we used the `filter()` command to subset data like so:
 
 ```r
 library(dplyr)
@@ -54,7 +54,7 @@ tail(yugoslavia, 2)
 ```
 
 ```
-# A tibble: 2 × 6
+# A tibble: 2 x 6
    country continent  year lifeExp     pop gdpPercap
     <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
 1 Slovenia    Europe  2002  76.660 2011497  20660.02
@@ -65,7 +65,7 @@ tail(yugoslavia, 2)
 What Values are Out There? Use distinct()
 ====================================================================================
 
-You can see all the values in your data for columns using `distinct`:
+You can see all the values in your data for columns using `distinct()`:
 
 
 ```r
@@ -73,19 +73,47 @@ gapminder %>% distinct(continent, year)
 ```
 
 ```
-# A tibble: 60 × 2
+# A tibble: 60 x 2
    continent  year
       <fctr> <int>
-1       Asia  1952
-2       Asia  1957
-3       Asia  1962
-4       Asia  1967
-5       Asia  1972
-6       Asia  1977
-7       Asia  1982
-8       Asia  1987
-9       Asia  1992
+ 1      Asia  1952
+ 2      Asia  1957
+ 3      Asia  1962
+ 4      Asia  1967
+ 5      Asia  1972
+ 6      Asia  1977
+ 7      Asia  1982
+ 8      Asia  1987
+ 9      Asia  1992
 10      Asia  1997
+# ... with 50 more rows
+```
+
+
+distinct() drops variables!
+====================================================================================
+
+Note that the default behavior of `distinct()` is to drop all unspecified columns. If you want to get distinct rows by certain variables without dropping the others, use `distinct(.keep_all=TRUE)`:
+
+
+```r
+gapminder %>% distinct(continent, year, .keep_all=TRUE)
+```
+
+```
+# A tibble: 60 x 6
+       country continent  year lifeExp      pop gdpPercap
+        <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>
+ 1 Afghanistan      Asia  1952  28.801  8425333  779.4453
+ 2 Afghanistan      Asia  1957  30.332  9240934  820.8530
+ 3 Afghanistan      Asia  1962  31.997 10267083  853.1007
+ 4 Afghanistan      Asia  1967  34.020 11537966  836.1971
+ 5 Afghanistan      Asia  1972  36.088 13079460  739.9811
+ 6 Afghanistan      Asia  1977  38.438 14880372  786.1134
+ 7 Afghanistan      Asia  1982  39.854 12881816  978.0114
+ 8 Afghanistan      Asia  1987  40.822 13867957  852.3959
+ 9 Afghanistan      Asia  1992  41.674 16317921  649.3414
+10 Afghanistan      Asia  1997  41.763 22227415  635.3414
 # ... with 50 more rows
 ```
 
@@ -101,7 +129,7 @@ gapminder %>% filter(country == "Canada") %>% head(2)
 ```
 
 ```
-# A tibble: 2 × 6
+# A tibble: 2 x 6
   country continent  year lifeExp      pop gdpPercap
    <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>
 1  Canada  Americas  1952   68.75 14785584  11367.16
@@ -135,7 +163,7 @@ yugoslavia %>% lm(pop ~ year, data = .)
 Sampling Rows: sample_n()
 ====================================================================================
 
-We can also filter *at random* to work with a smaller dataset using `sample_n` or `sample_frac`.
+We can also filter *at random* to work with a smaller dataset using `sample_n()` or `sample_frac()`.
 
 
 ```r
@@ -144,7 +172,7 @@ yugoslavia %>% sample_n(size = 6, replace = FALSE)
 ```
 
 ```
-# A tibble: 6 × 6
+# A tibble: 6 x 6
      country continent  year lifeExp     pop gdpPercap
       <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
 1 Montenegro    Europe  1962  63.728  474528  4649.594
@@ -167,18 +195,18 @@ yugoslavia %>% arrange(year, desc(pop))
 ```
 
 ```
-# A tibble: 60 × 6
+# A tibble: 60 x 6
                   country continent  year lifeExp     pop gdpPercap
                    <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
-1                  Serbia    Europe  1952  57.996 6860147 3581.4594
-2                 Croatia    Europe  1952  61.210 3882229 3119.2365
-3  Bosnia and Herzegovina    Europe  1952  53.820 2791000  973.5332
-4                Slovenia    Europe  1952  65.570 1489518 4215.0417
-5              Montenegro    Europe  1952  59.164  413834 2647.5856
-6                  Serbia    Europe  1957  61.685 7271135 4981.0909
-7                 Croatia    Europe  1957  64.770 3991242 4338.2316
-8  Bosnia and Herzegovina    Europe  1957  58.450 3076000 1353.9892
-9                Slovenia    Europe  1957  67.850 1533070 5862.2766
+ 1                 Serbia    Europe  1952  57.996 6860147 3581.4594
+ 2                Croatia    Europe  1952  61.210 3882229 3119.2365
+ 3 Bosnia and Herzegovina    Europe  1952  53.820 2791000  973.5332
+ 4               Slovenia    Europe  1952  65.570 1489518 4215.0417
+ 5             Montenegro    Europe  1952  59.164  413834 2647.5856
+ 6                 Serbia    Europe  1957  61.685 7271135 4981.0909
+ 7                Croatia    Europe  1957  64.770 3991242 4338.2316
+ 8 Bosnia and Herzegovina    Europe  1957  58.450 3076000 1353.9892
+ 9               Slovenia    Europe  1957  67.850 1533070 5862.2766
 10             Montenegro    Europe  1957  61.448  442829 3682.2599
 # ... with 50 more rows
 ```
@@ -187,7 +215,7 @@ yugoslavia %>% arrange(year, desc(pop))
 Keeping Columns: select()
 ====================================================================================
 
-Not only can we limit rows, but we can limit columns (and put them in the order listed) using `select`. 
+Not only can we limit rows, but we can limit columns (and put them in the order listed) using `select()`. 
 
 
 ```r
@@ -195,7 +223,7 @@ yugoslavia %>% select(country, year, pop) %>% head(4)
 ```
 
 ```
-# A tibble: 4 × 3
+# A tibble: 4 x 3
                  country  year     pop
                   <fctr> <int>   <int>
 1 Bosnia and Herzegovina  1952 2791000
@@ -208,7 +236,7 @@ yugoslavia %>% select(country, year, pop) %>% head(4)
 Dropping Columns: select()
 ====================================================================================
 
-We can instead drop columns with `select` using `-` signs:
+We can instead drop columns with `select()` using `-` signs:
 
 
 ```r
@@ -216,7 +244,7 @@ yugoslavia %>% select(-continent, -pop, -lifeExp) %>% head(4)
 ```
 
 ```
-# A tibble: 4 × 3
+# A tibble: 4 x 3
                  country  year gdpPercap
                   <fctr> <int>     <dbl>
 1 Bosnia and Herzegovina  1952  973.5332
@@ -229,7 +257,7 @@ yugoslavia %>% select(-continent, -pop, -lifeExp) %>% head(4)
 Helper Functions for select()
 ====================================================================================
 
-`select()` has a variety of helper functions like `starts_with`, `ends_with`, and `contains`, or giving a range of continguous columns `startvar:endvar`. These are very useful if you have a "wide" data frame with column names following a pattern or ordering. See `?select`.
+`select()` has a variety of helper functions like `starts_with()`, `ends_with()`, and `contains()`, or giving a range of continguous columns `startvar:endvar`. These are very useful if you have a "wide" data frame with column names following a pattern or ordering. See `?select`.
 
 ![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr-figure/dys_vars.PNG)
 
@@ -253,7 +281,7 @@ yugoslavia %>%
 ```
 
 ```
-# A tibble: 4 × 1
+# A tibble: 4 x 1
   Life_Expectancy
             <dbl>
 1           53.82
@@ -275,7 +303,7 @@ yugoslavia %>%
 ```
 
 ```
-# A tibble: 4 × 3
+# A tibble: 4 x 3
                  country  year Life_Expectancy
                   <fctr> <int>           <dbl>
 1 Bosnia and Herzegovina  1952           53.82
@@ -313,13 +341,13 @@ yugoslavia %>% filter(country == "Serbia") %>%
 
 
 
-|  Year  |  Life Expectancy  |
-|:------:|:-----------------:|
-|  1952  |      57.996       |
-|  1957  |      61.685       |
-|  1962  |      64.531       |
-|  1967  |      66.914       |
-|  1972  |      68.700       |
+| Year | Life Expectancy |
+|:----:|:---------------:|
+| 1952 |       58        |
+| 1957 |      61.69      |
+| 1962 |      64.53      |
+| 1967 |      66.91      |
+| 1972 |      68.7       |
 
 Table: Serbian life expectancy
 
@@ -327,9 +355,9 @@ Table: Serbian life expectancy
 Create New Columns: mutate() and transmute()
 ====================================================================================
 
-In `dplyr`, you can add new columns to a data frame using `mutate`. 
+In `dplyr`, you can add new columns to a data frame using `mutate()`. 
 
-You can also add new columns and *drop old ones* using `transmute`.
+You can also add new columns and *drop old ones* using `transmute()`.
 
 
 mutate() Example
@@ -345,7 +373,7 @@ yugoslavia %>% filter(country == "Serbia") %>%
 ```
 
 ```
-# A tibble: 5 × 5
+# A tibble: 5 x 5
    year     pop lifeExp pop_million life_exp_past_40
   <int>   <int>   <dbl>       <dbl>            <dbl>
 1  1952 6860147  57.996    6.860147           17.996
@@ -359,7 +387,7 @@ yugoslavia %>% filter(country == "Serbia") %>%
 ifelse()
 ====================================================================================
 
-A common function used in `mutate` (and in general in R programming) is `ifelse()`. This returns a value depending on logical tests.
+A common function used in `mutate()` (and in general in R programming) is `ifelse()`. This returns a value depending on logical tests.
 
 
 ```r
@@ -379,14 +407,15 @@ ifelse() Example
 
 ```r
 yugoslavia %>%
-    mutate(short_country = ifelse(country == "Bosnia and Herzegovina", "B and H", as.character(country))) %>%
+    mutate(short_country = ifelse(country == "Bosnia and Herzegovina", 
+                                  "B and H", as.character(country))) %>%
     select(short_country, year, pop) %>%
     arrange(year, short_country) %>%
     head(3)
 ```
 
 ```
-# A tibble: 3 × 3
+# A tibble: 3 x 3
   short_country  year     pop
           <chr> <int>   <int>
 1       B and H  1952 2791000
@@ -394,6 +423,28 @@ yugoslavia %>%
 3    Montenegro  1952  413834
 ```
 
+
+recode()
+====================================================================================
+
+`recode()` is another useful function to use inside `mutate()`. Use `recode()` to change specific values to other values. You can change multiple values at the same time using `recode()`. Note if a value has spaces in it, you'll need to put it in backticks!
+
+```r
+yugoslavia %>% 
+  mutate(country = recode(country, `Bosnia and Herzegovina`="B and H",
+                                    Montenegro="M")) %>% distinct(country)
+```
+
+```
+# A tibble: 5 x 1
+   country
+    <fctr>
+1  B and H
+2  Croatia
+3        M
+4   Serbia
+5 Slovenia
+```
 
 Summarizing with dplyr
 ====================================================================================
@@ -403,7 +454,7 @@ type: section
 General Aggregation: summarize()
 ====================================================================================
 
-`summarize` takes your rows of data and computes something across them: count how many rows there are, calculate the mean or total, etc. You can use any function that aggregates multiple values into a single one (like `sd`).
+`summarize()` takes your rows of data and computes something across them: count how many rows there are, calculate the mean or total, etc. You can use any function that aggregates multiple values into a single one (like `sd()`).
 
 In a spreadsheet:
 
@@ -424,7 +475,7 @@ yugoslavia %>%
 ```
 
 ```
-# A tibble: 1 × 4
+# A tibble: 1 x 4
   n_obs total_pop mean_life_exp range_life_exp
   <int>     <int>         <dbl>          <dbl>
 1     5  20042685       71.2952          3.939
@@ -434,7 +485,7 @@ yugoslavia %>%
 Avoiding Repetition: summarize_each()
 ====================================================================================
 
-Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_each()`, you put the functions to use in a `funs()` list, and the variables to compute over after that (like `select` syntax).
+Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_each()`, you put the functions to use in a `funs()` list, and the variables to compute over after that (like `select()` syntax).
 
 
 ```r
@@ -445,7 +496,7 @@ yugoslavia %>%
 ```
 
 ```
-# A tibble: 1 × 4
+# A tibble: 1 x 4
   lifeExp_mean pop_mean lifeExp_sd  pop_sd
          <dbl>    <dbl>      <dbl>   <dbl>
 1      71.2952  4008537   1.602685 3237282
@@ -455,7 +506,7 @@ yugoslavia %>%
 Splitting Data into Groups: group_by()
 ====================================================================================
 
-The special function `group_by()` changes how functions operate on the data, most importantly `summarize`. These functions are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
+The special function `group_by()` changes how functions operate on the data, most importantly `summarize()`. These functions are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
 
 Excel analogue: pivot tables
 
@@ -476,7 +527,7 @@ yugoslavia %>% group_by(year) %>%
 ```
 
 ```
-# A tibble: 5 × 4
+# A tibble: 5 x 4
    year num_countries total_pop total_gdp_per_cap
   <int>         <int>     <int>             <dbl>
 1  1952             5  15436728          3029.794
@@ -490,7 +541,7 @@ yugoslavia %>% group_by(year) %>%
 Window Functions
 ====================================================================================
 
-Grouping can also be used with `mutate` or `filter` to give rank orders within a group, lagged values, and cumulative sums. Much more on window functions is in a [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
+Grouping can also be used with `mutate()` or `filter()` to give rank orders within a group, lagged values, and cumulative sums. Much more on window functions is in a [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
 
 
 ```r
@@ -501,9 +552,8 @@ yugoslavia %>% select(country, year, pop) %>%
 ```
 
 ```
-Source: local data frame [4 x 5]
-Groups: country [2]
-
+# A tibble: 4 x 5
+# Groups:   country [2]
                  country  year     pop lag_pop pop_chg
                   <fctr> <int>   <int>   <int>   <int>
 1 Bosnia and Herzegovina  2002 4165416      NA      NA
@@ -569,7 +619,7 @@ We say rows should match because they have some columns containing the same valu
 * `by = c("var1", "var2", "var3")`: matches on identical values of `var1`, `,var2`, `var3` in both `A` and `B`
 * `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: matches identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
 
-Note: if there are multiple matches, you'll get one row for each possible combo (except with `semi_join` and `anti_join`).
+Note: if there are multiple matches, you'll get one row for each possible combo (except with `semi_join()` and `anti_join()`).
 
 (Need to get more complicated? You'll want to learn SQL.)
 
@@ -604,7 +654,7 @@ flights %>% filter(dest == "SEA") %>% select(tailnum) %>%
 ```
 
 ```
-# A tibble: 6 × 1
+# A tibble: 6 x 1
         manufacturer
                <chr>
 1             BOEING
@@ -627,7 +677,7 @@ flights %>% filter(dest == "SEA") %>% select(carrier) %>%
 ```
 
 ```
-# A tibble: 5 × 2
+# A tibble: 5 x 2
                     name     n
                    <chr> <int>
 1   Delta Air Lines Inc.  1213
@@ -658,7 +708,7 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
 Wind Gusts and Delays
 ====================================================================================
 
-<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-26-1.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" width="1100px" height="600px" />
+<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-28-1.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" width="1100px" height="600px" />
 
 Redo After Removing Extreme Outliers, Just Trend
 ====================================================================================
@@ -678,7 +728,7 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
 Wind Gusts and Delays: Mean Trend
 ====================================================================================
 
-<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-28-1.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" width="1100px" height="600px" />
+<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="1100px" height="600px" />
 
 
 Lab Break!

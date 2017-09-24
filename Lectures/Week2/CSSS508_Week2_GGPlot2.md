@@ -220,7 +220,7 @@ magrittr and Pipes
 ========================================================
 incremental: true
 
-`dplyr` allows us to use `magrittr` operators to "pipe" data between functions. So instead of nesting functions like this:
+`dplyr` allows us to use `magrittr` operators (`%>%`) to "pipe" data between functions. So instead of nesting functions like this:
 
 
 ```r
@@ -639,7 +639,7 @@ Fussy Manual Legend Example Result!
 
 <img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="1100px" height="500px" />
 
-Observation: one could use `filter` to identify the countries with dips in life expectancy and investigate.
+Observation: one could use `filter()` to identify the countries with dips in life expectancy and investigate.
 
 
 More on Customizing Legends

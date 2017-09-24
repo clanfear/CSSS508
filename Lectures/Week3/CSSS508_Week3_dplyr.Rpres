@@ -1,10 +1,10 @@
 CSSS508, Week 3: dplyr
 ====================================================================================
 author: Charles Lanfear
-date: April 12, 2017
+date: October 11, 2017
 transition: linear
-width: 1100
-height: 750
+width: 1600
+height: 900
 
 
 Death to Spreadsheets
@@ -27,7 +27,7 @@ type: section
 Filtering Rows (subsetting)
 ====================================================================================
 
-Recall last week we used the `filter` command to subset data like so:
+Recall last week we used the `filter()` command to subset data like so:
 ```{r}
 library(dplyr)
 library(gapminder)
@@ -57,10 +57,20 @@ tail(yugoslavia, 2)
 What Values are Out There? Use distinct()
 ====================================================================================
 
-You can see all the values in your data for columns using `distinct`:
+You can see all the values in your data for columns using `distinct()`:
 
 ```{r}
 gapminder %>% distinct(continent, year)
+```
+
+
+distinct() drops variables!
+====================================================================================
+
+Note that the default behavior of `distinct()` is to drop all unspecified columns. If you want to get distinct rows by certain variables without dropping the others, use `distinct(.keep_all=TRUE)`:
+
+```{r}
+gapminder %>% distinct(continent, year, .keep_all=TRUE)
 ```
 
 
@@ -98,7 +108,7 @@ yugoslavia %>% lm(pop ~ year, data = .)
 Sampling Rows: sample_n()
 ====================================================================================
 
-We can also filter *at random* to work with a smaller dataset using `sample_n` or `sample_frac`.
+We can also filter *at random* to work with a smaller dataset using `sample_n()` or `sample_frac()`.
 
 ```{r}
 set.seed(0413) # makes random numbers repeatable
@@ -119,7 +129,7 @@ yugoslavia %>% arrange(year, desc(pop))
 Keeping Columns: select()
 ====================================================================================
 
-Not only can we limit rows, but we can limit columns (and put them in the order listed) using `select`. 
+Not only can we limit rows, but we can limit columns (and put them in the order listed) using `select()`. 
 
 ```{r}
 yugoslavia %>% select(country, year, pop) %>% head(4)
@@ -129,7 +139,7 @@ yugoslavia %>% select(country, year, pop) %>% head(4)
 Dropping Columns: select()
 ====================================================================================
 
-We can instead drop columns with `select` using `-` signs:
+We can instead drop columns with `select()` using `-` signs:
 
 ```{r}
 yugoslavia %>% select(-continent, -pop, -lifeExp) %>% head(4)
@@ -139,7 +149,7 @@ yugoslavia %>% select(-continent, -pop, -lifeExp) %>% head(4)
 Helper Functions for select()
 ====================================================================================
 
-`select()` has a variety of helper functions like `starts_with`, `ends_with`, and `contains`, or giving a range of continguous columns `startvar:endvar`. These are very useful if you have a "wide" data frame with column names following a pattern or ordering. See `?select`.
+`select()` has a variety of helper functions like `starts_with()`, `ends_with()`, and `contains()`, or giving a range of continguous columns `startvar:endvar`. These are very useful if you have a "wide" data frame with column names following a pattern or ordering. See `?select`.
 
 ![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr-figure/dys_vars.PNG)
 
@@ -201,9 +211,9 @@ yugoslavia %>% filter(country == "Serbia") %>%
 Create New Columns: mutate() and transmute()
 ====================================================================================
 
-In `dplyr`, you can add new columns to a data frame using `mutate`. 
+In `dplyr`, you can add new columns to a data frame using `mutate()`. 
 
-You can also add new columns and *drop old ones* using `transmute`.
+You can also add new columns and *drop old ones* using `transmute()`.
 
 
 mutate() Example
@@ -221,7 +231,7 @@ yugoslavia %>% filter(country == "Serbia") %>%
 ifelse()
 ====================================================================================
 
-A common function used in `mutate` (and in general in R programming) is `ifelse()`. This returns a value depending on logical tests.
+A common function used in `mutate()` (and in general in R programming) is `ifelse()`. This returns a value depending on logical tests.
 
 ```{r, eval=FALSE}
 ifelse(test= x==y, yes=if_true, no=if_false)
@@ -239,12 +249,23 @@ ifelse() Example
 
 ```{r}
 yugoslavia %>%
-    mutate(short_country = ifelse(country == "Bosnia and Herzegovina", "B and H", as.character(country))) %>%
+    mutate(short_country = ifelse(country == "Bosnia and Herzegovina", 
+                                  "B and H", as.character(country))) %>%
     select(short_country, year, pop) %>%
     arrange(year, short_country) %>%
     head(3)
 ```
 
+
+recode()
+====================================================================================
+
+`recode()` is another useful function to use inside `mutate()`. Use `recode()` to change specific values to other values. You can change multiple values at the same time using `recode()`. Note if a value has spaces in it, you'll need to put it in backticks!
+```{r}
+yugoslavia %>% 
+  mutate(country = recode(country, `Bosnia and Herzegovina`="B and H",
+                                    Montenegro="M")) %>% distinct(country)
+```
 
 Summarizing with dplyr
 ====================================================================================
@@ -254,7 +275,7 @@ type: section
 General Aggregation: summarize()
 ====================================================================================
 
-`summarize` takes your rows of data and computes something across them: count how many rows there are, calculate the mean or total, etc. You can use any function that aggregates multiple values into a single one (like `sd`).
+`summarize()` takes your rows of data and computes something across them: count how many rows there are, calculate the mean or total, etc. You can use any function that aggregates multiple values into a single one (like `sd()`).
 
 In a spreadsheet:
 
@@ -277,7 +298,7 @@ yugoslavia %>%
 Avoiding Repetition: summarize_each()
 ====================================================================================
 
-Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_each()`, you put the functions to use in a `funs()` list, and the variables to compute over after that (like `select` syntax).
+Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_each()`, you put the functions to use in a `funs()` list, and the variables to compute over after that (like `select()` syntax).
 
 ```{r}
 yugoslavia %>%
@@ -290,7 +311,7 @@ yugoslavia %>%
 Splitting Data into Groups: group_by()
 ====================================================================================
 
-The special function `group_by()` changes how functions operate on the data, most importantly `summarize`. These functions are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
+The special function `group_by()` changes how functions operate on the data, most importantly `summarize()`. These functions are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
 
 Excel analogue: pivot tables
 
@@ -313,7 +334,7 @@ yugoslavia %>% group_by(year) %>%
 Window Functions
 ====================================================================================
 
-Grouping can also be used with `mutate` or `filter` to give rank orders within a group, lagged values, and cumulative sums. Much more on window functions is in a [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
+Grouping can also be used with `mutate()` or `filter()` to give rank orders within a group, lagged values, and cumulative sums. Much more on window functions is in a [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
 
 ```{r}
 yugoslavia %>% select(country, year, pop) %>%
@@ -379,7 +400,7 @@ We say rows should match because they have some columns containing the same valu
 * `by = c("var1", "var2", "var3")`: matches on identical values of `var1`, `,var2`, `var3` in both `A` and `B`
 * `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: matches identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
 
-Note: if there are multiple matches, you'll get one row for each possible combo (except with `semi_join` and `anti_join`).
+Note: if there are multiple matches, you'll get one row for each possible combo (except with `semi_join()` and `anti_join()`).
 
 (Need to get more complicated? You'll want to learn SQL.)
 

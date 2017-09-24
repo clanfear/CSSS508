@@ -183,7 +183,7 @@ magrittr and Pipes
 ========================================================
 incremental: true
 
-`dplyr` allows us to use `magrittr` operators to "pipe" data between functions. So instead of nesting functions like this:
+`dplyr` allows us to use `magrittr` operators (`%>%`) to "pipe" data between functions. So instead of nesting functions like this:
 
 ```{r}
 log(mean(gapminder$pop))
@@ -521,7 +521,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     theme(legend.position=c(0.75, 0.2))
 ```
 
-Observation: one could use `filter` to identify the countries with dips in life expectancy and investigate.
+Observation: one could use `filter()` to identify the countries with dips in life expectancy and investigate.
 
 
 More on Customizing Legends
