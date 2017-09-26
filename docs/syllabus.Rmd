@@ -71,11 +71,19 @@ has a large number of students but no teaching assistant, so students are both e
 and expected to assist one another with technical problems, both in and out of class.
 Diagnosing problems inothers' code is a very effective way to improve your understanding of programming.
 
+[DataCamp](https://www.datacamp.com/groups/cs-ss508-introduction-to-r-for-social-scientists/assignments)
+
+Students registered for this course are provided with free access to [DataCamp](http://www.datacamp.com) R courses for the duration of the term.
+DataCamp provides commercial interactive tutorials created by experts in data science, statistics, and general programming. These tutorials
+are provided as *optional* resources for additional practice and deeper learning. Free access to DataCamp is available
+through the beginning of Winter term, so you may review and work on them after the course has ended. 
+If you are registered for the course and did not receive a DataCamp email by Wednesday 9/27/17, please [email the instructor](mailto:clanfear@uw.edu).
+
 [Tutorial Package](https://github.com/clanfear/CSSS508/raw/master/uwcsss508_0.1.0.zip)
 
-This course also features an R package containing interactive tutorials for practicing
-concepts from lecture. Completion of tutorials is recommended to check your understanding
-but is not required. The package is in an early stage of development, so please email
+This course also features an R package containing optional interactive tutorials for practicing
+concepts from lecture. These short tutorials are useful to check your understanding
+but are not required. The package is in an early stage of development, so please email
 me if you find bugs or problems. Installation instructions are found in the Week 1 slides.
 
 # Course Requirements
@@ -130,11 +138,11 @@ highly readable general text on programming in R.
 by Paul Murrell, the definitive text on graphics in R. Vital if you want
 to get deeper into `base` or `grid` (the system underlying `ggplot2`) graphics.
 
-* [R-Bloggers](https://www.r-bloggers.com/): A blog of news and tutorials about R with
-multiple updates per day and thousands of archived posts.
-
 * [RStudio Cheat Sheets](https://www.rstudio.com/resources/cheatsheets/): Handy reference 
 sheets covering a variety of common R tasks and packages.
+
+* [R-Bloggers](https://www.r-bloggers.com/): A blog of news and tutorials about R with
+multiple updates per day and thousands of archived posts.
 
 * [StackOverflow](https://stackoverflow.com/), the internet's largest programming help
 community. Nearly any question you have about programming in R has probably already
