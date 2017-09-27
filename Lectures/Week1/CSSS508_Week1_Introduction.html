@@ -872,7 +872,7 @@ hljs.initHighlightingOnLoad();
 <p>Yes, peer grading&hellip;</p>
 
 <ul>
-<li><strong>30 students, no TA</strong></li>
+<li><strong>35+ students, no TA</strong></li>
 <li>You will write your reports better knowing others will see them</li>
 <li>Learn new tricks from reading others&#39; code; &ldquo;appreciate the little things&rdquo;</li>
 </ul>
@@ -882,7 +882,7 @@ hljs.initHighlightingOnLoad();
 <ul>
 <li>Randomly assigned peers, turnaround time: 1 week (due before next class)</li>
 <li>You&#39;ll get a rubric and are expected to leave constructive comments</li>
-<li>High scoring assignments will be adapted into keys (with your permission)</li>
+<li>High scoring assignments may be adapted into keys (with your permission)</li>
 <li>Email me if you want more feedback</li>
 </ul>
 
@@ -933,13 +933,13 @@ model &lt;- lm(y ~ x)
 <li class="fragment">Browse through the slides to see where that text is highlighted.</li>
 </ol>
 
-<p class="fragment">If you must take notes directly on course slides, use an add-on like Beanote for Chrome or Skitch for Safari.</p>
+<p class="fragment">If you must take notes directly on course slides, use an add-on like Beanote for Chrome or Skitch for Safari. You can also search the provided source code on the website.</p>
 
 </div>
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Rough schedule</h3>
+<h3>Rough Schedule</h3>
 <div class="slideContent" >
 <ol>
 <li class="fragment">Intro to R, RStudio, and R Markdown</li>
@@ -1006,7 +1006,7 @@ model &lt;- lm(y ~ x)
 <p>Killer feature of R/RStudio is ease of making R Markdown files:</p>
 
 <ul>
-<li class="fragment">Document analyses as you go with integrated text, code, and output
+<li class="fragment">Document analysis as you go with integrated text, code, and output
 
 <ul>
 <li class="fragment">No rerunning, recopying, or repasting</li>
@@ -1014,7 +1014,7 @@ model &lt;- lm(y ~ x)
 <li class="fragment">Show as little or as much of the code as you want</li>
 </ul></li>
 <li class="fragment">Make: presentations (like this one!); webpages; reports in html; Word docs</li>
-<li class="fragment">Works with LaTeX for PDFs for more formatting control</li>
+<li class="fragment">Works with LaTeX for more formatting control</li>
 </ul>
 
 <p class="fragment">We&#39;ll get back to this soon!</p>
@@ -1025,14 +1025,14 @@ model &lt;- lm(y ~ x)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Getting Started</h3>
 <div class="slideContent" >
-<p>Open up RStudio now (<a href="https://rebeccaferrell.github.io/CSSS508/CSSCR.html">CSSCR Lab Instructions</a>) and choose <em>File &gt; New File &gt; R Script</em>.</p>
+<p>Open up RStudio now and choose <em>File &gt; New File &gt; R Script</em>.</p>
 
 <p>Then, let&#39;s get oriented with the interface:</p>
 
 <ul>
-<li>Top Left: Code editor pane, data viewer (browse with tabs)</li>
-<li>Bottom Left: Console for running code (&gt; prompt)</li>
-<li>Top Right: List of objects in environment, code history tab.</li>
+<li>Top Left: Code <strong>editor</strong> pane, data viewer (browse with tabs)</li>
+<li>Bottom Left: <strong>Console</strong> for running code (&gt; prompt)</li>
+<li>Top Right: List of objects in <strong>environment</strong>, code <strong>history</strong> tab.</li>
 <li>Bottom Right: Tabs for browsing files, viewing plots, managing packages, and viewing help files.</li>
 </ul>
 
@@ -1101,7 +1101,7 @@ and look at the <strong>Help</strong> panel on the right.</p>
 <pre class="fragment"><code class="r">?sqrt
 </code></pre>
 
-<p class="fragment"><strong>Arguments</strong> are the inputs to a function. In this case, the only argument to <code>sqrt()</code>
+<p class="fragment"><strong>Arguments</strong> are the <em>inputs</em> to a function. In this case, the only argument to <code>sqrt()</code>
 is a number or a vector of numbers <code>x</code>.</p>
 
 <p class="fragment">Help files provide documentation on how to use functions and what functions produce.</p>
@@ -1114,7 +1114,7 @@ is a number or a vector of numbers <code>x</code>.</p>
 <div class="slideContent" >
 <p>R stores everything as an <strong>object</strong>, including data, functions, models, and output.</p>
 
-<p class="fragment">Creating an object is done using the assignment operator <code>&lt;-</code></p>
+<p class="fragment">Creating an object can be done using the assignment operator <code>&lt;-</code></p>
 
 <pre class="fragment"><code class="r">new.object &lt;- 144
 </code></pre>
@@ -1165,7 +1165,7 @@ as if it were the values stored inside.</p>
 <p>A <strong>vector</strong> is a series of <strong>elements</strong>, such as numbers.</p>
 
 <p class="fragment">You can create a vector and store it as an object in the same way. To do this, use the
-function <code>c()</code> which stands for &ldquo;concatenate&rdquo;.</p>
+function <code>c()</code> which stands for &ldquo;combine&rdquo;.</p>
 
 <pre class="fragment"><code class="r">new.object &lt;- c(4, 9, 16, 25, 36)
 new.object
@@ -1192,7 +1192,7 @@ new.object
 <div class="slideContent" >
 <p>The same principles can be used to create more complex objects like <strong>matrices</strong>, <strong>arrays</strong>, <strong>lists</strong>, and <strong>data frames</strong> (lists which look like matrices but can hold numerical and text information).</p>
 
-<p>Most data sets you will work with will be read into R and stored as a data frame.</p>
+<p>Most data sets you will work with will be read into R and stored as a <strong>data frame</strong>, so this course will mainly focus on manipulating and visualizing these objects.</p>
 
 <p>Before we get into these, let&#39;s revisit R Markdown.</p>
 
@@ -1212,10 +1212,10 @@ new.object
 <p>Let&#39;s try making an R Markdown file:</p>
 
 <ol>
-<li>Choose File &gt; New File &gt; R Markdown&hellip;</li>
-<li>Make sure HTML output is selected and click OK</li>
-<li>Save the file somewhere, call it my_first_Rmd.Rmd</li>
-<li>Click the Knit HTML button</li>
+<li>Choose <em>File &gt; New File &gt; R Markdown&hellip;</em></li>
+<li>Make sure <em>HTML output</em> is selected and click OK</li>
+<li>Save the file somewhere, call it <code>my_first_Rmd.Rmd</code></li>
+<li>Click the <em>Knit HTML</em> button</li>
 <li>Watch the progress in the R Markdown pane, then gaze upon your result!</li>
 </ol>
 
@@ -1227,9 +1227,7 @@ new.object
 <section data-transition="linear" data-transition-speed="default">
 <h3>Making R Markdown Documents</h3>
 <div class="slideContent" >
-<p>YAML headers</p>
-
-<p class="fragment">The header of an .Rmd file is a YAML block (YAML Ain&#39;t Markup Language) code, and everything else is part of the main document.</p>
+<p>The header of an .Rmd file is a <a href="http://yaml.org/">YAML</a> (YAML Ain&#39;t Markup Language) code block, and everything else is part of the main document.</p>
 
 <pre class="fragment"><code>---
 title: &quot;Untitled&quot;
@@ -1325,7 +1323,7 @@ famous person</p>
 
 <pre><code>1. Ordered lists
 1. Are real easy
-  + Even with sublists
+  1. Even with sublists
 </code></pre>
 
 <pre><code>* Unordered lists
@@ -1377,7 +1375,7 @@ z &lt;- y^2
 <section data-transition="linear" data-transition-speed="default">
 <h3>Your Turn</h3>
 <div class="slideContent" >
-<p>Now try editing and re-knitting <code>my_first_Rmd.Rmd</code> to give it some pizzazz: add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equationâ¦</p>
+<p>Feel free to edit and re-knit <code>my_first_Rmd.Rmd</code> to give it some pizzazz: Add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equationâ¦</p>
 
 <ul>
 <li><a href="http://rmarkdown.rstudio.com/html_document_format.html">Ways to modify the overall document appearance</a></li>
@@ -1393,7 +1391,7 @@ z &lt;- y^2
 <p>To keep R Markdown dead-simple, it lacks some features you might occasionally want to use. Your options for fancier documents are:</p>
 
 <ul>
-<li>Use HTML/CSS for custom formatting</li>
+<li>Use HTML with CSS for custom formatting</li>
 <li>Use LaTeX and .Rnw files instead of .Rmd</li>
 </ul>
 
@@ -1405,7 +1403,7 @@ z &lt;- y^2
 <section data-transition="linear" data-transition-speed="default">
 <h3>R code and R Markdown</h3>
 <div class="slideContent" >
-<p>Lines of R code make up what are called <strong>chunks</strong>. Code is sandwiched between sets of three backticks and <code>{r}</code>.</p>
+<p>Inside Markdown documents, lines of R code make up what are called <strong>chunks</strong>. Code is sandwiched between sets of three backticks and <code>{r}</code>.</p>
 
 <pre><code>```{r}
 data(cars)
@@ -1430,7 +1428,7 @@ summary(cars)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Chunk options</h3>
+<h3>Chunk Options</h3>
 <div class="slideContent" >
 <p>Chunks have options that control what happens with its code, such as:</p>
 
@@ -1440,7 +1438,7 @@ summary(cars)
 <li><code>warning=FALSE, message=FALSE</code>: suppresses R warnings or messages from the document, e.g. about versions</li>
 <li><code>eval=FALSE</code>: show R code in the document without running it</li>
 <li><code>cache=TRUE</code>: saves results of running that chunk so if it takes a while, you won&#39;t have to re-run it each time you re-knit the document</li>
-<li><code>fig.height=5, fig.width=51</code>: modify the dimensions of any plots that are generated in the chunk (units are in inches)</li>
+<li><code>fig.height=5, fig.width=5</code>: modify the dimensions of any plots that are generated in the chunk (units are in inches)</li>
 </ul>
 
 </div>
@@ -1490,7 +1488,7 @@ summary(cars)
 <p>Having R dump values directly into your document protects you from silly mistakes:</p>
 
 <ul>
-<li class="fragment">Never wonder &ldquo;how did I come up with this quantity?&rdquo; ever again &mdash; just look at your formula in your .Rmd file</li>
+<li class="fragment">Never wonder &ldquo;how did I come up with this quantity?&rdquo; ever again&mdash;just look at your formula in your .Rmd file</li>
 <li class="fragment">Consistency, no &ldquo;find/replace&rdquo; mishaps: reference a variable in-line throughout your document without manually updating if the calculation changes (e.g. reporting sample sizes)</li>
 <li class="fragment">You are more likely to make a typo in a &ldquo;hard-coded&rdquo; number than you are to write R code that somehow runs but gives you the wrong thing</li>
 </ul>
@@ -1527,8 +1525,9 @@ summary(cars)
 <p>In the sample R Markdown document you are working on, we can load the built-in data
 <code>cars</code>, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.</p>
 
-<p class="fragment"><code>data(cars)</code> loads this dataframe into the Global Environment.
-<code>View(cars)</code> pops up a viewer pane (&ldquo;interactive&rdquo; use only, don&#39;t put in R Markdown document!) or</p>
+<p class="fragment"><code>data(cars)</code> loads this dataframe into the Global Environment (as a <em>promise</em>).</p>
+
+<p class="fragment"><code>View(cars)</code> pops up a viewer pane (&ldquo;interactive&rdquo; use only, don&#39;t put in R Markdown document!) or</p>
 
 <pre class="fragment"><code class="r">head(cars) # prints first 6 rows, see tail() too
 </code></pre>
@@ -1615,7 +1614,7 @@ summary(cars)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Math with Cars</h3>
 <div class="slideContent" >
-<p>If you put an assignment &lt;- in parentheses (), R will print the output of the assignment out for you in your document. Otherwise, it won&#39;t show the value.</p>
+<p>If you put an assignment <code>&lt;-</code> in parentheses <code>()</code>, R will print the output of the assignment out for you in your document. Otherwise, it won&#39;t show the value.</p>
 
 <pre class="fragment"><code class="r">( dist_mean &lt;- mean(cars$dist) )
 </code></pre>
@@ -1689,7 +1688,7 @@ abline(v = speed_mean, col = &quot;cornflowerblue&quot;)
 
 <ul>
 <li class="fragment">Note that unlike the <code>library()</code> command, the name of a package to be installed must be in quotes. This is because the name here is a search term (text, not an object!) while for <code>library()</code> it is an actual R object.</li>
-<li class="fragment">Once you install a package, you don&#39;t need to re-install it until you update R. Consequently, **you should not include <code>install.packages()</code> in any markdown document or R script.</li>
+<li class="fragment">Once you install a package, you don&#39;t need to re-install it until you update R. Consequently, you should not include <code>install.packages()</code> in any markdown document or R script!</li>
 </ul>
 
 </div>
@@ -1706,14 +1705,14 @@ abline(v = speed_mean, col = &quot;cornflowerblue&quot;)
 install.packages(&quot;https://github.com/clanfear/CSSS508/raw/master/uwcsss508_0.1.0.zip&quot;, repos = NULL)
 </code></pre>
 
-<p class="fragment">You can run tutorial 1 using the following code. Change the number in the first argument to access later tutorials.</p>
+<p class="fragment">You can run tutorial 1 using the following code. Change only the number in the first argument to access later tutorials.</p>
 
 <pre class="fragment"><code class="r">library(learnr)
 library(uwcsss508)
 run_tutorial(&quot;tutorial_1&quot;, &quot;uwcsss508&quot;)
 </code></pre>
 
-<p class="fragment">Note that the tutorial package has been in development for less than a month, so it will be updated frequently and may have bugs. Let me know if you have issues!</p>
+<p class="fragment">Note that the tutorial package has been in development for less than a month, so it will be updated frequently and may have bugs. Let me know if you have issues! For more in-depth tutorials,  see the <a href="http://www.datacamp.com">DataCamp</a> links on the <a href="http://clanfear.github.io/CSSS508">course website</a>.</p>
 
 </div>
 
@@ -1862,7 +1861,7 @@ pander(summary(swiss), style = &quot;rmarkdown&quot;, split.tables = 120)
 
 <p>Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include <em>at least</em> one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. with functions like <code>nrow()</code>, <code>mean()</code>, <code>sd()</code>, <code>cor()</code>, <code>median()</code>, <code>min()</code>, <code>quantile()</code>) and <em>may not hard-code any numbers referenced in your text</em>.</p>
 
-<p>Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options <code>echo</code> and <code>results</code> to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text&ndash;<em>not as printed code and output</em>&ndash;and rounded so as not to be absurdly precise (1 to 3 digits).</p>
+<p>Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options <code>echo</code> and <code>results</code> to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text&mdash;<em>not as printed code and output</em>&mdash;and rounded so as not to be absurdly precise (1 to 3 digits).</p>
 
 <h3>DUE: 11:59 PM, Tuesday, October 3rd, 2017</h3>
 

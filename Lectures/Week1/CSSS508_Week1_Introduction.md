@@ -56,14 +56,14 @@ Peer grading, really?
 
 Yes, peer grading...
 
-* **30 students, no TA**
+* **35+ students, no TA**
 * You will write your reports better knowing others will see them
 * Learn new tricks from reading others' code; "appreciate the little things"
 
 Format:
 * Randomly assigned peers, turnaround time: 1 week (due before next class)
 * You'll get a rubric and are expected to leave constructive comments
-* High scoring assignments will be adapted into keys (with your permission)
+* High scoring assignments may be adapted into keys (with your permission)
 * Email me if you want more feedback
 
 
@@ -101,9 +101,9 @@ I do not provide PowerPoint or PDF slides. If you want to search a lecture for a
 3. To search for text, hit `Ctrl+F` or `⌘+F` and enter the search term
 4. Browse through the slides to see where that text is highlighted.
 
-If you must take notes directly on course slides, use an add-on like Beanote for Chrome or Skitch for Safari.
+If you must take notes directly on course slides, use an add-on like Beanote for Chrome or Skitch for Safari. You can also search the provided source code on the website.
 
-Rough schedule
+Rough Schedule
 ========================================================
 incremental: true
 
@@ -160,12 +160,12 @@ incremental: true
 
 Killer feature of R/RStudio is ease of making R Markdown files:
 
-* Document analyses as you go with integrated text, code, and output
+* Document analysis as you go with integrated text, code, and output
   + No rerunning, recopying, or repasting
   + Easy for collaborators to understand
   + Show as little or as much of the code as you want
 * Make: presentations (like this one!); webpages; reports in html; Word docs
-* Works with LaTeX for PDFs for more formatting control
+* Works with LaTeX for more formatting control
 
 We'll get back to this soon!
 
@@ -173,13 +173,13 @@ We'll get back to this soon!
 Getting Started
 ========================================================
 
-Open up RStudio now ([CSSCR Lab Instructions](https://rebeccaferrell.github.io/CSSS508/CSSCR.html)) and choose *File > New File > R Script*.
+Open up RStudio now and choose *File > New File > R Script*.
 
 Then, let's get oriented with the interface:
 
-- Top Left: Code editor pane, data viewer (browse with tabs)
-- Bottom Left: Console for running code (> prompt)
-- Top Right: List of objects in environment, code history tab.
+- Top Left: Code **editor** pane, data viewer (browse with tabs)
+- Bottom Left: **Console** for running code (> prompt)
+- Top Right: List of objects in **environment**, code **history** tab.
 - Bottom Right: Tabs for browsing files, viewing plots, managing packages, and viewing help files.
 
 You can change the layout in *Preferences > Pane Layout*
@@ -245,7 +245,7 @@ and look at the **Help** panel on the right.
 ?sqrt
 ```
 
-**Arguments** are the inputs to a function. In this case, the only argument to `sqrt()`
+**Arguments** are the *inputs* to a function. In this case, the only argument to `sqrt()`
 is a number or a vector of numbers `x`.
 
 Help files provide documentation on how to use functions and what functions produce.
@@ -256,7 +256,7 @@ incremental: true
 
 R stores everything as an **object**, including data, functions, models, and output.
 
-Creating an object is done using the assignment operator `<-`
+Creating an object can be done using the assignment operator `<-`
 
 ```r
 new.object <- 144
@@ -310,7 +310,7 @@ incremental: true
 A **vector** is a series of **elements**, such as numbers.
 
 You can create a vector and store it as an object in the same way. To do this, use the
-function `c()` which stands for "concatenate".
+function `c()` which stands for "combine".
 
 ```r
 new.object <- c(4, 9, 16, 25, 36)
@@ -339,7 +339,7 @@ More Complex Objects
 
 The same principles can be used to create more complex objects like **matrices**, **arrays**, **lists**, and **data frames** (lists which look like matrices but can hold numerical and text information).
 
-Most data sets you will work with will be read into R and stored as a data frame.
+Most data sets you will work with will be read into R and stored as a **data frame**, so this course will mainly focus on manipulating and visualizing these objects.
 
 Before we get into these, let's revisit R Markdown.
 
@@ -354,10 +354,10 @@ Making R Markdown Documents
 
 Let's try making an R Markdown file:
 
-1. Choose File > New File > R Markdown...
-2. Make sure HTML output is selected and click OK
-3. Save the file somewhere, call it my_first_Rmd.Rmd
-4. Click the Knit HTML button
+1. Choose *File > New File > R Markdown...*
+2. Make sure *HTML output* is selected and click OK
+3. Save the file somewhere, call it `my_first_Rmd.Rmd`
+4. Click the *Knit HTML* button
 5. Watch the progress in the R Markdown pane, then gaze upon your result!
 
 You may also open up the file in your computer's browser if you so desire.
@@ -367,9 +367,7 @@ Making R Markdown Documents
 ========================================================
 incremental: true
 
-YAML headers
-
-The header of an .Rmd file is a YAML block (YAML Ain't Markup Language) code, and everything else is part of the main document.
+The header of an .Rmd file is a [YAML](http://yaml.org/) (YAML Ain't Markup Language) code block, and everything else is part of the main document.
 
 ```{}
 ---
@@ -445,7 +443,7 @@ left: 30%
 ```
 1. Ordered lists
 1. Are real easy
-  + Even with sublists
+  1. Even with sublists
 ```
 
 ```
@@ -492,7 +490,7 @@ z <- y^2
 Your Turn
 ========================================================
 
-Now try editing and re-knitting `my_first_Rmd.Rmd` to give it some pizzazz: add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equationâ¦
+Feel free to edit and re-knit `my_first_Rmd.Rmd` to give it some pizzazz: Add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equationâ¦
 
 * [Ways to modify the overall document appearance](http://rmarkdown.rstudio.com/html_document_format.html)
 * [Ways to format parts of your document](http://rmarkdown.rstudio.com/authoring_basics.html)
@@ -503,7 +501,7 @@ R Markdown formatting caveat
 
 To keep R Markdown dead-simple, it lacks some features you might occasionally want to use. Your options for fancier documents are:
 
-* Use HTML/CSS for custom formatting
+* Use HTML with CSS for custom formatting
 * Use LaTeX and .Rnw files instead of .Rmd
 
 For day-to-day use, plain vanilla R Markdown does the job.
@@ -512,7 +510,7 @@ For day-to-day use, plain vanilla R Markdown does the job.
 R code and R Markdown
 ========================================================
 
-Lines of R code make up what are called **chunks**. Code is sandwiched between sets of three backticks and `{r}`.
+Inside Markdown documents, lines of R code make up what are called **chunks**. Code is sandwiched between sets of three backticks and `{r}`.
 
     ```{r}
     data(cars)
@@ -537,8 +535,9 @@ summary(cars)
 ```
 
 
-Chunk options
+Chunk Options
 ========================================================
+
 Chunks have options that control what happens with its code, such as:
 
 * `echo=FALSE`: keeps R code from being shown in the document
@@ -546,11 +545,12 @@ Chunks have options that control what happens with its code, such as:
 * `warning=FALSE, message=FALSE`: suppresses R warnings or messages from the document, e.g. about versions
 * `eval=FALSE`: show R code in the document without running it
 * `cache=TRUE`: saves results of running that chunk so if it takes a while, you won't have to re-run it each time you re-knit the document
-* `fig.height=5, fig.width=51`: modify the dimensions of any plots that are generated in the chunk (units are in inches)
+* `fig.height=5, fig.width=5`: modify the dimensions of any plots that are generated in the chunk (units are in inches)
 
 
 Playing with Chunk Options
 ========================================================
+
 Try adding or changing the chunk options (separated by commas) for the two chunks in `my_first_Rmd.Rmd` and re-knitting to check what happens.
 
 
@@ -590,13 +590,13 @@ incremental: true
 
 Having R dump values directly into your document protects you from silly mistakes:
 
-* Never wonder "how did I come up with this quantity?" ever again --- just look at your formula in your .Rmd file
+* Never wonder "how did I come up with this quantity?" ever again---just look at your formula in your .Rmd file
 * Consistency, no "find/replace" mishaps: reference a variable in-line throughout your document without manually updating if the calculation changes (e.g. reporting sample sizes)
 * You are more likely to make a typo in a "hard-coded" number than you are to write R code that somehow runs but gives you the wrong thing
 
 
 Example: Keeping document date current
-===
+=======================================================
 
 In your YAML header, make the date come from R's `Sys.time()` function by changing:
 
@@ -621,7 +621,8 @@ incremental: true
 In the sample R Markdown document you are working on, we can load the built-in data
 `cars`, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.
 
-`data(cars)` loads this dataframe into the Global Environment.
+`data(cars)` loads this dataframe into the Global Environment (as a *promise*).
+
 `View(cars)` pops up a viewer pane ("interactive" use only, don't put in R Markdown document!) or
 
 
@@ -709,7 +710,7 @@ Math with Cars
 ========================================================
 incremental: true
 
-If you put an assignment <- in parentheses (), R will print the output of the assignment out for you in your document. Otherwise, it won't show the value.
+If you put an assignment `<-` in parentheses `()`, R will print the output of the assignment out for you in your document. Otherwise, it won't show the value.
 
 
 ```r
@@ -781,7 +782,7 @@ Let's make a table that looks a little less code-y in the output. To do this, we
 In the console: `install.packages("pander")`.
 
 * Note that unlike the `library()` command, the name of a package to be installed must be in quotes. This is because the name here is a search term (text, not an object!) while for `library()` it is an actual R object.
-* Once you install a package, you don't need to re-install it until you update R. Consequently, **you should not include `install.packages()` in any markdown document or R script.
+* Once you install a package, you don't need to re-install it until you update R. Consequently, you should not include `install.packages()` in any markdown document or R script!
 
 
 Installing Tutorial Package
@@ -798,7 +799,7 @@ install.packages(c("learnr", "dplyr"))
 install.packages("https://github.com/clanfear/CSSS508/raw/master/uwcsss508_0.1.0.zip", repos = NULL)
 ```
 
-You can run tutorial 1 using the following code. Change the number in the first argument to access later tutorials.
+You can run tutorial 1 using the following code. Change only the number in the first argument to access later tutorials.
 
 
 ```r
@@ -807,7 +808,7 @@ library(uwcsss508)
 run_tutorial("tutorial_1", "uwcsss508")
 ```
 
-Note that the tutorial package has been in development for less than a month, so it will be updated frequently and may have bugs. Let me know if you have issues!
+Note that the tutorial package has been in development for less than a month, so it will be updated frequently and may have bugs. Let me know if you have issues! For more in-depth tutorials,  see the [DataCamp](http://www.datacamp.com) links on the [course website](http://clanfear.github.io/CSSS508).
 
 
 Making Tables
@@ -850,7 +851,6 @@ pander(head(swiss, 5), style = "rmarkdown", split.tables = 120)
 |  **Neuveville**  |   76.9    |    43.5     |     17      |    15     |   5.16   |       20.6       |
 
 
-
 Homework
 ========================================================
 
@@ -858,7 +858,7 @@ Write up a .Rmd file showing some exploratory analyses of the Swiss fertility da
 
 Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. with functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`, `quantile()`) and *may not hard-code any numbers referenced in your text*.
 
-Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text--*not as printed code and output*--and rounded so as not to be absurdly precise (1 to 3 digits).
+Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (1 to 3 digits).
 
 ### DUE: 11:59 PM, Tuesday, October 3rd, 2017
 
