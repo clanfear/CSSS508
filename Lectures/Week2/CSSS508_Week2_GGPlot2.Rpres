@@ -256,15 +256,15 @@ type: section
 Base Plots from Last Week
 ========================================================
 
-```{r, fig.width=20}
-plot(lifeExp ~ year, data = China, xlab = "Year", ylab = "Life expectancy", main = "Life expectancy in China", col = "red", cex = 3, pch = 16)
+```{r, fig.width = 7.5, fig.height = 3, dpi=300, out.width="1100px", out.height="440px"}
+plot(lifeExp ~ year, data = China, xlab = "Year", ylab = "Life expectancy", main = "Life expectancy in China", col = "red", cex = 1, pch = 16)
 ```
-
+ 
 
 ggplot2
 ========================================================
 
-An alternative way of plotting many prefer (myself included) -- [though this is not without debate](http://simplystatistics.org/2016/02/11/why-i-dont-use-ggplot2/) -- uses the `ggplot2` package in R, which is part
+An alternative way of plotting many prefer (myself included)---[though this is not without debate](http://simplystatistics.org/2016/02/11/why-i-dont-use-ggplot2/)---uses the `ggplot2` package in R, which is part
 of the `tidyverse`.
 
 ```{r}
@@ -277,28 +277,28 @@ The core idea underlying this package is the **grammar of graphics**: we can bre
 Chinese Life Expectancy in ggplot
 ========================================================
 
-```{r, fig.width = 10, fig.height = 4.1, dpi=300, out.width="1100px", out.height="450px"}
+```{r, fig.width = 7.5, fig.height = 3, dpi=300, out.width="1100px", out.height="440px"}
 ggplot(data = China, aes(x = year, y = lifeExp)) +
     geom_point()
 ```
 
 
-Axis labels, points, no gray background
+Axis Labels, Points, No Gray Background
 ========================================================
 
-```{r, fig.width = 10, fig.height = 3.6, dpi=300, out.width="1100px", out.height="400px"}
+```{r, fig.width = 7.5, fig.height = 3, dpi=300, out.width="1100px", out.height="440px"}
 ggplot(data = China, aes(x = year, y = lifeExp)) +
-    geom_point(color = "red", size = 5) +
+    geom_point(color = "red", size = 3) +
     xlab("Year") + ylab("Life expectancy") +
     ggtitle("Life expectancy in China") +
     theme_bw()
 ```
 
 
-Color observations by some attribute
+Color Observations by Variable
 ========================================================
 
-```{r, fig.width = 10, fig.height = 3.6, dpi=300, out.width="1100px", out.height="400px"}
+```{r, fig.width = 7.5, fig.height = 3, dpi=300, out.width="1100px", out.height="440px"}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) +
     geom_point() +
     xlab("Year") + ylab("Life expectancy") +
@@ -306,17 +306,30 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) +
     theme_bw()
 ```
 
-Segment observations by some attribute
+Segment Observations by Variable
 ========================================================
 
-```{r, fig.width = 10, fig.height = 3.2, dpi=300, out.width="1100px", out.height="350px"}
+```{r, fig.width = 7.5, fig.height = 3, dpi=300, out.width="1100px", out.height="440px"}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country, color = continent)) +
-    geom_line(alpha = 0.5) +
-    facet_wrap( ~ continent) +
+    geom_line(alpha = 0.5) + facet_wrap( ~ continent) +
     xlab("Year") + ylab("Life expectancy") +
-    ggtitle("Life expectancy over time") +
-    theme_bw()
+    ggtitle("Life expectancy over time") + theme_bw()
 ```
+
+Structure of a ggplot
+========================================================
+incremental: true
+
+`ggplot2` graphics objects consist of two primary components:
+
+1. **Layers**, the components of a graph.
+   * We *add* layers to a `ggplot2` object using `+`.
+   * This includes lines, shapes, and text.
+2. **Aesthetics**, which determine how the layers appear.
+   * We can *set* aesthetics using *arguments* inside layer functions.
+   * This includes locations, colors, and sizes.
+   * Aesthetics also determine how data *map* to appearances.
+
 
 Layers
 ========================================================
@@ -326,19 +339,19 @@ Layers
 * `ggplot()`: initializes `ggplot2` object, specifies input data
 * `geom_point()`: layer of scatterplot points
 * `geom_line()`: layer of lines
-* `ggtitle()`, `xlab()`, `ylab()`: layer of labels
+* `ggtitle()`, `xlab()`, `ylab()`: layers of labels
 * `facet_wrap()`: layer creating separate panels stratified by some factor wrapping around
 * `facet_grid()`: same idea, but can split by two variables along rows and columns (e.g. `facet_grid(gender ~ age_group)`)
 * `theme_bw()`: replace default gray background with black-and-white
 
-Layers are separated by a `+` sign. For clarity, I put each layer on a new line.
+Layers are separated by a `+` sign. For clarity, I usually put each layer on a new line.
 
 Aesthetics
 ========================================================
 
 **Aesthetics** control the appearance of the layers:
 
-* `x`, `y`: $x$- and $y$-values to use
+* `x`, `y`: $x$ and $y$ values to use
 * `color`: set color of elements based on some data value
 * `group`: describe which points are conceptually grouped together for the plot (often used with lines)
 * `size`: set size of points/lines based on some data value
@@ -356,7 +369,7 @@ Layers take arguments to control their appearance, such as point/line colors or 
 
 * `aes()` in the `ggplot()` layer gives overall aesthetics to use in other layers, but can be changed on individual layers (including switching `x` or `y` to different variables)
 
-(Pedantic, but searching for help will be easier for you.)
+This may seem pedantic, but precise language makes searching for help easier.
 
 
 Storing Plots
@@ -377,10 +390,10 @@ lifeExp_by_year <- ggplot(data = gapminder,
 The graph won't be displayed when you do this. You can show the graph using a single line of code with just the object name, or take the object and add more layers.
 
 
-Showing a stored graph
+Showing a Stored Graph
 ========================================================
 
-```{r, fig.width = 10, fig.height = 4.5, dpi=300, out.width="1100px", out.height="500px"}
+```{r, fig.width = 7, fig.height = 3.15, dpi=300, out.width="1100px", out.height="500px"}
 lifeExp_by_year
 ```
 
@@ -389,16 +402,16 @@ lifeExp_by_year
 Adding a Layer: Lines connecting each country
 ========================================================
 
-```{r, fig.width = 10, fig.height = 5, dpi=300, out.width="1100px", out.height="550px"}
+```{r, fig.width = 7, fig.height = 3.15, dpi=300, out.width="1100px", out.height="500px"}
 lifeExp_by_year +
     geom_line(aes(group = country))
 ```
 
 
-Lab Break!
+Tinkering Suggestions
 ========================================================
 
-Start experimenting with making some graphs in `ggplot2` of the Gapminder data. You can look at a subset of the data using `filter` to limit rows, plot different $x$ and $y$ variables, facet by a factor, etc.
+Start experimenting with making some graphs in `ggplot2` of the Gapminder data. You can look at a subset of the data using `filter()` to limit rows, plot different $x$ and $y$ variables, facet by a factor, etc.
 
 Some other options:
 * `geom_histogram()`, `geom_density()`, `geom_boxplot()` (see the [Cookbook for R site](http://www.cookbook-r.com/Graphs/Plotting_distributions_%28ggplot2%29/) for a reference)
@@ -409,7 +422,7 @@ Some other options:
 Common Scatterplot Problem: Overplotting
 ========================================================
 
-```{r, fig.width = 10, fig.height = 4.5, dpi=300, out.width="1100px", out.height="500px"}
+```{r, fig.width = 7, fig.height = 3.15, dpi=300, out.width="1100px", out.height="500px"}
 ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
     geom_point()
 ```
@@ -418,13 +431,13 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
 Fixing Overplotting with Jitter
 ========================================================
 
-```{r, fig.width = 10, fig.height = 4.1, dpi=300, out.width="1100px", out.height="450px"}
+```{r, fig.width = 7, fig.height = 3.15, dpi=300, out.width="1100px", out.height="500px"}
 ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
     geom_point(position = position_jitter(width = 0.5, height = 2))
 ```
 
 
-Changing the axes
+Changing the Axes
 ========================================================
 
 We can modify the axes in a variety of ways, such as:
@@ -434,26 +447,24 @@ We can modify the axes in a variety of ways, such as:
 * Change where the major/minor breaks are: `scale_x_continuous(breaks =, minor_breaks = )`
 
 
-Axis changes
+Axis Changes
 ========================================================
 
-```{r, fig.width = 10, fig.height = 3.2, dpi=300, out.width="1100px", out.height="350px"}
+```{r, fig.width = 7, fig.height = 2.9, dpi=300, out.width="1100px", out.height="450px"}
 ggplot(data = China, aes(x = year, y = gdpPercap)) +
     geom_line() +
     scale_y_log10(breaks = c(1000, 2000, 3000, 4000, 5000)) +
-    xlim(1940, 2010) +
-    ggtitle("Chinese GDP per capita")
+    xlim(1940, 2010) + ggtitle("Chinese GDP per capita")
 ```
 
 
 Fonts Too Small?
 ========================================================
 
-```{r, fig.width = 10, fig.height = 4.1, dpi=300, out.width="1100px", out.height="450px"}
+```{r, fig.width = 7, fig.height = 2.9, dpi=300, out.width="1100px", out.height="450px"}
 ggplot(data = China, aes(x = year, y = lifeExp)) +
-    geom_line() +
-    ggtitle("Chinese life expectancy") +
-    theme_gray(base_size = 30)
+    geom_line() + ggtitle("Chinese life expectancy") +
+    theme_gray(base_size = 20)
 ```
 
 
@@ -471,7 +482,7 @@ Examples:
 
 
 
-Color, Shape, etc. Scales
+Scales for Color, Shape, etc.
 ========================================================
 
 **Scales** control how the mapped aesthetics appear. You can modify these with a `scale_[aesthetic]_[option]()` layer where `[aesthetic]` is `color`, `shape`, `linetype`, `alpha`, `size`, `fill`, etc. and `[option]` is something like `manual`, `continuous` or `discrete` (depending on nature of the variable).
@@ -487,7 +498,7 @@ When confused... Google or StackOverflow it!
 Legend Name and Manual Color Scales
 ========================================================
 
-```{r, fig.width = 10, fig.height = 4.1, dpi=300, out.width="1100px", out.height="450px"}
+```{r, fig.width = 7, fig.height = 3.15, dpi=300, out.width="1100px", out.height="450px"}
 lifeExp_by_year +
     scale_color_manual(name = "Which\ncontinent\nare we\nlooking at?", values = c("Africa" = "seagreen", "Americas" = "turquoise1", "Asia" = "royalblue", "Europe" = "violetred1", "Oceania" = "yellow"))
 ```
@@ -504,13 +515,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     scale_color_manual(name = "Unit", values = c("Country" = "black", "Continent" = "dodgerblue1")) +
     scale_size_manual(name = "Unit", values = c("Country" = 1, "Continent" = 3)) +
     theme_minimal(base_size = 16) + 
-    theme(legend.position=c(0.75, 0.2))
+    theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
 ```
 
 Fussy Manual Legend Example Result!
 ========================================================
 
-```{r, echo=FALSE, fig.width = 10, fig.height = 4.5, dpi=300, out.width="1100px", out.height="500px"}
+```{r, echo=FALSE, fig.width = 7, fig.height = 3.5, dpi=300, out.width="1100px", out.height="550px"}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
     geom_line(stat = "smooth", method = "loess", aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
@@ -518,7 +529,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     scale_color_manual(name = "Unit", values = c("Country" = "black", "Continent" = "dodgerblue1")) +
     scale_size_manual(name = "Unit", values = c("Country" = 1, "Continent" = 3)) +
     theme_minimal(base_size = 16) + 
-    theme(legend.position=c(0.75, 0.2))
+    theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
 ```
 
 Observation: one could use `filter()` to identify the countries with dips in life expectancy and investigate.

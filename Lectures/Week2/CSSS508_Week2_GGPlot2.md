@@ -346,16 +346,16 @@ Base Plots from Last Week
 
 
 ```r
-plot(lifeExp ~ year, data = China, xlab = "Year", ylab = "Life expectancy", main = "Life expectancy in China", col = "red", cex = 3, pch = 16)
+plot(lifeExp ~ year, data = China, xlab = "Year", ylab = "Life expectancy", main = "Life expectancy in China", col = "red", cex = 1, pch = 16)
 ```
 
-![plot of chunk unnamed-chunk-15](CSSS508_Week2_GGPlot2-figure/unnamed-chunk-15-1.png)
-
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="1100px" height="440px" />
+ 
 
 ggplot2
 ========================================================
 
-An alternative way of plotting many prefer (myself included) -- [though this is not without debate](http://simplystatistics.org/2016/02/11/why-i-dont-use-ggplot2/) -- uses the `ggplot2` package in R, which is part
+An alternative way of plotting many prefer (myself included)---[though this is not without debate](http://simplystatistics.org/2016/02/11/why-i-dont-use-ggplot2/)---uses the `ggplot2` package in R, which is part
 of the `tidyverse`.
 
 
@@ -375,25 +375,25 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
     geom_point()
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" width="1100px" height="450px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" width="1100px" height="440px" />
 
 
-Axis labels, points, no gray background
+Axis Labels, Points, No Gray Background
 ========================================================
 
 
 ```r
 ggplot(data = China, aes(x = year, y = lifeExp)) +
-    geom_point(color = "red", size = 5) +
+    geom_point(color = "red", size = 3) +
     xlab("Year") + ylab("Life expectancy") +
     ggtitle("Life expectancy in China") +
     theme_bw()
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="1100px" height="400px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="1100px" height="440px" />
 
 
-Color observations by some attribute
+Color Observations by Variable
 ========================================================
 
 
@@ -405,22 +405,35 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) +
     theme_bw()
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="1100px" height="400px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="1100px" height="440px" />
 
-Segment observations by some attribute
+Segment Observations by Variable
 ========================================================
 
 
 ```r
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country, color = continent)) +
-    geom_line(alpha = 0.5) +
-    facet_wrap( ~ continent) +
+    geom_line(alpha = 0.5) + facet_wrap( ~ continent) +
     xlab("Year") + ylab("Life expectancy") +
-    ggtitle("Life expectancy over time") +
-    theme_bw()
+    ggtitle("Life expectancy over time") + theme_bw()
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="1100px" height="350px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="1100px" height="440px" />
+
+Structure of a ggplot
+========================================================
+incremental: true
+
+`ggplot2` graphics objects consist of two primary components:
+
+1. **Layers**, the components of a graph.
+   * We *add* layers to a `ggplot2` object using `+`.
+   * This includes lines, shapes, and text.
+2. **Aesthetics**, which determine how the layers appear.
+   * We can *set* aesthetics using *arguments* inside layer functions.
+   * This includes locations, colors, and sizes.
+   * Aesthetics also determine how data *map* to appearances.
+
 
 Layers
 ========================================================
@@ -430,19 +443,19 @@ Layers
 * `ggplot()`: initializes `ggplot2` object, specifies input data
 * `geom_point()`: layer of scatterplot points
 * `geom_line()`: layer of lines
-* `ggtitle()`, `xlab()`, `ylab()`: layer of labels
+* `ggtitle()`, `xlab()`, `ylab()`: layers of labels
 * `facet_wrap()`: layer creating separate panels stratified by some factor wrapping around
 * `facet_grid()`: same idea, but can split by two variables along rows and columns (e.g. `facet_grid(gender ~ age_group)`)
 * `theme_bw()`: replace default gray background with black-and-white
 
-Layers are separated by a `+` sign. For clarity, I put each layer on a new line.
+Layers are separated by a `+` sign. For clarity, I usually put each layer on a new line.
 
 Aesthetics
 ========================================================
 
 **Aesthetics** control the appearance of the layers:
 
-* `x`, `y`: $x$- and $y$-values to use
+* `x`, `y`: $x$ and $y$ values to use
 * `color`: set color of elements based on some data value
 * `group`: describe which points are conceptually grouped together for the plot (often used with lines)
 * `size`: set size of points/lines based on some data value
@@ -460,7 +473,7 @@ Layers take arguments to control their appearance, such as point/line colors or 
 
 * `aes()` in the `ggplot()` layer gives overall aesthetics to use in other layers, but can be changed on individual layers (including switching `x` or `y` to different variables)
 
-(Pedantic, but searching for help will be easier for you.)
+This may seem pedantic, but precise language makes searching for help easier.
 
 
 Storing Plots
@@ -482,7 +495,7 @@ lifeExp_by_year <- ggplot(data = gapminder,
 The graph won't be displayed when you do this. You can show the graph using a single line of code with just the object name, or take the object and add more layers.
 
 
-Showing a stored graph
+Showing a Stored Graph
 ========================================================
 
 
@@ -503,13 +516,13 @@ lifeExp_by_year +
     geom_line(aes(group = country))
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="1100px" height="550px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="1100px" height="500px" />
 
 
-Lab Break!
+Tinkering Suggestions
 ========================================================
 
-Start experimenting with making some graphs in `ggplot2` of the Gapminder data. You can look at a subset of the data using `filter` to limit rows, plot different $x$ and $y$ variables, facet by a factor, etc.
+Start experimenting with making some graphs in `ggplot2` of the Gapminder data. You can look at a subset of the data using `filter()` to limit rows, plot different $x$ and $y$ variables, facet by a factor, etc.
 
 Some other options:
 * `geom_histogram()`, `geom_density()`, `geom_boxplot()` (see the [Cookbook for R site](http://www.cookbook-r.com/Graphs/Plotting_distributions_%28ggplot2%29/) for a reference)
@@ -538,10 +551,10 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
     geom_point(position = position_jitter(width = 0.5, height = 2))
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" width="1100px" height="450px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" width="1100px" height="500px" />
 
 
-Changing the axes
+Changing the Axes
 ========================================================
 
 We can modify the axes in a variety of ways, such as:
@@ -551,7 +564,7 @@ We can modify the axes in a variety of ways, such as:
 * Change where the major/minor breaks are: `scale_x_continuous(breaks =, minor_breaks = )`
 
 
-Axis changes
+Axis Changes
 ========================================================
 
 
@@ -559,11 +572,10 @@ Axis changes
 ggplot(data = China, aes(x = year, y = gdpPercap)) +
     geom_line() +
     scale_y_log10(breaks = c(1000, 2000, 3000, 4000, 5000)) +
-    xlim(1940, 2010) +
-    ggtitle("Chinese GDP per capita")
+    xlim(1940, 2010) + ggtitle("Chinese GDP per capita")
 ```
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-26-1.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" width="1100px" height="350px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-26-1.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" width="1100px" height="450px" />
 
 
 Fonts Too Small?
@@ -572,9 +584,8 @@ Fonts Too Small?
 
 ```r
 ggplot(data = China, aes(x = year, y = lifeExp)) +
-    geom_line() +
-    ggtitle("Chinese life expectancy") +
-    theme_gray(base_size = 30)
+    geom_line() + ggtitle("Chinese life expectancy") +
+    theme_gray(base_size = 20)
 ```
 
 <img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-27-1.png" title="plot of chunk unnamed-chunk-27" alt="plot of chunk unnamed-chunk-27" width="1100px" height="450px" />
@@ -594,7 +605,7 @@ Examples:
 
 
 
-Color, Shape, etc. Scales
+Scales for Color, Shape, etc.
 ========================================================
 
 **Scales** control how the mapped aesthetics appear. You can modify these with a `scale_[aesthetic]_[option]()` layer where `[aesthetic]` is `color`, `shape`, `linetype`, `alpha`, `size`, `fill`, etc. and `[option]` is something like `manual`, `continuous` or `discrete` (depending on nature of the variable).
@@ -631,13 +642,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     scale_color_manual(name = "Unit", values = c("Country" = "black", "Continent" = "dodgerblue1")) +
     scale_size_manual(name = "Unit", values = c("Country" = 1, "Continent" = 3)) +
     theme_minimal(base_size = 16) + 
-    theme(legend.position=c(0.75, 0.2))
+    theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
 ```
 
 Fussy Manual Legend Example Result!
 ========================================================
 
-<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="1100px" height="500px" />
+<img src="CSSS508_Week2_GGPlot2-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="1100px" height="550px" />
 
 Observation: one could use `filter()` to identify the countries with dips in life expectancy and investigate.
 
