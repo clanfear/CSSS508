@@ -271,7 +271,7 @@ DYS %>% select(ends_with("18"))
 Renaming Columns with select()
 ====================================================================================
 
-We can rename columns using `select`, but that drops everything that isn't mentioned:
+We can rename columns using `select()`, but that drops everything that isn't mentioned:
 
 
 ```r
@@ -446,6 +446,38 @@ yugoslavia %>%
 5 Slovenia
 ```
 
+
+case_when()
+====================================================================================
+
+`case_when()` is a function that performs multiple `ifelse()` operations at the same time. `case_when()` allows you to create a new variable with values based on multiple logical statements at the same time. This is useful for making categorical variables or variables from combinations of other variables.
+
+
+```r
+gapminder %>% mutate(gdpPercap_ordinal = case_when(
+    gdpPercap < 700 ~ "low",
+    gdpPercap >= 700 & gdpPercap < 800 ~ "moderate",
+    TRUE ~ "high" ) ) # Assigns this value when all other statements are FALSE
+```
+
+```
+# A tibble: 1,704 x 7
+       country continent  year lifeExp      pop gdpPercap gdpPercap_ordinal
+        <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>             <chr>
+ 1 Afghanistan      Asia  1952  28.801  8425333  779.4453          moderate
+ 2 Afghanistan      Asia  1957  30.332  9240934  820.8530              high
+ 3 Afghanistan      Asia  1962  31.997 10267083  853.1007              high
+ 4 Afghanistan      Asia  1967  34.020 11537966  836.1971              high
+ 5 Afghanistan      Asia  1972  36.088 13079460  739.9811          moderate
+ 6 Afghanistan      Asia  1977  38.438 14880372  786.1134          moderate
+ 7 Afghanistan      Asia  1982  39.854 12881816  978.0114              high
+ 8 Afghanistan      Asia  1987  40.822 13867957  852.3959              high
+ 9 Afghanistan      Asia  1992  41.674 16317921  649.3414               low
+10 Afghanistan      Asia  1997  41.763 22227415  635.3414               low
+# ... with 1,694 more rows
+```
+ 
+
 Summarizing with dplyr
 ====================================================================================
 type: section
@@ -482,7 +514,7 @@ yugoslavia %>%
 ```
 
 
-Avoiding Repetition: summarize_each()
+Avoiding Repetition: summarize_at()
 ====================================================================================
 
 Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_each()`, you put the functions to use in a `funs()` list, and the variables to compute over after that (like `select()` syntax).
@@ -491,8 +523,7 @@ Maybe you need to calculate the mean and standard deviation of a bunch of column
 ```r
 yugoslavia %>%
     filter(year == 1982) %>%
-    summarize_each(funs(mean, sd),
-                   lifeExp, pop)
+    summarize_at(vars(lifeExp, pop), funs(mean, sd))
 ```
 
 ```
@@ -502,6 +533,24 @@ yugoslavia %>%
 1      71.2952  4008537   1.602685 3237282
 ```
 
+Avoiding Repetition: Other functions
+====================================================================================
+
+There are additional `dplyr` functions similar to `summarize_at()`:
+
+* `summarize_all()` and `mutate_all()` summarize / mutate all variables sent to them in the same way. For instance, getting the mean and standard deviation of an entire dataframe:
+
+```
+data %>% summarize_all(funs(mean, sd))
+```
+
+* `summarize_if()` and `mutate_if()` summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:
+
+```
+data %>% summarize_if(is.numeric, funs(mean, sd))
+```
+
+You can use all of these to avoid typing out the same code repeatedly!
 
 Splitting Data into Groups: group_by()
 ====================================================================================
@@ -650,19 +699,19 @@ Who manufactures the planes that flew to Seattle?
 ```r
 flights %>% filter(dest == "SEA") %>% select(tailnum) %>%
     left_join(planes %>% select(tailnum, manufacturer), by = "tailnum") %>%
-    distinct(manufacturer)
+    distinct(manufacturer, .keep_all=T)
 ```
 
 ```
-# A tibble: 6 x 1
-        manufacturer
-               <chr>
-1             BOEING
-2   AIRBUS INDUSTRIE
-3               <NA>
-4             AIRBUS
-5 CIRRUS DESIGN CORP
-6      BARKER JACK L
+# A tibble: 6 x 2
+  tailnum       manufacturer
+    <chr>              <chr>
+1  N594AS             BOEING
+2  N503JB   AIRBUS INDUSTRIE
+3  N3ETAA               <NA>
+4  N712JB             AIRBUS
+5  N508JB CIRRUS DESIGN CORP
+6  N531JB      BARKER JACK L
 ```
 
 Join Example #2
@@ -708,7 +757,7 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
 Wind Gusts and Delays
 ====================================================================================
 
-<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-28-1.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" width="1100px" height="600px" />
+<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-29-1.png" title="plot of chunk unnamed-chunk-29" alt="plot of chunk unnamed-chunk-29" width="1100px" height="600px" />
 
 Redo After Removing Extreme Outliers, Just Trend
 ====================================================================================
@@ -728,10 +777,10 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
 Wind Gusts and Delays: Mean Trend
 ====================================================================================
 
-<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="1100px" height="600px" />
+<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-31-1.png" title="plot of chunk unnamed-chunk-31" alt="plot of chunk unnamed-chunk-31" width="1100px" height="600px" />
 
 
-Lab Break!
+Tinkering Suggestions
 ====================================================================================
 
 Some possible questions to investigate:
@@ -743,14 +792,14 @@ Some possible questions to investigate:
     + What is the distribution of arrival times for flights leaving NYC over a 24 hour period?
     + Are especially late or early arrivals particular to some regions or airlines?
 
-**Warning!** `flights` has 336776 rows, so if you do a sloppy join, you can end up with many matches per observation and have the data blow up.
+**Warning!** `flights` has 336776 rows, so if you do a sloppy join, you can end up with **many** matches per observation and have the data *explode*.
 
 
 Homework
 ====================================================================================
 type: section
 
-Pick something to look at in the `nycflights13` data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: `mutate`, `summarize`, `group_by`, and joins. *Include at least one formatted plot or table* (use "nice" variable names and rounded values).
+Pick something to look at in the `nycflights13` data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: `mutate()`, `summarize()`, `group_by()`, and any join. *Include at least one formatted plot or table* (use "nice" variable names and rounded values).
 
 This time, *include all your code in your output document*, using comments and line breaks separating commands so that it is clear to a peer what you are doing. You must write up your observations in words as well. 
 
