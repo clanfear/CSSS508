@@ -16,53 +16,10 @@ Today we'll talk more about `dplyr`: a package that does in R just about any cal
 ![Reinhart and Rogoff's spreadsheet error](http://rooseveltinstitute.org/wp-content/uploads/styles/large/public/content_images/reinhart_rogoff_coding_error_0.png)
 
 
+
 Modifying Data Frames with dplyr
 ====================================================================================
 type: section
-
-
-But First, Pipes (%>%)
-====================================================================================
-
-The `dplyr` package makes use of the [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) forward pipe operator, usually called simply a **pipe**. We write pipes like `%>%` (*Cntl-Shift-M*). Pipes take the object on the *left* and apply the function on the *right*: `x %>% f(y) = f(x, y)`. Read out loud: "and then..."
-
-
-```r
-library(dplyr)
-library(gapminder)
-gapminder %>% filter(country == "Canada") %>% head(2)
-```
-
-```
-# A tibble: 2 x 6
-  country continent  year lifeExp      pop gdpPercap
-   <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>
-1  Canada  Americas  1952   68.75 14785584  11367.16
-2  Canada  Americas  1957   69.96 17010154  12489.95
-```
-
-Pipes save us typing, make code readable, and allow chaining like above, so we use them *all the time* when manipulating data frames.
-
-
-Using Pipes
-====================================================================================
-incremental: true
-
-Pipes are clearer to read when you have each function on a separate line (inconsistent in these slides because of space constraints).
-
-```r
-take_this_data %>%
-    do_first_thing(with = this_value) %>%
-    do_next_thing(using = that_value) %>% ...
-```
-
-Stuff to the left of the pipe is passed to the *first argument* of the function on the right. Other arguments go on the right in the function. 
-
-If you ever find yourself piping a function where data are not the first argument, use `.` in the data argument instead.
-
-```r
-yugoslavia %>% lm(pop ~ year, data = .)
-```
 
 
 Filtering Rows (subsetting)
@@ -71,6 +28,9 @@ Filtering Rows (subsetting)
 Recall last week we used the `filter()` command to subset data like so:
 
 ```r
+library(dplyr)
+library(gapminder)
+
 Canada <- gapminder %>%
     filter(country == "Canada")
 ```
@@ -80,10 +40,10 @@ Excel analogue:
 ![Excel's filter](http://content.gcflearnfree.org/topics/143/ex07_filter.gif)
 
 
-Another Operator: %in%
+%in%
 ====================================================================================
 
-Common use case: want to filter rows to things in some *set*. The `c()` function is how we make **vectors** in R, which are an important data type. We can use `%in%` like `==` but for matching *any item* in the vector on its right.
+Common use case: want to filter rows to things in some set. The `c()` function (**c**ombine or**c**oncatenate) is how we make **vectors** in R, which are an important data type.
 
 
 ```r
@@ -105,7 +65,7 @@ tail(yugoslavia, 2)
 What Values are Out There? Use distinct()
 ====================================================================================
 
-You can see all the unique values in your data for combinations of columns using `distinct()`:
+You can see all the values in your data for columns using `distinct()`:
 
 
 ```r
@@ -130,7 +90,7 @@ gapminder %>% distinct(continent, year)
 ```
 
 
-Note: distinct() drops unused variables!
+distinct() drops variables!
 ====================================================================================
 
 Note that the default behavior of `distinct()` is to drop all unspecified columns. If you want to get distinct rows by certain variables without dropping the others, use `distinct(.keep_all=TRUE)`:
@@ -158,6 +118,48 @@ gapminder %>% distinct(continent, year, .keep_all=TRUE)
 ```
 
 
+Pipes (%>%)
+====================================================================================
+
+The `dplyr` package makes use of an operator (not native to R) called a **pipe**. We write pipes like `%>%` (*Cntl-Shift-M*). Pipes take the object on the left and apply the function on the right: `x %>% f(y) = f(x, y)`. Read out loud: "and then..."
+
+
+```r
+gapminder %>% filter(country == "Canada") %>% head(2)
+```
+
+```
+# A tibble: 2 x 6
+  country continent  year lifeExp      pop gdpPercap
+   <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>
+1  Canada  Americas  1952   68.75 14785584  11367.16
+2  Canada  Americas  1957   69.96 17010154  12489.95
+```
+
+Pipes save us typing, make code readable, and allow chaining like above, so we use them all the time when manipulating data frames.
+
+
+Using Pipes
+====================================================================================
+incremental: true
+
+* Pipes are clearer to read when you have each function on a separate line (inconsistent in these slides because of space constraints).
+
+```r
+take_this_data %>%
+    do_first_thing(with = this_value) %>%
+    do_next_thing(using = that_value) %>% ...
+```
+
+* Stuff to the left of the pipe is passed to the *first argument* of the function on the right. Other arguments go on the right in the function. 
+
+* If you ever find yourself piping a function where the data is not the first argument, use `.` in the data argument instead.
+
+```r
+yugoslavia %>% lm(pop ~ year, data = .)
+```
+
+
 Sampling Rows: sample_n()
 ====================================================================================
 
@@ -165,7 +167,7 @@ We can also filter *at random* to work with a smaller dataset using `sample_n()`
 
 
 ```r
-set.seed(413) # makes random numbers repeatable
+set.seed(0413) # makes random numbers repeatable
 yugoslavia %>% sample_n(size = 6, replace = FALSE)
 ```
 
@@ -189,7 +191,7 @@ Along with filtering the data to see certain rows, we might want to sort it:
 
 
 ```r
-yugoslavia %>% arrange(year, desc(pop)) # ascending by year, descending by pop
+yugoslavia %>% arrange(year, desc(pop))
 ```
 
 ```
@@ -213,7 +215,7 @@ yugoslavia %>% arrange(year, desc(pop)) # ascending by year, descending by pop
 Keeping Columns: select()
 ====================================================================================
 
-Not only can we limit rows, but we can include specific columns (and put them in the order listed) using `select()`. 
+Not only can we limit rows, but we can limit columns (and put them in the order listed) using `select()`. 
 
 
 ```r
@@ -234,7 +236,7 @@ yugoslavia %>% select(country, year, pop) %>% head(4)
 Dropping Columns: select()
 ====================================================================================
 
-We can instead drop only specific columns with `select()` using `-` signs:
+We can instead drop columns with `select()` using `-` signs:
 
 
 ```r
@@ -269,7 +271,7 @@ DYS %>% select(ends_with("18"))
 Renaming Columns with select()
 ====================================================================================
 
-We can rename columns using `select()`, but that drops everything that isn't mentioned:
+We can rename columns using `select`, but that drops everything that isn't mentioned:
 
 
 ```r
@@ -315,10 +317,13 @@ Column Naming Practices
 ====================================================================================
 incremental: true
 
-* *Good* column names will be self-describing. Don't use inscrutable abbreviations to save typing. RStudio's autocompleting functions take away the pain of long variable names: Hit tab while writing code to autocomplete.
-* *Valid* "naked" column names can contain upper or lowercase letters, numbers, periods, and underscores. They must start with a letter or period and not be a special reserved word (e.g. `TRUE`, `if`).
-* Names are case-sensitive: `Year` and `year` are not the same thing!
-* You can include spaces or use reserved words if you put backticks around the name. Spaces can be worth including when preparing data for `ggplot2` or `pander` since you don't have to rename axes or table headings.
+- *Good* column names will be self-describing. Don't use inscrutable abbreviations to save typing. RStudio's autocompleting functions take away the pain of long variable names: hit tab while writing code.
+
+- *Valid* "naked" column names can contain upper or lowercase letters, numbers, periods, and underscores. They must start with a letter or period and not be a special reserved word (e.g. `TRUE`, `if`).
+
+- Names are case-sensitive: `Year` and `year` are not the same thing!
+
+- You can include spaces or use reserved words if you put backticks around the name. Spaces can be worth including when preparing data for `ggplot2` or `pander` since you don't have to rename axes or table headings.
 
 
 Column Name with Space Example
@@ -441,38 +446,6 @@ yugoslavia %>%
 5 Slovenia
 ```
 
-
-case_when()
-====================================================================================
-
-`case_when()` performs multiple `ifelse()` operations at the same time. `case_when()` allows you to create a new variable with values based on multiple logical statements at the same time. This is useful for making categorical variables or variables from combinations of other variables.
-
-
-```r
-gapminder %>% mutate(gdpPercap_ordinal = case_when(
-    gdpPercap < 700 ~ "low",
-    gdpPercap >= 700 & gdpPercap < 800 ~ "moderate",
-    TRUE ~ "high" ) ) # Assigns this value when all other statements are FALSE
-```
-
-```
-# A tibble: 1,704 x 7
-       country continent  year lifeExp      pop gdpPercap gdpPercap_ordinal
-        <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>             <chr>
- 1 Afghanistan      Asia  1952  28.801  8425333  779.4453          moderate
- 2 Afghanistan      Asia  1957  30.332  9240934  820.8530              high
- 3 Afghanistan      Asia  1962  31.997 10267083  853.1007              high
- 4 Afghanistan      Asia  1967  34.020 11537966  836.1971              high
- 5 Afghanistan      Asia  1972  36.088 13079460  739.9811          moderate
- 6 Afghanistan      Asia  1977  38.438 14880372  786.1134          moderate
- 7 Afghanistan      Asia  1982  39.854 12881816  978.0114              high
- 8 Afghanistan      Asia  1987  40.822 13867957  852.3959              high
- 9 Afghanistan      Asia  1992  41.674 16317921  649.3414               low
-10 Afghanistan      Asia  1997  41.763 22227415  635.3414               low
-# ... with 1,694 more rows
-```
- 
-
 Summarizing with dplyr
 ====================================================================================
 type: section
@@ -509,16 +482,17 @@ yugoslavia %>%
 ```
 
 
-Avoiding Repetition: summarize_at()
+Avoiding Repetition: summarize_each()
 ====================================================================================
 
-Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_at()`, put the variables to compute over first in `vars()` (like `select()` syntax) and put the functions to use in a `funs()` after.
+Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_each()`, you put the functions to use in a `funs()` list, and the variables to compute over after that (like `select()` syntax).
 
 
 ```r
 yugoslavia %>%
     filter(year == 1982) %>%
-    summarize_at(vars(lifeExp, pop), funs(mean, sd))
+    summarize_each(funs(mean, sd),
+                   lifeExp, pop)
 ```
 
 ```
@@ -528,29 +502,11 @@ yugoslavia %>%
 1      71.2952  4008537   1.602685 3237282
 ```
 
-Avoiding Repetition: Other functions
-====================================================================================
-
-There are additional `dplyr` functions similar to `summarize_at()`:
-
-* `summarize_all()` and `mutate_all()` summarize / mutate *all* variables sent to them in the same way. For instance, getting the mean and standard deviation of an entire dataframe:
-
-```
-dataframe %>% summarize_all(funs(mean, sd))
-```
-
-* `summarize_if()` and `mutate_if()` summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:
-
-```
-dataframe %>% summarize_if(is.numeric, funs(mean, sd))
-```
-
-You can use all of these to avoid typing out the same code repeatedly!
 
 Splitting Data into Groups: group_by()
 ====================================================================================
 
-The special function `group_by()` changes how functions operate on the data, most importantly `summarize()`. TFunctions after `group_by` are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
+The special function `group_by()` changes how functions operate on the data, most importantly `summarize()`. These functions are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
 
 Excel analogue: pivot tables
 
@@ -607,6 +563,16 @@ yugoslavia %>% select(country, year, pop) %>%
 ```
 
 
+Lab Break!
+====================================================================================
+
+With the Gapminder data, practice the following analyses:
+
+* Find the population (in units of millions of people) in 2007 for countries in Asia. Make a histogram.
+* Use population and GDP per capita to find the 10 largest economies in 1952 as measured by overall GDP (not per capita).
+* For each country and each year, find the percentage growth of the population relative to the population of the country 5 years prior (the Gapminder data are reported every 5 years). Then find the 10 country-year pairs that had the highest percentage growth relative to 5 years prior, and the 10 country-year pairs that had the lowest percentage growth.
+
+
 Joining (Merging) Data Frames
 ====================================================================================
 type: section
@@ -615,7 +581,7 @@ type: section
 When Do We Need to Join Tables?
 ====================================================================================
 
-* Want to make columns using criteria too complicated for `ifelse()` or `case_when()`
+* Want to make columns using criteria too complicated for `ifelse()`
 * Combine data stored in separate places: e.g. UW registrar information with student homework grades
 
 Excel equivalents: `VLOOKUP`, `MATCH`
@@ -633,7 +599,7 @@ We need to think about the following when we want to merge data frames `A` and `
 * Which variables determine whether rows match?
 
 
-Types of Joins: Rows and columns to keep
+Types of Joins: Rows and Columns to Keep
 ====================================================================================
 
 * `A %>% inner_join(B)`: keep rows from `A` that match rows in `B`, columns from both `A` and `B`
@@ -653,9 +619,9 @@ We say rows should match because they have some columns containing the same valu
 * `by = c("var1", "var2", "var3")`: matches on identical values of `var1`, `,var2`, `var3` in both `A` and `B`
 * `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: matches identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
 
-Note: If there are multiple matches, you'll get one row for each possible combo (except with `semi_join()` and `anti_join()`).
+Note: if there are multiple matches, you'll get one row for each possible combo (except with `semi_join()` and `anti_join()`).
 
-Need to get more complicated? You may want to learn SQL.
+(Need to get more complicated? You'll want to learn SQL.)
 
 
 nycflights13 Data
@@ -664,11 +630,11 @@ nycflights13 Data
 We'll use data in the [`nycflights13` package](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf). Install and load it:
 
 ```r
-# install.packages("nycflights13") # Uncomment to run
+# install.packages("nycflights13")
 library(nycflights13)
 ```
 
-It includes five dataframes, some of which contain missing data (`NA`):
+It includes five tables, some of which contain missing data (`NA`):
 
 * `flights`: flights leaving JFK, LGA, or EWR in 2013
 * `airlines`: airline abbreviations
@@ -684,19 +650,19 @@ Who manufactures the planes that flew to Seattle?
 ```r
 flights %>% filter(dest == "SEA") %>% select(tailnum) %>%
     left_join(planes %>% select(tailnum, manufacturer), by = "tailnum") %>%
-    distinct(manufacturer, .keep_all=T)
+    distinct(manufacturer)
 ```
 
 ```
-# A tibble: 6 x 2
-  tailnum       manufacturer
-    <chr>              <chr>
-1  N594AS             BOEING
-2  N503JB   AIRBUS INDUSTRIE
-3  N3ETAA               <NA>
-4  N712JB             AIRBUS
-5  N508JB CIRRUS DESIGN CORP
-6  N531JB      BARKER JACK L
+# A tibble: 6 x 1
+        manufacturer
+               <chr>
+1             BOEING
+2   AIRBUS INDUSTRIE
+3               <NA>
+4             AIRBUS
+5 CIRRUS DESIGN CORP
+6      BARKER JACK L
 ```
 
 Join Example #2
@@ -742,7 +708,7 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
 Wind Gusts and Delays
 ====================================================================================
 
-<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-29-1.png" title="plot of chunk unnamed-chunk-29" alt="plot of chunk unnamed-chunk-29" width="1100px" height="600px" />
+<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-28-1.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" width="1100px" height="600px" />
 
 Redo After Removing Extreme Outliers, Just Trend
 ====================================================================================
@@ -762,10 +728,10 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
 Wind Gusts and Delays: Mean Trend
 ====================================================================================
 
-<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-31-1.png" title="plot of chunk unnamed-chunk-31" alt="plot of chunk unnamed-chunk-31" width="1100px" height="600px" />
+<img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="1100px" height="600px" />
 
 
-Tinkering Suggestions
+Lab Break!
 ====================================================================================
 
 Some possible questions to investigate:
@@ -777,16 +743,14 @@ Some possible questions to investigate:
     + What is the distribution of arrival times for flights leaving NYC over a 24 hour period?
     + Are especially late or early arrivals particular to some regions or airlines?
 
-**Warning:** `flights` has 336776 rows, so if you do a sloppy join, you can end up with **many** matches per observation and have the data *explode* in size.
+**Warning!** `flights` has 336776 rows, so if you do a sloppy join, you can end up with many matches per observation and have the data blow up.
 
 
-Homework 3
+Homework
 ====================================================================================
 type: section
 
-Pick something to look at in the `nycflights13` data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: `mutate()`, `summarize()`, `group_by()`, and any join. *Include at least one nicely formatted plot (`ggplot2`) and one table (`pander`)*. In plots and tables, use "nice" variable names (try out spaces!) and rounded values (<= 3 digits).
+Pick something to look at in the `nycflights13` data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: `mutate`, `summarize`, `group_by`, and joins. *Include at least one formatted plot or table* (use "nice" variable names and rounded values).
 
-This time, *include all your code in your output document* (`echo=TRUE`), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one* individually (`airlines`, `airports`, `flights`, `planes`, and `weather`) using `data(dataframe_name)` (e.g. `data(flights)`).
-
-DUE: 11:59 PM, Oct 17th
+This time, *include all your code in your output document*, using comments and line breaks separating commands so that it is clear to a peer what you are doing. You must write up your observations in words as well. 
 
