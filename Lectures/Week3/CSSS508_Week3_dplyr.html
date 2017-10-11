@@ -809,14 +809,53 @@ hljs.initHighlightingOnLoad();
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
+<h3>But First, Pipes (%&gt;%)</h3>
+<div class="slideContent" >
+<p>The <code>dplyr</code> package makes use of the <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html"><code>magrittr</code></a> forward pipe operator, usually called simply a <strong>pipe</strong>. We write pipes like <code>%&gt;%</code> (<em>Cntl-Shift-M</em>). Pipes take the object on the <em>left</em> and apply the function on the <em>right</em>: <code>x %&gt;% f(y) = f(x, y)</code>. Read out loud: &ldquo;and then&hellip;&rdquo;</p>
+
+<pre><code class="r">library(dplyr)
+library(gapminder)
+gapminder %&gt;% filter(country == &quot;Canada&quot;) %&gt;% head(2)
+</code></pre>
+
+<pre><code># A tibble: 2 x 6
+  country continent  year lifeExp      pop gdpPercap
+   &lt;fctr&gt;    &lt;fctr&gt; &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1  Canada  Americas  1952   68.75 14785584  11367.16
+2  Canada  Americas  1957   69.96 17010154  12489.95
+</code></pre>
+
+<p>Pipes save us typing, make code readable, and allow chaining like above, so we use them <em>all the time</em> when manipulating data frames.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Using Pipes</h3>
+<div class="slideContent" >
+<p>Pipes are clearer to read when you have each function on a separate line (inconsistent in these slides because of space constraints).</p>
+
+<pre class="fragment"><code class="r">take_this_data %&gt;%
+    do_first_thing(with = this_value) %&gt;%
+    do_next_thing(using = that_value) %&gt;% ...
+</code></pre>
+
+<p class="fragment">Stuff to the left of the pipe is passed to the <em>first argument</em> of the function on the right. Other arguments go on the right in the function. </p>
+
+<p class="fragment">If you ever find yourself piping a function where data are not the first argument, use <code>.</code> in the data argument instead.</p>
+
+<pre class="fragment"><code class="r">yugoslavia %&gt;% lm(pop ~ year, data = .)
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
 <h3>Filtering Rows (subsetting)</h3>
 <div class="mediaInline slideContent" >
 <p>Recall last week we used the <code>filter()</code> command to subset data like so:</p>
 
-<pre><code class="r">library(dplyr)
-library(gapminder)
-
-Canada &lt;- gapminder %&gt;%
+<pre><code class="r">Canada &lt;- gapminder %&gt;%
     filter(country == &quot;Canada&quot;)
 </code></pre>
 
@@ -828,9 +867,9 @@ Canada &lt;- gapminder %&gt;%
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>%in%</h3>
+<h3>Another Operator: %in%</h3>
 <div class="slideContent" >
-<p>Common use case: want to filter rows to things in some set. The <code>c()</code> function (<strong>c</strong>ombine or<strong>c</strong>oncatenate) is how we make <strong>vectors</strong> in R, which are an important data type.</p>
+<p>Common use case: want to filter rows to things in some <em>set</em>. The <code>c()</code> function is how we make <strong>vectors</strong> in R, which are an important data type. We can use <code>%in%</code> like <code>==</code> but for matching <em>any item</em> in the vector on its right.</p>
 
 <pre><code class="r">former_yugoslavia &lt;- c(&quot;Bosnia and Herzegovina&quot;, &quot;Croatia&quot;, &quot;Macedonia&quot;, &quot;Montenegro&quot;, &quot;Serbia&quot;, &quot;Slovenia&quot;)
 yugoslavia &lt;- gapminder %&gt;%
@@ -851,7 +890,7 @@ tail(yugoslavia, 2)
 <section data-transition="linear" data-transition-speed="default">
 <h3>What Values are Out There? Use distinct()</h3>
 <div class="slideContent" >
-<p>You can see all the values in your data for columns using <code>distinct()</code>:</p>
+<p>You can see all the unique values in your data for combinations of columns using <code>distinct()</code>:</p>
 
 <pre><code class="r">gapminder %&gt;% distinct(continent, year)
 </code></pre>
@@ -876,7 +915,7 @@ tail(yugoslavia, 2)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>distinct() drops variables!</h3>
+<h3>Note: distinct() drops unused variables!</h3>
 <div class="slideContent" >
 <p>Note that the default behavior of <code>distinct()</code> is to drop all unspecified columns. If you want to get distinct rows by certain variables without dropping the others, use <code>distinct(.keep_all=TRUE)</code>:</p>
 
@@ -903,54 +942,11 @@ tail(yugoslavia, 2)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Pipes (%&gt;%)</h3>
-<div class="slideContent" >
-<p>The <code>dplyr</code> package makes use of an operator (not native to R) called a <strong>pipe</strong>. We write pipes like <code>%&gt;%</code> (<em>Cntl-Shift-M</em>). Pipes take the object on the left and apply the function on the right: <code>x %&gt;% f(y) = f(x, y)</code>. Read out loud: &ldquo;and then&hellip;&rdquo;</p>
-
-<pre><code class="r">gapminder %&gt;% filter(country == &quot;Canada&quot;) %&gt;% head(2)
-</code></pre>
-
-<pre><code># A tibble: 2 x 6
-  country continent  year lifeExp      pop gdpPercap
-   &lt;fctr&gt;    &lt;fctr&gt; &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
-1  Canada  Americas  1952   68.75 14785584  11367.16
-2  Canada  Americas  1957   69.96 17010154  12489.95
-</code></pre>
-
-<p>Pipes save us typing, make code readable, and allow chaining like above, so we use them all the time when manipulating data frames.</p>
-
-</div>
-
-</section>
-<section data-transition="linear" data-transition-speed="default">
-<h3>Using Pipes</h3>
-<div class="slideContent" >
-<ul>
-<li class="fragment">Pipes are clearer to read when you have each function on a separate line (inconsistent in these slides because of space constraints).</li>
-</ul>
-
-<pre class="fragment"><code class="r">take_this_data %&gt;%
-    do_first_thing(with = this_value) %&gt;%
-    do_next_thing(using = that_value) %&gt;% ...
-</code></pre>
-
-<ul>
-<li class="fragment"><p>Stuff to the left of the pipe is passed to the <em>first argument</em> of the function on the right. Other arguments go on the right in the function. </p></li>
-<li class="fragment"><p class="fragment">If you ever find yourself piping a function where the data is not the first argument, use <code>.</code> in the data argument instead.</p></li>
-</ul>
-
-<pre class="fragment"><code class="r">yugoslavia %&gt;% lm(pop ~ year, data = .)
-</code></pre>
-
-</div>
-
-</section>
-<section data-transition="linear" data-transition-speed="default">
 <h3>Sampling Rows: sample_n()</h3>
 <div class="slideContent" >
 <p>We can also filter <em>at random</em> to work with a smaller dataset using <code>sample_n()</code> or <code>sample_frac()</code>.</p>
 
-<pre><code class="r">set.seed(0413) # makes random numbers repeatable
+<pre><code class="r">set.seed(413) # makes random numbers repeatable
 yugoslavia %&gt;% sample_n(size = 6, replace = FALSE)
 </code></pre>
 
@@ -973,7 +969,7 @@ yugoslavia %&gt;% sample_n(size = 6, replace = FALSE)
 <div class="slideContent" >
 <p>Along with filtering the data to see certain rows, we might want to sort it:</p>
 
-<pre><code class="r">yugoslavia %&gt;% arrange(year, desc(pop))
+<pre><code class="r">yugoslavia %&gt;% arrange(year, desc(pop)) # ascending by year, descending by pop
 </code></pre>
 
 <pre><code># A tibble: 60 x 6
@@ -998,7 +994,7 @@ yugoslavia %&gt;% sample_n(size = 6, replace = FALSE)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Keeping Columns: select()</h3>
 <div class="slideContent" >
-<p>Not only can we limit rows, but we can limit columns (and put them in the order listed) using <code>select()</code>. </p>
+<p>Not only can we limit rows, but we can include specific columns (and put them in the order listed) using <code>select()</code>. </p>
 
 <pre><code class="r">yugoslavia %&gt;% select(country, year, pop) %&gt;% head(4)
 </code></pre>
@@ -1018,7 +1014,7 @@ yugoslavia %&gt;% sample_n(size = 6, replace = FALSE)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Dropping Columns: select()</h3>
 <div class="slideContent" >
-<p>We can instead drop columns with <code>select()</code> using <code>-</code> signs:</p>
+<p>We can instead drop only specific columns with <code>select()</code> using <code>-</code> signs:</p>
 
 <pre><code class="r">yugoslavia %&gt;% select(-continent, -pop, -lifeExp) %&gt;% head(4)
 </code></pre>
@@ -1096,10 +1092,10 @@ DYS %&gt;% select(ends_with(&quot;18&quot;))
 <h3>Column Naming Practices</h3>
 <div class="slideContent" >
 <ul>
-<li class="fragment"><p><em>Good</em> column names will be self-describing. Don&#39;t use inscrutable abbreviations to save typing. RStudio&#39;s autocompleting functions take away the pain of long variable names: hit tab while writing code.</p></li>
-<li class="fragment"><p class="fragment"><em>Valid</em> &ldquo;naked&rdquo; column names can contain upper or lowercase letters, numbers, periods, and underscores. They must start with a letter or period and not be a special reserved word (e.g. <code>TRUE</code>, <code>if</code>).</p></li>
-<li class="fragment"><p class="fragment">Names are case-sensitive: <code>Year</code> and <code>year</code> are not the same thing!</p></li>
-<li class="fragment"><p class="fragment">You can include spaces or use reserved words if you put backticks around the name. Spaces can be worth including when preparing data for <code>ggplot2</code> or <code>pander</code> since you don&#39;t have to rename axes or table headings.</p></li>
+<li class="fragment"><em>Good</em> column names will be self-describing. Don&#39;t use inscrutable abbreviations to save typing. RStudio&#39;s autocompleting functions take away the pain of long variable names: Hit tab while writing code to autocomplete.</li>
+<li class="fragment"><em>Valid</em> &ldquo;naked&rdquo; column names can contain upper or lowercase letters, numbers, periods, and underscores. They must start with a letter or period and not be a special reserved word (e.g. <code>TRUE</code>, <code>if</code>).</li>
+<li class="fragment">Names are case-sensitive: <code>Year</code> and <code>year</code> are not the same thing!</li>
+<li class="fragment">You can include spaces or use reserved words if you put backticks around the name. Spaces can be worth including when preparing data for <code>ggplot2</code> or <code>pander</code> since you don&#39;t have to rename axes or table headings.</li>
 </ul>
 
 </div>
@@ -1249,7 +1245,7 @@ yugoslavia %&gt;% filter(country == &quot;Serbia&quot;) %&gt;%
 <section data-transition="linear" data-transition-speed="default">
 <h3>case_when()</h3>
 <div class="slideContent" >
-<p><code>case_when()</code> is a function that performs multiple <code>ifelse()</code> operations at the same time. <code>case_when()</code> allows you to create a new variable with values based on multiple logical statements at the same time. This is useful for making categorical variables or variables from combinations of other variables.</p>
+<p><code>case_when()</code> performs multiple <code>ifelse()</code> operations at the same time. <code>case_when()</code> allows you to create a new variable with values based on multiple logical statements at the same time. This is useful for making categorical variables or variables from combinations of other variables.</p>
 
 <pre><code class="r">gapminder %&gt;% mutate(gdpPercap_ordinal = case_when(
     gdpPercap &lt; 700 ~ &quot;low&quot;,
@@ -1318,7 +1314,7 @@ yugoslavia %&gt;% filter(country == &quot;Serbia&quot;) %&gt;%
 <section data-transition="linear" data-transition-speed="default">
 <h3>Avoiding Repetition: summarize_at()</h3>
 <div class="slideContent" >
-<p>Maybe you need to calculate the mean and standard deviation of a bunch of columns. With <code>summarize_each()</code>, you put the functions to use in a <code>funs()</code> list, and the variables to compute over after that (like <code>select()</code> syntax).</p>
+<p>Maybe you need to calculate the mean and standard deviation of a bunch of columns. With <code>summarize_at()</code>, put the variables to compute over first in <code>vars()</code> (like <code>select()</code> syntax) and put the functions to use in a <code>funs()</code> after.</p>
 
 <pre><code class="r">yugoslavia %&gt;%
     filter(year == 1982) %&gt;%
@@ -1340,17 +1336,17 @@ yugoslavia %&gt;% filter(country == &quot;Serbia&quot;) %&gt;%
 <p>There are additional <code>dplyr</code> functions similar to <code>summarize_at()</code>:</p>
 
 <ul>
-<li><code>summarize_all()</code> and <code>mutate_all()</code> summarize / mutate all variables sent to them in the same way. For instance, getting the mean and standard deviation of an entire dataframe:</li>
+<li><code>summarize_all()</code> and <code>mutate_all()</code> summarize / mutate <em>all</em> variables sent to them in the same way. For instance, getting the mean and standard deviation of an entire dataframe:</li>
 </ul>
 
-<pre><code>data %&gt;% summarize_all(funs(mean, sd))
+<pre><code>dataframe %&gt;% summarize_all(funs(mean, sd))
 </code></pre>
 
 <ul>
 <li><code>summarize_if()</code> and <code>mutate_if()</code> summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:</li>
 </ul>
 
-<pre><code>data %&gt;% summarize_if(is.numeric, funs(mean, sd))
+<pre><code>dataframe %&gt;% summarize_if(is.numeric, funs(mean, sd))
 </code></pre>
 
 <p>You can use all of these to avoid typing out the same code repeatedly!</p>
@@ -1361,7 +1357,7 @@ yugoslavia %&gt;% filter(country == &quot;Serbia&quot;) %&gt;%
 <section data-transition="linear" data-transition-speed="default">
 <h3>Splitting Data into Groups: group_by()</h3>
 <div class="mediaInline slideContent" >
-<p>The special function <code>group_by()</code> changes how functions operate on the data, most importantly <code>summarize()</code>. These functions are computed <em>within each group</em> as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.</p>
+<p>The special function <code>group_by()</code> changes how functions operate on the data, most importantly <code>summarize()</code>. TFunctions after <code>group_by</code> are computed <em>within each group</em> as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.</p>
 
 <p>Excel analogue: pivot tables</p>
 
@@ -1417,20 +1413,6 @@ yugoslavia %&gt;% filter(country == &quot;Serbia&quot;) %&gt;%
 </div>
 
 </section>
-<section data-transition="linear" data-transition-speed="default">
-<h3>Lab Break!</h3>
-<div class="slideContent" >
-<p>With the Gapminder data, practice the following analyses:</p>
-
-<ul>
-<li>Find the population (in units of millions of people) in 2007 for countries in Asia. Make a histogram.</li>
-<li>Use population and GDP per capita to find the 10 largest economies in 1952 as measured by overall GDP (not per capita).</li>
-<li>For each country and each year, find the percentage growth of the population relative to the population of the country 5 years prior (the Gapminder data are reported every 5 years). Then find the 10 country-year pairs that had the highest percentage growth relative to 5 years prior, and the 10 country-year pairs that had the lowest percentage growth.</li>
-</ul>
-
-</div>
-
-</section>
 <section data-state="section" data-transition="linear" data-transition-speed="default">
 <h2>Joining (Merging) Data Frames</h2>
 <div class="slideContent" >
@@ -1442,7 +1424,7 @@ yugoslavia %&gt;% filter(country == &quot;Serbia&quot;) %&gt;%
 <h3>When Do We Need to Join Tables?</h3>
 <div class="mediaInline slideContent" >
 <ul>
-<li>Want to make columns using criteria too complicated for <code>ifelse()</code></li>
+<li>Want to make columns using criteria too complicated for <code>ifelse()</code> or <code>case_when()</code></li>
 <li>Combine data stored in separate places: e.g. UW registrar information with student homework grades</li>
 </ul>
 
@@ -1468,7 +1450,7 @@ yugoslavia %&gt;% filter(country == &quot;Serbia&quot;) %&gt;%
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Types of Joins: Rows and Columns to Keep</h3>
+<h3>Types of Joins: Rows and columns to keep</h3>
 <div class="slideContent" >
 <ul>
 <li><code>A %&gt;% inner_join(B)</code>: keep rows from <code>A</code> that match rows in <code>B</code>, columns from both <code>A</code> and <code>B</code></li>
@@ -1493,9 +1475,9 @@ yugoslavia %&gt;% filter(country == &quot;Serbia&quot;) %&gt;%
 <li><code>by = c(&quot;Avar1&quot; = &quot;Bvar1&quot;, &quot;Avar2&quot; = &quot;Bvar2&quot;)</code>: matches identical values of <code>Avar1</code> variable in <code>A</code> to <code>Bvar1</code> variable in <code>B</code>, and <code>Avar2</code> variable in <code>A</code> to <code>Bvar2</code> variable in <code>B</code></li>
 </ul>
 
-<p>Note: if there are multiple matches, you&#39;ll get one row for each possible combo (except with <code>semi_join()</code> and <code>anti_join()</code>).</p>
+<p>Note: If there are multiple matches, you&#39;ll get one row for each possible combo (except with <code>semi_join()</code> and <code>anti_join()</code>).</p>
 
-<p>(Need to get more complicated? You&#39;ll want to learn SQL.)</p>
+<p>Need to get more complicated? You may want to learn SQL.</p>
 
 </div>
 
@@ -1505,11 +1487,11 @@ yugoslavia %&gt;% filter(country == &quot;Serbia&quot;) %&gt;%
 <div class="slideContent" >
 <p>We&#39;ll use data in the <a href="https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf"><code>nycflights13</code> package</a>. Install and load it:</p>
 
-<pre><code class="r"># install.packages(&quot;nycflights13&quot;)
+<pre><code class="r"># install.packages(&quot;nycflights13&quot;) # Uncomment to run
 library(nycflights13)
 </code></pre>
 
-<p>It includes five tables, some of which contain missing data (<code>NA</code>):</p>
+<p>It includes five dataframes, some of which contain missing data (<code>NA</code>):</p>
 
 <ul>
 <li><code>flights</code>: flights leaving JFK, LGA, or EWR in 2013</li>
@@ -1636,17 +1618,19 @@ flights %&gt;% select(origin, year, month, day, hour, dep_delay) %&gt;%
 </ul></li>
 </ul>
 
-<p><strong>Warning!</strong> <code>flights</code> has 336776 rows, so if you do a sloppy join, you can end up with <strong>many</strong> matches per observation and have the data <em>explode</em>.</p>
+<p><strong>Warning:</strong> <code>flights</code> has 336776 rows, so if you do a sloppy join, you can end up with <strong>many</strong> matches per observation and have the data <em>explode</em> in size.</p>
 
 </div>
 
 </section>
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h2>Homework</h2>
+<h2>Homework 3</h2>
 <div class="slideContent" >
-<p>Pick something to look at in the <code>nycflights13</code> data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: <code>mutate()</code>, <code>summarize()</code>, <code>group_by()</code>, and any join. <em>Include at least one formatted plot or table</em> (use &ldquo;nice&rdquo; variable names and rounded values).</p>
+<p>Pick something to look at in the <code>nycflights13</code> data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: <code>mutate()</code>, <code>summarize()</code>, <code>group_by()</code>, and any join. <em>Include at least one nicely formatted plot (<code>ggplot2</code>) and one table (<code>pander</code>)</em>. In plots and tables, use &ldquo;nice&rdquo; variable names (try out spaces!) and rounded values (&lt;= 3 digits).</p>
 
-<p>This time, <em>include all your code in your output document</em>, using comments and line breaks separating commands so that it is clear to a peer what you are doing. You must write up your observations in words as well. </p>
+<p>This time, <em>include all your code in your output document</em> (<code>echo=TRUE</code>), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  Note: If you want to see the <code>nycflights13</code> dataframes in the environment, you will need to load <em>each one</em> individually (<code>airlines</code>, <code>airports</code>, <code>flights</code>, <code>planes</code>, and <code>weather</code>) using <code>data(dataframe_name)</code> (e.g. <code>data(flights)</code>).</p>
+
+<p>DUE: 11:59 PM, Oct 17th</p>
 
 </div>
 
