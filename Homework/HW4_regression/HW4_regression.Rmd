@@ -1,0 +1,226 @@
+---
+title: "CSSS508: Alternate HW4 - Linear regression by hand"
+author: "YOUR NAME"
+date: "DATE"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Linear Regression by Hand
+
+For this assignment, you will:
+
+* Simulate data and store it in a matrix
+* Use matrix algebra to fit a linear regression model
+* Compare your results with R's built-in regression function
+
+You will be walked through these steps. For each code chunk, fill in code and change it from `eval=FALSE` to `eval=TRUE` when you have it working. You will need to at minimum complete the object assignment steps `<-` that have been left unfinished, but you may also occasionally need to add in an extra line or two of code to tweak things like row and column names of these objects.
+
+# Simulating Data
+
+We are studying the relationship between grades of UW students in Calculus I and their high school preparation. Let's suppose we have measured these variables:
+
+* Independent Variable 1: High school math GPA. Ranges from 2.0-4.0, continuous.
+* Independent Variable 2: Binary indicator variable for whether they took calculus in high school or not (1 = yes, 0 = no). Students who had higher high school math grades were more likely to take calculus in high school.
+* Independent Variable 3: Binary indicator variable for whether they took UW's precalculus class or not (1 = yes, 0 = no). Students who didn't take calculus in high school or who had lower high school math grades were more likely to take precalculus at UW first.
+
+We don't actually have these data, so we're going to make up some semi-realistic numbers assuming there are $n=2000$ students. I will fill in these parts for you but you should study the functions and try to understand what they are doing. Use `?` in the console to get help for functions like `rnorm()` to learn what they do (e.g. `?rnorm`).
+
+```{r simulate_covariates, cache=TRUE}
+set.seed(1234)
+n <- 2000 # number of UW calc I students
+
+# simulate high school math GPA
+hs_math_gpa <- rnorm(n, mean = 3.5, sd = 0.5)
+# truncate to 2.0-4.0
+hs_math_gpa <- ifelse(hs_math_gpa < 2.0, 2.0,
+                      ifelse(hs_math_gpa > 4.0, 4.0, hs_math_gpa))
+
+# simulate previous calculus in high school:
+# - 75% of people with HS math GPAs over 3.6 took HS calculus
+# - 40% of people with HS math GPAs under 3.6 took HS calculus
+# binomial data with 1 trial per student, probabilities as above
+hs_calculus <- rbinom(n, size = 1,
+                      p = ifelse(hs_math_gpa >= 3.6, 0.75, 0.40))
+
+# simulate precalculus at UW:
+# - if no high school calculus, 70% take precalculus, regardless of grade
+# - if high school calculus, 60% take precalculus if HS grade < 3.5,
+#   and 25% otherwise
+uw_precalc <- rbinom(n, size = 1,
+                     p = ifelse(hs_calculus == 0, 0.70,
+                                ifelse(hs_math_gpa < 3.5, 0.60, 0.25)))
+```
+
+Our outcome is UW Calculus I grade, which is 0.0 or 0.7-4.0 in 0.1 increments. Let's suppose the following noisy relationship holds for each student $i$, which we want to recover from our data:
+
+$$\text{UW Calculus I grade}_i = 0.3 + 0.7 \cdot \text{HS math GPA}_i + 0.3 \cdot \text{HS calculus}_i + 0.1 \cdot \text{UW precalculus}_i + \varepsilon_i$$
+$$\varepsilon_i \sim \text{Normal}(\text{mean}=0, \text{SD}=0.5)$$
+
+```{r simulate_outcome, cache=TRUE}
+true_beta <- c("Intercept" = 0.3,
+               "hs_math_gpa" = 0.7,
+               "hs_calculus" = 0.3,
+               "uw_precalc" = 0.1)
+true_sigma <- 0.5
+uw_calculus_gpa <- true_beta["Intercept"] +
+    true_beta["hs_math_gpa"] * hs_math_gpa +
+    true_beta["hs_calculus"] * hs_calculus +
+    true_beta["uw_precalc"] * uw_precalc +
+    rnorm(n, mean = 0, sd = true_sigma)
+# we don't see exact GPAs, just nearest 0.1
+uw_calculus_gpa <- round(uw_calculus_gpa, 1)
+# truncate under 0.7 or over 4.0
+uw_calculus_gpa <- ifelse(uw_calculus_gpa > 4.0, 4.0,
+                          ifelse(uw_calculus_gpa < 0.0, 0.0,
+                                 ifelse(uw_calculus_gpa < 0.7, 0.7,
+                                        uw_calculus_gpa)))
+```
+
+# Linear Regression with lm()
+
+To get your grounding, first we'll make a data frame with the relevant variables, and then fit it using the linear regression function: `lm()`. Use the independent and dependent variables given above.
+
+```{r make_data_frame}
+calculus_data <- data.frame(uw_calculus_gpa, hs_math_gpa, hs_calculus, uw_precalc)
+head(calculus_data)
+```
+
+You need to fill in this part:
+```{r fit_lm_model, eval=FALSE}
+calculus_lm <- lm() # FILL THIS IN AND REMOVE COMMENT
+summary(calculus_lm)
+```
+
+
+# Background on Math of Linear Regression
+
+For ordinary least squares linear regression, we encode our independent variables in a **design matrix** $\mathbf{X}$ and our dependent variable (outcome) in a column vector $\mathbf{y}$. In general, if we have $n$ observations and $p$ independent variables, $\mathbf{X}$ is a matrix with $n$ rows and $p+1$ columns that looks like:
+
+$$\mathbf{X} = \left[ \begin{array}{ccccc} 1 & x_{11} & x_{12} & \ldots & x_{1p} \\ 1 & x_{21} & x_{22} & \ldots & x_{2p} \\ 1 & x_{31} & x_{32} & \ldots & x_{3p}\\\ldots & \ldots & \ldots & \ldots & \ldots \\ 1 & x_{n1} & x_{n2} & \ldots & x_{np} \end{array} \right]$$
+
+Each of the columns $x_{.1}, x_{.2}, \ldots, x_{.p}$ contains one of the independent variables.
+
+The outcome vector $\mathbf{y}$ looks like:
+
+$$\mathbf{y} = \left[ \begin{array}{c} y_1 \\ y_2 \\ y_3 \\ \ldots \\ y_n \end{array} \right]$$
+
+In matrix notation (using matrix multiplication), we model the relationship between $\mathbf{y}$ and $\mathbf{X}$ as $\mathbf{y} = \mathbf{X} \cdot \mathbf{\beta} + \text{noise}$ where
+
+$$ \mathbf{\beta} = \left[ \begin{array}{c} \beta_0 \\ \beta_1 \\ \beta_2 \\ \ldots \\ \beta_p \end{array} \right] $$
+
+One can show that the estimate $\hat{\mathbf{\beta}}$ that minimizes squared error between $\mathbf{y}$ and fitted values $\mathbf{X} \cdot \mathbf{\beta}$ is:
+
+$$\hat{\mathbf{\beta}} = \left(\mathbf{X}^T \cdot \mathbf{X} \right)^{-1} \cdot \mathbf{X}^T \cdot \mathbf{y}$$
+
+where the multiplication is matrix multiplication, $(\cdot)^T$ is the transpose operator, and $(\cdot)^{-1}$ is the matrix inverse operator.
+
+We estimate the variance of the residual noise $\hat{\sigma}^2$ (mean squared error) as
+
+$$\hat{\sigma}^2 = \frac{(\mathbf{y} - \mathbf{X} \cdot \hat{\mathbf{\beta}})^T \cdot (\mathbf{y} - \mathbf{X} \cdot \hat{\mathbf{\beta}})}{n - p - 1}$$
+
+We get estimated covariances for linear regression coefficient estimates using the following formula:
+
+$$\widehat{\text{Var}}(\hat{\mathbf{\beta}}) = \hat{\sigma}^2  \left(\mathbf{X}^T \cdot \mathbf{X} \right)^{-1}$$
+
+We then take the square root of the diagonal of $\widehat{\text{Var}}(\hat{\mathbf{\beta}})$ to get the standard errors for each coefficient. The off-diagonal terms are estimated covariances between parameter estimates, which are closely related to the estimated correlations.
+
+# Setting up the Design Matrix and Outcome
+
+This may look intimidating if you haven't seen it before, but fortunately we can break up the calculation into small pieces as we calculate things in R.
+
+First, make a numeric matrix `X` that looks like the matrix $\mathbf{X}$ above, but customized for this problem where $p=3$. Your first column should be a column of $n$ 1's ("intercept" term). Your second column should be the high school math GPA. Your third should be the high school calculus indicator. Your fourth should be the UW precalculus indicator. You can use `cbind()` to put these columns together into a matrix or dataframe. Make sure the columns are labeled.
+
+```{r make_X, eval=FALSE}
+X <- # MAKE THIS MATRIX THEN DELETE COMMENT
+```
+
+For clarity, you should make a variable `y` and store our outcome variable to it.
+
+```{r make_y, eval=FALSE}
+y <- # MAKE THIS VECTOR THEN DELETE COMMENT
+```
+
+# Compute Matrix Quantities
+
+The term $\left(\mathbf{X}^T \cdot \mathbf{X} \right)^{-1}$ appears in both the formulas for $\hat{\mathbf{\beta}}$ and for $\widehat{\text{Var}}(\hat{\mathbf{\beta}})$. Let's call this quantity $\mathbf{A}$. You can compute it using the matrix multiplication operator (`%*%`), and matrix transposes (`t()`) and matrix inversion functions (`solve()`). Some of these you can replace with the `crossprod()` function if you like (`?crossprod` for help).
+
+```{r compute_A, eval=FALSE}
+# FILL THIS IN AND DELETE THIS COMMENT
+A <- 
+```
+
+Now, we want $\hat{\mathbf{\beta}}$. Use $\mathbf{A}$ and more matrix multiplication to compute this.
+
+```{r compute_beta, eval=FALSE}
+# FILL THIS IN AND DELETE THIS COMMENT
+beta <- 
+```
+
+With $\hat{\mathbf{\beta}}$, you can compute the residuals $\mathbf{y} - \mathbf{X} \cdot \hat{\mathbf{\beta}}$, which go into your residual variance calculation.
+
+```{r compute_residuals, eval=FALSE}
+# FILL THIS IN AND DELETE THIS COMMENT
+residuals <- 
+```
+
+Now let's calculate the estimated residual variance $\hat{\sigma}^2$. This has $n-p-1$ in the denominator, so let's compute $p$ while we're at it. You already *know* $p=3$, but instead of hard-coding this, use a function to compute it as the number of columns of the design matrix minus 1. (That way, if had you added or deleted a column, the math would still be correct!) Additionally, after you've calculated the residual variance, I've put `as.numeric()` at the end to convert it to a single scalar number instead of a 1 by 1 matrix.
+
+```{r residual_variance, eval=FALSE}
+# FILL THIS IN AND DELETE THIS COMMENT
+p <- 
+residual_var <-
+residual_var <- as.numeric(residual_var)
+```
+
+Next, find the estimated covariance matrix of the coefficient estimates $\widehat{\text{Var}}(\hat{\mathbf{\beta}})$ using $A$ and $\hat{\sigma}^2$. (Note: we needed the `as.numeric()` step above because otherwise `residual_var` is a 1 by 1 matrix, and we would be multiplying together two matrices whose dimensions can't be multiplied. `as.numeric()` converts it to a scalar that multiplies all the entries, which is what we want.)
+
+```{r beta_covariance, eval=FALSE}
+# FILL THIS IN AND DELETE THIS COMMENT
+beta_covar <-
+```
+
+Finally, we go from estimated covariance matrix $\widehat{\text{Var}}(\hat{\mathbf{\beta}})$ to standard errors by taking the square root of its diagonal.
+
+```{r std_err_beta, eval=FALSE}
+# FILL THIS IN AND DELETE THIS COMMENT
+beta_SE <-
+```
+
+# Comparing Results
+
+Now, let's make a 4 row by 3 column matrix comparing the "true" values used to generate the data and fitted parameters using two methods:
+
+* Make the first column of the matrix have the name "Truth" and contain the true values of the coefficients.
+* Make the second column of the matrix have name "Manual" and the rows be the values of $\hat{\mathbf{\beta}}$ you computed.
+* Make the third column of the matrix have name "lm" and the rows be the values of the fitted parameters using `lm()` from before.
+
+Use the `pander` package to display a nice formatted table. If everything went right, the two columns of fitted values should equal each other, and will be close to but not exactly the truth. You may want to modify `rownames()` of `beta_compare`.
+
+```{r compare_beta, eval=FALSE}
+# FILL THIS IN AND DELETE THIS COMMENT
+beta_compare <- 
+library(pander)
+pander(beta_compare, caption = "Comparison of linear regression parameters estimated manually with those from R's lm().")
+```
+
+Now do the same thing for standard errors of the parameter estimates. The "true" covariance $\text{Var}(\hat{\mathbf{\beta}})$ uses the same formula as the estimated covariance $\widehat{\text{Var}}(\hat{\mathbf{\beta}})$ you calculated above, except substitute in $\sigma^2$ in place of $\hat{\sigma}^2$. You'll need to take the square root of the diagonal to go from covariance matrix to individual standard errors.
+
+```{r compare_SEs, eval=FALSE}
+# FILL THIS IN AND DELETE THIS COMMENT
+true_covar <-
+true_SE <-
+SE_compare <- 
+pander(SE_compare, caption = "Comparison of standard errors of linear regression parameters estimated manually with those from R's lm().")
+```
+
+Last, compare the "true" residual variance $\sigma^2$ with the values of the estimated residual variance obtained from the manual and `lm()` methods. This will be a 1 row by 3 column matrix. The estimated residual *standard deviation* in the `lm()` version can be found in the `summary()` list object in a list entry called `sigma`. You can convert this to residual variance by squaring it.
+
+```{r compare_resid_var, eval=FALSE}
+# FILL THIS IN AND DELETE THIS COMMENT
+resid_var_compare <- 
+pander(resid_var_compare, caption = "Comparison of residual variances of manual linear regression with that from R's lm().")
+```

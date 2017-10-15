@@ -1,10 +1,10 @@
 CSSS 508, Week 4: R Data Structures
 ====================================================================================
 author: Charles Lanfear
-date: April 19, 2017
+date: Otcotber 18, 2017
 transition: linear
-width: 1100
-height: 750
+width: 1600
+height: 900
 
 
 R Data Types
@@ -479,7 +479,7 @@ Missing values are coded as `NA` entries without quotes:
 vector_w_missing <- c(1, 2, NA, 4, 5, 6, NA)
 ```
 
-Even one `NA` "poisons the well": you'll get `NA` out of your calculations unless you remove them manually or with the extra argument `na.rm = TRUE` (in some functions):
+Even one `NA` "poisons the well": You'll get `NA` out of your calculations unless you remove them manually or with the extra argument `na.rm = TRUE` (in some functions):
 
 ```r
 mean(vector_w_missing)
@@ -560,7 +560,7 @@ vector_w_missing %in% NA
 ```
 [1] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
 ```
-It is still usually best to handle NAs directly, however!
+It is still usually best to handle NAs *directly*, however!
 
 
 Inf and NaN
@@ -1211,35 +1211,6 @@ swiss %>%
     summarize(mean = mean(Fertility))
 ```
 
-Lab and homework
-====================================================================================
-type: section
-
-Suggested lab practice: swirl
-====================================================================================
-
-You can do interactive R tutorials in `swirl` that cover these structure basics. To set up `swirl`:
-
-1. `install.packages("swirl")`
-2. `library("swirl")`
-3. `swirl()`
-4. Choose `R Programming`, pick a tutorial, and follow directions
-5. To get out of `swirl`, type `bye()` in the middle of a lesson, or `0` in the menus
-
-At this point, tutorials 1-8 are appropriate.
-
-
-Homework
-====================================================================================
-type:section
-
-For homework, you'll be filling in a template R Markdown file that will walk you through 
-creating, accessing, and manipulating R data structures. You will fill in values in 
-the R Markdown document and knit it to check your answers. If you get an error, check
-to see if undoing your last edit solves the problem; coding an assignment to handle
-all possible mistakes is really hard! This assignment is also long, so **start early**.
-
-
 An Aside from People with Statistics Training
 ====================================================================================
 type: section
@@ -1323,7 +1294,7 @@ speed         3.932409  0.4155128  9.463990 1.489836e-12
 ```
 
 
-Example: approximate 95% confidence interval
+Example: Approximate 95% confidence interval
 ====================================================================================
 
 
@@ -1339,3 +1310,40 @@ A 1 mph increase in speed is associated with a `r round(speed_beta, 1)` ft incre
 ```
 
 A 1 mph increase in speed is associated with a 3.9 ft increase in stopping distance (95% CI: (3.1, 4.7)).
+
+Practice and Homework
+====================================================================================
+type: section
+
+Suggested Practice: swirl
+====================================================================================
+
+You can do interactive R tutorials in `swirl` that cover these structure basics. To set up `swirl`:
+
+1. `install.packages("swirl")`
+2. `library("swirl")`
+3. `swirl()`
+4. Choose `R Programming`, pick a tutorial, and follow directions
+5. To get out of `swirl`, type `bye()` in the middle of a lesson, or `0` in the menus
+
+At this point, tutorials 1-8 are appropriate.
+
+
+Homework: Two Choices
+====================================================================================
+type:section
+
+Choose between one of two homeworks this week:
+
+### Guided Data Structure Practice (Less Advanced):
+Fill in a template R Markdown file that walks you through 
+creating, accessing, and manipulating R data structures. Enter values in 
+the R Markdown document and knit it to check your answers. **Knit after entering each answer**. 
+If you get an error, check to see if undoing your last edit solves the problem; coding an assignment to handle
+all possible mistakes is really hard! This assignment is also long, so **start early**.
+
+### Manual Linear Regression (More Advanced)
+Fill in a template R markdown file that walks you through (1) doing linear regression
+manually and (2) comparing it to the built-in `lm()` function. Includes simulating data and
+creating and modifying data structures. **Knit after entering each answer**. This
+assignment does not check answers as you go. This is also long, so **start early**!
