@@ -932,7 +932,7 @@ multiple of shorter object length
 <pre class="fragment"><code>[1] 4
 </code></pre>
 
-<p class="fragment">Some others: <code>min</code>, <code>mean</code>, <code>median</code>, <code>sd</code>, <code>var</code> &ndash; you&#39;ve seen these used with <code>dplyr::summarize</code>.</p>
+<p class="fragment">Some others: <code>min()</code>, <code>mean()</code>, <code>median()</code>, <code>sd()</code>, <code>var()</code> &ndash; you&#39;ve seen these used with <code>dplyr::summarize()</code>.</p>
 
 </div>
 
@@ -940,7 +940,9 @@ multiple of shorter object length
 <section data-transition="linear" data-transition-speed="default">
 <h3>Example: Standardizing Data</h3>
 <div class="slideContent" >
-<p>Let&#39;s say we had some test scores and we wanted to put these on a standardized scale: \[ z_i = \frac{x_i - \text{mean}(x)}{\text{SD}(x)} \]</p>
+<p>Let&#39;s say we had some test scores and we wanted to put these on a standardized scale: </p>
+
+<p class="fragment">\[ z_i = \frac{x_i - \text{mean}(x)}{\text{SD}(x)} \]</p>
 
 <pre class="fragment"><code class="r">x &lt;- c(97, 68, 75, 77, 69, 81, 80, 92, 50, 34, 66, 83, 62)
 z &lt;- (x - mean(x)) / sd(x)
@@ -951,7 +953,7 @@ round(z, 2)
 [12]  0.66 -0.58
 </code></pre>
 
-<p class="fragment">See also: <code>scale</code></p>
+<p class="fragment">The <code>scale()</code> function performs the above operation!</p>
 
 </div>
 
@@ -1109,7 +1111,7 @@ name_lengths
 <section data-transition="linear" data-transition-speed="default">
 <h3>Combining Logical Conditions</h3>
 <div class="slideContent" >
-<p>Suppose we are interested in which names have an even number of letters or whose second letter is &ldquo;a&rdquo;:</p>
+<p>Suppose we are interested in which names have an even number of letters:</p>
 
 <pre class="fragment"><code class="r">even_length &lt;- (name_lengths %% 2 == 0)
 # %% is modulo operator: gives remainder when dividing
@@ -1118,6 +1120,8 @@ even_length
 
 <pre class="fragment"><code>[1] FALSE  TRUE FALSE FALSE
 </code></pre>
+
+<p class="fragment">or whose second letter is &ldquo;a&rdquo;:</p>
 
 <pre class="fragment"><code class="r">second_letter_a &lt;- (substr(first_names, start=2, stop=2) == &quot;a&quot;)
 # substr: substring (portion) of a char vector
@@ -1227,7 +1231,7 @@ second_letter_a
 <pre class="fragment"><code>[1]  TRUE FALSE  TRUE  TRUE
 </code></pre>
 
-<p class="fragment"><code>which</code> gives the indices of <code>TRUE</code>s in a logical vector:</p>
+<p class="fragment"><code>which()</code> gives the indices of <code>TRUE</code>s in a logical vector:</p>
 
 <pre class="fragment"><code class="r">which(first_names %in% c(&quot;Andre&quot;, &quot;Carly&quot;, &quot;Dan&quot;))
 </code></pre>
@@ -1266,7 +1270,7 @@ second_letter_a
 <section data-transition="linear" data-transition-speed="default">
 <h3>Finding Missing Values</h3>
 <div class="slideContent" >
-<p><strong>WARNING:</strong> you can&#39;t test for missing values by seeing if they &ldquo;equal&rdquo; (<code>==</code>) <code>NA</code>:</p>
+<p><strong>WARNING:</strong> You can&#39;t test for missing values by seeing if they &ldquo;equal&rdquo; (<code>==</code>) <code>NA</code>:</p>
 
 <pre class="fragment"><code class="r">vector_w_missing == NA
 </code></pre>
@@ -1274,7 +1278,7 @@ second_letter_a
 <pre class="fragment"><code>[1] NA NA NA NA NA NA NA
 </code></pre>
 
-<p class="fragment">But you can use the <code>is.na</code> function:</p>
+<p class="fragment">But you can use the <code>is.na()</code> function:</p>
 
 <pre class="fragment"><code class="r">is.na(vector_w_missing)
 </code></pre>
@@ -1503,18 +1507,18 @@ head(a_vector)
 <div class="slideContent" >
 <p>Matrices can be numeric, integer, factor, character, or logical, just like vectors. Also like vectors, <em>they must be all the same data type</em>.</p>
 
-<pre class="fragment"><code class="r">(bad_matrix &lt;- cbind(1:2, letters[1:2]))
+<pre class="fragment"><code class="r">(bad_matrix &lt;- cbind(1:2, LETTERS[c(6,1)]))
 </code></pre>
 
 <pre class="fragment"><code>     [,1] [,2]
-[1,] &quot;1&quot;  &quot;a&quot; 
-[2,] &quot;2&quot;  &quot;b&quot; 
+[1,] &quot;1&quot;  &quot;F&quot; 
+[2,] &quot;2&quot;  &quot;A&quot; 
 </code></pre>
 
-<pre class="fragment"><code class="r">class(bad_matrix)
+<pre class="fragment"><code class="r">typeof(bad_matrix)
 </code></pre>
 
-<pre class="fragment"><code>[1] &quot;matrix&quot;
+<pre class="fragment"><code>[1] &quot;character&quot;
 </code></pre>
 
 <p class="fragment">In this case, everything was converted to character so as not to lose information.</p>
@@ -1527,21 +1531,21 @@ head(a_vector)
 <div class="slideContent" >
 <p>We can access dimension names or name them ourselves:</p>
 
-<pre class="fragment"><code class="r">rownames(bad_matrix) &lt;- c(&quot;Harry&quot;, &quot;Draco&quot;)
-colnames(bad_matrix) &lt;- c(&quot;Potions grade&quot;, &quot;Quidditch position&quot;)
+<pre class="fragment"><code class="r">rownames(bad_matrix) &lt;- c(&quot;Wedge&quot;, &quot;Biggs&quot;)
+colnames(bad_matrix) &lt;- c(&quot;Pilot grade&quot;, &quot;Moustache grade&quot;)
 bad_matrix
 </code></pre>
 
-<pre class="fragment"><code>      Potions grade Quidditch position
-Harry &quot;1&quot;           &quot;a&quot;               
-Draco &quot;2&quot;           &quot;b&quot;               
+<pre class="fragment"><code>      Pilot grade Moustache grade
+Wedge &quot;1&quot;         &quot;F&quot;            
+Biggs &quot;2&quot;         &quot;A&quot;            
 </code></pre>
 
-<pre class="fragment"><code class="r">bad_matrix[&quot;Draco&quot;, , drop=FALSE]
+<pre class="fragment"><code class="r">bad_matrix[&quot;Biggs&quot;, , drop=FALSE]
 </code></pre>
 
-<pre class="fragment"><code>      Potions grade Quidditch position
-Draco &quot;2&quot;           &quot;b&quot;               
+<pre class="fragment"><code>      Pilot grade Moustache grade
+Biggs &quot;2&quot;         &quot;A&quot;            
 </code></pre>
 
 </div>
@@ -1618,6 +1622,8 @@ Draco &quot;2&quot;           &quot;b&quot;
 [1,]    1 -3.552714e-15
 [2,]    0  1.000000e+00
 </code></pre>
+
+<p class="fragment">Note the floating point imprecision!</p>
 
 </div>
 
@@ -1709,7 +1715,7 @@ Coefficients:
 <section data-transition="linear" data-transition-speed="default">
 <h3>Why Two Brackets [[]]?</h3>
 <div class="slideContent" >
-<p>If you use one bracket to access list elements, you get a <strong>sublist</strong> back. The double brackets get <em>the actual element</em> in that location in the list.</p>
+<p>If you use one bracket to access list elements, you get a <strong>sublist</strong> back. The double brackets get <em>the actual element</em>, as whatever data type it is stored as, in that location in the list.</p>
 
 <pre class="fragment"><code class="r">str(my_list[1])
 </code></pre>
@@ -1728,7 +1734,7 @@ Coefficients:
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Sublists Can Be of Length &gt; 1</h3>
+<h3>Subsetted Lists Can Be of Length &gt; 1</h3>
 <div class="slideContent" >
 <p>You can use vector-style subsetting to get a sublist:</p>
 
@@ -1832,7 +1838,7 @@ Coefficients:
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Data frames are just a list of vectors!</h3>
+<h3>Data Frames are Just a List of Vectors!</h3>
 <div class="slideContent" >
 <pre class="fragment"><code class="r">str(cars)
 </code></pre>
@@ -1858,7 +1864,7 @@ Coefficients:
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Can treat data frames like a matrix though</h3>
+<h3>You Can Treat Data Frames like a Matrix</h3>
 <div class="slideContent" >
 <pre class="fragment"><code class="r">cars[1, ]
 </code></pre>
@@ -1962,7 +1968,7 @@ F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Getting standard errors</h3>
+<h3>Getting Standard Errors</h3>
 <div class="slideContent" >
 <pre class="fragment"><code class="r">summary(my_list[[3]])[[&quot;coefficients&quot;]] # a matrix
 </code></pre>
@@ -2026,9 +2032,7 @@ names(speed_CI) &lt;- c(&quot;lower&quot;, &quot;upper&quot;)
 <section data-state="section" data-transition="linear" data-transition-speed="default">
 <h2>Homework: Two Choices</h2>
 <div class="slideContent" >
-<p>Choose between one of two homeworks this week:</p>
-
-<h3>Guided Data Structure Practice (Less Advanced):</h3>
+<h2>Guided Data Structure Practice (Less Advanced):</h2>
 
 <p>Fill in a template R Markdown file that walks you through 
 creating, accessing, and manipulating R data structures. Enter values in 
@@ -2036,7 +2040,7 @@ the R Markdown document and knit it to check your answers. <strong>Knit after en
 If you get an error, check to see if undoing your last edit solves the problem; coding an assignment to handle
 all possible mistakes is really hard! This assignment is also long, so <strong>start early</strong>.</p>
 
-<h3>Manual Linear Regression (More Advanced)</h3>
+<h2>Manual Linear Regression (More Advanced)</h2>
 
 <p>Fill in a template R markdown file that walks you through (1) doing linear regression
 manually and (2) comparing it to the built-in <code>lm()</code> function. Includes simulating data and
@@ -2100,7 +2104,7 @@ function commandsForSlide(indexh) {
       transition: 'linear',
       transitionSpeed: 'default',
       rtl: false,
-      width: 1600,
+      width: 1440,
       height: 900,
     
       dependencies: []
