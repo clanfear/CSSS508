@@ -1,7 +1,7 @@
 CSSS 508, Week 4: R Data Structures
 ====================================================================================
 author: Charles Lanfear
-date: Otcotber 18, 2017
+date: October 18, 2017
 transition: linear
 width: 1600
 height: 900
