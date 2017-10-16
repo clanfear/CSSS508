@@ -3,7 +3,7 @@ CSSS 508, Week 4: R Data Structures
 author: Charles Lanfear
 date: October 18, 2017
 transition: linear
-width: 1600
+width: 1440
 height: 900
 
 
@@ -153,14 +153,17 @@ max(c(1, 2, 3, 4))
 [1] 4
 ```
 
-Some others: `min`, `mean`, `median`, `sd`, `var` -- you've seen these used with `dplyr::summarize`.
+Some others: `min()`, `mean()`, `median()`, `sd()`, `var()` -- you've seen these used with `dplyr::summarize()`.
 
 
 Example: Standardizing Data
 ====================================================================================
 incremental: true
 
-Let's say we had some test scores and we wanted to put these on a standardized scale: $$z_i = \frac{x_i - \text{mean}(x)}{\text{SD}(x)}$$
+Let's say we had some test scores and we wanted to put these on a standardized scale: 
+
+$$z_i = \frac{x_i - \text{mean}(x)}{\text{SD}(x)}$$
+
 
 ```r
 x <- c(97, 68, 75, 77, 69, 81, 80, 92, 50, 34, 66, 83, 62)
@@ -172,7 +175,8 @@ round(z, 2)
  [1]  1.49 -0.23  0.19  0.31 -0.17  0.54  0.48  1.19 -1.30 -2.24 -0.35
 [12]  0.66 -0.58
 ```
-See also: `scale`
+
+The `scale()` function performs the above operation!
 
 
 Types of Vectors
@@ -339,7 +343,7 @@ Combining Logical Conditions
 ====================================================================================
 incremental: true
 
-Suppose we are interested in which names have an even number of letters or whose second letter is "a":
+Suppose we are interested in which names have an even number of letters:
 
 ```r
 even_length <- (name_lengths %% 2 == 0)
@@ -350,6 +354,8 @@ even_length
 ```
 [1] FALSE  TRUE FALSE FALSE
 ```
+
+or whose second letter is "a":
 
 ```r
 second_letter_a <- (substr(first_names, start=2, stop=2) == "a")
@@ -458,7 +464,7 @@ first_names %in% c("Andre", "Carly", "Dan")
 [1]  TRUE FALSE  TRUE  TRUE
 ```
 
-`which` gives the indices of `TRUE`s in a logical vector:
+`which()` gives the indices of `TRUE`s in a logical vector:
 
 ```r
 which(first_names %in% c("Andre", "Carly", "Dan"))
@@ -501,7 +507,7 @@ Finding Missing Values
 ====================================================================================
 incremental: true
 
-**WARNING:** you can't test for missing values by seeing if they "equal" (`==`) `NA`:
+**WARNING:** You can't test for missing values by seeing if they "equal" (`==`) `NA`:
 
 ```r
 vector_w_missing == NA
@@ -511,7 +517,7 @@ vector_w_missing == NA
 [1] NA NA NA NA NA NA NA
 ```
 
-But you can use the `is.na` function:
+But you can use the `is.na()` function:
 
 ```r
 is.na(vector_w_missing)
@@ -770,21 +776,21 @@ incremental: true
 Matrices can be numeric, integer, factor, character, or logical, just like vectors. Also like vectors, *they must be all the same data type*.
 
 ```r
-(bad_matrix <- cbind(1:2, letters[1:2]))
+(bad_matrix <- cbind(1:2, LETTERS[c(6,1)]))
 ```
 
 ```
      [,1] [,2]
-[1,] "1"  "a" 
-[2,] "2"  "b" 
+[1,] "1"  "F" 
+[2,] "2"  "A" 
 ```
 
 ```r
-class(bad_matrix)
+typeof(bad_matrix)
 ```
 
 ```
-[1] "matrix"
+[1] "character"
 ```
 In this case, everything was converted to character so as not to lose information.
 
@@ -796,24 +802,24 @@ incremental: true
 We can access dimension names or name them ourselves:
 
 ```r
-rownames(bad_matrix) <- c("Harry", "Draco")
-colnames(bad_matrix) <- c("Potions grade", "Quidditch position")
+rownames(bad_matrix) <- c("Wedge", "Biggs")
+colnames(bad_matrix) <- c("Pilot grade", "Moustache grade")
 bad_matrix
 ```
 
 ```
-      Potions grade Quidditch position
-Harry "1"           "a"               
-Draco "2"           "b"               
+      Pilot grade Moustache grade
+Wedge "1"         "F"            
+Biggs "2"         "A"            
 ```
 
 ```r
-bad_matrix["Draco", , drop=FALSE]
+bad_matrix["Biggs", , drop=FALSE]
 ```
 
 ```
-      Potions grade Quidditch position
-Draco "2"           "b"               
+      Pilot grade Moustache grade
+Biggs "2"         "A"            
 ```
 
 
@@ -902,6 +908,8 @@ f_matrix %*% g_matrix
 [1,]    1 -3.552714e-15
 [2,]    0  1.000000e+00
 ```
+
+Note the floating point imprecision!
 
 Diagonal Matrices
 ====================================================================================
@@ -998,7 +1006,7 @@ Why Two Brackets [[]]?
 ====================================================================================
 incremental: true
 
-If you use one bracket to access list elements, you get a **sublist** back. The double brackets get *the actual element* in that location in the list.
+If you use one bracket to access list elements, you get a **sublist** back. The double brackets get *the actual element*, as whatever data type it is stored as, in that location in the list.
 
 
 ```r
@@ -1019,7 +1027,7 @@ str(my_list[[1]])
 ```
 
 
-Sublists Can Be of Length > 1
+Subsetted Lists Can Be of Length > 1
 ====================================================================================
 incremental: true
 
@@ -1129,7 +1137,7 @@ names(my_list[[3]])
 ```
 
 
-Data frames are just a list of vectors!
+Data Frames are Just a List of Vectors!
 ====================================================================================
 incremental: true
 
@@ -1161,7 +1169,7 @@ length(cars$dist) # should be same as nrow(cars)
 ```
 
 
-Can treat data frames like a matrix though
+You Can Treat Data Frames like a Matrix
 ====================================================================================
 incremental: true
 
@@ -1270,7 +1278,7 @@ F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12
 ```
 
 
-Getting standard errors
+Getting Standard Errors
 ====================================================================================
 incremental: true
 
@@ -1333,16 +1341,14 @@ Homework: Two Choices
 ====================================================================================
 type:section
 
-Choose between one of two homeworks this week:
-
-### Guided Data Structure Practice (Less Advanced):
+## Guided Data Structure Practice (Less Advanced):
 Fill in a template R Markdown file that walks you through 
 creating, accessing, and manipulating R data structures. Enter values in 
 the R Markdown document and knit it to check your answers. **Knit after entering each answer**. 
 If you get an error, check to see if undoing your last edit solves the problem; coding an assignment to handle
 all possible mistakes is really hard! This assignment is also long, so **start early**.
 
-### Manual Linear Regression (More Advanced)
+## Manual Linear Regression (More Advanced)
 Fill in a template R markdown file that walks you through (1) doing linear regression
 manually and (2) comparing it to the built-in `lm()` function. Includes simulating data and
 creating and modifying data structures. **Knit after entering each answer**. This
