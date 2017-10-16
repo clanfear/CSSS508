@@ -794,7 +794,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>CSSS 508, Week 4: R Data Structures</h1><p>Charles Lanfear<br/>April 19, 2017</p>
+<h1>CSSS 508, Week 4: R Data Structures</h1><p>Charles Lanfear<br/>October 18, 2017</p>
 
 <div class="slideContent" >
 
@@ -1246,7 +1246,7 @@ second_letter_a
 <pre class="fragment"><code class="r">vector_w_missing &lt;- c(1, 2, NA, 4, 5, 6, NA)
 </code></pre>
 
-<p class="fragment">Even one <code>NA</code> &ldquo;poisons the well&rdquo;: you&#39;ll get <code>NA</code> out of your calculations unless you remove them manually or with the extra argument <code>na.rm = TRUE</code> (in some functions):</p>
+<p class="fragment">Even one <code>NA</code> &ldquo;poisons the well&rdquo;: You&#39;ll get <code>NA</code> out of your calculations unless you remove them manually or with the extra argument <code>na.rm = TRUE</code> (in some functions):</p>
 
 <pre class="fragment"><code class="r">mean(vector_w_missing)
 </code></pre>
@@ -1316,7 +1316,7 @@ second_letter_a
 <pre class="fragment"><code>[1] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
 </code></pre>
 
-<p class="fragment">It is still usually best to handle NAs directly, however!</p>
+<p class="fragment">It is still usually best to handle NAs <em>directly</em>, however!</p>
 
 </div>
 
@@ -1904,43 +1904,6 @@ swiss %&gt;%
 
 </section>
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h2>Lab and homework</h2>
-<div class="slideContent" >
-
-</div>
-
-</section>
-<section data-transition="linear" data-transition-speed="default">
-<h3>Suggested lab practice: swirl</h3>
-<div class="slideContent" >
-<p>You can do interactive R tutorials in <code>swirl</code> that cover these structure basics. To set up <code>swirl</code>:</p>
-
-<ol>
-<li><code>install.packages(&quot;swirl&quot;)</code></li>
-<li><code>library(&quot;swirl&quot;)</code></li>
-<li><code>swirl()</code></li>
-<li>Choose <code>R Programming</code>, pick a tutorial, and follow directions</li>
-<li>To get out of <code>swirl</code>, type <code>bye()</code> in the middle of a lesson, or <code>0</code> in the menus</li>
-</ol>
-
-<p>At this point, tutorials 1-8 are appropriate.</p>
-
-</div>
-
-</section>
-<section data-state="section" data-transition="linear" data-transition-speed="default">
-<h2>Homework</h2>
-<div class="slideContent" >
-<p>For homework, you&#39;ll be filling in a template R Markdown file that will walk you through 
-creating, accessing, and manipulating R data structures. You will fill in values in 
-the R Markdown document and knit it to check your answers. If you get an error, check
-to see if undoing your last edit solves the problem; coding an assignment to handle
-all possible mistakes is really hard! This assignment is also long, so <strong>start early</strong>.</p>
-
-</div>
-
-</section>
-<section data-state="section" data-transition="linear" data-transition-speed="default">
 <h2>An Aside from People with Statistics Training</h2>
 <div class="slideContent" >
 
@@ -2019,7 +1982,7 @@ speed         3.932409  0.4155128  9.463990 1.489836e-12
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Example: approximate 95% confidence interval</h3>
+<h3>Example: Approximate 95% confidence interval</h3>
 <div class="slideContent" >
 <pre><code class="r">speed_CI &lt;- speed_beta + c(-qnorm(0.975), qnorm(0.975)) * speed_SE
 names(speed_CI) &lt;- c(&quot;lower&quot;, &quot;upper&quot;)
@@ -2031,6 +1994,54 @@ names(speed_CI) &lt;- c(&quot;lower&quot;, &quot;upper&quot;)
 </code></pre>
 
 <p>A 1 mph increase in speed is associated with a 3.9 ft increase in stopping distance (95% CI: (3.1, 4.7)).</p>
+
+</div>
+
+</section>
+<section data-state="section" data-transition="linear" data-transition-speed="default">
+<h2>Practice and Homework</h2>
+<div class="slideContent" >
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Suggested Practice: swirl</h3>
+<div class="slideContent" >
+<p>You can do interactive R tutorials in <code>swirl</code> that cover these structure basics. To set up <code>swirl</code>:</p>
+
+<ol>
+<li><code>install.packages(&quot;swirl&quot;)</code></li>
+<li><code>library(&quot;swirl&quot;)</code></li>
+<li><code>swirl()</code></li>
+<li>Choose <code>R Programming</code>, pick a tutorial, and follow directions</li>
+<li>To get out of <code>swirl</code>, type <code>bye()</code> in the middle of a lesson, or <code>0</code> in the menus</li>
+</ol>
+
+<p>At this point, tutorials 1-8 are appropriate.</p>
+
+</div>
+
+</section>
+<section data-state="section" data-transition="linear" data-transition-speed="default">
+<h2>Homework: Two Choices</h2>
+<div class="slideContent" >
+<p>Choose between one of two homeworks this week:</p>
+
+<h3>Guided Data Structure Practice (Less Advanced):</h3>
+
+<p>Fill in a template R Markdown file that walks you through 
+creating, accessing, and manipulating R data structures. Enter values in 
+the R Markdown document and knit it to check your answers. <strong>Knit after entering each answer</strong>. 
+If you get an error, check to see if undoing your last edit solves the problem; coding an assignment to handle
+all possible mistakes is really hard! This assignment is also long, so <strong>start early</strong>.</p>
+
+<h3>Manual Linear Regression (More Advanced)</h3>
+
+<p>Fill in a template R markdown file that walks you through (1) doing linear regression
+manually and (2) comparing it to the built-in <code>lm()</code> function. Includes simulating data and
+creating and modifying data structures. <strong>Knit after entering each answer</strong>. This
+assignment does not check answers as you go. This is also long, so <strong>start early</strong>!</p>
 
 </div>
 
@@ -2089,8 +2100,8 @@ function commandsForSlide(indexh) {
       transition: 'linear',
       transitionSpeed: 'default',
       rtl: false,
-      width: 1100,
-      height: 750,
+      width: 1600,
+      height: 900,
     
       dependencies: []
     });
