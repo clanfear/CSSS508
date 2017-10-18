@@ -980,7 +980,9 @@ round(z, 2)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Generating Numeric Vectors</h3>
 <div class="slideContent" >
-<p>There are shortcuts for generating common kinds of vectors:</p>
+<p>Numeric vectors contain only numbers, with any number of decimal places.</p>
+
+<p class="fragment">There are shortcuts for generating common kinds of vectors:</p>
 
 <pre class="fragment"><code class="r">seq(-3, 6, by = 1.75)
 </code></pre>
@@ -1006,7 +1008,9 @@ round(z, 2)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Generating Integer Vectors</h3>
 <div class="slideContent" >
-<p>We can get a special case of numeric vectors using the <code>:</code> shortcut:</p>
+<p>Integer vectors are a special case of numeric vectors where all the values are whole numbers.</p>
+
+<p class="fragment">We can produce them using the <code>:</code> shortcut:</p>
 
 <pre class="fragment"><code class="r">n &lt;- 12
 1:n
@@ -1027,7 +1031,7 @@ round(z, 2)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Character Vectors</h3>
 <div class="slideContent" >
-<p>Character vectors come up when dealing with data like names, addresses, and IDs:</p>
+<p>Character vectors store data as text and typically come up when dealing names, addresses, and IDs:</p>
 
 <pre class="fragment"><code class="r">first_names &lt;- c(&quot;Andre&quot;, &quot;Beth&quot;, &quot;Carly&quot;, &quot;Dan&quot;)
 class(first_names)
@@ -1036,13 +1040,15 @@ class(first_names)
 <pre class="fragment"><code>[1] &quot;character&quot;
 </code></pre>
 
+<p class="fragment">Note you can store numbers as character data as well, but you cannot perform math on them unless you convert them to numeric.</p>
+
 </div>
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
 <h3>Factor Vectors</h3>
 <div class="slideContent" >
-<p>Factors encode a (modest) number of <strong>levels</strong>, like for gender, experimental group, or geographic region: </p>
+<p>Factors are categorical data that encode a (modest) number of <strong>levels</strong>, like for gender, experimental group, or geographic region: </p>
 
 <pre class="fragment"><code class="r">gender &lt;- factor(c(&quot;M&quot;, &quot;F&quot;, &quot;F&quot;, &quot;M&quot;))
 gender
@@ -1066,7 +1072,7 @@ Levels: F M
 <section data-transition="linear" data-transition-speed="default">
 <h3>Logical Vectors</h3>
 <div class="slideContent" >
-<p>We make logical vectors by defining binary conditions to check for. For example, we can look at which of the first names has at least 4 letters:</p>
+<p>Logical vectors take only TRUE and FALSE values, and are typically the product of logical tests (e.g. <code>x==5</code>). We can make logical vectors by defining binary conditions to check for. For example, we can look at which of the first names has at least 4 letters:</p>
 
 <pre class="fragment"><code class="r">name_lengths &lt;- nchar(first_names) # number of characters
 name_lengths
@@ -1173,10 +1179,10 @@ second_letter_a
 <section data-transition="linear" data-transition-speed="default">
 <h3>Subsetting Vectors</h3>
 <div class="slideContent" >
-<p>We can <strong>subset</strong> the vector in a number of ways:</p>
+<p>We can <strong>subset</strong> a vector in a number of ways:</p>
 
 <ul>
-<li class="fragment">Passing a single index or vector of entries to keep:</li>
+<li class="fragment">Passing a single index or vector of entries to <strong>keep</strong>:</li>
 </ul>
 
 <pre class="fragment"><code class="r">first_names[c(1, 4)]
@@ -1186,7 +1192,7 @@ second_letter_a
 </code></pre>
 
 <ul>
-<li class="fragment">Passing a single index or vector of entries to drop:</li>
+<li class="fragment">Passing a single index or vector of entries to <strong>drop</strong>:</li>
 </ul>
 
 <pre class="fragment"><code class="r">first_names[-c(1, 4)]
@@ -1221,7 +1227,7 @@ second_letter_a
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>More Logical&#x2F;Subsetting Functions</h3>
+<h3>Some Logical&#x2F;Subsetting Functions</h3>
 <div class="slideContent" >
 <p><code>%in%</code> lets you avoid typing a lot of logical ORs (<code>|</code>):</p>
 
@@ -1415,7 +1421,9 @@ head(a_vector)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Matrices: 2D vectors</h3>
 <div class="slideContent" >
-<p><strong>Matrices</strong> extend vectors to two dimensions: rows and columns.</p>
+<p><strong>Matrices</strong> extend vectors to two <strong>dimension</strong>s: <strong>rows</strong> and <strong>columns</strong>. We can construct them directly 
+using <code>matrix</code>. Note the <code>byrow</code> argument which determines whether the data fill the matrix
+by row or by column.</p>
 
 <pre class="fragment"><code class="r">(a_matrix &lt;- matrix(letters[1:6], nrow=2, ncol=3))
 </code></pre>
@@ -1437,7 +1445,7 @@ head(a_vector)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Binding vectors</h3>
+<h3>Binding Vectors</h3>
 <div class="slideContent" >
 <p>We can also make matrices by <em>binding</em> vectors together with <code>rbind()</code> (<strong>r</strong>ow <strong>bind</strong>) and <code>cbind()</code> (<strong>c</strong>olumn <strong>bind</strong>).</p>
 
@@ -1463,7 +1471,7 @@ head(a_vector)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Subsetting Matrices</h3>
 <div class="slideContent" >
-<p>We subset matrices using the same methods as with vectors, except we refer to <code>[rows, columns]</code>:</p>
+<p>We subset matrices using the same methods as with vectors, except we index them with <code>[rows, columns]</code>:</p>
 
 <pre class="fragment"><code class="r">a_matrix[1, 2] # row 1, column 2
 </code></pre>
@@ -1476,6 +1484,8 @@ head(a_vector)
 
 <pre class="fragment"><code>[1] &quot;c&quot; &quot;e&quot;
 </code></pre>
+
+<p class="fragment">We can obtain the dimensions of a matrix using <code>dim()</code>.</p>
 
 </div>
 
@@ -1505,7 +1515,7 @@ head(a_vector)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Matrix Data Type Warning</h3>
 <div class="slideContent" >
-<p>Matrices can be numeric, integer, factor, character, or logical, just like vectors. Also like vectors, <em>they must be all the same data type</em>.</p>
+<p>Matrices can be numeric, integer, factor, character, or logical, just like vectors. Also like vectors, <em>all elements must be the same data type</em>.</p>
 
 <pre class="fragment"><code class="r">(bad_matrix &lt;- cbind(1:2, LETTERS[c(6,1)]))
 </code></pre>
@@ -1589,7 +1599,7 @@ Biggs &quot;2&quot;         &quot;A&quot;
 [3,]    5    6
 </code></pre>
 
-<p class="fragment">To do proper matrix multiplication (not entry-wise), use <code>%*%</code>.</p>
+<p class="fragment">To do actual matrix multiplication (not entry-wise), use <code>%*%</code>.</p>
 
 <pre class="fragment"><code class="r">(f_matrix &lt;- d_matrix %*% e_matrix)
 </code></pre>
@@ -1623,7 +1633,7 @@ Biggs &quot;2&quot;         &quot;A&quot;
 [2,]    0  1.000000e+00
 </code></pre>
 
-<p class="fragment">Note the floating point imprecision!</p>
+<p class="fragment">Note the floating point imprecision: The off-diagonals are <em>very close to zero</em> rather than actually zero!</p>
 
 </div>
 
@@ -1689,7 +1699,7 @@ Coefficients:
 <section data-transition="linear" data-transition-speed="default">
 <h3>Accessing List Elements</h3>
 <div class="slideContent" >
-<p>You can access a list element by its name or number in <code>[[]]</code>, or a <code>$</code> with its name:</p>
+<p>You can access a list element by its name or number in <code>[[ ]]</code>, or a <code>$</code> followed by its name:</p>
 
 <pre class="fragment"><code class="r">my_list[[&quot;first_thing&quot;]]
 </code></pre>
@@ -1730,13 +1740,15 @@ Coefficients:
 <pre class="fragment"><code> int [1:5] 1 2 3 4 5
 </code></pre>
 
+<p class="fragment">Note that you can only select a single list element at a time using <code>[ ]</code> (because this would have to return multiple objects).</p>
+
 </div>
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
 <h3>Subsetted Lists Can Be of Length &gt; 1</h3>
 <div class="slideContent" >
-<p>You can use vector-style subsetting to get a sublist:</p>
+<p>You can use vector-style subsetting to get a sublist of multiple elements:</p>
 
 <pre class="fragment"><code class="r">length(my_list[c(1, 2)])
 </code></pre>
@@ -1902,7 +1914,6 @@ Coefficients:
 <pre class="fragment"><code class="r">library(dplyr)
 swiss %&gt;%
     filter(Agriculture &gt; mean(Agriculture)) %&gt;%
-    select(Fertility) %&gt;%
     summarize(mean = mean(Fertility))
 </code></pre>
 

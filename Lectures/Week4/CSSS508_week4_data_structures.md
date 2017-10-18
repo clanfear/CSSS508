@@ -196,6 +196,8 @@ Generating Numeric Vectors
 ====================================================================================
 incremental: true
 
+Numeric vectors contain only numbers, with any number of decimal places.
+
 There are shortcuts for generating common kinds of vectors:
 
 ```r
@@ -225,8 +227,9 @@ rep(c(-1, 0, 1), each = 3)
 Generating Integer Vectors
 ====================================================================================
 incremental: true
+Integer vectors are a special case of numeric vectors where all the values are whole numbers.
 
-We can get a special case of numeric vectors using the `:` shortcut:
+We can produce them using the `:` shortcut:
 
 ```r
 n <- 12
@@ -250,7 +253,7 @@ Character Vectors
 ====================================================================================
 incremental: true
 
-Character vectors come up when dealing with data like names, addresses, and IDs:
+Character vectors store data as text and typically come up when dealing names, addresses, and IDs:
 
 ```r
 first_names <- c("Andre", "Beth", "Carly", "Dan")
@@ -260,13 +263,13 @@ class(first_names)
 ```
 [1] "character"
 ```
-
+Note you can store numbers as character data as well, but you cannot perform math on them unless you convert them to numeric.
 
 Factor Vectors
 ====================================================================================
 incremental: true
 
-Factors encode a (modest) number of **levels**, like for gender, experimental group, or geographic region: 
+Factors are categorical data that encode a (modest) number of **levels**, like for gender, experimental group, or geographic region: 
 
 ```r
 gender <- factor(c("M", "F", "F", "M"))
@@ -292,7 +295,7 @@ Logical Vectors
 ====================================================================================
 incremental: true
 
-We make logical vectors by defining binary conditions to check for. For example, we can look at which of the first names has at least 4 letters:
+Logical vectors take only TRUE and FALSE values, and are typically the product of logical tests (e.g. `x==5`). We can make logical vectors by defining binary conditions to check for. For example, we can look at which of the first names has at least 4 letters:
 
 ```r
 name_lengths <- nchar(first_names) # number of characters
@@ -405,9 +408,9 @@ Subsetting Vectors
 ====================================================================================
 incremental: true
 
-We can **subset** the vector in a number of ways:
+We can **subset** a vector in a number of ways:
 
-* Passing a single index or vector of entries to keep:
+* Passing a single index or vector of entries to **keep**:
 
 ```r
 first_names[c(1, 4)]
@@ -416,7 +419,7 @@ first_names[c(1, 4)]
 ```
 [1] "Andre" "Dan"  
 ```
-* Passing a single index or vector of entries to drop:
+* Passing a single index or vector of entries to **drop**:
 
 ```r
 first_names[-c(1, 4)]
@@ -450,7 +453,7 @@ first_names[gender != "F"] # != is "not equal to"
 ```
 
 
-More Logical/Subsetting Functions
+Some Logical/Subsetting Functions
 ====================================================================================
 incremental: true
 
@@ -670,7 +673,9 @@ Matrices: 2D vectors
 ====================================================================================
 incremental: true
 
-**Matrices** extend vectors to two dimensions: rows and columns.
+**Matrices** extend vectors to two **dimension**s: **rows** and **columns**. We can construct them directly 
+using `matrix`. Note the `byrow` argument which determines whether the data fill the matrix
+by row or by column.
 
 ```r
 (a_matrix <- matrix(letters[1:6], nrow=2, ncol=3))
@@ -693,7 +698,7 @@ incremental: true
 ```
 
 
-Binding vectors
+Binding Vectors
 ====================================================================================
 incremental: true
 
@@ -724,7 +729,7 @@ Subsetting Matrices
 ====================================================================================
 incremental: true
 
-We subset matrices using the same methods as with vectors, except we refer to `[rows, columns]`:
+We subset matrices using the same methods as with vectors, except we index them with `[rows, columns]`:
 
 ```r
 a_matrix[1, 2] # row 1, column 2
@@ -741,7 +746,7 @@ a_matrix[1, c(2, 3)] # row 1, columns 2 and 3
 ```
 [1] "c" "e"
 ```
-
+We can obtain the dimensions of a matrix using `dim()`.
 
 Matrices Becoming Vectors
 ====================================================================================
@@ -773,7 +778,7 @@ Matrix Data Type Warning
 ====================================================================================
 incremental: true
 
-Matrices can be numeric, integer, factor, character, or logical, just like vectors. Also like vectors, *they must be all the same data type*.
+Matrices can be numeric, integer, factor, character, or logical, just like vectors. Also like vectors, *all elements must be the same data type*.
 
 ```r
 (bad_matrix <- cbind(1:2, LETTERS[c(6,1)]))
@@ -869,7 +874,7 @@ To do matrix transpositions, use `t()`.
 [3,]    5    6
 ```
 
-To do proper matrix multiplication (not entry-wise), use `%*%`.
+To do actual matrix multiplication (not entry-wise), use `%*%`.
 
 
 ```r
@@ -909,7 +914,7 @@ f_matrix %*% g_matrix
 [2,]    0  1.000000e+00
 ```
 
-Note the floating point imprecision!
+Note the floating point imprecision: The off-diagonals are *very close to zero* rather than actually zero!
 
 Diagonal Matrices
 ====================================================================================
@@ -976,7 +981,7 @@ Accessing List Elements
 ====================================================================================
 incremental: true
 
-You can access a list element by its name or number in `[[]]`, or a `$` with its name:
+You can access a list element by its name or number in `[[ ]]`, or a `$` followed by its name:
 
 ```r
 my_list[["first_thing"]]
@@ -1025,13 +1030,14 @@ str(my_list[[1]])
 ```
  int [1:5] 1 2 3 4 5
 ```
+Note that you can only select a single list element at a time using `[ ]` (because this would have to return multiple objects).
 
 
 Subsetted Lists Can Be of Length > 1
 ====================================================================================
 incremental: true
 
-You can use vector-style subsetting to get a sublist:
+You can use vector-style subsetting to get a sublist of multiple elements:
 
 ```r
 length(my_list[c(1, 2)])
@@ -1215,7 +1221,6 @@ mean(swiss[swiss$Agriculture > mean(swiss$Agriculture), "Fertility"])
 library(dplyr)
 swiss %>%
     filter(Agriculture > mean(Agriculture)) %>%
-    select(Fertility) %>%
     summarize(mean = mean(Fertility))
 ```
 
