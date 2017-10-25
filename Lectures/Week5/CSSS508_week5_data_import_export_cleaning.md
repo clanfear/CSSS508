@@ -1,10 +1,10 @@
 CSSS 508, Week 5:   Importing, Exporting, and Cleaning
 ====================================================================================
 author: Charles Lanfear
-date: April 26, 2017
+date: October 25, 2017
 transition: linear
-width: 1100
-height: 750
+width: 1440
+height: 900
 
 
 Today's Theme: "Data Janitor Work"
@@ -17,7 +17,7 @@ Issues around getting data *in* and *out* of R and making it analytically *ready
 - Importing and exporting data: `readr` and `haven`
 - Cleaning and reshaping data: `tidyr`
 - Dates and times: `lubridate`
-- Controlling factor variables
+- Controlling factor variables: `forcats`
  
 
 
@@ -49,12 +49,11 @@ Comments:
 * Windows users: make sure to change back slashes (`\`) to forward slashes (`/`) for the filepaths
 * Recommendation is to put `setwd()` at the very beginning of your `.R` or `.Rmd` code so that someone using a different computer knows they need to modify it
 
-In-class Example
 
 Projects in RStudio
 ====================================================================================
 
-Better way to deal with working directories: RStudio's **project** feature in the top-right dropdown. This has lots of advantages:
+A better way to deal with working directories: RStudio's **project** feature in the top-right dropdown. This has lots of advantages:
 
 * Sets your working directory to be the project directory
 * Can remember objects in your workspace, command history, etc. next time you re-open that project
@@ -72,12 +71,13 @@ Once you've set the working directory, you can refer to folders and files within
 library(ggplot2)
 a_plot <- ggplot(data = cars, aes(x = speed, y = dist)) +
     geom_point()
-ggsave("Graphics/cars_plot.png", plot = a_plot)
+ggsave("graphics/cars_plot.png", plot = a_plot)
 ```
 
-The above would save an image called "cars_plot.png" inside an existing folder called "Graphics" within my working directory.
+The above would save an image called "cars_plot.png" inside an existing folder called "graphics" within my working directory.
 
-Relative paths are nice, because all  locations of loaded and saved files can be changed just by altering the working directory. 
+Relative paths are nice, because all locations of loaded and saved files can be changed just by altering the working directory. 
+
 
 Importing and Exporting Data
 ====================================================================================
@@ -87,7 +87,7 @@ type: section
 Special Data Access Packages
 ====================================================================================
 
-Are you working with a popular data source? Try Googling to see if it has a devoted R package on CRAN or on Github (use `devtools::install_github` for these). Examples:
+Are you working with a popular data source? Try Googling to see if it has a devoted R package on *CRAN* or *Github* (use `devtools::install_github()` for these). Examples:
 
 * `WDI`: World Development Indicators (World Bank)
 * `WHO`: World Health Organization API
@@ -99,7 +99,7 @@ Are you working with a popular data source? Try Googling to see if it has a devo
 Delimited Text Files
 ====================================================================================
 
-Besides a package, the easiest way to work with external data is for it to be stored in a *delimited* text file, e.g. comma-separated values (**csv**) or tab-separated values (**tsv**).
+Besides a package, the easiest way to work with external data is for it to be stored in a *delimited* text file, e.g. comma-separated values (**csv**) or tab-separated values (**tsv**). Here is `csv` data:
 
 ```
 "Subject","Depression","Sex","Week","HamD","Imipramine"
@@ -195,15 +195,26 @@ bb_types <- paste(c("icccD", rep("i", 76)), collapse="")
 billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv", col_types = bb_types)
 ```
 
+Alternate Solutions
+====================================================================================
+
+You could also deal with this by adjusting the maximum rows used by `readr` to guess column types:
+
+```
+read_csv(file, guess_max=5000) # Defaults is 1000
+```
+
+Or you could use `read.csv()` in the `foreign` package. This is a base R alternative that is slower and a bit dumber.
+
 
 Excel Files
 ====================================================================================
 
-The simplest thing to do with Excel files (`.xls` or `.xlsx`) is open them up, export to CSV, then import in R --- and compare carefully to make sure everything worked!
+The simplest thing to do with Excel files (`.xls` or `.xlsx`) is open them up, export to CSV, then import in R---and compare carefully to make sure everything worked!
 
 For Excel files that might get updated and you want the changes to flow to your analysis, I recommend using an R package such as `readxl` or `openxlsx`. For Google Docs Spreadsheets, there's the `googlesheets` package.
 
-You won't keep text formatting, color, comments, or merged cells so if these mean something in your data (*bad*!), you'll need to get creative.
+You won't keep text formatting, color, comments, or merged cells so if these mean something in your data (*bad!*), you'll need to get creative.
 
 
 write_csv, write_tsv, write_delim
@@ -222,7 +233,7 @@ This saved the data we pulled off the web in a file called "billboard_data.csv" 
 Saving in R Formats
 ====================================================================================
 
-Exporting to a CSV drops R metadata, such as whether a variable is a character or factor. You can save objects (data frames, lists, etc.) in R formats to preserve this.
+Exporting to a `.csv` drops R metadata, such as whether a variable is a character or factor. You can save objects (data frames, lists, etc.) in R formats to preserve this.
 
 * `.Rds` format:
     + Used for single objects, doesn't save original the object name
@@ -231,9 +242,9 @@ Exporting to a CSV drops R metadata, such as whether a variable is a character o
 * `.Rdata` or `.Rda` format:
     + Used for saving multiple files where the original object names are preserved
     + Save: `save(object1, object2, ... , file = "path.Rdata")`
-    + Load: `load("path.Rdata")` with no assignment
+    + Load: `load("path.Rdata")` *without assignment operator*
 
-dput
+dput()
 ====================================================================================
 incremental: true
 
@@ -261,7 +272,7 @@ temp <- structure(list(speed = c(4, 4, 7, 7, 8, 9, 10, 10), dist = c(2,
 Reading in Data from Other Software
 ====================================================================================
 
-Working with Stata or SPSS users? You can use a package to bring in their saved data files:
+Working with **Stata** or **SPSS** users? You can use a package to bring in their saved data files:
 
 * `haven` for Stata, SPSS, and SAS. 
     + Part of the `tidyverse` family
@@ -287,7 +298,7 @@ incremental: true
     + Modify a `col_names` argument or fix with `rename`
 * Are there "decorative" blank rows or columns to remove?
     + `filter` or `select` out those rows/columns
-* How are missing values represented: `NA`, blank, period, `999`?
+* How are missing values represented: `NA`, `" "` (blank), `.` (period), `999`?
     + Use `mutate` with `ifelse` to fix these (perhaps *en masse* with looping)
 * Are there character data (e.g. ZIP codes with leading zeroes) being incorrectly represented as numeric or vice versa?
     + Modify `col_types` argument, or use `mutate` and `as.numeric`
@@ -297,7 +308,7 @@ incremental: true
 ====================================================================================
 incremental: true
 
-| **Program**       | **Female** | **Male** |
+| **Program**   | **Female** | **Male** |
 |---------------|-------:|-----:|
 | Evans School  |     10 |    6 |
 | Arts & Sciences |    5 |    6 |
@@ -575,7 +586,7 @@ billboard_2000 %>%
 ```
 
 ```
-# A tibble: 7 × 3
+# A tibble: 7 x 3
                artist                   track weeks_at_1
                 <chr>                   <chr>      <int>
 1     Destiny's Child Independent Women Pa...         11
@@ -596,7 +607,7 @@ Getting Usable Dates from Billboard
 ====================================================================================
 incremental: true
 
-We have the date the songs first charted, but not the dates for later weeks. We can calculate these now that the data is tidy:
+We have the date the songs first charted, but not the dates for later weeks. We can calculate these now that the data are tidy:
 
 
 ```r
@@ -607,7 +618,7 @@ billboard_2000 %>% arrange(artist, track, week) %>%
 ```
 
 ```
-# A tibble: 4 × 5
+# A tibble: 4 x 5
   artist date.entered  week       date  rank
    <chr>       <date> <dbl>     <date> <int>
 1  2 Pac   2000-02-26     1 2000-02-26    87
@@ -913,6 +924,10 @@ Homework: Be a data janitor!
 ====================================================================================
 type: section
 
-Vote tallies in King County from the 2012 general election are in a 60 MB tab-delimited text file downloaded from the [WA Secretary of State](https://wei.sos.wa.gov/agency/osos/en/press_and_research/PreviousElections/2012/General-Election/Data/Documents/Forms/AllItems.aspx?RootFolder=%2Fagency%2Fosos%2Fen%2Fpress_and_research%2FPreviousElections%2F2012%2FGeneral-Election%2FData%2FDocuments%2FPrecinct_Results&FolderCTID=0x0120008B9C603856A5C84E89934BDF6A72C2ED&View={DF1C73C5-333F-4F68-8713-AD3007138C66}).
+Vote tallies in King County from the 2012 general election are in a 60 MB tab-delimited text file downloaded from the [WA Secretary of State](https://wei.sos.wa.gov/agency/osos/en/press_and_research/PreviousElections/2012/General-Election/Data/Documents/Forms/AllItems.aspx?RootFolder=%2Fagency%2Fosos%2Fen%2Fpress_and_research%2FPreviousElections%2F2012%2FGeneral-Election%2FData%2FDocuments%2FPrecinct_Results&FolderCTID=0x0120008B9C603856A5C84E89934BDF6A72C2ED&View={DF1C73C5-333F-4F68-8713-AD3007138C66}). They can be found on the course website.
 
 The data have no documentation, so show your detective work to answer questions about the data and clean it up in an R Markdown template on the course website.
+
+## DUE: 11:59 PM, November 7th
+
+You have **two weeks** to do this assignment, *for good reasons*. Start as soon as possible. 

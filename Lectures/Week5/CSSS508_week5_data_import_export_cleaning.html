@@ -784,7 +784,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>CSSS 508, Week 5:   Importing, Exporting, and Cleaning</h1><p>Charles Lanfear<br/>April 26, 2017</p>
+<h1>CSSS 508, Week 5:   Importing, Exporting, and Cleaning</h1><p>Charles Lanfear<br/>October 25, 2017</p>
 
 <div class="slideContent" >
 
@@ -801,7 +801,7 @@ hljs.initHighlightingOnLoad();
 <li class="fragment">Importing and exporting data: <code>readr</code> and <code>haven</code></li>
 <li class="fragment">Cleaning and reshaping data: <code>tidyr</code></li>
 <li class="fragment">Dates and times: <code>lubridate</code></li>
-<li class="fragment">Controlling factor variables</li>
+<li class="fragment">Controlling factor variables: <code>forcats</code></li>
 </ul>
 
 </div>
@@ -841,15 +841,13 @@ You can find out what it is using the function <code>getwd()</code>. On my compu
 <li>Recommendation is to put <code>setwd()</code> at the very beginning of your <code>.R</code> or <code>.Rmd</code> code so that someone using a different computer knows they need to modify it</li>
 </ul>
 
-<p>In-class Example</p>
-
 </div>
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
 <h3>Projects in RStudio</h3>
 <div class="slideContent" >
-<p>Better way to deal with working directories: RStudio&#39;s <strong>project</strong> feature in the top-right dropdown. This has lots of advantages:</p>
+<p>A better way to deal with working directories: RStudio&#39;s <strong>project</strong> feature in the top-right dropdown. This has lots of advantages:</p>
 
 <ul>
 <li>Sets your working directory to be the project directory</li>
@@ -869,12 +867,12 @@ You can find out what it is using the function <code>getwd()</code>. On my compu
 <pre><code class="r">library(ggplot2)
 a_plot &lt;- ggplot(data = cars, aes(x = speed, y = dist)) +
     geom_point()
-ggsave(&quot;Graphics/cars_plot.png&quot;, plot = a_plot)
+ggsave(&quot;graphics/cars_plot.png&quot;, plot = a_plot)
 </code></pre>
 
-<p>The above would save an image called &ldquo;cars_plot.png&rdquo; inside an existing folder called &ldquo;Graphics&rdquo; within my working directory.</p>
+<p>The above would save an image called &ldquo;cars_plot.png&rdquo; inside an existing folder called &ldquo;graphics&rdquo; within my working directory.</p>
 
-<p>Relative paths are nice, because all  locations of loaded and saved files can be changed just by altering the working directory. </p>
+<p>Relative paths are nice, because all locations of loaded and saved files can be changed just by altering the working directory. </p>
 
 </div>
 
@@ -889,7 +887,7 @@ ggsave(&quot;Graphics/cars_plot.png&quot;, plot = a_plot)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Special Data Access Packages</h3>
 <div class="slideContent" >
-<p>Are you working with a popular data source? Try Googling to see if it has a devoted R package on CRAN or on Github (use <code>devtools::install_github</code> for these). Examples:</p>
+<p>Are you working with a popular data source? Try Googling to see if it has a devoted R package on <em>CRAN</em> or <em>Github</em> (use <code>devtools::install_github()</code> for these). Examples:</p>
 
 <ul>
 <li><code>WDI</code>: World Development Indicators (World Bank)</li>
@@ -905,7 +903,7 @@ ggsave(&quot;Graphics/cars_plot.png&quot;, plot = a_plot)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Delimited Text Files</h3>
 <div class="slideContent" >
-<p>Besides a package, the easiest way to work with external data is for it to be stored in a <em>delimited</em> text file, e.g. comma-separated values (<strong>csv</strong>) or tab-separated values (<strong>tsv</strong>).</p>
+<p>Besides a package, the easiest way to work with external data is for it to be stored in a <em>delimited</em> text file, e.g. comma-separated values (<strong>csv</strong>) or tab-separated values (<strong>tsv</strong>). Here is <code>csv</code> data:</p>
 
 <pre><code>&quot;Subject&quot;,&quot;Depression&quot;,&quot;Sex&quot;,&quot;Week&quot;,&quot;HamD&quot;,&quot;Imipramine&quot;
 101,&quot;Non-endogenous&quot;,&quot;Male&quot;,0,26,NA
@@ -1008,13 +1006,26 @@ billboard_2000_raw &lt;- read_csv(file = &quot;https://raw.githubusercontent.com
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
+<h3>Alternate Solutions</h3>
+<div class="slideContent" >
+<p>You could also deal with this by adjusting the maximum rows used by <code>readr</code> to guess column types:</p>
+
+<pre><code>read_csv(file, guess_max=5000) # Defaults is 1000
+</code></pre>
+
+<p>Or you could use <code>read.csv()</code> in the <code>foreign</code> package. This is a base R alternative that is slower and a bit dumber.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
 <h3>Excel Files</h3>
 <div class="slideContent" >
-<p>The simplest thing to do with Excel files (<code>.xls</code> or <code>.xlsx</code>) is open them up, export to CSV, then import in R &mdash; and compare carefully to make sure everything worked!</p>
+<p>The simplest thing to do with Excel files (<code>.xls</code> or <code>.xlsx</code>) is open them up, export to CSV, then import in R&mdash;and compare carefully to make sure everything worked!</p>
 
 <p>For Excel files that might get updated and you want the changes to flow to your analysis, I recommend using an R package such as <code>readxl</code> or <code>openxlsx</code>. For Google Docs Spreadsheets, there&#39;s the <code>googlesheets</code> package.</p>
 
-<p>You won&#39;t keep text formatting, color, comments, or merged cells so if these mean something in your data (<em>bad</em>!), you&#39;ll need to get creative.</p>
+<p>You won&#39;t keep text formatting, color, comments, or merged cells so if these mean something in your data (<em>bad!</em>), you&#39;ll need to get creative.</p>
 
 </div>
 
@@ -1035,7 +1046,7 @@ billboard_2000_raw &lt;- read_csv(file = &quot;https://raw.githubusercontent.com
 <section data-transition="linear" data-transition-speed="default">
 <h3>Saving in R Formats</h3>
 <div class="slideContent" >
-<p>Exporting to a CSV drops R metadata, such as whether a variable is a character or factor. You can save objects (data frames, lists, etc.) in R formats to preserve this.</p>
+<p>Exporting to a <code>.csv</code> drops R metadata, such as whether a variable is a character or factor. You can save objects (data frames, lists, etc.) in R formats to preserve this.</p>
 
 <ul>
 <li><code>.Rds</code> format:
@@ -1050,7 +1061,7 @@ billboard_2000_raw &lt;- read_csv(file = &quot;https://raw.githubusercontent.com
 <ul>
 <li>Used for saving multiple files where the original object names are preserved</li>
 <li>Save: <code>save(object1, object2, ... , file = &quot;path.Rdata&quot;)</code></li>
-<li>Load: <code>load(&quot;path.Rdata&quot;)</code> with no assignment</li>
+<li>Load: <code>load(&quot;path.Rdata&quot;)</code> <em>without assignment operator</em></li>
 </ul></li>
 </ul>
 
@@ -1058,7 +1069,7 @@ billboard_2000_raw &lt;- read_csv(file = &quot;https://raw.githubusercontent.com
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>dput</h3>
+<h3>dput()</h3>
 <div class="slideContent" >
 <p>For asking for help, it is useful to prepare a snippet of your data with <code>dput()</code>:</p>
 
@@ -1082,7 +1093,7 @@ billboard_2000_raw &lt;- read_csv(file = &quot;https://raw.githubusercontent.com
 <section data-transition="linear" data-transition-speed="default">
 <h3>Reading in Data from Other Software</h3>
 <div class="slideContent" >
-<p>Working with Stata or SPSS users? You can use a package to bring in their saved data files:</p>
+<p>Working with <strong>Stata</strong> or <strong>SPSS</strong> users? You can use a package to bring in their saved data files:</p>
 
 <ul>
 <li><code>haven</code> for Stata, SPSS, and SAS. 
@@ -1129,7 +1140,7 @@ R package to handle it (or at least a clever hack).</p>
 <ul>
 <li class="fragment"><code>filter</code> or <code>select</code> out those rows/columns</li>
 </ul></li>
-<li class="fragment">How are missing values represented: <code>NA</code>, blank, period, <code>999</code>?
+<li class="fragment">How are missing values represented: <code>NA</code>, <code>&quot; &quot;</code> (blank), <code>.</code> (period), <code>999</code>?
 
 <ul>
 <li class="fragment">Use <code>mutate</code> with <code>ifelse</code> to fix these (perhaps <em>en masse</em> with looping)</li>
@@ -1509,7 +1520,7 @@ billboard_trajectories &lt;- ggplot(
     head(7)
 </code></pre>
 
-<pre class="fragment"><code># A tibble: 7 × 3
+<pre class="fragment"><code># A tibble: 7 x 3
                artist                   track weeks_at_1
                 &lt;chr&gt;                   &lt;chr&gt;      &lt;int&gt;
 1     Destiny&#39;s Child Independent Women Pa...         11
@@ -1534,7 +1545,7 @@ billboard_trajectories &lt;- ggplot(
 <section data-transition="linear" data-transition-speed="default">
 <h3>Getting Usable Dates from Billboard</h3>
 <div class="slideContent" >
-<p>We have the date the songs first charted, but not the dates for later weeks. We can calculate these now that the data is tidy:</p>
+<p>We have the date the songs first charted, but not the dates for later weeks. We can calculate these now that the data are tidy:</p>
 
 <pre class="fragment"><code class="r">billboard_2000 &lt;- billboard_2000 %&gt;%
     mutate(date = date.entered + (week - 1) * 7)
@@ -1542,7 +1553,7 @@ billboard_2000 %&gt;% arrange(artist, track, week) %&gt;%
     select(artist, date.entered, week, date, rank) %&gt;% head(4)
 </code></pre>
 
-<pre class="fragment"><code># A tibble: 4 × 5
+<pre class="fragment"><code># A tibble: 4 x 5
   artist date.entered  week       date  rank
    &lt;chr&gt;       &lt;date&gt; &lt;dbl&gt;     &lt;date&gt; &lt;int&gt;
 1  2 Pac   2000-02-26     1 2000-02-26    87
@@ -1868,9 +1879,13 @@ levels(jayz_biggest$track)
 <section data-state="section" data-transition="linear" data-transition-speed="default">
 <h2>Homework: Be a data janitor!</h2>
 <div class="slideContent" >
-<p>Vote tallies in King County from the 2012 general election are in a 60 MB tab-delimited text file downloaded from the <a href="https://wei.sos.wa.gov/agency/osos/en/press_and_research/PreviousElections/2012/General-Election/Data/Documents/Forms/AllItems.aspx?RootFolder=%2Fagency%2Fosos%2Fen%2Fpress_and_research%2FPreviousElections%2F2012%2FGeneral-Election%2FData%2FDocuments%2FPrecinct_Results&amp;FolderCTID=0x0120008B9C603856A5C84E89934BDF6A72C2ED&amp;View=%7BDF1C73C5-333F-4F68-8713-AD3007138C66%7D">WA Secretary of State</a>.</p>
+<p>Vote tallies in King County from the 2012 general election are in a 60 MB tab-delimited text file downloaded from the <a href="https://wei.sos.wa.gov/agency/osos/en/press_and_research/PreviousElections/2012/General-Election/Data/Documents/Forms/AllItems.aspx?RootFolder=%2Fagency%2Fosos%2Fen%2Fpress_and_research%2FPreviousElections%2F2012%2FGeneral-Election%2FData%2FDocuments%2FPrecinct_Results&amp;FolderCTID=0x0120008B9C603856A5C84E89934BDF6A72C2ED&amp;View=%7BDF1C73C5-333F-4F68-8713-AD3007138C66%7D">WA Secretary of State</a>. They can be found on the course website.</p>
 
 <p>The data have no documentation, so show your detective work to answer questions about the data and clean it up in an R Markdown template on the course website.</p>
+
+<h2>DUE: 11:59 PM, November 7th</h2>
+
+<p>You have <strong>two weeks</strong> to do this assignment, <em>for good reasons</em>. Start as soon as possible. </p>
 
 </div>
 
@@ -1929,8 +1944,8 @@ function commandsForSlide(indexh) {
       transition: 'linear',
       transitionSpeed: 'default',
       rtl: false,
-      width: 1100,
-      height: 750,
+      width: 1440,
+      height: 900,
     
       dependencies: []
     });
