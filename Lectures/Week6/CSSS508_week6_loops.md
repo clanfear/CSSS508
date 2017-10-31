@@ -1,10 +1,10 @@
-CSSS 508, Week 6
+CSSS 508, Week 6: Loops
 ====================================================================================
 author: Charles Lanfear
-date: May 3, 2017
+date: November 1, 2017
 transition: linear
-width: 1100
-height: 750
+width: 1440
+height: 960
 
 
 Programming with Goofus and Gallant
@@ -71,7 +71,7 @@ Programming and Looping Agenda
 **Today:**
 
 * `for()` and `while()` loop programming (general methods)
-* Vectorization to avoid loops
+* Vectorization to *avoid* loops
 
 **Next week:**
 
@@ -84,7 +84,7 @@ What is a Loop?
 
 I'll be bad and cite Wikipedia:
 
-"A loop is a sequence of statements which is specified once but which may be carried out several times in succession. The code "inside" the loop is obeyed a specified number of times, or once for each of a collection of items, or until some condition is met, or indefinitely." ([Wikipedia](https://en.wikipedia.org/wiki/Control_flow#Loops))
+>A loop is a sequence of statements which is specified once but which may be carried out several times in succession. The code "inside" the loop is obeyed a specified number of times, or once for each of a collection of items, or until some condition is met, or indefinitely.'' ([Wikipedia](https://en.wikipedia.org/wiki/Control_flow#Loops))
 
 
 for() Loops
@@ -191,10 +191,11 @@ incremental: true
 
 * We call what happens in the loop for a particular value one **iteration**. 
 
-* Iterating over indices `1:n` is *very* common. `n` might be the length of a vector, the number of rows or columns in a matrix or data frame, or the length of a list.
+* Iterating over indices `1:n` is *very* common. `n` might be the length of a vector, the number of rows or columns in a matrix or data frame, or the length of a list. 
 
-* Common notation: `i` is the variable that holds the current value inside the loop.
+* Common notation: `i` is the object that holds the current value inside the loop.
     + If loops are nested, you will often see `j` and `k` used for the inner loops.
+    + This notation is similar to indexing in mathematical symbols (e.g $\sum\limits_{i=1}^n$)
     
 
 Iterate Over Character Vectors
@@ -670,7 +671,7 @@ for(position in 1:length(my_vector)) {
 
 ```
    user  system elapsed 
-   0.73    0.02    0.75 
+   1.25    0.03    1.30 
 ```
 
 
@@ -688,7 +689,7 @@ new_vector <- my_vector + 1
 
 ```
    user  system elapsed 
-   0.05    0.00    0.05 
+   0.08    0.02    0.09 
 ```
 
 ```r
@@ -697,7 +698,7 @@ for_time / vec_time
 
 ```
    user  system elapsed 
-   14.6     Inf    15.0 
+   15.6     1.5    14.4 
 ```
 
 Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
@@ -761,4 +762,4 @@ type: section
 
 Read Rebecca Ferrell's [data downloading demonstration on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html) (it is shorter than it looks; it is more than half error messages). I hope any future forays into automated data downloading and cleaning are smoother than this one was!
 
-**Reminder: HW 5 assigned last week is due midnight Tuesday 5/9.**
+**Reminder: HW 5 assigned last week is due midnight Tuesday 11/7.**
