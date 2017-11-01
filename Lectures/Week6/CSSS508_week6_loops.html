@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>CSSS 508, Week 6</title>
+  <title>CSSS 508, Week 6: Loops</title>
     
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -794,7 +794,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>CSSS 508, Week 6</h1><p>Charles Lanfear<br/>May 3, 2017</p>
+<h1>CSSS 508, Week 6: Loops</h1><p>Charles Lanfear<br/>November 1, 2017</p>
 
 <div class="slideContent" >
 
@@ -866,7 +866,7 @@ swiss_means
 
 <ul>
 <li><code>for()</code> and <code>while()</code> loop programming (general methods)</li>
-<li>Vectorization to avoid loops</li>
+<li>Vectorization to <em>avoid</em> loops</li>
 </ul>
 
 <p><strong>Next week:</strong></p>
@@ -884,7 +884,9 @@ swiss_means
 <div class="slideContent" >
 <p>I&#39;ll be bad and cite Wikipedia:</p>
 
-<p>&ldquo;A loop is a sequence of statements which is specified once but which may be carried out several times in succession. The code &quot;inside&rdquo; the loop is obeyed a specified number of times, or once for each of a collection of items, or until some condition is met, or indefinitely.&ldquo; (<a href="https://en.wikipedia.org/wiki/Control_flow#Loops">Wikipedia</a>)</p>
+<blockquote>
+<p>A loop is a sequence of statements which is specified once but which may be carried out several times in succession. The code &ldquo;inside&rdquo; the loop is obeyed a specified number of times, or once for each of a collection of items, or until some condition is met, or indefinitely.&#39;&#39; (<a href="https://en.wikipedia.org/wiki/Control_flow#Loops">Wikipedia</a>)</p>
+</blockquote>
 
 </div>
 
@@ -990,11 +992,12 @@ print(i^2)
 <div class="slideContent" >
 <ul>
 <li class="fragment"><p>We call what happens in the loop for a particular value one <strong>iteration</strong>. </p></li>
-<li class="fragment"><p class="fragment">Iterating over indices <code>1:n</code> is <em>very</em> common. <code>n</code> might be the length of a vector, the number of rows or columns in a matrix or data frame, or the length of a list.</p></li>
-<li class="fragment"><p class="fragment">Common notation: <code>i</code> is the variable that holds the current value inside the loop.</p>
+<li class="fragment"><p class="fragment">Iterating over indices <code>1:n</code> is <em>very</em> common. <code>n</code> might be the length of a vector, the number of rows or columns in a matrix or data frame, or the length of a list. </p></li>
+<li class="fragment"><p class="fragment">Common notation: <code>i</code> is the object that holds the current value inside the loop.</p>
 
 <ul>
 <li class="fragment">If loops are nested, you will often see <code>j</code> and <code>k</code> used for the inner loops.</li>
+<li class="fragment">This notation is similar to indexing in mathematical symbols (e.g \( \sum\limits_{i=1}^n \))</li>
 </ul></li>
 </ul>
 
@@ -1180,7 +1183,7 @@ ggplot(data = fake_data, aes(x = x, y = y)) +
 <section data-transition="linear" data-transition-speed="default">
 <h3>Preallocating a List for the Regression Models</h3>
 <div class="slideContent" >
-<p>Let&#39;s make a named character vector for the formulas we&#39;ll use in <code>lm</code>:</p>
+<p>Let&#39;s make a named character vector for the formulas we&#39;ll use in <code>lm()</code>:</p>
 
 <pre class="fragment"><code class="r">models &lt;- c(&quot;intercept only&quot; = &quot;y ~ 1&quot;,
             &quot;linear&quot; = &quot;y ~ x&quot;,
@@ -1250,8 +1253,7 @@ tidy_predicted_data &lt;- predicted_data %&gt;%
 <pre><code class="r">ggplot(data = fake_data, aes(x = x, y = y)) +
     geom_point() +
     geom_line(data = tidy_predicted_data,
-              aes(x = x, y = Prediction,
-                  group = Model, color = Model),
+              aes(x = x, y = Prediction, group = Model, color = Model),
               alpha = 0.5, size = 2) +
     ggtitle(&quot;Predicted trends from regression&quot;) +
     theme_bw()
@@ -1298,7 +1300,8 @@ tidy_predicted_data &lt;- predicted_data %&gt;%
 
 <pre><code class="r">K &lt;- 10
 CV_predictions &lt;- fake_data
-CV_predictions$fold &lt;- sample(rep(1:K, length.out = nrow(CV_predictions)), replace = FALSE)
+CV_predictions$fold &lt;- sample(rep(1:K, length.out = nrow(CV_predictions)),
+                              replace = FALSE)
 CV_predictions[, names(models)] &lt;- NA
 head(CV_predictions, 2)
 </code></pre>
@@ -1340,7 +1343,7 @@ head(CV_predictions, 2)
 <pre class="fragment"><code class="r">CV_MSE &lt;- setNames(numeric(length(models)), names(models))
 for(mod in names(models)) {
     pred_sq_error &lt;- (CV_predictions$y - CV_predictions[[mod]])^2
-    CV_MSE[mod] &lt;- mean(pred_sq_error)
+    CV_MSE[mod]   &lt;- mean(pred_sq_error)
 }
 CV_MSE
 </code></pre>
@@ -1361,12 +1364,12 @@ CV_MSE
 </div>
 
 </section>
-<section data-state="incremental" data-transition="linear" data-transition-speed="default">
+<section data-transition="linear" data-transition-speed="default">
 <h3>if() then else()</h3>
 <div class="slideContent" >
 <p>You&#39;ve seen <code>ifelse()</code> before for logical checks on a whole vector. For checking whether a <em>single</em> logical statement holds and then conditionally executing a set of actions, use <code>if()</code> and <code>else</code>:</p>
 
-<pre><code class="r">for(i in 1:10) {
+<pre class="fragment"><code class="r">for(i in 1:10) {
     if(i %% 2 == 0) {
         print(paste0(&quot;The number &quot;, i, &quot; is even&quot;))
     } else if(i %% 3 == 0) {
@@ -1377,7 +1380,7 @@ CV_MSE
 }
 </code></pre>
 
-<p><strong>Warning!</strong> <code>else</code> needs to be on same line as the closing brace <code>}</code> of previous <code>if()</code>.</p>
+<p class="fragment"><strong>Warning!</strong> <code>else</code> needs to be on same line as the closing brace <code>}</code> of previous <code>if()</code>.</p>
 
 </div>
 
@@ -1413,26 +1416,17 @@ CV_MSE
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Data Prep Sketch Outline</h3>
+<h3>Loading Many Data Files with a Loop</h3>
 <div class="slideContent" >
-<ul>
-<li class="fragment">Pre-allocate a list for the individual files</li>
-<li class="fragment">Inside a <code>for()</code> loop:
+<p>One common use of a loop in R is for loading many individual data files at once&mdash;like
+an entire directory of Excel files&ndash;to combine them into one data set.</p>
 
-<ul>
-<li class="fragment">Make a URL and download file </li>
-<li class="fragment">Read the file in with Excel-reading package and store in list</li>
-</ul></li>
-<li class="fragment">Combine the data for each year into one file</li>
-<li class="fragment">Clean up the combined data</li>
-<li class="fragment">Some variations on general process you might encounter:
+<p class="fragment">We will actually do this <em>next week</em>.</p>
 
-<ul>
-<li class="fragment">Unzip files first (<code>unzip</code>)</li>
-<li class="fragment">Use <code>if()</code> logic to clean up data differently depending on file</li>
-</ul></li>
-<li class="fragment"><strong>HOMEWORK</strong>: Read Rebecca Ferrell&#39;s <a href="https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html">extended writeup on data hell on the course page</a>.</li>
-</ul>
+<p class="fragment">Alternatively, you might want to use a loops and <code>if()</code> to download and clean files that are all
+from different URLs&hellip; which might go poorly:</p>
+
+<p class="fragment"><strong>HOMEWORK</strong>: Read Rebecca Ferrell&#39;s <a href="https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html">extended writeup on data hell on the course page</a>.</p>
 
 </div>
 
@@ -1451,8 +1445,8 @@ CV_MSE
 
 <pre class="fragment"><code class="r">num_heads &lt;- 0; num_flips &lt;- 0
 while(num_heads &lt; 4) {
-    coin_flip &lt;- rbinom(n = 1, size = 1, prob = 0.5)
-    if(coin_flip == 1) { num_heads &lt;- num_heads + 1 }
+    coin_flip &lt;- rbinom(n=1, size=1, prob=0.5)
+    if (coin_flip == 1) { num_heads &lt;- num_heads + 1 }
     num_flips &lt;- num_flips + 1
 }
 num_flips # follows negative binomial distribution
@@ -1490,7 +1484,7 @@ for(position in 1:length(my_vector)) {
 </code></pre>
 
 <pre class="fragment"><code>   user  system elapsed 
-   0.77    0.00    0.78 
+   0.75    0.03    0.78 
 </code></pre>
 
 </div>
@@ -1501,20 +1495,20 @@ for(position in 1:length(my_vector)) {
 <div class="slideContent" >
 <p>Recognize that we can instead use R&#39;s vector addition (with recycling):</p>
 
-<pre class="fragment"><code class="r">vec_start &lt;- proc.time()
+<pre class="fragment"><code class="r">vec_start  &lt;- proc.time()
 new_vector &lt;- my_vector + 1
-(vec_time &lt;- proc.time() - vec_start)
+(vec_time  &lt;- proc.time() - vec_start)
 </code></pre>
 
 <pre class="fragment"><code>   user  system elapsed 
-   0.03    0.03    0.06 
+   0.06    0.00    0.06 
 </code></pre>
 
 <pre class="fragment"><code class="r">for_time / vec_time
 </code></pre>
 
 <pre class="fragment"><code>   user  system elapsed 
-   25.7     0.0    13.0 
+   12.5     Inf    13.0 
 </code></pre>
 
 <p class="fragment">Vector/matrix arithmetic is implemented using fast, optimized functions that a <code>for()</code> loop can&#39;t compete with.</p>
@@ -1578,7 +1572,7 @@ new_vector &lt;- my_vector + 1
 <div class="slideContent" >
 <p>Read Rebecca Ferrell&#39;s <a href="https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html">data downloading demonstration on the course page</a> (it is shorter than it looks; it is more than half error messages). I hope any future forays into automated data downloading and cleaning are smoother than this one was!</p>
 
-<p><strong>Reminder: HW 5 assigned last week is due midnight Tuesday 5/9.</strong></p>
+<p><strong>Reminder: HW 5 assigned last week is due midnight Tuesday 11/7.</strong></p>
 
 </div>
 
@@ -1637,8 +1631,8 @@ function commandsForSlide(indexh) {
       transition: 'linear',
       transitionSpeed: 'default',
       rtl: false,
-      width: 1100,
-      height: 750,
+      width: 1440,
+      height: 960,
     
       dependencies: []
     });

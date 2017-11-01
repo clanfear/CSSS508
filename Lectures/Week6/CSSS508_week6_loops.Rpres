@@ -285,7 +285,7 @@ Preallocating a List for the Regression Models
 ====================================================================================
 incremental: true
 
-Let's make a named character vector for the formulas we'll use in `lm`:
+Let's make a named character vector for the formulas we'll use in `lm()`:
 ```{r}
 models <- c("intercept only" = "y ~ 1",
             "linear" = "y ~ x",
@@ -348,8 +348,7 @@ We'll use `ggplot2` to plot these tidied up predictions. You'll see us use multi
 ggplot(data = fake_data, aes(x = x, y = y)) +
     geom_point() +
     geom_line(data = tidy_predicted_data,
-              aes(x = x, y = Prediction,
-                  group = Model, color = Model),
+              aes(x = x, y = Prediction, group = Model, color = Model),
               alpha = 0.5, size = 2) +
     ggtitle("Predicted trends from regression") +
     theme_bw()
@@ -362,8 +361,7 @@ Plotted Predictions
 ggplot(data = fake_data, aes(x = x, y = y)) +
     geom_point() +
     geom_line(data = tidy_predicted_data,
-              aes(x = x, y = Prediction,
-                  group = Model, color = Model),
+          aes(x = x, y = Prediction, group = Model, color = Model),
               alpha = 0.5, size = 2) +
     ggtitle("Predicted trends from regression") +
     theme_bw()
@@ -394,7 +392,8 @@ Let's split the data into $K=10$ folds. We'll make a new data frame to hold the 
 ```{r}
 K <- 10
 CV_predictions <- fake_data
-CV_predictions$fold <- sample(rep(1:K, length.out = nrow(CV_predictions)), replace = FALSE)
+CV_predictions$fold <- sample(rep(1:K, length.out = nrow(CV_predictions)),
+                              replace = FALSE)
 CV_predictions[, names(models)] <- NA
 head(CV_predictions, 2)
 ```
@@ -429,7 +428,7 @@ Let's write another loop to compute the mean squared error of these CV predictio
 CV_MSE <- setNames(numeric(length(models)), names(models))
 for(mod in names(models)) {
     pred_sq_error <- (CV_predictions$y - CV_predictions[[mod]])^2
-    CV_MSE[mod] <- mean(pred_sq_error)
+    CV_MSE[mod]   <- mean(pred_sq_error)
 }
 CV_MSE
 ```
@@ -443,7 +442,7 @@ type: section
 
 if() then else()
 ====================================================================================
-type: incremental
+incremental: true
 
 You've seen `ifelse()` before for logical checks on a whole vector. For checking whether a *single* logical statement holds and then conditionally executing a set of actions, use `if()` and `else`:
 
@@ -489,22 +488,19 @@ Aside from the previous toy example, `if()` statements are useful when you have 
 
 ![Mad Meg fighting at the gates of data hell](https://upload.wikimedia.org/wikipedia/en/d/db/Bruegel-Mad_Meg-thumb.jpg)
 
-
-Data Prep Sketch Outline
+Loading Many Data Files with a Loop
 ====================================================================================
 incremental: true
 
-- Pre-allocate a list for the individual files
-- Inside a `for()` loop:
-    + Make a URL and download file 
-    + Read the file in with Excel-reading package and store in list
-- Combine the data for each year into one file
-- Clean up the combined data
-- Some variations on general process you might encounter:
-    + Unzip files first (`unzip`)
-    + Use `if()` logic to clean up data differently depending on file
-- **HOMEWORK**: Read Rebecca Ferrell's [extended writeup on data hell on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html).
+One common use of a loop in R is for loading many individual data files at once---like
+an entire directory of Excel files--to combine them into one data set.
 
+We will actually do this *next week*.
+
+Alternatively, you might want to use a loops and `if()` to download and clean files that are all
+from different URLs... which might go poorly:
+
+**HOMEWORK**: Read Rebecca Ferrell's [extended writeup on data hell on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html).
 
 
 while() Loops
@@ -521,8 +517,8 @@ A lesser-used looping structure is the `while()` loop. Rather than iterating ove
 ```{r}
 num_heads <- 0; num_flips <- 0
 while(num_heads < 4) {
-    coin_flip <- rbinom(n = 1, size = 1, prob = 0.5)
-    if(coin_flip == 1) { num_heads <- num_heads + 1 }
+    coin_flip <- rbinom(n=1, size=1, prob=0.5)
+    if (coin_flip == 1) { num_heads <- num_heads + 1 }
     num_flips <- num_flips + 1
 }
 num_flips # follows negative binomial distribution
@@ -558,9 +554,9 @@ incremental: true
 
 Recognize that we can instead use R's vector addition (with recycling):
 ```{r}
-vec_start <- proc.time()
+vec_start  <- proc.time()
 new_vector <- my_vector + 1
-(vec_time <- proc.time() - vec_start)
+(vec_time  <- proc.time() - vec_start)
 for_time / vec_time
 ```
 
