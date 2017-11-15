@@ -1,97 +1,34 @@
 CSSS 508, Week 7: Vectorization and Functions
 ====================================================================================
 author: Charles Lanfear
-date: May 12, 2017
+date: November 8, 2017
 transition: linear
-width: 1100
-height: 750
+width: 1400
+height: 960
+
+A Quick Aside
+====================================================================================
+type: section
+
+
+Visualize the Goal Before Coding
+====================================================================================
+incremental: true
+
+Before you can write effective code, you need to know *exactly* what you want that code to produce. e.g.:
+* Do I want a single value? A vector? List?
+* Do I want one observation per person? Person-year? Year?
+
+Most programming problems can be reduced to having an unclear idea of your end **goal** (or your beginning state).
+
+If you know what you *have* (the data structure) and what you *want*, the intermediate steps are usually obvious.
+
+When in doubt, *sketch* the beginning state and the intended end state. Then consider what translates the former into the latter in the least complicated way.
 
 Vectorization
 ====================================================================================
 type: section
 
-
-Non-vectorized Example
-====================================================================================
-incremental: true
-
-We have a vector of numbers, and we want to add 1 to each entry.
-
-```r
-my_vector <- rnorm(10000000)
-```
-
-A `for` loop works but is relatively slow:
-
-```r
-for_start <- proc.time() # start the clock
-new_vector <- rep(NA, length(my_vector))
-for(position in 1:length(my_vector)) {
-    new_vector[position] <- my_vector[position] + 1
-}
-(for_time <- proc.time() - for_start) # time elapsed
-```
-
-```
-   user  system elapsed 
-   0.69    0.03    0.72 
-```
-
-
-Vectorization Wins
-====================================================================================
-incremental: true
-
-Recognize that we can instead use R's vector addition (with recycling):
-
-```r
-vec_start <- proc.time()
-new_vector <- my_vector + 1
-(vec_time <- proc.time() - vec_start)
-```
-
-```
-   user  system elapsed 
-   0.05    0.00    0.04 
-```
-
-```r
-for_time / vec_time
-```
-
-```
-   user  system elapsed 
-   13.8     Inf    18.0 
-```
-
-Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
-
-
-Vectorization Examples
-====================================================================================
-incremental: true
-
-* `rowSums()`, `colSums()`, `rowMeans()`, `colMeans()` give sums or averages over rows or columns of matrices/data frames
-
-
-```r
-(a_matrix <- matrix(1:12, nrow = 3, ncol = 4))
-```
-
-```
-     [,1] [,2] [,3] [,4]
-[1,]    1    4    7   10
-[2,]    2    5    8   11
-[3,]    3    6    9   12
-```
-
-```r
-rowSums(a_matrix)
-```
-
-```
-[1] 22 26 30
-```
 
 
 Back to Goofus Example from Last Week
@@ -111,42 +48,19 @@ colMeans(swiss)
         41.14383         19.94255 
 ```
 
-
-More Examples of Vectorized Functions
+Vectorization Means Avoiding Loops
 ====================================================================================
 incremental: true
 
-* `cumsum()`, `cumprod()`, `cummin()`, `cummax()` give back a vector with cumulative quantities (e.g. running totals)
+Loops are very powerful and applicable in almost any situation.
 
-```r
-cumsum(1:7)
-```
+They are also very slow and require writing more code than vectorized commands.
 
-```
-[1]  1  3  6 10 15 21 28
-```
+Whenever possible, use existing vectorized commands like `colMeans()` or `dplyr` functions.
 
-* `pmax()` and `pmin()` take a matrix or set of vectors, output the min or max for each **p**osition (after recycling):
+Sometimes no functions exist to do what you need, so you'll be tempted to write a loop. This makes sense on a *fast, one-time operation, on small data*.
 
-```r
-pmax(c(0, 2, 4), c(1, 1, 1), c(2, 2, 2))
-```
-
-```
-[1] 2 2 4
-```
-
-
-Lab Exercise: Running Totals
-====================================================================================
-
-1. Use `rnorm()` to randomly generate a vector of length 10 million
-
-2. Using a `for()` loop and timing your code, calculate another vector of length 10 million that gives the running total
-
-3. Repeat using `cumsum()` instead of a loop
-
-Did you get the same result both ways? What's the difference in speed? Which is easier to read?
+If your data are large or you're going to do it repeatedly, however, consider *writing your own functions*!
 
 
 Writing Your Own Functions
@@ -165,8 +79,8 @@ incremental: true
     + Input: a data frame, logical conditions
     + Output: a data frame with rows removed using those conditions
 * `readr::read_csv()`:
-    + Input: file path, optionally variable names or types
-    + Output: data frame containing info read in from file
+    + Input: a file path, optionally variable names or types
+    + Output: a data frame containing info read in from file
 
 
 Why Write Your Own Functions?
@@ -176,12 +90,13 @@ incremental: true
 Functions can encapsulate repeated actions such as:
 
 * Given a vector, compute some special summary stats
-* Given a vector and definition of "gross" values, replace with `NA`
+* Given a vector and definition of "invalid" values, replace with `NA`
 * Templates for favorite `ggplot`s used in reports
 
 Advanced uses for functions (not covered in this class):
 
 * Parallel processing
+* Generating *other* functions
 * Making custom packages containing your functions
 
 
@@ -195,7 +110,7 @@ Let's look at a function that takes a vector as input and outputs a named vector
 ```r
 first_and_last <- function(x) {
     first <- x[1]
-    last <- x[length(x)]
+    last  <- x[length(x)]
     return(c("first" = first, "last" = last))
 }
 ```
@@ -217,7 +132,7 @@ More Testing of Simple Function
 ====================================================================================
 incremental: true
 
-What if I give `first_and_last` a vector of length 1?
+What if I give `first_and_last()` a vector of length 1?
 
 
 ```r
@@ -248,7 +163,7 @@ Checking Inputs
 ====================================================================================
 incremental: true
 
-Let's make sure we get an error message is the vector is too small:
+Let's make sure we get an error message when the vector is too small:
 
 
 ```r
@@ -257,7 +172,7 @@ smarter_first_and_last <- function(x) {
         stop("The input has no length!")
     } else {
         first <- x[1]
-        last <- x[length(x)]
+        last  <- x[length(x)]
         return(c("first" = first, "last" = last))        
     }
 }
@@ -304,21 +219,22 @@ function(x) {
         stop("The input has no length!")
     } else {
         first <- x[1]
-        last <- x[length(x)]
+        last  <- x[length(x)]
         return(c("first" = first, "last" = last))        
     }
 }
-<bytecode: 0x000000001718af10>
+<bytecode: 0x0000000016a90fd0>
 ```
 
+You can also put your cursor over a function in your syntax and hit **F2**.
 
 Anatomy of a Function
 ====================================================================================
 incremental: true
 
 * Name: What you assign the function to so you can use it later
-    + Can have "anonymous" (no-name) functions
-* Arguments (aka inputs, parameters): things the user passes to the function that affects how it works
+    + You can have "anonymous" (no-name) functions
+* Arguments (aka inputs, parameters): things the user passes to the function that affect how it works
     + e.g. `x` or `na.rm` in `my_new_func <- function(x, na.rm = FALSE) {...}`
     + `na.rm = FALSE` is example of setting a default value: if user doesn't say what `na.rm` is, it'll be `FALSE`
     + `x`, `na.rm` values won't exist in R outside of the function
@@ -336,25 +252,27 @@ Maybe you want to know more detailed quantile information than `summary()` gives
 
 ```r
 quantile_report <- function(x, na.rm = FALSE) {
-    quants <- quantile(x, probs = c(0.01, 0.05, 0.10, 0.25, 0.5, 0.75, 0.90, 0.95, 0.99), na.rm = na.rm)
-    names(quants) <- c("Bottom 1%", "Bottom 5%", "Bottom 10%", "Bottom 25%", "Median", "Top 25%", "Top 10%", "Top 5%", "Top 1%")
+    quants <- quantile(x, na.rm = na.rm, 
+                probs = c(0.01, 0.05, 0.10, 0.25, 0.5, 0.75, 0.90, 0.95, 0.99))
+    names(quants) <- c("Bottom 1%", "Bottom 5%", "Bottom 10%", "Bottom 25%",
+                       "Median", "Top 25%", "Top 10%", "Top 5%", "Top 1%")
     return(quants)
 }
 quantile_report(rnorm(10000))
 ```
 
 ```
-  Bottom 1%   Bottom 5%  Bottom 10%  Bottom 25%      Median     Top 25% 
--2.33641425 -1.62735523 -1.25673777 -0.65994574  0.01399998  0.67837232 
-    Top 10%      Top 5%      Top 1% 
- 1.30174848  1.69714467  2.35052812 
+    Bottom 1%     Bottom 5%    Bottom 10%    Bottom 25%        Median 
+-2.3127322402 -1.6011368621 -1.2684850193 -0.6623473572  0.0009641404 
+      Top 25%       Top 10%        Top 5%        Top 1% 
+ 0.6628446819  1.2570929351  1.6149731158  2.3502399812 
 ```
 
 
 lapply(): List + Applying Functions
 ====================================================================================
 
-`lapply()` **apply** a function over a **l**ist of any kind (e.g. a data frame) and return a list. This is a lot easier than preparing a `for()` loop!
+`lapply()` is used **apply** a function over a **l**ist of any kind (e.g. a data frame) and return a list. This is a lot easier than preparing a `for()` loop!
 
 
 ```r
@@ -400,7 +318,7 @@ $Infant.Mortality
 ```
 
 
-More Usable lapply Output with sapply()
+More Usable lapply() Output with sapply()
 ====================================================================================
 
 A downside to `lapply()` is that lists are not always natural to work with. `sapply()` will **s**implify the list output by converting each list element to a column in a matrix:
@@ -434,7 +352,7 @@ Top 1%               25.818
 ```
 
 
-apply
+apply()
 ====================================================================================
 incremental: true
 
@@ -512,7 +430,7 @@ plot(x = bucketed_rando_data, y = rando_data,
      main = "Buckets and values")
 ```
 
-<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="1100px" height="330px" />
+<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="1100px" height="500px" />
 
 
 Example: Removing Bad Data Values
@@ -523,7 +441,10 @@ Let's say we have data where impossible values occur:
 
 
 ```r
-(school_data <- data.frame(school = letters[1:10], pct_passing_exam = c(0.78, 0.55, 0.91, -1, 0.88, 0.81, 0.90, 0.76, 999, 999), pct_free_lunch = c(0.33, 999, 0.25, 0.05, 0.12, 0.09, 0.22, -13, 0.21, 999)))
+(school_data <- 
+   data.frame(school = letters[1:10],
+   pct_passing_exam = c(0.78, 0.55, 0.91, -1, 0.88, 0.81, 0.90, 0.76, 999, 999),
+   pct_free_lunch = c(0.33, 999, 0.25, 0.05, 0.12, 0.09, 0.22, -13, 0.21, 999)))
 ```
 
 ```
@@ -572,8 +493,7 @@ dplyr::mutate_each(), summarize_each()
 ```r
 library(dplyr)
 school_data %>%
-    mutate_each(funs(remove_extremes(x = ., low = 0, high = 1)),
-                -school)
+   mutate_at(vars(-school), funs(remove_extremes(x = ., low = 0, high = 1)))
 ```
 
 ```
@@ -603,7 +523,7 @@ CA_OSHPD_util <- CA_OSHPD_util %>%
     # \\. matches the location of the period.
     # 0+ matches at least one zero and possibly more following that period.
     # replacement for period + 0s is nothing (empty string)
-    mutate_each(funs(gsub(pattern = "\\.0+",
+    mutate_each(funs(gsub(pattern = "\\.0+",  # Old version of mutate_at()
                           x = .,
                           replacement = "")),
                 # variables to fix
@@ -614,7 +534,7 @@ CA_OSHPD_util <- CA_OSHPD_util %>%
 Standard and Non-Standard Evaluation
 ====================================================================================
 
-`dplyr` uses what is called **non-standard evaluation** that lets you refer to "naked" variables (no quotes around them) like `FAC_NO, HSA, HFPA`. There are **standard evaluation** versions of `dplyr` functions that use the quoted versions instead, which can sometimes be more convenient. These end in an underscore (`_`).
+`dplyr` uses what is called **non-standard evaluation** that lets you refer to "naked" variables (no quotes around them) like `FAC_NO, HSA, HFPA`. `dplyr` verbs (like `mutate()`) recently started supporting *standard evaluation* allowing you to use quoted object names as well. This makes programming with `dplyr` easier.
 
 Example converting character data to dates from the data downloading demo:
 
@@ -622,7 +542,7 @@ Example converting character data to dates from the data downloading demo:
 yearly_frames[[i]] <- yearly_frames[[i]] %>%
     # cnames is a character vector of var names
     # 4th and 5th variables are strings to become dates
-    mutate_each_(funs(mdy), cnames[4:5])
+    mutate_at(vars(cnames[4:5]), (funs(mdy))
 ```
 
 Anonymous Functions in dplyr
@@ -633,7 +553,7 @@ You can skip naming your function in `dplyr` if you won't use it again. Code bel
 
 ```r
 swiss %>%
-    summarize_each(funs( mean(., na.rm = TRUE) / sd(., na.rm = TRUE) ))
+    summarize_all(funs( mean(., na.rm = TRUE) / sd(., na.rm = TRUE) ))
 ```
 
 ```
@@ -683,10 +603,11 @@ Let's say you have a particular way you like your charts:
 library(gapminder); library(ggplot2)
 ggplot(gapminder %>% filter(country == "Afghanistan"),
        aes(x = year, y = pop / 1000000)) +
-    geom_line(color = "firebrick") +
-    xlab(NULL) + ylab("Population (millions)") +
-    ggtitle("Population of Afghanistan since 1952") +
-    theme_minimal() + theme(text = element_text(family = "Times"), plot.title = element_text(hjust = 0, size = 20))
+       geom_line(color = "firebrick") +
+       xlab(NULL) + ylab("Population (millions)") +
+       ggtitle("Population of Afghanistan since 1952") +
+       theme_minimal() + 
+       theme(plot.title = element_text(hjust = 0, size = 20))
 ```
 
 * How could we make this flexible for any country?
@@ -695,12 +616,12 @@ ggplot(gapminder %>% filter(country == "Afghanistan"),
 Example of Desired Chart
 ====================================================================================
 
-<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-29-1.png" title="plot of chunk unnamed-chunk-29" alt="plot of chunk unnamed-chunk-29" width="1100px" height="660px" />
+<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="1100px" height="660px" />
 
 Another Example of Desired Chart
 ====================================================================================
 
-<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="1100px" height="660px" />
+<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" width="1100px" height="660px" />
 
 
 Making Country Flexible
@@ -713,9 +634,9 @@ gapminder_lifeplot <- function(cntry) {
     ggplot(gapminder %>% filter(country == cntry),
        aes(x = year, y = lifeExp)) +
     geom_line(color = "firebrick") +
-    xlab(NULL) + ylab("Life expectancy") +
+    xlab(NULL) + ylab("Life expectancy") + theme_minimal() + 
     ggtitle(paste0("Life expectancy in ", cntry, " since 1952")) +
-    theme_minimal() + theme(text = element_text(family = "Times"), plot.title = element_text(hjust = 0, size = 20))
+    theme(plot.title = element_text(hjust = 0, size = 20))
 }
 ```
  
@@ -728,7 +649,7 @@ Testing Out Life Expectancy Plot Function
 gapminder_lifeplot(cntry = "Turkey")
 ```
 
-<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-32-1.png" title="plot of chunk unnamed-chunk-32" alt="plot of chunk unnamed-chunk-32" width="1100px" height="440px" />
+<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-26-1.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" width="1100px" height="440px" />
 
 Making y Value Flexible
 ====================================================================================
@@ -755,13 +676,23 @@ y_axis_label["pop"]
 aes_string()
 ====================================================================================
 
-`ggplot` is usually looking for "naked" variables, but we can tell it to take them as quoted strings using `aes_string` instead of `aes`, which is handy when making functions:
+`ggplot()` is usually looking for "naked" variables, but we can tell it to take them as quoted strings using `aes_string()` instead of `aes()`, which is handy when making functions:
 
 ```r
 gapminder_plot <- function(cntry, yvar) {
-    y_axis_label <- c("lifeExp" = "Life expectancy", "pop" = "Population (millions)", "gdpPercap" = "GDP per capita, USD")[yvar]
-    title_text <- c("lifeExp" = "Life expectancy in ", "pop" = "Population of ", "gdpPercap" = "GDP per capita in ")[yvar]
-    ggplot(gapminder %>% filter(country == cntry) %>% mutate(pop = pop / 1000000), aes_string(x = "year", y = yvar)) + geom_line(color = "firebrick") + xlab(NULL) + ylab(y_axis_label) + ggtitle(paste0(title_text, cntry, " since 1952")) + theme_minimal() + theme(text = element_text(family = "Times"), plot.title = element_text(hjust = 0, size = 20))
+    y_axis_label <- c("lifeExp" = "Life expectancy",
+                      "pop" = "Population (millions)",
+                      "gdpPercap" = "GDP per capita, USD")[yvar]
+    title_text <- c("lifeExp" = "Life expectancy in ",
+                    "pop" = "Population of ",
+                    "gdpPercap" = "GDP per capita in ")[yvar]
+    ggplot(gapminder %>% filter(country == cntry) %>% 
+             mutate(pop = pop / 1000000),
+           aes_string(x = "year", y = yvar)) + 
+      geom_line(color = "firebrick") + 
+      ggtitle(paste0(title_text, cntry, " since 1952")) + 
+      xlab(NULL) + ylab(y_axis_label) + theme_minimal() + 
+      theme(plot.title = element_text(hjust = 0, size = 20))
 }
 ```
 
@@ -774,7 +705,7 @@ Testing Out the Gapminder Plot Function
 gapminder_plot(cntry = "Turkey", yvar = "pop")
 ```
 
-<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-35-1.png" title="plot of chunk unnamed-chunk-35" alt="plot of chunk unnamed-chunk-35" width="1100px" height="440px" />
+<img src="CSSS508_week7_vectorization-figure/unnamed-chunk-29-1.png" title="plot of chunk unnamed-chunk-29" alt="plot of chunk unnamed-chunk-29" width="1100px" height="440px" />
 
 
 Debugging
@@ -800,14 +731,14 @@ Homework
 ====================================================================================
 type: section
 
-
-Homework
-====================================================================================
-
-DUE IN TWO WEEKS (5/23, 11:59 PM): 
-
 [Download](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip) and analyze data from the first year of Seattle's Pronto! bike sharing program.
 
-You will write 1) a loop to read in the data, 2) functions to clean it up, and 3) another function to visualize ridership over the first year.
+Using the provided template, you will write: 
 
-There is some string processing needed, much of which you have already seen or can probably Google, but some will come in next week's lecture.
+1. A loop to read in the data from multiple files.
+2. Functions to clean up the data 
+3. A function to visualize ridership over the first year.
+
+There is some string processing needed---much of which you have already seen or can probably Google---but *some will come in next week's lecture*. I can cover string processing in detail in lab.
+
+## DUE: 11:59 PM, Tuesday 11/21

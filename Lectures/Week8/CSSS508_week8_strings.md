@@ -1,23 +1,25 @@
 CSSS 508, Week 8: Strings
 ====================================================================================
 author: Charles Lanfear
-date: May 17, 2017
+date: November 15, 2017
 transition: linear
-width: 1100
-height: 750
+width: 1400
+height: 960
 
 
 Data Today
 ====================================================================================
 
-We'll use data on food safety inspections in King County from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5). You can see a map of the data at [dinegerous.com](http://www.dinegerous.com/). Note these data are *quite large*.
+We'll use data on food safety inspections in King County from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5). You can see a map of the data at [dinegerous.com](http://www.dinegerous.com/). Note these data are *quite large*. You will want to save them and load them from a local directory.
 
 
 
 
 ```r
 library(tidyverse)
-load("https://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata")
+restaurants <- 
+  read_csv("https://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.csv",
+                        col_types = "ccccccccnnccicccciccciD")
 ```
 
 
@@ -51,7 +53,7 @@ restaurants %>% mutate(ZIP_length = nchar(Zip_Code)) %>%
 ```
 
 ```
-# A tibble: 2 × 2
+# A tibble: 2 x 2
   ZIP_length      n
        <int>  <int>
 1          5 258629
@@ -62,7 +64,7 @@ substr()
 ====================================================================================
 incremental: true
 
-You may be familiar with `substr` from the voting homework. We can use it to pull out just the first 5 digits of the ZIP code.
+You may be familiar with `substr()` from the voting homework. We can use it to pull out just the first 5 digits of the ZIP code.
 
 
 ```r
@@ -80,7 +82,7 @@ paste()
 ====================================================================================
 incremental: true
 
-We can combine parts of strings together using the `paste` function, e.g. to make a whole mailing address:
+We can combine parts of strings together using the `paste()` function, e.g. to make a whole mailing address:
 
 
 ```r
@@ -102,7 +104,7 @@ paste() with collapse
 ====================================================================================
 incremental: true
 
-`readr` functions can take an argument like `col_types = "cciDcnncii"`. You can build this yourself from existing data using `class` to get the type of data, `substr`, and `paste` with the `collapse = ""` argument to take a vector and make it a single character string:
+`readr` functions can take an argument like `col_types = "cciDcnncii"`. You can build this yourself from existing data using `class()` to get the type of data, and `substr()`, and `paste()` with the `collapse = ""` argument to take a vector and make it a single character string:
 
 
 ```r
@@ -123,7 +125,7 @@ Make a function out of this!
 ====================================================================================
 incremental: true
 
-I typically read in data using `read_csv` without `col_types`, use a function like this to get its guesses at the types, which I can then modify and feed back into `read_csv`:
+I typically read in data using `read_csv()` without `col_types()`. You could use the functions above together to get column types to feed back into `read_csv()`:
 
 
 ```r
@@ -151,7 +153,7 @@ paste0()
 ====================================================================================
 incremental: true
 
-`paste0` is a convenient version of `paste` where it'll smush together what you're pasting without any separator.
+`paste0()` is a shortcut for `paste()` without any separator.
 
 
 ```r
@@ -182,9 +184,7 @@ paste0(1:5, letters[1:5])
 paste() practice
 ====================================================================================
 
-`sep` controls what happens when doing entry-wise squishing of vectors you give to `paste()`/`paste0()`, while `collapse` controls if/how they go from a vector to a single string.
-
-Try to guess what will happen in each of these cases, then run it to check:
+`sep` controls what happens when doing entry-wise squishing of vectors you give to `paste()`, while `collapse` controls if/how they go from a vector to a single string. Here are some examples; make sure you understand how the arguments produce the results:
 
 
 ```r
@@ -195,6 +195,14 @@ paste(1:5, "Z", sep = "*")
 paste(1:5, "Z", sep = "*", collapse = " ~ ")
 ```
 
+```
+[1] "a!b!c!d!e"
+[1] "1+a" "2+b" "3+c" "4+d" "5+e"
+[1] "1a???2b???3c???4d???5e"
+[1] "1*Z" "2*Z" "3*Z" "4*Z" "5*Z"
+[1] "1*Z ~ 2*Z ~ 3*Z ~ 4*Z ~ 5*Z"
+```
+
 
 stringr
 ====================================================================================
@@ -203,13 +211,13 @@ type: section
 stringr
 ====================================================================================
 
-`stringr` is yet another R package from the Tidyverse (like `ggplot2`, `dplyr`, `tidyr`, `lubridate`, `readr`). It provides functions to:
+`stringr` is yet another R package from the Tidyverse (like `ggplot2`, `dplyr`, `tidyr`, `lubridate`, `readr`). It provides wrappers for functions that:
 
-* Replace some basic string functions like `paste` and `nchar` in a way that's a bit less touchy with missing values or factors
+* Replace some basic string functions like `paste()` and `nchar()` in a way that's a bit less touchy with missing values or factors
 * Remove whitespace or pad it out
 * Perform tasks related to **pattern matching**: Detect, locate, extract, match, replace, split.
     + Functions use **regular expressions** to describe patterns
-    + Base R versions for these exist but are more confusing to use
+    + Base R and `stringi` versions for these exist but are more confusing to use
 
 Conveniently, most `stringr` functions also begin with "`str_`" to make RStudio auto-complete more useful.
     
@@ -328,9 +336,9 @@ Then we can use the `str_trim()` function in `stringr` to clean them up all at o
 
 
 ```r
-# use mutate_each_ to trim all the character columns
+# use mutate_at to trim all the character columns
 restaurants <- restaurants %>%
-    mutate_each_(funs(str_trim), char_columns)
+    mutate_at(vars(char_columns), funs(str_trim))
 head(unique(restaurants$Name), 4)
 ```
 
@@ -437,11 +445,13 @@ incremental: true
 
 
 ```r
-restaurants %>% mutate(has_206_number = str_detect(Phone, area_code_206_pattern)) %>% group_by(has_206_number) %>% tally()
+restaurants %>% 
+  mutate(has_206_number = str_detect(Phone, area_code_206_pattern)) %>% 
+  group_by(has_206_number) %>% tally()
 ```
 
 ```
-# A tibble: 3 × 2
+# A tibble: 3 x 2
   has_206_number      n
            <lgl>  <int>
 1          FALSE  66655
@@ -483,7 +493,7 @@ restaurants %>% distinct(Address) %>% mutate(city_region = str_trim(str_extract(
 ```
 
 ```
-# A tibble: 9 × 2
+# A tibble: 9 x 2
   city_region     n
         <chr> <int>
 1          NE  2086
@@ -608,7 +618,7 @@ restaurants %>% select(Business_ID, Name, Date, Inspection_Score, street_only) %
 ```
 
 ```
-# A tibble: 5 × 2
+# A tibble: 5 x 2
         street_only     n
               <chr> <int>
 1 UNIVERSITY WAY NE   108
@@ -647,15 +657,28 @@ head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
 [6,] "Proper cold holding temperatures ( 42 degrees F to 45 degrees F)"                 
 ```
 
-
-Next week
+Other Useful stringr Functions
 ====================================================================================
+
+`str_pad(string, width, side, pad)` - Adds "padding" to any string to make it a given minimum width.
+
+`str_subset(string, pattern)` - Returns all elements that contain matches of the pattern.
+
+`str_which(string, pattern)` - Returns numeric indices of elements that match the pattern.
+
+`str_replace_all(string, pattern, replacement)` - Performs multiple replacements simultaneously
+
+Coming Up
+====================================================================================
+type: section
 
 Homework 6 assigned last week is due next week, and peer reviews due the week after.
 
+This term has *11 weeks of class* and I have only written *10 lectures*. What do we want to cover?
 
-**The end is nigh**: In class next week, you'll be working on a lab on *mapping* the restaurant inspection data,
-which serves as an *optional* final homework due in week 10. If you turn it in, I
-will grade it myself and give you feedback and **bonus points** based on the standard grading rubric (0 to 3).
+Ideas:
 
-*You will have nothing assigned or due in dead week or finals week.*
+1. **Tidy Model Output**: Creating regression tables and visualizing output.
+2. **Advanced / Applied Data Manipulation**: Complex variable creation, data reshaping.
+
+Any other suggestions?
