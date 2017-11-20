@@ -266,9 +266,7 @@ library(stringr)
 <blockquote>
 <p>We would like the names of the list entries to be simpler than the file names. For example, we want to read the <code>2015_station_data.csv</code> file into <code>data_list[[&quot;station_data&quot;]]</code>, and <code>2015_trip_data.csv</code> into <code>data_list[[&quot;trip_data&quot;]]</code>. So, you should make a new vector called <code>data_list_names</code> giving the names of the objects to read in these CSV files to using <code>files_in_year_one</code>. Use the <code>substr</code> function to keep the portion of the <code>files_in_year_one</code> entries starting from the sixth character (which will drop the <code>2015_</code> part) and stopping at number of characters of each filename string, minus 4 (which will drop the <code>.csv</code> part).</p>
 </blockquote>
-<pre class="r"><code>(data_list_names &lt;- substr(files_in_year_one,
-                           start = 6,
-                           stop = nchar(files_in_year_one) - 4))</code></pre>
+<pre class="r"><code>(data_list_names &lt;- str_sub(files_in_year_one, 6, -5))</code></pre>
 <pre><code>## [1] &quot;station_data&quot; &quot;trip_data&quot;    &quot;weather_data&quot;</code></pre>
 <blockquote>
 <p>Set the names for <code>data_list</code> using the <code>names</code> function and the <code>data_list_names</code> vector.</p>

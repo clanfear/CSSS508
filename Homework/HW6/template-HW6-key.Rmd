@@ -50,9 +50,7 @@ data_list <- vector("list", length(files_in_year_one))
 > We would like the names of the list entries to be simpler than the file names. For example, we want to read the `2015_station_data.csv` file into `data_list[["station_data"]]`, and `2015_trip_data.csv` into `data_list[["trip_data"]]`. So, you should make a new vector called `data_list_names` giving the names of the objects to read in these CSV files to using `files_in_year_one`. Use the `substr` function to keep the portion of the `files_in_year_one` entries starting from the sixth character (which will drop the `2015_` part) and stopping at number of characters of each filename string, minus 4 (which will drop the `.csv` part).
 
 ```{r initalize_list_names}
-(data_list_names <- substr(files_in_year_one,
-                           start = 6,
-                           stop = nchar(files_in_year_one) - 4))
+(data_list_names <- str_sub(files_in_year_one, 6, -5))
 ```
 
 > Set the names for `data_list` using the `names` function and the `data_list_names` vector.
