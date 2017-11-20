@@ -1,7 +1,7 @@
 ---
 title: "HW 6: Pronto!"
-author: "Rebecca Ferrell"
-date: "May 25, 2016"
+author: "Charles Lanfear"
+date: "November 20, 2016"
 output:
   html_document:
     toc: true
@@ -10,9 +10,9 @@ output:
 
 # Instructions
 
-> Pronto! is Seattle's bike sharing program, which launched in fall 2014. You've probably seen the green bike docks around campus. (It has also [been in the news in the past few months](http://www.king5.com/news/local/seattle/city-launches-investigation-into-sdot-director-over-pronto-ties/97249954).)
+> Pronto! is Seattle's first bike sharing program, which launched in fall 2014. You may have seen the green bike docks around campus. It was also [in the news frequently](http://www.king5.com/news/local/seattle/city-launches-investigation-into-sdot-director-over-pronto-ties/97249954) and [shut down](http://www.seattletimes.com/seattle-news/transportation/seattle-pronto-bike-share-shutting-down-friday/) after controversy.
 
-> You will be using data from the [2015 Pronto Cycle Share Data Challenge](https://www.prontocycleshare.com/datachallenge). These are available for download as a 75 MB ZIP file from <https://s3.amazonaws.com/pronto-data/open_data_year_one.zip>. (If the download link isn't working for whatever reason, post on the Canvas forums and Rebecca will link to her copy.) Once unzipped, the folder containing all the files is around 900 MB. The `open_data_year_one` folder contains a `README.txt` file that you should reference for documentation.
+> You will be using data from the [2015 Pronto Cycle Share Data Challenge](https://www.prontocycleshare.com/datachallenge). These are available for download as a 75 MB ZIP file from <https://s3.amazonaws.com/pronto-data/open_data_year_one.zip>. Once unzipped, the folder containing all the files is around 900 MB. The `open_data_year_one` folder contains a `README.txt` file that you should reference for documentation.
 
 > Questions for you to answer are as quoted blocks of text. Put your code used to address these questions and any comments you have below each block. Remember the guiding principle: **don't repeat yourself!**
 
@@ -29,8 +29,8 @@ library(ggplot2)
 library(lubridate)
 library(stringr)
 
-# my Rmd file is in the same folder as the open_data_year_one folder
-# so filepaths will be relative to this
+# The folder containing my data is in the same folder as this .Rmd. The default 
+# working directory will thus contain the data folder.
 
 # make my vector of filenames in the open_data_year_one folder
 (files_in_year_one <- list.files("open_data_year_one"))
@@ -67,7 +67,7 @@ data_list
 
 > You will want to use the `cache=TRUE` chunk option for this chunk --- otherwise you'll have to wait for the data to get read in every single time you knit. You will also want to make sure you are using `readr::read_csv` and not base R's `read.csv` as `readr`'s version is much faster, gives you a progress bar, and won't convert all character variables to factors automatically.
 
-```{r read_in_data, cache=TRUE}
+```{r read_in_data, cache=TRUE, warning=FALSE, message=FALSE}
 # read in the data in the open_data_year_one folder
 # paste0 to get the filepaths right
 for(i in seq_along(files_in_year_one)) {
@@ -82,8 +82,8 @@ for(i in seq_along(files_in_year_one)) {
 
 > First, patch up the missing values for `gender` in `data_list[["trip_data"]]`: if a user is a `Short-Term Pass Holder`, then put `"Unknown"` as their `gender`. Don't make new objects, but rather modify the entries in `data_list` directly (e.g. `data_list[["trip_data"]] <- data_list[["trip_data"]] %>% mutate(...)`.
 
-```{r inspect_data}
-str(data_list)
+```{r inspect_data, eval=FALSE}
+str(data_list) # Output suppressed due to length
 ```
 
 ```{r fix_gender}
@@ -93,22 +93,22 @@ data_list[["trip_data"]] <- data_list[["trip_data"]] %>%
                            "Unknown", gender))
 ```
 
-> Now, use `dplyr::mutate_each`, functions from the `lubridate` package, and the `factor` function to fix any date/times, as well as to convert the `usertype` and `gender` variables to factor variables from the trip data. Don't make new objects, but rather modify the entries in `data_list` directly.
+> Now, use `dplyr::mutate_at`, functions from the `lubridate` package, and the `factor` function to fix any date/times, as well as to convert the `usertype` and `gender` variables to factor variables from the trip data. Don't make new objects, but rather modify the entries in `data_list` directly.
 
 ```{r fix_dates}
 # make the date-times valid:
 
 # station_data: make online a date
 data_list[["station_data"]] <- data_list[["station_data"]] %>%
-    mutate_each(funs(mdy), online)
+    mutate(online=mdy(online))
 
 # trip_data: starttime, stoptime should be date-time
 data_list[["trip_data"]] <- data_list[["trip_data"]] %>%
-    mutate_each(funs(mdy_hm), starttime, stoptime)
+    mutate_at(vars(starttime, stoptime), funs(mdy_hm))
 
 # weather_data: make Date a date
 data_list[["weather_data"]] <- data_list[["weather_data"]] %>%
-    mutate_each(funs(mdy), Date)
+    mutate(Date=mdy(Date))
 ```
 
 ```{r fix_factors}
@@ -116,7 +116,7 @@ data_list[["weather_data"]] <- data_list[["weather_data"]] %>%
 
 # trip_data: usertype, gender
 data_list[["trip_data"]] <- data_list[["trip_data"]] %>%
-    mutate_each(funs(factor), usertype, gender)
+    mutate_at(vars(usertype, gender), funs(factor))
 ```
 
 

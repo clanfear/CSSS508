@@ -1,10 +1,10 @@
 CSSS 508, Week 9: Mapping
 ====================================================================================
 author: Charles Lanfear
-date: May 24, 2017
+date: November 22, 2017
 transition: linear
-width: 1100
-height: 750
+width: 1440
+height: 960
 
 
 Today
@@ -256,15 +256,121 @@ ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=log.violent.crime.
   labs(title="Violent Crime", fill="ln(Crime)\n")
 ```
 
+tidycensus
+====================================================================================
+type: section
 
-Lab/Homework Exercise
+tidycensus
+====================================================================================
+incremental: true
+
+`tidycensus` can be used to search the American Community Survey (ACS) and Dicennial
+Census for variables, then download them and automatically format them as tidy dataframes.
+
+**These dataframes include geographical boundaries such as tracts!**
+
+This package utilizes the Census API, so you will need to obtain a Census API key.
+We'll talk more about APIs next week.
+
+```{r tidycensus}
+library(tidycensus)
+# census_api_key("PUT YOUR KEY HERE", install=TRUE)
+```
+
+
+Development ggplot2
+====================================================================================
+
+Note that you may need to install the development version of ggplot2 to use `tidycensus` plotting functions
+
+This will change when the `geom` functions for `sf` objects are finalized.
+
+Use the code below to install `devtools` and the development version of `ggplot2`
+
+```{r development_ggplot, eval=FALSE}
+install.packages("devtools")
+devtools::install_github("tidyverse/ggplot2")
+```
+
+Key tidycensus Functions
+====================================================================================
+
+* `census_api_key()` - Install a census api key
+* `load_variables()` - Loads searchable variable lists
+* `get_decennial()` - Loads Census variables and geographical boundaries.
+* `get_acs()` - Loads ACS variables and boundaries
+
+
+Searching for Variables
+====================================================================================
+
+```{r tidycensus_vars, cache=TRUE, message=FALSE, warning=FALSE}
+acs_2015_vars <- load_variables(2015, "acs5")
+acs_2015_vars[10:18,] %>% print() 
+```
+
+Processing Data
+====================================================================================
+
+```{r king_county, cache=TRUE, message=FALSE, warning=FALSE}
+king_county <- get_acs(geography="tract", state="WA", county="King",
+                       geometry = TRUE,
+                       variables=c("B02001_001E", "B02009_001E")) %>% 
+  select(-moe) %>% group_by(GEOID) %>% spread(variable, estimate) %>% 
+  rename(`Total Population`=B02001_001, `Any Black`=B02009_001) %>%
+  mutate(`Any Black`=`Any Black`/`Total Population`)
+head(king_county)
+```
+
+Mapping Code
+====================================================================================
+
+```{r king_plot_code, eval=FALSE, fig.width = 10, fig.height = 6, dpi=300, out.width="1100px", out.height="660px"}
+king_county %>% ggplot(aes(fill=`Any Black`)) + geom_sf() + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9", high="#00025b") + 
+  theme_minimal() + ggtitle("Proportion Any Black")
+```
+
+New functions:
+
+* `geom_sf()` draws Simple Feature coordinate data.
+* `coord_sf()` is used here with these arguments:
+   * `crs`: Modifies the coordinate reference system (CRS), often called a "projection"; WGS84 is possibly the most commonly used CRS.
+   * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
+
+Map
+====================================================================================
+```{r king_plot, eval=TRUE, echo=FALSE, fig.width = 10, fig.height = 6, dpi=300, out.width="1100px", out.height="660px"}
+king_county %>% ggplot(aes(fill=`Any Black`)) + geom_sf() + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", low="#d4d5f9", high="#00025b") + 
+  theme_minimal() + ggtitle("Proportion Any Black")
+```
+
+
+Getting Deeper with Geospatial Data
+====================================================================================
+
+Until recently, the main way to work with geospatial data in R was through the `sp` 
+package. `sp` works well but does not store data the same way as most GIS packages
+and can be bulky and complicated.
+
+The more recent `sf` package implements [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) spatial data encoding, which
+is an ISO standard for spatial data storage used by GIS packages and spatial databases.
+`sf` is also integrated into the `tidyverse`: e.g. `geom_sf()` in `ggplot2`.
+
+The package is somewhat new but is expected to *replace* `sp` eventually. The principle
+authors and contributors to `sf` are the same authors as `sp` (including Bivan and Pebesma) but with new developers
+from the `tidyverse` as well.
+
+If you are going to enter the world of GIS in R seriously, learn to navigate `sf`!
+
+Homework Exercise
 ====================================================================================
 type: section
 
 
-Your Turn!
-====================================================================================
-
-Use the Lab/HW 7 template to practice making maps of the restaurant inspection data.
-Save your work when you're done by emailing it to yourself. If you wish to submit it
-for bonus points, turn it in via Canvas by midnight on Tuesday the 30th.
+Use the HW 7 template to practice making maps of the restaurant inspection data. 
+If you wish to submit it for bonus points, turn it in via Canvas by midnight on Tuesday the 28th.

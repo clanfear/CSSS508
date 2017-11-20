@@ -1,0 +1,74 @@
+CSSS 508, Week 11: Tidy Model Results and Applied Data Cleaning
+====================================================================================
+author: Charles Lanfear
+date: December 6, 2017
+transition: linear
+width: 1400
+height: 960
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+Topics for Today
+====================================================================================
+
+Displaying Model Results
+
+* Using `broom`
+   * Turning model output lists into dataframes
+   * Plotting model output
+
+* Counterfactuals
+   * Creating counterfactual data
+   * Plotting expected and predicted values
+
+* Making regression tables
+  * Using `mtable()` in `memisc`
+  * Using `stargazer` and `pander`
+  
+  
+  
+```{r}
+devtools::install_github("dgrtwo/broom")
+library(broom)
+```
+
+
+broom
+====================================================================================
+
+tidy() - Creates a dataframe summary of a model.
+augment() - Adds columns---such as fitted values---to the data used in the model.
+glance() - Provides one row of fit statistics for models.
+
+
+Standard Output
+====================================================================================
+
+```{r}
+data(swiss)
+lm_1 <- lm(Fertility~Catholic+Education, data=swiss)
+summary(lm_1)
+pander(lm_1)
+```
+
+
+Regression Tables
+===
+
+```{r table_packages}
+library(MASS, pos=999)
+library(memisc, post=999)
+```
+
+
+panderOptions('table.alignment.rownames', 'left')
+pander(relabel(
+    mtable(m1, m2, m3,
+           summary.stats=c('N', 'R-squared', 'F')),
+    '(Intercept)'       = 'Constant',
+    'hp'                = 'Gross horsepower',
+    'factor(gear): 4/3' = 'Four forward gears',
+    'factor(gear): 5/3' = 'Five forward gears',
+    'N'                 = 'Observations'))

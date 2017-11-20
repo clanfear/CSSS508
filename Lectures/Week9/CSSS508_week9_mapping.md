@@ -1,10 +1,10 @@
 CSSS 508, Week 9: Mapping
 ====================================================================================
 author: Charles Lanfear
-date: May 24, 2017
+date: November 22, 2017
 transition: linear
-width: 1100
-height: 750
+width: 1440
+height: 960
 
 
 Today
@@ -240,15 +240,152 @@ Chloropleths Using geom_polygon()
 ====================================================================================
 <img src="CSSS508_week9_mapping-figure/ggplot_alone_4-1.png" title="plot of chunk ggplot_alone_4" alt="plot of chunk ggplot_alone_4" width="1100px" height="660px" />
 
+tidycensus
+====================================================================================
+type: section
 
-Lab/Homework Exercise
+tidycensus
+====================================================================================
+incremental: true
+
+`tidycensus` can be used to search the American Community Survey (ACS) and Dicennial
+Census for variables, then download them and automatically format them as tidy dataframes.
+
+**These dataframes include geographical boundaries such as tracts!**
+
+This package utilizes the Census API, so you will need to obtain a Census API key.
+We'll talk more about APIs next week.
+
+
+```r
+library(tidycensus)
+# census_api_key("PUT YOUR KEY HERE", install=TRUE)
+```
+
+
+Development ggplot2
+====================================================================================
+
+Note that you may need to install the development version of ggplot2 to use `tidycensus` plotting functions
+
+This will change when the `geom` functions for `sf` objects are finalized.
+
+Use the code below to install `devtools` and the development version of `ggplot2`
+
+
+```r
+install.packages("devtools")
+devtools::install_github("tidyverse/ggplot2")
+```
+
+Key tidycensus Functions
+====================================================================================
+
+* `census_api_key()` - Install a census api key
+* `load_variables()` - Loads searchable variable lists
+* `get_decennial()` - Loads Census variables and geographical boundaries.
+* `get_acs()` - Loads ACS variables and boundaries
+
+
+Searching for Variables
+====================================================================================
+
+
+```r
+acs_2015_vars <- load_variables(2015, "acs5")
+acs_2015_vars[10:18,] %>% print() 
+```
+
+```
+# A tibble: 9 x 3
+         name                                     label
+        <chr>                                     <chr>
+1 B01001_001E                                    Total:
+2 B01001_001M               Margin Of Error For!!Total:
+3 B01001_002E                                     Male:
+4 B01001_002M                Margin Of Error For!!Male:
+5 B01001_003E                      Male:!!Under 5 years
+6 B01001_003M Margin Of Error For!!Male:!!Under 5 years
+7 B01001_004E                       Male:!!5 to 9 years
+8 B01001_004M  Margin Of Error For!!Male:!!5 to 9 years
+9 B01001_005E                     Male:!!10 to 14 years
+# ... with 1 more variables: concept <chr>
+```
+
+Processing Data
+====================================================================================
+
+
+```r
+king_county <- get_acs(geography="tract", state="WA", county="King",
+                       geometry = TRUE,
+                       variables=c("B02001_001E", "B02009_001E")) %>% 
+  select(-moe) %>% group_by(GEOID) %>% spread(variable, estimate) %>% 
+  rename(`Total Population`=B02001_001, `Any Black`=B02009_001) %>%
+  mutate(`Any Black`=`Any Black`/`Total Population`)
+head(king_county)
+```
+
+```
+# A tibble: 6 x 5
+# Groups:   GEOID [6]
+        GEOID                                       NAME
+        <chr>                                      <chr>
+1 53033000100    Census Tract 1, King County, Washington
+2 53033000200    Census Tract 2, King County, Washington
+3 53033000300    Census Tract 3, King County, Washington
+4 53033000401 Census Tract 4.01, King County, Washington
+5 53033000402 Census Tract 4.02, King County, Washington
+6 53033000500    Census Tract 5, King County, Washington
+# ... with 3 more variables: geometry <S3: sfc_MULTIPOLYGON>, `Total
+#   Population` <dbl>, `Any Black` <dbl>
+```
+
+Mapping Code
+====================================================================================
+
+
+```r
+king_county %>% ggplot(aes(fill=`Any Black`)) + geom_sf() + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9", high="#00025b") + 
+  theme_minimal() + ggtitle("Proportion Any Black")
+```
+
+New functions:
+
+* `geom_sf()` draws Simple Feature coordinate data.
+* `coord_sf()` is used here with these arguments:
+   * `crs`: Modifies the coordinate reference system (CRS), often called a "projection"; WGS84 is possibly the most commonly used CRS.
+   * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
+
+Map
+====================================================================================
+<img src="CSSS508_week9_mapping-figure/king_plot-1.png" title="plot of chunk king_plot" alt="plot of chunk king_plot" width="1100px" height="660px" />
+
+
+Getting Deeper with Geospatial Data
+====================================================================================
+
+Until recently, the main way to work with geospatial data in R was through the `sp` 
+package. `sp` works well but does not store data the same way as most GIS packages
+and can be bulky and complicated.
+
+The more recent `sf` package implements [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) spatial data encoding, which
+is an ISO standard for spatial data storage used by GIS packages and spatial databases.
+`sf` is also integrated into the `tidyverse`: e.g. `geom_sf()` in `ggplot2`.
+
+The package is somewhat new but is expected to *replace* `sp` eventually. The principle
+authors and contributors to `sf` are the same authors as `sp` (including Bivan and Pebesma) but with new developers
+from the `tidyverse` as well.
+
+If you are going to enter the world of GIS in R seriously, learn to navigate `sf`!
+
+Homework Exercise
 ====================================================================================
 type: section
 
 
-Your Turn!
-====================================================================================
-
-Use the Lab/HW 7 template to practice making maps of the restaurant inspection data.
-Save your work when you're done by emailing it to yourself. If you wish to submit it
-for bonus points, turn it in via Canvas by midnight on Tuesday the 30th.
+Use the HW 7 template to practice making maps of the restaurant inspection data. 
+If you wish to submit it for bonus points, turn it in via Canvas by midnight on Tuesday the 28th.

@@ -9,3 +9,7 @@ purrr
 dplyr
 ggmap
 ggrepel
+stringr
+forcats
+bindrcpp
+tidycensus
