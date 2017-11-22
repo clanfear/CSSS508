@@ -3,7 +3,7 @@ CSSS 508, Week 11: Tidy Model Results and Applied Data Cleaning
 author: Charles Lanfear
 date: December 6, 2017
 transition: linear
-width: 1400
+width: 1440
 height: 960
 
 ```{r setup, include=FALSE}
@@ -25,7 +25,7 @@ Displaying Model Results
 
 * Making regression tables
   * Using `mtable()` in `memisc`
-  * Using `stargazer` and `pander`
+  * Using `pander`
   
   
   

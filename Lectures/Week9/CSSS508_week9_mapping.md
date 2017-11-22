@@ -13,7 +13,7 @@ Today
 * `ggmap` for mashing up maps with `ggplot2`
 * Labeling points and `ggrepel`
 * Mapping with raw `ggplot2`
-* Lab: visualizing restaurant safety over space and time
+* `tidycensus` and `sf`
 
 
 Mapping in R: A quick plug
@@ -27,6 +27,8 @@ If you are interested in mapping, GIS, and geospatial analysis in R, *acquire th
 
 You may also consider taking Jon Wakefield's **CSSS 554: Statistical Methods for Spatial Data**, however it is challenging and focuses more heavily on statistics than mapping.
 
+Also, in most terms, CSDE offers workshops in GIS using both QGIS and ArcGIS.
+
 
 ggmap
 ====================================================================================
@@ -36,7 +38,7 @@ type: section
 ggmap
 ====================================================================================
 
-`ggmap` is a package that goes with `ggplot2` so that you can plot spatial data directly onto map images downloaded from Google Maps, OpenStreetMap, and Stamen Maps.
+`ggmap` is a package that goes with `ggplot2` so that you can plot spatial data directly onto map images downloaded from Google Maps, OpenStreetMap, and Stamen Maps (good artistic/minimal options).
 
 What this package does for you:
 
@@ -94,8 +96,8 @@ Both `qmplot()` and `qmap()` are wrappers for a function called `get_map()` that
 * `zoom = ` a zoom level (3 = continent, 10 = city, 21 = building)
 * `source = ` `"google"`, `"osm"`, `"stamen"`
 * `maptype = `
-    + Google: `"terrain"`, `"terrain-background"`, `"satellite"`, `"roadmap"`, `"hybrid"`
-    + Stamen: Good artistic/minimal options! `"watercolor"`, `"toner"`, `"toner-background"`, `"toner-lite"`
+    + Google types: `"terrain"`, `"terrain-background"`, `"satellite"`, `"roadmap"`, `"hybrid"`
+    + Stamen types: `"watercolor"`, `"toner"`, `"toner-background"`, `"toner-lite"`
 * `color = ` `"color"` or `"bw"`
 
 
@@ -147,7 +149,12 @@ Call `qmplot()` with no `geom()`, and then add density layers:
 
 
 ```r
-qmplot(data = downtown_seattle_incidents, geom = "blank", x = Longitude, y = Latitude, maptype = "toner-lite", darken = 0.5) + stat_density_2d(aes(fill = ..level..), geom = "polygon", alpha = .2, color = NA) + scale_fill_gradient2("Incident concentration", low = "white", mid = "yellow", high = "red")
+qmplot(data = downtown_seattle_incidents, geom = "blank", x = Longitude,
+       y = Latitude, maptype = "toner-lite", darken = 0.5) + 
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", alpha = .2,
+                  color = NA) + 
+  scale_fill_gradient2("Incident concentration", low = "white", 
+                       mid = "yellow", high = "red")
 ```
 
 
@@ -164,14 +171,20 @@ Let's label the assaults and robberies specifically in downtown:
 
 
 ```r
-assaults <- downtown_seattle_incidents %>% mutate(assault_label = ifelse(`Event Clearance Group` %in% c("ASSAULTS", "ROBBERY"), `Event Clearance Description`, "")) %>% filter(assault_label != "")
+assaults <- downtown_seattle_incidents %>% 
+  mutate(assault_label = 
+           ifelse(`Event Clearance Group` %in%  c("ASSAULTS", "ROBBERY"), 
+                  `Event Clearance Description`, "")) %>% 
+  filter(assault_label != "")
 ```
 
 Now let's plot the events and label these specifically using `geom_label()` (`geom_text()` also works without the background/border):
 
 
 ```r
-qmplot(data = downtown_seattle_incidents, x = Longitude, y = Latitude, maptype = "toner-lite", color = I("firebrick"), alpha = I(0.5)) + geom_label(data = assaults, aes(label = assault_label))
+qmplot(data = downtown_seattle_incidents, x = Longitude, y = Latitude,
+       maptype = "toner-lite", color = I("firebrick"), alpha = I(0.5)) + 
+  geom_label(data = assaults, aes(label = assault_label))
 ```
 
 
@@ -184,12 +197,15 @@ Labeled Point Example
 ggrepel
 ====================================================================================
 
-You can also try `geom_label_repel()` or `geom_text_repel()` if you install and load in the `ggrepel()` package to fix overlaps:
+You can also try `geom_label_repel()` or `geom_text_repel()` if you install and load in the `ggrepel` package to fix overlaps:
 
 
 ```r
 library(ggrepel)
-qmplot(data = downtown_seattle_incidents, x = Longitude, y = Latitude, maptype = "toner-lite", color = I("firebrick"), alpha = I(0.5)) + geom_label_repel(data = assaults, aes(label = assault_label), fill = "black", color = "white", segment.color = "black")
+qmplot(data = downtown_seattle_incidents, x = Longitude, y = Latitude,
+       maptype = "toner-lite", color = I("firebrick"), alpha = I(0.5)) + 
+  geom_label_repel(data = assaults, aes(label = assault_label), 
+                   fill = "black", color = "white", segment.color = "black")
 ```
 
 
@@ -219,13 +235,20 @@ Chloropleth Using geom_polygon()
 ====================================================================================
 
 ```r
-ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=con_disdvntg))  +
-  geom_polygon()  + scale_fill_gradient(low="white", high="darkred") +
-  coord_equal() + geom_path(color = "black", linetype=1) +
-  theme(axis.title=element_blank(), axis.text = element_blank(), panel.grid.major = 
-          element_blank(), panel.grid.minor = element_blank(), panel.background = 
-          element_blank(), axis.ticks = element_blank(), axis.line = element_blank()) +
-  labs(title="Concentrated Disadvantage", fill="Disadvantage\n")
+ggplot(sea_tract_data, aes(x = long, y = lat, group = group,
+                           fill = con_disdvntg)) +
+  geom_polygon()  + 
+  scale_fill_gradient(low = "white", high = "darkred") +
+  coord_equal() + 
+  geom_path(color = "black", linetype = 1) +
+  theme(axis.title = element_blank(), 
+        axis.text = element_blank(), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(),
+        axis.ticks = element_blank(),
+        axis.line = element_blank()) +
+  labs(title = "Concentrated Disadvantage", fill = "Disadvantage\n")
 ```
 
 Chloropleths Using geom_polygon()
@@ -270,7 +293,7 @@ Note that you may need to install the development version of ggplot2 to use `tid
 
 This will change when the `geom` functions for `sf` objects are finalized.
 
-Use the code below to install `devtools` and the development version of `ggplot2`
+Use the code below if you want to install `devtools` and the development version of `ggplot2`
 
 
 ```r
@@ -282,9 +305,9 @@ Key tidycensus Functions
 ====================================================================================
 
 * `census_api_key()` - Install a census api key
-* `load_variables()` - Loads searchable variable lists
-* `get_decennial()` - Loads Census variables and geographical boundaries.
-* `get_acs()` - Loads ACS variables and boundaries
+* `load_variables()` - Load searchable variable lists
+* `get_decennial()` - Load Census variables and geographical boundaries.
+* `get_acs()` - Load ACS variables and boundaries
 
 
 Searching for Variables
@@ -322,7 +345,7 @@ king_county <- get_acs(geography="tract", state="WA", county="King",
                        variables=c("B02001_001E", "B02009_001E")) %>% 
   select(-moe) %>% group_by(GEOID) %>% spread(variable, estimate) %>% 
   rename(`Total Population`=B02001_001, `Any Black`=B02009_001) %>%
-  mutate(`Any Black`=`Any Black`/`Total Population`)
+  mutate(`Any Black` = `Any Black` / `Total Population`)
 head(king_county)
 ```
 
