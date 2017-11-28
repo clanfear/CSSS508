@@ -26,7 +26,8 @@ Displaying Model Results
 * Making regression tables
   * Using `mtable()` in `memisc`
   * Using `pander`
-  
+
+* Wrapping up the course
   
   
 ```{r}
@@ -72,3 +73,53 @@ pander(relabel(
     'factor(gear): 4/3' = 'Four forward gears',
     'factor(gear): 5/3' = 'Five forward gears',
     'N'                 = 'Observations'))
+    
+    
+Wrapping up the Course
+====================================================================================
+type: section
+
+
+What You've Learned
+====================================================================================
+
+A lot!
+
+* How to get data into R from a variety of formats
+* How to do "data janitor" work to manipulate and clean data
+* How to make pretty visualizations
+* How to automate with loops and functions
+* How to combine text, calculations, plots, and tables into dynamic R Markdown reports 
+
+
+What Comes Next?
+====================================================================================
+
+* Statistical inference (e.g. more CSSS courses)
+    + Functions for hypothesis testing, hierarchical/mixed effect models, machine learning, survey design, etc. are straightforward to use... once data are clean
+    + Access output by working with list structures (like from regression models)
+* Practice, practice, practice!
+    + Replicate analyses you've done in Excel, SPSS, or Stata
+    + Think about data using `dplyr` verbs, tidy data principles
+    + R Markdown for documenting cleaning and analysis start-to-finish
+* More advanced projects
+    + Using version control (git) in RStudio
+    + Interactive Shiny web apps
+    
+
+Course Plugs
+====================================================================================
+
+If you...
+
+* have no stats background yet - **SOC504: Applied Social Statistics**
+* liked today - **SOC590: Big Data and Population Processes**
+* have (only) finished SOC506 - **CSSS510: Maximum Likelihood**
+* want to master visualization - **CSSS569: Visualizing Data**
+* study events or durations - **CSSS544: Event History Analysis**
+* want to use network data - **CSSS567: Social Network Analysis**
+* want to map - **CSSS554: Spatial Statistics**
+
+Thank you!
+====================================================================================
+type: section
