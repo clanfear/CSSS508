@@ -2,7 +2,7 @@
 title: 'CSSS508: Introduction to R for Social Scientists'
 subtitle: "University of Washington"
 author: "[Charles Lanfear](mailto:clanfear@uw.edu)"
-date: "Autumn 2017"
+date: "Spring 2018"
 output: html_document
 ---
 
@@ -63,7 +63,7 @@ about homework, lectures, or programming in R in general.
 This course features a mailing list for asking questions related to homeworks. I encourage
 you to use this list as your primary means of answering technical questions. As you 
 develop your skills, you will find that learning *how* to ask questions well makes 
-finding answers much easier. To use the mailing list, send your email to `cs_ss508a_au17@uw.edu`
+finding answers much easier. To use the mailing list, send your email to `cs_ss508a_sp18@uw.edu`
 and it will be sent to the instructor and all students in the class. Unless you specifically
 request otherwise, emailed questions directed to me ([clanfear@uw.edu](mailto:clanfear@uw.edu)) that may be useful to others in the class
 will be answered with a response to the class mailing list. Please note that this course
@@ -76,15 +76,8 @@ Diagnosing problems inothers' code is a very effective way to improve your under
 Students registered for this course are provided with free access to [DataCamp](http://www.datacamp.com) R courses for the duration of the term.
 DataCamp provides commercial interactive tutorials created by experts in data science, statistics, and general programming. These tutorials
 are provided as *optional* resources for additional practice and deeper learning. Free access to DataCamp is available
-through the beginning of Winter term, so you may review and work on them after the course has ended. 
-If you are registered for the course and did not receive a DataCamp email by Wednesday 9/27/17, please [email the instructor](mailto:clanfear@uw.edu).
-
-[Tutorial Package](https://github.com/clanfear/CSSS508/raw/master/uwcsss508_0.1.0.zip)
-
-This course also features an R package containing optional interactive tutorials for practicing
-concepts from lecture. These short tutorials are useful to check your understanding
-but are not required. The package is in an early stage of development, so please email
-me if you find bugs or problems. Installation instructions are found in the Week 1 slides.
+for approximately six months, so you may review and work on them after the course has ended. 
+If you are registered for the course and did not receive a DataCamp email by the end of Wednesday 3/28/18, please [email the instructor](mailto:clanfear@uw.edu).
 
 # Course Requirements
 This course is graded as credit / no credit. To pass you need to receive 
@@ -161,9 +154,11 @@ R or RStudio in office hours or over email.
 
 # Course Outline
 All topics are subject to change, however a tentative outline is as follows, with 
-the last two weeks reserved for topics requested by students.
+the last three reserved for topics requested by students. In terms with 10 class
+days, only two optional topics will be covered in class. A video lecture will be 
+available for the remaining topic.
 
-**Week**
+**Lectures**
 
 1. R, RStudio, and Markdown Documents
 2. Plotting with `ggplot2`
@@ -175,3 +170,4 @@ the last two weeks reserved for topics requested by students.
 8. Manipulating Text and Regular Expressions
 9. Spatial Data and Mapping
 10. Social Media Data
+11. Tidy Model Results and Advanced Data Manipulation
