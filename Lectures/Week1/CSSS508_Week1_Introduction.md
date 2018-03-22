@@ -1,7 +1,7 @@
 CSSS508 Introduction
 ========================================================
 author: Charles Lanfear
-date: September 27, 2017
+date: March 28, 2017
 width: 1600
 height: 900
 transition: linear
@@ -103,7 +103,7 @@ I do not provide PowerPoint or PDF slides. If you want to search a lecture for a
 
 If you must take notes directly on course slides, use an add-on like Beanote for Chrome or Skitch for Safari. You can also search the provided source code on the website.
 
-Rough Schedule
+Lecture Plan
 ========================================================
 incremental: true
 
@@ -115,8 +115,11 @@ incremental: true
 6. Loops and Functions
 7. Vectorization and Functions
 8. Strings / Text Processing
-9. Geospatial Data and Maps
-10. Social Media Data and Text Mining
+9. Geospatial Data and Maps `*`
+10. Social Media Data and Text Mining `*`
+11. Tidy Model Results / Advanced Data Cleaning `*`
+
+`*` *Optional topics*: We will do **two**. A video will be available for the third.
 
 
 R and RStudio
@@ -144,7 +147,7 @@ R Studio
 ========================================================
 incremental: true
 
-R Studio is a "front-end" or integrated development encironment (IDE) for R that can make your life *easier*.
+R Studio is a "front-end" or integrated development environment (IDE) for R that can make your life *easier*.
 
 RStudio can:
 
@@ -164,7 +167,7 @@ Killer feature of R/RStudio is ease of making R Markdown files:
   + No rerunning, recopying, or repasting
   + Easy for collaborators to understand
   + Show as little or as much of the code as you want
-* Make: presentations (like this one!); webpages; reports in html; Word docs
+* Make: Presentations (like this one!); HTML webpages and reports; Word docs
 * Works with LaTeX for more formatting control
 
 We'll get back to this soon!
@@ -178,7 +181,7 @@ Open up RStudio now and choose *File > New File > R Script*.
 Then, let's get oriented with the interface:
 
 - Top Left: Code **editor** pane, data viewer (browse with tabs)
-- Bottom Left: **Console** for running code (> prompt)
+- Bottom Left: **Console** for running code (`>` prompt)
 - Top Right: List of objects in **environment**, code **history** tab.
 - Bottom Right: Tabs for browsing files, viewing plots, managing packages, and viewing help files.
 
@@ -192,24 +195,24 @@ There are several ways to run R code in RStudio:
 
 1. Highlight lines in the **editor** window and click **Run** or hit *Cntl-Enter* or *Command-Enter* to run them all.
 2. Type individual lines in the **console** and press *Enter*.
-3. In R Markdown documents, click within a code block ("chunk") and
-click on a choice in the **Chunks** dropdown.
+3. In R Markdown documents, click within a code chunk and click on a choice in the **Chunks** dropdown.
 
 The console will show the lines you ran followed by any printed output. If you mess up (e.g. leave off
-a parenthesis), R might show a + sign prompting you to finish the command:
+a parenthesis), R might show a `+` sign prompting you to finish the command:
 
 
 ```r
 > (11-2
 +
 ```
+
 Finish the command or hit *Esc* to get out of this.
 
 R as a Calculator
 ========================================================
 incremental: true
 
-In the **console**, type 123 + 456 + 789 and hit *Enter*.
+In the **console**, type `123 + 456 + 789` and hit *Enter*.
 
 ```r
 123 + 456 + 789
@@ -218,10 +221,12 @@ In the **console**, type 123 + 456 + 789 and hit *Enter*.
 ```
 [1] 1368
 ```
-The [1] in the output indicates what line of output is shown.
 
-Now in your blank R document in the **editor**, try typing the line sqrt(400) and either
+The `[1]` in the output indicates what line of output is shown.
+
+Now in your blank R document in the **editor**, try typing the line `sqrt(400)` and either
 clicking **Run** or hitting *Cntl-Enter*.
+
 
 ```r
 sqrt(400)
@@ -261,7 +266,9 @@ Creating an object can be done using the assignment operator `<-`
 ```r
 new.object <- 144
 ```
+
 You can display or "call" an object by using its name.
+
 
 ```r
 new.object
@@ -270,6 +277,7 @@ new.object
 ```
 [1] 144
 ```
+
 Object names can have `_` and `.` in them, but cannot *start* with numbers.
 
 Using Objects
@@ -278,6 +286,7 @@ incremental: true
 
 The **name** represents the information stored in that **object**, so you can treat the object's name
 as if it were the values stored inside.
+
 
 ```r
 new.object + 10
@@ -373,7 +382,7 @@ The header of an .Rmd file is a [YAML](http://yaml.org/) (YAML Ain't Markup Lang
 ---
 title: "Untitled"
 author: "Charles Lanfear"
-date: "March 29, 2017"
+date: "March 28, 2018"
 output: html_document
 ---
 ```
@@ -490,7 +499,7 @@ z <- y^2
 Your Turn
 ========================================================
 
-Feel free to edit and re-knit `my_first_Rmd.Rmd` to give it some pizzazz: Add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equationâ¦
+Feel free to edit and re-knit `my_first_Rmd.Rmd` to give it some pizzazz: Add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equation.
 
 * [Ways to modify the overall document appearance](http://rmarkdown.rstudio.com/html_document_format.html)
 * [Ways to format parts of your document](http://rmarkdown.rstudio.com/authoring_basics.html)
@@ -562,7 +571,7 @@ You can also name your chunks by putting something after the `r` before the chun
 After you name your chunks, look what happens in the dropdown on the bottom left of your editor pane.
 
 
-In-line R code
+In-Line R code
 ========================================================
 incremental: true
 
@@ -590,8 +599,8 @@ incremental: true
 
 Having R dump values directly into your document protects you from silly mistakes:
 
-* Never wonder "how did I come up with this quantity?" ever again---just look at your formula in your .Rmd file
-* Consistency, no "find/replace" mishaps: reference a variable in-line throughout your document without manually updating if the calculation changes (e.g. reporting sample sizes)
+* Never wonder "how did I come up with this quantity?" ever again: Just look at your formula in your .Rmd file
+* Consistency; no "find/replace" mishaps: reference a variable in-line throughout your document without manually updating if the calculation changes (e.g. reporting sample sizes)
 * You are more likely to make a typo in a "hard-coded" number than you are to write R code that somehow runs but gives you the wrong thing
 
 
@@ -714,7 +723,7 @@ If you put an assignment `<-` in parentheses `()`, R will print the output of th
 
 
 ```r
-( dist_mean <- mean(cars$dist) )
+( dist_mean  <- mean(cars$dist) )
 ```
 
 ```
@@ -767,7 +776,8 @@ Looking at Swiss
 
 
 ```r
-pairs(swiss, pch = 8, col = "violet", main = "Pairwise comparisons of Swiss variables")
+pairs(swiss, pch = 8, col = "violet",
+      main = "Pairwise comparisons of Swiss variables")
 ```
 
 ![plot of chunk unnamed-chunk-14](CSSS508_Week1_Introduction-figure/unnamed-chunk-14-1.png)
@@ -783,33 +793,6 @@ In the console: `install.packages("pander")`.
 
 * Note that unlike the `library()` command, the name of a package to be installed must be in quotes. This is because the name here is a search term (text, not an object!) while for `library()` it is an actual R object.
 * Once you install a package, you don't need to re-install it until you update R. Consequently, you should not include `install.packages()` in any markdown document or R script!
-
-
-Installing Tutorial Package
-========================================================
-incremental: true
-
-This term I am introducing a tutorial package to complement lectures and homeworks. It features interactive webpages built using the `learnr` and `checkr` packages, on which you can run R code and receive basic feedback.
-
-If you want to make use of these tutorials, run the following code in your R console to install the package:
-
-
-```r
-install.packages(c("learnr", "dplyr"))
-install.packages("https://github.com/clanfear/CSSS508/raw/master/uwcsss508_0.1.0.zip", repos = NULL)
-```
-
-You can run tutorial 1 using the following code. Change only the number in the first argument to access later tutorials.
-
-
-```r
-library(learnr)
-library(uwcsss508)
-run_tutorial("tutorial_1", "uwcsss508")
-```
-
-Note that the tutorial package has been in development for less than a month, so it will be updated frequently and may have bugs. Let me know if you have issues! For more in-depth tutorials,  see the [DataCamp](http://www.datacamp.com) links on the [course website](http://clanfear.github.io/CSSS508).
-
 
 Making Tables
 ========================================================
@@ -860,7 +843,7 @@ Mix in-line R calculations, tables, R output, and plots with text describing the
 
 Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (1 to 3 digits).
 
-### DUE: 11:59 PM, Tuesday, October 3rd, 2017
+### DUE: 11:59 PM, Tuesday, April 3rd, 2018
 
 
 Grading Rubric
