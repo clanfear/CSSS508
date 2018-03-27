@@ -5,6 +5,7 @@ date: March 28, 2017
 width: 1600
 height: 900
 transition: linear
+font-family: 'Helvetica'
 
 
 
@@ -115,11 +116,13 @@ incremental: true
 6. Loops and Functions
 7. Vectorization and Functions
 8. Strings / Text Processing
-9. Geospatial Data and Maps `*`
-10. Social Media Data and Text Mining `*`
-11. Tidy Model Results / Advanced Data Cleaning `*`
+9. Geospatial Data and Maps \*
+10. Social Media Data and Text Mining \*
+11. Tidy Model Results / Advanced Data Cleaning \*
 
-`*` *Optional topics*: We will do **two**. A video will be available for the third.
+\* *Optional topics*: We will do **two**. A video from will be available for 
+the third. If you miss any lecture, videos of Autumn 2017 lectures are available
+on the course website but may differ from this term's lectures.
 
 
 R and RStudio
@@ -399,6 +402,8 @@ output:
 Making R Markdown Documents
 ========================================================
 
+## Output
+
 **bold/strong emphasis**
 
 *italic/normal emphasis*
@@ -414,29 +419,33 @@ Making R Markdown Documents
 
 ***
 
-`**bold/strong emphasis**`
-
-`*italic/normal emphasis*`
-
-`# Header`
-
-`## Subheader`
-
-`### Subsubheader`
+## Syntax
 
 ```
+**bold/strong emphasis**
+
+*italic/normal emphasis*
+
+# Header
+
+## Subheader
+
+### Subsubheader
+
 > Block quote from
 > famous person
 ```
 
 More R Markdown Syntax
 ========================================================
-
 left: 30%
+
+## Output
 
 1. Ordered lists
 1. Are real easy
   1. Even with sublists
+  1. Or when lazy with numbering
   
 * Unordered lists
 * Are also real easy
@@ -449,25 +458,27 @@ left: 30%
 
 ***
 
+## Syntax
+
 ```
 1. Ordered lists
 1. Are real easy
   1. Even with sublists
-```
+  1. Or when lazy with numbering
 
-```
 * Unordered lists
 * Are also real easy
   + Also even with sublists
+
+[URLs are trivial](http://www.uw.edu)
+
+![pictures aren't bad either](http://depts.washington.edu/uwcreate/img/UW_W-Logo_smallRGB.gif)
 ```
-
-`[URLs are trivial](http://www.uw.edu)`
-
-`![pictures aren't bad either](http://depts.washington.edu/uwcreate/img/UW_W-Logo_smallRGB.gif)`
-
 
 Formulae and Syntax in Markdown
 ========================================================
+
+## Output 
 
 You can put some math $y= \left( \frac{2}{3} \right)^2$ right up in there.
 
@@ -476,6 +487,8 @@ $$\frac{1}{n} \sum_{i=1}^{n} x_i = \bar{x}_n$$
 Or a sentence with `code-looking font`.
 
 
+Or a block of code:
+
 ```
 y <- 1:5
 z <- y^2
@@ -483,18 +496,22 @@ z <- y^2
 
 ***
 
-`You can put some math $y= \left( \frac{2}{3} \right)^2$ right up in there`
+## Syntax
 
-`$$\frac{1}{n} \sum_{i=1}^{n} x_i = \bar{x}_n$$`
+```
+You can put some math $y= \left( \frac{2}{3} \right)^2$ right up in there
 
-`` Or a sentence with `code-looking font`. ``
+$$\frac{1}{n} \sum_{i=1}^{n} x_i = \bar{x}_n$$
 
+Or a sentence with `code-looking font`.
+
+Or a block of code:
 
     ```
     y <- 1:5
     z <- y^2
     ```
-
+```
 
 Your Turn
 ========================================================
@@ -519,13 +536,13 @@ For day-to-day use, plain vanilla R Markdown does the job.
 R code and R Markdown
 ========================================================
 
-Inside Markdown documents, lines of R code make up what are called **chunks**. Code is sandwiched between sets of three backticks and `{r}`.
+Inside Markdown documents, lines of R code make up what are called **chunks**. Code is sandwiched between sets of three backticks and `{r}`. This chunk of code...
 
     ```{r}
     data(cars)
     summary(cars)
     ```
-
+Produces this output in your document:
 
 
 ```r
@@ -569,6 +586,10 @@ You can also name your chunks by putting something after the `r` before the chun
     summary(cars)
     ```
 After you name your chunks, look what happens in the dropdown on the bottom left of your editor pane.
+
+Naming chunks allows you to browse through an RMarkdown document by named chunks. 
+
+You can also browse by sections named using headers and subheaders.
 
 
 In-Line R code
