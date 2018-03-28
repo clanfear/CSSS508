@@ -12,6 +12,7 @@ date: March 28, 2017
 width: 1600
 height: 900
 transition: linear
+font-family: helvetica
 
 
 
