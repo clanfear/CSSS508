@@ -1081,10 +1081,10 @@ a parenthesis), R might show a <code>+</code> sign prompting you to finish the c
 <pre class="fragment"><code>[1] 1368
 </code></pre>
 
-<p class="fragment">The <code>[1]</code> in the output indicates what line of output is shown.</p>
+<p class="fragment">The <code>[1]</code> in the output indicates the numeric <strong>index</strong> of the first element on that line.</p>
 
 <p class="fragment">Now in your blank R document in the <strong>editor</strong>, try typing the line <code>sqrt(400)</code> and either
-clicking <em>Run</em> or hitting <code>Cntl+Enter</code> or <code>⌘+Enter</code>.</p>
+clicking <em>Run</em> or hitting <code>Ctrl+Enter</code> or <code>⌘+Enter</code>.</p>
 
 <pre class="fragment"><code class="r">sqrt(400)
 </code></pre>
@@ -1119,20 +1119,31 @@ is <code>x</code> which can be a number or a vector of numbers.</p>
 <div class="slideContent" >
 <p>R stores everything as an <strong>object</strong>, including data, functions, models, and output.</p>
 
-<p class="fragment">Creating an object can be done using the assignment operator <code>&lt;-</code></p>
+<p class="fragment">Creating an object can be done using the <strong>assignment operator</strong> <code>&lt;-</code>. </p>
 
 <pre class="fragment"><code class="r">new.object &lt;- 144
 </code></pre>
 
-<p class="fragment">You can display or &ldquo;call&rdquo; an object by using its name.</p>
+<p class="fragment"><strong>Operators</strong> like <code>&lt;-</code> are functions that look like symbols but typically sit between
+numbers or objects (instead of having them inside <code>()</code> like in <code>sqrt(x)</code>). </p>
 
-<pre class="fragment"><code class="r">new.object
+<p class="fragment">We do math with operators, e.g., <code>x + y</code>!</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Calling Objects</h3>
+<div class="slideContent" >
+<p>You can display or &ldquo;call&rdquo; an object simply by using its name.</p>
+
+<pre><code class="r">new.object
 </code></pre>
 
-<pre class="fragment"><code>[1] 144
+<pre><code>[1] 144
 </code></pre>
 
-<p class="fragment">Object names can contain <code>_</code> and <code>.</code> in them, but cannot <em>begin</em> with numbers. Try
+<p>Object names can contain <code>_</code> and <code>.</code> in them, but cannot <em>begin</em> with numbers. Try
 to be consistent in naming objects. RStudio auto-complete means <em>long names are better 
 than vague ones</em>!</p>
 
@@ -1197,7 +1208,7 @@ new.object
 <section data-transition="linear" data-transition-speed="default">
 <h3>More Complex Objects</h3>
 <div class="slideContent" >
-<p>The same principles can be used to create more complex objects like <strong>matrices</strong>, <strong>arrays</strong>, <strong>lists</strong>, and <strong>data frames</strong> (lists which look like matrices but can hold numerical and text information).</p>
+<p>The same principles can be used to create more complex objects like <strong>matrices</strong>, <strong>arrays</strong>, <strong>lists</strong>, and <strong>data frames</strong> (lists which look like matrices but can hold multiple data types at once).</p>
 
 <p>Most data sets you will work with will be read into R and stored as a <strong>data frame</strong>, so this course will mainly focus on manipulating and visualizing these objects.</p>
 
@@ -1454,7 +1465,7 @@ summary(cars)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Chunk Options</h3>
 <div class="slideContent" >
-<p>Chunks have options that control what happens with its code, such as:</p>
+<p>Chunks have options that control what happens with their code, such as:</p>
 
 <ul>
 <li><code>echo=FALSE</code>: keeps R code from being shown in the document</li>
@@ -1555,9 +1566,9 @@ summary(cars)
 <p>In the sample R Markdown document you are working on, we can load the built-in data
 <code>cars</code>, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.</p>
 
-<p class="fragment"><code>data(cars)</code> loads this dataframe into the Global Environment (as a <em>promise</em>).</p>
+<p class="fragment"><code>data(cars)</code> loads this dataframe into the <strong>Global Environment</strong> (as a <em>promise</em>).</p>
 
-<p class="fragment"><code>View(cars)</code> pops up a viewer pane (&ldquo;interactive&rdquo; use only, don&#39;t put in R Markdown document!) or</p>
+<p class="fragment"><code>View(cars)</code> pops up a <strong>Viewer</strong> pane (&ldquo;interactive&rdquo; use only, don&#39;t put in R Markdown document!) or</p>
 
 <pre class="fragment"><code class="r">head(cars) # prints first 6 rows, see tail() too
 </code></pre>
@@ -1669,8 +1680,10 @@ summary(cars)
      ylab = &quot;Stopping distance (ft)&quot;,
      main = &quot;Speeds and stopping distances of cars&quot;,
      pch = 16) # Point size
-abline(h = dist_mean, col = &quot;firebrick&quot;)
-abline(v = speed_mean, col = &quot;cornflowerblue&quot;)
+abline(h = dist_mean,
+       col = &quot;firebrick&quot;)
+abline(v = speed_mean,
+       col = &quot;cornflowerblue&quot;)
 </code></pre>
 
 
@@ -1713,13 +1726,15 @@ abline(v = speed_mean, col = &quot;cornflowerblue&quot;)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Installing Packages</h3>
 <div class="slideContent" >
-<p>Let&#39;s make a table that looks a little less code-y in the output. To do this, we&#39;ll want to install a <strong>package</strong> called <code>pander</code>.</p>
+<p>Let&#39;s make a table that looks a little less code-y in the output. To do this, we&#39;ll 
+want to install a <strong>package</strong> called <code>pander</code>. Packages contain premade functions 
+and/or data we can use. R&#39;s strength is its wide variety of packages!</p>
 
 <p class="fragment">In the console: <code>install.packages(&quot;pander&quot;)</code>.</p>
 
 <ul>
-<li class="fragment">Note that unlike the <code>library()</code> command, the name of a package to be installed must be in quotes. This is because the name here is a search term (text, not an object!) while for <code>library()</code> it is an actual R object.</li>
-<li class="fragment">Once you install a package, you don&#39;t need to re-install it until you update R. Consequently, you should not include <code>install.packages()</code> in any markdown document or R script!</li>
+<li class="fragment">Note that unlike the <code>library()</code> command, <em>the name of a package to be installed must be in quotes</em>. This is because the name here is a search term (text, not an object!) while for <code>library()</code> it is an actual R object.</li>
+<li class="fragment">Once you install a package, you don&#39;t need to re-install it until you update R. <em>Consequently, you should not include</em> <code>install.packages()</code> <em>in any markdown document or R script!</em></li>
 </ul>
 
 </div>

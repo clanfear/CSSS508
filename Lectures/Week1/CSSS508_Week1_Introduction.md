@@ -233,10 +233,10 @@ In the **console**, type `123 + 456 + 789` and hit `Enter`.
 [1] 1368
 ```
 
-The `[1]` in the output indicates what line of output is shown.
+The `[1]` in the output indicates the numeric **index** of the first element on that line.
 
 Now in your blank R document in the **editor**, try typing the line `sqrt(400)` and either
-clicking *Run* or hitting `Cntl+Enter` or `⌘+Enter`.
+clicking *Run* or hitting `Ctrl+Enter` or `⌘+Enter`.
 
 
 ```r
@@ -272,14 +272,22 @@ incremental: true
 
 R stores everything as an **object**, including data, functions, models, and output.
 
-Creating an object can be done using the assignment operator `<-`
+Creating an object can be done using the **assignment operator** `<-`. 
 
 
 ```r
 new.object <- 144
 ```
 
-You can display or "call" an object by using its name.
+**Operators** like `<-` are functions that look like symbols but typically sit between
+numbers or objects (instead of having them inside `()` like in `sqrt(x)`). 
+
+We do math with operators, e.g., `x + y`!
+
+Calling Objects
+========================================================
+
+You can display or "call" an object simply by using its name.
 
 
 ```r
@@ -361,7 +369,7 @@ sqrt(new.object)
 More Complex Objects
 ========================================================
 
-The same principles can be used to create more complex objects like **matrices**, **arrays**, **lists**, and **data frames** (lists which look like matrices but can hold numerical and text information).
+The same principles can be used to create more complex objects like **matrices**, **arrays**, **lists**, and **data frames** (lists which look like matrices but can hold multiple data types at once).
 
 Most data sets you will work with will be read into R and stored as a **data frame**, so this course will mainly focus on manipulating and visualizing these objects.
 
@@ -576,7 +584,7 @@ summary(cars)
 Chunk Options
 ========================================================
 
-Chunks have options that control what happens with its code, such as:
+Chunks have options that control what happens with their code, such as:
 
 * `echo=FALSE`: keeps R code from being shown in the document
 * `results='hide'`: hides R's (non-plot) output from the document
@@ -664,9 +672,9 @@ incremental: true
 In the sample R Markdown document you are working on, we can load the built-in data
 `cars`, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.
 
-`data(cars)` loads this dataframe into the Global Environment (as a *promise*).
+`data(cars)` loads this dataframe into the **Global Environment** (as a *promise*).
 
-`View(cars)` pops up a viewer pane ("interactive" use only, don't put in R Markdown document!) or
+`View(cars)` pops up a **Viewer** pane ("interactive" use only, don't put in R Markdown document!) or
 
 
 ```r
@@ -783,8 +791,10 @@ plot(dist ~ speed, data = cars,
      ylab = "Stopping distance (ft)",
      main = "Speeds and stopping distances of cars",
      pch = 16) # Point size
-abline(h = dist_mean, col = "firebrick")
-abline(v = speed_mean, col = "cornflowerblue")
+abline(h = dist_mean,
+       col = "firebrick")
+abline(v = speed_mean,
+       col = "cornflowerblue")
 ```
 
 ***
@@ -821,12 +831,14 @@ Installing Packages
 ========================================================
 incremental: true
 
-Let's make a table that looks a little less code-y in the output. To do this, we'll want to install a **package** called `pander`.
+Let's make a table that looks a little less code-y in the output. To do this, we'll 
+want to install a **package** called `pander`. Packages contain premade functions 
+and/or data we can use. R's strength is its wide variety of packages!
 
 In the console: `install.packages("pander")`.
 
-* Note that unlike the `library()` command, the name of a package to be installed must be in quotes. This is because the name here is a search term (text, not an object!) while for `library()` it is an actual R object.
-* Once you install a package, you don't need to re-install it until you update R. Consequently, you should not include `install.packages()` in any markdown document or R script!
+* Note that unlike the `library()` command, *the name of a package to be installed must be in quotes*. This is because the name here is a search term (text, not an object!) while for `library()` it is an actual R object.
+* Once you install a package, you don't need to re-install it until you update R. *Consequently, you should not include* `install.packages()` *in any markdown document or R script!*
 
 Making Tables
 ========================================================
