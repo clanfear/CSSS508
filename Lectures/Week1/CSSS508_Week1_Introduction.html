@@ -1052,9 +1052,10 @@ on the course website but may differ from this term&#39;s lectures.</p>
 <p>There are several ways to run R code in RStudio:</p>
 
 <ol>
-<li class="fragment">Highlight lines in the <strong>editor</strong> window and click <strong>Run</strong> or hit <em>Cntl-Enter</em> or <em>Command-Enter</em> to run them all.</li>
-<li class="fragment">Type individual lines in the <strong>console</strong> and press <em>Enter</em>.</li>
-<li class="fragment">In R Markdown documents, click within a code chunk and click on a choice in the <strong>Chunks</strong> dropdown.</li>
+<li class="fragment">Highlight lines in the <strong>editor</strong> window and click <em>Run</em> at the top or hit <code>Ctrl+Enter</code> or <code>⌘+Enter</code> to run them all.</li>
+<li class="fragment">With your <strong>caret</strong> on a line you want to run, hit <code>Ctrl+Enter</code> or <code>⌘+Enter</code>. Note your caret moves to the next line, so you can run code sequentially with repeated presses. </li>
+<li class="fragment">Type individual lines in the <strong>console</strong> and press <code>Enter</code>.</li>
+<li class="fragment">In R Markdown documents, click within a code chunk and click the green arrow to run the chunk. The button beside that runs <em>all prior chunks</em>.</li>
 </ol>
 
 <p class="fragment">The console will show the lines you ran followed by any printed output. If you mess up (e.g. leave off
@@ -1064,7 +1065,7 @@ a parenthesis), R might show a <code>+</code> sign prompting you to finish the c
 +
 </code></pre>
 
-<p class="fragment">Finish the command or hit <em>Esc</em> to get out of this.</p>
+<p class="fragment">Finish the command or hit <code>Esc</code> to get out of this.</p>
 
 </div>
 
@@ -1072,7 +1073,7 @@ a parenthesis), R might show a <code>+</code> sign prompting you to finish the c
 <section data-transition="linear" data-transition-speed="default">
 <h3>R as a Calculator</h3>
 <div class="slideContent" >
-<p>In the <strong>console</strong>, type <code>123 + 456 + 789</code> and hit <em>Enter</em>.</p>
+<p>In the <strong>console</strong>, type <code>123 + 456 + 789</code> and hit <code>Enter</code>.</p>
 
 <pre class="fragment"><code class="r">123 + 456 + 789
 </code></pre>
@@ -1083,7 +1084,7 @@ a parenthesis), R might show a <code>+</code> sign prompting you to finish the c
 <p class="fragment">The <code>[1]</code> in the output indicates what line of output is shown.</p>
 
 <p class="fragment">Now in your blank R document in the <strong>editor</strong>, try typing the line <code>sqrt(400)</code> and either
-clicking <strong>Run</strong> or hitting <em>Cntl-Enter</em>.</p>
+clicking <em>Run</em> or hitting <code>Cntl+Enter</code> or <code>⌘+Enter</code>.</p>
 
 <pre class="fragment"><code class="r">sqrt(400)
 </code></pre>
@@ -1106,7 +1107,7 @@ and look at the <strong>Help</strong> panel on the right.</p>
 </code></pre>
 
 <p class="fragment"><strong>Arguments</strong> are the <em>inputs</em> to a function. In this case, the only argument to <code>sqrt()</code>
-is a number or a vector of numbers <code>x</code>.</p>
+is <code>x</code> which can be a number or a vector of numbers.</p>
 
 <p class="fragment">Help files provide documentation on how to use functions and what functions produce.</p>
 
@@ -1131,7 +1132,9 @@ is a number or a vector of numbers <code>x</code>.</p>
 <pre class="fragment"><code>[1] 144
 </code></pre>
 
-<p class="fragment">Object names can have <code>_</code> and <code>.</code> in them, but cannot <em>start</em> with numbers.</p>
+<p class="fragment">Object names can contain <code>_</code> and <code>.</code> in them, but cannot <em>begin</em> with numbers. Try
+to be consistent in naming objects. RStudio auto-complete means <em>long names are better 
+than vague ones</em>!</p>
 
 </div>
 
@@ -1139,7 +1142,7 @@ is a number or a vector of numbers <code>x</code>.</p>
 <section data-transition="linear" data-transition-speed="default">
 <h3>Using Objects</h3>
 <div class="slideContent" >
-<p>The <strong>name</strong> represents the information stored in that <strong>object</strong>, so you can treat the object&#39;s name
+<p>An object&#39;s <strong>name</strong> represents the information stored in that <strong>object</strong>, so you can treat the object&#39;s name
 as if it were the values stored inside.</p>
 
 <pre class="fragment"><code class="r">new.object + 10
@@ -1169,7 +1172,7 @@ as if it were the values stored inside.</p>
 <p>A <strong>vector</strong> is a series of <strong>elements</strong>, such as numbers.</p>
 
 <p class="fragment">You can create a vector and store it as an object in the same way. To do this, use the
-function <code>c()</code> which stands for &ldquo;combine&rdquo;.</p>
+function <code>c()</code> which stands for &ldquo;combine&rdquo; or &ldquo;concatenate&rdquo;.</p>
 
 <pre class="fragment"><code class="r">new.object &lt;- c(4, 9, 16, 25, 36)
 new.object
@@ -1218,7 +1221,7 @@ new.object
 <ol>
 <li>Choose <em>File &gt; New File &gt; R Markdown&hellip;</em></li>
 <li>Make sure <em>HTML output</em> is selected and click OK</li>
-<li>Save the file somewhere, call it <code>my_first_Rmd.Rmd</code></li>
+<li>Save the file somewhere, call it <code>my_first_rmd.Rmd</code></li>
 <li>Click the <em>Knit HTML</em> button</li>
 <li>Watch the progress in the R Markdown pane, then gaze upon your result!</li>
 </ol>
@@ -1394,7 +1397,7 @@ Or a block of code:
 <section data-transition="linear" data-transition-speed="default">
 <h3>Your Turn</h3>
 <div class="slideContent" >
-<p>Feel free to edit and re-knit <code>my_first_Rmd.Rmd</code> to give it some pizzazz: Add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equation.</p>
+<p>Feel free to edit and re-knit <code>my_first_rmd.Rmd</code> to give it some pizzazz: Add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equation.</p>
 
 <ul>
 <li><a href="http://rmarkdown.rstudio.com/html_document_format.html">Ways to modify the overall document appearance</a></li>
@@ -1461,6 +1464,8 @@ summary(cars)
 <li><code>cache=TRUE</code>: saves results of running that chunk so if it takes a while, you won&#39;t have to re-run it each time you re-knit the document</li>
 <li><code>fig.height=5, fig.width=5</code>: modify the dimensions of any plots that are generated in the chunk (units are in inches)</li>
 </ul>
+
+<p>Some of these can be modified using the gear-shaped <em>Modify Chunk Options</em> button in each chunk. <a href="https://yihui.name/knitr/options/">There are a <em>lot</em> of other options, however</a>.</p>
 
 </div>
 
@@ -1639,7 +1644,7 @@ summary(cars)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Math with Cars</h3>
 <div class="slideContent" >
-<p>If you put an assignment <code>&lt;-</code> in parentheses <code>()</code>, R will print the output of the assignment out for you in your document. Otherwise, it won&#39;t show the value.</p>
+<p>If you put an assignment such as <code>x &lt;- y</code> in parentheses <code>()</code>, R will print the output of the assignment out for you in your document. Otherwise, it won&#39;t show the value.</p>
 
 <pre class="fragment"><code class="r">( dist_mean  &lt;- mean(cars$dist) )
 </code></pre>
@@ -1864,7 +1869,7 @@ pander(summary(swiss), style = &quot;rmarkdown&quot;, split.tables = 120)
 
 <p>Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include <em>at least</em> one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. with functions like <code>nrow()</code>, <code>mean()</code>, <code>sd()</code>, <code>cor()</code>, <code>median()</code>, <code>min()</code>, <code>quantile()</code>) and <em>may not hard-code any numbers referenced in your text</em>.</p>
 
-<p>Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options <code>echo</code> and <code>results</code> to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text&mdash;<em>not as printed code and output</em>&mdash;and rounded so as not to be absurdly precise (1 to 3 digits).</p>
+<p>Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options <code>echo</code> and <code>results</code> to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text&mdash;<em>not as printed code and output</em>&mdash;and rounded so as not to be absurdly precise (e.g. round <code>x</code> with <code>round(x, 2)</code>).</p>
 
 <h3>DUE: 11:59 PM, Tuesday, April 3rd, 2018</h3>
 

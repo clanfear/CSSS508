@@ -203,9 +203,10 @@ incremental: true
 
 There are several ways to run R code in RStudio:
 
-1. Highlight lines in the **editor** window and click **Run** or hit *Cntl-Enter* or *Command-Enter* to run them all.
-2. Type individual lines in the **console** and press *Enter*.
-3. In R Markdown documents, click within a code chunk and click on a choice in the **Chunks** dropdown.
+1. Highlight lines in the **editor** window and click *Run* at the top or hit `Ctrl+Enter` or `⌘+Enter` to run them all.
+2. With your **caret** on a line you want to run, hit `Ctrl+Enter` or `⌘+Enter`. Note your caret moves to the next line, so you can run code sequentially with repeated presses. 
+3. Type individual lines in the **console** and press `Enter`.
+4. In R Markdown documents, click within a code chunk and click the green arrow to run the chunk. The button beside that runs *all prior chunks*.
 
 The console will show the lines you ran followed by any printed output. If you mess up (e.g. leave off
 a parenthesis), R might show a `+` sign prompting you to finish the command:
@@ -216,13 +217,13 @@ a parenthesis), R might show a `+` sign prompting you to finish the command:
 +
 ```
 
-Finish the command or hit *Esc* to get out of this.
+Finish the command or hit `Esc` to get out of this.
 
 R as a Calculator
 ========================================================
 incremental: true
 
-In the **console**, type `123 + 456 + 789` and hit *Enter*.
+In the **console**, type `123 + 456 + 789` and hit `Enter`.
 
 ```r
 123 + 456 + 789
@@ -235,7 +236,7 @@ In the **console**, type `123 + 456 + 789` and hit *Enter*.
 The `[1]` in the output indicates what line of output is shown.
 
 Now in your blank R document in the **editor**, try typing the line `sqrt(400)` and either
-clicking **Run** or hitting *Cntl-Enter*.
+clicking *Run* or hitting `Cntl+Enter` or `⌘+Enter`.
 
 
 ```r
@@ -261,7 +262,7 @@ and look at the **Help** panel on the right.
 ```
 
 **Arguments** are the *inputs* to a function. In this case, the only argument to `sqrt()`
-is a number or a vector of numbers `x`.
+is `x` which can be a number or a vector of numbers.
 
 Help files provide documentation on how to use functions and what functions produce.
 
@@ -272,6 +273,7 @@ incremental: true
 R stores everything as an **object**, including data, functions, models, and output.
 
 Creating an object can be done using the assignment operator `<-`
+
 
 ```r
 new.object <- 144
@@ -288,13 +290,15 @@ new.object
 [1] 144
 ```
 
-Object names can have `_` and `.` in them, but cannot *start* with numbers.
+Object names can contain `_` and `.` in them, but cannot *begin* with numbers. Try
+to be consistent in naming objects. RStudio auto-complete means *long names are better 
+than vague ones*!
 
 Using Objects
 ========================================================
 incremental: true
 
-The **name** represents the information stored in that **object**, so you can treat the object's name
+An object's **name** represents the information stored in that **object**, so you can treat the object's name
 as if it were the values stored inside.
 
 
@@ -329,7 +333,8 @@ incremental: true
 A **vector** is a series of **elements**, such as numbers.
 
 You can create a vector and store it as an object in the same way. To do this, use the
-function `c()` which stands for "combine".
+function `c()` which stands for "combine" or "concatenate".
+
 
 ```r
 new.object <- c(4, 9, 16, 25, 36)
@@ -375,7 +380,7 @@ Let's try making an R Markdown file:
 
 1. Choose *File > New File > R Markdown...*
 2. Make sure *HTML output* is selected and click OK
-3. Save the file somewhere, call it `my_first_Rmd.Rmd`
+3. Save the file somewhere, call it `my_first_rmd.Rmd`
 4. Click the *Knit HTML* button
 5. Watch the progress in the R Markdown pane, then gaze upon your result!
 
@@ -523,7 +528,7 @@ Or a block of code:
 Your Turn
 ========================================================
 
-Feel free to edit and re-knit `my_first_Rmd.Rmd` to give it some pizzazz: Add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equation.
+Feel free to edit and re-knit `my_first_rmd.Rmd` to give it some pizzazz: Add sections, have it number the sections, make a list, throw in the UW logo, change the theme, insert a gratuitous equation.
 
 * [Ways to modify the overall document appearance](http://rmarkdown.rstudio.com/html_document_format.html)
 * [Ways to format parts of your document](http://rmarkdown.rstudio.com/authoring_basics.html)
@@ -580,6 +585,7 @@ Chunks have options that control what happens with its code, such as:
 * `cache=TRUE`: saves results of running that chunk so if it takes a while, you won't have to re-run it each time you re-knit the document
 * `fig.height=5, fig.width=5`: modify the dimensions of any plots that are generated in the chunk (units are in inches)
 
+Some of these can be modified using the gear-shaped *Modify Chunk Options* button in each chunk. [There are a *lot* of other options, however](https://yihui.name/knitr/options/).
 
 Playing with Chunk Options
 ========================================================
@@ -747,7 +753,7 @@ Math with Cars
 ========================================================
 incremental: true
 
-If you put an assignment `<-` in parentheses `()`, R will print the output of the assignment out for you in your document. Otherwise, it won't show the value.
+If you put an assignment such as `x <- y` in parentheses `()`, R will print the output of the assignment out for you in your document. Otherwise, it won't show the value.
 
 
 ```r
@@ -869,7 +875,7 @@ Write up a .Rmd file showing some exploratory analyses of the Swiss fertility da
 
 Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. with functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`, `quantile()`) and *may not hard-code any numbers referenced in your text*.
 
-Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (1 to 3 digits).
+Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (e.g. round `x` with `round(x, 2)`).
 
 ### DUE: 11:59 PM, Tuesday, April 3rd, 2018
 
