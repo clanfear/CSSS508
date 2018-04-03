@@ -1,11 +1,18 @@
+<style>
+code {
+   background-color: #efefef;
+   font-weight:bold;
+}
+</style>
+
 CSSS508, Week2: ggplot2
 ========================================================
 author: Charles Lanfear
-date: October 4, 2017
+date: April 4, 2018
 width: 1600
 height: 900
 transition: linear
-
+font-family: helvetica
 
 But First, Some Useful Stuff
 ========================================================
@@ -149,7 +156,7 @@ incremental: true
 
 We'll want to be able to slice up this data frame into subsets (e.g. just the rows for Afghanistan, just the rows for 1997). We will use a package called `dplyr` to do this neatly. `dplyr` is part of the [tidyverse](http://tidyverse.org/) family of R packages that are the focus of this course.
 
-In the console: `install.packages("tidyverse")`
+If you have no already installed the tidyverse, type, in the console: `install.packages("tidyverse")`
 
 This will install a large number of R packages we will use throughout the term, including `dplyr`. 
 `dplyr` is a very useful and powerful package that we will talk more about soon, but today we're just going to use it for "filtering" data.
@@ -169,14 +176,15 @@ incremental: true
 
 When you load packages in R that have functions sharing the same name as functions you already have, the more recently loaded package trumps the previous ones ("masks").
 
-This **message** is just letting you know that. To avoid this in your R Markdown file, add `message=FALSE` to your chunk options when loading packages.
+This **message** is just letting you know that. To avoid this in your R Markdown file, add `message=FALSE` or `include=FALSE` to your chunk options when loading packages.
 
 Sometimes you may get a **warning message**, often if you aren't running the latest version of R:
+
 ```
 Warning message:
 package `gapminder' was built under R version 3.2.3 
 ```
-Chunk option `warning=FALSE` will hide this.
+Chunk option `warning=FALSE` will hide this. Update R to deal with it completely!
 
 
 magrittr and Pipes
@@ -221,7 +229,7 @@ Or we can combine multiple logical conditions:
 
 * `&`: both conditions need to hold (AND)
 * `|`: at least one condition needs to hold (OR)
-* `!`: negates a logical condition (`TRUE` -> `FALSE`, `FALSE` -> `TRUE`)
+* `!`: inverts a logical condition (`TRUE` becomes `FALSE`, `FALSE` becomes `TRUE`)
 
 
 Multiple Conditions Example
@@ -232,8 +240,9 @@ Let's say we want observations from Oman after 1980 and through 2000.
 
 ```{r}
 gapminder %>%
-    filter( (country == "Oman") &
-                (year > 1980) & (year <= 2000) )
+    filter(country == "Oman" &
+           year > 1980 &
+           year <= 2000 )
 ```
 
 
@@ -326,7 +335,7 @@ incremental: true
    * We *add* layers to a `ggplot2` object using `+`.
    * This includes lines, shapes, and text.
 2. **Aesthetics**, which determine how the layers appear.
-   * We can *set* aesthetics using *arguments* inside layer functions.
+   * We *set* aesthetics using *arguments* (e.g. `color=`) inside layer functions.
    * This includes locations, colors, and sizes.
    * Aesthetics also determine how data *map* to appearances.
 
@@ -344,7 +353,7 @@ Layers
 * `facet_grid()`: same idea, but can split by two variables along rows and columns (e.g. `facet_grid(gender ~ age_group)`)
 * `theme_bw()`: replace default gray background with black-and-white
 
-Layers are separated by a `+` sign. For clarity, I usually put each layer on a new line.
+Layers are separated by a `+` sign. For clarity, I usually put each layer on a new line, unless it takes few or no arguments.
 
 Aesthetics
 ========================================================
@@ -355,7 +364,7 @@ Aesthetics
 * `color`: set color of elements based on some data value
 * `group`: describe which points are conceptually grouped together for the plot (often used with lines)
 * `size`: set size of points/lines based on some data value
-
+* `alpha`: set transparency based on some data value
 
 Aesthetics: Setting vs. mapping
 ========================================================
@@ -485,7 +494,7 @@ Examples:
 Scales for Color, Shape, etc.
 ========================================================
 
-**Scales** control how the mapped aesthetics appear. You can modify these with a `scale_[aesthetic]_[option]()` layer where `[aesthetic]` is `color`, `shape`, `linetype`, `alpha`, `size`, `fill`, etc. and `[option]` is something like `manual`, `continuous` or `discrete` (depending on nature of the variable).
+**Scales** are layers that control how the mapped aesthetics appear. You can modify these with a `scale_[aesthetic]_[option]()` layer where `[aesthetic]` is `color`, `shape`, `linetype`, `alpha`, `size`, `fill`, etc. and `[option]` is something like `manual`, `continuous` or `discrete` (depending on nature of the variable).
 
 Examples:
 * `scale_linetype_manual()`: manually specify the linetype for each different value
@@ -500,7 +509,8 @@ Legend Name and Manual Color Scales
 
 ```{r, fig.width = 7, fig.height = 3.15, dpi=300, out.width="1100px", out.height="450px"}
 lifeExp_by_year +
-    scale_color_manual(name = "Which\ncontinent\nare we\nlooking at?", values = c("Africa" = "seagreen", "Americas" = "turquoise1", "Asia" = "royalblue", "Europe" = "violetred1", "Oceania" = "yellow"))
+    scale_color_manual(name = "Which\ncontinent\nare we\nlooking at?",
+                       values = c("Africa" = "seagreen", "Americas" = "turquoise1", "Asia" = "royalblue", "Europe" = "violetred1", "Oceania" = "yellow"))
 ```
 
 
@@ -510,12 +520,17 @@ Fussy Manual Legend Example Code
 ```{r, eval=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
-    geom_line(stat = "smooth", method = "loess", aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+    geom_line(stat = "smooth", method = "loess", 
+              aes(group = continent, color = "Continent", 
+                  size = "Continent"), alpha = 0.5) +
     facet_wrap(~ continent, nrow = 2) +
-    scale_color_manual(name = "Unit", values = c("Country" = "black", "Continent" = "dodgerblue1")) +
-    scale_size_manual(name = "Unit", values = c("Country" = 1, "Continent" = 3)) +
-    theme_minimal(base_size = 16) + 
-    theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
+    scale_color_manual(name = "Unit", values = c("Country" = "black",
+                                      "Continent" = "dodgerblue1")) +
+    scale_size_manual(name = "Unit", values = c("Country" = 0.5, 
+                                                "Continent" = 3)) +
+    theme_minimal(base_size = 14) + 
+    theme(legend.position=c(0.75, 0.2), 
+          axis.text.x = element_text(angle = 45))
 ```
 
 Fussy Manual Legend Example Result!
@@ -527,8 +542,8 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_line(stat = "smooth", method = "loess", aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
     facet_wrap(~ continent, nrow = 2) +
     scale_color_manual(name = "Unit", values = c("Country" = "black", "Continent" = "dodgerblue1")) +
-    scale_size_manual(name = "Unit", values = c("Country" = 1, "Continent" = 3)) +
-    theme_minimal(base_size = 16) + 
+    scale_size_manual(name = "Unit", values = c("Country" = 0.5, "Continent" = 3)) +
+    theme_minimal(base_size = 14) + 
     theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
 ```
 
@@ -544,7 +559,7 @@ You can move the legends around, flip their orientation, remove them altogether,
 Saving ggplots
 ========================================================
 
-When you knit an R Markdown file, any plots you make are automatically saved in a folder in .png format. If you want to save another copy (perhaps of a different file type for use in a manuscript), use
+When you knit an R Markdown file, any plots you make are automatically saved in the "figure" folder in .png format. If you want to save another copy (perhaps of a different file type for use in a manuscript), use
 `ggsave()`:
 
 ```{r, eval=FALSE}
