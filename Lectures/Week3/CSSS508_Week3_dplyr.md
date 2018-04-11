@@ -1,11 +1,18 @@
+<style>
+code {
+   background-color: #efefef;
+   font-weight:bold;
+}
+</style>
+
 CSSS508, Week 3: dplyr
 ====================================================================================
 author: Charles Lanfear
-date: October 11, 2017
+date: April 11, 2018
 transition: linear
 width: 1600
 height: 900
-
+font-family: helvetica
 
 Death to Spreadsheets
 ====================================================================================
@@ -24,7 +31,9 @@ type: section
 But First, Pipes (%>%)
 ====================================================================================
 
-The `dplyr` package makes use of the [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) forward pipe operator, usually called simply a **pipe**. We write pipes like `%>%` (*Cntl-Shift-M*). Pipes take the object on the *left* and apply the function on the *right*: `x %>% f(y) = f(x, y)`. Read out loud: "and then..."
+`dplyr` uses the [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) forward pipe operator, usually called simply a **pipe**. We write pipes like `%>%` (`Ctrl+Shift+M`).
+
+Pipes take the object on the *left* and apply the function on the *right*: `x %>% f(y) = f(x, y)`. Read out loud: "and then..."
 
 
 ```r
@@ -36,9 +45,9 @@ gapminder %>% filter(country == "Canada") %>% head(2)
 ```
 # A tibble: 2 x 6
   country continent  year lifeExp      pop gdpPercap
-   <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>
-1  Canada  Americas  1952   68.75 14785584  11367.16
-2  Canada  Americas  1957   69.96 17010154  12489.95
+  <fct>   <fct>     <int>   <dbl>    <int>     <dbl>
+1 Canada  Americas   1952    68.8 14785584     11367
+2 Canada  Americas   1957    70.0 17010154     12490
 ```
 
 Pipes save us typing, make code readable, and allow chaining like above, so we use them *all the time* when manipulating data frames.
@@ -75,7 +84,7 @@ Canada <- gapminder %>%
     filter(country == "Canada")
 ```
 
-Excel analogue:
+Excel analogue: Filter!
 
 ![Excel's filter](http://content.gcflearnfree.org/topics/143/ex07_filter.gif)
 
@@ -83,11 +92,12 @@ Excel analogue:
 Another Operator: %in%
 ====================================================================================
 
-Common use case: want to filter rows to things in some *set*. The `c()` function is how we make **vectors** in R, which are an important data type. We can use `%in%` like `==` but for matching *any item* in the vector on its right.
+Common use case: Filter rows to things in some *set*. The `c()` function is how we make **vectors** in R, which are an important data type. We can use `%in%` like `==` but for matching *any element* in the vector on its right.
 
 
 ```r
-former_yugoslavia <- c("Bosnia and Herzegovina", "Croatia", "Macedonia", "Montenegro", "Serbia", "Slovenia")
+former_yugoslavia <- c("Bosnia and Herzegovina", "Croatia", "Macedonia",
+                       "Montenegro", "Serbia", "Slovenia")
 yugoslavia <- gapminder %>%
     filter(country %in% former_yugoslavia)
 tail(yugoslavia, 2)
@@ -95,10 +105,10 @@ tail(yugoslavia, 2)
 
 ```
 # A tibble: 2 x 6
-   country continent  year lifeExp     pop gdpPercap
-    <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
-1 Slovenia    Europe  2002  76.660 2011497  20660.02
-2 Slovenia    Europe  2007  77.926 2009245  25768.26
+  country  continent  year lifeExp     pop gdpPercap
+  <fct>    <fct>     <int>   <dbl>   <int>     <dbl>
+1 Slovenia Europe     2002    76.7 2011497     20660
+2 Slovenia Europe     2007    77.9 2009245     25768
 ```
 
 
@@ -115,17 +125,17 @@ gapminder %>% distinct(continent, year)
 ```
 # A tibble: 60 x 2
    continent  year
-      <fctr> <int>
- 1      Asia  1952
- 2      Asia  1957
- 3      Asia  1962
- 4      Asia  1967
- 5      Asia  1972
- 6      Asia  1977
- 7      Asia  1982
- 8      Asia  1987
- 9      Asia  1992
-10      Asia  1997
+   <fct>     <int>
+ 1 Asia       1952
+ 2 Asia       1957
+ 3 Asia       1962
+ 4 Asia       1967
+ 5 Asia       1972
+ 6 Asia       1977
+ 7 Asia       1982
+ 8 Asia       1987
+ 9 Asia       1992
+10 Asia       1997
 # ... with 50 more rows
 ```
 
@@ -142,18 +152,18 @@ gapminder %>% distinct(continent, year, .keep_all=TRUE)
 
 ```
 # A tibble: 60 x 6
-       country continent  year lifeExp      pop gdpPercap
-        <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>
- 1 Afghanistan      Asia  1952  28.801  8425333  779.4453
- 2 Afghanistan      Asia  1957  30.332  9240934  820.8530
- 3 Afghanistan      Asia  1962  31.997 10267083  853.1007
- 4 Afghanistan      Asia  1967  34.020 11537966  836.1971
- 5 Afghanistan      Asia  1972  36.088 13079460  739.9811
- 6 Afghanistan      Asia  1977  38.438 14880372  786.1134
- 7 Afghanistan      Asia  1982  39.854 12881816  978.0114
- 8 Afghanistan      Asia  1987  40.822 13867957  852.3959
- 9 Afghanistan      Asia  1992  41.674 16317921  649.3414
-10 Afghanistan      Asia  1997  41.763 22227415  635.3414
+   country     continent  year lifeExp      pop gdpPercap
+   <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
+ 1 Afghanistan Asia       1952    28.8  8425333       779
+ 2 Afghanistan Asia       1957    30.3  9240934       821
+ 3 Afghanistan Asia       1962    32.0 10267083       853
+ 4 Afghanistan Asia       1967    34.0 11537966       836
+ 5 Afghanistan Asia       1972    36.1 13079460       740
+ 6 Afghanistan Asia       1977    38.4 14880372       786
+ 7 Afghanistan Asia       1982    39.9 12881816       978
+ 8 Afghanistan Asia       1987    40.8 13867957       852
+ 9 Afghanistan Asia       1992    41.7 16317921       649
+10 Afghanistan Asia       1997    41.8 22227415       635
 # ... with 50 more rows
 ```
 
@@ -171,14 +181,14 @@ yugoslavia %>% sample_n(size = 6, replace = FALSE)
 
 ```
 # A tibble: 6 x 6
-     country continent  year lifeExp     pop gdpPercap
-      <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
-1 Montenegro    Europe  1962  63.728  474528  4649.594
-2 Montenegro    Europe  1982  74.101  562548 11222.588
-3     Serbia    Europe  1962  64.531 7616060  6289.629
-4   Slovenia    Europe  1952  65.570 1489518  4215.042
-5     Serbia    Europe  1952  57.996 6860147  3581.459
-6    Croatia    Europe  1997  73.680 4444595  9875.605
+  country    continent  year lifeExp     pop gdpPercap
+  <fct>      <fct>     <int>   <dbl>   <int>     <dbl>
+1 Montenegro Europe     1962    63.7  474528      4650
+2 Montenegro Europe     1982    74.1  562548     11223
+3 Serbia     Europe     1962    64.5 7616060      6290
+4 Slovenia   Europe     1952    65.6 1489518      4215
+5 Serbia     Europe     1952    58.0 6860147      3581
+6 Croatia    Europe     1997    73.7 4444595      9876
 ```
 
 
@@ -194,18 +204,18 @@ yugoslavia %>% arrange(year, desc(pop)) # ascending by year, descending by pop
 
 ```
 # A tibble: 60 x 6
-                  country continent  year lifeExp     pop gdpPercap
-                   <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
- 1                 Serbia    Europe  1952  57.996 6860147 3581.4594
- 2                Croatia    Europe  1952  61.210 3882229 3119.2365
- 3 Bosnia and Herzegovina    Europe  1952  53.820 2791000  973.5332
- 4               Slovenia    Europe  1952  65.570 1489518 4215.0417
- 5             Montenegro    Europe  1952  59.164  413834 2647.5856
- 6                 Serbia    Europe  1957  61.685 7271135 4981.0909
- 7                Croatia    Europe  1957  64.770 3991242 4338.2316
- 8 Bosnia and Herzegovina    Europe  1957  58.450 3076000 1353.9892
- 9               Slovenia    Europe  1957  67.850 1533070 5862.2766
-10             Montenegro    Europe  1957  61.448  442829 3682.2599
+   country                continent  year lifeExp     pop gdpPercap
+   <fct>                  <fct>     <int>   <dbl>   <int>     <dbl>
+ 1 Serbia                 Europe     1952    58.0 6860147      3581
+ 2 Croatia                Europe     1952    61.2 3882229      3119
+ 3 Bosnia and Herzegovina Europe     1952    53.8 2791000       974
+ 4 Slovenia               Europe     1952    65.6 1489518      4215
+ 5 Montenegro             Europe     1952    59.2  413834      2648
+ 6 Serbia                 Europe     1957    61.7 7271135      4981
+ 7 Croatia                Europe     1957    64.8 3991242      4338
+ 8 Bosnia and Herzegovina Europe     1957    58.4 3076000      1354
+ 9 Slovenia               Europe     1957    67.8 1533070      5862
+10 Montenegro             Europe     1957    61.4  442829      3682
 # ... with 50 more rows
 ```
 
@@ -222,8 +232,8 @@ yugoslavia %>% select(country, year, pop) %>% head(4)
 
 ```
 # A tibble: 4 x 3
-                 country  year     pop
-                  <fctr> <int>   <int>
+  country                 year     pop
+  <fct>                  <int>   <int>
 1 Bosnia and Herzegovina  1952 2791000
 2 Bosnia and Herzegovina  1957 3076000
 3 Bosnia and Herzegovina  1962 3349000
@@ -243,12 +253,12 @@ yugoslavia %>% select(-continent, -pop, -lifeExp) %>% head(4)
 
 ```
 # A tibble: 4 x 3
-                 country  year gdpPercap
-                  <fctr> <int>     <dbl>
-1 Bosnia and Herzegovina  1952  973.5332
-2 Bosnia and Herzegovina  1957 1353.9892
-3 Bosnia and Herzegovina  1962 1709.6837
-4 Bosnia and Herzegovina  1967 2172.3524
+  country                 year gdpPercap
+  <fct>                  <int>     <dbl>
+1 Bosnia and Herzegovina  1952       974
+2 Bosnia and Herzegovina  1957      1354
+3 Bosnia and Herzegovina  1962      1710
+4 Bosnia and Herzegovina  1967      2172
 ```
 
 
@@ -282,15 +292,17 @@ yugoslavia %>%
 # A tibble: 4 x 1
   Life_Expectancy
             <dbl>
-1           53.82
-2           58.45
-3           61.93
-4           64.79
+1            53.8
+2            58.4
+3            61.9
+4            64.8
 ```
 
 
 Safer: Rename Columns with rename()
 ====================================================================================
+
+`rename()` renames variables using the same syntax as `select()` without dropping unmentioned variables.
 
 
 ```r
@@ -302,12 +314,12 @@ yugoslavia %>%
 
 ```
 # A tibble: 4 x 3
-                 country  year Life_Expectancy
-                  <fctr> <int>           <dbl>
-1 Bosnia and Herzegovina  1952           53.82
-2 Bosnia and Herzegovina  1957           58.45
-3 Bosnia and Herzegovina  1962           61.93
-4 Bosnia and Herzegovina  1967           64.79
+  country                 year Life_Expectancy
+  <fct>                  <int>           <dbl>
+1 Bosnia and Herzegovina  1952            53.8
+2 Bosnia and Herzegovina  1957            58.4
+3 Bosnia and Herzegovina  1962            61.9
+4 Bosnia and Herzegovina  1967            64.8
 ```
 
 
@@ -371,13 +383,14 @@ yugoslavia %>% filter(country == "Serbia") %>%
 # A tibble: 5 x 5
    year     pop lifeExp pop_million life_exp_past_40
   <int>   <int>   <dbl>       <dbl>            <dbl>
-1  1952 6860147  57.996    6.860147           17.996
-2  1957 7271135  61.685    7.271135           21.685
-3  1962 7616060  64.531    7.616060           24.531
-4  1967 7971222  66.914    7.971222           26.914
-5  1972 8313288  68.700    8.313288           28.700
+1  1952 6860147    58.0        6.86             18.0
+2  1957 7271135    61.7        7.27             21.7
+3  1962 7616060    64.5        7.62             24.5
+4  1967 7971222    66.9        7.97             26.9
+5  1972 8313288    68.7        8.31             28.7
 ```
 
+Note you can create multiple variables in a single `mutate()` call by separating the formulae with commas.
 
 ifelse()
 ====================================================================================
@@ -412,32 +425,36 @@ yugoslavia %>%
 ```
 # A tibble: 3 x 3
   short_country  year     pop
-          <chr> <int>   <int>
-1       B and H  1952 2791000
-2       Croatia  1952 3882229
-3    Montenegro  1952  413834
+  <chr>         <int>   <int>
+1 B and H        1952 2791000
+2 Croatia        1952 3882229
+3 Montenegro     1952  413834
 ```
 
+Read this as "For each row, if country equals 'Bosnia and Herzegovina, make `short_country` equal to 'B and H', otherwise make it equal to that row's value of `country`."
 
 recode()
 ====================================================================================
 
 `recode()` is another useful function to use inside `mutate()`. Use `recode()` to change specific values to other values. You can change multiple values at the same time using `recode()`. Note if a value has spaces in it, you'll need to put it in backticks!
 
+
 ```r
 yugoslavia %>% 
-  mutate(country = recode(country, `Bosnia and Herzegovina`="B and H",
-                                    Montenegro="M")) %>% distinct(country)
+  mutate(country = recode(country, 
+                        `Bosnia and Herzegovina`="B and H",
+                        Montenegro="M")) %>% 
+  distinct(country)
 ```
 
 ```
 # A tibble: 5 x 1
-   country
-    <fctr>
-1  B and H
-2  Croatia
-3        M
-4   Serbia
+  country 
+  <fct>   
+1 B and H 
+2 Croatia 
+3 M       
+4 Serbia  
 5 Slovenia
 ```
 
@@ -445,30 +462,30 @@ yugoslavia %>%
 case_when()
 ====================================================================================
 
-`case_when()` performs multiple `ifelse()` operations at the same time. `case_when()` allows you to create a new variable with values based on multiple logical statements at the same time. This is useful for making categorical variables or variables from combinations of other variables.
+`case_when()` performs multiple `ifelse()` operations at the same time. `case_when()` allows you to create a new variable with values based on multiple logical statements. This is useful for making categorical variables or variables from combinations of other variables.
 
 
 ```r
 gapminder %>% mutate(gdpPercap_ordinal = case_when(
     gdpPercap < 700 ~ "low",
     gdpPercap >= 700 & gdpPercap < 800 ~ "moderate",
-    TRUE ~ "high" ) ) # Assigns this value when all other statements are FALSE
+    TRUE ~ "high" )) # Assign this value when all other statements are FALSE
 ```
 
 ```
 # A tibble: 1,704 x 7
-       country continent  year lifeExp      pop gdpPercap gdpPercap_ordinal
-        <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>             <chr>
- 1 Afghanistan      Asia  1952  28.801  8425333  779.4453          moderate
- 2 Afghanistan      Asia  1957  30.332  9240934  820.8530              high
- 3 Afghanistan      Asia  1962  31.997 10267083  853.1007              high
- 4 Afghanistan      Asia  1967  34.020 11537966  836.1971              high
- 5 Afghanistan      Asia  1972  36.088 13079460  739.9811          moderate
- 6 Afghanistan      Asia  1977  38.438 14880372  786.1134          moderate
- 7 Afghanistan      Asia  1982  39.854 12881816  978.0114              high
- 8 Afghanistan      Asia  1987  40.822 13867957  852.3959              high
- 9 Afghanistan      Asia  1992  41.674 16317921  649.3414               low
-10 Afghanistan      Asia  1997  41.763 22227415  635.3414               low
+   country     continent  year lifeExp      pop gdpPercap gdpPercap_ordinal
+   <fct>       <fct>     <int>   <dbl>    <int>     <dbl> <chr>            
+ 1 Afghanistan Asia       1952    28.8  8425333       779 moderate         
+ 2 Afghanistan Asia       1957    30.3  9240934       821 high             
+ 3 Afghanistan Asia       1962    32.0 10267083       853 high             
+ 4 Afghanistan Asia       1967    34.0 11537966       836 high             
+ 5 Afghanistan Asia       1972    36.1 13079460       740 moderate         
+ 6 Afghanistan Asia       1977    38.4 14880372       786 moderate         
+ 7 Afghanistan Asia       1982    39.9 12881816       978 high             
+ 8 Afghanistan Asia       1987    40.8 13867957       852 high             
+ 9 Afghanistan Asia       1992    41.7 16317921       649 low              
+10 Afghanistan Asia       1997    41.8 22227415       635 low              
 # ... with 1,694 more rows
 ```
  
@@ -505,9 +522,10 @@ yugoslavia %>%
 # A tibble: 1 x 4
   n_obs total_pop mean_life_exp range_life_exp
   <int>     <int>         <dbl>          <dbl>
-1     5  20042685       71.2952          3.939
+1     5  20042685          71.3           3.94
 ```
 
+These new variables are calculated using *all of the rows* in `yugoslavia`
 
 Avoiding Repetition: summarize_at()
 ====================================================================================
@@ -525,8 +543,10 @@ yugoslavia %>%
 # A tibble: 1 x 4
   lifeExp_mean pop_mean lifeExp_sd  pop_sd
          <dbl>    <dbl>      <dbl>   <dbl>
-1      71.2952  4008537   1.602685 3237282
+1         71.3  4008537       1.60 3237282
 ```
+
+Note it automatically names the summarized variables based on the functions used to summarize.
 
 Avoiding Repetition: Other functions
 ====================================================================================
@@ -547,10 +567,13 @@ dataframe %>% summarize_if(is.numeric, funs(mean, sd))
 
 You can use all of these to avoid typing out the same code repeatedly!
 
+
 Splitting Data into Groups: group_by()
 ====================================================================================
 
-The special function `group_by()` changes how functions operate on the data, most importantly `summarize()`. TFunctions after `group_by` are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
+The special function `group_by()` changes how functions operate on the data, most importantly `summarize()`.
+
+Functions after `group_by()` are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
 
 Excel analogue: pivot tables
 
@@ -574,18 +597,19 @@ yugoslavia %>% group_by(year) %>%
 # A tibble: 5 x 4
    year num_countries total_pop total_gdp_per_cap
   <int>         <int>     <int>             <dbl>
-1  1952             5  15436728          3029.794
-2  1957             5  16314276          4187.491
-3  1962             5  17099107          5256.578
-4  1967             5  17878535          6655.827
-5  1972             5  18579786          8730.215
+1  1952             5  15436728              3030
+2  1957             5  16314276              4187
+3  1962             5  17099107              5257
+4  1967             5  17878535              6656
+5  1972             5  18579786              8730
 ```
 
+Because we did `group_by()` with `year` then used `summarize()`, we get *one row per year*!
 
 Window Functions
 ====================================================================================
 
-Grouping can also be used with `mutate()` or `filter()` to give rank orders within a group, lagged values, and cumulative sums. Much more on window functions is in a [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
+Grouping can also be used with `mutate()` or `filter()` to give rank orders within a group, lagged values, and cumulative sums. You can read more about window functions in this [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
 
 
 ```r
@@ -598,12 +622,12 @@ yugoslavia %>% select(country, year, pop) %>%
 ```
 # A tibble: 4 x 5
 # Groups:   country [2]
-                 country  year     pop lag_pop pop_chg
-                  <fctr> <int>   <int>   <int>   <int>
+  country                 year     pop lag_pop pop_chg
+  <fct>                  <int>   <int>   <int>   <int>
 1 Bosnia and Herzegovina  2002 4165416      NA      NA
 2 Bosnia and Herzegovina  2007 4552198 4165416  386782
-3                Croatia  2002 4481020      NA      NA
-4                Croatia  2007 4493312 4481020   12292
+3 Croatia                 2002 4481020      NA      NA
+4 Croatia                 2007 4493312 4481020   12292
 ```
 
 
@@ -628,34 +652,39 @@ Joining: Conceptually
 
 We need to think about the following when we want to merge data frames `A` and `B`:
 
-* Which rows are we keeping from each data frame?
-* Which columns are we keeping from each data frame?
-* Which variables determine whether rows match?
+* Which *rows* are we keeping from each data frame?
+* Which *columns* are we keeping from each data frame?
+* Which variables determine whether rows *match*?
 
 
 Types of Joins: Rows and columns to keep
 ====================================================================================
 
-* `A %>% inner_join(B)`: keep rows from `A` that match rows in `B`, columns from both `A` and `B`
+There are many types of joins...
+
 * `A %>% left_join(B)`: keep all rows from `A`, matched with `B` wherever possible (`NA` when not), columns from both `A` and `B`
 * `A %>% right_join(B)`: keep all rows from `B`, matched with `A` wherever possible (`NA` when not), columns from both `A` and `B`
+* `A %>% inner_join(B)`: keep rows from `A` that match rows in `B`, columns from both `A` and `B`
 * `A %>% full_join(B)`: keep all rows from either `A` or `B`, matched wherever possible (`NA` when not), columns from both `A` and `B`
 * `A %>% semi_join(B)`: keep rows from `A` that match rows in `B`, columns from just `A`
 * `A %>% anti_join(B)`: keep rows from `A` that *don't* match a row in `B`, columns from just `A`
 
+... but usually `left_join()` does the job.
 
 Matching Criteria
 ====================================================================================
 
-We say rows should match because they have some columns containing the same value. We list these in a `by = ` argument to the join.
+We say rows should *match* because they have some columns containing the same value. We list these in a `by = ` argument to the join.
 
-* No `by`: matches using all variables in `A` and `B` that have identical names
-* `by = c("var1", "var2", "var3")`: matches on identical values of `var1`, `,var2`, `var3` in both `A` and `B`
-* `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: matches identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
+Matching Behavior:
 
-Note: If there are multiple matches, you'll get one row for each possible combo (except with `semi_join()` and `anti_join()`).
+* No `by`: Match using all variables in `A` and `B` that have identical names
+* `by = c("var1", "var2", "var3")`: Match on identical values of `var1`, `,var2`, `var3` in both `A` and `B`
+* `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: Match identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
 
-Need to get more complicated? You may want to learn SQL.
+Note: If there are multiple matches, you'll get *one row for each possible combo* (except with `semi_join()` and `anti_join()`).
+
+Need to get more complicated? You may want to learn SQL or break it into multiple operations.
 
 
 nycflights13 Data
@@ -676,28 +705,33 @@ It includes five dataframes, some of which contain missing data (`NA`):
 * `planes`: airplane metadata
 * `weather`: hourly weather data for JFK, LGA, and EWR
 
+Note these are separate data frames, each needing to be loaded separately (e.g. `data(planes)`).
+
 Join Example #1
 ====================================================================================
 
 Who manufactures the planes that flew to Seattle?
 
 ```r
-flights %>% filter(dest == "SEA") %>% select(tailnum) %>%
+flights %>% filter(dest == "SEA") %>% 
+    select(tailnum) %>%
     left_join(planes %>% select(tailnum, manufacturer), by = "tailnum") %>%
     distinct(manufacturer, .keep_all=T)
 ```
 
 ```
 # A tibble: 6 x 2
-  tailnum       manufacturer
-    <chr>              <chr>
-1  N594AS             BOEING
-2  N503JB   AIRBUS INDUSTRIE
-3  N3ETAA               <NA>
-4  N712JB             AIRBUS
-5  N508JB CIRRUS DESIGN CORP
-6  N531JB      BARKER JACK L
+  tailnum manufacturer      
+  <chr>   <chr>             
+1 N594AS  BOEING            
+2 N503JB  AIRBUS INDUSTRIE  
+3 N3ETAA  <NA>              
+4 N712JB  AIRBUS            
+5 N508JB  CIRRUS DESIGN CORP
+6 N531JB  BARKER JACK L     
 ```
+
+Note you can perform operations on the data inside functions such as `left_join()` and the *result* will be used by the function.
 
 Join Example #2
 ====================================================================================
@@ -705,19 +739,22 @@ Join Example #2
 Which airlines had the most flights to Seattle from NYC?
 
 ```r
-flights %>% filter(dest == "SEA") %>% select(carrier) %>%
+flights %>% filter(dest == "SEA") %>% 
+    select(carrier) %>%
     left_join(airlines, by = "carrier") %>%
-    group_by(name) %>% tally() %>% arrange(desc(n))
+    group_by(name) %>% 
+    tally() %>% 
+    arrange(desc(n))
 ```
 
 ```
 # A tibble: 5 x 2
-                    name     n
-                   <chr> <int>
-1   Delta Air Lines Inc.  1213
-2  United Air Lines Inc.  1117
-3   Alaska Airlines Inc.   714
-4        JetBlue Airways   514
+  name                       n
+  <chr>                  <int>
+1 Delta Air Lines Inc.    1213
+2 United Air Lines Inc.   1117
+3 Alaska Airlines Inc.     714
+4 JetBlue Airways          514
 5 American Airlines Inc.   365
 ```
 
@@ -730,7 +767,8 @@ Is there a relationship between departure delays and wind gusts?
 
 ```r
 library(ggplot2)
-flights %>% select(origin, year, month, day, hour, dep_delay) %>%
+flights %>% 
+    select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
     # removing rows with missing values
@@ -744,20 +782,25 @@ Wind Gusts and Delays
 
 <img src="CSSS508_Week3_dplyr-figure/unnamed-chunk-29-1.png" title="plot of chunk unnamed-chunk-29" alt="plot of chunk unnamed-chunk-29" width="1100px" height="600px" />
 
+Check out those 1200 mph winds!
+
 Redo After Removing Extreme Outliers, Just Trend
 ====================================================================================
 
 
 ```r
-flights %>% select(origin, year, month, day, hour, dep_delay) %>%
+flights %>% 
+    select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
     filter(!is.na(dep_delay) & !is.na(wind_gust) & wind_gust < 250) %>% 
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_smooth() + theme_bw(base_size = 16) +
+    geom_smooth() + 
+    theme_bw(base_size = 16) +
     xlab("Wind gusts in departure hour (mph)") +
     ylab("Average departure delay (minutes)")
 ```
+
 
 Wind Gusts and Delays: Mean Trend
 ====================================================================================
@@ -788,5 +831,5 @@ Pick something to look at in the `nycflights13` data and write up a .Rmd file sh
 
 This time, *include all your code in your output document* (`echo=TRUE`), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one* individually (`airlines`, `airports`, `flights`, `planes`, and `weather`) using `data(dataframe_name)` (e.g. `data(flights)`).
 
-DUE: 11:59 PM, Oct 17th
+DUE: 11:59 PM, April 17th
 

@@ -1,11 +1,18 @@
+<style>
+code {
+   background-color: #efefef;
+   font-weight:bold;
+}
+</style>
+
 CSSS508, Week 3: dplyr
 ====================================================================================
 author: Charles Lanfear
-date: October 11, 2017
+date: April 11, 2018
 transition: linear
 width: 1600
 height: 900
-
+font-family: helvetica
 
 Death to Spreadsheets
 ====================================================================================
@@ -26,7 +33,9 @@ type: section
 But First, Pipes (%>%)
 ====================================================================================
 
-The `dplyr` package makes use of the [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) forward pipe operator, usually called simply a **pipe**. We write pipes like `%>%` (*Cntl-Shift-M*). Pipes take the object on the *left* and apply the function on the *right*: `x %>% f(y) = f(x, y)`. Read out loud: "and then..."
+`dplyr` uses the [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) forward pipe operator, usually called simply a **pipe**. We write pipes like `%>%` (`Ctrl+Shift+M`).
+
+Pipes take the object on the *left* and apply the function on the *right*: `x %>% f(y) = f(x, y)`. Read out loud: "and then..."
 
 ```{r}
 library(dplyr)
@@ -65,7 +74,7 @@ Canada <- gapminder %>%
     filter(country == "Canada")
 ```
 
-Excel analogue:
+Excel analogue: Filter!
 
 ![Excel's filter](http://content.gcflearnfree.org/topics/143/ex07_filter.gif)
 
@@ -73,10 +82,11 @@ Excel analogue:
 Another Operator: %in%
 ====================================================================================
 
-Common use case: want to filter rows to things in some *set*. The `c()` function is how we make **vectors** in R, which are an important data type. We can use `%in%` like `==` but for matching *any item* in the vector on its right.
+Common use case: Filter rows to things in some *set*. The `c()` function is how we make **vectors** in R, which are an important data type. We can use `%in%` like `==` but for matching *any element* in the vector on its right.
 
 ```{r}
-former_yugoslavia <- c("Bosnia and Herzegovina", "Croatia", "Macedonia", "Montenegro", "Serbia", "Slovenia")
+former_yugoslavia <- c("Bosnia and Herzegovina", "Croatia", "Macedonia",
+                       "Montenegro", "Serbia", "Slovenia")
 yugoslavia <- gapminder %>%
     filter(country %in% former_yugoslavia)
 tail(yugoslavia, 2)
@@ -172,6 +182,8 @@ yugoslavia %>%
 Safer: Rename Columns with rename()
 ====================================================================================
 
+`rename()` renames variables using the same syntax as `select()` without dropping unmentioned variables.
+
 ```{r}
 yugoslavia %>%
     select(country, year, lifeExp) %>%
@@ -222,6 +234,7 @@ yugoslavia %>% filter(country == "Serbia") %>%
     head(5)
 ```
 
+Note you can create multiple variables in a single `mutate()` call by separating the formulae with commas.
 
 ifelse()
 ====================================================================================
@@ -251,28 +264,32 @@ yugoslavia %>%
     head(3)
 ```
 
+Read this as "For each row, if country equals 'Bosnia and Herzegovina, make `short_country` equal to 'B and H', otherwise make it equal to that row's value of `country`."
 
 recode()
 ====================================================================================
 
 `recode()` is another useful function to use inside `mutate()`. Use `recode()` to change specific values to other values. You can change multiple values at the same time using `recode()`. Note if a value has spaces in it, you'll need to put it in backticks!
+
 ```{r}
 yugoslavia %>% 
-  mutate(country = recode(country, `Bosnia and Herzegovina`="B and H",
-                                    Montenegro="M")) %>% distinct(country)
+  mutate(country = recode(country, 
+                        `Bosnia and Herzegovina`="B and H",
+                        Montenegro="M")) %>% 
+  distinct(country)
 ```
 
 
 case_when()
 ====================================================================================
 
-`case_when()` performs multiple `ifelse()` operations at the same time. `case_when()` allows you to create a new variable with values based on multiple logical statements at the same time. This is useful for making categorical variables or variables from combinations of other variables.
+`case_when()` performs multiple `ifelse()` operations at the same time. `case_when()` allows you to create a new variable with values based on multiple logical statements. This is useful for making categorical variables or variables from combinations of other variables.
 
 ```{r}
 gapminder %>% mutate(gdpPercap_ordinal = case_when(
     gdpPercap < 700 ~ "low",
     gdpPercap >= 700 & gdpPercap < 800 ~ "moderate",
-    TRUE ~ "high" ) ) # Assigns this value when all other statements are FALSE
+    TRUE ~ "high" )) # Assign this value when all other statements are FALSE
 ```
  
 
@@ -303,6 +320,7 @@ yugoslavia %>%
               range_life_exp = max(lifeExp) - min(lifeExp))
 ```
 
+These new variables are calculated using *all of the rows* in `yugoslavia`
 
 Avoiding Repetition: summarize_at()
 ====================================================================================
@@ -314,6 +332,8 @@ yugoslavia %>%
     filter(year == 1982) %>%
     summarize_at(vars(lifeExp, pop), funs(mean, sd))
 ```
+
+Note it automatically names the summarized variables based on the functions used to summarize.
 
 Avoiding Repetition: Other functions
 ====================================================================================
@@ -334,10 +354,13 @@ dataframe %>% summarize_if(is.numeric, funs(mean, sd))
 
 You can use all of these to avoid typing out the same code repeatedly!
 
+
 Splitting Data into Groups: group_by()
 ====================================================================================
 
-The special function `group_by()` changes how functions operate on the data, most importantly `summarize()`. TFunctions after `group_by` are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
+The special function `group_by()` changes how functions operate on the data, most importantly `summarize()`.
+
+Functions after `group_by()` are computed *within each group* as defined by variables given, rather than over all rows at once. Typically the variables you group by will be integers, factors, or characters, and not continuous real values.
 
 Excel analogue: pivot tables
 
@@ -356,11 +379,12 @@ yugoslavia %>% group_by(year) %>%
     head(5)
 ```
 
+Because we did `group_by()` with `year` then used `summarize()`, we get *one row per year*!
 
 Window Functions
 ====================================================================================
 
-Grouping can also be used with `mutate()` or `filter()` to give rank orders within a group, lagged values, and cumulative sums. Much more on window functions is in a [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
+Grouping can also be used with `mutate()` or `filter()` to give rank orders within a group, lagged values, and cumulative sums. You can read more about window functions in this [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
 
 ```{r}
 yugoslavia %>% select(country, year, pop) %>%
@@ -391,34 +415,39 @@ Joining: Conceptually
 
 We need to think about the following when we want to merge data frames `A` and `B`:
 
-* Which rows are we keeping from each data frame?
-* Which columns are we keeping from each data frame?
-* Which variables determine whether rows match?
+* Which *rows* are we keeping from each data frame?
+* Which *columns* are we keeping from each data frame?
+* Which variables determine whether rows *match*?
 
 
 Types of Joins: Rows and columns to keep
 ====================================================================================
 
-* `A %>% inner_join(B)`: keep rows from `A` that match rows in `B`, columns from both `A` and `B`
+There are many types of joins...
+
 * `A %>% left_join(B)`: keep all rows from `A`, matched with `B` wherever possible (`NA` when not), columns from both `A` and `B`
 * `A %>% right_join(B)`: keep all rows from `B`, matched with `A` wherever possible (`NA` when not), columns from both `A` and `B`
+* `A %>% inner_join(B)`: keep rows from `A` that match rows in `B`, columns from both `A` and `B`
 * `A %>% full_join(B)`: keep all rows from either `A` or `B`, matched wherever possible (`NA` when not), columns from both `A` and `B`
 * `A %>% semi_join(B)`: keep rows from `A` that match rows in `B`, columns from just `A`
 * `A %>% anti_join(B)`: keep rows from `A` that *don't* match a row in `B`, columns from just `A`
 
+... but usually `left_join()` does the job.
 
 Matching Criteria
 ====================================================================================
 
-We say rows should match because they have some columns containing the same value. We list these in a `by = ` argument to the join.
+We say rows should *match* because they have some columns containing the same value. We list these in a `by = ` argument to the join.
 
-* No `by`: matches using all variables in `A` and `B` that have identical names
-* `by = c("var1", "var2", "var3")`: matches on identical values of `var1`, `,var2`, `var3` in both `A` and `B`
-* `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: matches identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
+Matching Behavior:
 
-Note: If there are multiple matches, you'll get one row for each possible combo (except with `semi_join()` and `anti_join()`).
+* No `by`: Match using all variables in `A` and `B` that have identical names
+* `by = c("var1", "var2", "var3")`: Match on identical values of `var1`, `,var2`, `var3` in both `A` and `B`
+* `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: Match identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
 
-Need to get more complicated? You may want to learn SQL.
+Note: If there are multiple matches, you'll get *one row for each possible combo* (except with `semi_join()` and `anti_join()`).
+
+Need to get more complicated? You may want to learn SQL or break it into multiple operations.
 
 
 nycflights13 Data
@@ -438,24 +467,32 @@ It includes five dataframes, some of which contain missing data (`NA`):
 * `planes`: airplane metadata
 * `weather`: hourly weather data for JFK, LGA, and EWR
 
+Note these are separate data frames, each needing to be loaded separately (e.g. `data(planes)`).
+
 Join Example #1
 ====================================================================================
 
 Who manufactures the planes that flew to Seattle?
 ```{r}
-flights %>% filter(dest == "SEA") %>% select(tailnum) %>%
+flights %>% filter(dest == "SEA") %>% 
+    select(tailnum) %>%
     left_join(planes %>% select(tailnum, manufacturer), by = "tailnum") %>%
     distinct(manufacturer, .keep_all=T)
 ```
+
+Note you can perform operations on the data inside functions such as `left_join()` and the *result* will be used by the function.
 
 Join Example #2
 ====================================================================================
 
 Which airlines had the most flights to Seattle from NYC?
 ```{r}
-flights %>% filter(dest == "SEA") %>% select(carrier) %>%
+flights %>% filter(dest == "SEA") %>% 
+    select(carrier) %>%
     left_join(airlines, by = "carrier") %>%
-    group_by(name) %>% tally() %>% arrange(desc(n))
+    group_by(name) %>% 
+    tally() %>% 
+    arrange(desc(n))
 ```
 
 
@@ -466,7 +503,8 @@ Is there a relationship between departure delays and wind gusts?
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(ggplot2)
-flights %>% select(origin, year, month, day, hour, dep_delay) %>%
+flights %>% 
+    select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
     # removing rows with missing values
@@ -489,30 +527,37 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
     geom_point() + geom_smooth()
 ```
 
+Check out those 1200 mph winds!
+
 Redo After Removing Extreme Outliers, Just Trend
 ====================================================================================
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
-flights %>% select(origin, year, month, day, hour, dep_delay) %>%
+flights %>% 
+    select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
     filter(!is.na(dep_delay) & !is.na(wind_gust) & wind_gust < 250) %>% 
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_smooth() + theme_bw(base_size = 16) +
+    geom_smooth() + 
+    theme_bw(base_size = 16) +
     xlab("Wind gusts in departure hour (mph)") +
     ylab("Average departure delay (minutes)")
 ```
+
 
 Wind Gusts and Delays: Mean Trend
 ====================================================================================
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE, fig.width = 10, fig.height = 5.5, dpi=300, out.width="1100px", out.height="600px"}
-flights %>% select(origin, year, month, day, hour, dep_delay) %>%
+flights %>% 
+    select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
     filter(!is.na(dep_delay) & !is.na(wind_gust) & wind_gust < 250) %>% 
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_smooth() + theme_bw(base_size = 16) +
+    geom_smooth() + 
+    theme_bw(base_size = 16) +
     xlab("Wind gusts in departure hour (mph)") +
     ylab("Average departure delay (minutes)")
 ```
@@ -541,5 +586,5 @@ Pick something to look at in the `nycflights13` data and write up a .Rmd file sh
 
 This time, *include all your code in your output document* (`echo=TRUE`), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one* individually (`airlines`, `airports`, `flights`, `planes`, and `weather`) using `data(dataframe_name)` (e.g. `data(flights)`).
 
-DUE: 11:59 PM, Oct 17th
+DUE: 11:59 PM, April 17th
 
