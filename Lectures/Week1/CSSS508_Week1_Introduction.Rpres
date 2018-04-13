@@ -1,7 +1,7 @@
 <style>
 code {
    background-color: #efefef;
-   font-weight:bold;
+   font-weight: bold;
 }
 </style>
 
