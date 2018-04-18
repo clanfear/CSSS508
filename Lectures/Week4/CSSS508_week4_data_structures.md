@@ -1,10 +1,18 @@
+<style>
+code {
+   background-color: #efefef;
+   font-weight: bold;
+}
+</style>
+
 CSSS 508, Week 4: R Data Structures
 ====================================================================================
 author: Charles Lanfear
-date: October 18, 2017
-transition: linear
-width: 1440
+date: April 18, 2017
+width: 1600
 height: 900
+transition: linear
+font-family: helvetica
 
 
 R Data Types
@@ -12,13 +20,14 @@ R Data Types
 
 So far we've been manipulating data frames, making visuals, and summarizing. This got you pretty far! Now we get more in the weeds of programming. Today is all about *types of data* in R.
 
+Up Until Now
+====================================================================================
+
+A data frame is really a **list** of **vectors**, where each vector is a column of the same length (number of rows). But data frames are not the only object we want to have in R (e.g. linear regression output). We need to learn about **vectors**, **matrices**, and **lists** to do additional things we can't express with `dplyr` syntax.
 
 Vectors
 ====================================================================================
 type: section
-
-
-A data frame is really a **list** of **vectors**, where each vector is a column of the same length (number of rows). But data frames are not the only object we want to have in R, e.g. linear regression output. We need to learn about **vectors**, **matrices**, and **lists** to do additional things we can't express with `dplyr` syntax.
 
 
 Making Vectors
@@ -116,6 +125,7 @@ incremental: true
 
 Recycling doesn't work so well with vectors of incommensurate lengths:
 
+
 ```r
 c(1, 2, 3, 4) + c(0.5, 1.5, 2.5)
 ```
@@ -128,6 +138,7 @@ multiple of shorter object length
 ```
 [1] 1.5 3.5 5.5 4.5
 ```
+
 Try not to let R's recycling behavior catch you by surprise!
 
 
@@ -136,6 +147,7 @@ Vector-Wise Math
 incremental: true
 
 Some functions operate on an entire vector and return *one number* rather than working element-wise:
+
 
 ```r
 sum(c(1, 2, 3, 4))
@@ -153,7 +165,9 @@ max(c(1, 2, 3, 4))
 [1] 4
 ```
 
-Some others: `min()`, `mean()`, `median()`, `sd()`, `var()` -- you've seen these used with `dplyr::summarize()`.
+Some others: `min()`, `mean()`, `median()`, `sd()`, `var()`
+
+You've seen these used with `dplyr::summarize()`.
 
 
 Example: Standardizing Data
@@ -227,9 +241,11 @@ rep(c(-1, 0, 1), each = 3)
 Generating Integer Vectors
 ====================================================================================
 incremental: true
+
 Integer vectors are a special case of numeric vectors where all the values are whole numbers.
 
 We can produce them using the `:` shortcut:
+
 
 ```r
 n <- 12
@@ -248,12 +264,24 @@ n:4
 [1] 12 11 10  9  8  7  6  5  4
 ```
 
+You can also specify an integer using a whole number followed by `L`:
+
+
+```r
+class(9L)
+```
+
+```
+[1] "integer"
+```
+
 
 Character Vectors
 ====================================================================================
 incremental: true
 
 Character vectors store data as text and typically come up when dealing names, addresses, and IDs:
+
 
 ```r
 first_names <- c("Andre", "Beth", "Carly", "Dan")
@@ -263,6 +291,7 @@ class(first_names)
 ```
 [1] "character"
 ```
+
 Note you can store numbers as character data as well, but you cannot perform math on them unless you convert them to numeric.
 
 Factor Vectors
@@ -270,6 +299,7 @@ Factor Vectors
 incremental: true
 
 Factors are categorical data that encode a (modest) number of **levels**, like for gender, experimental group, or geographic region: 
+
 
 ```r
 gender <- factor(c("M", "F", "F", "M"))
@@ -280,7 +310,9 @@ gender
 [1] M F F M
 Levels: F M
 ```
+
 Character data usually can't go directly into a statistical model, but factor data can. It has an *underlying numeric representation*:
+
 
 ```r
 as.numeric(gender)
@@ -296,6 +328,7 @@ Logical Vectors
 incremental: true
 
 Logical vectors take only TRUE and FALSE values, and are typically the product of logical tests (e.g. `x==5`). We can make logical vectors by defining binary conditions to check for. For example, we can look at which of the first names has at least 4 letters:
+
 
 ```r
 name_lengths <- nchar(first_names) # number of characters
@@ -320,6 +353,7 @@ Logical Vectors as Numeric
 incremental: true
 
 You can do math with logical vectors, because `TRUE`=1 and `FALSE`=0:
+
 
 ```r
 name_lengths >= 4
@@ -347,6 +381,7 @@ Combining Logical Conditions
 incremental: true
 
 Suppose we are interested in which names have an even number of letters:
+
 
 ```r
 even_length <- (name_lengths %% 2 == 0)
@@ -377,6 +412,7 @@ incremental: true
 
 * `&` is **AND** (both conditions must be `TRUE` to be `TRUE`):
 
+
 ```r
 even_length & second_letter_a
 ```
@@ -384,7 +420,9 @@ even_length & second_letter_a
 ```
 [1] FALSE FALSE FALSE FALSE
 ```
+
 * `|` is **OR** (at least one condition must be `TRUE` to be `TRUE`):
+
 
 ```r
 even_length | second_letter_a
@@ -393,7 +431,9 @@ even_length | second_letter_a
 ```
 [1] FALSE  TRUE  TRUE  TRUE
 ```
+
 * `!` is **NOT** (switches `TRUE` and `FALSE`):
+
 
 ```r
 !(even_length | second_letter_a)
@@ -412,6 +452,7 @@ We can **subset** a vector in a number of ways:
 
 * Passing a single index or vector of entries to **keep**:
 
+
 ```r
 first_names[c(1, 4)]
 ```
@@ -419,7 +460,9 @@ first_names[c(1, 4)]
 ```
 [1] "Andre" "Dan"  
 ```
+
 * Passing a single index or vector of entries to **drop**:
+
 
 ```r
 first_names[-c(1, 4)]
@@ -435,6 +478,7 @@ Subsetting Vectors
 incremental: true
 
 * Passing a logical vector (`TRUE`=keep, `FALSE`=drop):
+
 
 ```r
 first_names[even_length | second_letter_a]
@@ -459,6 +503,7 @@ incremental: true
 
 `%in%` lets you avoid typing a lot of logical ORs (`|`):
 
+
 ```r
 first_names %in% c("Andre", "Carly", "Dan")
 ```
@@ -468,6 +513,7 @@ first_names %in% c("Andre", "Carly", "Dan")
 ```
 
 `which()` gives the indices of `TRUE`s in a logical vector:
+
 
 ```r
 which(first_names %in% c("Andre", "Carly", "Dan"))
@@ -484,11 +530,13 @@ incremental: true
 
 Missing values are coded as `NA` entries without quotes:
 
+
 ```r
 vector_w_missing <- c(1, 2, NA, 4, 5, 6, NA)
 ```
 
 Even one `NA` "poisons the well": You'll get `NA` out of your calculations unless you remove them manually or with the extra argument `na.rm = TRUE` (in some functions):
+
 
 ```r
 mean(vector_w_missing)
@@ -512,6 +560,7 @@ incremental: true
 
 **WARNING:** You can't test for missing values by seeing if they "equal" (`==`) `NA`:
 
+
 ```r
 vector_w_missing == NA
 ```
@@ -521,6 +570,7 @@ vector_w_missing == NA
 ```
 
 But you can use the `is.na()` function:
+
 
 ```r
 is.na(vector_w_missing)
@@ -545,6 +595,7 @@ incremental: true
 
 When testing logical conditions, `NA` will produce an `NA` rather than `TRUE` or `FALSE`:
 
+
 ```r
 vector_w_missing == 5
 ```
@@ -552,7 +603,9 @@ vector_w_missing == 5
 ```
 [1] FALSE FALSE    NA FALSE  TRUE FALSE    NA
 ```
+
 It is noteworthy, however, that `%in%` will handle NAs:
+
 
 ```r
 vector_w_missing %in% 5
@@ -569,6 +622,7 @@ vector_w_missing %in% NA
 ```
 [1] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
 ```
+
 It is still usually best to handle NAs *directly*, however!
 
 
@@ -578,6 +632,7 @@ incremental: true
 
 Sometimes we might get positive or negative infinity ($\pm \infty$) or `NaN` (**N**ot **A** **N**umber) from our calculations:
 
+
 ```r
 c(-2, -1, 0, 1, 2) / 0
 ```
@@ -585,7 +640,9 @@ c(-2, -1, 0, 1, 2) / 0
 ```
 [1] -Inf -Inf  NaN  Inf  Inf
 ```
+
 You can check for these using functions like `is.finite()` or `is.nan()`.
+
 
 ```r
 is.finite(c(-2, -1, 0, 1, 2) / 0)
@@ -609,6 +666,7 @@ Previewing Vectors
 incremental: true
 
 Like with data frames, we can use `head()` and `tail()` to preview vectors:
+
 
 ```r
 head(letters) # letters is a built-in vector
@@ -640,6 +698,7 @@ Named Vector Entries
 incremental: true
 
 We can also index vectors by assigning **names** to the entries.
+
 
 ```r
 a_vector <- 1:26
@@ -673,9 +732,9 @@ Matrices: 2D vectors
 ====================================================================================
 incremental: true
 
-**Matrices** extend vectors to two **dimension**s: **rows** and **columns**. We can construct them directly 
-using `matrix`. Note the `byrow` argument which determines whether the data fill the matrix
-by row or by column.
+**Matrices** extend vectors to two **dimension**s: **rows** and **columns**. We can construct them directly using `matrix`.
+
+Note the `byrow` argument which determines whether the data fill the matrix by row or by column.
 
 ```r
 (a_matrix <- matrix(letters[1:6], nrow=2, ncol=3))
@@ -704,6 +763,7 @@ incremental: true
 
 We can also make matrices by *binding* vectors together with `rbind()` (**r**ow **bind**) and `cbind()` (**c**olumn **bind**).
 
+
 ```r
 (c_matrix <- cbind(c(1, 2), c(3, 4), c(5, 6)))
 ```
@@ -731,6 +791,7 @@ incremental: true
 
 We subset matrices using the same methods as with vectors, except we index them with `[rows, columns]`:
 
+
 ```r
 a_matrix[1, 2] # row 1, column 2
 ```
@@ -746,7 +807,19 @@ a_matrix[1, c(2, 3)] # row 1, columns 2 and 3
 ```
 [1] "c" "e"
 ```
+
 We can obtain the dimensions of a matrix using `dim()`.
+
+
+```r
+dim(a_matrix)
+```
+
+```
+[1] 2 3
+```
+
+Note that using `length()` on a matrix will not give you the number of rows or columns but rather the number of elements!
 
 Matrices Becoming Vectors
 ====================================================================================
@@ -780,6 +853,7 @@ incremental: true
 
 Matrices can be numeric, integer, factor, character, or logical, just like vectors. Also like vectors, *all elements must be the same data type*.
 
+
 ```r
 (bad_matrix <- cbind(1:2, LETTERS[c(6,1)]))
 ```
@@ -797,6 +871,7 @@ typeof(bad_matrix)
 ```
 [1] "character"
 ```
+
 In this case, everything was converted to character so as not to lose information.
 
 
@@ -805,6 +880,7 @@ Matrix Dimension Names
 incremental: true
 
 We can access dimension names or name them ourselves:
+
 
 ```r
 rownames(bad_matrix) <- c("Wedge", "Biggs")
@@ -862,6 +938,7 @@ Matrix Transposition and Multiplication
 incremental: true
 
 To do matrix transpositions, use `t()`.
+
 
 ```r
 (e_matrix <- t(c_matrix))
@@ -953,6 +1030,7 @@ incremental: true
 
 **Lists** are an object that can store multiple types of data.
 
+
 ```r
 (my_list <- list("first_thing" = 1:5, "second_thing" = matrix(8:11, nrow = 2), "third_thing" = lm(dist ~ speed, data = cars)))
 ```
@@ -982,6 +1060,7 @@ Accessing List Elements
 incremental: true
 
 You can access a list element by its name or number in `[[ ]]`, or a `$` followed by its name:
+
 
 ```r
 my_list[["first_thing"]]
@@ -1030,8 +1109,8 @@ str(my_list[[1]])
 ```
  int [1:5] 1 2 3 4 5
 ```
-Note that you can only select a single list element at a time using `[ ]` (because this would have to return multiple objects).
 
+Note that you can only select a single list element at a time using `[ ]` (because this would have to return multiple objects).
 
 Subsetted Lists Can Be of Length > 1
 ====================================================================================
@@ -1224,7 +1303,7 @@ swiss %>%
     summarize(mean = mean(Fertility))
 ```
 
-An Aside from People with Statistics Training
+An Aside for People with Statistics Training
 ====================================================================================
 type: section
 
@@ -1256,6 +1335,7 @@ Summarizing Regression with a List
 incremental: true
 
 `summary(lm_object)` is also a list with more information, which has the side effect of printing some output to the console:
+
 
 ```r
 summary(my_list[[3]]) # this prints output
@@ -1317,6 +1397,7 @@ names(speed_CI) <- c("lower", "upper")
 ```
 
 Now you can include these values in a Markdown document:
+
 
 ```r
 A 1 mph increase in speed is associated with a `r round(speed_beta, 1)` ft increase in stopping distance (95% CI: (`r round(speed_CI["lower"],1)`, `r round(speed_CI["upper"],1)`)).
