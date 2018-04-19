@@ -1750,7 +1750,7 @@ Coefficients:
 <section data-transition="linear" data-transition-speed="default">
 <h3>Why Two Brackets [[]]?</h3>
 <div class="slideContent" >
-<p>If you use one bracket to access list elements, you get a <strong>sublist</strong> back. The double brackets get <em>the actual element</em>, as whatever data type it is stored as, in that location in the list.</p>
+<p>If you use one bracket to access list elements, you get a <strong>list</strong> back. The double brackets get <em>the actual element</em>, as whatever data type it is stored as, in that location in the list.</p>
 
 <pre class="fragment"><code class="r">str(my_list[1])
 </code></pre>
@@ -1765,7 +1765,7 @@ Coefficients:
 <pre class="fragment"><code> int [1:5] 1 2 3 4 5
 </code></pre>
 
-<p class="fragment">Note that you can only select a single list element at a time using <code>[ ]</code> (because this would have to return multiple objects).</p>
+<p class="fragment">Note that you can only select a single list element at a time using <code>[[ ]]</code>, because otherwise this would have to return multiple objects!</p>
 
 </div>
 
