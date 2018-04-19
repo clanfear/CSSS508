@@ -547,7 +547,7 @@ body {
 
 
 .reveal {
-  font-family: "Lato", sans-serif;
+  font-family: helvetica, sans-serif;
 }
   
 .reveal h1,
@@ -556,7 +556,7 @@ body {
 .reveal h4,
 .reveal h5,
 .reveal h6 {
-  font-family: "News Cycle", Impact, sans-serif;
+  font-family: helvetica, Impact, sans-serif;
 }
 
 
@@ -783,7 +783,7 @@ hljs.initHighlightingOnLoad();
 
   
 
-
+<style>code {   background-color: #efefef;   font-weight: bold;}</style>
 
 
 
@@ -794,7 +794,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>CSSS 508, Week 4: R Data Structures</h1><p>Charles Lanfear<br/>October 18, 2017</p>
+<h1>CSSS 508, Week 4: R Data Structures</h1><p>Charles Lanfear<br/>April 18, 2018</p>
 
 <div class="slideContent" >
 
@@ -809,10 +809,17 @@ hljs.initHighlightingOnLoad();
 </div>
 
 </section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Up Until Now</h3>
+<div class="slideContent" >
+<p>A data frame is really a <strong>list</strong> of <strong>vectors</strong>, where each vector is a column of the same length (number of rows). But data frames are not the only object we want to have in R (e.g. linear regression output). We need to learn about <strong>vectors</strong>, <strong>matrices</strong>, and <strong>lists</strong> to do additional things we can&#39;t express with <code>dplyr</code> syntax.</p>
+
+</div>
+
+</section>
 <section data-state="section" data-transition="linear" data-transition-speed="default">
 <h2>Vectors</h2>
 <div class="slideContent" >
-<p>A data frame is really a <strong>list</strong> of <strong>vectors</strong>, where each vector is a column of the same length (number of rows). But data frames are not the only object we want to have in R, e.g. linear regression output. We need to learn about <strong>vectors</strong>, <strong>matrices</strong>, and <strong>lists</strong> to do additional things we can&#39;t express with <code>dplyr</code> syntax.</p>
 
 </div>
 
@@ -932,7 +939,9 @@ multiple of shorter object length
 <pre class="fragment"><code>[1] 4
 </code></pre>
 
-<p class="fragment">Some others: <code>min()</code>, <code>mean()</code>, <code>median()</code>, <code>sd()</code>, <code>var()</code> &ndash; you&#39;ve seen these used with <code>dplyr::summarize()</code>.</p>
+<p class="fragment">Some others: <code>min()</code>, <code>mean()</code>, <code>median()</code>, <code>sd()</code>, <code>var()</code></p>
+
+<p class="fragment">You&#39;ve seen these used with <code>dplyr::summarize()</code>.</p>
 
 </div>
 
@@ -1023,6 +1032,14 @@ round(z, 2)
 </code></pre>
 
 <pre class="fragment"><code>[1] 12 11 10  9  8  7  6  5  4
+</code></pre>
+
+<p class="fragment">You can also specify an integer using a whole number followed by <code>L</code>:</p>
+
+<pre class="fragment"><code class="r">class(9L)
+</code></pre>
+
+<pre class="fragment"><code>[1] &quot;integer&quot;
 </code></pre>
 
 </div>
@@ -1421,9 +1438,9 @@ head(a_vector)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Matrices: 2D vectors</h3>
 <div class="slideContent" >
-<p><strong>Matrices</strong> extend vectors to two <strong>dimension</strong>s: <strong>rows</strong> and <strong>columns</strong>. We can construct them directly 
-using <code>matrix</code>. Note the <code>byrow</code> argument which determines whether the data fill the matrix
-by row or by column.</p>
+<p><strong>Matrices</strong> extend vectors to two <strong>dimension</strong>s: <strong>rows</strong> and <strong>columns</strong>. We can construct them directly using <code>matrix</code>.</p>
+
+<p class="fragment">Note the <code>byrow</code> argument which determines whether the data fill the matrix by row or by column.</p>
 
 <pre class="fragment"><code class="r">(a_matrix &lt;- matrix(letters[1:6], nrow=2, ncol=3))
 </code></pre>
@@ -1486,6 +1503,14 @@ by row or by column.</p>
 </code></pre>
 
 <p class="fragment">We can obtain the dimensions of a matrix using <code>dim()</code>.</p>
+
+<pre class="fragment"><code class="r">dim(a_matrix)
+</code></pre>
+
+<pre class="fragment"><code>[1] 2 3
+</code></pre>
+
+<p class="fragment">Note that using <code>length()</code> on a matrix will not give you the number of rows or columns but rather the number of elements!</p>
 
 </div>
 
@@ -1921,7 +1946,7 @@ swiss %&gt;%
 
 </section>
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h2>An Aside from People with Statistics Training</h2>
+<h2>An Aside for People with Statistics Training</h2>
 <div class="slideContent" >
 
 </div>
@@ -2115,7 +2140,7 @@ function commandsForSlide(indexh) {
       transition: 'linear',
       transitionSpeed: 'default',
       rtl: false,
-      width: 1440,
+      width: 1600,
       height: 900,
     
       dependencies: []

@@ -46,8 +46,8 @@ gapminder %>% filter(country == "Canada") %>% head(2)
 # A tibble: 2 x 6
   country continent  year lifeExp      pop gdpPercap
   <fct>   <fct>     <int>   <dbl>    <int>     <dbl>
-1 Canada  Americas   1952    68.8 14785584     11367
-2 Canada  Americas   1957    70.0 17010154     12490
+1 Canada  Americas   1952    68.8 14785584    11367.
+2 Canada  Americas   1957    70.0 17010154    12490.
 ```
 
 Pipes save us typing, make code readable, and allow chaining like above, so we use them *all the time* when manipulating data frames.
@@ -107,8 +107,8 @@ tail(yugoslavia, 2)
 # A tibble: 2 x 6
   country  continent  year lifeExp     pop gdpPercap
   <fct>    <fct>     <int>   <dbl>   <int>     <dbl>
-1 Slovenia Europe     2002    76.7 2011497     20660
-2 Slovenia Europe     2007    77.9 2009245     25768
+1 Slovenia Europe     2002    76.7 2011497    20660.
+2 Slovenia Europe     2007    77.9 2009245    25768.
 ```
 
 
@@ -154,16 +154,16 @@ gapminder %>% distinct(continent, year, .keep_all=TRUE)
 # A tibble: 60 x 6
    country     continent  year lifeExp      pop gdpPercap
    <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
- 1 Afghanistan Asia       1952    28.8  8425333       779
- 2 Afghanistan Asia       1957    30.3  9240934       821
- 3 Afghanistan Asia       1962    32.0 10267083       853
- 4 Afghanistan Asia       1967    34.0 11537966       836
- 5 Afghanistan Asia       1972    36.1 13079460       740
- 6 Afghanistan Asia       1977    38.4 14880372       786
- 7 Afghanistan Asia       1982    39.9 12881816       978
- 8 Afghanistan Asia       1987    40.8 13867957       852
- 9 Afghanistan Asia       1992    41.7 16317921       649
-10 Afghanistan Asia       1997    41.8 22227415       635
+ 1 Afghanistan Asia       1952    28.8  8425333      779.
+ 2 Afghanistan Asia       1957    30.3  9240934      821.
+ 3 Afghanistan Asia       1962    32.0 10267083      853.
+ 4 Afghanistan Asia       1967    34.0 11537966      836.
+ 5 Afghanistan Asia       1972    36.1 13079460      740.
+ 6 Afghanistan Asia       1977    38.4 14880372      786.
+ 7 Afghanistan Asia       1982    39.9 12881816      978.
+ 8 Afghanistan Asia       1987    40.8 13867957      852.
+ 9 Afghanistan Asia       1992    41.7 16317921      649.
+10 Afghanistan Asia       1997    41.8 22227415      635.
 # ... with 50 more rows
 ```
 
@@ -183,12 +183,12 @@ yugoslavia %>% sample_n(size = 6, replace = FALSE)
 # A tibble: 6 x 6
   country    continent  year lifeExp     pop gdpPercap
   <fct>      <fct>     <int>   <dbl>   <int>     <dbl>
-1 Montenegro Europe     1962    63.7  474528      4650
-2 Montenegro Europe     1982    74.1  562548     11223
-3 Serbia     Europe     1962    64.5 7616060      6290
-4 Slovenia   Europe     1952    65.6 1489518      4215
-5 Serbia     Europe     1952    58.0 6860147      3581
-6 Croatia    Europe     1997    73.7 4444595      9876
+1 Montenegro Europe     1962    63.7  474528     4650.
+2 Montenegro Europe     1982    74.1  562548    11223.
+3 Serbia     Europe     1962    64.5 7616060     6290.
+4 Slovenia   Europe     1952    65.6 1489518     4215.
+5 Serbia     Europe     1952    58.0 6860147     3581.
+6 Croatia    Europe     1997    73.7 4444595     9876.
 ```
 
 
@@ -206,16 +206,16 @@ yugoslavia %>% arrange(year, desc(pop)) # ascending by year, descending by pop
 # A tibble: 60 x 6
    country                continent  year lifeExp     pop gdpPercap
    <fct>                  <fct>     <int>   <dbl>   <int>     <dbl>
- 1 Serbia                 Europe     1952    58.0 6860147      3581
- 2 Croatia                Europe     1952    61.2 3882229      3119
- 3 Bosnia and Herzegovina Europe     1952    53.8 2791000       974
- 4 Slovenia               Europe     1952    65.6 1489518      4215
- 5 Montenegro             Europe     1952    59.2  413834      2648
- 6 Serbia                 Europe     1957    61.7 7271135      4981
- 7 Croatia                Europe     1957    64.8 3991242      4338
- 8 Bosnia and Herzegovina Europe     1957    58.4 3076000      1354
- 9 Slovenia               Europe     1957    67.8 1533070      5862
-10 Montenegro             Europe     1957    61.4  442829      3682
+ 1 Serbia                 Europe     1952    58.0 6860147     3581.
+ 2 Croatia                Europe     1952    61.2 3882229     3119.
+ 3 Bosnia and Herzegovina Europe     1952    53.8 2791000      974.
+ 4 Slovenia               Europe     1952    65.6 1489518     4215.
+ 5 Montenegro             Europe     1952    59.2  413834     2648.
+ 6 Serbia                 Europe     1957    61.7 7271135     4981.
+ 7 Croatia                Europe     1957    64.8 3991242     4338.
+ 8 Bosnia and Herzegovina Europe     1957    58.4 3076000     1354.
+ 9 Slovenia               Europe     1957    67.8 1533070     5862.
+10 Montenegro             Europe     1957    61.4  442829     3682.
 # ... with 50 more rows
 ```
 
@@ -255,10 +255,10 @@ yugoslavia %>% select(-continent, -pop, -lifeExp) %>% head(4)
 # A tibble: 4 x 3
   country                 year gdpPercap
   <fct>                  <int>     <dbl>
-1 Bosnia and Herzegovina  1952       974
-2 Bosnia and Herzegovina  1957      1354
-3 Bosnia and Herzegovina  1962      1710
-4 Bosnia and Herzegovina  1967      2172
+1 Bosnia and Herzegovina  1952      974.
+2 Bosnia and Herzegovina  1957     1354.
+3 Bosnia and Herzegovina  1962     1710.
+4 Bosnia and Herzegovina  1967     2172.
 ```
 
 
@@ -476,16 +476,16 @@ gapminder %>% mutate(gdpPercap_ordinal = case_when(
 # A tibble: 1,704 x 7
    country     continent  year lifeExp      pop gdpPercap gdpPercap_ordinal
    <fct>       <fct>     <int>   <dbl>    <int>     <dbl> <chr>            
- 1 Afghanistan Asia       1952    28.8  8425333       779 moderate         
- 2 Afghanistan Asia       1957    30.3  9240934       821 high             
- 3 Afghanistan Asia       1962    32.0 10267083       853 high             
- 4 Afghanistan Asia       1967    34.0 11537966       836 high             
- 5 Afghanistan Asia       1972    36.1 13079460       740 moderate         
- 6 Afghanistan Asia       1977    38.4 14880372       786 moderate         
- 7 Afghanistan Asia       1982    39.9 12881816       978 high             
- 8 Afghanistan Asia       1987    40.8 13867957       852 high             
- 9 Afghanistan Asia       1992    41.7 16317921       649 low              
-10 Afghanistan Asia       1997    41.8 22227415       635 low              
+ 1 Afghanistan Asia       1952    28.8  8425333      779. moderate         
+ 2 Afghanistan Asia       1957    30.3  9240934      821. high             
+ 3 Afghanistan Asia       1962    32.0 10267083      853. high             
+ 4 Afghanistan Asia       1967    34.0 11537966      836. high             
+ 5 Afghanistan Asia       1972    36.1 13079460      740. moderate         
+ 6 Afghanistan Asia       1977    38.4 14880372      786. moderate         
+ 7 Afghanistan Asia       1982    39.9 12881816      978. high             
+ 8 Afghanistan Asia       1987    40.8 13867957      852. high             
+ 9 Afghanistan Asia       1992    41.7 16317921      649. low              
+10 Afghanistan Asia       1997    41.8 22227415      635. low              
 # ... with 1,694 more rows
 ```
  
@@ -541,9 +541,9 @@ yugoslavia %>%
 
 ```
 # A tibble: 1 x 4
-  lifeExp_mean pop_mean lifeExp_sd  pop_sd
-         <dbl>    <dbl>      <dbl>   <dbl>
-1         71.3  4008537       1.60 3237282
+  lifeExp_mean pop_mean lifeExp_sd   pop_sd
+         <dbl>    <dbl>      <dbl>    <dbl>
+1         71.3 4008537.       1.60 3237282.
 ```
 
 Note it automatically names the summarized variables based on the functions used to summarize.
@@ -597,11 +597,11 @@ yugoslavia %>% group_by(year) %>%
 # A tibble: 5 x 4
    year num_countries total_pop total_gdp_per_cap
   <int>         <int>     <int>             <dbl>
-1  1952             5  15436728              3030
-2  1957             5  16314276              4187
-3  1962             5  17099107              5257
-4  1967             5  17878535              6656
-5  1972             5  18579786              8730
+1  1952             5  15436728             3030.
+2  1957             5  16314276             4187.
+3  1962             5  17099107             5257.
+4  1967             5  17878535             6656.
+5  1972             5  18579786             8730.
 ```
 
 Because we did `group_by()` with `year` then used `summarize()`, we get *one row per year*!
