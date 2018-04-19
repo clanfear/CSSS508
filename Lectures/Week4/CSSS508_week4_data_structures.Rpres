@@ -8,7 +8,7 @@ code {
 CSSS 508, Week 4: R Data Structures
 ====================================================================================
 author: Charles Lanfear
-date: April 18, 2017
+date: April 18, 2018
 width: 1600
 height: 900
 transition: linear
@@ -604,14 +604,14 @@ Why Two Brackets [[]]?
 ====================================================================================
 incremental: true
 
-If you use one bracket to access list elements, you get a **sublist** back. The double brackets get *the actual element*, as whatever data type it is stored as, in that location in the list.
+If you use one bracket to access list elements, you get a **list** back. The double brackets get *the actual element*, as whatever data type it is stored as, in that location in the list.
 
 ```{r}
 str(my_list[1])
 str(my_list[[1]])
 ```
 
-Note that you can only select a single list element at a time using `[ ]` (because this would have to return multiple objects).
+Note that you can only select a single list element at a time using `[[ ]]`, because otherwise this would have to return multiple objects!
 
 Subsetted Lists Can Be of Length > 1
 ====================================================================================
