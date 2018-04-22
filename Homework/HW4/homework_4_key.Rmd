@@ -334,10 +334,10 @@ to call on them from `lm.output` object for your answer!
 
 ## 4: Coding with Data Frames
 ```{r data_frames_1}
-# 1) Use "data.frame()" to combine "vec_num" and "vec_int" into "df_1".
+# 1) Use "data.frame()" to combine "vec_num" (first column) and "vec_int" (second column) into "df_1".
 df_1 <- data.frame(vec_num, vec_int)
 
-# 2) Use "$" to extract "vec_num" from "df_1", reverse it with "rev()", and assign it to "vec_num_2".
+# 2) Use "$" to extract "vec_num" from "df_1", reverse it with "rev()", and assign it as the vector "vec_num_2".
 vec_num_2 <- rev(df_1$vec_num)
 
 # 3) Use "$" to add "vec_num_2" to "df_2" as a new column with the name "number_vector".

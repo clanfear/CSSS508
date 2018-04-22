@@ -368,10 +368,10 @@ lm.output</code></pre>
 </div>
 <div id="coding-with-data-frames" class="section level2">
 <h2>4: Coding with Data Frames</h2>
-<pre class="r"><code># 1) Use &quot;data.frame()&quot; to combine &quot;vec_num&quot; and &quot;vec_int&quot; into &quot;df_1&quot;.
+<pre class="r"><code># 1) Use &quot;data.frame()&quot; to combine &quot;vec_num&quot; (first column) and &quot;vec_int&quot; (second column) into &quot;df_1&quot;.
 df_1 &lt;- data.frame(vec_num, vec_int)
 
-# 2) Use &quot;$&quot; to extract &quot;vec_num&quot; from &quot;df_1&quot;, reverse it with &quot;rev()&quot;, and assign it to &quot;vec_num_2&quot;.
+# 2) Use &quot;$&quot; to extract &quot;vec_num&quot; from &quot;df_1&quot;, reverse it with &quot;rev()&quot;, and assign it as the vector &quot;vec_num_2&quot;.
 vec_num_2 &lt;- rev(df_1$vec_num)
 
 # 3) Use &quot;$&quot; to add &quot;vec_num_2&quot; to &quot;df_2&quot; as a new column with the name &quot;number_vector&quot;.
