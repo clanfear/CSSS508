@@ -13,7 +13,7 @@ library(tidyverse)
 set.seed(7)
 test_x <- function(x=NULL, class="omit", dims="omit", numeric="omit",
                    nam_pos="omit", nam_val="omit", c_pos="omit", c_val="omit",
-                   na_check="omit"){
+                   na_check="omit", all_NA="omit"){
   if(is.null(x)){
     return(message("No code entered for ", deparse(substitute(x)), " yet.\n"))
   } else {
@@ -42,6 +42,11 @@ test_x <- function(x=NULL, class="omit", dims="omit", numeric="omit",
       }
     }
   }
+  if (all_NA==TRUE){
+    all_NA_x <- all(is.na(x))
+    } else {
+    all_NA_x <- TRUE
+    }
   if (all(na_check!="omit") & is.null(dim(x))){
     na_x     <- any(is.na(x[na_check])==TRUE)==FALSE
   } else {
@@ -53,10 +58,11 @@ test_x <- function(x=NULL, class="omit", dims="omit", numeric="omit",
       } else {na_x <- TRUE}
     }
   }
-  if (all(c(class_x, dim_x, names_x, num_x, na_x, check_x)==TRUE)){
+  if (all(c(class_x, dim_x, names_x, num_x, na_x, check_x, all_NA_x)==TRUE)){
     message("Good job on ", deparse(substitute(x)), "!\n")
     } else {
       message("Oh no, check your code for \"", deparse(substitute(x)), "\"\n")
+        if (all_NA_x==FALSE)message("- All elements should be NA!\n")
         if (dim_x==FALSE)   message("- Wrong length or dimensions!\n")
         if (class_x==FALSE) message("- Wrong object class!\n")
         if (names_x==FALSE) message("- Wrong object names!\n")
@@ -203,7 +209,7 @@ mat_big <- NULL
 *How'd you do?*
 ```{r matrices_1_test, echo=FALSE, message=TRUE, collapse=TRUE, comment=''}
 # DO NOT EDIT ANY PART OF THIS CHUNK
-test_x(mat_empty, class="matrix", dims=c(10,4))
+test_x(mat_empty, class="matrix", dims=c(10,4), all_NA=TRUE)
 test_x(mat_1, class="matrix", dims=c(10,4), numeric=TRUE, na_check=1)
 test_x(mat_2, class="matrix", dims=c(10,4), numeric=TRUE, na_check=2)
 test_x(mat_3, class="matrix", dims=c(10,4), numeric=FALSE, na_check=3, c_pos=c(2,3), c_val="R")
