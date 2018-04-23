@@ -2,10 +2,7 @@
 title: "Homework 5"
 author: "YOUR NAME"
 date: "DATE"
-output:
-  html_document:
-    toc: true
-    toc_float: false
+output: html_document
 ---
 
 
