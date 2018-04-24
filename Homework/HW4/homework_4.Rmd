@@ -1,7 +1,7 @@
 ---
 title: 'CSSS508: HW4'
 author: "Charles Lanfear"
-date: "October 18, 2017"
+date: "April 23, 2018"
 output: html_document
 ---
 
@@ -151,7 +151,7 @@ fac_vec <- NULL
 *How'd you do?*
 ```{r vectors_1_check, echo=FALSE, message=TRUE, collapse=TRUE, comment=''}
 # DO NOT EDIT ANY PART OF THIS CHUNK
-test_x(vec_num, class="numeric",   dims=10, c_pos=10, c_val=15)
+test_x(vec_num, class="numeric",   dims=10, c_pos=4, c_val=5)
 test_x(vec_int, class="integer",   dims=10, c_pos=5,  c_val=15)
 test_x(vec_cha, class="character", dims=10, c_pos=3,  c_val="S")
 test_x(vec_fac, class="factor",    dims=10, c_pos=7,  c_val="g")
