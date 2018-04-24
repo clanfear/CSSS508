@@ -6,3 +6,5 @@ tidyr
 ggplot2
 lubridate
 forcats
+pander
+bindrcpp

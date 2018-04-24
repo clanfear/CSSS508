@@ -1,23 +1,31 @@
-CSSS 508, Week 5:   Importing, Exporting, and Cleaning
+<style>
+code {
+   background-color: #efefef;
+   font-weight:bold;
+}
+</style>
+
+CSSS 508, Week 5: Importing, Exporting, and Cleaning
 ====================================================================================
 author: Charles Lanfear
-date: October 25, 2017
+date: April 25, 2018
 transition: linear
-width: 1440
+width: 1600
 height: 900
+font-family: helvetica
 
 
-Today's Theme: "Data Janitor Work"
+Today's Theme: "Data Custodian Work"
 ====================================================================================
 incremental: true
 
 Issues around getting data *in* and *out* of R and making it analytically *ready*:
 
-- Working directories and projects
-- Importing and exporting data: `readr` and `haven`
-- Cleaning and reshaping data: `tidyr`
-- Dates and times: `lubridate`
-- Controlling factor variables: `forcats`
+* Working directories and projects
+* Importing and exporting data: `readr` and `haven`
+* Cleaning and reshaping data: `tidyr`
+* Dates and times: `lubridate`
+* Controlling factor variables: `forcats`
  
 
 
@@ -45,9 +53,11 @@ Changing Your Working Directory
 
 You can use `setwd(dir = "C:/path/to/new/working/directory")` to change the working directory.
 
-Comments:
-* Windows users: make sure to change back slashes (`\`) to forward slashes (`/`) for the filepaths
-* Recommendation is to put `setwd()` at the very beginning of your `.R` or `.Rmd` code so that someone using a different computer knows they need to modify it
+Working Directory Suggestions:
+
+* Windows users: If you copy a path from Explorer, make sure to change back slashes (`\`) to forward slashes (`/`) for the filepaths
+* If you need to set a working directly, put `setwd()` at the very beginning of your `.R` or `.Rmd` code so that someone using a different computer knows they need to modify it
+* Instead of setting a working directory, it is usually better to use **RStudio projects** or keep all files your RMarkdown file refers to in the same folder or subfolders.
 
 
 Projects in RStudio
@@ -64,7 +74,7 @@ A better way to deal with working directories: RStudio's **project** feature in 
 Relative Paths
 ====================================================================================
 
-Once you've set the working directory, you can refer to folders and files within using relative paths.
+Once you've set the working directory---or you're in an RStudio project---you can refer to folders and files within the working directory using relative paths.
 
 
 ```r
@@ -76,7 +86,9 @@ ggsave("graphics/cars_plot.png", plot = a_plot)
 
 The above would save an image called "cars_plot.png" inside an existing folder called "graphics" within my working directory.
 
-Relative paths are nice, because all locations of loaded and saved files can be changed just by altering the working directory. 
+Relative paths are nice, because all locations of loaded and saved files can be changed just by altering the working directory.
+
+Relative paths also allow others to download your files or entire project and use them on their computer without modifying all the paths!
 
 
 Importing and Exporting Data
@@ -87,19 +99,18 @@ type: section
 Special Data Access Packages
 ====================================================================================
 
-Are you working with a popular data source? Try Googling to see if it has a devoted R package on *CRAN* or *Github* (use `devtools::install_github()` for these). Examples:
+If you are working with a popular data source, try Googling to see if it has a devoted R package on *CRAN* or *Github* (use `devtools::install_github("user/repository")` for these). Examples:
 
 * `WDI`: World Development Indicators (World Bank)
 * `WHO`: World Health Organization API
-* `censusapi`: Census API
-* `acs`: American Community Survey
+* `tidycensus`: Census and American Community Survey
 * `quantmod`: financial data from Yahoo, FRED, Google
 
 
 Delimited Text Files
 ====================================================================================
 
-Besides a package, the easiest way to work with external data is for it to be stored in a *delimited* text file, e.g. comma-separated values (**csv**) or tab-separated values (**tsv**). Here is `csv` data:
+Besides a package, the easiest way to work with external data is for it to be stored in a *delimited* text file, e.g. comma-separated values (**.csv**) or tab-separated values (**.tsv**). Here is `csv` data:
 
 ```
 "Subject","Depression","Sex","Week","HamD","Imipramine"
@@ -119,19 +130,23 @@ readr
 
 R has a variety of built-in functions for importing data stored in text files, like `read.table()` and `read.csv()`. I recommend using the versions in the `readr` package instead: `read_csv()`, `read_tsv()`, and `read_delim()`:
 
-- Faster!
-- Better defaults (e.g. doesn't automatically convert character data to factors)
-- A little smarter about dates and times
-- Handy function `problems()` you can run if there are errors
+* Faster!
+* Better defaults (e.g. doesn't automatically convert character data to factors)
+* A little smarter about dates and times
+* Handy function `problems()` you can run if there are errors
+* Loading bars for large files
 
 
 readr Importing Example
 ====================================================================================
 
+
 ```r
 library(readr)
 ```
+
 Let's import some data about song ranks on the Billboard Hot 100 back in 2000:
+
 
 ```r
 billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv")
@@ -183,7 +198,7 @@ incremental: true
 
 `readr` uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character). There are not many songs in the data that charted for 60+ weeks --- and none in the first 1000 that charted for 66+ weeks! 
 
-To be safe, `readr` assumed the `wk66`-`wk76` columns were character. Use the `col_types` argument to fix this:
+To be safe, `readr` assumed the `wk66`-`wk76` columns were *character*. Use the `col_types` argument to fix this:
 
 
 ```r
@@ -204,7 +219,9 @@ You could also deal with this by adjusting the maximum rows used by `readr` to g
 read_csv(file, guess_max=5000) # Defaults is 1000
 ```
 
-Or you could use `read.csv()` in the `foreign` package. This is a base R alternative that is slower and a bit dumber.
+Or you could use `read.csv()` in the `foreign` package. This is a base R alternative that is slower and a bit dumber. 
+
+With `read.csv` you will need to specify if the data have column names and you'll want to use `stringsAsFactors=FALSE` to prevent character columns from becoming factors. `read_csv()` does this for us!
 
 
 Excel Files
@@ -217,7 +234,7 @@ For Excel files that might get updated and you want the changes to flow to your 
 You won't keep text formatting, color, comments, or merged cells so if these mean something in your data (*bad!*), you'll need to get creative.
 
 
-write_csv, write_tsv, write_delim
+write_csv(), write_tsv(), write_delim()
 ====================================================================================
 
 Getting data out of R into a delimited file is very similar to getting it into R:
@@ -228,7 +245,6 @@ write_csv(billboard_2000_raw, path = "billboard_data.csv")
 ```
 
 This saved the data we pulled off the web in a file called "billboard_data.csv" in my working directory.
-
 
 Saving in R Formats
 ====================================================================================
@@ -243,6 +259,8 @@ Exporting to a `.csv` drops R metadata, such as whether a variable is a characte
     + Used for saving multiple files where the original object names are preserved
     + Save: `save(object1, object2, ... , file = "path.Rdata")`
     + Load: `load("path.Rdata")` *without assignment operator*
+
+I pretty much always just save as `.Rdata`.
 
 dput()
 ====================================================================================
@@ -295,13 +313,13 @@ incremental: true
 * Did the last rows/columns from the original file make it in?
     + May need to use different package or manually specify range
 * Are the column names in good shape?
-    + Modify a `col_names` argument or fix with `rename`
+    + Modify a `col_names=` argument or fix with `rename()`
 * Are there "decorative" blank rows or columns to remove?
-    + `filter` or `select` out those rows/columns
+    + `filter()` or `select()` out those rows/columns
 * How are missing values represented: `NA`, `" "` (blank), `.` (period), `999`?
-    + Use `mutate` with `ifelse` to fix these (perhaps *en masse* with looping)
+    + Use `mutate()` with `ifelse()` to fix these (perhaps *en masse* with looping)
 * Are there character data (e.g. ZIP codes with leading zeroes) being incorrectly represented as numeric or vice versa?
-    + Modify `col_types` argument, or use `mutate` and `as.numeric`
+    + Modify `col_types=` argument, or use `mutate()` and `as.numeric()`
 
 
 "Pretty-Messy" Data
@@ -327,12 +345,29 @@ incremental: true
 
 Billboard is Just "Ugly-Messy"
 ====================================================================================
+incremental: false
+
+
+| year |       artist        |          track          | time | date.entered | wk1 | wk2 | wk3 | wk4 | wk5 |
+|:----:|:-------------------:|:-----------------------:|:----:|:------------:|:---:|:---:|:---:|:---:|:---:|
+| 2000 |        2 Pac        | Baby Don't Cry (Keep... | 4:22 |  2000-02-26  | 87  | 82  | 72  | 77  | 87  |
+| 2000 |       2Ge+her       | The Hardest Part Of ... | 3:15 |  2000-09-02  | 91  | 87  | 92  | NA  | NA  |
+| 2000 |    3 Doors Down     |       Kryptonite        | 3:53 |  2000-04-08  | 81  | 70  | 68  | 67  | 66  |
+| 2000 |    3 Doors Down     |          Loser          | 4:24 |  2000-10-21  | 76  | 76  | 72  | 69  | 67  |
+| 2000 |      504 Boyz       |      Wobble Wobble      | 3:35 |  2000-04-15  | 57  | 34  | 25  | 17  | 17  |
+| 2000 |        98^0         | Give Me Just One Nig... | 3:24 |  2000-08-19  | 51  | 39  | 34  | 26  | 26  |
+| 2000 |       A*Teens       |      Dancing Queen      | 3:44 |  2000-07-08  | 97  | 97  | 96  | 95  | 100 |
+| 2000 |       Aaliyah       |      I Don't Wanna      | 4:15 |  2000-01-29  | 84  | 62  | 51  | 41  | 38  |
+| 2000 |       Aaliyah       |        Try Again        | 4:03 |  2000-03-18  | 59  | 53  | 38  | 28  | 21  |
+| 2000 |   Adams, Yolanda    |      Open My Heart      | 5:30 |  2000-08-26  | 76  | 76  | 74  | 69  | 68  |
+| 2000 |    Adkins, Trace    |          More           | 3:05 |  2000-04-29  | 84  | 84  | 75  | 73  | 73  |
+| 2000 | Aguilera, Christina | Come On Over Baby (A... | 3:38 |  2000-08-05  | 57  | 47  | 45  | 29  | 23  |
+
+Week columns continue up to `wk76`!
+
+Billboard is Just "Ugly-Messy"
+====================================================================================
 incremental: true
-
-
-```r
-View(billboard_2000_raw)
-```
 
 * What are the **observations** in the data?
     + Week since entering the Billboard Hot 100 per song
@@ -378,6 +413,7 @@ incremental: true
 
 Let's use `gather()` to get the week and rank variables out of their current layout into two columns (big increase in rows, big drop in columns):
 
+
 ```r
 library(dplyr)
 library(tidyr)
@@ -389,6 +425,7 @@ dim(billboard_2000)
 ```
 [1] 24092     7
 ```
+
 `starts_with()` and other helper functions from `dplyr::select()` work here too. Could instead use: `gather(key = week, value = rank, wk1:wk76)` to pull out these contiguous columns.
 
 
@@ -434,6 +471,7 @@ incremental: true
 
 The track length column isn't analytically friendly. Let's convert it to a number rather than the character (minutes:seconds) format:
 
+
 ```r
 billboard_2000 <- billboard_2000 %>%
     separate(time, into = c("minutes", "seconds"),
@@ -466,7 +504,7 @@ summary(billboard_2000$week)
    1.00    5.00   10.00   11.47   16.00   65.00 
 ```
 
-For more sophisticated conversion or pattern checking, you'll need to use string parsing (to be covered later).
+For more sophisticated conversion or pattern checking, you'll need to use string parsing (to be covered in week 8).
 
 
 spread() Motivation
@@ -485,7 +523,7 @@ Example of data that we probably want to spread (unless we want to plot each sta
 | B     | Median    |     2 |
 | B     | SD        |  1.33 |
 
-A common cue to use `spread` is you have measurements of different quantities in the same column. 
+A common cue to use `spread()` is you have measurements of different quantities in the same column. 
 
 
 spread() Illustration: Before
@@ -587,15 +625,15 @@ billboard_2000 %>%
 
 ```
 # A tibble: 7 x 3
-               artist                   track weeks_at_1
-                <chr>                   <chr>      <int>
-1     Destiny's Child Independent Women Pa...         11
-2             Santana            Maria, Maria         10
+  artist              track                   weeks_at_1
+  <chr>               <chr>                        <int>
+1 Destiny's Child     Independent Women Pa...         11
+2 Santana             Maria, Maria                    10
 3 Aguilera, Christina Come On Over Baby (A...          4
-4             Madonna                   Music          4
-5       Savage Garden      I Knew I Loved You          4
-6     Destiny's Child             Say My Name          3
-7   Iglesias, Enrique             Be With You          3
+4 Madonna             Music                            4
+5 Savage Garden       I Knew I Loved You               4
+6 Destiny's Child     Say My Name                      3
+7 Iglesias, Enrique   Be With You                      3
 ```
 
 Dates and Times
@@ -619,12 +657,12 @@ billboard_2000 %>% arrange(artist, track, week) %>%
 
 ```
 # A tibble: 4 x 5
-  artist date.entered  week       date  rank
-   <chr>       <date> <dbl>     <date> <int>
-1  2 Pac   2000-02-26     1 2000-02-26    87
-2  2 Pac   2000-02-26     2 2000-03-04    82
-3  2 Pac   2000-02-26     3 2000-03-11    72
-4  2 Pac   2000-02-26     4 2000-03-18    77
+  artist date.entered  week date        rank
+  <chr>  <date>       <dbl> <date>     <int>
+1 2 Pac  2000-02-26      1. 2000-02-26    87
+2 2 Pac  2000-02-26      2. 2000-03-04    82
+3 2 Pac  2000-02-26      3. 2000-03-11    72
+4 2 Pac  2000-02-26      4. 2000-03-18    77
 ```
 
 
@@ -651,13 +689,13 @@ Calendar Time Plot!
 
 <img src="CSSS508_week5_data_import_export_cleaning-figure/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" width="1100px" height="500px" />
 
-We see some of the entry dates are before 2000 --- presumably songs still charting during 2000 that came out earlier. 
+We see some of the entry dates are before 2000---presumably songs still charting during 2000 that came out earlier. 
 
 
 Dates and Times
 ====================================================================================
 
-To practice working with finer-grained temporal information, let's look at one day of Seattle Police response data Rebecca Ferrell obtained from [data.seattle.gov](http://data.seattle.gov):
+To practice working with finer-grained temporal information, let's look at one day of Seattle Police response data obtained from [data.seattle.gov](http://data.seattle.gov):
 
 
 ```r
@@ -669,8 +707,38 @@ The URL for the above:
 https://raw.githubusercontent.com/clanfear/CSSS508/master/
 Seattle_Police_Department_911_Incident_Response.csv
 ```
-**Your turn**: inspect `spd_raw`. Do the types of all the variables make sense?
 
+SPD Data
+====================================================================================
+
+
+```r
+glimpse(spd_raw)
+```
+
+```
+Observations: 706
+Variables: 19
+$ `CAD CDW ID`                  <int> 1701856, 1701857, 1701853, 17018...
+$ `CAD Event Number`            <dbl> 16000104006, 16000103970, 160001...
+$ `General Offense Number`      <int> 2016104006, 2016103970, 20161041...
+$ `Event Clearance Code`        <chr> "063", "064", "161", "245", "202...
+$ `Event Clearance Description` <chr> "THEFT - CAR PROWL", "SHOPLIFT",...
+$ `Event Clearance SubGroup`    <chr> "CAR PROWL", "THEFT", "TRESPASS"...
+$ `Event Clearance Group`       <chr> "CAR PROWL", "SHOPLIFTING", "TRE...
+$ `Event Clearance Date`        <chr> "03/25/2016 11:58:30 PM", "03/25...
+$ `Hundred Block Location`      <chr> "S KING ST / 8 AV S", "92XX BLOC...
+$ `District/Sector`             <chr> "K", "S", "D", "M", "M", "B", "B...
+$ `Zone/Beat`                   <chr> "K3", "S3", "D2", "M1", "M3", "B...
+$ `Census Tract`                <dbl> 9100.102, 11800.602, 7200.106, 8...
+$ Longitude                     <dbl> -122.3225, -122.2680, -122.3420,...
+$ Latitude                      <dbl> 47.59835, 47.51985, 47.61422, 47...
+$ `Incident Location`           <chr> "(47.598347, -122.32245)", "(47....
+$ `Initial Type Description`    <chr> "THEFT (DOES NOT INCLUDE SHOPLIF...
+$ `Initial Type Subgroup`       <chr> "OTHER PROPERTY", "SHOPLIFTING",...
+$ `Initial Type Group`          <chr> "THEFT", "THEFT", "TRESPASS", "C...
+$ `At Scene Time`               <chr> "03/25/2016 10:25:51 PM", "03/25...
+```
 
 lubridate
 ====================================================================================
@@ -751,7 +819,7 @@ time_spd_plot <- ggplot(spd_times, aes(x = hour)) +
 Histogram of SPD Event Clearances, March 25
 ====================================================================================
 
-<img src="CSSS508_week5_data_import_export_cleaning-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="1100px" height="600px" />
+<img src="CSSS508_week5_data_import_export_cleaning-figure/unnamed-chunk-31-1.png" title="plot of chunk unnamed-chunk-31" alt="plot of chunk unnamed-chunk-31" width="1100px" height="600px" />
 
 
 Managing Factor Variables
@@ -769,6 +837,15 @@ Factors are such a common (and fussy) vector type in R that we need to get to kn
     + Often want to plot in interpretable/aesthetically pleasing order, e.g. from highest to lowest values -- not **"Alabama first"**
 * Lowest level of a factor is treated as a reference for regression, and the other levels get their own coefficients
     + Reference levels are by default alphabetical, which doesn't necessarily coincide with the easiest to understand baseline category
+
+forcats
+====================================================================================
+
+The `tidyverse` family of packages includes a package called `forcats` (an anagram of "factors") that is... for cat(egorical)s.
+
+This package replaces the functionally of the base factor functions with somewhat more logical and uniform syntax.
+
+To find more, [look at the `forcats` manual](https://cran.r-project.org/web/packages/forcats/forcats.pdf).
 
 
 SPD Incident Types: Character to Factor
@@ -824,22 +901,23 @@ time_spd_plot_2 <- ggplot(spd_times_2, aes(x = hour)) +
 SPD Incident Types: Better ordered plot
 ====================================================================================
 
-<img src="CSSS508_week5_data_import_export_cleaning-figure/unnamed-chunk-33-1.png" title="plot of chunk unnamed-chunk-33" alt="plot of chunk unnamed-chunk-33" width="1100px" height="600px" />
+<img src="CSSS508_week5_data_import_export_cleaning-figure/unnamed-chunk-34-1.png" title="plot of chunk unnamed-chunk-34" alt="plot of chunk unnamed-chunk-34" width="1100px" height="600px" />
 
 Other Ways to Reorder
 ====================================================================================
 
-* Another way is through the `reorder()` function:
+Another way to reorder a factor is through the `fct_reorder()` function:
 
 ```
-reorder(factor_vector,
+fct_reorder(factor_vector,
         quantity_to_order_by,
         function_to_apply_to_quantities_by_factor)
 ```
 
 This is especially useful for making legends go from highest to lowest value visually using `max()` as your function, or making axis labels go from lowest to highest value using `mean()`. 
-* Use `relevel()` and use the `ref` argument to change the reference category
-    + Good when fitting regressions where you don't care about the overall ordering, just which level is the reference
+
+Use `fct_relevel()` and use the `ref` argument to change the reference category
+ * Good when fitting regressions where you don't care about the overall ordering, just which level is the reference
 
 
 Reorder Legend Example: Jay-Z
@@ -859,7 +937,7 @@ jayz_bad_legend <- ggplot(jayz, aes(x = week, y = rank, group = track, color = t
 
 Jay-Z with Bad Legend Order
 ====================================================================================
-<img src="CSSS508_week5_data_import_export_cleaning-figure/unnamed-chunk-35-1.png" title="plot of chunk unnamed-chunk-35" alt="plot of chunk unnamed-chunk-35" width="1100px" height="600px" />
+<img src="CSSS508_week5_data_import_export_cleaning-figure/unnamed-chunk-36-1.png" title="plot of chunk unnamed-chunk-36" alt="plot of chunk unnamed-chunk-36" width="1100px" height="600px" />
 
 
 Better Ordering for Jay-Z
@@ -867,7 +945,7 @@ Better Ordering for Jay-Z
 
 
 ```r
-jayz <- jayz %>% mutate(track = fct_reorder(track, rank, min)) # same as reorder()
+jayz <- jayz %>% mutate(track = fct_reorder(track, rank, min))
 
 jayz_good_legend <- ggplot(jayz, aes(x = week, y = rank, group = track, color = track)) +
     geom_line() + theme_bw() +
@@ -879,14 +957,14 @@ jayz_good_legend <- ggplot(jayz, aes(x = week, y = rank, group = track, color = 
 
 Jay-Z with Good Legend Order
 ====================================================================================
-<img src="CSSS508_week5_data_import_export_cleaning-figure/unnamed-chunk-37-1.png" title="plot of chunk unnamed-chunk-37" alt="plot of chunk unnamed-chunk-37" width="1100px" height="600px" />
+<img src="CSSS508_week5_data_import_export_cleaning-figure/unnamed-chunk-38-1.png" title="plot of chunk unnamed-chunk-38" alt="plot of chunk unnamed-chunk-38" width="1100px" height="600px" />
 
 
 Dropping Unused Levels
 ====================================================================================
 incremental: true
 
-After subsetting you can end up with fewer *realized* levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your whole data using `droplevels()`.
+After subsetting you can end up with fewer *realized* levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your *whole data* using `droplevels()`.
  
 
 ```r
@@ -909,25 +987,15 @@ levels(jayz_biggest$track)
 [1] "I Just Wanna Love U ..." "Big Pimpin'"            
 ```
 
-
-forcats
-====================================================================================
-
-The `tidyverse` family of packages includes a relatively new package called `forcats` (an anagram of "factors") that is... for cat(egorical)s.
-
-This package replaces the functionally of the base factor functions used above with somewhat more logical and uniform syntax.
-
-I've used them above and showed the `base` equivalents. To find more, [look at the `forcats` manual](https://cran.r-project.org/web/packages/forcats/forcats.pdf).
-
-
-Homework: Be a data janitor!
+Homework: Be a data custodian!
 ====================================================================================
 type: section
 
-Vote tallies in King County from the 2012 general election are in a 60 MB tab-delimited text file downloaded from the [WA Secretary of State](https://wei.sos.wa.gov/agency/osos/en/press_and_research/PreviousElections/2012/General-Election/Data/Documents/Forms/AllItems.aspx?RootFolder=%2Fagency%2Fosos%2Fen%2Fpress_and_research%2FPreviousElections%2F2012%2FGeneral-Election%2FData%2FDocuments%2FPrecinct_Results&FolderCTID=0x0120008B9C603856A5C84E89934BDF6A72C2ED&View={DF1C73C5-333F-4F68-8713-AD3007138C66}). They can be found on the course website.
+Vote tallies in King County from the 2016 general election are in a 60 MB comma-delimited text file downloaded from [King County](https://www.kingcounty.gov/depts/elections/results/2016/201611/reports.aspx). They can be found on the course website.
 
-The data have no documentation, so show your detective work to answer questions about the data and clean it up in an R Markdown template on the course website.
+The data have no documentation (aside from what I provide), so show your detective work to answer questions about the data and clean them up in the R Markdown template on the course website. Use ⌘-Click on Mac or Right-Click -> Save link as... on Windows to download the .Rmd to the folder you plan to work from, then open it in RStudio.
 
-## DUE: 11:59 PM, November 7th
+This homework is broken up into two parts to be completed in each of the next two weeks. It can be daunting, so do not wait until Monday or Tuesday to start. I recommend reading instructions closely, working with others, and using the mailing list.
 
-You have **two weeks** to do this assignment, *for good reasons*. Start as soon as possible. 
+## PART 1 DUE: 11:59 PM, May 1st
+## PART 2 DUE: 11:59 PM, May 8th
