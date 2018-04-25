@@ -839,7 +839,7 @@ You can find out what it is using the function <code>getwd()</code>. On my compu
 <ul>
 <li>Windows users: If you copy a path from Explorer, make sure to change back slashes (<code>\</code>) to forward slashes (<code>/</code>) for the filepaths</li>
 <li>If you need to set a working directly, put <code>setwd()</code> at the very beginning of your <code>.R</code> or <code>.Rmd</code> code so that someone using a different computer knows they need to modify it</li>
-<li>Instead of setting a working directory, it is usually better to use <strong>RStudio projects</strong> or keep all files your RMarkdown file refers to in the same folder or subfolders.</li>
+<li>Instead of setting a working directory, it is usually better to use <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">RStudio projects</a> or keep all files your RMarkdown file refers to in the same folder or subfolders.</li>
 </ul>
 
 </div>
@@ -854,7 +854,12 @@ You can find out what it is using the function <code>getwd()</code>. On my compu
 <li>Sets your working directory to be the project directory</li>
 <li>Can remember objects in your workspace, command history, etc. next time you re-open that project</li>
 <li>Reduce risk of intermingling different work using the same variable names (e.g. <code>n</code>) by using separate RStudio instances for each project</li>
-<li>Easy to integrate with version control systems (e.g. <code>git</code>)</li>
+<li>Easy to integrate with version control systems (e.g. <code>git</code>)
+
+<ul>
+<li>I usually make each RStudio project its own GitHub repository</li>
+<li>If you&#39;re interested in advanced project management, ask me after class or check out <a href="https://clanfear.github.io/birthtiming/inst/presentation/presentation.html#/">my presentation on reproducible research with rrtools</a>.</li>
+</ul></li>
 </ul>
 
 </div>
@@ -927,10 +932,12 @@ ggsave(&quot;graphics/cars_plot.png&quot;, plot = a_plot)
 <div class="slideContent" >
 <p>R has a variety of built-in functions for importing data stored in text files, like <code>read.table()</code> and <code>read.csv()</code>. I recommend using the versions in the <code>readr</code> package instead: <code>read_csv()</code>, <code>read_tsv()</code>, and <code>read_delim()</code>:</p>
 
+<p><code>readr</code> function features:</p>
+
 <ul>
 <li>Faster!</li>
 <li>Better defaults (e.g. doesn&#39;t automatically convert character data to factors)</li>
-<li>A little smarter about dates and times</li>
+<li>A <em>little</em> smarter about dates and times</li>
 <li>Handy function <code>problems()</code> you can run if there are errors</li>
 <li>Loading bars for large files</li>
 </ul>
@@ -963,8 +970,7 @@ vignettes/billboard.csv
 <div class="slideContent" >
 <p>Look at the data types for the last few columns:</p>
 
-<pre class="fragment"><code class="r"># str(billboard_2000_raw)
-str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
+<pre class="fragment"><code class="r">str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 </code></pre>
 
 <pre class="fragment"><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   317 obs. of  17 variables:
@@ -993,11 +999,10 @@ str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 <section data-transition="linear" data-transition-speed="default">
 <h3>What Went Wrong?</h3>
 <div class="slideContent" >
-<p><code>readr</code> uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character). There are not many songs in the data that charted for 60+ weeks &mdash; and none in the first 1000 that charted for 66+ weeks! </p>
+<p><code>readr</code> uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character). There are not many songs in the data that charted for 60+ weeks&mdash;and none in the first 1000 that charted for 66+ weeks! 
+SInce it encountered no values, <code>readr</code> assumed the <code>wk66</code>-<code>wk76</code> columns were <em>character</em> to be sure nothing would be lost. Use the <code>col_types</code> argument to fix this:</p>
 
-<p class="fragment">To be safe, <code>readr</code> assumed the <code>wk66</code>-<code>wk76</code> columns were <em>character</em>. Use the <code>col_types</code> argument to fix this:</p>
-
-<pre class="fragment"><code class="r"># paste is a concatenation function
+<pre class="fragment"><code class="r"># paste is a string concatenation function
 # i = integer, c = character, D = date
 # rep(&quot;i&quot;, 76) does the 76 weeks of integer ranks
 bb_types &lt;- paste(c(&quot;icccD&quot;, rep(&quot;i&quot;, 76)), collapse=&quot;&quot;)
@@ -1018,7 +1023,7 @@ billboard_2000_raw &lt;- read_csv(file = &quot;https://raw.githubusercontent.com
 
 <p>Or you could use <code>read.csv()</code> in the <code>foreign</code> package. This is a base R alternative that is slower and a bit dumber. </p>
 
-<p>With <code>read.csv</code> you will need to specify if the data have column names and you&#39;ll want to use <code>stringsAsFactors=FALSE</code> to prevent character columns from becoming factors. <code>read_csv()</code> does this for us!</p>
+<p>With <code>read.csv()</code> you will need to specify if the data have column names (<code>header=TRUE</code>) and you&#39;ll want to use <code>stringsAsFactors=FALSE</code> to prevent character columns from becoming factors. <code>read_csv()</code> does this for us!</p>
 
 </div>
 
@@ -1043,7 +1048,7 @@ billboard_2000_raw &lt;- read_csv(file = &quot;https://raw.githubusercontent.com
 <pre><code class="r">write_csv(billboard_2000_raw, path = &quot;billboard_data.csv&quot;)
 </code></pre>
 
-<p>This saved the data we pulled off the web in a file called &ldquo;billboard_data.csv&rdquo; in my working directory.</p>
+<p>This saved the data we pulled off the web in a file called <code>billboard_data.csv</code> in my working directory.</p>
 
 </div>
 
@@ -1118,6 +1123,10 @@ billboard_2000_raw &lt;- read_csv(file = &quot;https://raw.githubusercontent.com
 <p>For less common formats, Google it. I&#39;ve yet to encounter a data format without an 
 R package to handle it (or at least a clever hack).</p>
 
+<p>If you encounter a mysterious file extension (e.g. <code>.dat</code>), try opening it with
+a good text editor first (e.g. Notepad++); there&#39;s a good chance it is actually raw text
+with a delimiter or fixed format that R can handle!</p>
+
 </div>
 
 </section>
@@ -1131,6 +1140,8 @@ R package to handle it (or at least a clever hack).</p>
 <section data-transition="linear" data-transition-speed="default">
 <h3>Initial Spot Checks</h3>
 <div class="slideContent" >
+<p>First things to check after loading new data:</p>
+
 <ul>
 <li class="fragment">Did the last rows/columns from the original file make it in?
 
@@ -1213,6 +1224,67 @@ R package to handle it (or at least a clever hack).</p>
 <li class="fragment">Count: <strong>spread over two columns!</strong></li>
 </ul></li>
 </ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Tidy Version</h3>
+<div class="slideContent" >
+<table><thead>
+<tr>
+<th><strong>Program</strong></th>
+<th align="right"><strong>Gender</strong></th>
+<th align="right"><strong>Count</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Evans School</td>
+<td align="right">Female</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>Evans School</td>
+<td align="right">Male</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td>Arts &amp; Sciences</td>
+<td align="right">Female</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Arts &amp; Sciences</td>
+<td align="right">Male</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td>Public Health</td>
+<td align="right">Female</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Public Health</td>
+<td align="right">Male</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>Other</td>
+<td align="right">Female</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>Other</td>
+<td align="right">Male</td>
+<td align="right">1</td>
+</tr>
+</tbody></table>
+
+<p>Each variable is a column.</p>
+
+<p>Each observation is a row.</p>
+
+<p>Ready to throw into <code>ggplot()</code>!</p>
 
 </div>
 
@@ -1438,9 +1510,14 @@ R package to handle it (or at least a clever hack).</p>
 <p>The <code>tidyr</code> package provides functions to tidy up data, similar to <code>reshape</code> in Stata or <code>varstocases</code> in SPSS. Key functions:</p>
 
 <ul>
-<li class="fragment"><code>gather()</code>: takes a set of columns and rotates them down to make two new columns: one storing the original column names (<code>key</code>), and one with the values in those columns (<code>value</code>)</li>
-<li class="fragment"><code>spread()</code>: inverts <code>gather()</code> by taking two columns and rotating them up</li>
-<li class="fragment"><code>separate()</code>: pulls apart one column into multiple (common with freshly <code>gather</code>ed data where values had been embedded in column names)
+<li class="fragment"><code>gather()</code>: takes a set of columns and rotates them down to make two new columns (which you can name yourself): 
+
+<ul>
+<li class="fragment">A <code>key</code> that stores the original column names</li>
+<li class="fragment">A <code>value</code> with the values in those original columns</li>
+</ul></li>
+<li class="fragment"><code>spread()</code>: inverts <code>gather()</code> by taking two columns and rotating them up into multiple columns</li>
+<li class="fragment"><code>separate()</code>: pulls apart one column into multiple columns (common with freshly <code>gather</code>ed data where values had been embedded in column names)
 
 <ul>
 <li class="fragment"><code>extract_numeric()</code> does a simple version of this for the common case when you just want grab the number part</li>
@@ -1481,9 +1558,7 @@ dim(billboard_2000)
    1.00   26.00   51.00   51.05   76.00  100.00   18785 
 </code></pre>
 
-<ul>
-<li class="fragment">We don&#39;t want to keep the 18785 rows with missing ranks (i.e. observations for weeks since entering the Hot 100 that the song was no longer on the Hot 100).</li>
-</ul>
+<p>An improvement, but we don&#39;t want to keep the 18785 rows with missing ranks (i.e. observations for weeks since entering the Hot 100 that the song was no longer on the Hot 100).</p>
 
 </div>
 
@@ -1491,7 +1566,7 @@ dim(billboard_2000)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Gathering Better: na.rm</h3>
 <div class="slideContent" >
-<p>The argument <code>na.rm</code> to <code>gather()</code> will remove rows with missing ranks.</p>
+<p>The argument <code>na.rm = TRUE</code> to <code>gather()</code> will remove rows with missing ranks.</p>
 
 <pre class="fragment"><code class="r">billboard_2000 &lt;- billboard_2000_raw %&gt;%
     gather(key = week, value = rank, starts_with(&quot;wk&quot;),
@@ -1591,7 +1666,7 @@ summary(billboard_2000$week)
 </tr>
 </tbody></table>
 
-<p>A common cue to use <code>spread()</code> is you have measurements of different quantities in the same column. </p>
+<p>A common cue to use <code>spread()</code> is having measurements of different quantities in the same column. </p>
 
 </div>
 
@@ -1839,6 +1914,27 @@ str(spd$`Event Clearance Date`)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
+<h3>An Aside on Time</h3>
+<div class="slideContent" >
+<p>Time data are a bit weird.</p>
+
+<p>R uses two primary formats for storing data on times and dates:</p>
+
+<ul>
+<li><code>POSIXct</code>: Numeric vector of seconds since the beginning of 1970.</li>
+<li><code>POSIXlt</code>: Named list of vectors containing lots of date/time information.</li>
+</ul>
+
+<p>We usually work with <code>POSIXct</code>.</p>
+
+<p><code>lubridate</code> gives us many convenience functions for dealing with date/time data.</p>
+
+<p>It is often easiest to just convert time to standard numeric values and work with it that way, however, particularly if it will be used as a variable in a statistical model.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
 <h3>Useful Date&#x2F;Time Functions</h3>
 <div class="slideContent" >
 <pre class="fragment"><code class="r">demo_dts &lt;- spd$`Event Clearance Date`[1:2]
@@ -1904,7 +2000,7 @@ time_spd_plot &lt;- ggplot(spd_times, aes(x = hour)) +
 <li class="fragment">Order of factor levels controls order of categories in tables, on axes, in legends, and in facets in <code>ggplot2</code>
 
 <ul>
-<li class="fragment">Often want to plot in interpretable/aesthetically pleasing order, e.g. from highest to lowest values &ndash; not <strong>&ldquo;Alabama first&rdquo;</strong></li>
+<li class="fragment">Often want to plot in interpretable/aesthetically pleasing order, e.g. from highest to lowest values&mdash;not <strong>&ldquo;Alabama first&rdquo;</strong></li>
 </ul></li>
 <li class="fragment">Lowest level of a factor is treated as a reference for regression, and the other levels get their own coefficients
 
@@ -1919,9 +2015,9 @@ time_spd_plot &lt;- ggplot(spd_times, aes(x = hour)) +
 <section data-transition="linear" data-transition-speed="default">
 <h3>forcats</h3>
 <div class="slideContent" >
-<p>The <code>tidyverse</code> family of packages includes a package called <code>forcats</code> (an anagram of &ldquo;factors&rdquo;) that is&hellip; for cat(egorical)s.</p>
+<p>The <code>tidyverse</code> family of packages includes the package <code>forcats</code> (an anagram of &ldquo;factors&rdquo;) that is &ldquo;for cat(egorical)s&rdquo;.</p>
 
-<p>This package replaces the functionally of the base factor functions with somewhat more logical and uniform syntax.</p>
+<p>This package supercedes the functionality of the base factor functions with somewhat more logical and uniform syntax.</p>
 
 <p>To find more, <a href="https://cran.r-project.org/web/packages/forcats/forcats.pdf">look at the <code>forcats</code> manual</a>.</p>
 
@@ -1994,7 +2090,7 @@ time_spd_plot_2 &lt;- ggplot(spd_times_2, aes(x = hour)) +
 
 <p>This is especially useful for making legends go from highest to lowest value visually using <code>max()</code> as your function, or making axis labels go from lowest to highest value using <code>mean()</code>. </p>
 
-<p>Use <code>fct_relevel()</code> and use the <code>ref</code> argument to change the reference category</p>
+<p>Use <code>fct_relevel()</code> and use the <code>ref=</code> argument to change the reference category</p>
 
 <ul>
 <li>Good when fitting regressions where you don&#39;t care about the overall ordering, just which level is the reference</li>
@@ -2053,7 +2149,7 @@ jayz_good_legend &lt;- ggplot(jayz, aes(x = week, y = rank, group = track, color
 <section data-transition="linear" data-transition-speed="default">
 <h3>Dropping Unused Levels</h3>
 <div class="slideContent" >
-<p>After subsetting you can end up with fewer <em>realized</em> levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your <em>whole data</em> using <code>droplevels()</code>.</p>
+<p>After subsetting you can end up with fewer <em>realized</em> levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your <em>entire dataframe</em> using <code>droplevels()</code>.</p>
 
 <pre class="fragment"><code class="r">jayz_biggest &lt;- jayz %&gt;% filter(track %in% c(&quot;I Just Wanna Love U ...&quot;, &quot;Big Pimpin&#39;&quot;))
 levels(jayz_biggest$track)

@@ -57,7 +57,7 @@ Working Directory Suggestions:
 
 * Windows users: If you copy a path from Explorer, make sure to change back slashes (`\`) to forward slashes (`/`) for the filepaths
 * If you need to set a working directly, put `setwd()` at the very beginning of your `.R` or `.Rmd` code so that someone using a different computer knows they need to modify it
-* Instead of setting a working directory, it is usually better to use **RStudio projects** or keep all files your RMarkdown file refers to in the same folder or subfolders.
+* Instead of setting a working directory, it is usually better to use [RStudio projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects) or keep all files your RMarkdown file refers to in the same folder or subfolders.
 
 
 Projects in RStudio
@@ -69,6 +69,8 @@ A better way to deal with working directories: RStudio's **project** feature in 
 * Can remember objects in your workspace, command history, etc. next time you re-open that project
 * Reduce risk of intermingling different work using the same variable names (e.g. `n`) by using separate RStudio instances for each project
 * Easy to integrate with version control systems (e.g. `git`)
+   * I usually make each RStudio project its own GitHub repository
+   * If you're interested in advanced project management, ask me after class or check out [my presentation on reproducible research with rrtools](https://clanfear.github.io/birthtiming/inst/presentation/presentation.html#/).
 
 
 Relative Paths
@@ -130,9 +132,11 @@ readr
 
 R has a variety of built-in functions for importing data stored in text files, like `read.table()` and `read.csv()`. I recommend using the versions in the `readr` package instead: `read_csv()`, `read_tsv()`, and `read_delim()`:
 
+`readr` function features:
+
 * Faster!
 * Better defaults (e.g. doesn't automatically convert character data to factors)
-* A little smarter about dates and times
+* A *little* smarter about dates and times
 * Handy function `problems()` you can run if there are errors
 * Loading bars for large files
 
@@ -166,7 +170,6 @@ Look at the data types for the last few columns:
 
 
 ```r
-# str(billboard_2000_raw)
 str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 ```
 
@@ -196,13 +199,12 @@ What Went Wrong?
 ====================================================================================
 incremental: true
 
-`readr` uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character). There are not many songs in the data that charted for 60+ weeks --- and none in the first 1000 that charted for 66+ weeks! 
-
-To be safe, `readr` assumed the `wk66`-`wk76` columns were *character*. Use the `col_types` argument to fix this:
+`readr` uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character). There are not many songs in the data that charted for 60+ weeks---and none in the first 1000 that charted for 66+ weeks! 
+SInce it encountered no values, `readr` assumed the `wk66`-`wk76` columns were *character* to be sure nothing would be lost. Use the `col_types` argument to fix this:
 
 
 ```r
-# paste is a concatenation function
+# paste is a string concatenation function
 # i = integer, c = character, D = date
 # rep("i", 76) does the 76 weeks of integer ranks
 bb_types <- paste(c("icccD", rep("i", 76)), collapse="")
@@ -221,7 +223,7 @@ read_csv(file, guess_max=5000) # Defaults is 1000
 
 Or you could use `read.csv()` in the `foreign` package. This is a base R alternative that is slower and a bit dumber. 
 
-With `read.csv` you will need to specify if the data have column names and you'll want to use `stringsAsFactors=FALSE` to prevent character columns from becoming factors. `read_csv()` does this for us!
+With `read.csv()` you will need to specify if the data have column names (`header=TRUE`) and you'll want to use `stringsAsFactors=FALSE` to prevent character columns from becoming factors. `read_csv()` does this for us!
 
 
 Excel Files
@@ -244,7 +246,7 @@ Getting data out of R into a delimited file is very similar to getting it into R
 write_csv(billboard_2000_raw, path = "billboard_data.csv")
 ```
 
-This saved the data we pulled off the web in a file called "billboard_data.csv" in my working directory.
+This saved the data we pulled off the web in a file called `billboard_data.csv` in my working directory.
 
 Saving in R Formats
 ====================================================================================
@@ -300,6 +302,10 @@ Working with **Stata** or **SPSS** users? You can use a package to bring in thei
 For less common formats, Google it. I've yet to encounter a data format without an 
 R package to handle it (or at least a clever hack).
 
+If you encounter a mysterious file extension (e.g. `.dat`), try opening it with
+a good text editor first (e.g. Notepad++); there's a good chance it is actually raw text
+with a delimiter or fixed format that R can handle!
+
 
 Cleaning Data
 ====================================================================================
@@ -309,6 +315,8 @@ type: section
 Initial Spot Checks
 ====================================================================================
 incremental: true
+
+First things to check after loading new data:
 
 * Did the last rows/columns from the original file make it in?
     + May need to use different package or manually specify range
@@ -326,12 +334,12 @@ incremental: true
 ====================================================================================
 incremental: true
 
-| **Program**   | **Female** | **Male** |
-|---------------|-------:|-----:|
-| Evans School  |     10 |    6 |
-| Arts & Sciences |    5 |    6 |
-| Public Health |      2 |    3 |
-| Other         |      5 |    1 |
+| **Program**     | **Female** | **Male** |
+|-----------------|-----------:|---------:|
+| Evans School    |     10     |    6    |
+| Arts & Sciences |      5     |    6    |
+| Public Health   |      2     |    3    |
+| Other           |      5     |    1    |
 
 * What is an observation?
     + A group of students from a program of a given gender
@@ -342,6 +350,26 @@ incremental: true
     + Gender: Female, Male -- **in the column headings, not its own column!**
     + Count: **spread over two columns!**
 
+Tidy Version
+====================================================================================
+incremental: false
+
+| **Program**     | **Gender** | **Count** |
+|-----------------|-----------:|---------:|
+| Evans School    |     Female |    10   |
+| Evans School    |     Male   |    6    |
+| Arts & Sciences |     Female |    5    |
+| Arts & Sciences |     Male   |    6    |
+| Public Health   |     Female |    2    |
+| Public Health   |     Male   |    3    |
+| Other           |     Female |    5    |
+| Other           |     Male   |    1    |
+
+Each variable is a column.
+
+Each observation is a row.
+
+Ready to throw into `ggplot()`!
 
 Billboard is Just "Ugly-Messy"
 ====================================================================================
@@ -401,10 +429,12 @@ incremental: true
 
 The `tidyr` package provides functions to tidy up data, similar to `reshape` in Stata or `varstocases` in SPSS. Key functions:
 
-* `gather()`: takes a set of columns and rotates them down to make two new columns: one storing the original column names (`key`), and one with the values in those columns (`value`)
-* `spread()`: inverts `gather()` by taking two columns and rotating them up
-* `separate()`: pulls apart one column into multiple (common with freshly `gather`ed data where values had been embedded in column names)
-    + `extract_numeric()` does a simple version of this for the common case when you just want grab the number part
+* `gather()`: takes a set of columns and rotates them down to make two new columns (which you can name yourself): 
+    * A `key` that stores the original column names
+    * A `value` with the values in those original columns
+* `spread()`: inverts `gather()` by taking two columns and rotating them up into multiple columns
+* `separate()`: pulls apart one column into multiple columns (common with freshly `gather`ed data where values had been embedded in column names)
+    * `extract_numeric()` does a simple version of this for the common case when you just want grab the number part
 * `unite()`: inverts `separate()` by gluing together multiple columns into one character column (less common)
 
 gather()
@@ -443,14 +473,14 @@ summary(billboard_2000$rank)
    1.00   26.00   51.00   51.05   76.00  100.00   18785 
 ```
 
-* We don't want to keep the 18785 rows with missing ranks (i.e. observations for weeks since entering the Hot 100 that the song was no longer on the Hot 100).
+An improvement, but we don't want to keep the 18785 rows with missing ranks (i.e. observations for weeks since entering the Hot 100 that the song was no longer on the Hot 100).
 
 
 Gathering Better: na.rm
 ====================================================================================
 incremental: true
 
-The argument `na.rm` to `gather()` will remove rows with missing ranks.
+The argument `na.rm = TRUE` to `gather()` will remove rows with missing ranks.
 
 ```r
 billboard_2000 <- billboard_2000_raw %>%
@@ -523,7 +553,7 @@ Example of data that we probably want to spread (unless we want to plot each sta
 | B     | Median    |     2 |
 | B     | SD        |  1.33 |
 
-A common cue to use `spread()` is you have measurements of different quantities in the same column. 
+A common cue to use `spread()` is having measurements of different quantities in the same column. 
 
 
 spread() Illustration: Before
@@ -767,6 +797,21 @@ str(spd$`Event Clearance Date`)
  POSIXct[1:706], format: "2016-03-25 23:58:30" "2016-03-25 23:57:22" ...
 ```
 
+An Aside on Time
+====================================================================================
+
+Time data are a bit weird.
+
+R uses two primary formats for storing data on times and dates:
+
+* `POSIXct`: Numeric vector of seconds since the beginning of 1970.
+* `POSIXlt`: Named list of vectors containing lots of date/time information.
+
+We usually work with `POSIXct`.
+
+`lubridate` gives us many convenience functions for dealing with date/time data.
+
+It is often easiest to just convert time to standard numeric values and work with it that way, however, particularly if it will be used as a variable in a statistical model.
 
 Useful Date/Time Functions
 ====================================================================================
@@ -834,16 +879,16 @@ incremental: true
 Factors are such a common (and fussy) vector type in R that we need to get to know them a little better when preparing data:
 
 * Order of factor levels controls order of categories in tables, on axes, in legends, and in facets in `ggplot2`
-    + Often want to plot in interpretable/aesthetically pleasing order, e.g. from highest to lowest values -- not **"Alabama first"**
+    + Often want to plot in interpretable/aesthetically pleasing order, e.g. from highest to lowest values---not **"Alabama first"**
 * Lowest level of a factor is treated as a reference for regression, and the other levels get their own coefficients
     + Reference levels are by default alphabetical, which doesn't necessarily coincide with the easiest to understand baseline category
 
 forcats
 ====================================================================================
 
-The `tidyverse` family of packages includes a package called `forcats` (an anagram of "factors") that is... for cat(egorical)s.
+The `tidyverse` family of packages includes the package `forcats` (an anagram of "factors") that is "for cat(egorical)s".
 
-This package replaces the functionally of the base factor functions with somewhat more logical and uniform syntax.
+This package supercedes the functionality of the base factor functions with somewhat more logical and uniform syntax.
 
 To find more, [look at the `forcats` manual](https://cran.r-project.org/web/packages/forcats/forcats.pdf).
 
@@ -916,7 +961,7 @@ fct_reorder(factor_vector,
 
 This is especially useful for making legends go from highest to lowest value visually using `max()` as your function, or making axis labels go from lowest to highest value using `mean()`. 
 
-Use `fct_relevel()` and use the `ref` argument to change the reference category
+Use `fct_relevel()` and use the `ref=` argument to change the reference category
  * Good when fitting regressions where you don't care about the overall ordering, just which level is the reference
 
 
@@ -964,7 +1009,7 @@ Dropping Unused Levels
 ====================================================================================
 incremental: true
 
-After subsetting you can end up with fewer *realized* levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your *whole data* using `droplevels()`.
+After subsetting you can end up with fewer *realized* levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your *entire dataframe* using `droplevels()`.
  
 
 ```r
