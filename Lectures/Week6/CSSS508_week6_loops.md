@@ -1,14 +1,23 @@
+<style>
+code {
+   background-color: #efefef;
+   font-weight:bold;
+}
+</style>
+
 CSSS 508, Week 6: Loops
 ====================================================================================
 author: Charles Lanfear
-date: November 1, 2017
+date: May 2, 2018
 transition: linear
-width: 1440
-height: 960
-
+width: 1600
+height: 900
+font-family: helvetica
 
 Programming with Goofus and Gallant
 ====================================================================================
+
+
 
 ![Goofus and Gallant](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops-figure/Goofus.jpg)
 
@@ -41,7 +50,8 @@ incremental: true
 
 
 
-You will learn more Gallant solutions today (and better ones next week):
+You will learn general Gallant solutions today (and better but more specific ones next week):
+
 
 ```r
 swiss_means <- setNames(numeric(ncol(swiss)), colnames(swiss))
@@ -62,15 +72,18 @@ swiss_means
 Don't Repeat Yourself (DRY)!
 ====================================================================================
 
-The **DRY** idea: Computers are much better at doing the same thing over and over again than we are. Writing code to repeat tasks for us prevents Goofus goofs.
+The **DRY** idea: Computers are much better at doing the same thing over and over again than we are.
 
+Writing code to repeat tasks for us prevents the most common human coding mistakes.
+
+It also *substantially* reduces the time and effort involved in processing large volumes of data.
 
 Programming and Looping Agenda 
 ====================================================================================
 
 **Today:**
 
-* `for()` and `while()` loop programming (general methods)
+* `for()` and `while()` **loop** programming (general methods)
 * Vectorization to *avoid* loops
 
 **Next week:**
@@ -98,14 +111,17 @@ incremental: true
 
 `for()` loops are the most general kind of *loop*, found in pretty much every programming language.
 
+"**For** each of these values---in order---do *this*"
+
 Conceptually:
 
 * Given a set of values...
 * You set a variable equal to the first value and enter the loop...
-* In the loop:
+* Inside the loop:
     + Do some set of things (maybe depending on current value)...
     + Update to the next value...
 * ...and keep going until you run out of values.
+
 
 
 
@@ -134,7 +150,7 @@ for(i in 1:10) {
 [1] 100
 ```
 
-
+Note this is 10 separate print commands, which is why each line starts with `[1]`.
 
 
 These Do the Same Thing
@@ -196,13 +212,16 @@ incremental: true
 * Common notation: `i` is the object that holds the current value inside the loop.
     + If loops are nested, you will often see `j` and `k` used for the inner loops.
     + This notation is similar to indexing in mathematical symbols (e.g $\sum\limits_{i=1}^n$)
-    
+
+* Note `i` (and `j`,`k`, etc) are just normal objects. You can use any other names you want.
+    + Ex: When iterating over rows and/or columns, I often use `row` and/or `col`!
 
 Iterate Over Character Vectors
 ====================================================================================
 incremental: true
 
-What we iterate over doesn't have to be numbers `1:n`. You can also iterate over a character vector in R:
+What we iterate over doesn't have to be numbers `1:n` or numbers at all! You can also iterate over a character vector in R:
+
 
 ```r
 some_letters <- letters[4:6]
@@ -246,7 +265,7 @@ for(a in seq_along(some_letters)) {
 ```
 
 ```r
-a
+a # The object `a` contains the number of the last iteration
 ```
 
 ```
@@ -260,7 +279,7 @@ incremental: true
 
 Usually in a `for()` loop, you aren't just printing output, but want to store results from calculations in each iteration somewhere.
 
-To do that, figure out what you want to store, and **pre-allocate** an object of the right size as a placeholder (typically with zeroes or missing values as placeholders).
+To do that, figure out what you want to store, and **pre-allocate** an object of the right size as a placeholder (typically with missing values as placeholders).
 
 Examples of what to pre-allocate based on what you store:
 
@@ -291,6 +310,11 @@ output
  [1]   1   1   5  13  25  41  61  85 113 145
 ```
 
+Steps:
+
+1. Set a number of iterations
+2. Pre-allocated a numeric vector of that length
+3. Ran ten iterations where the output is a mathematical function of iteration number.
 
 setNames()
 ====================================================================================
@@ -343,14 +367,16 @@ Let's simulate some fake data for this using the `rnorm()` function to generate 
 
 
 ```r
-set.seed(98195)
+set.seed(98115)
 # simulating example data:
 n <- 300
 x <- rnorm(n, mean = 5, sd = 4)
 fake_data <- data.frame(x = x, y = -0.5 * x + 0.05 * x^2 + rnorm(n, sd = 1))
 ```
 
-Aside: If you followed the scandal in political science two years about a grad student allegedly faking data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
+This generates a dataframe of 300 observations where `y` is dependent on `x`, with some uncorrelated residual in `y`.
+
+Aside: If you followed the scandal in political science a few years about a grad student allegedly faking data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
 
 
 Plot of fake_data
@@ -358,9 +384,9 @@ Plot of fake_data
 
 
 ```r
-library(ggplot2)
 ggplot(data = fake_data, aes(x = x, y = y)) +
-    geom_point() + ggtitle("Our fake data")
+  geom_point() + 
+  ggtitle("Our fake data")
 ```
 
 <img src="CSSS508_week6_loops-figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="1100px" height="330px" />
@@ -382,7 +408,8 @@ Preallocating a List for the Regression Models
 ====================================================================================
 incremental: true
 
-Let's make a named character vector for the formulas we'll use in `lm()`:
+Let's make a *named character vector* for the formulas we'll use in `lm()`:
+
 
 ```r
 models <- c("intercept only" = "y ~ 1",
@@ -391,18 +418,36 @@ models <- c("intercept only" = "y ~ 1",
             "cubic" = "y ~ x + I(x^2) + I(x^3)")
 ```
 
+Note: The values on the *left* are the *names* of the *elements* on the *right*.
+
 Then pre-allocate a list to store the fitted models:
+
 
 ```r
 fitted_lms <- vector("list", length(models)) # initialize list
 names(fitted_lms) <- names(models) # give entries good names
+fitted_lms # display the pre-allocated (empty) list
+```
+
+```
+$`intercept only`
+NULL
+
+$linear
+NULL
+
+$quadratic
+NULL
+
+$cubic
+NULL
 ```
 
 Fitting the Models in a for() Loop
 ====================================================================================
 incremental: true
 
-Next, we'll loop over the `models` vector and fit each one, storing it in the appropriate slot. We can go from a character string describing a model to a formula using the `formula()` function:
+Next, we'll loop over the `models` vector and fit each one, storing it in the appropriate slot. The `formula()` function converts a character string describing a model to a formula object readable by `lm()`:
 
 ```r
 for(mod in names(models)) {
@@ -410,6 +455,12 @@ for(mod in names(models)) {
 }
 ```
 
+What this does:
+
+**For** each model name (which will be referred to as `mod`)... 
+
+1. Fit a `lm` using the formula associated with that name.
+2. Assign the output to the element of the list with the matching name.
 
 Getting Predictions from Fitted Models
 ====================================================================================
@@ -427,40 +478,94 @@ for(mod in names(models)) {
 }
 ```
 
+What this does:
+
+**For** each named `lm()` model output...
+
+1. Get predicted values from the associated model
+2. Save each of those predicted values as a new column in `predicted_data`.
+  + `mod` will be the new column names!
+  
+  
+Predictions
+====================================================================================
+
+
+```r
+head(predicted_data, 10)
+```
+
+```
+        x      y intercept only  linear quadratic  cubic
+1   6.330  1.521         -0.464 -0.4005    -1.117 -1.106
+2   5.984  1.437         -0.464 -0.4256    -1.155 -1.149
+3   6.501  0.887         -0.464 -0.3881    -1.093 -1.081
+4   3.788 -1.928         -0.464 -0.5851    -1.135 -1.153
+5  -1.064  1.880         -0.464 -0.9375     0.530  0.536
+6   7.371 -0.514         -0.464 -0.3249    -0.932 -0.911
+7   8.393 -1.167         -0.464 -0.2506    -0.651 -0.622
+8   0.886 -0.668         -0.464 -0.7959    -0.408 -0.431
+9  11.062 -1.781         -0.464 -0.0568     0.550  0.571
+10 -0.796  0.771         -0.464 -0.9180     0.379  0.380
+```
 
 Gathering Predictions
 ====================================================================================
 
-Use `tidyr::gather` to make the predictions tidy, and set the levels of the `Model` variable.
+We can use `tidyr::gather` to make the predictions tidy, and set the levels of the `Model` variable.
 
 
 ```r
 library(tidyr)
-library(dplyr)
 tidy_predicted_data <- predicted_data %>%
     gather(Model, Prediction, -x, -y) %>%
     mutate(Model = factor(Model, levels = names(models)))
+tidy_predicted_data[seq(1,1200,100),] # Displaying some rows
+```
+
+```
+        x      y          Model Prediction
+1    6.33  1.521 intercept only     -0.464
+101  5.69 -1.515 intercept only     -0.464
+201  2.04  0.279 intercept only     -0.464
+301  6.33  1.521         linear     -0.400
+401  5.69 -1.515         linear     -0.447
+501  2.04  0.279         linear     -0.712
+601  6.33  1.521      quadratic     -1.117
+701  5.69 -1.515      quadratic     -1.179
+801  2.04  0.279      quadratic     -0.794
+901  6.33  1.521          cubic     -1.106
+1001 5.69 -1.515          cubic     -1.176
+1101 2.04  0.279          cubic     -0.821
 ```
 
 Plotting Predictions
 ====================================================================================
 
-We'll use `ggplot2` to plot these tidied up predictions. You'll see us use multiple data sets on the same plot: Look at the `geom_line` call.
+We'll use `ggplot2` to plot these tidied up predictions. You'll see us use multiple data sets on the same plot: Look at the `geom_line()` call.
+
 
 ```r
-ggplot(data = fake_data, aes(x = x, y = y)) +
+ggplot(data = fake_data, # Original data!
+       aes(x = x,
+           y = y)) +
     geom_point() +
-    geom_line(data = tidy_predicted_data,
-              aes(x = x, y = Prediction, group = Model, color = Model),
-              alpha = 0.5, size = 2) +
+    geom_line(data = tidy_predicted_data, # Predicted data!
+              aes(x = x, 
+                  y = Prediction, 
+                  group = Model, 
+                  color = Model),
+              alpha = 0.5, 
+              size = 2) +
     ggtitle("Predicted trends from regression") +
     theme_bw()
 ```
 
+
 Plotted Predictions
 ====================================================================================
 
-<img src="CSSS508_week6_loops-figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="1100px" height="500px" />
+<img src="CSSS508_week6_loops-figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="1100px" height="500px" />
 
 Which looks best to you?
 
@@ -473,8 +578,8 @@ incremental: true
 
 * Split your data into $K$ **folds** (disjoint pieces)
 * For each fold $i = 1, \ldots, K$:
-    + Fit the model to all the data except that in fold $i$
-    + Make predictions for the held-out data in fold $i$
+    + Fit the model to all the data *except* that in fold $i$
+    + Make predictions for the omitted data in fold $i$
 * Calculate the mean squared error (or your favorite measure of accuracy comparing predictions to actuals): $\text{MSE} = \frac{1}{n} \sum_{i=1}^n (\text{actual } y_i - \text{predicted } y_i)^2$
 
 A model that fits well will have *low mean squared error*. Models that are either too simple or too complicated will tend to make bad predictions and have high mean squared error.
@@ -495,9 +600,9 @@ head(CV_predictions, 2)
 ```
 
 ```
-      x      y fold intercept only linear quadratic cubic
-1  1.41  0.830   10             NA     NA        NA    NA
-2 10.76 -0.125    3             NA     NA        NA    NA
+     x    y fold intercept only linear quadratic cubic
+1 6.33 1.52    9             NA     NA        NA    NA
+2 5.98 1.44    5             NA     NA        NA    NA
 ```
 
 Double-Looping for CV
@@ -539,7 +644,7 @@ CV_MSE
 
 ```
 intercept only         linear      quadratic          cubic 
-          2.18           2.15           1.05           1.06 
+         1.953          1.910          0.955          0.981 
 ```
 
 Based on these results, which model would you choose?
@@ -549,7 +654,7 @@ Conditional Flow
 ====================================================================================
 type: section
 
-if() then else()
+if() then else
 ====================================================================================
 incremental: true
 
@@ -605,7 +710,7 @@ Loading Many Data Files with a Loop
 incremental: true
 
 One common use of a loop in R is for loading many individual data files at once---like
-an entire directory of Excel files--to combine them into one data set.
+an entire directory of Excel files---to combine them into one data set.
 
 We will actually do this *next week*.
 
@@ -638,7 +743,7 @@ num_flips # follows negative binomial distribution
 ```
 
 ```
-[1] 7
+[1] 11
 ```
 
 Vectorization
@@ -668,7 +773,7 @@ for(position in 1:length(my_vector)) {
 
 ```
    user  system elapsed 
-   0.75    0.03    0.78 
+   1.25    0.01    1.27 
 ```
 
 
@@ -686,7 +791,7 @@ new_vector <- my_vector + 1
 
 ```
    user  system elapsed 
-   0.06    0.00    0.06 
+   0.08    0.02    0.09 
 ```
 
 ```r
@@ -695,7 +800,7 @@ for_time / vec_time
 
 ```
    user  system elapsed 
-   12.5     Inf    13.0 
+   15.6     0.5    14.1 
 ```
 
 Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
@@ -759,4 +864,4 @@ type: section
 
 Read Rebecca Ferrell's [data downloading demonstration on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html) (it is shorter than it looks; it is more than half error messages). I hope any future forays into automated data downloading and cleaning are smoother than this one was!
 
-**Reminder: HW 5 assigned last week is due midnight Tuesday 11/7.**
+**Reminder: HW 5 Part II assigned last week is due midnight Tuesday 5/8.**

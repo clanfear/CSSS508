@@ -1,14 +1,26 @@
+<style>
+code {
+   background-color: #efefef;
+   font-weight:bold;
+}
+</style>
+
 CSSS 508, Week 6: Loops
 ====================================================================================
 author: Charles Lanfear
-date: November 1, 2017
+date: May 2, 2018
 transition: linear
-width: 1440
-height: 960
-
+width: 1600
+height: 900
+font-family: helvetica
 
 Programming with Goofus and Gallant
 ====================================================================================
+
+```{r setup, include=F}
+library(ggplot2)
+library(dplyr)
+```
 
 ![Goofus and Gallant](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops-figure/Goofus.jpg)
 
@@ -42,7 +54,8 @@ incremental: true
 options(digits = 3)
 ```
 
-You will learn more Gallant solutions today (and better ones next week):
+You will learn general Gallant solutions today (and better but more specific ones next week):
+
 ```{r}
 swiss_means <- setNames(numeric(ncol(swiss)), colnames(swiss))
 for(i in seq_along(swiss)) {
@@ -55,15 +68,18 @@ swiss_means
 Don't Repeat Yourself (DRY)!
 ====================================================================================
 
-The **DRY** idea: Computers are much better at doing the same thing over and over again than we are. Writing code to repeat tasks for us prevents Goofus goofs.
+The **DRY** idea: Computers are much better at doing the same thing over and over again than we are.
 
+Writing code to repeat tasks for us prevents the most common human coding mistakes.
+
+It also *substantially* reduces the time and effort involved in processing large volumes of data.
 
 Programming and Looping Agenda 
 ====================================================================================
 
 **Today:**
 
-* `for()` and `while()` loop programming (general methods)
+* `for()` and `while()` **loop** programming (general methods)
 * Vectorization to *avoid* loops
 
 **Next week:**
@@ -91,14 +107,17 @@ incremental: true
 
 `for()` loops are the most general kind of *loop*, found in pretty much every programming language.
 
+"**For** each of these values---in order---do *this*"
+
 Conceptually:
 
 * Given a set of values...
 * You set a variable equal to the first value and enter the loop...
-* In the loop:
+* Inside the loop:
     + Do some set of things (maybe depending on current value)...
     + Update to the next value...
 * ...and keep going until you run out of values.
+
 
 
 
@@ -113,7 +132,7 @@ for(i in 1:10) {
 }
 ```
 
-
+Note this is 10 separate print commands, which is why each line starts with `[1]`.
 
 
 These Do the Same Thing
@@ -149,13 +168,16 @@ incremental: true
 * Common notation: `i` is the object that holds the current value inside the loop.
     + If loops are nested, you will often see `j` and `k` used for the inner loops.
     + This notation is similar to indexing in mathematical symbols (e.g $\sum\limits_{i=1}^n$)
-    
+
+* Note `i` (and `j`,`k`, etc) are just normal objects. You can use any other names you want.
+    + Ex: When iterating over rows and/or columns, I often use `row` and/or `col`!
 
 Iterate Over Character Vectors
 ====================================================================================
 incremental: true
 
-What we iterate over doesn't have to be numbers `1:n`. You can also iterate over a character vector in R:
+What we iterate over doesn't have to be numbers `1:n` or numbers at all! You can also iterate over a character vector in R:
+
 ```{r}
 some_letters <- letters[4:6]
 for(i in some_letters) {
@@ -175,7 +197,7 @@ When you want to loop over something that isn't numeric but want to use a numeri
 for(a in seq_along(some_letters)) {
     print(paste0("Letter ", a, ": ", some_letters[a]))
 }
-a
+a # The object `a` contains the number of the last iteration
 ```
 
 
@@ -185,7 +207,7 @@ incremental: true
 
 Usually in a `for()` loop, you aren't just printing output, but want to store results from calculations in each iteration somewhere.
 
-To do that, figure out what you want to store, and **pre-allocate** an object of the right size as a placeholder (typically with zeroes or missing values as placeholders).
+To do that, figure out what you want to store, and **pre-allocate** an object of the right size as a placeholder (typically with missing values as placeholders).
 
 Examples of what to pre-allocate based on what you store:
 
@@ -211,6 +233,11 @@ for(i in 1:iters) {
 output
 ```
 
+Steps:
+
+1. Set a number of iterations
+2. Pre-allocated a numeric vector of that length
+3. Ran ten iterations where the output is a mathematical function of iteration number.
 
 setNames()
 ====================================================================================
@@ -249,23 +276,25 @@ incremental: true
 Let's simulate some fake data for this using the `rnorm()` function to generate random values from a normal distribution.
 
 ```{r, cache=TRUE}
-set.seed(98195)
+set.seed(98115)
 # simulating example data:
 n <- 300
 x <- rnorm(n, mean = 5, sd = 4)
 fake_data <- data.frame(x = x, y = -0.5 * x + 0.05 * x^2 + rnorm(n, sd = 1))
 ```
 
-Aside: If you followed the scandal in political science two years about a grad student allegedly faking data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
+This generates a dataframe of 300 observations where `y` is dependent on `x`, with some uncorrelated residual in `y`.
+
+Aside: If you followed the scandal in political science a few years about a grad student allegedly faking data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
 
 
 Plot of fake_data
 ====================================================================================
 
 ```{r, fig.width = 10, fig.height = 3, dpi=300, out.width="1100px", out.height="330px"}
-library(ggplot2)
 ggplot(data = fake_data, aes(x = x, y = y)) +
-    geom_point() + ggtitle("Our fake data")
+  geom_point() + 
+  ggtitle("Our fake data")
 ```
 
 
@@ -285,7 +314,8 @@ Preallocating a List for the Regression Models
 ====================================================================================
 incremental: true
 
-Let's make a named character vector for the formulas we'll use in `lm()`:
+Let's make a *named character vector* for the formulas we'll use in `lm()`:
+
 ```{r}
 models <- c("intercept only" = "y ~ 1",
             "linear" = "y ~ x",
@@ -293,23 +323,33 @@ models <- c("intercept only" = "y ~ 1",
             "cubic" = "y ~ x + I(x^2) + I(x^3)")
 ```
 
+Note: The values on the *left* are the *names* of the *elements* on the *right*.
+
 Then pre-allocate a list to store the fitted models:
+
 ```{r}
 fitted_lms <- vector("list", length(models)) # initialize list
 names(fitted_lms) <- names(models) # give entries good names
+fitted_lms # display the pre-allocated (empty) list
 ```
 
 Fitting the Models in a for() Loop
 ====================================================================================
 incremental: true
 
-Next, we'll loop over the `models` vector and fit each one, storing it in the appropriate slot. We can go from a character string describing a model to a formula using the `formula()` function:
+Next, we'll loop over the `models` vector and fit each one, storing it in the appropriate slot. The `formula()` function converts a character string describing a model to a formula object readable by `lm()`:
 ```{r}
 for(mod in names(models)) {
     fitted_lms[[mod]] <- lm(formula(models[mod]), data = fake_data)
 }
 ```
 
+What this does:
+
+**For** each model name (which will be referred to as `mod`)... 
+
+1. Fit a `lm` using the formula associated with that name.
+2. Assign the output to the element of the list with the matching name.
 
 Getting Predictions from Fitted Models
 ====================================================================================
@@ -326,33 +366,56 @@ for(mod in names(models)) {
 }
 ```
 
+What this does:
+
+**For** each named `lm()` model output...
+
+1. Get predicted values from the associated model
+2. Save each of those predicted values as a new column in `predicted_data`.
+  + `mod` will be the new column names!
+  
+  
+Predictions
+====================================================================================
+
+```{r}
+head(predicted_data, 10)
+```
 
 Gathering Predictions
 ====================================================================================
 
-Use `tidyr::gather` to make the predictions tidy, and set the levels of the `Model` variable.
+We can use `tidyr::gather` to make the predictions tidy, and set the levels of the `Model` variable.
 
 ```{r, warning=FALSE, message=FALSE}
 library(tidyr)
-library(dplyr)
 tidy_predicted_data <- predicted_data %>%
     gather(Model, Prediction, -x, -y) %>%
     mutate(Model = factor(Model, levels = names(models)))
+tidy_predicted_data[seq(1,1200,100),] # Displaying some rows
 ```
 
 Plotting Predictions
 ====================================================================================
 
-We'll use `ggplot2` to plot these tidied up predictions. You'll see us use multiple data sets on the same plot: Look at the `geom_line` call.
+We'll use `ggplot2` to plot these tidied up predictions. You'll see us use multiple data sets on the same plot: Look at the `geom_line()` call.
+
 ```{r, eval=FALSE}
-ggplot(data = fake_data, aes(x = x, y = y)) +
+ggplot(data = fake_data, # Original data!
+       aes(x = x,
+           y = y)) +
     geom_point() +
-    geom_line(data = tidy_predicted_data,
-              aes(x = x, y = Prediction, group = Model, color = Model),
-              alpha = 0.5, size = 2) +
+    geom_line(data = tidy_predicted_data, # Predicted data!
+              aes(x = x, 
+                  y = Prediction, 
+                  group = Model, 
+                  color = Model),
+              alpha = 0.5, 
+              size = 2) +
     ggtitle("Predicted trends from regression") +
     theme_bw()
 ```
+
 
 Plotted Predictions
 ====================================================================================
@@ -378,8 +441,8 @@ incremental: true
 
 * Split your data into $K$ **folds** (disjoint pieces)
 * For each fold $i = 1, \ldots, K$:
-    + Fit the model to all the data except that in fold $i$
-    + Make predictions for the held-out data in fold $i$
+    + Fit the model to all the data *except* that in fold $i$
+    + Make predictions for the omitted data in fold $i$
 * Calculate the mean squared error (or your favorite measure of accuracy comparing predictions to actuals): $\text{MSE} = \frac{1}{n} \sum_{i=1}^n (\text{actual } y_i - \text{predicted } y_i)^2$
 
 A model that fits well will have *low mean squared error*. Models that are either too simple or too complicated will tend to make bad predictions and have high mean squared error.
@@ -440,7 +503,7 @@ Conditional Flow
 ====================================================================================
 type: section
 
-if() then else()
+if() then else
 ====================================================================================
 incremental: true
 
@@ -493,7 +556,7 @@ Loading Many Data Files with a Loop
 incremental: true
 
 One common use of a loop in R is for loading many individual data files at once---like
-an entire directory of Excel files--to combine them into one data set.
+an entire directory of Excel files---to combine them into one data set.
 
 We will actually do this *next week*.
 
@@ -596,4 +659,4 @@ type: section
 
 Read Rebecca Ferrell's [data downloading demonstration on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html) (it is shorter than it looks; it is more than half error messages). I hope any future forays into automated data downloading and cleaning are smoother than this one was!
 
-**Reminder: HW 5 assigned last week is due midnight Tuesday 11/7.**
+**Reminder: HW 5 Part II assigned last week is due midnight Tuesday 5/8.**
