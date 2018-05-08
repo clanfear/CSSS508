@@ -1,10 +1,18 @@
+<style>
+code {
+   background-color: #efefef;
+   font-weight:bold;
+}
+</style>
+
 CSSS 508, Week 7: Vectorization and Functions
 ====================================================================================
 author: Charles Lanfear
-date: November 8, 2017
+date: May 8, 2018
 transition: linear
-width: 1400
-height: 960
+width: 1600
+height: 900
+font-family: helvetica
 
 A Quick Aside
 ====================================================================================
@@ -24,6 +32,8 @@ Most programming problems can be reduced to having an unclear idea of your end *
 If you know what you *have* (the data structure) and what you *want*, the intermediate steps are usually obvious.
 
 When in doubt, *sketch* the beginning state and the intended end state. Then consider what translates the former into the latter in the least complicated way.
+
+If that seems complex, break it into more steps.
 
 Vectorization
 ====================================================================================
@@ -63,7 +73,7 @@ Sometimes no functions exist to do what you need, so you'll be tempted to write 
 If your data are large or you're going to do it repeatedly, however, consider *writing your own functions*!
 
 
-Writing Your Own Functions
+Writing Functions
 ====================================================================================
 type: section
 
@@ -93,7 +103,7 @@ Functions can encapsulate repeated actions such as:
 * Given a vector and definition of "invalid" values, replace with `NA`
 * Templates for favorite `ggplot`s used in reports
 
-Advanced uses for functions (not covered in this class):
+Advanced function applications (not covered in this class):
 
 * Parallel processing
 * Generating *other* functions
@@ -223,14 +233,21 @@ function(x) {
         return(c("first" = first, "last" = last))        
     }
 }
-<bytecode: 0x0000000015a608a0>
+<bytecode: 0x000000001378c858>
 ```
 
-You can also put your cursor over a function in your syntax and hit **F2**.
+You can also put your cursor over a function in your syntax and hit `F2`.
 
 Anatomy of a Function
 ====================================================================================
 incremental: true
+
+```
+NAME <- function(ARGUMENT1, ARGUMENT2=DEFAULT){
+  BODY
+  return(OUTPUT)
+}
+```
 
 * Name: What you assign the function to so you can use it later
     + You can have "anonymous" (no-name) functions
@@ -243,6 +260,9 @@ incremental: true
     + If unspecified, will be the last thing calculated (maybe not what you want?)
     
 
+
+
+
 Example: Reporting Quantiles
 ====================================================================================
 incremental: true
@@ -253,7 +273,7 @@ Maybe you want to know more detailed quantile information than `summary()` gives
 ```r
 quantile_report <- function(x, na.rm = FALSE) {
     quants <- quantile(x, na.rm = na.rm, 
-                probs = c(0.01, 0.05, 0.10, 0.25, 0.5, 0.75, 0.90, 0.95, 0.99))
+       probs = c(0.01, 0.05, 0.10, 0.25, 0.5, 0.75, 0.90, 0.95, 0.99))
     names(quants) <- c("Bottom 1%", "Bottom 5%", "Bottom 10%", "Bottom 25%",
                        "Median", "Top 25%", "Top 10%", "Top 5%", "Top 1%")
     return(quants)
@@ -263,16 +283,16 @@ quantile_report(rnorm(10000))
 
 ```
   Bottom 1%   Bottom 5%  Bottom 10%  Bottom 25%      Median     Top 25% 
--2.35670154 -1.68023965 -1.30974362 -0.69055478 -0.01712307  0.65109329 
+-2.32168927 -1.66807815 -1.30499235 -0.68990166 -0.00221216  0.67764673 
     Top 10%      Top 5%      Top 1% 
- 1.25589186  1.60349155  2.30856998 
+ 1.29236019  1.66859690  2.34025365 
 ```
 
 
 lapply(): List + Applying Functions
 ====================================================================================
 
-`lapply()` is used **apply** a function over a **l**ist of any kind (e.g. a data frame) and return a list. This is a lot easier than preparing a `for()` loop!
+`lapply()` is used to **apply** a function over a **l**ist of any kind (e.g. a data frame) and return a list. This is a lot easier than preparing a `for()` loop!
 
 
 ```r
@@ -424,9 +444,10 @@ Trying Out the Bucket
 
 
 ```r
-rando_data <- rnorm(100)
-bucketed_rando_data <- bucket(rando_data, quants = c(0.05, 0.25, 0.5, 0.75, 0.95))
-plot(x = bucketed_rando_data, y = rando_data,
+random_data <- rnorm(100)
+bucketed_random_data <- bucket(random_data, 
+                              quants = c(0.05, 0.25, 0.5, 0.75, 0.95))
+plot(x = bucketed_random_data, y = random_data,
      main = "Buckets and values")
 ```
 
@@ -442,23 +463,23 @@ Let's say we have data where impossible values occur:
 
 ```r
 (school_data <- 
-   data.frame(school = letters[1:10],
-   pct_passing_exam = c(0.78, 0.55, 0.91, -1, 0.88, 0.81, 0.90, 0.76, 999, 999),
-   pct_free_lunch = c(0.33, 999, 0.25, 0.05, 0.12, 0.09, 0.22, -13, 0.21, 999)))
+  data.frame(school = letters[1:10],
+  pct_passing_exam = c(0.78, 0.55, 0.91, -1, 0.88, 0.81, 0.90, 0.76, 99, 99),
+  pct_free_lunch = c(0.33, 99, 0.25, 0.05, 0.12, 0.09, 0.22, -13, 0.21, 99)))
 ```
 
 ```
    school pct_passing_exam pct_free_lunch
 1       a             0.78           0.33
-2       b             0.55         999.00
+2       b             0.55          99.00
 3       c             0.91           0.25
 4       d            -1.00           0.05
 5       e             0.88           0.12
 6       f             0.81           0.09
 7       g             0.90           0.22
 8       h             0.76         -13.00
-9       i           999.00           0.21
-10      j           999.00         999.00
+9       i            99.00           0.21
+10      j            99.00          99.00
 ```
 
 
@@ -487,7 +508,7 @@ remove_extremes(school_data$pct_passing_exam, low = 0, high = 1)
 dplyr::mutate_each(), summarize_each()
 ====================================================================================
 
-`dplyr` functions `summarize_each()` and `mutate_each()` take an argument `funs()`. This will apply our function to every variable (besides `school`) to update the columns in `school_data`:
+`dplyr` functions `summarize_at()` and `mutate_at()` take an argument `funs()`. This will apply our function to every variable (besides `school`) to update the columns in `school_data`:
 
 
 ```r
@@ -530,11 +551,13 @@ CA_OSHPD_util <- CA_OSHPD_util %>%
                 FAC_NO, HSA, HFPA)
 ```
 
+This function deletes any period and values after it in variables `FAC_NO`, `HSA`, and `HFPA` at the same time!
+
 
 Standard and Non-Standard Evaluation
 ====================================================================================
 
-`dplyr` uses what is called **non-standard evaluation** that lets you refer to "naked" variables (no quotes around them) like `FAC_NO, HSA, HFPA`. `dplyr` verbs (like `mutate()`) recently started supporting *standard evaluation* allowing you to use quoted object names as well. This makes programming with `dplyr` easier.
+`dplyr` uses what is called **non-standard evaluation** that lets you refer to "naked" variables (no quotes around them) like `FAC_NO`, `HSA`, `HFPA`. `dplyr` verbs (like `mutate()`) recently started supporting *standard evaluation* allowing you to use quoted object names as well. This makes programming with `dplyr` easier.
 
 Example converting character data to dates from the data downloading demo:
 
@@ -671,6 +694,15 @@ y_axis_label["pop"]
 ```
                     pop 
 "Population (millions)" 
+```
+
+```r
+title_text["pop"]
+```
+
+```
+             pop 
+"Population of " 
 ```
 
 aes_string()
