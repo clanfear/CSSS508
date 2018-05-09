@@ -8,7 +8,7 @@ code {
 CSSS 508, Week 7: Vectorization and Functions
 ====================================================================================
 author: Charles Lanfear
-date: May 8, 2018
+date: May 9, 2018
 transition: linear
 width: 1600
 height: 900
@@ -233,7 +233,7 @@ function(x) {
         return(c("first" = first, "last" = last))        
     }
 }
-<bytecode: 0x000000001b50a320>
+<bytecode: 0x000000001a0d4b50>
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -283,9 +283,9 @@ quantile_report(rnorm(10000))
 
 ```
    Bottom 1%    Bottom 5%   Bottom 10%   Bottom 25%       Median 
--2.309188522 -1.650306681 -1.289211282 -0.694596461 -0.007588518 
+-2.303857510 -1.636911251 -1.259198792 -0.684342309  0.002514539 
      Top 25%      Top 10%       Top 5%       Top 1% 
- 0.649359944  1.260465247  1.622619120  2.329943219 
+ 0.676007194  1.280816946  1.660436046  2.366719523 
 ```
 
 
@@ -788,4 +788,7 @@ Using the provided template, you will write:
 2. Functions to clean up the data 
 3. A function to visualize ridership over the first year.
 
-There is some string processing needed---much of which you have already seen or can probably Google---but *some will come in next week's lecture*. I can cover string processing in detail in lab.
+There is some string processing needed---much of which you have already seen or can probably Google---but *some will come in next week's lecture*. I give suggestions in the template, but I can cover string processing in detail in lab if needed before next week.
+
+## PART 1 DUE: 11:59 PM, May 15th
+## PART 2 DUE: 11:59 PM, May 22nd
