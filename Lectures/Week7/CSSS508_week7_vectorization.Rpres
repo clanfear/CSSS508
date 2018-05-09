@@ -531,6 +531,8 @@ undebug(gapminder_plot)
 
 Overview: The Process
 ====================================================================================
+incremental: true
+
 Data processing can be very complicated, with many valid ways of accomplishing it.
 
 I believe the best general approach is the following:

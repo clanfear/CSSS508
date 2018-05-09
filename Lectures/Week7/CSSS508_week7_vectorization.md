@@ -233,7 +233,7 @@ function(x) {
         return(c("first" = first, "last" = last))        
     }
 }
-<bytecode: 0x000000001378c858>
+<bytecode: 0x000000001b50a320>
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -282,10 +282,10 @@ quantile_report(rnorm(10000))
 ```
 
 ```
-  Bottom 1%   Bottom 5%  Bottom 10%  Bottom 25%      Median     Top 25% 
--2.32168927 -1.66807815 -1.30499235 -0.68990166 -0.00221216  0.67764673 
-    Top 10%      Top 5%      Top 1% 
- 1.29236019  1.66859690  2.34025365 
+   Bottom 1%    Bottom 5%   Bottom 10%   Bottom 25%       Median 
+-2.309188522 -1.650306681 -1.289211282 -0.694596461 -0.007588518 
+     Top 25%      Top 10%       Top 5%       Top 1% 
+ 0.649359944  1.260465247  1.622619120  2.329943219 
 ```
 
 
@@ -759,6 +759,8 @@ undebug(gapminder_plot)
 
 Overview: The Process
 ====================================================================================
+incremental: true
+
 Data processing can be very complicated, with many valid ways of accomplishing it.
 
 I believe the best general approach is the following:
