@@ -18,7 +18,9 @@ font-family: helvetica
 Data Today
 ====================================================================================
 
-We'll use data on food safety inspections in King County from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5). You can see a map of the data at [dinegerous.com](http://www.dinegerous.com/). Note these data are *quite large*. You will want to save them and load them from a *local directory*.
+We'll use data on food safety inspections in King County from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5). 
+
+Note these data are *quite large*. You will want to save them and load them from a *local directory*.
 
 
 
@@ -681,12 +683,9 @@ type: section
 
 Homework 6, Part 2 is due next week, and peer reviews due the week after.
 
-This term has *10 weeks of class* and I have written *11 lectures*. What do we want to cover?
+This term has *10 weeks of class* and I have written *11 lectures*. What final topic do we want?
 
-1. **Mapping and Geographical Data**
-    + Using `ggmap`, `ggplot2`, and `sf` to produce maps
-    + `tidycensus` for Census data
-2. **Text Mining and Twitter Data**
+1. **Text Mining and Twitter Data**
     + Accessing and working with social media data
     + Doing text analysis
 3. **Tidy Model Results and Applied Data Manipulation** 
