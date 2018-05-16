@@ -1,16 +1,24 @@
+<style>
+code {
+   background-color: #efefef;
+   font-weight:bold;
+}
+</style>
+
 CSSS 508, Week 8: Strings
 ====================================================================================
 author: Charles Lanfear
-date: November 15, 2017
+date: May 16, 2018
 transition: linear
-width: 1400
-height: 960
+width: 1600
+height: 900
+font-family: helvetica
 
 
 Data Today
 ====================================================================================
 
-We'll use data on food safety inspections in King County from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5). You can see a map of the data at [dinegerous.com](http://www.dinegerous.com/). Note these data are *quite large*. You will want to save them and load them from a local directory.
+We'll use data on food safety inspections in King County from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5). You can see a map of the data at [dinegerous.com](http://www.dinegerous.com/). Note these data are *quite large*. You will want to save them and load them from a *local directory*.
 
 
 
@@ -28,7 +36,7 @@ Strings
 ====================================================================================
 
 A general programming term for a unit of character data is a **string**, which is defined
-as *a sequence of characters*. In R the terms "string" and "character data" are mostly interchangeable.
+as *a sequence of characters*. In R the terms "strings" and "character data" are mostly interchangeable.
 
 In other languages, a string often also refers a *sequence* of numeric information, such as
 binary strings (e.g. "01110000 01101111 01101111 01110000").
@@ -48,7 +56,8 @@ We've seen the `nchar()` function to get the number of characters in a string. H
 
 
 ```r
-restaurants %>% mutate(ZIP_length = nchar(Zip_Code)) %>%
+restaurants %>% 
+  mutate(ZIP_length = nchar(Zip_Code)) %>%
     group_by(ZIP_length) %>% tally()
 ```
 
@@ -184,7 +193,7 @@ paste0(1:5, letters[1:5])
 paste() practice
 ====================================================================================
 
-`sep` controls what happens when doing entry-wise squishing of vectors you give to `paste()`, while `collapse` controls if/how they go from a vector to a single string. Here are some examples; make sure you understand how the arguments produce the results:
+`sep=` controls what happens when doing entry-wise squishing of vectors you give to `paste()`, while `collapse=` controls if/how they go from a vector to a single string. Here are some examples; make sure you understand how the arguments produce the results:
 
 
 ```r
@@ -211,12 +220,14 @@ type: section
 stringr
 ====================================================================================
 
-`stringr` is yet another R package from the Tidyverse (like `ggplot2`, `dplyr`, `tidyr`, `lubridate`, `readr`). It provides wrappers for functions that:
+`stringr` is yet another R package from the Tidyverse (like `ggplot2`, `dplyr`, `tidyr`, `lubridate`, `readr`).
+
+It provides functions that:
 
 * Replace some basic string functions like `paste()` and `nchar()` in a way that's a bit less touchy with missing values or factors
 * Remove whitespace or pad it out
 * Perform tasks related to **pattern matching**: Detect, locate, extract, match, replace, split.
-    + Functions use **regular expressions** to describe patterns
+    + The functions use **regular expressions** to describe patterns
     + Base R and `stringi` versions for these exist but are more confusing to use
 
 Conveniently, most `stringr` functions also begin with "`str_`" to make RStudio auto-complete more useful.
@@ -295,7 +306,7 @@ head(unique(restaurants$City))
 
 ```r
 restaurants <- restaurants %>%
-    mutate_each(funs(str_to_upper), Name, Address, City)
+    mutate_at(vars(Name, Address, City), funs(str_to_upper))
 head(unique(restaurants$City))
 ```
 
@@ -303,7 +314,7 @@ head(unique(restaurants$City))
 [1] "SEATTLE"  "KENT"     "BELLEVUE" "KENMORE"  "ISSAQUAH" "BURIEN"  
 ```
 
-Whitespace
+Whitespace and str_trim()
 ====================================================================================
 incremental: true
 
@@ -311,34 +322,21 @@ Extra leading or trailing whitespace is common in text data:
 
 
 ```r
-head(unique(restaurants$Name, 4))
+head(unique(restaurants$Name), 4)
 ```
 
 ```
-[1] "@ THE SHACK, LLC "                "10 MERCER RESTAURANT"            
-[3] "100 LB CLAM"                      "1000 SPIRITS"                    
-[5] "108 AUTHENTIC VIETNAMESE CUISINE" "11TH AVENUE INN"                 
+[1] "@ THE SHACK, LLC "    "10 MERCER RESTAURANT" "100 LB CLAM"         
+[4] "1000 SPIRITS"        
 ```
 
-Any character column is potentially affected. Let's find all the character columns:
+Any character column is potentially affected. We can use the `str_trim()` function in `stringr` to clean them up all at once:
 
 
 ```r
-column_types <- sapply(restaurants, class)
-char_columns <- names(column_types)[column_types == "character"]
-```
-
-Using `str_trim()` to Clean Up Whitespace
-====================================================================================
-incremental: true
-
-Then we can use the `str_trim()` function in `stringr` to clean them up all at once:
-
-
-```r
-# use mutate_at to trim all the character columns
+# use mutate_if to trim all the character columns
 restaurants <- restaurants %>%
-    mutate_at(vars(char_columns), funs(str_trim))
+    mutate_if(is.character, str_trim)
 head(unique(restaurants$Name), 4)
 ```
 
@@ -453,10 +451,10 @@ restaurants %>%
 ```
 # A tibble: 3 x 2
   has_206_number      n
-           <lgl>  <int>
-1          FALSE  66655
-2           TRUE 109099
-3             NA  82876
+  <lgl>           <int>
+1 FALSE           66655
+2 TRUE           109099
+3 NA              82876
 ```
 
 
@@ -495,16 +493,16 @@ restaurants %>% distinct(Address) %>% mutate(city_region = str_trim(str_extract(
 ```
 # A tibble: 9 x 2
   city_region     n
-        <chr> <int>
-1          NE  2086
-2           S  1764
-3        <NA>  1745
-4           N   879
-5          SE   868
-6          SW   705
-7           E   538
-8          NW   438
-9           W   235
+  <chr>       <int>
+1 NE           2086
+2 S            1764
+3 <NA>         1745
+4 N             879
+5 SE            868
+6 SW            705
+7 E             538
+8 NW            438
+9 W             235
 ```
 
 
@@ -545,7 +543,8 @@ incremental: true
 
 
 ```r
-restaurants <- restaurants %>% mutate(street_only = str_replace(Address, address_number_pattern, replacement = ""))
+restaurants <- restaurants %>% 
+  mutate(street_only = str_replace(Address, address_number_pattern, replacement = ""))
 head(unique(restaurants$street_only), 12)
 ```
 
@@ -581,7 +580,7 @@ How'd the Unit regex Work?
 ====================================================================================
 incremental: true
 
-Breaking down `" (|#|STE|SUITE|SHOP|UNIT).*"`:
+Breaking down `" (|#|STE|SUITE|SHOP|UNIT).*$"`:
 
 * First we match a space
 * `(#|STE|SUITE|SHOP|UNIT)` matches one of those words
@@ -594,7 +593,8 @@ incremental: true
 
 
 ```r
-restaurants <- restaurants %>% mutate(street_only = str_trim(str_replace(street_only, address_unit_pattern, replacement = "")))
+restaurants <- restaurants %>% 
+  mutate(street_only = str_trim(str_replace(street_only, address_unit_pattern, replacement = "")))
 head(unique(restaurants$street_only), 15)
 ```
 
@@ -613,19 +613,26 @@ incremental: true
 
 Let's get one row per restaurant per date with the score, and see which streets the ones above 45 are on:
 
+
 ```r
-restaurants %>% select(Business_ID, Name, Date, Inspection_Score, street_only) %>% distinct() %>% filter(Inspection_Score > 45) %>% group_by(street_only) %>% tally() %>% arrange(desc(n)) %>% head(n=5)
+restaurants %>% 
+  select(Business_ID, Name, Date, Inspection_Score, street_only) %>% 
+  distinct() %>% filter(Inspection_Score > 45) %>% 
+  group_by(street_only) %>% 
+  tally() %>% 
+  arrange(desc(n)) %>% 
+  head(n=5)
 ```
 
 ```
 # A tibble: 5 x 2
-        street_only     n
-              <chr> <int>
+  street_only           n
+  <chr>             <int>
 1 UNIVERSITY WAY NE   108
-2      S JACKSON ST   105
-3     PACIFIC HWY S    90
-4        NE 24TH ST    76
-5     RAINIER AVE S    70
+2 S JACKSON ST        105
+3 PACIFIC HWY S        90
+4 NE 24TH ST           76
+5 RAINIER AVE S        70
 ```
 
 
@@ -633,7 +640,7 @@ Splitting up Strings
 ====================================================================================
 incremental: true
 
-You can split up strings using `tidyr::separate()`, seen in Week 5. Another option is `str_split()`, which will split strings based on a pattern separating parts and put these components in a list. `str_split_fixed()` will do that but with a matrix instead (so can't have varying numbers of separators):
+You can split up strings using `tidyr::separate()`, seen in Week 5. Another option is `str_split()`, which will split strings based on a pattern separating parts and put these components in a list. `str_split_fixed()` will do that but with a matrix instead (and thus can't have varying numbers of separators):
 
 
 ```r
@@ -672,13 +679,16 @@ Coming Up
 ====================================================================================
 type: section
 
-Homework 6 assigned last week is due next week, and peer reviews due the week after.
+Homework 6, Part 2 is due next week, and peer reviews due the week after.
 
-This term has *11 weeks of class* and I have only written *10 lectures*. What do we want to cover?
+This term has *10 weeks of class* and I have written *11 lectures*. What do we want to cover?
 
-Ideas:
-
-1. **Tidy Model Output**: Creating regression tables and visualizing output.
-2. **Advanced / Applied Data Manipulation**: Complex variable creation, data reshaping.
-
-Any other suggestions?
+1. **Mapping and Geographical Data**
+    + Using `ggmap`, `ggplot2`, and `sf` to produce maps
+    + `tidycensus` for Census data
+2. **Text Mining and Twitter Data**
+    + Accessing and working with social media data
+    + Doing text analysis
+3. **Tidy Model Results and Applied Data Manipulation** 
+    + Creating regression tables and predicted value plots.
+    + Working example of complex variable creation, data reshaping.
