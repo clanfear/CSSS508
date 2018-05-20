@@ -1,10 +1,18 @@
+<style>
+code {
+   background-color: #efefef;
+   font-weight: bold;
+}
+</style>
+
 CSSS 508, Week 11: Tidy Model Results and Applied Data Cleaning
 ====================================================================================
 author: Charles Lanfear
-date: December 6, 2017
+date: May 30th, 2018
 transition: linear
-width: 1440
-height: 960
+width: 1600
+height: 900
+font-family: helvetica
 
 
 
@@ -224,18 +232,18 @@ mtcars %>% group_by(cyl) %>%
 # Groups:   cyl [3]
      cyl term            estimate std.error  statistic   p.value
    <dbl> <chr>              <dbl>     <dbl>      <dbl>     <dbl>
- 1  4.00 (Intercept)  44.9           5.03    8.92      0.0000452
- 2  4.00 wt          - 2.59          3.52   -0.735     0.486    
- 3  4.00 hp          - 0.0645        0.0549 -1.18      0.278    
- 4  4.00 disp        - 0.0663        0.0818 -0.810     0.445    
- 5  6.00 (Intercept)  30.3           5.63    5.38      0.0126   
- 6  6.00 wt          - 3.90          1.41   -2.75      0.0705   
- 7  6.00 hp          - 0.0110        0.0213 -0.514     0.643    
- 8  6.00 disp          0.0161        0.0135  1.20      0.317    
- 9  8.00 (Intercept)  26.7           3.91    6.82      0.0000461
-10  8.00 wt          - 2.18          1.16   -1.88      0.0902   
-11  8.00 hp          - 0.0137        0.0114 -1.20      0.258    
-12  8.00 disp          0.00000110    0.0131  0.0000843 1.000    
+ 1    4. (Intercept)  44.9           5.03    8.92      0.0000452
+ 2    4. wt           -2.59          3.52   -0.735     0.486    
+ 3    4. hp           -0.0645        0.0549 -1.18      0.278    
+ 4    4. disp         -0.0663        0.0818 -0.810     0.445    
+ 5    6. (Intercept)  30.3           5.63    5.38      0.0126   
+ 6    6. wt           -3.90          1.41   -2.75      0.0705   
+ 7    6. hp           -0.0110        0.0213 -0.514     0.643    
+ 8    6. disp          0.0161        0.0135  1.20      0.317    
+ 9    8. (Intercept)  26.7           3.91    6.82      0.0000461
+10    8. wt           -2.18          1.16   -1.88      0.0902   
+11    8. hp           -0.0137        0.0114 -1.20      0.258    
+12    8. disp          0.00000110    0.0131  0.0000843 1.000    
 ```
 
 
@@ -263,7 +271,7 @@ ggpredict()
 
 When you run  `ggpredict()`, it produces a dataframe with a row for every unique 
 value of a supplied predictor ("independent") variable (`term`). Each row contains a 
-predicted value for the outcome ("dependent") variable, plus confidence intervals.
+predicted value for the outcome ("dependent") variable, plus confidence intervals. The argument `interval="prediction"` will give predicted intervals instead.
 
 
 ```r
@@ -301,7 +309,7 @@ plot(lm_1_predicted)
 <img src="CSSS508_Week11_broom-figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="1100px" height="600px" />
 
 
-Grouping with ggpredict
+Grouping with ggpredict()
 ====================================================================================
 
 When using a vector of multiple `terms`, `ggeffects` will plot the first along the x-axis and use
@@ -315,7 +323,7 @@ glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
 
 <img src="CSSS508_Week11_broom-figure/unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="1100px" height="600px" />
 
-Faceting with ggpredict
+Faceting with ggpredict()
 ====================================================================================
 
 You can add `facet=TRUE` to the `plot()` call to facet over *grouping terms*.
@@ -328,6 +336,20 @@ glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
 
 <img src="CSSS508_Week11_broom-figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="1100px" height="600px" />
 
+Setting Counterfactual Values with ggpredict()
+====================================================================================
+
+You can add values in square brackets in the `terms=` argument to specify counterfactual values.
+
+
+```r
+glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
+  ggpredict(terms=c("wt [2,3,4]", "cyl [4,6]")) %>% plot(facet=TRUE)
+```
+
+<img src="CSSS508_Week11_broom-figure/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="1100px" height="600px" />
+
+
 Dot plots with ggpredict
 ====================================================================================
 
@@ -338,7 +360,7 @@ Dot plots with ggpredict
 lm(mpg~as.factor(am)+as.factor(cyl), data=mtcars) %>% ggpredict(terms=c("am", "cyl")) %>% plot()
 ```
 
-<img src="CSSS508_Week11_broom-figure/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="600px" height="600px" />
+<img src="CSSS508_Week11_broom-figure/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="600px" height="600px" />
 
 Notes on ggeffects
 ====================================================================================
@@ -436,7 +458,7 @@ model_1 <- lm(mpg ~ wt, data = mtcars)
 sjt.lm(model_1)
 ```
 
-<img src="img/sjPlot_table.PNG" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="600px" />
+<img src="img/sjPlot_table.PNG" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="600px" />
 
 Multi-Model Tables with sjTable
 ====================================================================================
@@ -457,7 +479,7 @@ model_3 <- lm(mpg ~ hp + wt + factor(am), data = mtcars)
 sjt.lm(model_1, model_2, model_3)
 ```
 
-<img src="img/sjPlot_mtable.PNG" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" width="1280px" />
+<img src="img/sjPlot_mtable.PNG" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="1280px" />
 
 
 sjPlot does a lot more
@@ -489,26 +511,66 @@ sjPlot Example: Crosstabs
 LaTeX Tables in Theses / Dissertations / Posters
 ====================================================================================
 
-For tables in LaTeX documents, which are common for theses, dissertations, and posters,
+For tables in $\LaTeX$ documents, which are common for theses, dissertations, and posters,
 I recommend either manually generating tables or looking into the `kableExtra` package.
 
-`kableExtra` allows the construction of complex tables in either HTML or LaTeX using
+`kableExtra` allows the construction of complex tables in either HTML or $\LaTeX$ using
 additive syntax similar to `ggplot2`.
 
-In the past, most R users used `xtable` and `stargazer` to generate LaTeX tables, 
-but these are getting a bit dated. They definitely work, however!
+In the past, most R users used `xtable` and `stargazer` to generate $\LaTeX$ tables, 
+but these are date or idosyncratic. They definitely work, however!
 
-If you want to edit LaTeX documents, you can do it in R using Sweave documents (.Rnw).
+If you want to edit $\LaTeX$ documents, you can do it in R using Sweave documents (.Rnw).
 Alternatively, you may want to work in a dedicated LaTeX editor; I recommend [Overleaf](http://www.overleaf.com)
 for this purpose.
 
 RMarkdown has support for a fair amount of basic LaTeX syntax if you aren't trying to 
 get too fancy.
 
+One approach I have used is to manually format $\LaTeX$ tables but use in-line R calls to 
+fill in the values dynamically. This gets you the exact format you want but without 
+forcing you to update values any time something changes.
+
+
+Bonus: corrplot
+====================================================================================
+
+The `corrplot` package has functions for displaying correlograms.
+
+These make visualizing the correlations between variables in a data set easier.
+
+The first argument is a call to `cor()` the base R function for generating a correlation matrix.
+
+[See the vignette for customization options.](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html)
+
+
+```r
+library(corrplot)
+corrplot(
+  cor(mtcars),
+  addCoef.col = "white",
+  addCoefasPercent=T,
+  type="upper", 
+  order="AOE")
+```
+
+
+
+***
+
+## Correlogram
+
+![plot of chunk unnamed-chunk-24](CSSS508_Week11_broom-figure/unnamed-chunk-24-1.png)
+
+
 
 Advanced Data Manipulation
 ====================================================================================
 type: section
+
+This section walks you through an example of a real-world data management scenario.
+
+We will use a small extract from the **Denver Youth Survey**, a 10-wave (in this example) panel data set with 1526 respondents.
 
 
 Example Data
@@ -578,8 +640,8 @@ I like to type out long comments that describe my problem and possible strategie
 
 ![](img/comment_cap.PNG)
 
-If interested, [here is a link to my *unedited script* this is all taken from.](http://clanfear.githhub.io/CSSS508/Lectures/Week11/marriage/marriage_dates_to_age_year_110317.R)
-It is a bit messy but a realistic example of "in-use" code. Note that it assumes access to the full data set, which I cannot share.
+If interested, [here is a link to my *unedited script* this is all taken from.](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week11/marriage_dates_to_age_year_110317.R)
+It is a bit messy, long, and inefficient but is a realistic example of "in-use" code. Note that it assumes access to the full data set, which I cannot share.
 
 Strategy
 ====================================================================================
@@ -610,19 +672,19 @@ names(married_years) <- paste0(mar_ages$seqid, "-", mar_ages$marriage_n)
 for (i in 1:nrow(mar_ages)){
   if (is.na(mar_ages$marriage_age[i])){
     married_years[[i]] <- NA # Assign NA if no marriage
-  } else if (!is.na(mar_ages$marriage_age[i]) &
-              is.na(mar_ages$divorce_age[i])) {
+  } else if (!is.na(mar_ages$marriage_age[i]) & # Was married...
+              is.na(mar_ages$divorce_age[i])) { # but not divorced
       if (mar_ages$marriage_age[i] <= mar_ages$censored_age[i]){
-         married_years[[i]] <- 
+         married_years[[i]] <- # Marriage age to censored age
            mar_ages$marriage_age[i]:mar_ages$censored_age[i]
-      } else {
+      } else { # If married for only one year
          married_years[[i]] <- mar_ages$marriage_age[i]
       }
-  } else if (!is.na(mar_ages$marriage_age[i]) &
-             !is.na(mar_ages$divorce_age[i])) {
-    married_years[[i]] <- 
+  } else if (!is.na(mar_ages$marriage_age[i]) & # Married...
+             !is.na(mar_ages$divorce_age[i])) { # ... and divorced
+    married_years[[i]] <- # Marriage age to divorce age
       mar_ages$marriage_age[i]:mar_ages$divorce_age[i]
-  } else { # Built-in error checking here!
+  } else { # Print ERROR if none of above conditions apply
     married_years[[i]] <- "ERROR"; print(paste0("Error on ", i))
   }}
 ```
@@ -665,7 +727,7 @@ Next, *combine* each person's *three vectors* into *one vector* of married ages.
 age_year_yes_list <- vector("list", length(unique(mar_ages$seqid)))
 names(age_year_yes_list) <- paste0("seqid_", unique(mar_ages$seqid))
 for (i in 1:length(age_year_yes_list)){
-  vals <- c(married_years[[(3*i)-2]], 
+  vals <- c(married_years[[(3*i)-2]],
             married_years[[(3*i)-1]], 
             married_years[[(3*i)]])
   if (all(is.na(vals))) {
@@ -716,14 +778,14 @@ unmarried_years <- vector("list", nrow(mar_ages))
 names(unmarried_years) <- paste0(mar_ages$seqid, "-", mar_ages$marriage_n)
 for (i in 1:nrow(mar_ages)){
   if (is.na(mar_ages$censored_age[i])) {
-    unmarried_years[[i]] <- NA
-  } else if (is.na(mar_ages$marriage_age[i])) {
+    unmarried_years[[i]] <- NA # NA if always censored
+  } else if (is.na(mar_ages$marriage_age[i])) { # If never married
     unmarried_years[[i]] <- 10:mar_ages$censored_age[i]
-  } else if (!is.na(mar_ages$marriage_age[i]) & 
-              is.na(mar_ages$divorce_age[i])){
+  } else if (!is.na(mar_ages$marriage_age[i]) & # Married...
+              is.na(mar_ages$divorce_age[i])){ # ... without divorce
     unmarried_years[[i]] <- 10:mar_ages$marriage_age[i]
-  } else if (!is.na(mar_ages$marriage_age[i]) &
-             !is.na(mar_ages$divorce_age[i])) {
+  } else if (!is.na(mar_ages$marriage_age[i]) & # Married...
+             !is.na(mar_ages$divorce_age[i])) { # ... and divorced
     unmarried_years[[i]] <- c(10:mar_ages$marriage_age[i],
             mar_ages$divorce_age[i]:mar_ages$censored_age[i])
   } else {
@@ -822,13 +884,13 @@ A Function to Convert from Lists to a Matrix
 ay_list_to_ay_mat <- function(age_year_yes_list, age_year_no_list){
   age_year_mat <- setNames(as.data.frame(matrix(as.numeric(NA), 
               ncol=length(10:27), nrow=6)), paste0("age_", 10:27))
-  for(i in 1:6){
+  for(i in 1:6){ # Six individuals!
     if (any(!is.na(age_year_yes_list[[i]]))){
       age_year_mat[i, age_year_yes_list[[i]]-9 ] <- 1
-    }
+    } # Above: If any married ages, assign 1 to corresponding cells
     if (any(!is.na(age_year_no_list[[i]]))){
       age_year_mat[i, age_year_no_list[[i]]-9 ] <- 0
-    }
+    } # Above: If any unmarried ages, assign 1 to corresponding cells
   }
   return(age_year_mat)
 }
@@ -901,11 +963,11 @@ What You've Learned
 A lot!
 
 * How to get data into R from a variety of formats
-* How to do "data janitor" work to manipulate and clean data
+* How to do "data custodian" work to manipulate and clean data
 * How to make pretty visualizations
 * How to automate with loops and functions
 * How to combine text, calculations, plots, and tables into dynamic R Markdown reports 
-* How to acquire and work with spatial and social media data
+* How to acquire and work with spatial data
 
 
 What Comes Next?
@@ -922,9 +984,6 @@ What Comes Next?
     + Using version control (git) in RStudio
     + Interactive Shiny web apps
     + Write your own functions and put them in a package
-* Go deeper!
-    + Investigate `sf` for spatial data analysis
-    + Mine social media data with `tidytext`
     
 
 Course Plugs
