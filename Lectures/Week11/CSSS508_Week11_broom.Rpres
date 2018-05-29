@@ -129,7 +129,7 @@ augment(lm_1) %>% head()
 The Power of broom
 ====================================================================================
 
-The real advantage of `broom` becomes apparent when running many models at once:
+The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `cyl`:
 
 ```{r}
 mtcars %>% group_by(cyl) %>% 
@@ -181,7 +181,7 @@ Grouping with ggpredict()
 ====================================================================================
 
 When using a vector of multiple `terms`, `ggeffects` will plot the first along the x-axis and use
-subsequent terms for *grouping*.
+subsequent terms for *grouping*. Note we can pipe a model straight into `ggpredict()`!
 
 ```{r, fig.width=11, fig.height=6, out.width="1100px", out.height="600px"}
 glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
@@ -374,23 +374,22 @@ LaTeX Tables in Theses / Dissertations / Posters
 ====================================================================================
 
 For tables in $\LaTeX$ documents, which are common for theses, dissertations, and posters,
-I recommend either manually generating tables or looking into the `kableExtra` package.
+I recommend either manually generating tables or looking into the `stargazer` or `kableExtra` packages.
 
 `kableExtra` allows the construction of complex tables in either HTML or $\LaTeX$ using
 additive syntax similar to `ggplot2`.
 
-In the past, most R users used `xtable` and `stargazer` to generate $\LaTeX$ tables, 
-but these are date or idosyncratic. They definitely work, however!
+`stargazer` produces nicely formatted $\LaTeX$ tables but is fussy and idiosyncratic.
 
 If you want to edit $\LaTeX$ documents, you can do it in R using Sweave documents (.Rnw).
-Alternatively, you may want to work in a dedicated LaTeX editor; I recommend [Overleaf](http://www.overleaf.com)
+Alternatively, you may want to work in a dedicated LaTeX editor. I recommend [Overleaf](http://www.overleaf.com)
 for this purpose.
 
-RMarkdown has support for a fair amount of basic LaTeX syntax if you aren't trying to 
-get too fancy.
+RMarkdown has support for a fair amount of basic $\LaTeX$ syntax if you aren't trying to 
+get too fancy!
 
-One approach I have used is to manually format $\LaTeX$ tables but use in-line R calls to 
-fill in the values dynamically. This gets you the exact format you want but without 
+Another approach I have used is to manually format $\LaTeX$ tables but use in-line R calls to 
+fill in the values dynamically. This gets you the *exact* format you want but without 
 forcing you to update values any time something changes.
 
 
@@ -401,7 +400,7 @@ The `corrplot` package has functions for displaying correlograms.
 
 These make visualizing the correlations between variables in a data set easier.
 
-The first argument is a call to `cor()` the base R function for generating a correlation matrix.
+The first argument is a call to `cor()`, the base R function for generating a correlation matrix.
 
 [See the vignette for customization options.](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html)
 
@@ -434,7 +433,7 @@ type: section
 
 This section walks you through an example of a real-world data management scenario.
 
-We will use a small extract from the **Denver Youth Survey**, a 10-wave (in this example) panel data set with 1526 respondents.
+We will use a small extract from the **Denver Youth Survey**, a 10-wave (in this example) panel data set with 1526 respondents aged 7 to 26.
 
 
 Example Data
@@ -720,7 +719,7 @@ Course Plugs
 If you...
 
 * have no stats background yet - **SOC504: Applied Social Statistics**
-* liked last week - **SOC590: Big Data and Population Processes**
+* want to learn more social science computing - **SOC590: Big Data and Population Processes**
 * have (only) finished SOC506 - **CSSS510: Maximum Likelihood**
 * want to master visualization - **CSSS569: Visualizing Data**
 * study events or durations - **CSSS544: Event History Analysis**
