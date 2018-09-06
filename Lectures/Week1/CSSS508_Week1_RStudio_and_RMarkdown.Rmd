@@ -25,7 +25,7 @@ csss508css <- list(
      ".hljs-tomorrow-night .hljs" = list(
         "background" = "#10102c",
         "border-radius"="5px"),
-        ".remark-inline-code" = list(
+     ".remark-inline-code" = list(
         "background"= "#c5c8c6",
         "color" = "#10102c",
         "border-radius" = "3px",
@@ -47,7 +47,6 @@ csss508css <- list(
      ".inverse a" = list("color" = "#cbd3a3"),
      "body" = list("line-height" = "1.4")
     )
- 
 mono_accent(base_color = "#342c5c",
             code_font_google = google_font("Fira Mono"),
             header_font_google = google_font("Quattrocento"),
@@ -267,14 +266,18 @@ The lines preceded by `##` represent the output, or result, of running the code 
 --
 
 9. Geospatial Data and Maps \*
-10. Social Media Data and Text Mining \*
-11. Tidy Model Results / Advanced Data Cleaning \*
+--
 
+10. Working with Model Results \*
+--
 
-\* *Optional topics*: We will do **two**. A video from 2017 will be available for 
-the third. If you miss any lecture, videos of lectures are available
-on the course website.
+11. Reproducibility and Applied Data Cleaning<sup>1</sup>  \*
 
+.footnote[[1] New for this term!]
+
+--
+
+If you miss any lecture, lecture videos are available on the course website.
 
 
 ---
