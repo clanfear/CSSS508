@@ -210,6 +210,9 @@ h1, h2, h3 {
 a {
   text-decoration: underline;
 }
+.inverse a {
+  color: #cbd3a3;
+}
 body {
   line-height: 1.4;
 }

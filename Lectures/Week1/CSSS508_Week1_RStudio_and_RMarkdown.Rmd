@@ -2,7 +2,7 @@
 title: "CSSS508, Week 1"
 subtitle: "RStudio and RMarkdown"
 author: "Charles Lanfear"
-date: "2018-9-26 (updated: `r Sys.Date()`)"
+date: "Sep 26, 2018"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -23,23 +23,26 @@ library(xaringanthemer)
 
 csss508css <- list(
      ".hljs-tomorrow-night .hljs" = list(
-       "background" = "#10102c",
-       "border-radius"="5px"),
-     ".remark-inline-code" = list(
-       "color"= "#c5c8c6",
-       "background" = "#10102c",
+        "background" = "#10102c",
+        "border-radius"="5px"),
+        ".remark-inline-code" = list(
+        "background"= "#c5c8c6",
+        "color" = "#10102c",
         "border-radius" = "3px",
-       "padding" = "2px"),
+        "padding" = "2px"),
      ".small" = list("font-size" = "75%"),
      ".remark-code-line-highlighted" = list(
-       "background-color" = "rgba(255,255,0,0.2)"),
+        "background-color" = "rgba(255,0,255,0.2)"),
      "sup" = list("font-size" = "14px"),
-     "h1, h2, h3" = list("margin-top"=".25em", 
-                         "margin-bottom"=".25em"),
-     ".pull-left60" = list("float" = "left",
-                           "width" = "58%" ),
-     ".pull-right40" = list("float" = "right",
-                           "width" = "38%" ),
+     "h1, h2, h3" = list(
+        "margin-top"=".25em", 
+        "margin-bottom"=".25em"),
+     ".pull-left60" = list(
+        "float" = "left",
+        "width" = "58%" ),
+     ".pull-right40" = list(
+        "float" = "right",
+        "width" = "38%" ),
      "a" = list("text-decoration" = "underline"),
      "body" = list("line-height" = "1.4")
     )
@@ -47,9 +50,10 @@ csss508css <- list(
 mono_accent(base_color = "#342c5c",
             code_font_google = google_font("Fira Mono"),
             header_font_google = google_font("Quattrocento"),
-  # code_font_family = "Fira Code",
-  # code_font_url    = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css",
-  extra_css = csss508css
+            extra_css = csss508css,
+            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/img/CherryBlossoms_42-X3_crop.png",
+            title_slide_background_position = "bottom",
+            title_slide_background_size = "contain"
 )
 ```
 
@@ -227,6 +231,7 @@ If you want to see the code used to generate these slides, you can right click o
 Code chunks that span the page like the one below represent *actual R code that runs inside these slides*.
 
 ```{r}
+# Sometimes important stuff is highlighted! #<<
 7 * 49
 ```
 
@@ -1063,6 +1068,7 @@ pander(head(swiss, 5), style = "rmarkdown", split.tables = 120)
 ```
 ]
 ---
+class: inverse
 
 # Homework
 
