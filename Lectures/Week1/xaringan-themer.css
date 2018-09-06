@@ -93,7 +93,7 @@ a, a > code {
 }
 .title-slide {
   background-color: #342c5c;
-  background-image: url(https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/img/CherryBlossoms_42-X3_crop.png);
+  background-image: url(https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/img/title_slide_img.png);
   background-size: contain;
   background-position: bottom;
 }
@@ -209,6 +209,9 @@ h1, h2, h3 {
 }
 a {
   text-decoration: underline;
+}
+.inverse a {
+  color: #cbd3a3;
 }
 body {
   line-height: 1.4;

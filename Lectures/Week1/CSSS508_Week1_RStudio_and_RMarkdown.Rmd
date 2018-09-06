@@ -1,8 +1,8 @@
 ---
 title: "CSSS508, Week 1"
 subtitle: "RStudio and RMarkdown"
-author: "Charles Lanfear"
-date: "Sep 26, 2018"
+author: "Chuck Lanfear"
+date: "Sep 26, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -44,6 +44,7 @@ csss508css <- list(
         "float" = "right",
         "width" = "38%" ),
      "a" = list("text-decoration" = "underline"),
+     ".inverse a" = list("color" = "#cbd3a3"),
      "body" = list("line-height" = "1.4")
     )
  
@@ -51,7 +52,7 @@ mono_accent(base_color = "#342c5c",
             code_font_google = google_font("Fira Mono"),
             header_font_google = google_font("Quattrocento"),
             extra_css = csss508css,
-            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/img/CherryBlossoms_42-X3_crop.png",
+            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/img/title_slide_img.png",
             title_slide_background_position = "bottom",
             title_slide_background_size = "contain"
 )
