@@ -58,9 +58,9 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * [Cookbook for R graph reference](http://www.cookbook-r.com/Graphs/)
    * [R graph catalog at UBC](http://shiny.stat.ubc.ca/r-graph-catalog/)
    * `ggplot2` add-ons
-       + `ggthemes` package
-       + `cowplot` package for publication ready graphs, multiple plots in single image, etc.
-       + `gganimate` for easy animations (saving GIFs requires ImageMagick or GraphicsMagick)
+       + [`ggthemes` package](https://github.com/jrnold/ggthemes)
+       + [`cowplot` package](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html) for publication ready graphs, multiple plots in single image, etc.
+       + [`gganimate` package](https://github.com/dgrtwo/gganimate) for easy animations (saving GIFs requires ImageMagick or GraphicsMagick)
    * [Hadley Wickham on the grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.html)
    * [Tufte in R](http://motioninsocial.com/tufte/) (if that's your sort of thing)
 
