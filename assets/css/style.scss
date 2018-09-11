@@ -17,12 +17,13 @@ h1, h2, h3 {
 a:link {
   color: #342c5c;
   text-decoration: underline;
+  letter-spacing: 0.05px;
 }
-a:hover {
+a:hover, a:focus{
   color: #342c5c;
   text-decoration: underline;
-  background-color: #c5c8c6;
-  border-radius: 4px;
+  letter-spacing: 0;
+  font-weight: bold;
 }
 a:active{
   color: #271872;
