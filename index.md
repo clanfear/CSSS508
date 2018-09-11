@@ -25,7 +25,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 
 ## Weekly lecture notes and links:
 
-1. RStudio and Markdown
+### 1. RStudio and Markdown
    * [Slides for Lecture 1: Course logistics, R/RStudio, making R Markdown documents](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
        + [Rmd for Lecture 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
    * [Lecture Video for Lecture 1](https://youtu.be/iLqvlSgiO6c)
@@ -45,8 +45,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * [Shapes and line types](http://www.cookbook-r.com/Graphs/Shapes_and_line_types/) in base R
    * [Color names (PDF)](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) in base R
    
-2. Visualizing Data
-
+### 2. Visualizing Data
    * [Slides for Lecture 2: Plotting with `ggplot2`](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.html)
        + [Rmd for Lecture 2 slides](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.Rpres)
    * [Lecture Video for Lecture 2](https://youtu.be/eJuWqsj8K5A)
@@ -65,8 +64,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * [Hadley Wickham on the grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.html)
    * [Tufte in R](http://motioninsocial.com/tufte/) (if that's your sort of thing)
 
-3. Manipulating and Summarizing Data
-
+### 3. Manipulating and Summarizing Data
    * [Slides for Lecture 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
        + [Rmd for Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.Rpres)
    * [Lecture Video for Lecture 3](https://youtu.be/-jCMNTUUmJI)
@@ -83,8 +81,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
        + [Joining data in `dplyr`](https://cran.rstudio.com/web/packages/dplyr/vignettes/two-table.html)
        + More advanced joins: [`sqldf` for easy SQL in R](https://cran.r-project.org/web/packages/sqldf/index.html)
    
-4. Understanding R Data Structures
-
+### 4. Understanding R Data Structures
    * [Slides for Lecture 4: R data structures](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.html)
        + [Rmd for Lecture 4 slides](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.Rpres)
    * [Lecture Video for Lecture 4](https://youtu.be/giD90SP7r64)
@@ -100,7 +97,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * [Setting up swirl for practice](http://swirlstats.com/students.html)
    * Reading: **[Data Structures chapter in Advanced R](http://adv-r.had.co.nz/Data-structures.html)**
 
-5. Importing, Exporting, and Cleaning Data
+### 5. Importing, Exporting, and Cleaning Data
    * [Slides for Lecture 5: Data import, export, and cleaning](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.html)
        + [Rmd for Lecture 5 slides](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.Rpres)
    * [Lecture Video for Lecture 5](https://youtu.be/9zObKNltIlw)
@@ -131,8 +128,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * Factors:
        + [Lots on factors from Jenny Bryan](http://stat545-ubc.github.io/block014_factors.html)
        
-6. Using Loops
-
+### 6. Using Loops
    * [Slides for Lecture 6: Looping with `for()` loops](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.html)
        + [Rmd for Lecture 6 slides](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.Rpres)
    * [Lecture Video for Lecture 6](https://youtu.be/ffYdAIVm-HE)
@@ -141,8 +137,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5_p2.html)
        + Homework 5, Part 2 Key: HTML, RMD
    
-7. Writing Functions
-
+### 7. Writing Functions
    * [Slides for Lecture 7: Vectorization and writing functions](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.html)
        + [Rmd for Lecture 7 slides](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.Rpres)
    * [Lecture Video for Lecture 7](https://youtu.be/bKxiUd4Qfqg)
@@ -155,8 +150,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * [Code style guide](http://adv-r.had.co.nz/Style.html) for writing functions, etc.
    * [R, the master troll of statistical languages](http://www.talyarkoni.org/blog/2012/06/08/r-the-master-troll-of-statistical-languages/) (to read if you feel a bit frustrated!)
 
-8.  Working with Text Data
-
+### 8.  Working with Text Data
    * [Slides for Lecture 8: Working with strings and character data](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.html)
        + [Rmd for Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.Rpres)
    * [Lecture Video for Lecture 8](https://youtu.be/UosA8PxcVPM)
@@ -171,8 +165,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * [Site for regular expression testing](http://regexr.com/)  with a good cheatsheet and hover explanations
    * [Blog post explaining `paste()`](https://trinkerrstuff.wordpress.com/2013/09/15/paste-paste0-and-sprintf-2) for combining strings
    
-9. Working with Geographical Data
-
+### 9. Working with Geographical Data
    * [Slides for Lecture 9: Mapping and labels in `ggplot2`](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_week9_mapping.html)
        + [R code in Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_week9_mapping.Rpres)
    * [Lecture Video for Lecture 9](https://youtu.be/NUL9ndVbuOE)
@@ -186,8 +179,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * [More in depth `ggmap` examples](http://vita.had.co.nz/papers/ggmap.pdf)
    * [`ggrepel` package vignette](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html)
 
-10. Reproducibility and Best Practices
-
+### 10. Reproducibility and Best Practices
    * Slides for Lecture 12: Reproducibility and Best Practices
       + Rmd for Lecture 12 slides
    * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
@@ -195,8 +187,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
       + [`huskydown`](https://github.com/benmarwick/huskydown)
       + [`rrtools`](https://github.com/benmarwick/rrtools)
       
-11. Working with Model Results
-
+### 11. Working with Model Results
    * [Slides for Lecture 11: Tidy Model Results and Applied Data Cleaning](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_broom.html)
        + [Rmd for Lecture 11 slides](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_broom.Rpres)
    * [Lecture Video for Lecture 11](https://youtu.be/JjM0VYNGkUo)
@@ -205,8 +196,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * [`sjPlot` home page](http://www.strengejacke.de/sjPlot/)
    * [Overleaf online LaTeX editor](http://www.overleaf.com/)
 
-12. Working with Social Media Data (A bit out of date)
-
+### 12. Working with Social Media Data (A bit out of date)
    * [Slides for Lecture 12: Social media and text mining](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_scraping.html)
        + [Rmd for Lecture 12 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_scraping.Rpres)
    * [Lecture Video for Week 10](https://youtu.be/DJIgMr8GrzM)
