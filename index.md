@@ -8,7 +8,7 @@ University of Washington, Autumn 2018
 
 Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 
-## Important Links
+## Important links
 
 * [Canvas page for course (enrolled students only)](https://canvas.uw.edu/courses/1219583)
 * [Syllabus](https://clanfear.github.io/CSSS508/docs/syllabus.html)
