@@ -3,7 +3,9 @@ layout: default
 ---
 
 Welcome to CSSS 508: Introduction to R for Social Scientists
+
 University of Washington, Spring 2018
+
 Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 
 ## Important Links
@@ -190,6 +192,10 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 
 11. Reproducibility and Best Practices
    * Slides for Lecture 12: Reproducibility and Best Practices
+   * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
+   * R Packages:
+      + [`huskydown`](https://github.com/benmarwick/huskydown)
+      + [`rrtools`](https://github.com/benmarwick/rrtools)
 
 12. Working with Social Media Data (A bit out of date)
    * Slides for Lecture 12: Social media and text mining
