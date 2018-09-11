@@ -2,3 +2,18 @@
 ---
 
 @import "{{ site.theme }}";
+@import url(https://fonts.googleapis.com/css?family=Fira+Mono);
+
+body {
+  font-family: 'Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+  font-weight: normal;
+  color: #272822;
+}
+h1, h2, h3 {
+  font-family: Quattrocento;
+  font-weight: normal;
+  color: #342c5c;
+}
+code {
+  font-family: Fira Mono, 'Lucida Console', Monaco, monospace;
+}
