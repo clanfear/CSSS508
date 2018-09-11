@@ -26,7 +26,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 ## Weekly lecture notes and links:
 
 ### 1. RStudio and Markdown
-   * [Slides for Lecture 1: Course logistics, R/RStudio, making R Markdown documents](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
+   * [Slides for Lecture 1: Course logistics, R/RStudio, and R Markdown](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
        + [Rmd for Lecture 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
    * [Lecture Video for Lecture 1](https://youtu.be/iLqvlSgiO6c)
    * Homework 1: Due at 11:59PM on October 2nd
@@ -36,10 +36,10 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    * [Get R](https://cran.r-project.org/)
    * [Get RStudio](https://www.rstudio.com/)
    * [RMarkdown documentation](http://rmarkdown.rstudio.com/)
-       + [HTML document options (global formatting, etc.)](http://rmarkdown.rstudio.com/html_document_format.html)
-       + [PDF document options (requires LaTeX installation to output PDFs)](http://rmarkdown.rstudio.com/pdf_document_format.html)
-       + [Word document options (but please do not use Word output for this class!)](http://rmarkdown.rstudio.com/word_document_format.html)
-   * [Useful RStudio cheatsheets on R Markdown, RStudio shortcuts, etc.](https://www.rstudio.com/resources/cheatsheets/)
+       + [HTML document options](http://rmarkdown.rstudio.com/html_document_format.html) (global formatting, etc.)
+       + [PDF document options](http://rmarkdown.rstudio.com/pdf_document_format.html) (requires LaTeX installation to output PDFs)
+       + [Word document options](http://rmarkdown.rstudio.com/word_document_format.html) (but please do not use Word output for this class!)
+   * [Useful RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/) on R Markdown, RStudio shortcuts, etc.
    * [Information on the `prettydoc` package](https://yixuan.cos.name/prettydoc/cayman.html) for nicer looking RMarkdown themes
    * [`pander` documentation](http://rapporter.github.io/pander/) for making tables, etc.
    * [Shapes and line types](http://www.cookbook-r.com/Graphs/Shapes_and_line_types/) in base R
