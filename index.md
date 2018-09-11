@@ -6,7 +6,7 @@ Welcome to CSSS 508: Introduction to R for Social Scientists
 
 University of Washington, Autumn 2018
 
-Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
+Instructor: [Chuck Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 
 ## Important links
 
