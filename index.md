@@ -4,7 +4,7 @@ layout: default
 
 Welcome to CSSS 508: Introduction to R for Social Scientists
 
-University of Washington, Spring 2018
+University of Washington, Autumn 2018
 
 Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 
@@ -17,7 +17,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 
 ## Helpful resources:
 
-* [R for Data Science online](http://r4ds.had.co.nz/) textbook by Garrett Grolemund and Hadley Wickham. One of many good R texts available, but importantly it is free and focuses on the [tidyverse](http://tidyverse.org/) collection of R packages which form the backbone of this course.
+* [R for Data Science online](http://r4ds.had.co.nz/) textbook by Garrett Grolemund and Hadley Wickham. One of many good R texts available, but importantly it is free and focuses on the [`tidyverse`](http://tidyverse.org/) collection of R packages which form the backbone of this course.
 * [Advanced R](http://adv-r.had.co.nz/) online textbook by Hadley Wickham. A great source for more in-depth and advanced R programming.
 * [DataCamp for CSSS508](https://www.datacamp.com/enterprise/csss508-introduction-to-r-for-social-scientists/): Interactive R tutorials provided free of charge to registered CSSS508 students by DataCamp.
 * [Jenny Bryan's materials for STAT545 at UBC](Jenny Bryan's materials for STAT545 at UBC). CSSS508 is partly based on Rebecca Ferrell's abbreviated version of Bryan's course, so more explanations can be found on her page.
@@ -27,10 +27,10 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 
 1. RStudio and Markdown
    * [Slides for week 1: Course logistics, R/RStudio, making R Markdown documents](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
-       + [R code for Week 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
+       + [Rmd for Week 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
    * [Lecture Video for Week 1](https://youtu.be/iLqvlSgiO6c)
    * Homework 1: Due at 11:59PM on October 2nd
-       + [Homework 1](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
+       + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
        + Homework 1 Key #1: HTML, RMD
        + Homework 1 Key #2: HTML, RMD
    * [Get R](https://cran.r-project.org/)
@@ -47,89 +47,89 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
    
 2. Visualizing Data
 
-   * Slides for week 2: Plotting with ggplot2
-       + R code for week 2 slides
-   * Lecture Video for Week 2
+   * [Slides for week 2: Plotting with `ggplot2`](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.html)
+       + [Rmd for week 2 slides](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.Rpres)
+   * [Lecture Video for Week 2](https://youtu.be/eJuWqsj8K5A)
    * Homework 2: Due at 11:59PM on April 10th
-       + Homework 2
+       + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Key: HTML, RMD
-   * Visualization chapter in R for Data Science
-   * ggplot2 documentation
-   * ggplot2 Cheat Sheet
-   * Cookbook for R graph reference
-   * R graph catalog at UBC
-   * ggthemes package
-   * cowplot package for publication ready graphs, multiple plots in single image, etc.
-   * gganimate for easy animations (saving GIFs requires ImageMagick or GraphicsMagick)
-   * Hadley Wickham on the grammar of graphics
-   * Tufte in R (if that's your sort of thing)
-   * Caption demonstration with gridExtra or R Markdown
+   * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
+   * [`ggplot2` documentation](http://docs.ggplot2.org/current/)
+   * [`ggplot2` Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+   * [Cookbook for R graph reference](http://www.cookbook-r.com/Graphs/)
+   * [R graph catalog at UBC](http://shiny.stat.ubc.ca/r-graph-catalog/)
+   * `ggplot2` add-ons
+       + `ggthemes` package
+       + `cowplot` package for publication ready graphs, multiple plots in single image, etc.
+       + `gganimate` for easy animations (saving GIFs requires ImageMagick or GraphicsMagick)
+   * [Hadley Wickham on the grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.html)
+   * [Tufte in R](http://motioninsocial.com/tufte/) (if that's your sort of thing)
 
 3. Manipulating and Summarizing Data
 
-   * Slides for week 3: Manipulating and summarizing data with dplyr
-       + R code for week 3 slides
-   * Lecture Video for Week 3
+   * [Slides for week 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
+       + [Rmd for week 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.Rpres)
+   * [Lecture Video for Week 3](https://youtu.be/-jCMNTUUmJI)
    * Homework 3: Due at 11:59PM on April 17th
-       + Homework 3
+       + [Homework 3 Instructions](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW3/homework_3.html)
        + Homework 3 Key: HTML, RMD
-   * Data Transformation chapter in R for Data Science
-   * A cautionary tale about Excel
-   * dplyr stuff:
-       + dplyr cheatsheets with diagrams to help you remember functions
-       + Introduction to dplyr
-       + Window functions in dplyr
-       + Joining data in dplyr
-       + More advanced joins: sqldf for easy SQL in R
-   * nycflights13 documentation
+       + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
+   * Reading: **[Data Transformation chapter in R for Data Science](http://r4ds.had.co.nz/transform.html)**
+   * [A cautionary tale about Excel](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history)
+   * `dplyr` stuff:
+       + [`dplyr` cheatsheets](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) with diagrams to help you remember functions
+       + [Introduction to `dplyr`](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
+       + [Window functions in `dplyr`](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html)
+       + [Joining data in `dplyr`](https://cran.rstudio.com/web/packages/dplyr/vignettes/two-table.html)
+       + More advanced joins: [`sqldf` for easy SQL in R](https://cran.r-project.org/web/packages/sqldf/index.html)
    
 4. Understanding R Data Structures
 
-   * Slides for week 4: R data structures
-       + R code for week 4 slides
-   * Lecture Video for Week 4
+   * [Slides for week 4: R data structures](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.html)
+       + [R code for week 4 slides](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.Rpres)
+   * [Lecture Video for Week 4](https://youtu.be/giD90SP7r64)
    * Homework 4 (two options, complete one): Due at 11:59PM on April 24th
        + Homework 4: R Data Structures (Less Advanced)
-           * Homework 4: R Data Structures, HTML Document
-           * Homework 4: R Data Structures, R Markdown template (you will download this, fill in and submit on Canvas)
+           * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
+           * [Homework 4: R Data Structures, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4/homework_4.html)
            * Homework 4: Data Structures, Key: HTML, RMD
        + Homework 4: Linear Regression (More Advanced)
-           * Homework 4: Linear Regression, HTML Document
-           * Homework 4: Linear Regression, R Markdown template (you will download this, fill in and submit on Canvas)
+           * [Homework 4: Linear Regression, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4_regression/HW4_regression.Rmd) (you will download this, fill in and submit on Canvas)
+           * [Homework 4: Linear Regression, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4_regression/HW4_regression.html)
            * Homework 4: Linear Regression, Key: HTML, RMD
-   * Setting up swirl for practice
-   * Data Structures chapter in Advanced R
+   * [Setting up swirl for practice](http://swirlstats.com/students.html)
+   * Reading: **[Data Structures chapter in Advanced R](http://adv-r.had.co.nz/Data-structures.html)**
 
 5. Importing, Exporting, and Cleaning Data
-   * Slides for week 5: data import, export, and cleaning with readr, tidyr, and lubridate
-       + R code in week 5 slides
-   * Lecture Video for Week 5
+   * [Slides for Week 5: Data import, export, and cleaning](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.html)
+       + [R code in week 5 slides](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.Rpres)
+   * [Lecture Video for Week 5](https://youtu.be/9zObKNltIlw)
    * Homework 5, Part 1 due at 11:59 PM on May 1st
-       + Homework 5: HTML Document
-       + Homework 5: R Markdown template (you will download this, fill in and submit on Canvas)
+       + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
+       + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
        + Homework 5, Part 1 Key: HTML, RMD
-   * 2016 general election voting data for King County (60 MB download; save, don't load in browser!)
+       + [2016 general election voting data for King County](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt) (60 MB download; save, *don't load in browser*!)
    * Data in-class:
-       + Billboard Hot 100 data from 2000
-       + One day of Seattle Police Department incident data
+       + [Billboard Hot 100 data from 2000](https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv)
+       + [One day of Seattle Police Department incident data](https://raw.githubusercontent.com/clanfear/CSSS508/master/Seattle_Police_Department_911_Incident_Response.csv)
    * Data import and export:
-       + readr documentation
-       + Column types in readr
-       + Using dput when asking for help
-       + readxl and openxlsx packages for Excel
+       + [`readr` documentation](https://cran.r-project.org/web/packages/readr/readr.pdf)
+       + [Column types in readr](https://cran.r-project.org/web/packages/readr/vignettes/column-types.html)
+       + [Using `dput()` when asking for help](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example)
+       + [`readxl`](https://github.com/hadley/readxl) and [`openxlsx`](https://cran.r-project.org/web/packages/openxlsx/vignettes/Introduction.pdf) packages for Excel
    * General data access and cleaning:
-       + New York Times article on "data janitor" work
-       + Quartz guide to bad data: a must read!
-       + Lots of resources on survey data sources and analysis in R
-       + rOpenSci (many packages for accessing particular data sources in R)
-       + Qualtrics API package and Rmonkey for Survey Monkey
+       + [New York Times article on "data janitor" work](http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html)
+       + [Quartz guide to bad data: a must read!](http://qz.com/572338/the-quartz-guide-to-bad-data/)
+       + [Lots of resources on survey data sources and analysis in R](http://www.asdfree.com/)
+       + [rOpenSci](https://ropensci.org/packages/) (many packages for accessing particular data sources in R)
+       + [`qualtrics` API package](https://github.com/jbryer/qualtrics) and [`Rmonkey` for Survey Monkey](https://github.com/cloudyr/Rmonkey)
    * Tidying:
-       + tidyr vignette
-       + Tidy genomics (a walkthough of tidy data preparation and analysis)
+       + [`tidyr` vignette](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html)
+       + [Tidy genomics](http://varianceexplained.org/r/tidy-genomics/) (a walkthough of tidy data preparation and analysis)
    * Dates and times:
-       + lubridate vignette
+       + [`lubridate` vignette](https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html)
    * Factors:
-       + Lots on factors from Jenny Bryan
+       + [Lots on factors from Jenny Bryan](http://stat545-ubc.github.io/block014_factors.html)
        
 6. Using Loops
    * Slides for week 6: Looping with for() loops
