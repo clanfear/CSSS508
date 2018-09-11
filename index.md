@@ -27,12 +27,12 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
 
 ### 1. RStudio and Markdown
    * [Slides for Lecture 1: Course logistics, R/RStudio, making R Markdown documents](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
-       + [Rmd for Lecture 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
+     + [Rmd for Lecture 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
    * [Lecture Video for Lecture 1](https://youtu.be/iLqvlSgiO6c)
    * Homework 1: Due at 11:59PM on October 2nd
-       + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
-       + Homework 1 Key #1: HTML, RMD
-       + Homework 1 Key #2: HTML, RMD
+    + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
+    + Homework 1 Key #1: HTML, RMD
+    + Homework 1 Key #2: HTML, RMD
    * [Get R](https://cran.r-project.org/)
    * [Get RStudio](https://www.rstudio.com/)
    * [RMarkdown documentation](http://rmarkdown.rstudio.com/)
