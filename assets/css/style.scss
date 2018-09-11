@@ -14,9 +14,21 @@ h1, h2, h3 {
   font-weight: normal;
   color: #342c5c;
 }
-a {
+a:link {
   color: #342c5c;
   text-decoration: underline;
+}
+a:hover {
+  color: #342c5c;
+  text-decoration: underline;
+  background-color: #c5c8c6;
+  border-radius: 4px;
+}
+a:active{
+  color: #271872;
+}
+a:visited{
+  color: #4e428a;
 }
 code {
   font-family: Fira Mono, 'Lucida Console', Monaco, monospace;
