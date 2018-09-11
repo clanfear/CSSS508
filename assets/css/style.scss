@@ -14,19 +14,13 @@ h1, h2, h3 {
   font-weight: normal;
   color: #342c5c;
 }
-a:link {
+a {
   color: #342c5c;
-  text-decoration: underline;
-  letter-spacing: 0.05px;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid;
 }
-a:hover, a:focus{
-  color: #342c5c;
-  text-decoration: underline;
-  letter-spacing: 0;
-  font-weight: bold;
-}
-a:active{
-  color: #271872;
+a:hover {
 }
 a:visited{
   color: #4e428a;
