@@ -814,7 +814,7 @@ flights %&gt;% filter(dest == "SEA") %&gt;%
 `tally()` is a shortcut for `summarize(n(.))`: It creates a variable `n` equal to the number of rows in each group.
 
 ---
-### Join Example #3
+## Join Example #3
 
 Is there a relationship between departure delays and wind gusts?
 
@@ -823,43 +823,49 @@ Is there a relationship between departure delays and wind gusts?
 library(ggplot2)
 flights %&gt;% 
     select(origin, year, month, day, hour, dep_delay) %&gt;%
-    inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %&gt;%
+    inner_join(weather, 
+           by = c("origin", "year", "month", "day", "hour")) %&gt;%
     select(dep_delay, wind_gust) %&gt;%
     # removing rows with missing values
     filter(!is.na(dep_delay) &amp; !is.na(wind_gust)) %&gt;% 
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_point() + geom_smooth()
+    geom_point() + 
+  geom_smooth()
 ```
 
 ---
 ## Wind Gusts and Delays
 
-![](CSSS_508_Week3_dplyr_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
 
-Check out those 1200 mph winds!
+![](CSSS_508_Week3_dplyr_files/figure-html/unnamed-chunk-32-1.svg)&lt;!-- --&gt;
+
+Check out those 1200 mph winds!&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] These observations appear to have been fixed in the current data.]
 
 ---
 ## Redo After Removing Extreme Outliers, Just Trend
 
-
+.small[
 
 ```r
 flights %&gt;% 
     select(origin, year, month, day, hour, dep_delay) %&gt;%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %&gt;%
     select(dep_delay, wind_gust) %&gt;%
-    filter(!is.na(dep_delay) &amp; !is.na(wind_gust) &amp; wind_gust &lt; 250) %&gt;% 
+*   filter(!is.na(dep_delay) &amp; !is.na(wind_gust) &amp; wind_gust &lt; 250) %&gt;%
     ggplot(aes(x = wind_gust, y = dep_delay)) +
     geom_smooth() + 
     theme_bw(base_size = 16) +
     xlab("Wind gusts in departure hour (mph)") +
     ylab("Average departure delay (minutes)")
 ```
+]
 
 ---
 ## Wind Gusts and Delays: Mean Trend
 
-![](CSSS_508_Week3_dplyr_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
+![](CSSS_508_Week3_dplyr_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
 
 ---
 ## Tinkering Suggestions
@@ -882,7 +888,8 @@ class: inverse
 
 Pick something to look at in the `nycflights13` data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: `mutate()`, `summarize()`, `group_by()`, and any join. *Include at least one nicely formatted plot (`ggplot2`) and one table (`pander`)*. In plots and tables, use "nice" variable names (try out spaces!) and rounded values (&lt;= 3 digits).
 
-This time, *include all your code in your output document* (`echo=TRUE`), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one* individually (`airlines`, `airports`, `flights`, `planes`, and `weather`) using `data(dataframe_name)` (e.g. `data(flights)`).
+This time, *include all your code in your output document* (`echo=TRUE`), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  
+Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one* individually (`airlines`, `airports`, `flights`, `planes`, and `weather`) using `data(dataframe_name)` (e.g. `data(flights)`).
 
 ## DUE: 11:59 PM, April 17th
     </textarea>

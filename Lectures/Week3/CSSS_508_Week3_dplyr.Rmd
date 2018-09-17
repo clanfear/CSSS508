@@ -26,9 +26,16 @@ csss508css <- list(
      ".hljs-tomorrow-night-bright .hljs" = list(
         "background" = "#10102c",
         "border-radius"="5px"),
-        ".remark-inline-code" = list(
-        "background"= "#c5c8c6",
+     ".remark-inline-code" = list(
+        # "background"= "#c5c8c6",
+        "background" = "#E0E0E0",
         "color" = "#10102c",
+        "border-radius" = "3px",
+        "padding" = "2px"),
+     ".inverse .remark-inline-code" = list(
+        # "background"= "#c5c8c6",
+        "background" = "#10102c",
+        "color" = "#ececf8",
         "border-radius" = "3px",
         "padding" = "2px"),
      ".small" = list("font-size" = "75%"),
@@ -586,7 +593,7 @@ flights %>% filter(dest == "SEA") %>%
 `tally()` is a shortcut for `summarize(n(.))`: It creates a variable `n` equal to the number of rows in each group.
 
 ---
-### Join Example #3
+## Join Example #3
 
 Is there a relationship between departure delays and wind gusts?
 
@@ -594,16 +601,21 @@ Is there a relationship between departure delays and wind gusts?
 library(ggplot2)
 flights %>% 
     select(origin, year, month, day, hour, dep_delay) %>%
-    inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
+    inner_join(weather, 
+           by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
     # removing rows with missing values
     filter(!is.na(dep_delay) & !is.na(wind_gust)) %>% 
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_point() + geom_smooth()
+    geom_point() + 
+  geom_smooth()
 ```
 
 ---
 ## Wind Gusts and Delays
+```{r, echo=FALSE}
+
+```
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE, fig.height=4, dev='svg'}
 library(ggplot2)
@@ -611,29 +623,34 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
     # removing rows with missing values
-    filter(!is.na(dep_delay) & !is.na(wind_gust)) %>% 
+    filter(!is.na(dep_delay) & !is.na(wind_gust)) %>%
+    # Funky 1200 mph observations were dropped so I make new ones!
+    mutate(wind_gust = if_else(row_number() %in% c(1,2,3), 1200, wind_gust)) %>%
     ggplot(aes(x = wind_gust, y = dep_delay)) +
     geom_point() + geom_smooth()
 ```
 
-Check out those 1200 mph winds!
+Check out those 1200 mph winds!<sup>1</sup>
+
+.footnote[[1] These observations appear to have been fixed in the current data.]
 
 ---
 ## Redo After Removing Extreme Outliers, Just Trend
 
-
+.small[
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 flights %>% 
     select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
-    filter(!is.na(dep_delay) & !is.na(wind_gust) & wind_gust < 250) %>% 
+    filter(!is.na(dep_delay) & !is.na(wind_gust) & wind_gust < 250) %>% #<<
     ggplot(aes(x = wind_gust, y = dep_delay)) +
     geom_smooth() + 
     theme_bw(base_size = 16) +
     xlab("Wind gusts in departure hour (mph)") +
     ylab("Average departure delay (minutes)")
 ```
+]
 
 ---
 ## Wind Gusts and Delays: Mean Trend
@@ -672,7 +689,7 @@ class: inverse
 
 Pick something to look at in the `nycflights13` data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: `mutate()`, `summarize()`, `group_by()`, and any join. *Include at least one nicely formatted plot (`ggplot2`) and one table (`pander`)*. In plots and tables, use "nice" variable names (try out spaces!) and rounded values (<= 3 digits).
 
-This time, *include all your code in your output document* (`echo=TRUE`), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one* individually (`airlines`, `airports`, `flights`, `planes`, and `weather`) using `data(dataframe_name)` (e.g. `data(flights)`).
+This time, *include all your code in your output document* (`echo=TRUE`), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  
+Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one* individually (`airlines`, `airports`, `flights`, `planes`, and `weather`) using `data(dataframe_name)` (e.g. `data(flights)`).
 
 ## DUE: 11:59 PM, April 17th
-

@@ -176,13 +176,19 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
 
 
 /* Extra CSS */
-.hljs-tomorrow-night .hljs {
+.hljs-tomorrow-night-bright .hljs {
   background: #10102c;
   border-radius: 5px;
 }
 .remark-inline-code {
-  background: #c5c8c6;
+  background: #E0E0E0;
   color: #10102c;
+  border-radius: 3px;
+  padding: 2px;
+}
+.inverse .remark-inline-code {
+  background: #10102c;
+  color: #ececf8;
   border-radius: 3px;
   padding: 2px;
 }
