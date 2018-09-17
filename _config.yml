@@ -1,5 +1,6 @@
 title: 'UW CSSS508'
 description: "Course website for CSSS508: Introduction to R for Social Scientists"
+logo: 'https://raw.githubusercontent.com/clanfear/CSSS508/master/docs/img/csss_white.png'
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-minimal
