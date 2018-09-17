@@ -39,6 +39,8 @@ layout: default
        + [Word document options](http://rmarkdown.rstudio.com/word_document_format.html) (but please do not use Word output for this class!)
    * [Useful RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/) on R Markdown, RStudio shortcuts, etc.
    * [Information on the `prettydoc` package](https://yixuan.cos.name/prettydoc/cayman.html) for nicer looking RMarkdown themes
+   * [Presentations in RStudio](https://support.rstudio.com/hc/en-us/articles/200486468-Authoring-R-Presentations) for simple presentations
+   * [Xaringan](https://github.com/yihui/xaringan) for advanced presentations
    * [`pander` documentation](http://rapporter.github.io/pander/) for making tables, etc.
    * [Shapes and line types](http://www.cookbook-r.com/Graphs/Shapes_and_line_types/) in base R
    * [Color names (PDF)](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) in base R
@@ -58,7 +60,7 @@ layout: default
    * `ggplot2` add-ons
        + [`ggthemes` package](https://github.com/jrnold/ggthemes)
        + [`cowplot` package](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html) for publication ready graphs, multiple plots in single image, etc.
-       + [`gganimate` package](https://github.com/dgrtwo/gganimate) for easy animations (saving GIFs requires ImageMagick or GraphicsMagick)
+       + [`gganimate` package](https://github.com/dgrtwo/gganimate) for easy animations (saving GIFs requires [ImageMagick](https://www.imagemagick.org/script/index.php) or [GraphicsMagick](http://www.graphicsmagick.org/))
    * [Hadley Wickham on the grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.html)
    * [Tufte in R](http://motioninsocial.com/tufte/) (if that's your sort of thing)
 
@@ -172,7 +174,8 @@ layout: default
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
        + [Seattle restaurant inspection data since 2012](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata) (CSV, about 16 MB) from King County
        + Homework 7 Key: HTML, RMD [Posted after HW7]
-   * Suggested text: A[pplied Spatial Data Analysis with R](http://www.springer.com/us/book/9781461476177)  by Bivand et al.
+   * Suggested text: [Applied Spatial Data Analysis with R](http://www.springer.com/us/book/9781461476177)  by Bivand et al.
+   * [RSpatial.org](http://www.rspatial.org/index.html): Massive resource for spatial analysis in R
    * [`ggmap` package examples](https://github.com/dkahle/ggmap)
    * [More in depth `ggmap` examples](http://vita.had.co.nz/papers/ggmap.pdf)
    * [`ggrepel` package vignette](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html)

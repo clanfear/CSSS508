@@ -1,0 +1,8 @@
+base
+xaringanthemer
+dplyr
+gapminder
+bindrcpp
+pander
+nycflights13
+ggplot2
