@@ -27,13 +27,11 @@ csss508css <- list(
         "background" = "#10102c",
         "border-radius"="5px"),
      ".remark-inline-code" = list(
-        # "background"= "#c5c8c6",
         "background" = "#E0E0E0",
         "color" = "#10102c",
         "border-radius" = "3px",
         "padding" = "2px"),
      ".inverse .remark-inline-code" = list(
-        # "background"= "#c5c8c6",
         "background" = "#10102c",
         "color" = "#ececf8",
         "border-radius" = "3px",
