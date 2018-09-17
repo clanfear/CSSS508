@@ -2,15 +2,13 @@
 layout: default
 ---
 
-Welcome to CSSS 508: Introduction to R for Social Scientists
-
-University of Washington, Autumn 2018
-
-Instructor: [Chuck Lanfear](mailto:clanfear@uw.edu), PhD student, UW Sociology
+# CSSS 508
+## Introduction to R for Social Scientists
+### University of Washington
 
 ## Important links
 
-* [Canvas page for course (enrolled students only)](https://canvas.uw.edu/courses/1219583)
+* [Canvas Page (enrolled students only)](https://canvas.uw.edu/courses/1219583)
 * [Syllabus](https://clanfear.github.io/CSSS508/docs/syllabus.html)
 * [Homework Instructions](https://clanfear.github.io/CSSS508/docs/homework.html) and grading rubric.
 * [Peer Review Instructions](https://clanfear.github.io/CSSS508/docs/peer_review.html) and suggestions for reading code.

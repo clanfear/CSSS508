@@ -1,6 +1,7 @@
 
-# CSSS508: Introduction to R for Social Scientists
-## University of Washington
+# CSSS 508
+## Introduction to R for Social Scientists
+### University of Washington
 
 Instructor: [Charles Lanfear](mailto:clanfear@uw.edu)
 
