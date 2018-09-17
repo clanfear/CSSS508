@@ -1,3 +1,4 @@
+
 # CSSS508: Introduction to R for Social Scientists
 ## University of Washington
 
