@@ -57,7 +57,7 @@ office hours and collaborative work time. You are highly encouraged to attend an
 about homework, lectures, or programming in R in general.
 
 ### Extra Help
-[Mailing List](mailto:cs_ss508a_au17@uw.edu)
+[Mailing List](csss508a_au18@uw.edu)
 
 This course features a mailing list for asking questions related to homeworks. I encourage
 you to use this list as your primary means of answering technical questions. As you 
@@ -70,13 +70,21 @@ has a large number of students but no teaching assistant, so students are both e
 and expected to assist one another with technical problems, both in and out of class.
 Diagnosing problems inothers' code is a very effective way to improve your understanding of programming.
 
-[DataCamp](https://www.datacamp.com/groups/cs-ss508-introduction-to-r-for-social-scientists/assignments)
+[Slack Channel](https://uwcsss508au18.slack.com/)
+
+This term I am experimenting with using a Slack channel for student communication.
+You may ask and answer questions in the Slack channel instead of the mailing list.
+Additionally, I encourage you to have the Slack channel open during class and use it 
+to ask and answer questions or share liinks between yourselves. Your `@uw.edu` email
+must be used to register for the channel.
+
+[DataCamp](https://www.datacamp.com/enterprise/csss508-autumn-2018)
 
 Students registered for this course are provided with free access to [DataCamp](http://www.datacamp.com) R courses for the duration of the term.
 DataCamp provides commercial interactive tutorials created by experts in data science, statistics, and general programming. These tutorials
 are provided as *optional* resources for additional practice and deeper learning. Free access to DataCamp is available
 for approximately six months, so you may review and work on them after the course has ended. 
-If you are registered for the course and did not receive a DataCamp email by the end of Wednesday 3/28/18, please [email the instructor](mailto:clanfear@uw.edu).
+If you are registered for the course and did not receive a DataCamp email by the end of Wednesday 10/3/18, please [email the instructor](mailto:clanfear@uw.edu).
 
 ## Course Requirements
 This course is graded as credit / no credit. To pass you need to receive 

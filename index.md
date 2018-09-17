@@ -12,12 +12,14 @@ layout: default
 * [Syllabus](https://clanfear.github.io/CSSS508/docs/syllabus.html)
 * [Homework Instructions](https://clanfear.github.io/CSSS508/docs/homework.html) and grading rubric.
 * [Peer Review Instructions](https://clanfear.github.io/CSSS508/docs/peer_review.html) and suggestions for reading code.
+* [Class Mailing List](csss508a_au18@uw.edu)
+* [Class Slack Channel](https://uwcsss508au18.slack.com/)
 
 ## Helpful resources:
 
 * [R for Data Science online](http://r4ds.had.co.nz/) textbook by Garrett Grolemund and Hadley Wickham. One of many good R texts available, but importantly it is free and focuses on the [`tidyverse`](http://tidyverse.org/) collection of R packages which form the backbone of this course.
 * [Advanced R](http://adv-r.had.co.nz/) online textbook by Hadley Wickham. A great source for more in-depth and advanced R programming.
-* [DataCamp for CSSS508](https://www.datacamp.com/enterprise/csss508-introduction-to-r-for-social-scientists/): Interactive R tutorials provided free of charge to registered CSSS508 students by DataCamp.
+* [DataCamp for CSSS508 AU18](https://www.datacamp.com/enterprise/csss508-autumn-2018): Interactive R tutorials provided free of charge for six months to registered CSSS508 students courtesy of [DataCamp](https://www.datacamp.com/).
 * [Jenny Bryan's materials for STAT545 at UBC](Jenny Bryan's materials for STAT545 at UBC). CSSS508 is partly based on Rebecca Ferrell's abbreviated version of Bryan's course, so more explanations can be found on her page.
 * [Instructions for using RStudio in the CSSCR lab](https://clanfear.github.io/CSSS508/docs/CSSCR.html) (hopefully week 1 only; I would prefer you become comfortable using your own computers!)
 
