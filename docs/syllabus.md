@@ -15,9 +15,9 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu)
 [Savery 117](https://www.washington.edu/maps/#!/sav): Mondays 3:30-5:20
 
 **My Office**
-[Savery 240](https://www.washington.edu/maps/#!/sav): By appointment
+[Savery 255](https://www.washington.edu/maps/#!/sav): By appointment
 
-# Overview
+## Overview
 This course is intended to give students a foundational understanding of programming
 in the statistical language R. This knowledge is intended to be broadly useful wherever
 you encounter data in your education and career. General topics we will focus on include:
@@ -78,7 +78,7 @@ are provided as *optional* resources for additional practice and deeper learning
 for approximately six months, so you may review and work on them after the course has ended. 
 If you are registered for the course and did not receive a DataCamp email by the end of Wednesday 3/28/18, please [email the instructor](mailto:clanfear@uw.edu).
 
-# Course Requirements
+## Course Requirements
 This course is graded as credit / no credit. To pass you need to receive 
 at least 60% of the available points. There will be approximately 7 graded homeworks,
 one nearly every week. There are 4 points possible for each week that features a homework.
@@ -101,7 +101,7 @@ These reviews will be due midnight prior to the following class meeting.
 Each peer review is worth 1 point and will be evaluated by the instructor on a binary
 "good" / "not good" scale. 
 
-# Course Texts
+## Course Texts
 There are no texts you are required to purchase for this course. The main recommended
 texts are available online:
 
@@ -140,7 +140,7 @@ multiple updates per day and thousands of archived posts.
 community. Nearly any question you have about programming in R has probably already
 been asked and answered here, and if not, this is the place to ask.
 
-# Software
+## Software
 This is a course in R programming, so you will be expected to use R. You are welcome
 to use lab computers, however R and RStudio are free software, so you are strongly
 urged to use your own computer so that you will be more comfortable and have easy
@@ -151,22 +151,17 @@ the [RStudio home page](https://www.rstudio.com/products/rstudio/download/)(you 
 the free RStudio desktop version). The instructor can provide support with installing
 R or RStudio in office hours or over email.
 
-# Course Outline
-All topics are subject to change, however a tentative outline is as follows, with 
-the last three reserved for topics requested by students. In terms with 10 class
-days, only two optional topics will be covered in class. A video lecture will be 
-available for the remaining topic.
+## Course Outline
 
-**Lectures**
-
-1. R, RStudio, and Markdown Documents
-2. Plotting with `ggplot2`
-3. Manipulating and Summarizing Data with `dplyr`
-4. R Data Structures
+1. RStudio and Markdown
+2. Visualizing Data
+3. Manipulating and Summarizing Data
+4. Understanding R Data Structures
 5. Importing, Exporting, Cleaning Data
-6. Loops
-7. Vectorization and Writing Functions
-8. Manipulating Text and Regular Expressions
-9. Spatial Data and Mapping
-10. Social Media Data
-11. Tidy Model Results and Advanced Data Manipulation
+6. Using Loops
+7. Writing Functions
+8. Working with Text Data
+9. Working with Geographical Data
+10. Reproducibility and Best Practices
+11. Working with Model Results
+12. Working with Social Media Data
