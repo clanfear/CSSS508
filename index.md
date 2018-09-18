@@ -12,7 +12,7 @@ layout: default
 * [Syllabus](https://clanfear.github.io/CSSS508/docs/syllabus.html)
 * [Homework Instructions](https://clanfear.github.io/CSSS508/docs/homework.html) and grading rubric.
 * [Peer Review Instructions](https://clanfear.github.io/CSSS508/docs/peer_review.html) and suggestions for reading code.
-* [Class Mailing List](csss508a_au18@uw.edu)
+* [Class Mailing List](mailto:csss508a_au18@uw.edu)
 * [Class Slack Channel](https://uwcsss508au18.slack.com/)
 
 ## Helpful resources:

@@ -57,7 +57,7 @@ office hours and collaborative work time. You are highly encouraged to attend an
 about homework, lectures, or programming in R in general.
 
 ### Extra Help
-[Mailing List](csss508a_au18@uw.edu)
+[Mailing List](mailto:csss508a_au18@uw.edu)
 
 This course features a mailing list for asking questions related to homeworks. I encourage
 you to use this list as your primary means of answering technical questions. As you 
