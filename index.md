@@ -14,6 +14,7 @@ layout: default
 * [Peer Review Instructions](https://clanfear.github.io/CSSS508/docs/peer_review.html) and suggestions for reading code.
 * [Class Mailing List](mailto:csss508a_au18@uw.edu)
 * [Class Slack Channel](https://uwcsss508au18.slack.com/)
+* [R and RStudio Installation Instructions](https://clanfear.github.io/CSSS508/docs/installation.html)
 
 ## Helpful resources:
 
