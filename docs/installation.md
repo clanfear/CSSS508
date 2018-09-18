@@ -65,7 +65,7 @@ In the instructions below, anywhere it says (version), there will be a series of
 
 When you open RStudio, you should see something similar to this in the bottom-left:
 
-![](https://raw.githubusercontent.com/clanfear/CSSS508/master/dics/img/r_first_load.png)
+![](https://raw.githubusercontent.com/clanfear/CSSS508/master/docs/img/r_first_load.PNG)
 
 If so, your installation was successful!
 
