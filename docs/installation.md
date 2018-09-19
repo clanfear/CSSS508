@@ -22,21 +22,21 @@ In the instructions below, anywhere it says (version), there will be a series of
 
 ### MacOS
 
-   1. Go to the [MacOS Installers page](https://cran.r-project.org/bin/macosx/).
+1. Go to the [MacOS Installers page](https://cran.r-project.org/bin/macosx/).
     * Scroll to "Latest release"
     * Click `R-(version).pkg` to download: Whatever version is listed will be the most current.
    
-   2. Run the installer.
+2. Run the installer.
     * Follow the on-screen instructions.
     * You do not need to change any default values unless you have a good reason.
    
-   3. Once it completes, R is installed!
+3. Once it completes, R is installed!
     * There may now be R icons on your desktop or start menu, but we typically do not use R directly.
    
-   4. Browse to the [XQuartz download page](https://www.xquartz.org/)
+4. Browse to the [XQuartz download page](https://www.xquartz.org/)
     * Click `XQuartz-(version).dmg` to download.
    
-   5. Run XQuartz installer.
+5. Run XQuartz installer.
     * XQuartz is needed to create windows to display many types of R graphics: this used to be included in MacOS until version 10.8 but now must be downloaded separately.
 
 ## Installing RStudio
