@@ -15,6 +15,7 @@ layout: default
 * [Class Mailing List](mailto:csss508a_au18@uw.edu)
 * [Class Slack Channel](https://uwcsss508au18.slack.com/)
 * [R and RStudio Installation Instructions](https://clanfear.github.io/CSSS508/docs/installation.html)
+* [Function Lecture Reference](https://clanfear.github.io/CSSS508/docs/functions.html)
 
 ## Helpful resources:
 
@@ -183,8 +184,9 @@ layout: default
    * [`ggrepel` package vignette](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html)
 
 ### 10. Reproducibility and Best Practices
-   * Slides for Lecture 12: Reproducibility and Best Practices
-      + Rmd for Lecture 12 slides
+   * Slides for Lecture 10: Reproducibility and Best Practices
+      + Rmd for Lecture 10 slides
+   * Leacture Video for Lecture 11
    * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
    * R Packages:
       + [`huskydown`](https://github.com/benmarwick/huskydown)
