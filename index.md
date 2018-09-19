@@ -22,7 +22,6 @@ layout: default
 * [R for Data Science online](http://r4ds.had.co.nz/) textbook by Garrett Grolemund and Hadley Wickham. One of many good R texts available, but importantly it is free and focuses on the [`tidyverse`](http://tidyverse.org/) collection of R packages which form the backbone of this course.
 * [Advanced R](http://adv-r.had.co.nz/) online textbook by Hadley Wickham. A great source for more in-depth and advanced R programming.
 * [DataCamp for CSSS508 AU18](https://www.datacamp.com/enterprise/csss508-autumn-2018): Interactive R tutorials provided free of charge for six months to registered CSSS508 students courtesy of [DataCamp](https://www.datacamp.com/).
-* [Jenny Bryan's materials for STAT545 at UBC](Jenny Bryan's materials for STAT545 at UBC). CSSS508 is partly based on Rebecca Ferrell's abbreviated version of Bryan's course, so more explanations can be found on her page.
 
 ## Weekly lecture notes and links:
 
