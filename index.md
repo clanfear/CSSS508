@@ -51,7 +51,7 @@ layout: default
    * [Slides for Lecture 2: Plotting with `ggplot2`](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.html)
        + [Rmd for Lecture 2 slides](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.Rpres)
    * [Lecture Video for Lecture 2](https://youtu.be/eJuWqsj8K5A)
-   * Homework 2: Due at 11:59PM on April 10th
+   * Homework 2: Due at 11:59PM on October 9th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Key: HTML, RMD
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
@@ -70,7 +70,7 @@ layout: default
    * [Slides for Lecture 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
        + [Rmd for Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.Rpres)
    * [Lecture Video for Lecture 3](https://youtu.be/-jCMNTUUmJI)
-   * Homework 3: Due at 11:59PM on April 17th
+   * Homework 3: Due at 11:59PM on October 16th
        + [Homework 3 Instructions](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW3/homework_3.html)
        + Homework 3 Key: HTML, RMD
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
@@ -87,7 +87,7 @@ layout: default
    * [Slides for Lecture 4: R data structures](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.html)
        + [Rmd for Lecture 4 slides](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.Rpres)
    * [Lecture Video for Lecture 4](https://youtu.be/giD90SP7r64)
-   * Homework 4 (two options, complete one): Due at 11:59PM on April 24th
+   * Homework 4 (two options, complete one): Due at 11:59PM on October 23rd
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: R Data Structures, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4/homework_4.html)
@@ -103,7 +103,7 @@ layout: default
    * [Slides for Lecture 5: Data import, export, and cleaning](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.html)
        + [Rmd for Lecture 5 slides](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.Rpres)
    * [Lecture Video for Lecture 5](https://youtu.be/9zObKNltIlw)
-   * Homework 5, Part 1 due at 11:59 PM on May 1st
+   * Homework 5, Part 1 due at 11:59 PM on October 30th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
        + Homework 5, Part 1 Key: HTML, RMD
@@ -134,7 +134,7 @@ layout: default
    * [Slides for Lecture 6: Looping with `for()` loops](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.html)
        + [Rmd for Lecture 6 slides](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.Rpres)
    * [Lecture Video for Lecture 6](https://youtu.be/ffYdAIVm-HE)
-   * Homework 5, Part 2 due at 11:59 PM on May 8th
+   * Homework 5, Part 2 due at 11:59 PM on November 6th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p2.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5_p2.html)
        + Homework 5, Part 2 Key: HTML, RMD
@@ -143,7 +143,7 @@ layout: default
    * [Slides for Lecture 7: Vectorization and writing functions](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.html)
        + [Rmd for Lecture 7 slides](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.Rpres)
    * [Lecture Video for Lecture 7](https://youtu.be/bKxiUd4Qfqg)
-   * Homework 6, Part 1 due at 11:59 PM on May 15th
+   * Homework 6, Part 1 due at 11:59 PM on November 13th
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
        + Homework 6, Part 1 Key: HTML, RMD
@@ -156,7 +156,7 @@ layout: default
    * [Slides for Lecture 8: Working with strings and character data](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.html)
        + [Rmd for Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.Rpres)
    * [Lecture Video for Lecture 8](https://youtu.be/UosA8PxcVPM)
-   * Homework 6, Part 2 due at 11:59 PM on May 22nd
+   * Homework 6, Part 2 due at 11:59 PM on November 20th
        + Homework 6, Part 2: R Markdown template
        + Homework 6, Part 2 Key: HTML, RMD
    * Data In-Class:
@@ -171,7 +171,7 @@ layout: default
    * [Slides for Lecture 9: Mapping and labels in `ggplot2`](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_week9_mapping.html)
        + [R code in Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_week9_mapping.Rpres)
    * [Lecture Video for Lecture 9](https://youtu.be/NUL9ndVbuOE)
-   * Optional Homework 7: Due at 11:59 PM on May 29
+   * Optional Homework 7: Due at 11:59 PM on November 27th
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
        + [Seattle restaurant inspection data since 2012](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata) (CSV, about 16 MB) from King County

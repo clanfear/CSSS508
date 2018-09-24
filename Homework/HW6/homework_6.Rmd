@@ -1,7 +1,7 @@
 ---
 title: "HW 6: Pronto!"
 author: "YOUR NAME"
-date: "May 9, 2018"
+date: "November 7th, 2018"
 output:
   html_document:
     toc: true

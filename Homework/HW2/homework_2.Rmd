@@ -1,7 +1,7 @@
 ---
 title: 'CSSS508: HW2'
 author: "Charles Lanfear"
-date: "April 5, 2017"
+date: "October 3rd, 2018"
 output: html_document
 ---
 
@@ -9,4 +9,4 @@ Pick some relationship to look at in the Gapminder data and write up a .Rmd file
 
 Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Use chunk options `echo` and `results` to limit the code/output you show in the `.html`.
 
-### DUE: 11:59 PM, Tuesday April 11th, 2017
+### DUE: 11:59 PM, Tuesday October 9th, 2018

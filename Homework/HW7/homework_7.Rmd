@@ -1,7 +1,7 @@
 ---
 title: "Lab/HW 7: Visualizing temporal and spatial data"
 author: "YOUR NAME"
-date: "May 24, 2017"
+date: "November 21st, 2017"
 output:
   html_document:
     toc: true

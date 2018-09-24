@@ -1,7 +1,7 @@
 ---
 title: 'CSSS508: HW1'
 author: "Charles Lanfear"
-date: "September 27, 2017"
+date: "September 26th, 2018"
 output: html_document
 ---
 
@@ -11,4 +11,4 @@ Mix in-line R calculations, tables, R output, and plots with text describing the
 
 Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text--*not as printed code and output*--and rounded so as not to be absurdly precise (1 to 3 digits).
 
-### DUE: 11:59 PM, Tuesday, October 3rd, 2017
+### DUE: 11:59 PM, Tuesday, October 2nd, 2018

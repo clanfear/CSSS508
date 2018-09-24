@@ -1,7 +1,7 @@
 ---
 title: 'CSSS508: HW3'
 author: "Charles Lanfear"
-date: "October 11, 2017"
+date: "October 10, 2018"
 output: html_document
 ---
 
@@ -9,4 +9,4 @@ Pick something to look at in the `nycflights13` data and write up a .Rmd file sh
 
 This time, *include all your code in your output document* (`echo=TRUE`), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one* individually (`airlines`, `airports`, `flights`, `planes`, and `weather`) using `data(dataframe_name)` (e.g. `data(flights)`).
 
-DUE: 11:59 PM, Oct 17th
+### DUE: 11:59 PM, Oct 16th
