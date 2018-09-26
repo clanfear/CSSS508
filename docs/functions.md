@@ -11,10 +11,12 @@ Functions listed like `dplyr::filter()` indicate that the function is named `fil
 
 1. [RStudio and Markdown](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
    * `<-`: The assignment operator, for creating objects.
+   * `$`: The extract operator, for extracting or replacing parts of objects.
    * `c()`: **Combine** elements into a vector.
    * `data()`: Load data objects from R packages.
    * `head()`: Displays the first few elements of an object.
    * `hist()`: Draws a histogram of a numeric vector.
+   * `pairs()`: Draws pairwise scatterplots of a dataframe.
    * `install.packages()`: Install a package when given a package name as a string (that is, a name in quotes).
    * `library()`: Loads a package when given the package name (doesn't need to be in quotes).
    * `pander::pander()`: Creates a table in an R Markdown doc out of an object.

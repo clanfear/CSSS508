@@ -49,6 +49,9 @@ csss508css <- list(
      ".pull-right40" = list(
         "float" = "right",
         "width" = "38%" ),
+     ".pull-right30" = list(
+        "float" = "right",
+        "width" = "30%" ),
      "a" = list("text-decoration" = "underline"),
      ".inverse a" = list("color" = "#cbd3a3"),
      "body" = list("line-height" = "1.4")
@@ -499,9 +502,13 @@ You can display or "call" an object simply by using its name.
 new.object
 ```
 
+--
+
 Object names can contain `_` and `.` in them, but cannot *begin* with numbers. Try
 to be consistent in naming objects. RStudio auto-complete means *long names are better 
-than vague ones*! Good names<sup>1</sup> save confusion later.
+than vague ones*! 
+
+*Good names<sup>1</sup> save confusion later.*
 
 .footnote[[1] "There are only two hard things in Computer Science: cache invalidation and naming things." - Phil Karlton]
 
@@ -762,7 +769,7 @@ For handouts, memos, and homeworks, default R Markdown PDFs look surprisingly go
 .footnote[
 [1] These slides were created using [Xaringan](https://github.com/yihui/xaringan), a blend of RMarkdown and CSS.
 
-[2] Here be dragons! LaTeX is like a wizard with dementia: Terribly powerful but incomprehensible.
+[2] Here be dragons! LaTeX is powerful but exacts a terrible price.
 ]
 
 ---
@@ -880,7 +887,7 @@ to:
     date: "`r inline_expr("Sys.time()", "md")`"
 Fancier option: Use this instead to take today's date and make it read nicely:
 
-    date: `format(Sys.Date(), format="%B %d, %Y")` 
+    date: "`r inline_expr('format(Sys.Date(), format="%B %d, %Y")', "md")`"
 
 ---
 class: inverse
@@ -933,7 +940,7 @@ summary(cars)
 
 # Ugly Pictures of `cars`
 
-`hist()` generates a histogram of a vector.
+`hist()` generates a histogram of a vector. Note you can access a vector that is a column of a dataframe using `$`, the **extract operator**.
 
 .pull-left[
 ```{r}
@@ -978,7 +985,7 @@ If you put an assignment such as `x <- y` in parentheses `()`, R will print the 
 
 .small[
 ```{r, out.height="400px"}
-plot(dist ~ speed, data = cars,
+plot(dist ~ speed, data = cars, #<<
      xlab = "Speed (mph)",
      ylab = "Stopping distance (ft)",
      main = "Speeds and stopping distances of cars",
@@ -988,6 +995,9 @@ abline(v = speed_mean, col = "cornflowerblue")
 ```
 ]
 
+.pull-right[
+.footnote[Note that `dist ~ speed` is a **formula** of the type `y ~ x`. The first element (`dist`) gets plotted on the y-axis and the second (`speed`) goes on the x-axis. Regression formulae follow this convention as well!]
+]
 
 ---
 
@@ -1005,16 +1015,22 @@ Then, load it using `data(swiss)`
 
 --
 
-Add chunks to your R Markdown document inspecting swiss, defining variables, doing some exploratory plots using hist or plot. You can experiment with [colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) and [shapes](http://www.cookbook-r.com/Graphs/Shapes_and_line_types/).
+Add chunks to your R Markdown document inspecting swiss, defining variables, doing some exploratory plots using hist or plot.
+
+You might experiment with [colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) and [shapes](http://www.cookbook-r.com/Graphs/Shapes_and_line_types/).
 
 ---
 
 ## Looking at `swiss`
 
 ```{r}
-pairs(swiss, pch = 8, col = "violet",
+pairs(swiss, pch = 8, col = "violet", #<<
       main = "Pairwise comparisons of Swiss variables")
 ```
+
+.pull-right30[
+.footnote[`pairs()` is a pairwise scatterplot function. Good for a quick look at small datasets, but mostly useless for larger data.]
+]
 
 ---
 
@@ -1040,7 +1056,7 @@ In the console: `install.packages("pander")`.
 
 ```{r, eval=FALSE}
 library(pander) # loads pander, do once in your session
-pander(summary(swiss), style = "rmarkdown", split.tables = 120)
+pander(summary(swiss), style = "rmarkdown", split.tables = 120) #<<
 ```
 
 .small[
@@ -1049,6 +1065,8 @@ library(pander) # loads pander, do once in your session
 pander(summary(swiss), style = "rmarkdown", split.tables = 120)
 ```
 ]
+
+.footnote[Note that we put the `summary(swiss)` function call inside the `pander()` call. This is called *nesting functions* and is very common. I'll introduce a method next week to avoid confusion from nesting too many functions inside each other.]
 
 ---
 
@@ -1073,7 +1091,7 @@ Mix in-line R calculations, tables, R output, and plots with text describing the
 
 Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (e.g. round `x` with `round(x, 2)`).
 
-### DUE: 11:59 PM, Tuesday, April 3rd, 2018
+### DUE: 11:59 PM, Tuesday, October 2nd, 2018
 
 ---
 
