@@ -15,6 +15,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu)
 [Savery 117](https://www.washington.edu/maps/#!/sav): Mondays 3:30-5:20
 
 **My Office**
+
 [Savery 255](https://www.washington.edu/maps/#!/sav): By appointment
 
 ## Overview
@@ -22,10 +23,10 @@ This course is intended to give students a foundational understanding of program
 in the statistical language R. This knowledge is intended to be broadly useful wherever
 you encounter data in your education and career. General topics we will focus on include:
 
-* Organizing projects and creating reproducible research
 * Exploring data with graphics and summaries
 * Cleaning and preparing data for analyses
 * Linking data sets together
+* Organizing projects and creating reproducible research
 
 By the end of this course you should feel *confident* approaching any data you encounter
 in the future. We will cover virtually no statistics, however it is the intention that this course will
@@ -62,7 +63,7 @@ about homework, lectures, or programming in R in general.
 This course features a mailing list for asking questions related to homeworks. I encourage
 you to use this list as your primary means of answering technical questions. As you 
 develop your skills, you will find that learning *how* to ask questions well makes 
-finding answers much easier. To use the mailing list, send your email to `cs_ss508a_sp18@uw.edu`
+finding answers much easier. To use the mailing list, send your email to `csss508a_au18@uw.edu`
 and it will be sent to the instructor and all students in the class. Unless you specifically
 request otherwise, emailed questions directed to me ([clanfear@uw.edu](mailto:clanfear@uw.edu)) that may be useful to others in the class
 will be answered with a response to the class mailing list. Please note that this course
@@ -152,7 +153,7 @@ been asked and answered here, and if not, this is the place to ask.
 This is a course in R programming, so you will be expected to use R. You are welcome
 to use lab computers, however R and RStudio are free software, so you are strongly
 urged to use your own computer so that you will be more comfortable and have easy
-access. In terms of R packages, this course will ephasize the `tidyverse` family of 
+access. In terms of R packages, this course will ephasize the [`tidyverse`](https://tidyverse.org) family of 
 packages for manipulating and displaying data. You can acquire R from the
 [Comprehensive R Archive Network (CRAN)](https://cran.rstudio.com/) and RStudio from
 the [RStudio home page](https://www.rstudio.com/products/rstudio/download/)(you want

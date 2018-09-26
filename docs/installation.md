@@ -1,4 +1,3 @@
-
 # Installing R and RStudio
 
 This document walks you through installing R and RStudio on your personal computer.
