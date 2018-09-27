@@ -129,7 +129,7 @@ mono_accent(base_color = "#342c5c",
 Location: 
 * Lecture: SAV117 on Wednesdays, 3:30-5:20
 * Optional Lab: SAV117 on Mondays, 3:30-5:20
-* Office Hours: SAV240 by Appointment
+* Office Hours: SAV255 by Appointment
 
 Materials: http://clanfear.github.io/CSSS508
 

@@ -28,7 +28,7 @@ layout: default
 ### 1. RStudio and R Markdown
    * [Slides for Lecture 1: Course logistics, R/RStudio, and R Markdown](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
        + [Rmd for Lecture 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
-   * [Lecture Video for Lecture 1](https://youtu.be/iLqvlSgiO6c)
+   * [Lecture Video for Lecture 1](https://youtu.be/u6_uhABKia4), recorded Sep. 26, 2018
    * Homework 1: Due at 11:59PM on October 2nd
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
        + Homework 1 Key #1: HTML, RMD
