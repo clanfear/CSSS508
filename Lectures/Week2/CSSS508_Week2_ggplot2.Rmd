@@ -144,7 +144,7 @@ assignment) its own folder. I use the following system:
 --
 
 For example, this presentation is located and named this:
-`GitHub/CSSS508/Lectures/Week2/CSSS508_Week2_ggplot2.Rpres`
+`GitHub/CSSS508/Lectures/Week2/CSSS508_Week2_ggplot2.Rmd`
 
 --
 
@@ -171,7 +171,9 @@ We mainly work with three types of file in this class:
 
 --
 
-* `.R`: These are **R** *syntax* files, where you write code to process and analyze data *without making an output document*.
+* `.R`: These are **R** *syntax* files, where you write code to process and analyze data *without making an output document*.<sup>1</sup>
+
+.footnote[[1] While beyond the scope of this class, you can use the `source()` function to run a `.R` script file inside a `.Rmd` or `.R` file. Using this you can break a large project up into multiple files but still run it all at once!]
 
 --
 
@@ -188,7 +190,7 @@ class: inverse
 # Now, our GGPlot2 Unit
 
 .center[
-<img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/CSSS508_Week2_GGPlot2-figure/ggplot2unit.jpg" style="width: 70%;"/>
+<img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/img/ggplot2unit.jpg" style="width: 70%;"/>
 ]
 
 ---
