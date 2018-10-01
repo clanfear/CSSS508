@@ -224,10 +224,13 @@ str(gapminder)
 
 # What's Interesting Here?
 
-* **Factor** variables `country` and `continent`: categorical data with an underlying numeric representation
+* **Factor** variables `country` and `continent`
+   + Factors are categorical data with an underlying numeric representation
+
 --
 
 * Many observations: $n=`r nrow(gapminder)`$ rows
+
 --
 
 * A nested/hierarchical structure: `year` in `country` in `continent`
@@ -274,7 +277,7 @@ When you load packages in R that have functions sharing the same name as functio
 
 --
 
-This **message** is just letting you know that. To avoid this in your R Markdown file, add `message=FALSE` or `include=FALSE` to your chunk options when loading packages.
+This **message** is just letting you know that. To avoid showing this in your R Markdown file, add `message=FALSE` or `include=FALSE` to your chunk options when loading packages.
 
 --
 
@@ -605,7 +608,9 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
 We can modify the axes in a variety of ways, such as:
 
 * Change the $x$ or $y$ range using `xlim()` or `ylim()` layers
+
 * Change to a logarithmic or square-root scale on either axis: `scale_x_log10()`, `scale_y_sqrt()`
+
 * Change where the major/minor breaks are: `scale_x_continuous(breaks =, minor_breaks = )`
 
 ---
@@ -633,7 +638,7 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
 
 # Text and Tick Adjustments
 
-Text size, labels, tick marks, etc. can be messed with more precisely using arguments to the `theme()` layer. Note: `theme()` is a different layer than `theme_gray()` or `theme_bw()`, which you might also be using in a previous layer. See the [`ggplot2` documentation](http://docs.ggplot2.org/current/theme.html) for details.
+Text size, labels, tick marks, etc. can be messed with more precisely using arguments to the `theme()` layer. 
 
 Examples:
 
@@ -641,6 +646,10 @@ Examples:
 * `axis.text.x = element_text(angle = 45)` rotates $x$ axis labels
 * `axis.text = element_text(colour = "blue")` makes the $x$ and $y$ axis labels blue
 * `axis.ticks.length = unit(.5, "cm")` makes the axis ticks longer
+
+Note: `theme()` is a different layer than `theme_gray()` or `theme_bw()`, which you might also be using in a previous layer. See the [`ggplot2` documentation](http://docs.ggplot2.org/current/theme.html) for details. 
+
+I recommend using `theme()` *after* `theme_bw()` or other *global themes*.
 
 ---
 
