@@ -887,7 +887,7 @@ to:
     date: "`r inline_expr("Sys.time()", "md")`"
 Fancier option: Use this instead to take today's date and make it read nicely:
 
-    date: "`r inline_expr('format(Sys.Date(), format="%B %d, %Y")', "md")`"
+    date: "`r inline_expr("format(Sys.Date(), format='%B %d, %Y')", "md")`"
 
 ---
 class: inverse
