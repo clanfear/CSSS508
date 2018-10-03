@@ -505,7 +505,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country, color = con
 * `facet_grid()`: same idea, but can split by two variables along rows and columns (e.g. `facet_grid(gender ~ age_group)`)
 * `theme_bw()`: replace default gray background with black-and-white
 
-Layers are separated by a `+` sign. For clarity, I usually put each layer on a new line, unless it takes few or no arguments (e.g. `xlab()` and `ylab()`).
+Layers are separated by a `+` sign. For clarity, I usually put each layer on a new line, unless it takes few or no arguments (e.g. `xlab()`, `ylab()`, `theme_bw()`).
 
 ---
 
@@ -633,7 +633,7 @@ We can modify the axes in a variety of ways, such as:
 ```{r, fig.height=4, dev='svg'}
 ggplot(data = China, aes(x = year, y = gdpPercap)) +
     geom_line() +
-    scale_y_log10(breaks = c(1000, 2000, 3000, 4000, 5000)) +
+    scale_y_log10(breaks = c(1000, 2000, 3000, 4000, 5000)) + #<<
     xlim(1940, 2010) + ggtitle("Chinese GDP per capita")
 ```
 
@@ -643,8 +643,9 @@ ggplot(data = China, aes(x = year, y = gdpPercap)) +
 
 ```{r, fig.height=4, dev='svg'}
 ggplot(data = China, aes(x = year, y = lifeExp)) +
-    geom_line() + ggtitle("Chinese life expectancy") +
-    theme_gray(base_size = 20)
+    geom_line() +
+    ggtitle("Chinese life expectancy") +
+    theme_gray(base_size = 20) #<<
 ```
 
 ---
@@ -696,17 +697,17 @@ lifeExp_by_year +
 ```{r, eval=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
-    geom_line(stat = "smooth", method = "loess", 
+    geom_line(stat = "smooth", method = "loess", #<<
           aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
-    facet_wrap(~ continent, nrow = 2) +
-    scale_color_manual(name = "Life Exp. for:", 
-                       values = c("Country" = "black", "Continent" = "dodgerblue1")) +
+    facet_wrap(~ continent, nrow = 2) + #<<
+    scale_color_manual(name = "Life Exp. for:", #<<
+                       values = c("Country" = "black", "Continent" = "dodgerblue1")) + #<<
     scale_size_manual(name = "Life Exp. for:", 
                       values = c("Country" = 0.25, "Continent" = 3)) +
     theme_minimal(base_size = 14) + 
     ylab("Years") + xlab("") + 
     ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
-    theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
+    theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45)) #<<
 ```
 ]
 
@@ -758,6 +759,39 @@ If you didn't manually set font sizes, these will usually come out at a reasonab
 **Bad/non-reproducible way**<sup>1</sup>: choose *Export* on the plot preview or take a screenshot / snip.
 
 .footnote[[1] I still do this for quick emails of quick plots. Bad me!]
+
+---
+# Bonus Plot
+
+`ggplot2` is well suited to making complex, publication ready plots.
+
+This is the complete syntax for one plot from a recent journal article revise and resubmit.<sup>1</sup>
+
+.small[
+```{r, eval=FALSE}
+ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) + 
+  facet_grid(`Crime Type` ~ Neighborhood) +
+  geom_errorbar(aes(ymin = LB, ymax = UB),
+                position = position_dodge(width = .4), size = 0.75, width = 0.15) +
+  geom_point(shape = 21, position = position_dodge(width = .4),
+             size = 2, aes(fill = Reporter)) + 
+  scale_fill_manual("Reporter",
+                    values = c("Any White" = "white", "All Black" = "black")) +
+  ggtitle("Figure 3. Probability of Arrest", 
+          subtitle = "by Reporter and Target Race, Neighborhood and Crime Type") +
+  xlab("Race of Target") + ylab("Estimated Probability") + 
+  theme_bw() + theme(legend.position = c(0.86, 0.15),
+                     legend.background = element_rect(color = 1))
+```
+]
+
+.footnote[
+[1] Lanfear, Charles C., Lindsey R. Beach, Timothy A. Thomas. 2018. "Formal Social Control in Changing Neighborhoods: Racial Implications of Neighborhood Context on Reactive Policing." Under review, *City & Community*
+]
+---
+
+![](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png)
+
 ---
 class: inverse
 
