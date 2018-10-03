@@ -66,7 +66,8 @@ mono_accent(base_color = "#342c5c",
 
 class: inverse
 
-## But First, Some Useful Stuff
+# But First...
+## *Some useful stuff*
 
 ---
 
@@ -80,7 +81,11 @@ new.object <- 1:10 # Making vector of 1 to 10
 
 Anything written on the same line *after* `#` will not be run by R.
 
-This is useful for annotating your code to remind you (or others) what you are doing in a section.
+This is useful for annotating your code to remind you (or others) what you are doing in a section.<sup>1</sup>
+
+.footnote[
+In R Markdown documents, comments only work in chunks. Outside of a chunk, `#` creates **headers** like "comments" at the top of this slide.
+]
 
 ---
 
@@ -123,6 +128,9 @@ Similarly, we can set a working directory like so:
 setwd("C:/Users/cclan/Documents")
 ```
 
+--
+
+Don't set a working directory in R Markdown documents! They automatically set the directory they are in as the working directory.
 
 ---
 
@@ -225,7 +233,9 @@ str(gapminder)
 # What's Interesting Here?
 
 * **Factor** variables `country` and `continent`
+
    + Factors are categorical data with an underlying numeric representation
+   + We'll spend a lot of time on factors later!
 
 --
 
@@ -234,6 +244,8 @@ str(gapminder)
 --
 
 * A nested/hierarchical structure: `year` in `country` in `continent`
+
+   + These are panel data!
 
 ---
 class: inverse
@@ -281,13 +293,13 @@ This **message** is just letting you know that. To avoid showing this in your R 
 
 --
 
-Sometimes you may get a **warning message**, often if you aren't running the latest version of R:
+Sometimes you may get a **warning message** when loading packages---usually because you aren't running the latest version of R:
 
 ```
 Warning message:
 package `gapminder' was built under R version 3.4.1 
 ```
-Chunk option `warning=FALSE` will hide this. *Update R* to deal with it completely!
+Chunk options `message=FALSE` or `include=FALSE` will hide this. *Update R* to deal with it completely!
 
 ---
 
@@ -429,17 +441,17 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
 .small[
 ```{r, fig.height=4, dev='svg'}
 ggplot(data = China, aes(x = year, y = lifeExp)) +
-    geom_point(color = "red", size = 3) +
+    geom_point(color = "red", size = 3) + #<<
     xlab("Year") + ylab("Life expectancy") +
     ggtitle("Life expectancy in China") +
-    theme_bw()
+    theme_bw() #<<
 ```
 ]
 ---
 ## Color Observations by Variable
 .small[
 ```{r, fig.height=4, dev='svg'}
-ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) +
+ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) + #<<
     geom_point() +
     xlab("Year") + ylab("Life expectancy") +
     ggtitle("Life expectancy over time") +
@@ -448,11 +460,12 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) +
 ]
 
 ---
-## Segment Observations by Variable
+## **Facet** Observations by Variable
 .small[
 ```{r, fig.height=4, dev='svg'}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country, color = continent)) +
-    geom_line(alpha = 0.5) + facet_wrap( ~ continent) +
+    geom_line(alpha = 0.5) + 
+    facet_wrap( ~ continent) + #<<
     xlab("Year") + ylab("Life expectancy") +
     ggtitle("Life expectancy over time") + theme_bw()
 ```
