@@ -52,7 +52,7 @@ layout: default
 ### 2. Visualizing Data
    * [Slides for Lecture 2: Plotting with `ggplot2`](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.html)
        + [Rmd for Lecture 2 slides](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.Rpres)
-   * [Lecture Video for Lecture 2](https://youtu.be/eJuWqsj8K5A)
+   * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded Oct. 3, 2018
    * Homework 2: Due at 11:59PM on October 9th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Key: HTML, RMD
@@ -71,7 +71,7 @@ layout: default
 ### 3. Manipulating and Summarizing Data
    * [Slides for Lecture 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
        + [Rmd for Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.Rpres)
-   * [Lecture Video for Lecture 3](https://youtu.be/-jCMNTUUmJI)
+   * [Lecture Video for Lecture 3](https://youtu.be/-jCMNTUUmJI), recorded Spring 2018
    * Homework 3: Due at 11:59PM on October 16th
        + [Homework 3 Instructions](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW3/homework_3.html)
        + Homework 3 Key: HTML, RMD
@@ -88,7 +88,7 @@ layout: default
 ### 4. Understanding R Data Structures
    * [Slides for Lecture 4: R data structures](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.html)
        + [Rmd for Lecture 4 slides](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.Rpres)
-   * [Lecture Video for Lecture 4](https://youtu.be/giD90SP7r64)
+   * [Lecture Video for Lecture 4](https://youtu.be/giD90SP7r64), recorded Spring 2018
    * Homework 4 (two options, complete one): Due at 11:59PM on October 23rd
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
@@ -104,7 +104,7 @@ layout: default
 ### 5. Importing, Exporting, and Cleaning Data
    * [Slides for Lecture 5: Data import, export, and cleaning](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.html)
        + [Rmd for Lecture 5 slides](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.Rpres)
-   * [Lecture Video for Lecture 5](https://youtu.be/9zObKNltIlw)
+   * [Lecture Video for Lecture 5](https://youtu.be/9zObKNltIlw), recorded Spring 2018
    * Homework 5, Part 1 due at 11:59 PM on October 30th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
@@ -135,7 +135,7 @@ layout: default
 ### 6. Using Loops
    * [Slides for Lecture 6: Looping with `for()` loops](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.html)
        + [Rmd for Lecture 6 slides](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.Rpres)
-   * [Lecture Video for Lecture 6](https://youtu.be/ffYdAIVm-HE)
+   * [Lecture Video for Lecture 6](https://youtu.be/ffYdAIVm-HE), recorded Spring 2018
    * Homework 5, Part 2 due at 11:59 PM on November 6th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p2.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5_p2.html)
@@ -144,7 +144,7 @@ layout: default
 ### 7. Writing Functions
    * [Slides for Lecture 7: Vectorization and writing functions](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.html)
        + [Rmd for Lecture 7 slides](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.Rpres)
-   * [Lecture Video for Lecture 7](https://youtu.be/bKxiUd4Qfqg)
+   * [Lecture Video for Lecture 7](https://youtu.be/bKxiUd4Qfqg), recorded Spring 2018
    * Homework 6, Part 1 due at 11:59 PM on November 13th
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
@@ -157,7 +157,7 @@ layout: default
 ### 8.  Working with Text Data
    * [Slides for Lecture 8: Working with strings and character data](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.html)
        + [Rmd for Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.Rpres)
-   * [Lecture Video for Lecture 8](https://youtu.be/UosA8PxcVPM)
+   * [Lecture Video for Lecture 8](https://youtu.be/UosA8PxcVPM), recorded Spring 2018
    * Homework 6, Part 2 due at 11:59 PM on November 20th
        + Homework 6, Part 2: R Markdown template
        + Homework 6, Part 2 Key: HTML, RMD
@@ -172,7 +172,7 @@ layout: default
 ### 9. Working with Geographical Data
    * [Slides for Lecture 9: Mapping and labels in `ggplot2`](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_week9_mapping.html)
        + [R code in Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_week9_mapping.Rpres)
-   * [Lecture Video for Lecture 9](https://youtu.be/NUL9ndVbuOE)
+   * [Lecture Video for Lecture 9](https://youtu.be/NUL9ndVbuOE), recorded Spring 2018
    * Optional Homework 7: Due at 11:59 PM on November 27th
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
@@ -196,7 +196,7 @@ layout: default
 ### 11. Working with Model Results
    * [Slides for Lecture 11: Tidy Model Results and Applied Data Cleaning](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_broom.html)
        + [Rmd for Lecture 11 slides](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_broom.Rpres)
-   * [Lecture Video for Lecture 11](https://youtu.be/JjM0VYNGkUo)
+   * [Lecture Video for Lecture 11](https://youtu.be/JjM0VYNGkUo), recorded Spring 2018
    * [`broom` vignette](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)
    * [`ggeffects` vignette](https://cran.r-project.org/web/packages/ggeffects/vignettes/marginaleffects.html)
    * [`sjPlot` home page](http://www.strengejacke.de/sjPlot/)
