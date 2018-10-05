@@ -290,7 +290,7 @@ yugoslavia %&gt;% select(-continent, -pop, -lifeExp) %&gt;% head(4)
 
 These are very useful if you have a "wide" data frame with column names following a pattern or ordering. 
 
-![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr-figure/dys_vars.PNG)
+![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr/img/dys_vars.PNG)
 
 
 ```r
@@ -363,8 +363,8 @@ yugoslavia %&gt;%
 * You can include spaces or use reserved words if you put backticks around the name. Spaces can be worth including when preparing data for `ggplot2` or `pander` since you don't have to rename axes or table headings.
 
 ---
-## Column Name with Space Example
 
+## Column Name with Space Example
 
 
 ```r
@@ -394,13 +394,6 @@ Table: Serbian life expectancy
 In `dplyr`, you can add new columns to a data frame using `mutate()`.
 
 --
-
-You can also add new columns and *drop old ones* using `transmute()`.&lt;sup&gt;1&lt;/sup&gt;
-
-.footnote[[1] I usually just use `mutate()` then `select()` for clarity.]
-
----
-## `mutate()` Example
 
 
 
@@ -442,6 +435,20 @@ Output from `ifelse()`:
 * `ifelse()` returns `if_false` if `x==y` is `FALSE`.
 
 * `ifelse()` returns `NA` if `x==y` is neither `TRUE` nor `FALSE`.
+
+--
+
+For example:
+
+
+```r
+example &lt;- c(1,0,2,-2)
+ifelse(example &gt; 0, "Positive", "Not Positive")
+```
+
+```
+## [1] "Positive"     "Not Positive" "Positive"     "Not Positive"
+```
 
 ---
 # `ifelse()` Example
@@ -708,17 +715,17 @@ We need to think about the following when we want to merge data frames `A` and `
 
 There are many types of joins...
 
-* `A %&gt;% left_join(B)`: keep all rows from `A`, matched with `B` wherever possible (`NA` when not), columns from both `A` and `B`
+* `A %&gt;% left_join(B)`: keep all rows from `A`, matched with `B` wherever possible (`NA` when not), keep columns from both `A` and `B`
 
-* `A %&gt;% right_join(B)`: keep all rows from `B`, matched with `A` wherever possible (`NA` when not), columns from both `A` and `B`
+* `A %&gt;% right_join(B)`: keep all rows from `B`, matched with `A` wherever possible (`NA` when not), keep columns from both `A` and `B`
 
-* `A %&gt;% inner_join(B)`: keep rows from `A` that match rows in `B`, columns from both `A` and `B`
+* `A %&gt;% inner_join(B)`: keep rows from `A` that match rows in `B`, keep columns from both `A` and `B`
 
-* `A %&gt;% full_join(B)`: keep all rows from either `A` or `B`, matched wherever possible (`NA` when not), columns from both `A` and `B`
+* `A %&gt;% full_join(B)`: keep all rows from either `A` or `B`, matched wherever possible (`NA` when not), keep columns from both `A` and `B`
 
-* `A %&gt;% semi_join(B)`: keep rows from `A` that match rows in `B`, columns from just `A`
+* `A %&gt;% semi_join(B)`: keep rows from `A` that match rows in `B`, keep columns from only `A`
 
-* `A %&gt;% anti_join(B)`: keep rows from `A` that *don't* match a row in `B`, columns from just `A`
+* `A %&gt;% anti_join(B)`: keep rows from `A` that *don't* match a row in `B`, keep columns from only `A`
 
 ... but usually `left_join()` does the job.
 
@@ -731,11 +738,11 @@ Matching Behavior:
 
 * No `by`: Match using all variables in `A` and `B` that have identical names
 
-* `by = c("var1", "var2", "var3")`: Match on identical values of `var1`, `,var2`, `var3` in both `A` and `B`
+* `by = c("var1", "var2", "var3")`: Match on identical values of `var1`, `var2`, and `var3` in both `A` and `B`
 
 * `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: Match identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
 
-Note: If there are multiple matches, you'll get *one row for each possible combo* (except with `semi_join()` and `anti_join()`).
+Note: If there are multiple matches, you'll get *one row for each possible combination* (except with `semi_join()` and `anti_join()`).
 
 Need to get more complicated? Break it into multiple operations.
 
@@ -757,7 +764,15 @@ It includes five dataframes, some of which contain missing data (`NA`):
 * `planes`: airplane metadata
 * `weather`: hourly weather data for JFK, LGA, and EWR
 
-Note these are separate data frames, each needing to be loaded separately (e.g. `data(planes)`).
+Note these are *separate data frames*, each needing to be *loaded separately*:
+
+
+```r
+data(flights)
+data(airlines)
+data(airports)
+# and so on...
+```
 
 ---
 ## Join Example #1
@@ -769,19 +784,20 @@ flights %&gt;% filter(dest == "SEA") %&gt;%
     select(tailnum) %&gt;%
     left_join(planes %&gt;% select(tailnum, manufacturer),
               by = "tailnum") %&gt;%
-    distinct(manufacturer, .keep_all=T)
+    count(manufacturer) %&gt;% # Count observations of by manufacturer
+    arrange(desc(n)) # Arrange data descending by count
 ```
 
 ```
 ## # A tibble: 6 x 2
-##   tailnum manufacturer      
-##   &lt;chr&gt;   &lt;chr&gt;             
-## 1 N594AS  BOEING            
-## 2 N503JB  AIRBUS INDUSTRIE  
-## 3 N3ETAA  &lt;NA&gt;              
-## 4 N712JB  AIRBUS            
-## 5 N508JB  CIRRUS DESIGN CORP
-## 6 N531JB  BARKER JACK L
+##   manufacturer           n
+##   &lt;chr&gt;              &lt;int&gt;
+## 1 BOEING              2659
+## 2 AIRBUS               475
+## 3 AIRBUS INDUSTRIE     394
+## 4 &lt;NA&gt;                 391
+## 5 BARKER JACK L          2
+## 6 CIRRUS DESIGN CORP     2
 ```
 
 Note you can perform operations on the data inside functions such as `left_join()` and the *result* will be used by the function.
@@ -836,8 +852,7 @@ flights %&gt;%
 ---
 ## Wind Gusts and Delays
 
-
-![](CSSS_508_Week3_dplyr_files/figure-html/unnamed-chunk-32-1.svg)&lt;!-- --&gt;
+![](CSSS_508_Week3_dplyr_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
 
 Check out those 1200 mph winds!&lt;sup&gt;1&lt;/sup&gt;
 
@@ -865,7 +880,7 @@ flights %&gt;%
 ---
 ## Wind Gusts and Delays: Mean Trend
 
-![](CSSS_508_Week3_dplyr_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
+![](CSSS_508_Week3_dplyr_files/figure-html/unnamed-chunk-35-1.svg)&lt;!-- --&gt;
 
 ---
 ## Tinkering Suggestions
@@ -889,7 +904,8 @@ class: inverse
 Pick something to look at in the `nycflights13` data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: `mutate()`, `summarize()`, `group_by()`, and any join. *Include at least one nicely formatted plot (`ggplot2`) and one table (`pander`)*. In plots and tables, use "nice" variable names (try out spaces!) and rounded values (&lt;= 3 digits).
 
 This time, *include all your code in your output document* (`echo=TRUE`), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.  
-Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one* individually (`airlines`, `airports`, `flights`, `planes`, and `weather`) using `data(dataframe_name)` (e.g. `data(flights)`).
+
+Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one*: `airlines`, `airports`, `flights`, `planes`, and `weather` (e.g. `data(flights)`).
 
 ## DUE: 11:59 PM, April 17th
     </textarea>
