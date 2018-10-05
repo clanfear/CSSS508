@@ -224,7 +224,7 @@ yugoslavia %>% select(-continent, -pop, -lifeExp) %>% head(4)
 
 These are very useful if you have a "wide" data frame with column names following a pattern or ordering. 
 
-![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr-figure/dys_vars.PNG)
+![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr/img/dys_vars.PNG)
 
 ```{r, eval=FALSE}
 DYS %>% select(starts_with("married"))
