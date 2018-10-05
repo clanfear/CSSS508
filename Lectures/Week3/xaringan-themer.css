@@ -225,3 +225,6 @@ body {
 .inverse {
   background-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg);
 }
+.short {
+  height: 30%;
+}

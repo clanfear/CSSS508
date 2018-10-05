@@ -52,7 +52,8 @@ csss508css <- list(
      "a" = list("text-decoration" = "underline"),
      ".inverse a" = list("color" = "#cbd3a3"),
      "body" = list("line-height" = "1.4"),
-     ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)")
+     ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)"),
+     ".short" = list("height" = "30%")
     )
  
 mono_accent(base_color = "#342c5c",
@@ -73,9 +74,9 @@ mono_accent(base_color = "#342c5c",
 options(width = 90)
 ```
 
-Today we'll talk more about `dplyr`: a package that does in R just about any calculation you've tried to do in Excel, but more *transparently*, *reproducibly*, and *safely*. Don't be the sad research assistant who made this mistake ([Reinhart and Rogoff](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history)):
+Today we'll talk more about `dplyr`: a package that does in R just about any calculation you've tried to do in Excel, but more *transparently*, *reproducibly*, and *safely*. 
 
-![Reinhart and Rogoff's spreadsheet error](http://rooseveltinstitute.org/wp-content/uploads/styles/large/public/content_images/reinhart_rogoff_coding_error_0.png)
+Don't be the next sad research assistant who makes headlines with an Excel error ([Reinhart & Rogoff, 2010](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history))
 
 ---
 class: inverse
