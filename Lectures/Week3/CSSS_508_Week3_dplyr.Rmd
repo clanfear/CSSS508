@@ -52,7 +52,7 @@ csss508css <- list(
      "a" = list("text-decoration" = "underline"),
      ".inverse a" = list("color" = "#cbd3a3"),
      "body" = list("line-height" = "1.4"),
-     ".inverse" = list("backgrond-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCS&SSBG1_white.svg)")
+     ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)")
     )
  
 mono_accent(base_color = "#342c5c",
@@ -62,7 +62,7 @@ mono_accent(base_color = "#342c5c",
             title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/title_slide_img.png",
             title_slide_background_position = "bottom",
             title_slide_background_size = "contain",
-            background_image = "https://clanfear.github.io/CSSS508/Lectures/img/UWCS&SSBG1.svg"
+            background_image = "https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg"
 )
 ```
 

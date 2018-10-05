@@ -34,7 +34,7 @@ h1, h2, h3 {
 .remark-slide-content {
   background-color: #FFFFFF;
   font-size: 20px;
-  background-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCS&SSBG1.svg);
+  background-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg);
   background-size: cover;
   
   padding: 1em 4em 1em 4em;
@@ -223,5 +223,5 @@ body {
   line-height: 1.4;
 }
 .inverse {
-  backgrond-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCS&SSBG1_white.svg);
+  background-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg);
 }
