@@ -228,3 +228,6 @@ body {
 .short {
   height: 30%;
 }
+.image-50 img {
+  width: 50%;
+}

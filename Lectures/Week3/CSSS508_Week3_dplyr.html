@@ -456,9 +456,8 @@ ifelse(example &gt; 0, "Positive", "Not Positive")
 
 
 ```r
-yugoslavia %&gt;%
-    mutate(short_country = 
-             ifelse(country == "Bosnia and Herzegovina", 
+yugoslavia %&gt;% mutate(short_country = 
+               ifelse(country == "Bosnia and Herzegovina", 
                     "B and H", as.character(country))) %&gt;%
     select(short_country, year, pop) %&gt;%
     arrange(year, short_country) %&gt;%
@@ -629,7 +628,7 @@ Functions after `group_by()` are computed *within each group* as defined by vari
 
 Excel analogue: pivot tables
 
-![Pivot table](http://www.excel-easy.com/data-analysis/images/pivot-tables/two-dimensional-pivot-table.png)
+.image-50[![Pivot table](http://www.excel-easy.com/data-analysis/images/pivot-tables/two-dimensional-pivot-table.png)]
 
 ---
 `group_by()` example
@@ -713,7 +712,7 @@ We need to think about the following when we want to merge data frames `A` and `
 ---
 ## Join Types: Rows and columns kept
 
-There are many types of joins...
+There are many types of joins&lt;sup&gt;1&lt;/sup&gt;...
 
 * `A %&gt;% left_join(B)`: keep all rows from `A`, matched with `B` wherever possible (`NA` when not), keep columns from both `A` and `B`
 
@@ -727,7 +726,7 @@ There are many types of joins...
 
 * `A %&gt;% anti_join(B)`: keep rows from `A` that *don't* match a row in `B`, keep columns from only `A`
 
-... but usually `left_join()` does the job.
+.pull-right[.footnote[[1] Usually `left_join()` does the job.]]
 
 ---
 ## Matching Criteria
@@ -780,9 +779,8 @@ data(airports)
 Who manufactures the planes that flew to Seattle?
 
 ```r
-flights %&gt;% filter(dest == "SEA") %&gt;% 
-    select(tailnum) %&gt;%
-    left_join(planes %&gt;% select(tailnum, manufacturer),
+flights %&gt;% filter(dest == "SEA") %&gt;% select(tailnum) %&gt;%
+*   left_join(planes %&gt;% select(tailnum, manufacturer),
               by = "tailnum") %&gt;%
     count(manufacturer) %&gt;% # Count observations of by manufacturer
     arrange(desc(n)) # Arrange data descending by count
@@ -845,9 +843,11 @@ flights %&gt;%
     # removing rows with missing values
     filter(!is.na(dep_delay) &amp; !is.na(wind_gust)) %&gt;% 
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_point() + 
-  geom_smooth()
+      geom_point() + 
+      geom_smooth()
 ```
+
+Because the data are the first argument for `ggplot()`, we can pipe them straight into a plot.
 
 ---
 ## Wind Gusts and Delays

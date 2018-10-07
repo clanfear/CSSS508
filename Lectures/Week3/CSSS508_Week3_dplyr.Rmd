@@ -53,7 +53,8 @@ csss508css <- list(
      ".inverse a" = list("color" = "#cbd3a3"),
      "body" = list("line-height" = "1.4"),
      ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)"),
-     ".short" = list("height" = "30%")
+     ".short" = list("height" = "30%"),
+     ".image-50 img" = list("width" = "50%")
     )
  
 mono_accent(base_color = "#342c5c",
@@ -338,9 +339,8 @@ ifelse(example > 0, "Positive", "Not Positive")
 
 
 ```{r}
-yugoslavia %>%
-    mutate(short_country = 
-             ifelse(country == "Bosnia and Herzegovina", 
+yugoslavia %>% mutate(short_country = 
+               ifelse(country == "Bosnia and Herzegovina", 
                     "B and H", as.character(country))) %>%
     select(short_country, year, pop) %>%
     arrange(year, short_country) %>%
@@ -454,7 +454,7 @@ Functions after `group_by()` are computed *within each group* as defined by vari
 
 Excel analogue: pivot tables
 
-![Pivot table](http://www.excel-easy.com/data-analysis/images/pivot-tables/two-dimensional-pivot-table.png)
+.image-50[![Pivot table](http://www.excel-easy.com/data-analysis/images/pivot-tables/two-dimensional-pivot-table.png)]
 
 ---
 `group_by()` example
@@ -514,7 +514,7 @@ We need to think about the following when we want to merge data frames `A` and `
 ---
 ## Join Types: Rows and columns kept
 
-There are many types of joins...
+There are many types of joins<sup>1</sup>...
 
 * `A %>% left_join(B)`: keep all rows from `A`, matched with `B` wherever possible (`NA` when not), keep columns from both `A` and `B`
 
@@ -528,7 +528,7 @@ There are many types of joins...
 
 * `A %>% anti_join(B)`: keep rows from `A` that *don't* match a row in `B`, keep columns from only `A`
 
-... but usually `left_join()` does the job.
+.pull-right[.footnote[[1] Usually `left_join()` does the job.]]
 
 ---
 ## Matching Criteria
@@ -578,9 +578,8 @@ data(airports)
 
 Who manufactures the planes that flew to Seattle?
 ```{r}
-flights %>% filter(dest == "SEA") %>% 
-    select(tailnum) %>%
-    left_join(planes %>% select(tailnum, manufacturer),
+flights %>% filter(dest == "SEA") %>% select(tailnum) %>%
+    left_join(planes %>% select(tailnum, manufacturer), #<<
               by = "tailnum") %>%
     count(manufacturer) %>% # Count observations of by manufacturer
     arrange(desc(n)) # Arrange data descending by count
@@ -618,9 +617,11 @@ flights %>%
     # removing rows with missing values
     filter(!is.na(dep_delay) & !is.na(wind_gust)) %>% 
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_point() + 
-  geom_smooth()
+      geom_point() + 
+      geom_smooth()
 ```
+
+Because the data are the first argument for `ggplot()`, we can pipe them straight into a plot.
 
 ---
 ## Wind Gusts and Delays
@@ -659,6 +660,8 @@ flights %>%
     ylab("Average departure delay (minutes)")
 ```
 ]
+
+I removed `geom_point()` to focus on the mean trend produced by `geom_smooth()`.
 
 ---
 ## Wind Gusts and Delays: Mean Trend
