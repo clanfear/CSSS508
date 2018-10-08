@@ -54,7 +54,8 @@ csss508css <- list(
      "body" = list("line-height" = "1.4"),
      ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)"),
      ".short" = list("height" = "30%"),
-     ".image-50 img" = list("width" = "50%")
+     ".image-50 img" = list("width" = "50%"),
+     ".image-75 img" = list("width" = "75%")
     )
  
 mono_accent(base_color = "#342c5c",
@@ -498,7 +499,9 @@ class: inverse
 
 Excel equivalents: `VLOOKUP`, `MATCH`
 
+.image-75[
 ![VLOOKUP example](https://cdn.ablebits.com/_img-blog/excel-vlookup/excel-vlookup.png)
+]
 
 ---
 ## Joining in Concept
