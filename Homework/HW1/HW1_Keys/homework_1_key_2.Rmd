@@ -1,0 +1,68 @@
+---
+title: "CS&SS 508 Homework 1"
+author: "Stephen Lee"
+date: "`r Sys.time()`"
+output: html_document
+---
+
+```{r swiss_summary, warning=FALSE, echo=FALSE}
+data(swiss)
+library(pander)
+```
+
+
+## Exploratory Analysis of Swiss Fertility Data
+
+This report is a summary based on exploratory analysis of the Swiss dataset. The dataset contains a total of `r nrow(swiss)` observations, representing the `r nrow(swiss)` provinces of Switzerland in 1888. The dataset contains a total of `r ncol(swiss)` variables. Of particular interest is the fertility variable, which is a standardized measure of fertility.
+
+From this dataset, a few summary statistics can be observed. First, the measure of Fertility ranges from a minimum value of `r min(swiss$Fertility)` to a maximum value of `r max(swiss$Fertility)` with a mean value of `r round(mean(swiss$Fertility),2)`. The socioeconomic indicators show that across provinces, the average percent of males involved in agriculture as occupation was `r round(mean(swiss$Agriculture),2)` at that time. IN addition, the average percent of draftees with education beyond primary school was `r round(mean(swiss$Education),2)` at that time.
+
+## Relationship between Socioeconomic Indicators and Fertility
+
+Examining the bivariate correlations of the variables included shows that there are multiple socioeconomic indicators that appear to have a relationship with fertility.
+
+```{r swiss_cor, echo=FALSE}
+pander(round(cor(swiss),3),split.tables=Inf)
+```
+
+Based on the correlation table, it appears that there is a strong negative correlation between fertility and education with a correlation of `r round(cor(swiss$Fertility,swiss$Education),3)`. This suggests that in provinces where education beyond primary school is higher, there tends to be a lower fertility rate.
+
+```{r plot_fertilityxeducation, echo=FALSE}
+plot(swiss$Fertility~swiss$Education, ylab="Fertility",xlab="Education",main="Fertility x Education",
+     pch=16,col="blue")
+
+```
+
+
+Similarly, there is also a strong negative correlation between fertility and examination with a correlation of `r round(cor(swiss$Fertility,swiss$Examination),3)`. The variable Examination represents the percent of draftees receiving the highest mark on the army examination. This suggests that in provinces with a high percent of draftees scoring the higest mark on the army examination, there tends to be a lower fertility rate.
+
+```{r plot_fertilityxexam, echo=FALSE}
+plot(swiss$Fertility~swiss$Examination, ylab="Fertility",xlab="Army Examination",main="Fertility x Army Examination",
+     pch=16,col="blue")
+
+```
+
+Of the variables in the dataset, Catholic and Infant Mortality have the highest, positive correlation with fertility at `r round(cor(swiss$Fertility,swiss$Catholic),3)` and `r round(cor(swiss$Fertility,swiss$Infant.Mortality),3)` respectively. This suggests that provinces with a higher percent of catholics and provinces with a larger number of infants that live less than 1 year tend to have higher fertility rates.
+
+```{r plot_catholic_and_mortality, echo=FALSE}
+plot(swiss$Fertility~swiss$Catholic, ylab="Fertility",xlab="Catholic",main="Fertility x Catholic",
+     pch=16,col="blue")
+plot(swiss$Fertility~swiss$Infant.Mortality, ylab="Fertility",xlab="Infant Mortality",main="Fertility x Infant Mortality",
+     pch=16,col="blue")
+
+```
+
+From the plot comparing the percent of catholics with the fertility measure, it also appears that most provinces either have a large majority or a small minority of catholics. Only a few provinces appear to be relatively evenly split in the proportion of catholics versus protestants.
+
+```{r plot_catholic_hist, echo=FALSE}
+hist(swiss$Catholic,main="% of Catholics")
+
+```
+
+## Relationships between other Variables
+
+In addition, there appears to be a negative correleation between the percent of males involved in agriculture and percent of education beyond primary school at a correlation of `r round(cor(swiss$Agriculture,swiss$Education),3)`. This suggests that in provinces where education beyond primary school is higher, the percent of males involved in agriculture is lower. This appears to be an intuitive relationship, considering that people who obtain a higher education are more likely to seek occupations that are more prestigious rather than being limited to agriculture.
+
+```{r plot_agriculturexeducation, echo=FALSE}
+plot(swiss$Agriculture~swiss$Education, ylab="Agriculture",xlab="Education",main="Agriculture x Education",pch=16,col="blue")
+```

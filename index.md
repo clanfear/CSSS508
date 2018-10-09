@@ -31,8 +31,8 @@ layout: default
    * [Lecture Video for Lecture 1](https://youtu.be/u6_uhABKia4), recorded Sep. 26, 2018
    * Homework 1: Due at 11:59PM on October 2nd
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
-       + Homework 1 Key #1: HTML, RMD
-       + Homework 1 Key #2: HTML, RMD
+       + Homework 1 Key #1: [HTML](https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_1.html), [RMD]((https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_1.Rmd))
+       + Homework 1 Key #2: [HTML](https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_2.html), [RMD]((https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_2.Rmd))
    * [Get R](https://cran.r-project.org/)
    * [Get RStudio](https://www.rstudio.com/)
    * [R Markdown Installation](https://bookdown.org/yihui/rmarkdown/installation.html#installation) - Also has LaTeX installation instructions
