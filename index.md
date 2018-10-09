@@ -40,7 +40,7 @@ layout: default
        + [HTML document options](http://rmarkdown.rstudio.com/html_document_format.html) (global formatting, etc.)
        + [PDF document options](http://rmarkdown.rstudio.com/pdf_document_format.html) (requires LaTeX installation to output PDFs)
        + [Word document options](http://rmarkdown.rstudio.com/word_document_format.html) (but please do not use Word output for this class!)
-   * [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) by Xi, Allaire, and Grolemund, a comprehensive textbook on R Markdown.
+   * [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) by Xie, Allaire, and Grolemund, a comprehensive textbook on R Markdown.
    * [Useful RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/) on R Markdown, RStudio shortcuts, etc.
    * [Information on the `prettydoc` package](https://yixuan.cos.name/prettydoc/cayman.html) for nicer looking RMarkdown themes
    * [Presentations in RStudio](https://support.rstudio.com/hc/en-us/articles/200486468-Authoring-R-Presentations) for simple presentations
