@@ -36,6 +36,7 @@ layout: default
    * [Get R](https://cran.r-project.org/)
    * [Get RStudio](https://www.rstudio.com/)
    * [R Markdown Installation](https://bookdown.org/yihui/rmarkdown/installation.html#installation) - Also has LaTeX installation instructions
+   * [Introduction to R Markdown](https://rmarkdown.rstudio.com/lesson-1.html)
    * [RMarkdown documentation](http://rmarkdown.rstudio.com/)
        + [HTML document options](http://rmarkdown.rstudio.com/html_document_format.html) (global formatting, etc.)
        + [PDF document options](http://rmarkdown.rstudio.com/pdf_document_format.html) (requires LaTeX installation to output PDFs)
