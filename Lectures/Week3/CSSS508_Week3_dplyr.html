@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 3
 ## Manipulating and Summarizing Data
 ### Chuck Lanfear
-### Oct 10, 2018<br>Updated: Oct 8, 2018
+### Oct 10, 2018<br>Updated: Oct 10, 2018
 
 ---
 
@@ -196,7 +196,7 @@ We can also filter *at random* to work with a smaller dataset using `sample_n()`
 
 
 ```r
-set.seed(413) # makes random numbers repeatable
+*set.seed(413) # makes random numbers repeatable
 yugoslavia %&gt;% sample_n(size = 6, replace = FALSE)
 ```
 
@@ -211,6 +211,8 @@ yugoslavia %&gt;% sample_n(size = 6, replace = FALSE)
 ## 5 Serbia     Europe     1952    58.0 6860147     3581.
 ## 6 Croatia    Europe     1997    73.7 4444595     9876.
 ```
+
+.footnote[Use `set.seed()` to make all random numbers in a file come up *exactly the same* each time it is run. Read *Details* in `?set.seed` if you like your brain to hurt.]
 
 ---
 ## Sorting: `arrange()`
@@ -290,7 +292,7 @@ yugoslavia %&gt;% select(-continent, -pop, -lifeExp) %&gt;% head(4)
 
 These are very useful if you have a "wide" data frame with column names following a pattern or ordering. 
 
-![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr/img/dys_vars.PNG)
+![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/img/dys_vars.PNG)
 
 
 ```r
@@ -416,25 +418,25 @@ yugoslavia %&gt;% filter(country == "Serbia") %&gt;%
 ## 5  1972 8313288    68.7        8.31             28.7
 ```
 
-Note you can create multiple variables in a single `mutate()` call by separating the formulae with commas.
+Note you can create multiple variables in a single `mutate()` call by separating the expressions with commas.
 
 ---
 # `ifelse()`
 
 
-A common function used in `mutate()` (and in general in R programming) is `ifelse()`. This returns a value depending on logical tests.
+A common function used in `mutate()` (and in general in R programming) is `ifelse()`. It returns a vector of values depending on a logical test.
 
 
 ```r
-ifelse(test= x==y, yes=if_true, no=if_false)
+ifelse(test = x==y, yes = first_value , no = second_value)
 ```
 
-Output from `ifelse()`:
-* `ifelse()` returns the value assigned to `if_true` if `x==y` is `TRUE`.
+Output from `ifelse()` if `x==y` is...
+* `TRUE`: `first_value` - the value for `yes =`
 
-* `ifelse()` returns `if_false` if `x==y` is `FALSE`.
+* `FALSE`: `second_value` - the value for `no = `
 
-* `ifelse()` returns `NA` if `x==y` is neither `TRUE` nor `FALSE`.
+* `NA`: `NA` - because you can't test for NA with an equality!
 
 --
 
@@ -442,12 +444,12 @@ For example:
 
 
 ```r
-example &lt;- c(1,0,2,-2)
+example &lt;- c(1, 0, NA, -2)
 ifelse(example &gt; 0, "Positive", "Not Positive")
 ```
 
 ```
-## [1] "Positive"     "Not Positive" "Positive"     "Not Positive"
+## [1] "Positive"     "Not Positive" NA             "Not Positive"
 ```
 
 ---
@@ -481,7 +483,7 @@ This is a simple way to change some values but not others!
 # `recode()`
 
 
-`recode()` is another useful function to use inside `mutate()`. Use `recode()` to change specific values to other values. You can change multiple values at the same time. Note if a value has spaces in it, you'll need to put it in backticks!
+`recode()` is another useful function to use inside `mutate()`. Use `recode()` to change specific values to other values, particularly with factors. You can change multiple values at the same time. Note if a value has spaces in it, you'll need to put it in backticks!
 
 
 ```r
@@ -637,7 +639,7 @@ Excel analogue: pivot tables
 
 ```r
 yugoslavia %&gt;%
-  group_by(year) %&gt;%
+* group_by(year) %&gt;%
     summarize(num_countries = n_distinct(country),
               total_pop = sum(pop),
               total_gdp_per_cap = sum(pop*gdpPercap)/total_pop) %&gt;%
@@ -739,7 +741,11 @@ Matching Behavior:
 
 * No `by`: Match using all variables in `A` and `B` that have identical names
 
+--
+
 * `by = c("var1", "var2", "var3")`: Match on identical values of `var1`, `var2`, and `var3` in both `A` and `B`
+
+--
 
 * `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: Match identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
 
@@ -748,7 +754,7 @@ Note: If there are multiple matches, you'll get *one row for each possible combi
 Need to get more complicated? Break it into multiple operations.
 
 ---
-## nycflights13 Data
+## `nycflights13` Data
 
 We'll use data in the [`nycflights13` package](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf). Install and load it:
 
@@ -872,10 +878,10 @@ flights %&gt;%
     select(dep_delay, wind_gust) %&gt;%
 *   filter(!is.na(dep_delay) &amp; !is.na(wind_gust) &amp; wind_gust &lt; 250) %&gt;%
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_smooth() + 
-    theme_bw(base_size = 16) +
-    xlab("Wind gusts in departure hour (mph)") +
-    ylab("Average departure delay (minutes)")
+      geom_smooth() + 
+      theme_bw(base_size = 16) +
+      xlab("Wind gusts in departure hour (mph)") +
+      ylab("Average departure delay (minutes)")
 ```
 ]
 

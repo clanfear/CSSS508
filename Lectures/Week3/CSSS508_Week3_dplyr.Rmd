@@ -17,6 +17,7 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(comment = "##")
+library(ggplot2)
 ```
 
 ```{r xaringan-themer, include = FALSE}
@@ -187,9 +188,11 @@ gapminder %>% distinct(continent, year, .keep_all=TRUE)
 We can also filter *at random* to work with a smaller dataset using `sample_n()` or `sample_frac()`.
 
 ```{r}
-set.seed(413) # makes random numbers repeatable
+set.seed(413) # makes random numbers repeatable #<<
 yugoslavia %>% sample_n(size = 6, replace = FALSE)
 ```
+
+.footnote[Use `set.seed()` to make all random numbers in a file come up *exactly the same* each time it is run. Read *Details* in `?set.seed` if you like your brain to hurt.]
 
 ---
 ## Sorting: `arrange()`
@@ -229,7 +232,7 @@ yugoslavia %>% select(-continent, -pop, -lifeExp) %>% head(4)
 
 These are very useful if you have a "wide" data frame with column names following a pattern or ordering. 
 
-![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr/img/dys_vars.PNG)
+![DYS Data Example](http://clanfear.github.io/CSSS508/Lectures/Week3/img/dys_vars.PNG)
 
 ```{r, eval=FALSE}
 DYS %>% select(starts_with("married"))
@@ -307,31 +310,31 @@ yugoslavia %>% filter(country == "Serbia") %>%
     head(5)
 ```
 
-Note you can create multiple variables in a single `mutate()` call by separating the formulae with commas.
+Note you can create multiple variables in a single `mutate()` call by separating the expressions with commas.
 
 ---
 # `ifelse()`
 
 
-A common function used in `mutate()` (and in general in R programming) is `ifelse()`. This returns a value depending on logical tests.
+A common function used in `mutate()` (and in general in R programming) is `ifelse()`. It returns a vector of values depending on a logical test.
 
 ```{r, eval=FALSE}
-ifelse(test= x==y, yes=if_true, no=if_false)
+ifelse(test = x==y, yes = first_value , no = second_value)
 ```
 
-Output from `ifelse()`:
-* `ifelse()` returns the value assigned to `if_true` if `x==y` is `TRUE`.
+Output from `ifelse()` if `x==y` is...
+* `TRUE`: `first_value` - the value for `yes =`
 
-* `ifelse()` returns `if_false` if `x==y` is `FALSE`.
+* `FALSE`: `second_value` - the value for `no = `
 
-* `ifelse()` returns `NA` if `x==y` is neither `TRUE` nor `FALSE`.
+* `NA`: `NA` - because you can't test for NA with an equality!
 
 --
 
 For example:
 
 ```{r}
-example <- c(1,0,2,-2)
+example <- c(1, 0, NA, -2)
 ifelse(example > 0, "Positive", "Not Positive")
 ```
 
@@ -356,7 +359,7 @@ This is a simple way to change some values but not others!
 # `recode()`
 
 
-`recode()` is another useful function to use inside `mutate()`. Use `recode()` to change specific values to other values. You can change multiple values at the same time. Note if a value has spaces in it, you'll need to put it in backticks!
+`recode()` is another useful function to use inside `mutate()`. Use `recode()` to change specific values to other values, particularly with factors. You can change multiple values at the same time. Note if a value has spaces in it, you'll need to put it in backticks!
 
 ```{r}
 yugoslavia %>% 
@@ -463,7 +466,7 @@ Excel analogue: pivot tables
 
 ```{r}
 yugoslavia %>%
-  group_by(year) %>%
+  group_by(year) %>% #<<
     summarize(num_countries = n_distinct(country),
               total_pop = sum(pop),
               total_gdp_per_cap = sum(pop*gdpPercap)/total_pop) %>%
@@ -542,7 +545,11 @@ Matching Behavior:
 
 * No `by`: Match using all variables in `A` and `B` that have identical names
 
+--
+
 * `by = c("var1", "var2", "var3")`: Match on identical values of `var1`, `var2`, and `var3` in both `A` and `B`
+
+--
 
 * `by = c("Avar1" = "Bvar1", "Avar2" = "Bvar2")`: Match identical values of `Avar1` variable in `A` to `Bvar1` variable in `B`, and `Avar2` variable in `A` to `Bvar2` variable in `B`
 
@@ -551,7 +558,7 @@ Note: If there are multiple matches, you'll get *one row for each possible combi
 Need to get more complicated? Break it into multiple operations.
 
 ---
-## nycflights13 Data
+## `nycflights13` Data
 
 We'll use data in the [`nycflights13` package](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf). Install and load it:
 ```{r}
@@ -629,8 +636,7 @@ Because the data are the first argument for `ggplot()`, we can pipe them straigh
 ---
 ## Wind Gusts and Delays
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE, fig.height=4, dev='svg'}
-library(ggplot2)
+```{r, warning=FALSE, message=FALSE, echo=FALSE, cache=FALSE, fig.height=4, dev='svg'}
 flights %>% select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
@@ -639,7 +645,7 @@ flights %>% select(origin, year, month, day, hour, dep_delay) %>%
     # Funky 1200 mph observations were dropped so I make new ones!
     mutate(wind_gust = if_else(row_number() %in% c(1,2,3), 1200, wind_gust)) %>%
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_point() + geom_smooth()
+      geom_point() + geom_smooth()
 ```
 
 Check out those 1200 mph winds!<sup>1</sup>
@@ -657,10 +663,10 @@ flights %>%
     select(dep_delay, wind_gust) %>%
     filter(!is.na(dep_delay) & !is.na(wind_gust) & wind_gust < 250) %>% #<<
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_smooth() + 
-    theme_bw(base_size = 16) +
-    xlab("Wind gusts in departure hour (mph)") +
-    ylab("Average departure delay (minutes)")
+      geom_smooth() + 
+      theme_bw(base_size = 16) +
+      xlab("Wind gusts in departure hour (mph)") +
+      ylab("Average departure delay (minutes)")
 ```
 ]
 
@@ -669,17 +675,17 @@ I removed `geom_point()` to focus on the mean trend produced by `geom_smooth()`.
 ---
 ## Wind Gusts and Delays: Mean Trend
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE, fig.height=4, dev='svg'}
+```{r, warning=FALSE, message=FALSE, echo=FALSE, cache=FALSE, fig.height=4, dev='svg'}
 flights %>% 
     select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
     filter(!is.na(dep_delay) & !is.na(wind_gust) & wind_gust < 250) %>% 
     ggplot(aes(x = wind_gust, y = dep_delay)) +
-    geom_smooth() + 
-    theme_bw(base_size = 16) +
-    xlab("Wind gusts in departure hour (mph)") +
-    ylab("Average departure delay (minutes)")
+      geom_smooth() + 
+      theme_bw(base_size = 16) +
+      xlab("Wind gusts in departure hour (mph)") +
+      ylab("Average departure delay (minutes)")
 ```
 
 ---
