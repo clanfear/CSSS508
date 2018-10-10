@@ -73,7 +73,7 @@ layout: default
        + [Rmd for Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.Rpres)
    * [Lecture Video for Lecture 3](https://youtu.be/-jCMNTUUmJI), recorded Spring 2018
    * Homework 3: Due at 11:59PM on October 16th
-       + [Homework 3 Instructions](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW3/homework_3.html)
+       + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + Homework 3 Key: HTML, RMD
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
    * Reading: **[Data Transformation chapter in R for Data Science](http://r4ds.had.co.nz/transform.html)**
