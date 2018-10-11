@@ -72,7 +72,7 @@ layout: default
 ### 3. Manipulating and Summarizing Data
    * [Slides for Lecture 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
        + [Rmd for Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.Rpres)
-   * [Lecture Video for Lecture 3](https://youtu.be/-jCMNTUUmJI), recorded Spring 2018
+   * [Lecture Video for Lecture 3](https://youtu.be/giKghK_7z7c), recorded Oct. 10, 2018
    * Homework 3: Due at 11:59PM on October 16th
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + Homework 3 Key: HTML, RMD
