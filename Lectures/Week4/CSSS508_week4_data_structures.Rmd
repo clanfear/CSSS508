@@ -70,7 +70,6 @@ mono_accent(base_color = "#342c5c",
 ```
 
 
----
 # R Data Types
 
 So far we've been manipulating data frames, making visuals, and summarizing. This got you pretty far!

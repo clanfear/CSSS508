@@ -1,7 +1,7 @@
 ---
 title: 'CSSS508: HW4'
-author: "Charles Lanfear"
-date: "October 17, 2018"
+author: "YOUR NAME"
+date: "DATE"
 output: html_document
 ---
 
