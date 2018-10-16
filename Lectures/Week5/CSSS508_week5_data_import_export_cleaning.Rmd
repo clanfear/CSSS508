@@ -36,7 +36,9 @@ csss508css <- list(
         "color" = "#ececf8",
         "border-radius" = "3px",
         "padding" = "2px"),
+     ".smallish" = list("font-size" = "85%"),
      ".small" = list("font-size" = "75%"),
+     ".smaller" = list("font-size" = "60%"),
      ".remark-code-line-highlighted" = list(
         "background-color" = "rgba(255,0,255,0.2)"),
      "sup" = list("font-size" = "14px"),
@@ -95,8 +97,8 @@ Issues around getting data *in* and *out* of R and making it analytically *ready
 * Controlling factor variables: `forcats`
 
 ---
-# Directories
 class: inverse
+# Directories
 
 ---
 # Working Directory
@@ -127,12 +129,14 @@ Working Directory Suggestions:
 
 --
 
-* If you need to set a working directly, put `setwd()` at the very beginning of your `.R` code so that someone using a different computer knows they need to modify it
+* If you need to set a working, put `setwd()` at the start of your file so that someone using another computer knows they need to modify it
 
 ---
 # Projects in RStudio
 
 A better way to deal with working directories: RStudio's **project** feature in the top-right dropdown. This has lots of advantages:
+
+--
 
 * Sets your working directory to be the project directory
 --
@@ -145,8 +149,10 @@ A better way to deal with working directories: RStudio's **project** feature in 
 
 * Easy to integrate with version control systems (e.g. `git`)
 --
+
    * I usually make each RStudio project its own GitHub repository
 --
+
    * If you're interested in advanced project management, ask me after class or check out [my presentation on reproducible research with rrtools](https://clanfear.github.io/birthtiming/inst/presentation/presentation.html#/).
 
 ---
@@ -161,9 +167,15 @@ a_plot <- ggplot(data = cars, aes(x = speed, y = dist)) +
 ggsave("graphics/cars_plot.png", plot = a_plot)
 ```
 
+--
+
 The above would save an image called "cars_plot.png" inside an existing folder called "graphics" within my working directory.
 
+--
+
 Relative paths are nice, because all locations of loaded and saved files can be changed just by altering the working directory.
+
+--
 
 Relative paths also allow others to download your files or entire project and use them on their computer without modifying all the paths!
 
@@ -214,33 +226,31 @@ R has a variety of built-in functions for importing data stored in text files, l
 * Handy function `problems()` you can run if there are errors
 * Loading bars for large files
 
----
-# `readr` Importing Example
-
 ```{r}
 library(readr)
 ```
 
-Let's import some data about song ranks on the Billboard Hot 100 back in 2000:
+---
+# `readr` Importing Example
 
+Let's import some data about song ranks on the Billboard Hot 100 in 2000:
+
+.small[
 ```{r, cache=TRUE}
 billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv")
 ```
-
-The data URL with a line break for readability:
-```
-https://raw.githubusercontent.com/hadley/tidyr/master/
-vignettes/billboard.csv
-```
+]
 
 ---
 # Did It Load?
 
 Look at the data types for the last few columns:
 
+.small[
 ```{r}
 str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 ```
+]
 
 ---
 # What Went Wrong?
@@ -257,7 +267,9 @@ Since it encountered no values, `readr` assumed the `wk66`-`wk76` columns were *
 # rep("i", 76) does the 76 weeks of integer ranks
 bb_types <- paste(c("icccD", rep("i", 76)), collapse="")
 
-billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv", col_types = bb_types)
+billboard_2000_raw <- 
+  read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv",
+           col_types = bb_types)
 ```
 
 ---
@@ -324,8 +336,10 @@ dput(head(cars, 8))
 
 The output of `dput()` can be copied and assigned to an object in R:
 ```{r}
-temp <- structure(list(speed = c(4, 4, 7, 7, 8, 9, 10, 10), dist = c(2, 
-10, 4, 22, 16, 10, 18, 26)), .Names = c("speed", "dist"), row.names = c(NA, 8L), class = "data.frame")
+temp <- structure(list(speed = c(4, 4, 7, 7, 8, 9, 10, 10), 
+                       dist = c(2, 10, 4, 22, 16, 10, 18, 26)),
+                       .Names = c("speed", "dist"),
+                       row.names = c(NA, 8L), class = "data.frame")
 ```
 
 ---
@@ -356,29 +370,41 @@ class: inverse
 ---
 # Initial Spot Checks
 
+.smallish[
 First things to check after loading new data:
-
+]
 --
 
+.smallish[
 * Did the last rows/columns from the original file make it in?
---
+
     + May need to use different package or manually specify range
+]
+
 --
+
+.smallish[
 * Are the column names in good shape?
---
     + Modify a `col_names=` argument or fix with `rename()`
+]
 --
+.smallish[
+
 * Are there "decorative" blank rows or columns to remove?
---
     + `filter()` or `select()` out those rows/columns
+]
 --
+.smallish[
+
 * How are missing values represented: `NA`, `" "` (blank), `.` (period), `999`?
---
     + Use `mutate()` with `ifelse()` to fix these (perhaps *en masse* with looping)
+]
 --
+.smallish[
+
 * Are there character data (e.g. ZIP codes with leading zeroes) being incorrectly represented as numeric or vice versa?
---
     + Modify `col_types=` argument, or use `mutate()` and `as.numeric()`
+]
 
 ---
 # Slightly Messy Data
@@ -393,19 +419,12 @@ First things to check after loading new data:
 --
 
 * What is an observation?
---
     + A group of students from a program of a given gender
---
 * What are the variables?
---
     + Program, gender
---
 * What are the values?
---
     + Program: Evans School, Arts & Sciences, Public Health, Other
---
     + Gender: Female, Male -- **in the column headings, not its own column!**
---
     + Count: **spread over two columns!**
 
 ---
@@ -431,10 +450,12 @@ Ready to throw into `ggplot()`!
 ---
 # Billboard is Just Ugly-Messy
 
+.small[
 ```{r, echo=FALSE}
 library(pander)
 pander(head(billboard_2000_raw[,1:10], 12), split.tables=120, style="rmarkdown")
 ```
+]
 
 Week columns continue up to `wk76`!
 
@@ -442,15 +463,21 @@ Week columns continue up to `wk76`!
 # Billboard
 
 * What are the **observations** in the data?
+
 --
+
     + Week since entering the Billboard Hot 100 per song
 --
+
 * What are the **variables** in the data?
 --
+
     + Year, artist, track, song length, date entered Hot 100, week since first entered Hot 100 (**spread over many columns**), rank during week (**spread over many columns**)
 --
+
 * What are the **values** in the data?
 --
+
     + e.g. 2000; 3 Doors Down; Kryptonite; 3 minutes 53 seconds; April 8, 2000; Week 3 (**stuck in column headings**); rank 68 (**spread over many columns**)
 
 ---
@@ -467,6 +494,7 @@ Week columns continue up to `wk76`!
 --
 
 3. The observations are all of the same nature.
+
 --
 
 Why do we want tidy data?
@@ -484,17 +512,20 @@ The `tidyr` package provides functions to tidy up data, similar to `reshape` in 
 --
 
 * `gather()`: takes a set of columns and rotates them down to make two new columns (which you can name yourself): 
---
     * A `key` that stores the original column names
---
     * A `value` with the values in those original columns
+
 --
+
 * `spread()`: inverts `gather()` by taking two columns and rotating them up into multiple columns
+
 --
-* `separate()`: pulls apart one column into multiple columns (common with freshly `gather`ed data where values had been embedded in column names)
---
+
+* `separate()`: pulls apart one column into multiple columns (common with `gather`ed data where values had been embedded in column names)
     * `extract_numeric()` does a simple version of this for the common case when you just want grab the number part
+
 --
+
 * `unite()`: inverts `separate()` by gluing together multiple columns into one character column (less common)
 
 ---
@@ -502,7 +533,7 @@ The `tidyr` package provides functions to tidy up data, similar to `reshape` in 
 
 Let's use `gather()` to get the week and rank variables out of their current layout into two columns (big increase in rows, big drop in columns):
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(dplyr)
 library(tidyr)
 billboard_2000 <- billboard_2000_raw %>%
@@ -510,7 +541,9 @@ billboard_2000 <- billboard_2000_raw %>%
 dim(billboard_2000)
 ```
 
-`starts_with()` and other helper functions from `dplyr::select()` work here too. Could instead use: `gather(key = week, value = rank, wk1:wk76)` to pull out these contiguous columns.
+`starts_with()` and other helper functions from `dplyr::select()` work here too.
+
+We could instead use: `gather(key = week, value = rank, wk1:wk76)` to pull out these contiguous columns.
 
 ---
 # Gathering Better?
@@ -568,6 +601,7 @@ For more sophisticated conversion or pattern checking, you'll need to use string
 
 Example of data that we probably want to spread (unless we want to plot each statistic in its own facet):
 
+.small[
 | **Group** | **Statistic** | **Value** |
 |-------|-----------|------:|
 | A     | Mean      |  1.28 |
@@ -576,6 +610,7 @@ Example of data that we probably want to spread (unless we want to plot each sta
 | B     | Mean      |  2.81 |
 | B     | Median    |     2 |
 | B     | SD        |  1.33 |
+]
 
 A common cue to use `spread()` is having measurements of different quantities in the same column. 
 
@@ -583,7 +618,9 @@ A common cue to use `spread()` is having measurements of different quantities in
 # Before `spread()`
 
 ```{r}
-(too_long_data <- data.frame(Group = c(rep("A", 3), rep("B", 3)), Statistic = rep(c("Mean", "Median", "SD"), 2), Value = c(1.28, 1.0, 0.72, 2.81, 2, 1.33)))
+(too_long_data <- data.frame(Group = c(rep("A", 3), rep("B", 3)),
+                             Statistic = rep(c("Mean", "Median", "SD"), 2),
+                             Value = c(1.28, 1.0, 0.72, 2.81, 2, 1.33)))
 ```
 
 ---
@@ -605,7 +642,9 @@ best_rank <- billboard_2000 %>%
     group_by(artist, track) %>%
     summarize(min_rank = min(rank),
               weeks_at_1 = sum(rank == 1)) %>%
-    mutate(`Peak rank` = ifelse(min_rank == 1, "Hit #1", "Didn't #1"))
+    mutate(`Peak rank` = ifelse(min_rank == 1,
+                                "Hit #1",
+                                "Didn't #1"))
 
 # merge onto original data
 billboard_2000 <- billboard_2000 %>%
@@ -636,7 +675,7 @@ billboard_trajectories <- ggplot(
 ---
 # Charts of 2000: Beauty!
 
-```{r, cache=TRUE, echo=FALSE, fig.width = 10, fig.height = 4.5, dpi=300, out.width="1100px", out.height="500px"}
+```{r, cache=TRUE, echo=FALSE, dev="svg", fig.height=4}
 billboard_trajectories
 ```
 
@@ -672,6 +711,7 @@ billboard_2000 %>% arrange(artist, track, week) %>%
 ---
 # Preparing to Plot Over Calendar Time
 
+.small[
 ```{r}
 plot_by_day <- ggplot(billboard_2000,
                       aes(x = date, y = rank, group = track)) +
@@ -684,11 +724,12 @@ plot_by_day <- ggplot(billboard_2000,
     geom_vline(xintercept = as.numeric(as.Date("2000-01-01", "%Y-%m-%d")), col = "red") +
     geom_vline(xintercept = as.numeric(as.Date("2000-12-31", "%Y-%m-%d")), col = "red")
 ```
+]
 
 ---
 # Calendar Time Plot!
 
-```{r, cache=TRUE, echo=FALSE, fig.width = 10, fig.height = 4.5, dpi=300, out.width="1100px", out.height="500px"}
+```{r, echo=FALSE, dev="svg", fig.height=4}
 plot_by_day
 ```
 
@@ -699,22 +740,20 @@ We see some of the entry dates are before 2000---presumably songs still charting
 
 To practice working with finer-grained temporal information, let's look at one day of Seattle Police response data obtained from [data.seattle.gov](http://data.seattle.gov):
 
+.smaller[
 ```{r, cache=TRUE}
 spd_raw <- read_csv("https://raw.githubusercontent.com/clanfear/CSSS508/master/Seattle_Police_Department_911_Incident_Response.csv")
 ```
-
-The URL for the above:
-```
-https://raw.githubusercontent.com/clanfear/CSSS508/master/
-Seattle_Police_Department_911_Incident_Response.csv
-```
+]
 
 ---
 # SPD Data
 
+.small[
 ```{r}
 glimpse(spd_raw)
 ```
+]
 
 ---
 # `lubridate`
@@ -729,7 +768,10 @@ using the `lubridate` package.
 ```{r, message=FALSE, warning=FALSE}
 # install.packages("lubridate")
 library(lubridate)
-spd <- spd_raw %>% mutate(`Event Clearance Date` = mdy_hms(`Event Clearance Date`, tz = "America/Los_Angeles"))
+spd <- spd_raw %>% 
+  mutate(`Event Clearance Date` = 
+           mdy_hms(`Event Clearance Date`,
+                   tz = "America/Los_Angeles"))
 str(spd$`Event Clearance Date`)
 ```
 
@@ -775,9 +817,9 @@ time_spd_plot <- ggplot(spd_times, aes(x = hour)) +
 ```
 
 ---
-## Histogram of SPD Event Clearances, March 25
+## SPD Event Clearances, March 25
 
-```{r, cache=TRUE, echo=FALSE, fig.width = 10, fig.height = 5.4, dpi=300, out.width="1100px", out.height="600px"}
+```{r, echo=FALSE, dev="svg", fig.height=5}
 time_spd_plot
 ```
 
@@ -791,12 +833,17 @@ class: inverse
 Factors are such a common (and fussy) vector type in R that we need to get to know them a little better when preparing data:
 
 --
+
 * Order of factor levels controls order of categories in tables, on axes, in legends, and in facets in `ggplot2`
+
 --
+
     + Often want to plot in interpretable/aesthetically pleasing order, e.g. from highest to lowest values---not **"Alabama first"**
 --
+
 * Lowest level of a factor is treated as a reference for regression, and the other levels get their own coefficients
 --
+
     + Reference levels are by default alphabetical, which doesn't necessarily coincide with the easiest to understand baseline category
 
 ---
@@ -814,7 +861,8 @@ To find more, [look at the `forcats` manual](https://cran.r-project.org/web/pack
 ```{r, message=FALSE, warning=FALSE}
 library(forcats)
 str(spd_times$`Initial Type Group`)
-spd_times$`Initial Type Group` <- parse_factor(spd_times$`Initial Type Group`, levels=NULL)
+spd_times$`Initial Type Group` <- 
+  parse_factor(spd_times$`Initial Type Group`, levels=NULL)
 str(spd_times$`Initial Type Group`)
 head(as.numeric(spd_times$`Initial Type Group`))
 ```
@@ -827,7 +875,10 @@ spd_vol <- spd_times %>% group_by(`Initial Type Group`) %>%
     summarize(n_events = n()) %>% arrange(desc(n_events))
 
 # set levels using order from sorted frequency table
-spd_times_2 <- spd_times %>% mutate(`Initial Type Group` = parse_factor(`Initial Type Group`, levels = spd_vol$`Initial Type Group`))
+spd_times_2 <- spd_times %>% 
+  mutate(`Initial Type Group` = 
+         parse_factor(`Initial Type Group`,
+                      levels = spd_vol$`Initial Type Group`))
 
 # replot
 time_spd_plot_2 <- ggplot(spd_times_2, aes(x = hour)) +
@@ -840,7 +891,7 @@ time_spd_plot_2 <- ggplot(spd_times_2, aes(x = hour)) +
 ---
 # Better Ordered Plot
 
-```{r, cache=TRUE, echo=FALSE, fig.width = 10, fig.height = 5.4, dpi=300, out.width="1100px", out.height="600px"}
+```{r, echo=FALSE, dev="svg", fig.height=5}
 time_spd_plot_2
 ```
 
@@ -871,7 +922,8 @@ Use `fct_relevel()` and use the `ref=` argument to change the reference category
 jayz <- billboard_2000 %>% filter(artist == "Jay-Z") %>%
     mutate(track = factor(track))
 
-jayz_bad_legend <- ggplot(jayz, aes(x = week, y = rank, group = track, color = track)) +
+jayz_bad_legend <- ggplot(jayz, aes(x = week, y = rank, 
+                                    group = track, color = track)) +
     geom_line() + theme_bw() +
     scale_y_reverse(limits = c(100, 0)) + 
     theme(legend.position = c(0.80, 0.25),
@@ -880,7 +932,7 @@ jayz_bad_legend <- ggplot(jayz, aes(x = week, y = rank, group = track, color = t
 
 ---
 ## Jay-Z with Bad Legend Order
-```{r, cache=TRUE, echo=FALSE, fig.width = 10, fig.height = 5.4, dpi=300, out.width="1100px", out.height="600px"}
+```{r, cache=TRUE, echo=FALSE, dev="svg", fig.height=5}
 jayz_bad_legend
 ```
 
@@ -890,7 +942,9 @@ jayz_bad_legend
 ```{r, cache=TRUE}
 jayz <- jayz %>% mutate(track = fct_reorder(track, rank, min))
 
-jayz_good_legend <- ggplot(jayz, aes(x = week, y = rank, group = track, color = track)) +
+jayz_good_legend <- ggplot(jayz, 
+                           aes(x = week, y = rank,
+                               group = track, color = track)) +
     geom_line() + theme_bw() +
     scale_y_reverse(limits = c(100, 0)) + 
     theme(legend.position = c(0.80, 0.25),
@@ -899,7 +953,7 @@ jayz_good_legend <- ggplot(jayz, aes(x = week, y = rank, group = track, color = 
 
 ---
 ## Jay-Z with Good Legend Order
-```{r, cache=TRUE, echo=FALSE, fig.width = 10, fig.height = 5.4, dpi=300, out.width="1100px", out.height="600px"}
+```{r, cache=TRUE, echo=FALSE, fig.height = 5, dev="svg"}
 jayz_good_legend
 ```
 
@@ -909,7 +963,8 @@ jayz_good_legend
 After subsetting you can end up with fewer *realized* levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your *entire dataframe* using `droplevels()`.
  
 ```{r}
-jayz_biggest <- jayz %>% filter(track %in% c("I Just Wanna Love U ...", "Big Pimpin'"))
+jayz_biggest <- jayz %>% 
+  filter(track %in% c("I Just Wanna Love U ...", "Big Pimpin'"))
 levels(jayz_biggest$track)
 jayz_biggest <- jayz_biggest %>% droplevels(.)
 levels(jayz_biggest$track)
@@ -917,13 +972,13 @@ levels(jayz_biggest$track)
 
 ---
 class: inverse
-# Homework: Be a data custodian!
+# Homework
 
 Vote tallies in King County from the 2016 general election are in a 60 MB comma-delimited text file downloaded from [King County](https://www.kingcounty.gov/depts/elections/results/2016/201611/reports.aspx). They can be found on the course website.
 
-The data have no documentation (aside from what I provide), so show your detective work to answer questions about the data and clean them up in the R Markdown template on the course website. Use *⌘-Click* on Mac or *Right-Click -> Save link as...* on Windows to download the .Rmd to the folder you plan to work from, then open it in RStudio.
+The data have no documentation (aside from what I provide), so show your detective work to answer questions about the data and clean them up in the R Markdown template on the course website. Use *⌘-Click* on Mac or *Right-Click * on Windows to download the .Rmd to the folder you plan to work from, then open it in RStudio.
 
-This homework is broken up into two parts to be completed in each of the next two weeks. It can be daunting, so do not wait until Monday or Tuesday to start. I recommend reading instructions closely, working with others, and using the mailing list.
+This homework is two parts to be completed in each of the next two weeks. It can be daunting, so do not wait until Monday to start. I recommend reading instructions closely, working with others, and using the mailing list.
 
 ## PART 1 DUE: 11:59 PM, May 1st
 ## PART 2 DUE: 11:59 PM, May 8th
