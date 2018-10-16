@@ -1,0 +1,10 @@
+base
+xaringanthemer
+readr
+pander
+dplyr
+tidyr
+bindrcpp
+ggplot2
+lubridate
+forcats
