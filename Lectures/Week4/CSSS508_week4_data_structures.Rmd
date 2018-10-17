@@ -92,7 +92,7 @@ class: inverse
 ---
 # Making Vectors
 
-In R, we call a set of values a **vector**. We can create vectors using the `c()` function ("c" for **c**ombine or **c**oncatenate).
+In R, we call a set of values of the same type a **vector**. We can create vectors using the `c()` function ("c" for **c**ombine or **c**oncatenate).
 
 ```{r}
 c(1, 3, 7, -0.5)
@@ -104,6 +104,10 @@ Vectors have one dimension: **length**
 ```{r}
 length(c(1, 3, 7, -0.5))
 ```
+
+--
+
+Remember: All elements of a vector must be the same type (e.g. numeric or character)
 
 ---
 # Element-wise Vector Math
@@ -183,7 +187,7 @@ The `scale()` function performs the above operation!
 --
 
 * **numeric**: `c(1, 10*3, 4, -3.14)` <sup>1</sup>
-.footnote[[1] R is perfectly happy with you including a calculation as an element!]
+.footnote[[1] R is perfectly happy with you including a calculation—or any other valid object—as an element!]
 
 --
 
@@ -468,7 +472,7 @@ is.nan(c(-2, -1, 0, 1, 2) / 0)
 ---
 # Previewing Vectors
 
-Like with dataframes, we can use `head()` and `tail()` to preview vectors:
+Like with data frames, we can use `head()` and `tail()` to preview vectors:
 
 ```{r}
 head(letters) # letters is a built-in vector
@@ -500,7 +504,7 @@ class: inverse
 
 **Matrices** extend vectors to two **dimension**s: **rows** and **columns**. We can construct them directly using `matrix`.
 
-Note the `byrow` argument which determines whether the data fill the matrix by row or by column.
+Note the `byrow=` argument which determines whether the data fill the matrix by row or by column.
 ```{r}
 (a_matrix <- matrix(letters[1:6], nrow=2, ncol=3))
 (b_matrix <- matrix(letters[1:6], nrow=2, ncol=3, byrow=TRUE))
@@ -657,7 +661,9 @@ str(my_list[1])
 str(my_list[[1]])
 ```
 
-Note that you can only select a single element at a time using `[[ ]]`,because this would have to return *multiple objects*!
+--
+
+Note that you can only select a single element at a time using `[[ ]]`, because this would have to return *multiple objects*!
 
 An R function can only return one object at a time—otherwise operations like assignment would be impossible.
 
@@ -689,9 +695,9 @@ names(my_list[[3]])
 ```
 
 ---
-# Dataframes are Lists!
+# Data Frames are Lists!
 
-Dataframes are lists of equal-length vectors.
+data frames are lists of equal-length vectors.
 
 ```{r}
 str(cars)
@@ -708,7 +714,7 @@ cars[1:5, "speed", drop = FALSE]
 ```
 
 ---
-# Base R vs. dplyr
+# Base R vs. `dplyr`
 
 Two ways of calculating the same thing: which do you like better?
 
@@ -771,6 +777,7 @@ summary(my_list[[3]])[["coefficients"]] # a matrix
 speed_CI <- speed_beta + c(-qnorm(0.975), qnorm(0.975)) * speed_SE
 names(speed_CI) <- c("lower", "upper")
 ```
+.footnote[[1] `qnorm(0.975)` is `r round(qnorm(0.975),2)`]
 
 --
 

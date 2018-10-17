@@ -960,7 +960,7 @@ jayz_good_legend
 ---
 # Dropping Unused Levels
 
-After subsetting you can end up with fewer *realized* levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your *entire dataframe* using `droplevels()`.
+After subsetting you can end up with fewer *realized* levels than before, but old levels remain linked and can cause problems for regressions. Drop unused levels from variables or your *entire data frame* using `droplevels()`.
  
 ```{r}
 jayz_biggest <- jayz %>% 
