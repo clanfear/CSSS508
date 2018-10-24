@@ -56,7 +56,6 @@ layout: default
    * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded Oct. 3, 2018
    * Homework 2: Due at 11:59PM on October 9th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
-       + Homework 2 Key: HTML, RMD
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
    * [`ggplot2` documentation](http://docs.ggplot2.org/current/)
    * [`ggplot2` Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
@@ -75,7 +74,6 @@ layout: default
    * [Lecture Video for Lecture 3](https://youtu.be/giKghK_7z7c), recorded Oct. 10, 2018
    * Homework 3: Due at 11:59PM on October 16th
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
-       + Homework 3 Key: HTML, RMD
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
    * Reading: **[Data Transformation chapter in R for Data Science](http://r4ds.had.co.nz/transform.html)**
    * [A cautionary tale about Excel](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history)
@@ -94,11 +92,11 @@ layout: default
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: R Data Structures, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4/homework_4.html)
-           * Homework 4: Data Structures, Key: HTML, RMD
+           * Homework 4: Data Structures, Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/homework_4_key.html), [RMD]((https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/homework_4_key.Rmd))
        + Homework 4: Linear Regression (More Advanced)
            * [Homework 4: Linear Regression, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4_regression/HW4_regression.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: Linear Regression, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4_regression/HW4_regression.html)
-           * Homework 4: Linear Regression, Key: HTML, RMD
+           * Homework 4: Linear Regression, Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/HW4_regression_key.html), [RMD]((https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/HW4_regression_key.Rmd))
    * [Setting up swirl for practice](http://swirlstats.com/students.html)
    * Reading: **[Data Structures chapter in Advanced R](http://adv-r.had.co.nz/Data-structures.html)**
 
