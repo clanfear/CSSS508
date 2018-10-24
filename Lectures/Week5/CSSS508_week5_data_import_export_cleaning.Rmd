@@ -2,7 +2,7 @@
 title: "CSSS508, Week 5"
 subtitle: "Importing, Exporting, and Cleaning Data"
 author: "Chuck Lanfear"
-date: "Oct 17, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Oct 24, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -57,7 +57,10 @@ csss508css <- list(
      ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)"),
      ".short" = list("height" = "30%"),
      ".image-50 img" = list("width" = "50%"),
-     ".image-75 img" = list("width" = "75%")
+     ".image-75 img" = list("width" = "75%"),
+     ".title-slide" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg), url(https://clanfear.github.io/CSSS508/Lectures/img/title_slide_img.png)",
+                           "background-position" = "center center, center bottom",
+                           "background-size" = "contain, contain")
     )
  
 mono_accent(base_color = "#342c5c",
@@ -72,7 +75,8 @@ mono_accent(base_color = "#342c5c",
 ```
 
 
-# Today's Theme: "Data Custodian Work"
+# Today's Theme:
+### "Data Custodian Work"
 
 Issues around getting data *in* and *out* of R and making it analytically *ready*:
 
@@ -104,7 +108,11 @@ class: inverse
 # Working Directory
 
 You may recall that the **working directory** is where R will look for and save things by default.
-You can find out what it is using the function `getwd()`. On my computer when I knitted this, it happens to be:
+
+
+You can find out what it is using the function `getwd()`.
+
+On my computer when I knitted these slides, it happened to be:
 
 ```{r}
 getwd()
@@ -138,27 +146,32 @@ A better way to deal with working directories: RStudio's **project** feature in 
 
 --
 
-* Sets your working directory to be the project directory
+* Sets your working directory to be the project directory.
+
 --
 
-* Can remember objects in your workspace, command history, etc. next time you re-open that project
+* Remembers objects in your workspace, command history, etc. next time you re-open that project.
+
 --
 
-* Reduce risk of intermingling different work using the same variable names (e.g. `n`) by using separate RStudio instances for each project
+* Reduces risk of intermingling different work using the same variable names (e.g. `n`) by using separate RStudio instances for each project.
+
 --
 
 * Easy to integrate with version control systems (e.g. `git`)
+
 --
 
-   * I usually make each RStudio project its own GitHub repository
+   * I usually make each RStudio project its own GitHub repository.
+   
 --
 
-   * If you're interested in advanced project management, ask me after class or check out [my presentation on reproducible research with rrtools](https://clanfear.github.io/birthtiming/inst/presentation/presentation.html#/).
+.footnote[If you're interested in advanced project management, ask me after class or check out [my presentation on reproducible research with rrtools](https://clanfear.github.io/birthtiming/inst/presentation/presentation.html#/).]
 
 ---
 # Relative Paths
 
-Once you've set the working directory---or you're in an RStudio project---you can refer to folders and files within the working directory using relative paths.
+Once you've set the working directory—or you're in an RStudio project—you can refer to folders and files within the working directory using relative paths.
 
 ```{r, eval=FALSE}
 library(ggplot2)
@@ -255,7 +268,7 @@ str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 ---
 # What Went Wrong?
 
-`readr` uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character). There are not many songs in the data that charted for 60+ weeks---and none in the first 1000 that charted for 66+ weeks! 
+`readr` uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character). There are not many songs in the data that charted for 60+ weeks—and none in the first 1000 that charted for 66+ weeks! 
 
 --
 
@@ -265,11 +278,11 @@ Since it encountered no values, `readr` assumed the `wk66`-`wk76` columns were *
 # paste is a string concatenation function
 # i = integer, c = character, D = date
 # rep("i", 76) does the 76 weeks of integer ranks
-bb_types <- paste(c("icccD", rep("i", 76)), collapse="")
+bb_types <- paste(c("icccD", rep("i", 76)), collapse="") #<<
 
 billboard_2000_raw <- 
   read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv",
-           col_types = bb_types)
+           col_types = bb_types) #<<
 ```
 
 ---
@@ -290,7 +303,7 @@ With `read.csv()` you will need to specify if the data have column names (`heade
 ---
 # Excel Files
 
-The simplest thing to do with Excel files (`.xls` or `.xlsx`) is open them up, export to CSV, then import in R---and compare carefully to make sure everything worked!
+The simplest thing to do with Excel files (`.xls` or `.xlsx`) is open them up, export to CSV, then import in R—and compare carefully to make sure everything worked!
 
 For Excel files that might get updated and you want the changes to flow to your analysis, I recommend using an R package such as `readxl` or `openxlsx`. For Google Docs Spreadsheets, there's the `googlesheets` package.
 
@@ -360,7 +373,7 @@ R package to handle it (or at least a clever hack).
 --
 
 If you encounter a mysterious file extension (e.g. `.dat`), try opening it with
-a good text editor first (e.g. Notepad++); there's a good chance it is actually raw text
+a good text editor first (e.g. Atom or Sublime); there's a good chance it is actually raw text
 with a delimiter or fixed format that R can handle!
 
 ---
@@ -385,24 +398,28 @@ First things to check after loading new data:
 
 .smallish[
 * Are the column names in good shape?
+
     + Modify a `col_names=` argument or fix with `rename()`
 ]
 --
 .smallish[
 
 * Are there "decorative" blank rows or columns to remove?
+
     + `filter()` or `select()` out those rows/columns
 ]
 --
 .smallish[
 
 * How are missing values represented: `NA`, `" "` (blank), `.` (period), `999`?
+
     + Use `mutate()` with `ifelse()` to fix these (perhaps *en masse* with looping)
 ]
 --
 .smallish[
 
 * Are there character data (e.g. ZIP codes with leading zeroes) being incorrectly represented as numeric or vice versa?
+
     + Modify `col_types=` argument, or use `mutate()` and `as.numeric()`
 ]
 
@@ -499,6 +516,7 @@ Week columns continue up to `wk76`!
 
 Why do we want tidy data?
 
+* Easier to understand many rows than many columns
 * Required for plotting in `ggplot2`
 * Required for many types of statistical procedures (e.g. hierarchical or mixed effects models)
 * Fewer confusing variable names
@@ -537,7 +555,7 @@ Let's use `gather()` to get the week and rank variables out of their current lay
 library(dplyr)
 library(tidyr)
 billboard_2000 <- billboard_2000_raw %>%
-    gather(key = week, value = rank, starts_with("wk"))
+    gather(key = week, value = rank, starts_with("wk")) #<<
 dim(billboard_2000)
 ```
 
@@ -546,22 +564,33 @@ dim(billboard_2000)
 We could instead use: `gather(key = week, value = rank, wk1:wk76)` to pull out these contiguous columns.
 
 ---
+# `gather`ed Weeks
+
+.smallish[
+```{r, message=FALSE, warning=FALSE}
+head(billboard_2000)
+```
+]
+
+Now we have a single week column!
+
+---
 # Gathering Better?
 
 ```{r}
 summary(billboard_2000$rank)
 ```
 
-An improvement, but we don't want to keep the `r sum(is.na(billboard_2000$rank))` rows with missing ranks (i.e. observations for weeks since entering the Hot 100 that the song was no longer on the Hot 100).
+This is an improvement, but we don't want to keep the `r sum(is.na(billboard_2000$rank))` rows with missing ranks (i.e. observations for weeks since entering the Hot 100 that the song was no longer on the Hot 100).
 
 ---
-# Gathering Better: na.rm
+# Gathering Better: `na.rm`
 
 The argument `na.rm = TRUE` to `gather()` will remove rows with missing ranks.
 ```{r}
 billboard_2000 <- billboard_2000_raw %>%
     gather(key = week, value = rank, starts_with("wk"),
-           na.rm = TRUE)
+           na.rm = TRUE) #<<
 summary(billboard_2000$rank)
 ```
 
@@ -573,11 +602,15 @@ The track length column isn't analytically friendly. Let's convert it to a numbe
 ```{r}
 billboard_2000 <- billboard_2000 %>%
     separate(time, into = c("minutes", "seconds"),
-             sep = ":", convert = TRUE) %>%
+             sep = ":", convert = TRUE) %>% #<<
     mutate(length = minutes + seconds / 60) %>%
     select(-minutes, -seconds)
 summary(billboard_2000$length)
 ```
+
+`sep = :` tells `separate()` to split the column into two where it finds a colon (`:`).
+
+Then we add `seconds / 60` to `minutes` to produce a numeric `length` in minutes.
 
 ---
 # `parse_number()`
@@ -586,7 +619,7 @@ summary(billboard_2000$length)
 
 ```{r}
 billboard_2000 <- billboard_2000 %>%
-    mutate(week = parse_number(week))
+    mutate(week = parse_number(week)) #<<
 summary(billboard_2000$week)
 ```
 
@@ -617,11 +650,13 @@ A common cue to use `spread()` is having measurements of different quantities in
 ---
 # Before `spread()`
 
+.smallish[
 ```{r}
 (too_long_data <- data.frame(Group = c(rep("A", 3), rep("B", 3)),
                              Statistic = rep(c("Mean", "Median", "SD"), 2),
                              Value = c(1.28, 1.0, 0.72, 2.81, 2, 1.33)))
 ```
+]
 
 ---
 # After `spread()`
@@ -634,13 +669,13 @@ A common cue to use `spread()` is having measurements of different quantities in
 ---
 # Charts of 2000: Data Prep
 
-Let's look at songs that hit #1 at some point and look how they got there vs. the songs that didn't:
+Let's look at songs that hit #1 at some point and look how they got there versus songs that did not:
 
 ```{r}
 # find best rank for each song
 best_rank <- billboard_2000 %>%
     group_by(artist, track) %>%
-    summarize(min_rank = min(rank),
+    summarize(min_rank = min(rank), #<<
               weeks_at_1 = sum(rank == 1)) %>%
     mutate(`Peak rank` = ifelse(min_rank == 1,
                                 "Hit #1",
@@ -651,38 +686,41 @@ billboard_2000 <- billboard_2000 %>%
     left_join(best_rank, by = c("artist", "track"))
 ```
 
+.footnote[Note that because the "highest" rank is *numerically lowest* (1), we are summarizing with `min()`.]
+
 ---
 # Charts of 2000: `ggplot2`
 
 ```{r}
 library(ggplot2)
-billboard_trajectories <- ggplot(
-    data = billboard_2000,
-    aes(x = week, y = rank,
-        group = track, color = `Peak rank`)
-    ) +
-    geom_line(aes(size = `Peak rank`), alpha = 0.4) +
+billboard_trajectories <- 
+  ggplot(data = billboard_2000,
+         aes(x = week, y = rank, group = track,
+             color = `Peak rank`)
+         ) +
+  geom_line(aes(size = `Peak rank`), alpha = 0.4) +
     # rescale time: early weeks more important
-    scale_x_log10(breaks = seq(0, 70, 10)) +
-    # want rank 1 on top, not bottom
-    scale_y_reverse() + theme_classic() +
-    scale_color_manual(values = c("black", "red")) +
-    scale_size_manual(values = c(0.25, 1)) +
-    theme(legend.position = c(0.90, 0.25),
-          legend.background = element_rect(fill="transparent"))
+  scale_x_log10(breaks = seq(0, 70, 10)) + 
+  scale_y_reverse() + # want rank 1 on top, not bottom
+  theme_classic() +
+  xlab("Week") + ylab("Rank") +
+  scale_color_manual(values = c("black", "red")) +
+  scale_size_manual(values = c(0.25, 1)) +
+  theme(legend.position = c(0.90, 0.25),
+        legend.background = element_rect(fill="transparent"))
 ```
 
 ---
 # Charts of 2000: Beauty!
 
-```{r, cache=TRUE, echo=FALSE, dev="svg", fig.height=4}
+```{r, cache=FALSE, echo=FALSE, dev="svg", fig.height=4}
 billboard_trajectories
 ```
 
 Observation: There appears to be censoring around week 20 for songs falling out of the top 50 that I'd want to follow up on.
 
 ---
-## Which Songs Were #1 the Most Weeks?
+## Which Were #1 the Most Weeks?
 
 ```{r}
 billboard_2000 %>%
@@ -697,32 +735,37 @@ class: inverse
 # Dates and Times
 
 ---
-# Getting Usable Dates from Billboard
+# Getting Usable Dates
 
 We have the date the songs first charted, but not the dates for later weeks. We can calculate these now that the data are tidy:
 
 ```{r}
 billboard_2000 <- billboard_2000 %>%
-    mutate(date = date.entered + (week - 1) * 7)
+    mutate(date = date.entered + (week - 1) * 7) #<<
 billboard_2000 %>% arrange(artist, track, week) %>%
     select(artist, date.entered, week, date, rank) %>% head(4)
 ```
 
+This works because `date` objects are in units of days—we just add 7 days per week to the start date.
+
 ---
 # Preparing to Plot Over Calendar Time
 
-.small[
+.smallish[
 ```{r}
-plot_by_day <- ggplot(billboard_2000,
-                      aes(x = date, y = rank, group = track)) +
-    geom_line(size = 0.25, alpha = 0.4) +
-    # just show the month abbreviation label (%b)
-    scale_x_date(date_breaks = "1 month", date_labels = "%b") +
-    scale_y_reverse() + theme_bw() +
-    # add lines for start and end of year:
-    # input as dates, then make numeric for plotting
-    geom_vline(xintercept = as.numeric(as.Date("2000-01-01", "%Y-%m-%d")), col = "red") +
-    geom_vline(xintercept = as.numeric(as.Date("2000-12-31", "%Y-%m-%d")), col = "red")
+plot_by_day <- 
+  ggplot(billboard_2000, aes(x = date, y = rank, group = track)) +
+  geom_line(size = 0.25, alpha = 0.4) +
+  # just show the month abbreviation label (%b)
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  scale_y_reverse() + theme_bw() +
+  # add lines for start and end of year:
+  # input as dates, then make numeric for plotting
+  geom_vline(xintercept = as.numeric(as.Date("2000-01-01", "%Y-%m-%d")),
+             col = "red") +
+  geom_vline(xintercept = as.numeric(as.Date("2000-12-31", "%Y-%m-%d")),
+             col = "red") +
+  xlab("Week") + ylab("Rank")
 ```
 ]
 
@@ -770,11 +813,12 @@ using the `lubridate` package.
 library(lubridate)
 spd <- spd_raw %>% 
   mutate(`Event Clearance Date` = 
-           mdy_hms(`Event Clearance Date`,
+           mdy_hms(`Event Clearance Date`, #<<
                    tz = "America/Los_Angeles"))
 str(spd$`Event Clearance Date`)
 ```
 
+.footnote[`mdy_hms()` automatically processes datetimes in month-day-year, hour-minute-second format. It figures out separators for you!]
 ---
 # An Aside on Time
 
@@ -804,7 +848,7 @@ demo_dts <- spd$`Event Clearance Date`[1:2]
 ---
 # What Time of Day were Incidents Cleared?
 
-```{r, cache=TRUE}
+```{r, cache=FALSE}
 spd_times <- spd %>%
     select(`Initial Type Group`, `Event Clearance Date`) %>%
     mutate(hour = hour(`Event Clearance Date`))
@@ -813,7 +857,8 @@ time_spd_plot <- ggplot(spd_times, aes(x = hour)) +
     geom_histogram(binwidth = 2) +
     facet_wrap( ~ `Initial Type Group`) +
     theme_minimal() +
-    theme(strip.text.x = element_text(size = rel(0.6)))
+    theme(strip.text.x = element_text(size = rel(0.6))) +
+    ylab("Count of Incidents") + xlab("Hour of Day")
 ```
 
 ---
@@ -834,17 +879,17 @@ Factors are such a common (and fussy) vector type in R that we need to get to kn
 
 --
 
-* Order of factor levels controls order of categories in tables, on axes, in legends, and in facets in `ggplot2`
+* The order of factor levels controls the order of categories in tables, on axes, in legends, and in facets in `ggplot2`.
 
 --
 
-    + Often want to plot in interpretable/aesthetically pleasing order, e.g. from highest to lowest values---not **"Alabama first"**
+    + Often we want to plot in interpretable/aesthetically pleasing order, e.g. from highest to lowest values—not **"Alabama first"**.
 --
 
-* Lowest level of a factor is treated as a reference for regression, and the other levels get their own coefficients
+* The lowest level of a factor is treated as a reference for regression, and the other levels get their own coefficients.
 --
 
-    + Reference levels are by default alphabetical, which doesn't necessarily coincide with the easiest to understand baseline category
+    + Reference levels are by default alphabetical, which doesn't necessarily coincide with the easiest to understand baseline category.
 
 ---
 # `forcats`
@@ -859,6 +904,7 @@ To find more, [look at the `forcats` manual](https://cran.r-project.org/web/pack
 # Character to Factor
 
 ```{r, message=FALSE, warning=FALSE}
+# install.packages("forcats")
 library(forcats)
 str(spd_times$`Initial Type Group`)
 spd_times$`Initial Type Group` <- 
@@ -870,22 +916,25 @@ head(as.numeric(spd_times$`Initial Type Group`))
 ---
 ## Releveling by Frequency
 
-```{r, cache=TRUE}
-spd_vol <- spd_times %>% group_by(`Initial Type Group`) %>%
-    summarize(n_events = n()) %>% arrange(desc(n_events))
+```{r, cache=FALSE}
+spd_vol <- spd_times %>% 
+  group_by(`Initial Type Group`) %>%
+  summarize(n_events = n()) %>% 
+  arrange(desc(n_events)) #<<
 
 # set levels using order from sorted frequency table
 spd_times_2 <- spd_times %>% 
   mutate(`Initial Type Group` = 
          parse_factor(`Initial Type Group`,
-                      levels = spd_vol$`Initial Type Group`))
+                      levels = spd_vol$`Initial Type Group`)) #<<
 
 # replot
 time_spd_plot_2 <- ggplot(spd_times_2, aes(x = hour)) +
-    geom_histogram(binwidth = 2) +
-    facet_wrap( ~ `Initial Type Group`) +
-    theme_minimal() +
-    theme(strip.text.x = element_text(size = rel(0.6)))
+  geom_histogram(binwidth = 2) +
+  facet_wrap( ~ `Initial Type Group`) +
+  theme_minimal() +
+  theme(strip.text.x = element_text(size = rel(0.6))) +
+  ylab("Count of Incidents") + xlab("Hour of Day")
 ```
 
 ---
@@ -918,42 +967,48 @@ Use `fct_relevel()` and use the `ref=` argument to change the reference category
 ---
 # Reorder Example: Jay-Z
 
-```{r, cache=TRUE}
-jayz <- billboard_2000 %>% filter(artist == "Jay-Z") %>%
-    mutate(track = factor(track))
+```{r, cache=FALSE}
+jayz <- billboard_2000 %>% 
+  filter(artist == "Jay-Z") %>%
+  mutate(track = factor(track))
 
-jayz_bad_legend <- ggplot(jayz, aes(x = week, y = rank, 
-                                    group = track, color = track)) +
-    geom_line() + theme_bw() +
-    scale_y_reverse(limits = c(100, 0)) + 
-    theme(legend.position = c(0.80, 0.25),
-          legend.background = element_rect(fill="transparent"))
+jayz_bad_legend <- 
+  ggplot(jayz, aes(x = week, y = rank, 
+                   group = track, color = track)) +
+  geom_line() + 
+  theme_bw() +
+  scale_y_reverse(limits = c(100, 0)) + 
+  theme(legend.position = c(0.80, 0.25),
+        legend.background = element_rect(fill="transparent")) +
+  xlab("Week") + ylab("Rank")
 ```
 
 ---
 ## Jay-Z with Bad Legend Order
-```{r, cache=TRUE, echo=FALSE, dev="svg", fig.height=5}
+```{r, cache=FALSE, echo=FALSE, dev="svg", fig.height=5}
 jayz_bad_legend
 ```
 
 ---
 ## Better Ordering for Jay-Z
 
-```{r, cache=TRUE}
+```{r, cache=FALSE}
 jayz <- jayz %>% mutate(track = fct_reorder(track, rank, min))
 
-jayz_good_legend <- ggplot(jayz, 
-                           aes(x = week, y = rank,
-                               group = track, color = track)) +
-    geom_line() + theme_bw() +
-    scale_y_reverse(limits = c(100, 0)) + 
-    theme(legend.position = c(0.80, 0.25),
-          legend.background = element_rect(fill="transparent"))
+jayz_good_legend <-
+  ggplot(jayz, aes(x = week, y = rank, 
+                   group = track, color = track)) +
+  geom_line() + 
+  theme_bw() +
+  scale_y_reverse(limits = c(100, 0)) + 
+  theme(legend.position = c(0.80, 0.25),
+        legend.background = element_rect(fill="transparent")) +
+  xlab("Week") + ylab("Rank")
 ```
 
 ---
 ## Jay-Z with Good Legend Order
-```{r, cache=TRUE, echo=FALSE, fig.height = 5, dev="svg"}
+```{r, cache=FALSE, echo=FALSE, fig.height = 5, dev="svg"}
 jayz_good_legend
 ```
 
