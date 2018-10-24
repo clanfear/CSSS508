@@ -92,11 +92,11 @@ layout: default
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: R Data Structures, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4/homework_4.html)
-           * Homework 4: Data Structures, Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/homework_4_key.html), [RMD]((https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/homework_4_key.Rmd))
+           * Homework 4: Data Structures, Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/homework_4_key.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/homework_4_key.Rmd)
        + Homework 4: Linear Regression (More Advanced)
            * [Homework 4: Linear Regression, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4_regression/HW4_regression.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: Linear Regression, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4_regression/HW4_regression.html)
-           * Homework 4: Linear Regression, Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/HW4_regression_key.html), [RMD]((https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/HW4_regression_key.Rmd))
+           * Homework 4: Linear Regression, Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/HW4_regression_key.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/HW4_regression_key.Rmd)
    * [Setting up swirl for practice](http://swirlstats.com/students.html)
    * Reading: **[Data Structures chapter in Advanced R](http://adv-r.had.co.nz/Data-structures.html)**
 
