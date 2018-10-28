@@ -718,7 +718,7 @@ class: inverse
 
 We have a vector of numbers, and we want to add 1 to each element.
 ```{r, cache=TRUE}
-my_vector <- rnorm(10000000) # Length 100 million random vector
+my_vector <- rnorm(10000000) # Length 10 million random vector
 ```
 
 A `for()` loop works but is super slow:
