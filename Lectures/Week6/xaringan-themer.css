@@ -240,6 +240,12 @@ body {
 .image-75 img {
   width: 75%;
 }
+.image-full img {
+  height: 480px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .title-slide {
   background-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg), url(https://clanfear.github.io/CSSS508/Lectures/img/title_slide_img.png);
   background-position: center center, center bottom;

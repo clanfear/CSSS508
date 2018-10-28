@@ -60,6 +60,11 @@ csss508css <- list(
      ".short" = list("height" = "30%"),
      ".image-50 img" = list("width" = "50%"),
      ".image-75 img" = list("width" = "75%"),
+          ".image-full img" = list(
+        "height" = "480px",
+        "display"="block",
+        "margin-left"="auto",
+        "margin-right"="auto"),
      ".title-slide" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg), url(https://clanfear.github.io/CSSS508/Lectures/img/title_slide_img.png)",
                            "background-position" = "center center, center bottom",
                            "background-size" = "contain, contain")
@@ -167,26 +172,35 @@ class: inverse
 
 Conceptually:
 
-Given a set of values...
+*Given a set of values...*
 
-1. You set a variable (often `i`) equal to the first value
+1. You set an index variable (often `i`) equal to the first value
 2. Do some set of things (usually depending on current value)
-3. Update to the next value
-* ...and keep going until you run out of values.
+3. Is there a next value?
+   * *YES*: Update to next value, go back to 2.
+   * *NO*: Exit loop
 
+We are *looping* through values and repeating some actions.
 
 
 ---
-# `for()` Loop: Toy example
+# `for()` Loop: Diagram
+
+*Given a set of values...*
+
+![](https://clanfear.github.io/CSSS508/Lectures/Week6/img/loop.svg)
+
+---
+# `for()` Loop: Example
 
 ```{r}
 for(i in 1:10) {
-    # inside for, output won't show up w/o "print"
+    # inside for, output won't show up without print()
     print(i^2) 
 }
 ```
 
-Note this is 10 separate print commands, which is why each line starts with `[1]`.
+Note this runs *10 separate print commands*, which is why each line starts with `[1]`.
 
 ---
 # These Do the Same Thing
@@ -200,7 +214,7 @@ for(i in 1:3) {
 ]
 
 .pull-right[
-```{r}
+```{r, results='hold'}
 i <- 1
 print(i^2) 
 i <- 2
@@ -215,22 +229,28 @@ print(i^2)
 
 * We call what happens in the loop for a particular value one **iteration**. 
 
+--
+
 * Iterating over indices `1:n` is *very* common. `n` might be the length of a vector, the number of rows or columns in a matrix or data frame, or the length of a list. 
+
+--
 
 * Common notation: `i` is the object that holds the current value inside the loop.
     + If loops are nested, you will often see `j` and `k` used for the inner loops.
     + This notation is similar to indexing in mathematical symbols (e.g $\sum\limits_{i=1}^n$)
 
+--
+
 * Note `i` (and `j`,`k`, etc) are just normal objects. You can use any other names you want.
     + Ex: When iterating over rows and/or columns, I often use `row` and/or `col`!
 
 ---
-# Iterate Over Character Vectors
+# Iterate Over Characters
 
 What we iterate over doesn't have to be numbers `1:n` or numbers at all! You can also iterate over a character vector in R:
 
 ```{r}
-some_letters <- letters[4:6]
+some_letters <- letters[4:6] # Vector of letters d,e,f
 for(i in some_letters) {
     print(i)
 }
@@ -238,7 +258,9 @@ i # in R, this will exist outside of the loop!
 ```
 
 ---
-`seq_along()` and Building Messages
+# `seq_along()` and Messages
+
+`seq_along(x)` creates an integer vector equal to `1:length(x)`.
 
 When you want to loop over something that isn't numeric but want to use a numeric index of where you are in the loop, `seq_along` is useful:
 
@@ -254,7 +276,11 @@ a # The object `a` contains the number of the last iteration
 
 Usually in a `for()` loop, you aren't just printing output, but want to store results from calculations in each iteration somewhere.
 
+--
+
 To do that, figure out what you want to store, and **pre-allocate** an object of the right size as a placeholder (typically with missing values as placeholders).
+
+--
 
 Examples of what to pre-allocate based on what you store:
 
@@ -265,24 +291,24 @@ Examples of what to pre-allocate based on what you store:
 * Some complicated object per iteration: `vector("list", num_of_iters)`
 
 ---
-# Pre-Allocation: Numeric example
+# Pre-Allocation: Numeric
 
 ```{r}
 # preallocate numeric vector
-iters <- 10
-output <- numeric(iters)
+iters <- 10 # Set number of interations
+output <- numeric(iters) # Pre-allocate numeric vector 
 
-for(i in 1:iters) {
+for(i in 1:iters) { # Run code below iters times
     output[i] <- (i-1)^2 + (i-2)^2
 }
-output
+output # Display output
 ```
 
 Steps:
 
 1. Set a number of iterations
 2. Pre-allocated a numeric vector of that length
-3. Ran ten iterations where the output is a mathematical function of iteration number.
+3. Ran ten iterations where the output is a mathematical function of each iteration number.
 
 ---
 # `setNames()`
@@ -307,34 +333,45 @@ class: inverse
 ---
 # Premise
 
-Suppose we have some data that we want to try fitting several regression models to. We want to store the results of fitting each regression in a list so that we can compare them. To do this consistently, we'll write a loop. That way no matter if we had 2 models or 200 models, we wouldn't make a typo.
+Suppose we have some data that we want to try fitting several regression models to.
+
+--
+
+We want to store the results of fitting each regression as elements of a list so that we can compare them.
+
+--
+
+To do this consistently, we'll write a loop. That way no matter if we had 2 models or 200 models, we could use the same code.
+
+--
 
 After we do this, we'll try something more advanced with loops: **Cross-validating** regressions to get an estimate of their true accuracy in predicting values out-of-sample.
 
 ---
-# Making up data
+# Simulating Data
 
 Let's simulate some fake data for this using the `rnorm()` function to generate random values from a normal distribution.
 
 ```{r, cache=TRUE}
-set.seed(98115)
-# simulating example data:
+set.seed(98115) # Making sure values always the same
 n <- 300
 x <- rnorm(n, mean = 5, sd = 4)
-fake_data <- data.frame(x = x, y = -0.5 * x + 0.05 * x^2 + rnorm(n, sd = 1))
+sim_data <- 
+  data.frame(x = x,
+             y = -0.5 * x + 0.05 * x^2 + rnorm(n, sd = 1))
 ```
 
-This generates a dataframe of 300 observations where `y` is dependent on `x`, with some uncorrelated residual in `y`.
+This generates a dataframe of 300 observations where `y` is dependent on `x`, with some uncorrelated, normally-distributed residual (from `rnorm()`).
 
-Aside: If you followed the scandal in political science a few years about a grad student allegedly faking data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
+Aside: If you followed the 2014 scandal in political science when a grad student faked data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
 
 ---
-# Plot of fake_data
+# Plot of sim_data
 
-```{r, fig.width = 10, fig.height = 3, dpi=300, out.width="1100px", out.height="330px"}
-ggplot(data = fake_data, aes(x = x, y = y)) +
+```{r, dev="svg", fig.height=4}
+ggplot(data = sim_data, aes(x = x, y = y)) +
   geom_point() + 
-  ggtitle("Our fake data")
+  ggtitle("Simulated Data")
 ```
 
 ---
@@ -342,40 +379,63 @@ ggplot(data = fake_data, aes(x = x, y = y)) +
 
 Let's say we want to consider several different regression models to draw trendlines through these data:
 
-* "Intercept only": draw a horizontal line that best fits the `y` values, i.e. $E[y_i | x_i] = \beta_0$
-* "Linear model": draw a line that best fits the `y` values as a function of `x`, i.e. $E[y_i | x_i] = \beta_0 + \beta_1 \cdot x_i$
-* "Quadratic model": draw a quadratic curve that best summarizes the `y` values as a function of `x`, i.e. $E[y_i | x_i ] = \beta_0 + \beta_1 \cdot x_i + \beta_2 \cdot x_i^2$
-* "Cubic model": draw a cubic curve that best summarizes the `y` values as a function of `x`, i.e. $E[y_i | x_i ] = \beta_0 + \beta_1 \cdot x_i + \beta_2 \cdot x_i^2 + \beta_3 \cdot x_i^3$
+* **Intercept Only:** draw a horizontal line that best fits the `y` values.
+
+$$E[y_i | x_i] = \beta_0$$
+
+--
+
+* **Linear Model:** draw a line that best fits the `y` values as a function of `x`.
+
+$$E[y_i | x_i] = \beta_0 + \beta_1 \cdot x_i$$
+
+--
+
+* **Quadratic Model:** draw a quadratic curve that best summarizes the `y` values as a function of `x`.
+
+$$E[y_i | x_i ] = \beta_0 + \beta_1 \cdot x_i + \beta_2 \cdot x_i^2$$
+
+--
+
+* **Cubic Model:** draw a cubic curve that best summarizes the `y` values as a function of `x`.
+
+$$E[y_i | x_i ] = \beta_0 + \beta_1 \cdot x_i + \beta_2 \cdot x_i^2 + \beta_3 \cdot x_i^3$$
 
 ---
-# Preallocating a List for the Regression Models
+# Preallocating a List
 
 Let's make a *named character vector* for the formulas we'll use in `lm()`:
 
+.small[
 ```{r}
-models <- c("intercept only" = "y ~ 1",
+models <- c("intercept only" = "y ~ 1", # Name on left, formula on right
             "linear" = "y ~ x",
             "quadratic" = "y ~ x + I(x^2)",
             "cubic" = "y ~ x + I(x^2) + I(x^3)")
 ```
+]
 
-Note: The values on the *left* are the *names* of the *elements* on the *right*.
+Then pre-allocate a list to *store* the fitted models:
 
-Then pre-allocate a list to store the fitted models:
-
+.small[
 ```{r}
 fitted_lms <- vector("list", length(models)) # initialize list
 names(fitted_lms) <- names(models) # give entries good names
 fitted_lms # display the pre-allocated (empty) list
 ```
+]
 
 ---
-# Fitting the Models in a `for()` Loop
+# Fitting Models in `for()` Loop
 
-Next, we'll loop over the `models` vector and fit each one, storing it in the appropriate slot. The `formula()` function converts a character string describing a model to a formula object readable by `lm()`:
+Next, we'll loop over the `models` vector and fit each one, storing it in the appropriate slot.
+
+--
+
+The `formula()` function converts a character string describing a model to a formula object readable by `lm()`:
 ```{r}
 for(mod in names(models)) {
-    fitted_lms[[mod]] <- lm(formula(models[mod]), data = fake_data)
+    fitted_lms[[mod]] <- lm(formula(models[mod]), data = sim_data)
 }
 ```
 
@@ -383,31 +443,34 @@ What this does:
 
 **For** each model name (which will be referred to as `mod`)... 
 
-1. Fit a `lm` using the formula associated with that name.
+1. Fit a `lm()` using the formula with that name (`mod`).
+
 2. Assign the output to the element of the list with the matching name.
 
 ---
-# Getting Predictions from Fitted Models
+# Getting Predictions
 
 To plot the fitted models, we can first get predicted `y` values from each at the `x` values in our data. 
 
+.smallish[
 ```{r}
 # initialize data frame to hold predictions
-predicted_data <- fake_data
+predicted_data <- sim_data
 for(mod in names(models)) {
-    # make a new column in predicted data for each model's predictions
+    # make a new column in predicted_data for each model's predictions
     predicted_data[[mod]] <- predict(fitted_lms[[mod]],
                                 newdata = predicted_data)
 }
 ```
+]
 
 What this does:
 
 **For** each named `lm()` model output...
 
-1. Get predicted values from the associated model
-2. Save each of those predicted values as a new column in `predicted_data`.
-  + `mod` will be the new column names!
+1. Get predicted values from the associated model (`predict()`)
+2. Save each of those predicted values as a *new column* in `predicted_data`.
+  + Values of `mod` will be the new column names!
   
 ---
 # Predictions
@@ -419,15 +482,17 @@ head(predicted_data, 10)
 ---
 # Gathering Predictions
 
-We can use `tidyr::gather` to make the predictions tidy, and set the levels of the `Model` variable.
+We can use `tidyr::gather()` to make the predictions tidy, and set the levels of the `Model` variable.
 
+.smallish[
 ```{r, warning=FALSE, message=FALSE}
 library(tidyr)
 tidy_predicted_data <- predicted_data %>%
-    gather(Model, Prediction, -x, -y) %>%
-    mutate(Model = factor(Model, levels = names(models)))
+    gather(Model, Prediction, -x, -y) %>% #<<
+    mutate(Model = factor(Model, levels = names(models))) #<<
 tidy_predicted_data[seq(1,1200,100),] # Displaying some rows
 ```
+]
 
 ---
 # Plotting Predictions
@@ -435,11 +500,11 @@ tidy_predicted_data[seq(1,1200,100),] # Displaying some rows
 We'll use `ggplot2` to plot these tidied up predictions. You'll see us use multiple data sets on the same plot: Look at the `geom_line()` call.
 
 ```{r, eval=FALSE}
-ggplot(data = fake_data, # Original data!
+ggplot(data = sim_data, # Original data!
        aes(x = x,
            y = y)) +
-    geom_point() +
-    geom_line(data = tidy_predicted_data, # Predicted data!
+    geom_point() + # Original data as points
+    geom_line(data = tidy_predicted_data, # Predicted data! #<<
               aes(x = x, 
                   y = Prediction, 
                   group = Model, 
@@ -453,8 +518,8 @@ ggplot(data = fake_data, # Original data!
 ---
 # Plotted Predictions
 
-```{r, echo=FALSE, fig.width = 10, fig.height = 4.5, dpi=300, out.width="1100px", out.height="500px"}
-ggplot(data = fake_data, aes(x = x, y = y)) +
+```{r, echo=FALSE, fig.height=4, dev="svg"}
+ggplot(data = sim_data, aes(x = x, y = y)) +
     geom_point() +
     geom_line(data = tidy_predicted_data,
           aes(x = x, y = Prediction, group = Model, color = Model),
@@ -468,33 +533,54 @@ Which looks best to you?
 ---
 # Cross Validation: What is it?
 
-**Cross validation** is a widely-used way to estimate how accurately a model makes predictions on unseen data (data not used in fitting the model). The procedure:
+**Cross validation** is a widely-used method to estimate how well a model makes predictions on unseen data (data not used in fitting the model). The procedure:
 
-* Split your data into $K$ **folds** (disjoint pieces)
+* Split your data into $K$ **folds** (pieces)
+
+--
+
 * For each fold $i = 1, \ldots, K$:
-    + Fit the model to all the data *except* that in fold $i$
-    + Make predictions for the omitted data in fold $i$
+
+--
+
+  + Fit the model to all the data *except* that in fold $i$
+
+--
+
+  + Make predictions for the omitted data in fold $i$
+
+--
+
 * Calculate the mean squared error (or your favorite measure of accuracy comparing predictions to actuals): $\text{MSE} = \frac{1}{n} \sum_{i=1}^n (\text{actual } y_i - \text{predicted } y_i)^2$
 
-A model that fits well will have *low mean squared error*. Models that are either too simple or too complicated will tend to make bad predictions and have high mean squared error.
+--
+
+A model that fits well will have *low mean squared error*. Models that are either too simple or too complicated will tend to make bad predictions and thus high mean squared error.
 
 ---
 # Pre-Allocating for CV
 
-Let's split the data into $K=10$ folds. We'll make a new data frame to hold the data and sampled fold numbers that we will add predictions onto later. We'll get the folds by using the `sample()` function without replacement on a vector as long as our data that has the numbers 1 through $K$ repeated:
+Let's split the data into $K=10$ folds. We'll make a new data frame to hold the data and sampled fold numbers that we will add predictions to later.
+
+--
+
+We'll get the folds using the `sample()` function without replacement on a vector as long as our data that contains the numbers 1 through $K$ repeated:
+
+.smallish[
 ```{r}
 K <- 10
-CV_predictions <- fake_data
+CV_predictions <- sim_data
 CV_predictions$fold <- sample(rep(1:K, length.out = nrow(CV_predictions)),
                               replace = FALSE)
 CV_predictions[, names(models)] <- NA
-head(CV_predictions, 2)
+head(CV_predictions)
 ```
+]
 
 ---
 # Double-Looping for CV
 
-Next, let's loop over models, and within each model, loop over folds to fit the model and make predictions:
+Next, let's loop over models, and within each model, loop over folds to fit the model and make predictions.
 
 ```{r}
 for(mod in names(models)) {
@@ -503,17 +589,22 @@ for(mod in names(models)) {
         fold_rows <- (CV_predictions$fold == k)
         # fit model to data not in fold
         temp_mod <- lm(formula(models[mod]),
-                       data = CV_predictions[!fold_rows, ])
+                       data = CV_predictions[!fold_rows, ]) #<<
         # predict on data in fold
-        CV_predictions[fold_rows, mod] <- predict(temp_mod, newdata = CV_predictions[fold_rows, ])
+        CV_predictions[fold_rows, mod] <- 
+           predict(temp_mod, newdata = CV_predictions[fold_rows, ]) #<<
     }
 }
 ```
 
+Note the models are fit *without* the fold rows, but prediction is done on *only the fold rows*.
+
 ---
 # Which Did Best?
 
-Let's write another loop to compute the mean squared error of these CV predictions:
+Let's write another loop to compute the mean squared error of these CV predictions.
+
+The squared error is equal to the difference between the real values and predictions squared. The MSE is the mean of all the squared errors of each prediction.
 
 ```{r}
 CV_MSE <- setNames(numeric(length(models)), names(models))
@@ -538,68 +629,79 @@ You've seen `ifelse()` before for logical checks on a whole vector. For checking
 
 ```{r, eval=FALSE}
 for(i in 1:10) {
-    if(i %% 2 == 0) {
-        print(paste0("The number ", i, " is even"))
-    } else if(i %% 3 == 0) {
-        print(paste0("The number ", i, " is divisible by 3"))
-    } else {
-        print(paste0("The number ", i, " is not divisible by 2 or 3"))
-    }
+  if(i %% 2 == 0) {
+    print(paste0("The number ", i, " is even."))
+  } else if(i %% 3 == 0) {
+    print(paste0("The number ", i, " is divisible by 3."))
+  } else {
+    print(paste0("The number ", i, " is not divisible by 2 or 3."))
+  }
 }
 ```
 
 **Warning!** `else` needs to be on same line as the closing brace `}` of previous `if()`.
 
 ---
-# `if()`, `else`: Example from previous slide
+# `if()`, `else`: Output
+
+The loop from the previous slide produces this output:
 
 ```{r, echo=FALSE}
 for(i in 1:10) {
-    if(i %% 2 == 0) {
-        print(paste0("The number ", i, " is even"))
-    } else if(i %% 3 == 0) {
-        print(paste0("The number ", i, " is not even but divisible by 3"))
-    } else {
-        print(paste0("The number ", i, " is not divisible by 2 or 3"))
-    }
+  if(i %% 2 == 0) {
+    print(paste0("The number ", i, " is even."))
+  } else if(i %% 3 == 0) {
+    print(paste0("The number ", i, " is divisible by 3."))
+  } else {
+    print(paste0("The number ", i, " is not divisible by 2 or 3."))
+  }
 }
 ```
 
 ---
 # Handling Special Cases
 
-Aside from the previous toy example, `if()` statements are useful when you have to handle special cases. For your "homework", you will learn about some very special cases on a journey into...
+Aside from the previous toy example, `if()` statements are useful when you have to handle special cases. 
 
-**data hell!**
+`if()` statements can be used to make a loop ignore or fix problematic cases.
 
-![Mad Meg fighting at the gates of data hell](https://upload.wikimedia.org/wikipedia/en/d/db/Bruegel-Mad_Meg-thumb.jpg)
+They are also useful for producing error messages, by generating a message *if* an input value is not what is expected.
+
 
 ---
-# Loading Many Data Files with a Loop
+# Loading Files with a Loop
 
-One common use of a loop in R is for loading many individual data files at once---like
-an entire directory of Excel files---to combine them into one data set.
-
-We will actually do this *next week*.
+One common use of a loop in R is for loading many individual data files at once—like
+an entire directory of Excel files—to combine them into one data set.
 
 Alternatively, you might want to use a loops and `if()` to download and clean files that are all
-from different URLs... which might go poorly:
+from different URLs... which might go poorly.
 
-**HOMEWORK**: Read Rebecca Ferrell's [extended writeup on data hell on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html).
+For an example, read Rebecca Ferrell's [extended writeup on data hell on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html).
 
 ---
+class: inverse
 # `while()` Loops
 
 ---
 # `while()`
 
-A lesser-used looping structure is the `while()` loop. Rather than iterating over a predefined vector, the loop keeps going until some condition is no longer true.
+A lesser-used looping structure is the `while()` loop.
+
+--
+
+Rather than iterating over a predefined vector, the loop keeps going until some condition is no longer true.
+
+--
+
+Let's see how many times we need to flip a coin to get 4 heads:
 
 ```{r}
-num_heads <- 0; num_flips <- 0
+num_heads <- 0
+num_flips <- 0
 while(num_heads < 4) {
-    coin_flip <- rbinom(n=1, size=1, prob=0.5)
-    if (coin_flip == 1) { num_heads <- num_heads + 1 }
+  coin_flip <- rbinom(n = 1, size = 1, prob = 0.5)
+  if (coin_flip == 1) { num_heads <- num_heads + 1 }
     num_flips <- num_flips + 1
 }
 num_flips # follows negative binomial distribution
@@ -615,12 +717,12 @@ class: inverse
 # Non-Vectorized Example
 
 We have a vector of numbers, and we want to add 1 to each element.
-```{r}
-my_vector <- rnorm(10000000)
+```{r, cache=TRUE}
+my_vector <- rnorm(10000000) # Length 100 million random vector
 ```
 
 A `for()` loop works but is super slow:
-```{r}
+```{r, cache=TRUE}
 for_start <- proc.time() # start the clock
 new_vector <- rep(NA, length(my_vector))
 for(position in 1:length(my_vector)) {
@@ -634,14 +736,14 @@ for(position in 1:length(my_vector)) {
 # Vectorization Wins
 
 Recognize that we can instead use R's vector addition (with recycling):
-```{r}
+```{r, cache=TRUE}
 vec_start  <- proc.time()
 new_vector <- my_vector + 1
 (vec_time  <- proc.time() - vec_start)
 for_time / vec_time
 ```
 
-Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was `r round(for_time / vec_time, 0)[1]` times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples
@@ -668,8 +770,13 @@ pmax(c(0, 2, 4), c(1, 1, 1), c(2, 2, 2))
 
 ---
 class: inverse
-# Homework
+# Recommended Reading
 
-Read Rebecca Ferrell's [data downloading demonstration on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html) (it is shorter than it looks; it is more than half error messages). I hope any future forays into automated data downloading and cleaning are smoother than this one was!
+For a look at a complex problem in loading data, read Rebecca Ferrell's [data downloading demonstration on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html) (it is shorter than it looks; it is more than half error messages).
+
+I hope any future forays into automated data downloading and cleaning are smoother than this one was!
+
+Note: *This reading will help if you have trouble using a loop to load files in the next homework!*
+
 
 **Reminder: HW 5 Part II assigned last week is due midnight Tuesday 11/6.**
