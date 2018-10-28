@@ -814,7 +814,7 @@ class: inverse
 We have a vector of numbers, and we want to add 1 to each element.
 
 ```r
-my_vector &lt;- rnorm(10000000) # Length 10 million random vector
+my_vector &lt;- rnorm(1000000000) # Length 1 billion random vector
 ```
 
 A `for()` loop works but is super slow:
@@ -830,7 +830,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##    0.47    0.03    0.50
+##    48.3     1.6    50.3
 ```
 
 ---
@@ -847,7 +847,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.03    0.02    0.05
+##    1.28    1.11    2.39
 ```
 
 ```r
@@ -856,10 +856,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-##    15.7     1.5    10.0
+##   37.76    1.44   21.06
 ```
 
-The vectorized method was 16 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 38 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples

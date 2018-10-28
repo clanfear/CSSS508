@@ -717,12 +717,12 @@ class: inverse
 # Non-Vectorized Example
 
 We have a vector of numbers, and we want to add 1 to each element.
-```{r, cache=TRUE}
-my_vector <- rnorm(10000000) # Length 10 million random vector
+```{r, cache=FALSE}
+my_vector <- rnorm(100000000) # Length 100 million random vector
 ```
 
 A `for()` loop works but is super slow:
-```{r, cache=TRUE}
+```{r, cache=FALSE}
 for_start <- proc.time() # start the clock
 new_vector <- rep(NA, length(my_vector))
 for(position in 1:length(my_vector)) {
@@ -736,7 +736,7 @@ for(position in 1:length(my_vector)) {
 # Vectorization Wins
 
 Recognize that we can instead use R's vector addition (with recycling):
-```{r, cache=TRUE}
+```{r, cache=FALSE}
 vec_start  <- proc.time()
 new_vector <- my_vector + 1
 (vec_time  <- proc.time() - vec_start)
