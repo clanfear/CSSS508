@@ -103,7 +103,7 @@ layout: default
 ### 5. Importing, Exporting, and Cleaning Data
    * [Slides for Lecture 5: Data import, export, and cleaning](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.html)
        + [Rmd for Lecture 5 slides](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.Rmd)
-   * [Lecture Video for Lecture 5](https://youtu.be/9zObKNltIlw), recorded Spring 2018
+   * [Lecture Video for Lecture 5](https://youtu.be/vPjW6jKVINI), recorded October 24, 2018
    * Homework 5, Part 1 due at 11:59 PM on October 30th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
@@ -134,7 +134,7 @@ layout: default
 ### 6. Using Loops
    * [Slides for Lecture 6: Looping with `for()` loops](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.html)
        + [Rmd for Lecture 6 slides](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.Rmd)
-   * [Lecture Video for Lecture 6](https://youtu.be/ffYdAIVm-HE), recorded Spring 2018
+   * [Lecture Video for Lecture 6](https://youtu.be/D0Zz3Sfxpxw), recorded October 31, 2018
    * Homework 5, Part 2 due at 11:59 PM on November 6th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p2.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5_p2.html)
