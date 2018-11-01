@@ -1,26 +1,83 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>CSSS508, Week 7</title>
-    <meta charset="utf-8">
-    <meta name="author" content="Chuck Lanfear" />
-    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
-  </head>
-  <body>
-    <textarea id="source">
-class: center, top, title-slide
-
-# CSSS508, Week 7
-## Vectorization and Functions
-### Chuck Lanfear
-### Nov 7, 2018<br>Updated: Oct 31, 2018
-
+---
+title: "CSSS508, Week 7"
+subtitle: "Vectorization and Functions"
+author: "Chuck Lanfear"
+date: "Nov 7, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: tomorrow-night-bright
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: ["center","top"]
 ---
 
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(comment = "##")
+```
 
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
 
-
-
+csss508css <- list(
+     ".hljs-tomorrow-night-bright .hljs" = list(
+        "background" = "#10102c",
+        "border-radius"="5px"),
+     ".remark-inline-code" = list(
+        "background" = "#E0E0E0",
+        "color" = "#10102c",
+        "border-radius" = "3px",
+        "padding" = "2px"),
+     ".inverse .remark-inline-code" = list(
+        "background" = "#10102c",
+        "color" = "#ececf8",
+        "border-radius" = "3px",
+        "padding" = "2px"),
+     ".smallish" = list("font-size" = "85%"),
+     ".small" = list("font-size" = "75%"),
+     ".smaller" = list("font-size" = "60%"),
+     ".remark-code-line-highlighted" = list(
+        "background-color" = "rgba(255,0,255,0.2)"),
+     "sup" = list("font-size" = "14px"),
+     "h1, h2, h3" = list(
+        "margin-top"=".25em", 
+        "margin-bottom"=".25em"),
+     ".pull-left60" = list(
+        "float" = "left",
+        "width" = "58%" ),
+     ".pull-right40" = list(
+        "float" = "right",
+        "width" = "38%" ),
+     "a" = list("text-decoration" = "underline"),
+     ".inverse a" = list("color" = "#cbd3a3"),
+     "body" = list("line-height" = "1.4"),
+     ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)"),
+     ".short" = list("height" = "30%"),
+     ".image-50 img" = list("width" = "50%"),
+     ".image-75 img" = list("width" = "75%"),
+          ".image-full img" = list(
+        "height" = "480px",
+        "display"="block",
+        "margin-left"="auto",
+        "margin-right"="auto"),
+     ".title-slide" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg), url(https://clanfear.github.io/CSSS508/Lectures/img/title_slide_img.png)",
+                           "background-position" = "center center, center bottom",
+                           "background-size" = "contain, contain")
+    )
+ 
+mono_accent(base_color = "#342c5c",
+            code_font_google = google_font("Fira Mono"),
+            header_font_google = google_font("Quattrocento"),
+            extra_css = csss508css,
+            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/img/title_slide_img.png",
+            title_slide_background_position = "bottom",
+            title_slide_background_size = "contain",
+            background_image = "https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg"
+)
+```
 
 class: inverse
 # A Quick Aside
@@ -59,16 +116,8 @@ class: inverse
 # Example from Last Week
 
 Remember when we tried find the mean for each variable in the `swiss` data? The best solution is to just use `colMeans()` without even thinking about pre-allocation or `for()` loops:
-
-```r
+```{r}
 colMeans(swiss)
-```
-
-```
-##        Fertility      Agriculture      Examination        Education 
-##         70.14255         50.65957         16.48936         10.97872 
-##         Catholic Infant.Mortality 
-##         41.14383         19.94255
 ```
 
 ---
@@ -141,11 +190,10 @@ Advanced function applications (not covered in this class):
 
 Let's look at a function that takes a vector as input and outputs a named vector of the first and last elements:
 
-
-```r
-first_and_last &lt;- function(x) {
-    first &lt;- x[1]
-    last  &lt;- x[length(x)]
+```{r}
+first_and_last <- function(x) {
+    first <- x[1]
+    last  <- x[length(x)]
     return(c("first" = first, "last" = last))
 }
 ```
@@ -154,14 +202,8 @@ first_and_last &lt;- function(x) {
 
 Test it out:
 
-
-```r
+```{r}
 first_and_last(c(4, 3, 1, 8))
-```
-
-```
-## first  last 
-##     4     8
 ```
 
 ---
@@ -169,28 +211,16 @@ first_and_last(c(4, 3, 1, 8))
 
 What if I give `first_and_last()` a vector of length 1?
 
-
-```r
+```{r}
 first_and_last(7)
-```
-
-```
-## first  last 
-##     7     7
 ```
 
 --
 
 Of length 0?
 
-
-```r
+```{r}
 first_and_last(numeric(0))
-```
-
-```
-## first 
-##    NA
 ```
 
 --
@@ -202,14 +232,13 @@ Maybe we want it to be a little smarter.
 
 Let's make sure we get an error message when the vector is too small:
 
-
-```r
-smarter_first_and_last &lt;- function(x) {
+```{r}
+smarter_first_and_last <- function(x) {
     if(length(x) == 0L) { # specify integers with L
         stop("The input has no length!")
     } else {
-        first &lt;- x[1]
-        last  &lt;- x[length(x)]
+        first <- x[1]
+        last  <- x[length(x)]
         return(c("first" = first, "last" = last))        
     }
 }
@@ -218,22 +247,9 @@ smarter_first_and_last &lt;- function(x) {
 ---
 # Testing Smarter Function
 
-
-```r
+```{r, error=TRUE}
 smarter_first_and_last(numeric(0))
-```
-
-```
-## Error in smarter_first_and_last(numeric(0)): The input has no length!
-```
-
-```r
 smarter_first_and_last(c(4, 3, 1, 8))
-```
-
-```
-## first  last 
-##     4     8
 ```
 
 ---
@@ -241,22 +257,8 @@ smarter_first_and_last(c(4, 3, 1, 8))
 
 If you type the function name without any parentheses or arguments, you can see its guts:
 
-
-```r
+```{r}
 smarter_first_and_last
-```
-
-```
-## function(x) {
-##     if(length(x) == 0L) { # specify integers with L
-##         stop("The input has no length!")
-##     } else {
-##         first &lt;- x[1]
-##         last  &lt;- x[length(x)]
-##         return(c("first" = first, "last" = last))        
-##     }
-## }
-## &lt;bytecode: 0x00000000207b2480&gt;
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -265,9 +267,8 @@ You can also put your cursor over a function in your syntax and hit `F2`.
 # Anatomy of a Function
 
 .small[
-
-```r
-NAME &lt;- function(ARGUMENT1, ARGUMENT2=DEFAULT){
+```{r, eval=FALSE}
+NAME <- function(ARGUMENT1, ARGUMENT2=DEFAULT){
   BODY
   return(OUTPUT)
 }
@@ -278,7 +279,7 @@ NAME &lt;- function(ARGUMENT1, ARGUMENT2=DEFAULT){
     + You can have "anonymous" (no-name) functions
 --
 * **Arguments** (aka inputs, parameters): things the user passes to the function that affect how it works
-    + e.g. `x` or `na.rm` in `my_new_func &lt;- function(x, na.rm = FALSE) {...}`
+    + e.g. `x` or `na.rm` in `my_new_func <- function(x, na.rm = FALSE) {...}`
     + `na.rm = FALSE` is example of setting a default value: if user doesn't say what `na.rm` is, it'll be `FALSE`
     + `x`, `na.rm` values won't exist in R outside of the function
 --
@@ -296,23 +297,15 @@ Maybe you want to know more detailed quantile information than `summary()` gives
 Here's a starting point:
 
 .smallish[
-
-```r
-quantile_report &lt;- function(x, na.rm = FALSE) {
-    quants &lt;- quantile(x, na.rm = na.rm, 
+```{r}
+quantile_report <- function(x, na.rm = FALSE) {
+    quants <- quantile(x, na.rm = na.rm, 
        probs = c(0.01, 0.05, 0.10, 0.25, 0.5, 0.75, 0.90, 0.95, 0.99))
-    names(quants) &lt;- c("Bottom 1%", "Bottom 5%", "Bottom 10%", "Bottom 25%",
+    names(quants) <- c("Bottom 1%", "Bottom 5%", "Bottom 10%", "Bottom 25%",
                        "Median", "Top 25%", "Top 10%", "Top 5%", "Top 1%")
     return(quants)
 }
 quantile_report(rnorm(10000))
-```
-
-```
-##   Bottom 1%   Bottom 5%  Bottom 10%  Bottom 25%      Median     Top 25% 
-## -2.29473294 -1.61860965 -1.26152205 -0.64943007 -0.00830461  0.66222050 
-##     Top 10%      Top 5%      Top 1% 
-##  1.27322344  1.60615507  2.31786566
 ```
 ]
 
@@ -321,31 +314,13 @@ quantile_report(rnorm(10000))
 
 `lapply()` is used to **apply** a function over a **l**ist of any kind (e.g. a data frame) and return a list. This is a lot easier than preparing a `for()` loop!
 
-
-```r
+```{r, eval=FALSE}
 lapply(swiss, FUN = quantile_report)
 ```
 
 .small[
-
-```
-## $Fertility
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
-##     38.588     47.580     56.240     64.700     70.400     78.450 
-##    Top 10%     Top 5%     Top 1% 
-##     84.600     90.670     92.454 
-## 
-## $Agriculture
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
-##      4.190     15.650     17.360     35.900     54.100     67.650 
-##    Top 10%     Top 5%     Top 1% 
-##     76.820     84.810     87.952 
-## 
-## $Examination
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
-##       3.00       5.00       6.00      12.00      16.00      22.00 
-##    Top 10%     Top 5%     Top 1% 
-##      26.00      30.40      36.08
+```{r, echo=FALSE}
+lapply(swiss, FUN = quantile_report)[1:3]
 ```
 ]
 
@@ -355,32 +330,8 @@ lapply(swiss, FUN = quantile_report)
 A downside to `lapply()` is that lists are hard to work with. `sapply()` **s**implifies the output by making each element a column in a matrix:
 
 .small[
-
-```r
+```{r}
 sapply(swiss, FUN = quantile_report)
-```
-
-```
-##            Fertility Agriculture Examination Education Catholic
-## Bottom 1%     38.588       4.190        3.00      1.46   2.2052
-## Bottom 5%     47.580      15.650        5.00      2.00   2.4480
-## Bottom 10%    56.240      17.360        6.00      3.00   2.8320
-## Bottom 25%    64.700      35.900       12.00      6.00   5.1950
-## Median        70.400      54.100       16.00      8.00  15.1400
-## Top 25%       78.450      67.650       22.00     12.00  93.1250
-## Top 10%       84.600      76.820       26.00     23.20  99.0000
-## Top 5%        90.670      84.810       30.40     29.00  99.6140
-## Top 1%        92.454      87.952       36.08     43.34  99.8666
-##            Infant.Mortality
-## Bottom 1%            12.778
-## Bottom 5%            15.600
-## Bottom 10%           16.420
-## Bottom 25%           18.150
-## Median               20.000
-## Top 25%              21.700
-## Top 10%              23.680
-## Top 5%               24.470
-## Top 1%               25.818
 ```
 ]
 
@@ -390,32 +341,8 @@ sapply(swiss, FUN = quantile_report)
 There is also `apply()` which works over matrices or data frames. You can apply the function to each row (`MARGIN = 1`) or column (`MARGIN = 2`).
 
 .small[
-
-```r
+```{r}
 apply(swiss, MARGIN = 2, FUN = quantile_report)
-```
-
-```
-##            Fertility Agriculture Examination Education Catholic
-## Bottom 1%     38.588       4.190        3.00      1.46   2.2052
-## Bottom 5%     47.580      15.650        5.00      2.00   2.4480
-## Bottom 10%    56.240      17.360        6.00      3.00   2.8320
-## Bottom 25%    64.700      35.900       12.00      6.00   5.1950
-## Median        70.400      54.100       16.00      8.00  15.1400
-## Top 25%       78.450      67.650       22.00     12.00  93.1250
-## Top 10%       84.600      76.820       26.00     23.20  99.0000
-## Top 5%        90.670      84.810       30.40     29.00  99.6140
-## Top 1%        92.454      87.952       36.08     43.34  99.8666
-##            Infant.Mortality
-## Bottom 1%            12.778
-## Bottom 5%            15.600
-## Bottom 10%           16.420
-## Bottom 25%           18.150
-## Median               20.000
-## Top 25%              21.700
-## Top 10%              23.680
-## Top 5%               24.470
-## Top 1%               25.818
 ```
 ]
 ---
@@ -437,11 +364,10 @@ Maybe you often want to bucket variables in your data into groups based on quant
 
 There's already a function in R called `cut()` that does this, but you need to tell it cutpoints or the number of buckets. Let's make a convenience function that calls `cut()` using quantiles for splitting and returns an integer:
 
-
-```r
-bucket &lt;- function(x, quants = c(0.333, 0.667)) {
+```{r}
+bucket <- function(x, quants = c(0.333, 0.667)) {
     # set low extreme, quantile points, high extreme
-    new_breaks &lt;- c(min(x)-1, quantile(x, probs = quants), max(x)+1)
+    new_breaks <- c(min(x)-1, quantile(x, probs = quants), max(x)+1)
     # labels = FALSE will return integer codes instead of ranges
     return(cut(x, breaks = new_breaks, labels = FALSE))
 }
@@ -451,15 +377,12 @@ bucket &lt;- function(x, quants = c(0.333, 0.667)) {
 # Trying Out `bucket()`
 
 .smallish[
-
-```r
-random_data &lt;- rnorm(100)
-bucketed_random_data &lt;- bucket(random_data, 
+```{r, fig.height=4, dev="svg"}
+random_data <- rnorm(100)
+bucketed_random_data <- bucket(random_data, 
                           quants = c(0.05, 0.25, 0.5, 0.75, 0.95))
 plot(x = bucketed_random_data, y = random_data, main = "Buckets and values")
 ```
-
-![](CSSS508_week7_vectorization_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -468,26 +391,11 @@ plot(x = bucketed_random_data, y = random_data, main = "Buckets and values")
 Let's say we have data where impossible values occur:
 
 .smallish[
-
-```r
-(school_data &lt;- 
+```{r}
+(school_data <- 
   data.frame(school = letters[1:10],
   pct_passing_exam=c(0.78, 0.55, 0.91,   -1, 0.88, 0.81, 0.90, 0.76,   99, 99),
   pct_free_lunch = c(0.33,   99, 0.25, 0.05, 0.12, 0.09, 0.22,  -13, 0.21, 99)))
-```
-
-```
-##    school pct_passing_exam pct_free_lunch
-## 1       a             0.78           0.33
-## 2       b             0.55          99.00
-## 3       c             0.91           0.25
-## 4       d            -1.00           0.05
-## 5       e             0.88           0.12
-## 6       f             0.81           0.09
-## 7       g             0.90           0.22
-## 8       h             0.76         -13.00
-## 9       i            99.00           0.21
-## 10      j            99.00          99.00
 ```
 ]
 
@@ -501,18 +409,13 @@ Goal:
 
 --
 
-
-```r
-remove_extremes &lt;- function(x, low, high) {
-    x_no_low &lt;- ifelse(x &lt; low, NA, x)
-    x_no_low_no_high &lt;- ifelse(x_no_low &gt; high, NA, x)
+```{r}
+remove_extremes <- function(x, low, high) {
+    x_no_low <- ifelse(x < low, NA, x)
+    x_no_low_no_high <- ifelse(x_no_low > high, NA, x)
     return(x_no_low_no_high)
 }
 remove_extremes(school_data$pct_passing_exam, low = 0, high = 1)
-```
-
-```
-##  [1] 0.78 0.55 0.91   NA 0.88 0.81 0.90 0.76   NA   NA
 ```
 
 ---
@@ -521,25 +424,10 @@ remove_extremes(school_data$pct_passing_exam, low = 0, high = 1)
 `dplyr` functions `mutate_at()` and `summarize_at()` take an argument `funs()`. This will apply our function to every variable (besides `school`) to update the columns in `school_data`:
 
 .smallish[
-
-```r
+```{r, message=FALSE, warning=FALSE}
 library(dplyr)
-school_data %&gt;%
+school_data %>%
    mutate_at(vars(-school), funs(remove_extremes(x = ., low = 0, high = 1)))
-```
-
-```
-##    school pct_passing_exam pct_free_lunch
-## 1       a             0.78           0.33
-## 2       b             0.55             NA
-## 3       c             0.91           0.25
-## 4       d               NA           0.05
-## 5       e             0.88           0.12
-## 6       f             0.81           0.09
-## 7       g             0.90           0.22
-## 8       h             0.76             NA
-## 9       i               NA           0.21
-## 10      j               NA             NA
 ```
 ]
 
@@ -551,9 +439,8 @@ school_data %&gt;%
 `dplyr` verbs (like `mutate()`) recently started supporting *standard evaluation* allowing you to use quoted object names as well. This makes programming with `dplyr` easier.
 
 Example converting character data to dates from the data downloading demo:
-
-```r
-yearly_frames[[i]] &lt;- yearly_frames[[i]] %&gt;%
+```{r, eval=FALSE}
+yearly_frames[[i]] <- yearly_frames[[i]] %>%
     # cnames is a character vector of var names
     # 4th and 5th variables are strings to become dates
     mutate_at(vars(cnames[4:5]), (funs(mdy))
@@ -564,15 +451,9 @@ yearly_frames[[i]] &lt;- yearly_frames[[i]] %&gt;%
 
 You can skip naming your function in `dplyr` if you won't use it again. Code below will return the mean divided by the standard deviation for each variable in `swiss`:
 
-
-```r
-swiss %&gt;%
+```{r}
+swiss %>%
     summarize_all(funs(mean(., na.rm = TRUE) / sd(., na.rm = TRUE)))
-```
-
-```
-##   Fertility Agriculture Examination Education  Catholic Infant.Mortality
-## 1  5.615134    2.230597    2.066884  1.141785 0.9865478         6.846766
 ```
 
 ---
@@ -581,28 +462,13 @@ swiss %&gt;%
 Like with `dplyr`, you can use anonymous functions in `lapply()`, but a difference is you'll need to have the `function()` part at the beginning:
 
 .smallish[
-
-```r
+```{r, eval=FALSE}
 lapply(swiss, function(x) mean(x, na.rm = TRUE) / sd(x, na.rm = TRUE))
 ```
 ]
 
-
-```
-## $Fertility
-## [1] 5.615134
-## 
-## $Agriculture
-## [1] 2.230597
-## 
-## $Examination
-## [1] 2.066884
-## 
-## $Education
-## [1] 1.141785
-## 
-## $Catholic
-## [1] 0.9865478
+```{r, echo=FALSE}
+lapply(swiss, function(x) mean(x, na.rm = TRUE) / sd(x, na.rm = TRUE))[1:5]
 ```
 
 ---
@@ -610,10 +476,9 @@ lapply(swiss, function(x) mean(x, na.rm = TRUE) / sd(x, na.rm = TRUE))
 
 Let's say you have a particular way you like your charts:
 
-
-```r
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(gapminder); library(ggplot2)
-ggplot(gapminder %&gt;% filter(country == "Afghanistan"),
+ggplot(gapminder %>% filter(country == "Afghanistan"),
        aes(x = year, y = pop / 1000000)) +
        geom_line(color = "firebrick") +
        xlab(NULL) + ylab("Population (millions)") +
@@ -632,25 +497,39 @@ ggplot(gapminder %&gt;% filter(country == "Afghanistan"),
 ---
 # Example of Desired Chart
 
-![](CSSS508_week7_vectorization_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
+```{r, warning=FALSE, message=FALSE, echo=FALSE, fig.height = 4, dev="svg"}
+library(gapminder); library(ggplot2)
+ggplot(gapminder %>% filter(country == "Afghanistan"),
+       aes(x = year, y = pop / 1000000)) +
+    geom_line(color = "firebrick") +
+    xlab(NULL) + ylab("Population (millions)") +
+    ggtitle("Population of Afghanistan since 1952") +
+    theme_minimal() + theme(plot.title = element_text(hjust = 0, size = 20))
+```
 
 ---
 # Another Example
 
-![](CSSS508_week7_vectorization_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+```{r, warning=FALSE, message=FALSE, echo=FALSE, fig.height = 4, dev="svg"}
+ggplot(gapminder %>% filter(country == "Peru"),
+       aes(x = year, y = lifeExp)) +
+    geom_line(color = "firebrick") +
+    xlab(NULL) + ylab("Life expectancy") +
+    ggtitle("Life expectancy in Peru since 1952") +
+    theme_minimal() + theme(plot.title = element_text(hjust = 0, size = 20))
+```
 
 ---
 # Making Country Flexible
 
 We can have the user input a character string for `cntry` as an argument to the function to get subsetting and the title right:
-
-```r
-gapminder_lifeplot &lt;- function(cntry) {
-*   ggplot(gapminder %&gt;% filter(country == cntry),
+```{r}
+gapminder_lifeplot <- function(cntry) {
+    ggplot(gapminder %>% filter(country == cntry), #<<
        aes(x = year, y = lifeExp)) +
     geom_line(color = "firebrick") +
     xlab(NULL) + ylab("Life expectancy") + theme_minimal() + 
-*   ggtitle(paste0("Life expectancy in ", cntry, " since 1952")) +
+    ggtitle(paste0("Life expectancy in ", cntry, " since 1952")) + #<<
     theme(plot.title = element_text(hjust = 0, size = 20))
 }
 ```
@@ -664,12 +543,9 @@ What `cntry` does:
 ---
 # Testing Plot Function
 
-
-```r
+```{r, warning=FALSE, message=FALSE, echo=TRUE, fig.height = 4, dev="svg"}
 gapminder_lifeplot(cntry = "Turkey")
 ```
-
-![](CSSS508_week7_vectorization_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
 
 ---
 # Making `y` Value Flexible
@@ -677,30 +553,16 @@ gapminder_lifeplot(cntry = "Turkey")
 Now let's allow the user to say which variable they want on the y-axis. How we can get the right labels for the axis and title? We can use a named character vector to serve as a "lookup table" inside the function:
 
 .smallish[
-
-```r
-y_axis_label &lt;- c("lifeExp" = "Life expectancy",
+```{r}
+y_axis_label <- c("lifeExp" = "Life expectancy",
                   "pop" = "Population (millions)",
                   "gdpPercap" = "GDP per capita, USD")
-title_text &lt;- c("lifeExp" = "Life expectancy in ",
+title_text <- c("lifeExp" = "Life expectancy in ",
                 "pop" = "Population of ",
                 "gdpPercap" = "GDP per capita in ")
 # example use:
 y_axis_label["pop"]
-```
-
-```
-##                     pop 
-## "Population (millions)"
-```
-
-```r
 title_text["pop"]
-```
-
-```
-##              pop 
-## "Population of "
 ```
 ]
 
@@ -708,16 +570,15 @@ title_text["pop"]
 # `aes_string()`
 
 `ggplot()` is usually looking for "naked" variables, but we can tell it to take them as quoted strings (standard evaluation) using `aes_string()` instead of `aes()`, which is handy when making functions:
-
-```r
-gapminder_plot &lt;- function(cntry, yvar) {
-    y_axis_label &lt;- c("lifeExp" = "Life expectancy",
+```{r}
+gapminder_plot <- function(cntry, yvar) {
+    y_axis_label <- c("lifeExp" = "Life expectancy",
                       "pop" = "Population (millions)",
                       "gdpPercap" = "GDP per capita, USD")[yvar]
-    title_text   &lt;- c("lifeExp" = "Life expectancy in ",
+    title_text   <- c("lifeExp" = "Life expectancy in ",
                       "pop" = "Population of ",
                       "gdpPercap" = "GDP per capita in ")[yvar]
-    ggplot(gapminder %&gt;% filter(country == cntry) %&gt;% 
+    ggplot(gapminder %>% filter(country == cntry) %>% 
              mutate(pop = pop / 1000000),
            aes_string(x = "year", y = yvar)) + 
       geom_line(color = "firebrick") + 
@@ -730,27 +591,22 @@ gapminder_plot &lt;- function(cntry, yvar) {
 ---
 # Testing `gapminder_plot()`
 
-
-```r
+```{r, warning=FALSE, message=FALSE, echo=TRUE, fig.height = 4, dev="svg"}
 gapminder_plot(cntry = "Turkey", yvar = "pop")
 ```
-
-![](CSSS508_week7_vectorization_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
 
 ---
 # Debugging
 
 Something not working as hoped? Try using `debug()` on a function, which will show you the world as perceived from inside the function:
 
-
-```r
+```{r, eval=FALSE}
 debug(gapminder_plot)
 ```
 
 Then when you've fixed your problem, use `undebug()` so that you won't go into debug mode every time you run it:
 
-
-```r
+```{r, eval=FALSE}
 undebug(gapminder_plot)
 ```
 
@@ -799,51 +655,3 @@ There is some string processing needed—much of which you have already seen or 
 
 ## PART 1 DUE: 11:59 PM, Nov 13th
 ## PART 2 DUE: 11:59 PM, Nov 20th
-    </textarea>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create({
-"highlightStyle": "tomorrow-night-bright",
-"highlightLines": true,
-"countIncrementalSlides": false
-});
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
-  window.dispatchEvent(new Event('resize'));
-});
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
-  if (!r) return;
-  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
-  d.head.appendChild(s);
-})();</script>
-
-<script>
-(function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
-  for (i = 0; i < codes.length;) {
-    code = codes[i];
-    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
-      text = code.textContent;
-      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
-          /^\$\$(.|\s)+\$\$$/.test(text) ||
-          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
-        code.outerHTML = code.innerHTML;  // remove <code></code>
-        continue;
-      }
-    }
-    i++;
-  }
-})();
-</script>
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-(function () {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
-  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
-    script.src  = script.src.replace(/^https?:/, '');
-  document.getElementsByTagName('head')[0].appendChild(script);
-})();
-</script>
-  </body>
-</html>
