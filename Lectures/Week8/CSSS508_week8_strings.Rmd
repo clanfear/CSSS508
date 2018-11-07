@@ -1,26 +1,83 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>CSSS508, Week 8</title>
-    <meta charset="utf-8">
-    <meta name="author" content="Chuck Lanfear" />
-    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
-  </head>
-  <body>
-    <textarea id="source">
-class: center, top, title-slide
-
-# CSSS508, Week 8
-## Strings
-### Chuck Lanfear
-### Nov 14, 2018<br>Updated: Nov 5, 2018
-
+---
+title: "CSSS508, Week 8"
+subtitle: "Strings"
+author: "Chuck Lanfear"
+date: "Nov 14, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: tomorrow-night-bright
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: ["center","top"]
 ---
 
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(comment = "##")
+```
 
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
 
-
-
+csss508css <- list(
+     ".hljs-tomorrow-night-bright .hljs" = list(
+        "background" = "#10102c",
+        "border-radius"="5px"),
+     ".remark-inline-code" = list(
+        "background" = "#E0E0E0",
+        "color" = "#10102c",
+        "border-radius" = "3px",
+        "padding" = "2px"),
+     ".inverse .remark-inline-code" = list(
+        "background" = "#10102c",
+        "color" = "#ececf8",
+        "border-radius" = "3px",
+        "padding" = "2px"),
+     ".smallish" = list("font-size" = "85%"),
+     ".small" = list("font-size" = "75%"),
+     ".smaller" = list("font-size" = "60%"),
+     ".remark-code-line-highlighted" = list(
+        "background-color" = "rgba(255,0,255,0.2)"),
+     "sup" = list("font-size" = "14px"),
+     "h1, h2, h3" = list(
+        "margin-top"=".25em", 
+        "margin-bottom"=".25em"),
+     ".pull-left60" = list(
+        "float" = "left",
+        "width" = "58%" ),
+     ".pull-right40" = list(
+        "float" = "right",
+        "width" = "38%" ),
+     "a" = list("text-decoration" = "underline"),
+     ".inverse a" = list("color" = "#cbd3a3"),
+     "body" = list("line-height" = "1.4"),
+     ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)"),
+     ".short" = list("height" = "30%"),
+     ".image-50 img" = list("width" = "50%"),
+     ".image-75 img" = list("width" = "75%"),
+          ".image-full img" = list(
+        "height" = "480px",
+        "display"="block",
+        "margin-left"="auto",
+        "margin-right"="auto"),
+     ".title-slide" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg), url(https://clanfear.github.io/CSSS508/Lectures/img/title_slide_img.png)",
+                           "background-position" = "center center, center bottom",
+                           "background-size" = "contain, contain")
+    )
+ 
+mono_accent(base_color = "#342c5c",
+            code_font_google = google_font("Fira Mono"),
+            header_font_google = google_font("Quattrocento"),
+            extra_css = csss508css,
+            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/img/title_slide_img.png",
+            title_slide_background_position = "bottom",
+            title_slide_background_size = "contain",
+            background_image = "https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg"
+)
+```
 
 
 # Data Today
@@ -29,13 +86,15 @@ We'll use data on food safety inspections in King County from [data.kingcounty.g
 
 Note these data are *quite large*. You will want to save them and load them from a *local directory*.
 
-
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+load("restaurants.Rdata")
+```
 
 .small[
-
-```r
+```{r download_restaurant_data, eval=FALSE}
 library(tidyverse)
-restaurants &lt;- 
+restaurants <- 
   read_csv("https://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.csv",
                         col_types = "ccccccccnnccicccciccciD")
 ```
@@ -65,19 +124,10 @@ class: inverse
 
 We've seen the `nchar()` function to get the number of characters in a string. How many characters are in the ZIP codes?
 
-
-```r
-restaurants %&gt;% 
-  mutate(ZIP_length = nchar(Zip_Code)) %&gt;%
+```{r nchar_zip}
+restaurants %>% 
+  mutate(ZIP_length = nchar(Zip_Code)) %>%
   count(ZIP_length)
-```
-
-```
-## # A tibble: 2 x 2
-##   ZIP_length      n
-##        &lt;int&gt;  &lt;int&gt;
-## 1          5 258629
-## 2         10      1
 ```
 
 ---
@@ -85,23 +135,10 @@ restaurants %&gt;%
 
 You may be familiar with `substr()` from the voting homework. We can use it to pull out just the first 5 digits of the ZIP code.
 
-
-```r
-restaurants &lt;- restaurants %&gt;%
+```{r substr}
+restaurants <- restaurants %>%
     mutate(ZIP_5 = substr(Zip_Code, 1, 5))
-restaurants %&gt;% distinct(ZIP_5) %&gt;% head()
-```
-
-```
-## # A tibble: 6 x 1
-##   ZIP_5
-##   &lt;chr&gt;
-## 1 98126
-## 2 98109
-## 3 98101
-## 4 98032
-## 5 98102
-## 6 98004
+restaurants %>% distinct(ZIP_5) %>% head()
 ```
 
 ---
@@ -109,24 +146,11 @@ restaurants %&gt;% distinct(ZIP_5) %&gt;% head()
 
 We can combine parts of strings together using the `paste()` function, e.g. to make a whole mailing address:
 
-
-```r
-restaurants &lt;- restaurants %&gt;%
+```{r mailing_address}
+restaurants <- restaurants %>%
     mutate(mailing_address = paste(Address, ", ", City, 
                                    ", WA ", ZIP_5, sep = ""))
-restaurants %&gt;% distinct(mailing_address) %&gt;% head()
-```
-
-```
-## # A tibble: 6 x 1
-##   mailing_address                                  
-##   &lt;chr&gt;                                            
-## 1 2920 SW AVALON WAY, Seattle, WA 98126            
-## 2 10 MERCER ST, Seattle, WA 98109                  
-## 3 1001 FAIRVIEW AVE N Unit 1700A, SEATTLE, WA 98109
-## 4 1225 1ST AVE, SEATTLE, WA 98101                  
-## 5 18114 E VALLEY HWY, KENT, WA 98032               
-## 6 121 11TH AVE E, SEATTLE, WA 98102
+restaurants %>% distinct(mailing_address) %>% head()
 ```
 
 ---
@@ -136,18 +160,13 @@ restaurants %&gt;% distinct(mailing_address) %&gt;% head()
 
 You can build this yourself from existing data using `class()` to get the type of data, and `substr()`, and `paste()` with the `collapse = ""` argument to take a vector and make it a single character string:
 
-
-```r
+```{r readr_types_example}
 # use the class function to get the type of data
-column_types &lt;- sapply(restaurants, class)
+column_types <- sapply(restaurants, class)
 # extract 1st character
-column_types_1 &lt;- substr(column_types, 1, 1)
+column_types_1 <- substr(column_types, 1, 1)
 # use paste with collapse to get one string
-(column_types_collapse &lt;- paste(column_types_1, collapse = ""))
-```
-
-```
-## [1] "ccccccccnnccicccciccciDcc"
+(column_types_collapse <- paste(column_types_1, collapse = ""))
 ```
 
 ---
@@ -155,25 +174,13 @@ column_types_1 &lt;- substr(column_types, 1, 1)
 
 I typically read in data using `read_csv()` without `col_types()`. You could use the functions above together to get column types to feed back into `read_csv()`:
 
-
-```r
-readr_input_types &lt;- function(data) {
-    column_types_1 &lt;- substr(sapply(data, class), 1, 1)
+```{r function_to_get_types}
+readr_input_types <- function(data) {
+    column_types_1 <- substr(sapply(data, class), 1, 1)
     return(paste(column_types_1, collapse = ""))
 }
 readr_input_types(swiss)
-```
-
-```
-## [1] "nniinn"
-```
-
-```r
 readr_input_types(restaurants)
-```
-
-```
-## [1] "ccccccccnnccicccciccciDcc"
 ```
 
 ---
@@ -181,29 +188,10 @@ readr_input_types(restaurants)
 
 `paste0()` is a shortcut for `paste()` without any separator.
 
-
-```r
+```{r paste0}
 paste(1:5, letters[1:5]) # sep is a space by default
-```
-
-```
-## [1] "1 a" "2 b" "3 c" "4 d" "5 e"
-```
-
-```r
 paste(1:5, letters[1:5], sep ="")
-```
-
-```
-## [1] "1a" "2b" "3c" "4d" "5e"
-```
-
-```r
 paste0(1:5, letters[1:5])
-```
-
-```
-## [1] "1a" "2b" "3c" "4d" "5e"
 ```
 
 ---
@@ -213,21 +201,12 @@ paste0(1:5, letters[1:5])
 
 Here are some examples; make sure you understand how the arguments produce the results:
 
-
-```r
+```{r paste_practice, eval=TRUE, results="hold"}
 paste(letters[1:5], collapse = "!")
 paste(1:5, letters[1:5], sep = "+")
 paste0(1:5, letters[1:5], collapse = "???")
 paste(1:5, "Z", sep = "*")
 paste(1:5, "Z", sep = "*", collapse = " ~ ")
-```
-
-```
-## [1] "a!b!c!d!e"
-## [1] "1+a" "2+b" "3+c" "4+d" "5+e"
-## [1] "1a???2b???3c???4d???5e"
-## [1] "1*Z" "2*Z" "3*Z" "4*Z" "5*Z"
-## [1] "1*Z ~ 2*Z ~ 3*Z ~ 4*Z ~ 5*Z"
 ```
 
 ---
@@ -249,8 +228,7 @@ It provides functions that:
 
 Conveniently, most `stringr` functions also begin with "`str_`" to make RStudio auto-complete more useful.
     
-
-```r
+```{r load_stringr}
 library(stringr)
 ```
 
@@ -259,25 +237,15 @@ library(stringr)
 
 * `str_sub()` is like `substr()` but also lets you put in negative values to count backwards from the end (-1 is the end, -3 is third from end):
 
-
-```r
+```{r str_sub_example}
 str_sub("Washington", 1, -3)
-```
-
-```
-## [1] "Washingt"
 ```
 --
 
 * `str_c()` ("string combine") is just like `paste()` but where default is `sep = ""` (like `paste0()`)
 
-
-```r
+```{r str_c_example}
 str_c(letters[1:5], 1:5)
-```
-
-```
-## [1] "a1" "b2" "c3" "d4" "e5"
 ```
 
 ---
@@ -285,21 +253,9 @@ str_c(letters[1:5], 1:5)
 
 * `str_length()` is equivalent to `nchar()`:
 
-
-```r
+```{r nchar_v_str_length}
 nchar("weasels")
-```
-
-```
-## [1] 7
-```
-
-```r
 str_length("weasels")
-```
-
-```
-## [1] 7
 ```
 
 ---
@@ -307,23 +263,11 @@ str_length("weasels")
 
 `str_to_upper()`, `str_to_lower()`, `str_to_title()` convert cases, which is often a good idea to do before searching for values:
 
-
-```r
+```{r make_seattle_uppercase}
 head(unique(restaurants$City))
-```
-
-```
-## [1] "Seattle"  "SEATTLE"  "KENT"     "BELLEVUE" "KENMORE"  "Issaquah"
-```
-
-```r
-restaurants &lt;- restaurants %&gt;%
+restaurants <- restaurants %>%
     mutate_at(vars(Name, Address, City), funs(str_to_upper))
 head(unique(restaurants$City))
-```
-
-```
-## [1] "SEATTLE"  "KENT"     "BELLEVUE" "KENMORE"  "ISSAQUAH" "BURIEN"
 ```
 
 ---
@@ -331,31 +275,19 @@ head(unique(restaurants$City))
 
 Extra leading or trailing whitespace is common in text data:
 
-
-```r
+```{r show_whitespace}
 head(unique(restaurants$Name), 4)
-```
-
-```
-## [1] "@ THE SHACK, LLC "    "10 MERCER RESTAURANT" "100 LB CLAM"         
-## [4] "1000 SPIRITS"
 ```
 
 --
 
 Any character column is potentially affected. We can use the `str_trim()` function in `stringr` to clean them up all at once:
 
-
-```r
+```{r clean_whitespace}
 # use mutate_if to trim all the character columns
-restaurants &lt;- restaurants %&gt;%
+restaurants <- restaurants %>%
     mutate_if(is.character, str_trim)
 head(unique(restaurants$Name), 4)
-```
-
-```
-## [1] "@ THE SHACK, LLC"     "10 MERCER RESTAURANT" "100 LB CLAM"         
-## [4] "1000 SPIRITS"
 ```
 
 ---
@@ -384,23 +316,10 @@ to a string input, and then can do things with **matches** we find.
 
 I want to get inspections for coffee shops. I'll say a coffee shop is anything that has "COFFEE", "ESPRESSO", or "ROASTER" in the name. The `regex` for this is `COFFEE|ESPRESSO|ROASTER` because `|` is a metacharacter that means "OR". Use the `str_detect()` function, which returns `TRUE` if it finds what you're looking for and `FALSE` if it doesn't (similar to `grepl()`):
 
-
-```r
-coffee &lt;- restaurants %&gt;% 
+```{r coffee_check}
+coffee <- restaurants %>% 
   filter(str_detect(Name, "COFFEE|ESPRESSO|ROASTER"))
-coffee %&gt;% distinct(Name) %&gt;% head()
-```
-
-```
-## # A tibble: 6 x 1
-##   Name                               
-##   &lt;chr&gt;                              
-## 1 2 SISTERS ESPRESSO                 
-## 2 701 COFFEE                         
-## 3 909 COFFEE AND WINE                
-## 4 AJ'S ESPRESSO                      
-## 5 ALKI HOMEFRONT SMOOTHIES &amp; ESPRESSO
-## 6 ALL CITY COFFEE
+coffee %>% distinct(Name) %>% head()
 ```
 
 ---
@@ -409,12 +328,9 @@ coffee %&gt;% distinct(Name) %&gt;% head()
 Let's take each unique business identifier, keep the most recent inspection score, and look at a histogram of scores:
 
 .small[
-
-```r
-with(coffee %&gt;% select(Business_ID, Name, Inspection_Score, Date) %&gt;% group_by(Business_ID) %&gt;% filter(Date == max(Date)) %&gt;% distinct(.keep_all=TRUE), hist(Inspection_Score, xlab = "Most recent inspection score", main = "Most recent inspection scores\nfor Seattle coffee shops"))
+```{r coffee_histogram, fig.height = 3, dev = "svg" }
+with(coffee %>% select(Business_ID, Name, Inspection_Score, Date) %>% group_by(Business_ID) %>% filter(Date == max(Date)) %>% distinct(.keep_all=TRUE), hist(Inspection_Score, xlab = "Most recent inspection score", main = "Most recent inspection scores\nfor Seattle coffee shops"))
 ```
-
-![](CSSS508_week8_strings_files/figure-html/coffee_histogram-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -424,16 +340,11 @@ Let's look for phone numbers whose first three digits are "206" using `str_detec
 
 We will want it to work whether they have parentheses around the beginning or not, but NOT to match "206" occurring elsewhere:
 
-
-```r
-area_code_206_pattern &lt;- "^\\(?206"
-phone_test_examples &lt;- c("2061234567", "(206)1234567",
+```{r look_for_206}
+area_code_206_pattern <- "^\\(?206"
+phone_test_examples <- c("2061234567", "(206)1234567",
                          "(206) 123-4567", "555-206-1234")
 str_detect(phone_test_examples, area_code_206_pattern)
-```
-
-```
-## [1]  TRUE  TRUE  TRUE FALSE
 ```
 
 * `^` is a metacharacter meaning "look only at the *beginning* of the string"
@@ -446,8 +357,7 @@ str_detect(phone_test_examples, area_code_206_pattern)
 `stringr` also has a function called `str_view()` that allows you to see in the viewer pane *exactly*
 what text is being selected with a regular expression.
 
-
-```r
+```{r str_view, eval=FALSE}
 str_view(phone_test_examples, area_code_206_pattern)
 ```
 
@@ -459,21 +369,11 @@ as it tries to render a massive page!
 ---
 # How Many Rows Have Non-206 Numbers?
 
-
-```r
-restaurants %&gt;% 
+```{r look_for_206_rest}
+restaurants %>% 
   mutate(has_206_number = 
-           str_detect(Phone, area_code_206_pattern)) %&gt;% 
-  group_by(has_206_number) %&gt;% tally()
-```
-
-```
-## # A tibble: 3 x 2
-##   has_206_number      n
-##   &lt;lgl&gt;           &lt;int&gt;
-## 1 FALSE           66655
-## 2 TRUE           109099
-## 3 NA              82876
+           str_detect(Phone, area_code_206_pattern)) %>% 
+  group_by(has_206_number) %>% tally()
 ```
 
 ---
@@ -482,16 +382,11 @@ restaurants %&gt;%
 Let's extract the [directional part of Seattle](https://en.wikipedia.org/wiki/Street_layout_of_Seattle#Directionals) of addresses: N, NW, SE, none, etc.
 
 
-
-```r
-direction_pattern &lt;- " (N|NW|NE|S|SW|SE|W|E)( |$)"
-direction_examples &lt;- c("2812 THORNDYKE AVE W", "512 NW 65TH ST",
+```{r test_direction}
+direction_pattern <- " (N|NW|NE|S|SW|SE|W|E)( |$)"
+direction_examples <- c("2812 THORNDYKE AVE W", "512 NW 65TH ST",
                         "407 CEDAR ST", "15 NICKERSON ST")
 str_extract(direction_examples, direction_pattern)
-```
-
-```
-## [1] " W"   " NW " NA     NA
 ```
 
 * The first space will match a space character, then
@@ -501,28 +396,12 @@ str_extract(direction_examples, direction_pattern)
 ---
 # Where are the Addresses?
 
-
-```r
-restaurants %&gt;% 
-  distinct(Address) %&gt;% 
+```{r extract_directions}
+restaurants %>% 
+  distinct(Address) %>% 
   mutate(city_region = 
-          str_trim(str_extract(Address, direction_pattern))) %&gt;% 
-  count(city_region) %&gt;% arrange(desc(n))
-```
-
-```
-## # A tibble: 9 x 2
-##   city_region     n
-##   &lt;chr&gt;       &lt;int&gt;
-## 1 NE           2086
-## 2 S            1764
-## 3 &lt;NA&gt;         1745
-## 4 N             879
-## 5 SE            868
-## 6 SW            705
-## 7 E             538
-## 8 NW            438
-## 9 W             235
+          str_trim(str_extract(Address, direction_pattern))) %>% 
+  count(city_region) %>% arrange(desc(n))
 ```
 
 ---
@@ -530,20 +409,14 @@ restaurants %&gt;%
 
 Maybe we want to do a street-level analysis of inspections (e.g. compare The Ave to Pike Street). How can we remove building numbers?
 
-
-```r
-address_number_pattern &lt;- "^[0-9]*-?[A-Z]? (1/2 )?"
-address_number_test_examples &lt;- 
+```{r test_address_numbers}
+address_number_pattern <- "^[0-9]*-?[A-Z]? (1/2 )?"
+address_number_test_examples <- 
   c("2812 THORNDYKE AVE W", "1ST AVE", "10A 1ST AVE", 
     "10-A 1ST AVE", "5201-B UNIVERSITY WAY NE",
     "7040 1/2 15TH AVE NW")
 str_replace(address_number_test_examples, 
             address_number_pattern, replacement = "")
-```
-
-```
-## [1] "THORNDYKE AVE W"   "1ST AVE"           "1ST AVE"          
-## [4] "1ST AVE"           "UNIVERSITY WAY NE" "15TH AVE NW"
 ```
 
 ---
@@ -576,29 +449,11 @@ Let's break down `"^[0-9]*-?[A-Z]? (1/2 )?"`:
 ---
 # Removing the Street Numbers
 
-
-```r
-restaurants &lt;- restaurants %&gt;% 
+```{r replace_numbers}
+restaurants <- restaurants %>% 
   mutate(street_only = str_replace(Address, address_number_pattern,
                                    replacement = ""))
-restaurants %&gt;% distinct(street_only) %&gt;% head(11)
-```
-
-```
-## # A tibble: 11 x 1
-##    street_only              
-##    &lt;chr&gt;                    
-##  1 SW AVALON WAY            
-##  2 MERCER ST                
-##  3 FAIRVIEW AVE N UNIT 1700A
-##  4 1ST AVE                  
-##  5 E VALLEY HWY             
-##  6 11TH AVE E               
-##  7 112TH AVE NE #125        
-##  8 NE BOTHELL WAY           
-##  9 NW GILMAN BL C-08        
-## 10 NE 20TH ST STE 300       
-## 11 S ORCAS ST
+restaurants %>% distinct(street_only) %>% head(11)
 ```
 
 ---
@@ -606,19 +461,13 @@ restaurants %&gt;% distinct(street_only) %&gt;% head(11)
 
 Getting rid of unit/suite references is tricky, but a decent attempt would be to drop anything including and after "#", "STE", "SUITE", "SHOP", "UNIT":
 
-
-```r
-address_unit_pattern &lt;- " (#|STE|SUITE|SHOP|UNIT).*$"
-address_unit_test_examples &lt;-
+```{r test_unit_numbers}
+address_unit_pattern <- " (#|STE|SUITE|SHOP|UNIT).*$"
+address_unit_test_examples <-
   c("1ST AVE", "RAINIER AVE S #A", "FAUNTLEROY WAY SW STE 108", 
     "4TH AVE #100C", "NW 54TH ST")
 str_replace(address_unit_test_examples, address_unit_pattern,
             replacement = "")
-```
-
-```
-## [1] "1ST AVE"           "RAINIER AVE S"     "FAUNTLEROY WAY SW"
-## [4] "4TH AVE"           "NW 54TH ST"
 ```
 
 ---
@@ -639,29 +488,11 @@ Breaking down `" (|#|STE|SUITE|SHOP|UNIT).*$"`:
 ---
 # Removing Units/Suites
 
-
-```r
-restaurants &lt;- restaurants %&gt;% 
+```{r replace_units}
+restaurants <- restaurants %>% 
   mutate(street_only = str_trim(str_replace(street_only, 
                        address_unit_pattern, replacement = "")))
-restaurants %&gt;% distinct(street_only) %&gt;% head(11)
-```
-
-```
-## # A tibble: 11 x 1
-##    street_only      
-##    &lt;chr&gt;            
-##  1 SW AVALON WAY    
-##  2 MERCER ST        
-##  3 FAIRVIEW AVE N   
-##  4 1ST AVE          
-##  5 E VALLEY HWY     
-##  6 11TH AVE E       
-##  7 112TH AVE NE     
-##  8 NE BOTHELL WAY   
-##  9 NW GILMAN BL C-08
-## 10 NE 20TH ST       
-## 11 S ORCAS ST
+restaurants %>% distinct(street_only) %>% head(11)
 ```
 
 ---
@@ -669,25 +500,13 @@ restaurants %&gt;% distinct(street_only) %&gt;% head(11)
 
 Let's get one row per restaurant per date with the score, and see which streets the ones above 45 are on:
 
-
-```r
-restaurants %&gt;% 
-  distinct(Business_ID, Date, Inspection_Score, street_only) %&gt;% 
-  filter(Inspection_Score &gt; 45) %&gt;% 
-  count(street_only) %&gt;%
-  arrange(desc(n)) %&gt;% 
+```{r failed_inspections}
+restaurants %>% 
+  distinct(Business_ID, Date, Inspection_Score, street_only) %>% 
+  filter(Inspection_Score > 45) %>% 
+  count(street_only) %>%
+  arrange(desc(n)) %>% 
   head(n=5)
-```
-
-```
-## # A tibble: 5 x 2
-##   street_only           n
-##   &lt;chr&gt;             &lt;int&gt;
-## 1 UNIVERSITY WAY NE   108
-## 2 S JACKSON ST        105
-## 3 PACIFIC HWY S        90
-## 4 NE 24TH ST           76
-## 5 RAINIER AVE S        70
 ```
 
 ---
@@ -696,26 +515,8 @@ restaurants %&gt;%
 You can split up strings using `tidyr::separate()`, seen in Week 5. Another option is `str_split()`, which will split strings based on a pattern separating parts and put these components in a list. `str_split_fixed()` will do that but with a matrix instead (and thus can't have varying numbers of separators):
 
 .small[
-
-```r
+```{r str_split_violation}
 head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
-```
-
-```
-##      [,1]  
-## [1,] ""    
-## [2,] "4300"
-## [3,] "4800"
-## [4,] "1200"
-## [5,] "4100"
-## [6,] "2120"
-##      [,2]                                                                               
-## [1,] ""                                                                                 
-## [2,] "Non-food contact surfaces maintained and clean"                                   
-## [3,] "Physical facilities properly installed,..."                                       
-## [4,] "Proper shellstock ID; wild mushroom ID;  parasite destruction procedures for fish"
-## [5,] "Warewashing facilities properly installed,..."                                    
-## [6,] "Proper cold holding temperatures ( 42 degrees F to 45 degrees F)"
 ```
 ]
 
@@ -735,51 +536,3 @@ class: inverse
 # Coming Up
 
 Homework 6, Part 2 is due next week, and peer reviews due the week after.
-    </textarea>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create({
-"highlightStyle": "tomorrow-night-bright",
-"highlightLines": true,
-"countIncrementalSlides": false
-});
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
-  window.dispatchEvent(new Event('resize'));
-});
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
-  if (!r) return;
-  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
-  d.head.appendChild(s);
-})();</script>
-
-<script>
-(function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
-  for (i = 0; i < codes.length;) {
-    code = codes[i];
-    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
-      text = code.textContent;
-      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
-          /^\$\$(.|\s)+\$\$$/.test(text) ||
-          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
-        code.outerHTML = code.innerHTML;  // remove <code></code>
-        continue;
-      }
-    }
-    i++;
-  }
-})();
-</script>
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-(function () {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
-  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
-    script.src  = script.src.replace(/^https?:/, '');
-  document.getElementsByTagName('head')[0].appendChild(script);
-})();
-</script>
-  </body>
-</html>

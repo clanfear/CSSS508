@@ -1,0 +1,574 @@
+---
+title: "CSSS508, Week 9"
+subtitle: "Mapping"
+author: "Chuck Lanfear"
+date: "Nov 21, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: tomorrow-night-bright
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: ["center","top"]
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(comment = "##")
+```
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+
+csss508css <- list(
+     ".hljs-tomorrow-night-bright .hljs" = list(
+        "background" = "#10102c",
+        "border-radius"="5px"),
+     ".remark-inline-code" = list(
+        "background" = "#E0E0E0",
+        "color" = "#10102c",
+        "border-radius" = "3px",
+        "padding" = "2px"),
+     ".inverse .remark-inline-code" = list(
+        "background" = "#10102c",
+        "color" = "#ececf8",
+        "border-radius" = "3px",
+        "padding" = "2px"),
+     ".smallish" = list("font-size" = "85%"),
+     ".small" = list("font-size" = "75%"),
+     ".smaller" = list("font-size" = "60%"),
+     ".remark-code-line-highlighted" = list(
+        "background-color" = "rgba(255,0,255,0.2)"),
+     "sup" = list("font-size" = "14px"),
+     "h1, h2, h3" = list(
+        "margin-top"=".25em", 
+        "margin-bottom"=".25em"),
+     ".pull-left60" = list(
+        "float" = "left",
+        "width" = "58%" ),
+     ".pull-right40" = list(
+        "float" = "right",
+        "width" = "38%" ),
+     "a" = list("text-decoration" = "underline"),
+     ".inverse a" = list("color" = "#cbd3a3"),
+     "body" = list("line-height" = "1.4"),
+     ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)"),
+     ".short" = list("height" = "30%"),
+     ".image-50 img" = list("width" = "50%"),
+     ".image-75 img" = list("width" = "75%"),
+          ".image-full img" = list(
+        "height" = "480px",
+        "display"="block",
+        "margin-left"="auto",
+        "margin-right"="auto"),
+     ".title-slide" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg), url(https://clanfear.github.io/CSSS508/Lectures/img/title_slide_img.png)",
+                           "background-position" = "center center, center bottom",
+                           "background-size" = "contain, contain")
+    )
+ 
+mono_accent(base_color = "#342c5c",
+            code_font_google = google_font("Fira Mono"),
+            header_font_google = google_font("Quattrocento"),
+            extra_css = csss508css,
+            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/img/title_slide_img.png",
+            title_slide_background_position = "bottom",
+            title_slide_background_size = "contain",
+            background_image = "https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg"
+)
+```
+
+
+
+
+# Today
+
+* `ggmap` for mashing up maps with `ggplot2`
+* Labeling points and using `ggrepel` to avoid overlaps
+* Mapping with raw `ggplot2` using coordinates
+* `tidycensus` for obtaining Census Bureau data
+* `sf`: [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) geometry for R
+
+---
+# Mapping in R: A quick plug
+
+.pull-left[
+![](CSSS508_week9_mapping-figure/bivand.jpg)
+]
+
+.pull-right[
+If you are interested in mapping, GIS, and geospatial analysis in R, *acquire this book*.
+
+You may also consider taking Jon Wakefield's **CSSS 554: Statistical Methods for Spatial Data**, however it is challenging and focuses more heavily on statistics than mapping.
+
+Also, in most terms, CSDE offers workshops in GIS using [QGIS](https://qgis.org/en/site/) and/or ArcGIS.
+
+I recommend QGIS because it is free, open-source software with an extensive feature set and large user community.
+]
+
+---
+class: inverse
+# ggmap
+
+---
+# ggmap
+
+`ggmap` is a package that works with `ggplot2` to plot spatial data directly on map images downloaded from Google Maps<sup>1<sup>, OpenStreetMap, and Stamen Maps (good artistic/minimal options).
+
+What this package does for you:
+
+1. Queries servers for a map (`get_map()`) at the location and scale you want
+2. Plots the **raster** (bitmap) image as a `ggplot` object
+3. Lets you add more `ggplot` layers like points, 2D density plots, text annotations
+4. Additional functions for interacting with Google Maps (e.g. getting distances by bike)
+
+.footnote[[1] [Requires an API Key now.](https://cloud.google.com/maps-platform/)]
+
+---
+# Installation
+
+As of `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`, the current version of `ggmap` must be downloaded from GitHub.
+
+This can be done using the `devtools` package.
+
+```{r, eval=FALSE}
+if(!requireNamespace("devtools")) install.packages("devtools")
+devtools::install_github("dkahle/ggmap", ref = "tidyup")
+```
+
+This may require compilation on your computer. If you get errors during install, please consult 
+
+---
+# One Day of SPD Incidents
+
+In Week 5, we looked at types of incidents the Seattle Police Department responded to in a single day. Now, we'll look at where those were.
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse); library(ggmap)
+```
+
+```{r read_spd_data, cache=TRUE, message=FALSE, warning=FALSE}
+spd_raw <- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Department_911_Incident_Response.csv")
+```
+
+---
+# Quick Map Plotting with `qmplot()`
+
+.pull-left[
+`qmplot` will automatically set the map region based on your data:
+
+```{r, message = FALSE, cache=TRUE, eval=FALSE, fig.height = 5, dev="svg"}
+qmplot(data = spd_raw, 
+       x = Longitude, 
+       y = Latitude, 
+       color = "firebrick", 
+       alpha = 0.5)
+```
+
+All I provided was numeric latitude and longitude, and it placed the data points correctly on a raster map of Seattle.
+]
+
+.pull-right[
+```{r quick_plot, message = FALSE, cache=TRUE, echo=FALSE, fig.height = 4, dev="svg"}
+qmplot(data = spd_raw, x = Longitude, y = Latitude, color = I("firebrick"), alpha = I(0.5))
+```
+]
+
+
+---
+# `get_map()`
+
+Both `qmplot()` and `qmap()` are wrappers for a function called `get_map()` that retrieves a base map layer. Some options:
+
+* `location=` search query or numeric vector of longitude and latitude
+* `zoom=` a zoom level (3 = continent, 10 = city, 21 = building)
+* `source=` 
+    + `"google"`: Google Maps for general purpose maps<sup>1</sup>
+    + `"osm"`: OpenStreetMaps, general purpose but open access
+    + `"stamen"`: Aesthetically pleasing alternatives based on OpenStreetMaps
+* `maptype=`
+    + Google types: `"terrain"`, `"terrain-background"`, `"satellite"`, `"roadmap"`, `"hybrid"`
+    + Stamen types: `"watercolor"`, `"toner"`, `"toner-background"`, `"toner-lite"`
+* `color=` `"color"` or `"bw"`
+
+.footnote[[1] Requires API key!]
+
+---
+# Toner Example
+
+`source="stamen"` yields interesting looking maps---including nice black and white styles---which 
+may look better than Google or OpenStreetMaps in publications and presentations.
+
+.pull-left[
+```{r, eval=FALSE}
+qmap(location = "pike place market",
+     zoom = 14,
+     maptype = "toner-background",
+     source = "stamen")
+```
+]
+
+.pull-right[
+```{r downtown, message = FALSE, echo=FALSE, cache=TRUE, fig.height = 4, dev="svg"}
+qmap(location = "pike place market", zoom = 14, maptype = "toner-background", source = "stamen")
+```
+]
+
+---
+# Google Maps Example
+
+.pull-left[
+`source="google"` produces the same rasters you would get using the Google Maps website.
+
+```{r, eval=FALSE}
+qmap(location = "seattle",
+     zoom = 8,
+     maptype = "terrain",
+     source = "google")
+```
+]
+
+.pull-right[
+
+```{r puget_sound, message = FALSE, cache=TRUE, echo=FALSE, fig.height = 4, dev="svg"}
+qmap(location = "seattle", zoom = 8, maptype = "terrain", source = "google")
+```
+]
+---
+# Subsetting Geographic Data
+
+Let's look at locations of incidents near downtown.
+
+```{r downtown_subset, cache=TRUE}
+# query the map server
+downtown_map <- get_map(location = "pike place market", zoom = 14)
+# grab the bounding box coordinate data frame
+downtown_bb <- attributes(downtown_map)[["bb"]]
+# subset the data based on bounding box
+# keep observations in between our max lat and long
+downtown_seattle_incidents <- spd_raw %>%
+    filter(downtown_bb[["ll.lat"]] <= Latitude &
+               Latitude <= downtown_bb[["ur.lat"]] &
+               downtown_bb[["ll.lon"]] <= Longitude &
+               Longitude <= downtown_bb[["ur.lon"]])
+```
+
+---
+# Adding Density Layers
+
+.pull-left[
+Call `qmplot()` with no `geom()`, and then add density layers:
+
+```{r quick_plot_density_1, eval=FALSE}
+qmplot(data = downtown_seattle_incidents, 
+       geom = "blank", 
+       x = Longitude,
+       y = Latitude, 
+       maptype = "toner-lite", 
+       darken = 0.5) + 
+  stat_density_2d(
+    aes(fill = ..level..), 
+    geom = "polygon", 
+    alpha = .2,
+    color = NA) + 
+  scale_fill_gradient2(
+      "Incident concentration", 
+      low = "white", 
+      mid = "yellow", 
+      high = "red")
+```
+]
+
+.pull-right[
+```{r quick_plot_density_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 4, dev="svg"}
+qmplot(data = downtown_seattle_incidents, geom = "blank", x = Longitude, y = Latitude, maptype = "toner-lite", darken = 0.5) + stat_density_2d(aes(fill = ..level..), geom = "polygon", alpha = .2, color = NA) + scale_fill_gradient2("Incident concentration", low = "white", mid = "yellow", high = "red")
+```
+]
+---
+# Labeling Points
+
+Let's label the assaults and robberies specifically in downtown:
+
+```{r flag_assaults}
+assaults <- downtown_seattle_incidents %>% 
+  mutate(assault_label = 
+           ifelse(`Event Clearance Group` %in%  c("ASSAULTS", "ROBBERY"), 
+                  `Event Clearance Description`, "")) %>% 
+  filter(assault_label != "")
+```
+
+---
+# Plotting with Labels
+
+.pull-left[
+Now let's plot the events and label these specifically using `geom_label()` (`geom_text()` also works without the background/border):
+
+```{r labels_1, eval=FALSE}
+qmplot(data = 
+       downtown_seattle_incidents,
+       x = Longitude,
+       y = Latitude,
+       maptype = "toner-lite",
+       color = I("firebrick"),
+       alpha = I(0.5)) + 
+  geom_label(data = assaults,
+       aes(label = assault_label))
+```
+
+Placing the arguments for `color=` and `alpha=` inside `I()` prevents them from also applying to the labels. We would get transparent red labels otherwise!
+]
+
+.pull-right[
+```{r labels_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 4, dev="svg"}
+qmplot(data = downtown_seattle_incidents, x = Longitude, y = Latitude, maptype = "toner-lite", color = I("firebrick"), alpha = I(0.5)) + geom_label(data = assaults, aes(label = assault_label))
+```
+]
+
+---
+`ggrepel`
+
+.pull-left[
+You can also try `geom_label_repel()` or `geom_text_repel()` if you install and load in the `ggrepel` package to fix overlaps:
+
+```{r ggrepel_1, eval=FALSE}
+library(ggrepel)
+qmplot(data = 
+    downtown_seattle_incidents,
+    x = Longitude,
+    y = Latitude,
+    maptype = "toner-lite", 
+    color = I("firebrick"), 
+    alpha = I(0.5)) + 
+  geom_label_repel(
+    data = assaults,
+    aes(label = assault_label), 
+    fill = "black", 
+    color = "white", 
+    segment.color = "black")
+```
+]
+
+.pull-right[
+```{r ggrepel_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 4, dev="svg"}
+library(ggrepel)
+qmplot(data = downtown_seattle_incidents, x = Longitude, y = Latitude, maptype = "toner-lite", color = I("firebrick"), alpha = I(0.5)) + geom_label_repel(data = assaults, aes(label = assault_label), fill = "black", color = "white", segment.color = "black")
+```
+]
+
+---
+# `ggplot` without `ggmap`
+
+It is also common (and easy) to plot geospatial data using standard `ggplot2` functions. Just provide `x` and `y`
+coordinates to use to draw points or lines.
+
+You need only provide ggplot the following:
+* Longitude for the `x` aesthetic
+* Latitude for the `y` aesthetic
+* Data to fill polygons if making a chloropleth
+
+```{r, messages=FALSE, cache=TRUE}
+sea_tract_data <- read_csv("https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week9/sea_tract_data.csv")
+```
+
+---
+# Chloropleth Using `geom_polygon()`
+
+.pull-left[
+```{r ggplot_alone_1, eval=FALSE}
+ggplot(sea_tract_data, 
+      aes(x = long, y = lat, 
+          group = group,
+          fill = con_disdvntg)) +
+ geom_polygon()  + 
+ scale_fill_gradient(
+  low = "white", high = "darkred") +
+ coord_equal() + 
+ geom_path(color = "black", 
+           linetype = 1) +
+ theme(
+  axis.title=element_blank(), 
+  axis.text=element_blank(), 
+  panel.grid.major=element_blank(), 
+  panel.grid.minor=element_blank(), 
+  panel.background=element_blank(),
+  axis.ticks=element_blank(),
+  axis.line=element_blank()) +
+ labs(
+   title="Concentrated Disadvantage",
+   fill = "Disadvantage\n")
+```
+]
+
+.pull-right[
+```{r ggplot_alone_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 4, dev="svg"}
+ggplot(sea_tract_data, aes(x=long, y=lat, group = group, 
+                           fill = con_disdvntg))  +
+  geom_polygon()  + scale_fill_gradient(low="white", high="darkred") +
+  coord_equal() + geom_path(color = "black", linetype=1) +
+  theme(axis.title=element_blank(), axis.text = element_blank(), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(),
+        axis.ticks = element_blank(),
+        axis.line = element_blank()) +
+  labs(title="Concentrated Disadvantage", fill="Disadvantage\n")
+```
+]
+
+---
+# Chloropleths Using `geom_polygon()`
+
+```{r ggplot_alone_3, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 4, dev="svg"}
+ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=mean.inform.soc.control))  +
+  geom_polygon()  +
+  scale_fill_gradient(low="white", high="darkblue") +
+  coord_equal() +
+  geom_path(color = "black", linetype=1) +
+  theme(axis.title=element_blank(), axis.text = element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.ticks = element_blank(),
+        axis.line = element_blank()) +
+  labs(title="Collective Efficacy", fill="CE\n")
+```
+
+---
+# Chloropleths Using `geom_polygon()`
+
+```{r ggplot_alone_4, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 4, dev="svg"}
+ggplot(sea_tract_data, aes(x=long, y=lat, group = group, fill=log.violent.crime.0305))  +
+  geom_polygon()  +
+  scale_fill_gradient(low="white", high="darkred") +
+  coord_equal() +
+  geom_path(color = "black", linetype=1) +
+  theme(axis.title=element_blank(), axis.text = element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.ticks = element_blank(),
+        axis.line = element_blank()) +
+  labs(title="Violent Crime", fill="ln(Crime)\n")
+```
+
+---
+class: inverse
+# `tidycensus`
+
+---
+tidycensus
+
+`tidycensus` can be used to search the American Community Survey (ACS) and Dicennial
+Census for variables, then download them and automatically format them as tidy dataframes.
+
+**These dataframes include geographical boundaries such as tracts!**
+
+This package utilizes the Census API, so you will need to obtain a [Census API key](https://api.census.gov/data/key_signup.html).
+I talk more about APIs in the Social Media Data and Text Mining lecture.
+
+## The Basics:
+
+**Application Program Interface (API)**: A type of computer interface that exists as the 
+"native"" method of communication between computers, often via http (usable via httr package).
+* R packages that interface with websites and databases typically use APIs.
+* APIs make accessing data easy while allowing websites to control access.
+
+```{r tidycensus}
+library(tidycensus)
+# census_api_key("PUT YOUR KEY HERE", install=TRUE)
+```
+
+---
+# Development `ggplot2`
+
+Note that you may need to install the development version of ggplot2 to use `tidycensus` plotting functions
+
+This will change when the `geom` functions for `sf` objects are finalized.
+
+Use the code below if you want to install `devtools` and the development version of `ggplot2`
+
+```{r development_ggplot, eval=FALSE}
+install.packages("devtools")
+devtools::install_github("tidyverse/ggplot2")
+```
+
+---
+# Key `tidycensus` Functions
+
+* `census_api_key()` - Install a census api key
+* `load_variables()` - Load searchable variable lists
+* `get_decennial()` - Load Census variables and geographical boundaries.
+* `get_acs()` - Load ACS variables and boundaries
+
+---
+# Searching for Variables
+
+```{r tidycensus_vars, cache=TRUE, message=FALSE, warning=FALSE}
+acs_2015_vars <- load_variables(2015, "acs5")
+acs_2015_vars[10:18,] %>% print() 
+```
+
+---
+# Processing Data
+
+```{r king_county, cache=TRUE, message=FALSE, warning=FALSE}
+king_county <- get_acs(geography="tract", state="WA", county="King",
+                       geometry = TRUE,
+                       variables=c("B02001_001E", "B02009_001E")) %>% 
+  select(-moe) %>% group_by(GEOID) %>% spread(variable, estimate) %>% 
+  rename(`Total Population`=B02001_001, `Any Black`=B02009_001) %>%
+  mutate(`Any Black` = `Any Black` / `Total Population`)
+head(king_county)
+```
+
+---
+# Mapping Code
+
+```{r king_plot_code, eval=FALSE, fig.height = 4, dev="svg"}
+king_county %>% ggplot(aes(fill=`Any Black`)) + geom_sf() + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9", high="#00025b") + 
+  theme_minimal() + ggtitle("Proportion Any Black")
+```
+
+New functions:
+
+* `geom_sf()` draws Simple Feature coordinate data.
+* `coord_sf()` is used here with these arguments:
+   * `crs`: Modifies the coordinate reference system (CRS), often called a "projection"; WGS84 is possibly the most commonly used CRS.
+   * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
+
+---
+# Map
+```{r king_plot, eval=TRUE, echo=FALSE, fig.height = 4, dev="svg"}
+king_county %>% ggplot(aes(fill=`Any Black`)) + geom_sf() + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", low="#d4d5f9", high="#00025b") + 
+  theme_minimal() + ggtitle("Proportion Any Black")
+```
+
+---
+# Getting Deeper with Geospatial Data
+
+Until recently, the main way to work with geospatial data in R was through the `sp` 
+package. `sp` works well but does not store data the same way as most GIS packages
+and can be bulky and complicated.
+
+The more recent `sf` package implements [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) spatial data encoding, which
+is an ISO standard for spatial data storage used by GIS packages and spatial databases.
+`sf` is also integrated into the `tidyverse`: e.g. `geom_sf()` in `ggplot2`.
+
+The package is somewhat new but is expected to *replace* `sp` eventually. The principle
+authors and contributors to `sf` are the same authors as `sp` (including Bivand and Pebesma) but with new developers
+from the `tidyverse` as well.
+
+If you are going to enter the world of GIS in R seriously, learn to navigate `sf`!
+
+---
+class: inverse
+# Homework Exercise
+
+
+Use the HW 7 template to practice making maps of the restaurant inspection data. 
+
+If you wish to submit it for bonus points, turn it in via Canvas by midnight on Tuesday the 29th.
+
+There will be no peer review.

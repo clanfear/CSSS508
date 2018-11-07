@@ -85,7 +85,7 @@ class: inverse
 ---
 # Visualize the Goal First
 
-Before you can write effective code, you need to know *exactly* what you want that code to produce. e.g.:
+Before you can write effective code, you need to know *exactly* what you want that code to produce.
 
 --
 
@@ -115,7 +115,9 @@ class: inverse
 ---
 # Example from Last Week
 
-Remember when we tried find the mean for each variable in the `swiss` data? The best solution is to just use `colMeans()` without even thinking about pre-allocation or `for()` loops:
+Remember when we tried find the mean for each variable in the `swiss` data?
+
+The best solution is to just use `colMeans()` without even thinking about pre-allocation or `for()` loops:
 ```{r}
 colMeans(swiss)
 ```
@@ -235,7 +237,7 @@ Let's make sure we get an error message when the vector is too small:
 ```{r}
 smarter_first_and_last <- function(x) {
     if(length(x) == 0L) { # specify integers with L
-        stop("The input has no length!")
+        stop("The input has no length!") #<<
     } else {
         first <- x[1]
         last  <- x[length(x)]
@@ -244,6 +246,7 @@ smarter_first_and_last <- function(x) {
 }
 ```
 
+.footnote[`stop()` ceases running the function and prints the text inside as an error message.]
 ---
 # Testing Smarter Function
 
@@ -255,7 +258,7 @@ smarter_first_and_last(c(4, 3, 1, 8))
 ---
 # Cracking Open Functions
 
-If you type the function name without any parentheses or arguments, you can see its guts:
+If you type a function name without any parentheses or arguments, you can see its contents:
 
 ```{r}
 smarter_first_and_last
@@ -283,16 +286,16 @@ NAME <- function(ARGUMENT1, ARGUMENT2=DEFAULT){
     + `na.rm = FALSE` is example of setting a default value: if user doesn't say what `na.rm` is, it'll be `FALSE`
     + `x`, `na.rm` values won't exist in R outside of the function
 --
-* **Body**: The guts!
+* **Body**: The actual operations inside the function.
 --
 
-* **Return Value**: The output thing inside `return()`. Could be a vector, list, data frame, another function, or even nothing
+* **Return Value**: The output inside `return()`. Could be a vector, list, data frame, another function, or even nothing
     + If unspecified, will be the last thing calculated (maybe not what you want?)
     
 ---
 # Example: Reporting Quantiles
 
-Maybe you want to know more detailed quantile information than `summary()` gives you with interpretable names.
+Maybe you want to know more detailed quantile information than `summary()` gives you and with interpretable names.
 
 Here's a starting point:
 
@@ -362,7 +365,9 @@ Maybe you often want to bucket variables in your data into groups based on quant
 ---
 # Bucketing Function
 
-There's already a function in R called `cut()` that does this, but you need to tell it cutpoints or the number of buckets. Let's make a convenience function that calls `cut()` using quantiles for splitting and returns an integer:
+There's already a function in R called `cut()` that does this, but you need to tell it cutpoints or the number of buckets.
+
+Let's make a convenience function that calls `cut()` using quantiles for splitting and returns an integer:
 
 ```{r}
 bucket <- function(x, quants = c(0.333, 0.667)) {
@@ -394,8 +399,8 @@ Let's say we have data where impossible values occur:
 ```{r}
 (school_data <- 
   data.frame(school = letters[1:10],
-  pct_passing_exam=c(0.78, 0.55, 0.91,   -1, 0.88, 0.81, 0.90, 0.76,   99, 99),
-  pct_free_lunch = c(0.33,   99, 0.25, 0.05, 0.12, 0.09, 0.22,  -13, 0.21, 99)))
+  pr_passing_exam=c(0.78, 0.55, 0.91,   -1, 0.88, 0.81, 0.90, 0.76,   99, 99),
+  pr_free_lunch = c(0.33,   99, 0.25, 0.05, 0.12, 0.09, 0.22,  -13, 0.21, 99)))
 ```
 ]
 
@@ -415,7 +420,7 @@ remove_extremes <- function(x, low, high) {
     x_no_low_no_high <- ifelse(x_no_low > high, NA, x)
     return(x_no_low_no_high)
 }
-remove_extremes(school_data$pct_passing_exam, low = 0, high = 1)
+remove_extremes(school_data$pr_passing_exam, low = 0, high = 1)
 ```
 
 ---
@@ -574,16 +579,16 @@ title_text["pop"]
 gapminder_plot <- function(cntry, yvar) {
     y_axis_label <- c("lifeExp" = "Life expectancy",
                       "pop" = "Population (millions)",
-                      "gdpPercap" = "GDP per capita, USD")[yvar]
+                      "gdpPercap" = "GDP per capita, USD")[yvar] #<<
     title_text   <- c("lifeExp" = "Life expectancy in ",
                       "pop" = "Population of ",
-                      "gdpPercap" = "GDP per capita in ")[yvar]
-    ggplot(gapminder %>% filter(country == cntry) %>% 
+                      "gdpPercap" = "GDP per capita in ")[yvar] #<<
+    ggplot(gapminder %>% filter(country == cntry) %>% #<<
              mutate(pop = pop / 1000000),
-           aes_string(x = "year", y = yvar)) + 
+           aes_string(x = "year", y = yvar)) + #<<
       geom_line(color = "firebrick") + 
-      ggtitle(paste0(title_text, cntry, " since 1952")) + 
-      xlab(NULL) + ylab(y_axis_label) + theme_minimal() + 
+      ggtitle(paste0(title_text, cntry, " since 1952")) +  #<<
+      xlab(NULL) + ylab(y_axis_label) + theme_minimal() +
       theme(plot.title = element_text(hjust = 0, size = 20))
 }
 ```

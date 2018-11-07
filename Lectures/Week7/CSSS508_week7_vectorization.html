@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 7
 ## Vectorization and Functions
 ### Chuck Lanfear
-### Nov 7, 2018<br>Updated: Oct 31, 2018
+### Nov 7, 2018<br>Updated: Nov 5, 2018
 
 ---
 
@@ -28,7 +28,7 @@ class: inverse
 ---
 # Visualize the Goal First
 
-Before you can write effective code, you need to know *exactly* what you want that code to produce. e.g.:
+Before you can write effective code, you need to know *exactly* what you want that code to produce.
 
 --
 
@@ -58,7 +58,9 @@ class: inverse
 ---
 # Example from Last Week
 
-Remember when we tried find the mean for each variable in the `swiss` data? The best solution is to just use `colMeans()` without even thinking about pre-allocation or `for()` loops:
+Remember when we tried find the mean for each variable in the `swiss` data?
+
+The best solution is to just use `colMeans()` without even thinking about pre-allocation or `for()` loops:
 
 ```r
 colMeans(swiss)
@@ -206,7 +208,7 @@ Let's make sure we get an error message when the vector is too small:
 ```r
 smarter_first_and_last &lt;- function(x) {
     if(length(x) == 0L) { # specify integers with L
-        stop("The input has no length!")
+*       stop("The input has no length!")
     } else {
         first &lt;- x[1]
         last  &lt;- x[length(x)]
@@ -215,6 +217,7 @@ smarter_first_and_last &lt;- function(x) {
 }
 ```
 
+.footnote[`stop()` ceases running the function and prints the text inside as an error message.]
 ---
 # Testing Smarter Function
 
@@ -239,7 +242,7 @@ smarter_first_and_last(c(4, 3, 1, 8))
 ---
 # Cracking Open Functions
 
-If you type the function name without any parentheses or arguments, you can see its guts:
+If you type a function name without any parentheses or arguments, you can see its contents:
 
 
 ```r
@@ -249,14 +252,14 @@ smarter_first_and_last
 ```
 ## function(x) {
 ##     if(length(x) == 0L) { # specify integers with L
-##         stop("The input has no length!")
+##         stop("The input has no length!") #&lt;&lt;
 ##     } else {
 ##         first &lt;- x[1]
 ##         last  &lt;- x[length(x)]
 ##         return(c("first" = first, "last" = last))        
 ##     }
 ## }
-## &lt;bytecode: 0x00000000207b2480&gt;
+## &lt;bytecode: 0x000000001ff94eb8&gt;
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -282,16 +285,16 @@ NAME &lt;- function(ARGUMENT1, ARGUMENT2=DEFAULT){
     + `na.rm = FALSE` is example of setting a default value: if user doesn't say what `na.rm` is, it'll be `FALSE`
     + `x`, `na.rm` values won't exist in R outside of the function
 --
-* **Body**: The guts!
+* **Body**: The actual operations inside the function.
 --
 
-* **Return Value**: The output thing inside `return()`. Could be a vector, list, data frame, another function, or even nothing
+* **Return Value**: The output inside `return()`. Could be a vector, list, data frame, another function, or even nothing
     + If unspecified, will be the last thing calculated (maybe not what you want?)
     
 ---
 # Example: Reporting Quantiles
 
-Maybe you want to know more detailed quantile information than `summary()` gives you with interpretable names.
+Maybe you want to know more detailed quantile information than `summary()` gives you and with interpretable names.
 
 Here's a starting point:
 
@@ -309,10 +312,10 @@ quantile_report(rnorm(10000))
 ```
 
 ```
-##   Bottom 1%   Bottom 5%  Bottom 10%  Bottom 25%      Median     Top 25% 
-## -2.29473294 -1.61860965 -1.26152205 -0.64943007 -0.00830461  0.66222050 
-##     Top 10%      Top 5%      Top 1% 
-##  1.27322344  1.60615507  2.31786566
+##    Bottom 1%    Bottom 5%   Bottom 10%   Bottom 25%       Median 
+## -2.320934949 -1.652393450 -1.267519645 -0.651794932  0.005558195 
+##      Top 25%      Top 10%       Top 5%       Top 1% 
+##  0.671163498  1.280785140  1.652984034  2.361357293
 ```
 ]
 
@@ -435,7 +438,9 @@ Maybe you often want to bucket variables in your data into groups based on quant
 ---
 # Bucketing Function
 
-There's already a function in R called `cut()` that does this, but you need to tell it cutpoints or the number of buckets. Let's make a convenience function that calls `cut()` using quantiles for splitting and returns an integer:
+There's already a function in R called `cut()` that does this, but you need to tell it cutpoints or the number of buckets.
+
+Let's make a convenience function that calls `cut()` using quantiles for splitting and returns an integer:
 
 
 ```r
@@ -472,22 +477,22 @@ Let's say we have data where impossible values occur:
 ```r
 (school_data &lt;- 
   data.frame(school = letters[1:10],
-  pct_passing_exam=c(0.78, 0.55, 0.91,   -1, 0.88, 0.81, 0.90, 0.76,   99, 99),
-  pct_free_lunch = c(0.33,   99, 0.25, 0.05, 0.12, 0.09, 0.22,  -13, 0.21, 99)))
+  pr_passing_exam=c(0.78, 0.55, 0.91,   -1, 0.88, 0.81, 0.90, 0.76,   99, 99),
+  pr_free_lunch = c(0.33,   99, 0.25, 0.05, 0.12, 0.09, 0.22,  -13, 0.21, 99)))
 ```
 
 ```
-##    school pct_passing_exam pct_free_lunch
-## 1       a             0.78           0.33
-## 2       b             0.55          99.00
-## 3       c             0.91           0.25
-## 4       d            -1.00           0.05
-## 5       e             0.88           0.12
-## 6       f             0.81           0.09
-## 7       g             0.90           0.22
-## 8       h             0.76         -13.00
-## 9       i            99.00           0.21
-## 10      j            99.00          99.00
+##    school pr_passing_exam pr_free_lunch
+## 1       a            0.78          0.33
+## 2       b            0.55         99.00
+## 3       c            0.91          0.25
+## 4       d           -1.00          0.05
+## 5       e            0.88          0.12
+## 6       f            0.81          0.09
+## 7       g            0.90          0.22
+## 8       h            0.76        -13.00
+## 9       i           99.00          0.21
+## 10      j           99.00         99.00
 ```
 ]
 
@@ -508,7 +513,7 @@ remove_extremes &lt;- function(x, low, high) {
     x_no_low_no_high &lt;- ifelse(x_no_low &gt; high, NA, x)
     return(x_no_low_no_high)
 }
-remove_extremes(school_data$pct_passing_exam, low = 0, high = 1)
+remove_extremes(school_data$pr_passing_exam, low = 0, high = 1)
 ```
 
 ```
@@ -529,17 +534,17 @@ school_data %&gt;%
 ```
 
 ```
-##    school pct_passing_exam pct_free_lunch
-## 1       a             0.78           0.33
-## 2       b             0.55             NA
-## 3       c             0.91           0.25
-## 4       d               NA           0.05
-## 5       e             0.88           0.12
-## 6       f             0.81           0.09
-## 7       g             0.90           0.22
-## 8       h             0.76             NA
-## 9       i               NA           0.21
-## 10      j               NA             NA
+##    school pr_passing_exam pr_free_lunch
+## 1       a            0.78          0.33
+## 2       b            0.55            NA
+## 3       c            0.91          0.25
+## 4       d              NA          0.05
+## 5       e            0.88          0.12
+## 6       f            0.81          0.09
+## 7       g            0.90          0.22
+## 8       h            0.76            NA
+## 9       i              NA          0.21
+## 10      j              NA            NA
 ```
 ]
 
@@ -713,16 +718,16 @@ title_text["pop"]
 gapminder_plot &lt;- function(cntry, yvar) {
     y_axis_label &lt;- c("lifeExp" = "Life expectancy",
                       "pop" = "Population (millions)",
-                      "gdpPercap" = "GDP per capita, USD")[yvar]
+*                     "gdpPercap" = "GDP per capita, USD")[yvar]
     title_text   &lt;- c("lifeExp" = "Life expectancy in ",
                       "pop" = "Population of ",
-                      "gdpPercap" = "GDP per capita in ")[yvar]
-    ggplot(gapminder %&gt;% filter(country == cntry) %&gt;% 
+*                     "gdpPercap" = "GDP per capita in ")[yvar]
+*   ggplot(gapminder %&gt;% filter(country == cntry) %&gt;%
              mutate(pop = pop / 1000000),
-           aes_string(x = "year", y = yvar)) + 
+*          aes_string(x = "year", y = yvar)) +
       geom_line(color = "firebrick") + 
-      ggtitle(paste0(title_text, cntry, " since 1952")) + 
-      xlab(NULL) + ylab(y_axis_label) + theme_minimal() + 
+*     ggtitle(paste0(title_text, cntry, " since 1952")) +
+      xlab(NULL) + ylab(y_axis_label) + theme_minimal() +
       theme(plot.title = element_text(hjust = 0, size = 20))
 }
 ```
