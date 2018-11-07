@@ -99,7 +99,7 @@ library(ggplot2)
 # Mapping in R: A quick plug
 
 .pull-left[
-![](CSSS508_week9_mapping-figure/bivand.jpg)
+![](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week9/img/bivand.jpg)
 ]
 
 .pull-right[
@@ -126,9 +126,26 @@ I recommend QGIS because it is free, open-source software with an extensive feat
 ```{r}
 library(sf)
 ```
+
+---
+```{r, eval=FALSE}
+load("seattle_tracts.RData")
+
+ggplot(seattle_tracts, aes(fill=Experiment)) + 
+  geom_sf(size=0.1, color="white") + # Thin white outline
+  coord_sf(datum=NA) +               # Remove graticule lines
+  scale_fill_manual(values = c(      # Manual hex colors
+    "Mailbox, Litter Intervention" = "#342c5c",
+    "Mailbox"                      = "#458490",
+    "Litter Intervention"          = "#905145",
+    "No Letters"                   = "grey",
+    "Only Letters"                 = "#cbd3a3")) +
+  theme_minimal(base_size = 20)      # Large text
+```
+
 ---
 
-```{r}
+```{r, echo=FALSE, dev="svg", fig.height=6.15}
 load("seattle_tracts.RData")
 
 ggplot(seattle_tracts, aes(fill=Experiment)) + 
