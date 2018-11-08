@@ -94,7 +94,7 @@ mono_accent(base_color = "#342c5c",
 # Mapping in R: A quick plug
 
 .pull-left[
-![](CSSS508_week9_mapping-figure/bivand.jpg)
+![](img/bivand.jpg)
 ]
 
 .pull-right[

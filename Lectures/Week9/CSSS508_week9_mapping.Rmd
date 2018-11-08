@@ -99,7 +99,7 @@ library(ggplot2)
 # Mapping in R: A quick plug
 
 .pull-left[
-![](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week9/img/bivand.jpg)
+![](img/bivand.jpg)
 ]
 
 .pull-right[
@@ -118,7 +118,6 @@ I recommend QGIS because it is free, open-source software with an extensive feat
 
 ### Coordinates are just numbers!
 
----
 
 ---
 # `sf`

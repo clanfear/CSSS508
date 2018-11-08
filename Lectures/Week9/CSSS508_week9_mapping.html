@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSSS508, Week 9</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Chuck Lanfear" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, top, title-slide
+
+# CSSS508, Week 9
+## Mapping
+### Chuck Lanfear
+### Nov 21, 2018<br>Updated: Nov 7, 2018
+
+---
+
+
+
+
+
+
+
+
+
+# Today
+
+
+* Mapping with raw `ggplot2` using coordinates
+* Labeling points and using `ggrepel` to avoid overlaps
+* `ggmap` for mashing up maps with `ggplot2`
+* `sf`: [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) geometry for R
+* `tidycensus` for obtaining Census Bureau data
+
+
+```r
+library(ggplot2)
+```
+
+---
+# Mapping in R: A quick plug
+
+.pull-left[
+![](img/bivand.jpg)
+]
+
+.pull-right[
+If you are interested in mapping, GIS, and geospatial analysis in R, *acquire this book*.
+
+You may also consider taking Jon Wakefield's **CSSS 554: Statistical Methods for Spatial Data**, however it is challenging and focuses more heavily on statistics than mapping.
+
+Also, in most terms, CSDE offers workshops in GIS using [QGIS](https://qgis.org/en/site/) and/or ArcGIS.
+
+I recommend QGIS because it is free, open-source software with an extensive feature set and large user community.
+]
+
+---
+
+# Mapping in `ggplot2`
+
+### Coordinates are just numbers!
+
+
+---
+# `sf`
+
+
+```r
+library(sf)
+```
+
+```
+## Linking to GEOS 3.6.1, GDAL 2.2.3, proj.4 4.9.3
+```
+
+---
+
+```r
+load("seattle_tracts.RData")
+
+ggplot(seattle_tracts, aes(fill=Experiment)) + 
+  geom_sf(size=0.1, color="white") + # Thin white outline
+  coord_sf(datum=NA) +               # Remove graticule lines
+  scale_fill_manual(values = c(      # Manual hex colors
+    "Mailbox, Litter Intervention" = "#342c5c",
+    "Mailbox"                      = "#458490",
+    "Litter Intervention"          = "#905145",
+    "No Letters"                   = "grey",
+    "Only Letters"                 = "#cbd3a3")) +
+  theme_minimal(base_size = 20)      # Large text
+```
+
+---
+
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-4-1.svg)&lt;!-- --&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "tomorrow-night-bright",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
