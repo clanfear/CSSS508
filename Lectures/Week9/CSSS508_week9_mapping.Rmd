@@ -80,14 +80,14 @@ mono_accent(base_color = "#342c5c",
 ```
 
 
-
-
 # Today
 
-
+# Basic Mapping in `ggplot2`
 * Mapping with raw `ggplot2` using coordinates
 * Labeling points and using `ggrepel` to avoid overlaps
 * `ggmap` for mashing up maps with `ggplot2`
+
+# Advanced Mapping
 * `sf`: [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) geometry for R
 * `tidycensus` for obtaining Census Bureau data
 
@@ -99,31 +99,129 @@ library(ggplot2)
 # Mapping in R: A quick plug
 
 .pull-left[
+.image-75[
 ![](img/bivand.jpg)
+]
 ]
 
 .pull-right[
 If you are interested in mapping, GIS, and geospatial analysis in R, *acquire this book*.
 
+[RSpatial.org](http://rspatial.org/) is a great resource as well.
+
 You may also consider taking Jon Wakefield's **CSSS 554: Statistical Methods for Spatial Data**, however it is challenging and focuses more heavily on statistics than mapping.
 
-Also, in most terms, CSDE offers workshops in GIS using [QGIS](https://qgis.org/en/site/) and/or ArcGIS.
-
-I recommend QGIS because it is free, open-source software with an extensive feature set and large user community.
+[CSDE offers workshops](https://csde.washington.edu/training/workshops/) using [QGIS](https://qgis.org/en/site/) and/or ArcGIS. I recommend QGIS because it is free software with an extensive feature set and large user community.
 ]
 
 ---
-
-# Mapping in `ggplot2`
+class: inverse
+# Basic Mapping in `ggplot2`
 
 ### Coordinates are just numbers!
 
+---
+
+
+
+---
+# Terminology
+
+* Simple Features (`sf`)
+* Shapefile
+* Coordinate Reference System (CRS)
+
+---
+# `sf`
+
+Until recently, the main way to work with geospatial data in R was through the `sp` 
+package. `sp` works well but does not store data the same way as most GIS packages
+and can be bulky and complicated.
+
+The more recent `sf` package implements the GIS standard of [**Simple Feature**](https://en.wikipedia.org/wiki/Simple_Features) in R.
+
+`sf` is also integrated into the `tidyverse`: e.g. `geom_sf()` in `ggplot2`.
+
+The package is somewhat new but is expected to *replace* `sp` eventually. The principle
+authors and contributors to `sf` are the same authors as `sp` (including Bivand and Pebesma) but with new developers
+from the `tidyverse` as well.
+
+Because `sf` is the new standard, we will focus on it today.
+
+---
+# Simple Features
+
+A [**Simple Feature**](https://en.wikipedia.org/wiki/Simple_Features) is a single observation with some defined geospatial location(s). Features are stored in special data frames (class `sf`) with two properties:
+
+--
+
+* **Geometry**: Properties describing a location (usually on Earth).
+   * Usually 2 dimensions, but support for up to 4. 
+   * Stored in a single reserved *list-column* (`geom`, of class `sfc`).<sup>1</sup>
+   * Contain a defined coordinate reference system.
+
+.footnote[
+[1] A list-column is the same length as all other columns in the data, but each element contains *sub-elements* (class `sfg`) with all the geometrical components. 
+
+*List-columns* require special functions to manipulate *including removing them*.
+]
+
+--
+
+* **Attributes**: Characteristics of the location (such as population).
+   * These are non-spatial measures that describe a feature.
+   * Standard data frame columns.
+
+
+
+---
+## Coordinate Reference Systems
+
+**Coordinate reference systems** (**CRS**) specify what location on Earth geometry coordinates are *relative to* (i.e. what location is (0,0) when plotting).
+
+The most commonly used is [**WGS84**](https://en.wikipedia.org/wiki/World_Geodetic_System), the standard for Google Earth, the Department of Defense, and GPS satellites.
+
+There are two common ways to define a CRS:
+
+* [**EPSG codes**](http://spatialreference.org/ref/epsg/) (`epsg` in R)
+   * Numeric codes which *refer to a predefined projection*
+   * Ex: WGS84 is `4326`
+
+* [**PROJ.4 strings**](https://proj4.org/usage/quickstart.html) (`proj4string` in R)
+   * Text strings which *define a projection*
+   * WGS84 looks like this:
+
+```
++init=epsg:4326 +proj=longlat +ellps=WGS84
++datum=WGS84 +no_defs +towgs84=0,0,0
+```
+
+---
+# Shapefiles
+
+Geospatial data is typically stored in **shapefiles** which store geometric data as **vectors** with associated attributes (variables)
+
+Shapefiles actually consist of multiple individual files. There are always at least three (but up to 10+):
+
+`.shp`: The feature geometries
+`.shx`: Shape positional index
+`.dbf`: Attributes describing features<sup>1</sup>
+
+Often there will also be a `.prj` file defining the coordinate system.
+
+.footnote[[1] This is just a dBase IV file which is an ancient and common database storage file format.]
 
 ---
 # `sf`
 
 ```{r}
 library(sf)
+```
+
+---
+
+```{r}
+# Use sf to create the seattle_tracts df
 ```
 
 ---
@@ -158,3 +256,107 @@ ggplot(seattle_tracts, aes(fill=Experiment)) +
     "Only Letters" = "#cbd3a3")) +
   theme_minimal(base_size = 20)
 ```
+
+---
+class: inverse
+# `tidycensus`
+
+---
+`tidycensus`
+
+`tidycensus` can be used to search the American Community Survey (ACS) and Dicennial
+Census for variables, then download them and automatically format them as tidy dataframes.
+
+**These dataframes include geographical boundaries such as tracts!**
+
+This package utilizes the Census API, so you will need to obtain a [Census API key](https://api.census.gov/data/key_signup.html).
+I talk more about APIs in the Social Media Data and Text Mining lecture.
+
+## The Basics:
+
+**Application Program Interface (API)**: A type of computer interface that exists as the 
+"native" method of communication between computers, often via http (usable via `httr` package).
+* R packages that interface with websites and databases typically use APIs.
+* APIs make accessing data easy while allowing websites to control access.
+
+```{r tidycensus}
+library(tidycensus)
+# census_api_key("PUT YOUR KEY HERE", install=TRUE)
+```
+
+---
+# Key `tidycensus` Functions
+
+* `census_api_key()` - Install a census api key
+* `load_variables()` - Load searchable variable lists
+* `get_decennial()` - Load Census variables and geographical boundaries.
+* `get_acs()` - Load ACS variables and boundaries
+
+---
+# Searching for Variables
+
+```{r, cache=TRUE, message=FALSE, warning=FALSE}
+acs_2015_vars <- load_variables(2015, "acs5")
+acs_2015_vars[10:18,] %>% print() 
+```
+
+---
+# Processing Data
+
+```{r, include=FALSE, cache=TRUE}
+king_county <- get_acs(geography="tract", state="WA", county="King",
+                       geometry = TRUE,
+                       variables=c("B02001_001E", "B02009_001E")) %>% 
+  select(-moe) %>% group_by(GEOID) %>% spread(variable, estimate) %>% 
+  rename(`Total Population`=B02001_001, `Any Black`=B02009_001) %>%
+  mutate(`Any Black` = `Any Black` / `Total Population`)
+head(king_county)
+```
+
+```{r, eval=FALSE}
+king_county <- get_acs(geography="tract", state="WA", county="King",
+                       geometry = TRUE,
+                       variables=c("B02001_001E", "B02009_001E")) %>% 
+  select(-moe) %>% group_by(GEOID) %>% spread(variable, estimate) %>% 
+  rename(`Total Population`=B02001_001, `Any Black`=B02009_001) %>%
+  mutate(`Any Black` = `Any Black` / `Total Population`)
+head(king_county)
+```
+
+---
+# Mapping Code
+
+```{r, eval=FALSE, fig.height = 4, dev="svg"}
+king_county %>% ggplot(aes(fill=`Any Black`)) + geom_sf() + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9", high="#00025b") + 
+  theme_minimal() + ggtitle("Proportion Any Black")
+```
+
+New functions:
+
+* `geom_sf()` draws Simple Feature coordinate data.
+* `coord_sf()` is used here with these arguments:
+   * `crs`: Modifies the coordinate reference system (CRS), often called a "projection"; WGS84 is possibly the most commonly used CRS.
+   * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
+
+---
+# Map
+```{r king_plot, eval=TRUE, echo=FALSE, fig.height = 4, dev="svg"}
+king_county %>% ggplot(aes(fill=`Any Black`)) + geom_sf() + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", low="#d4d5f9", high="#00025b") + 
+  theme_minimal() + ggtitle("Proportion Any Black")
+```
+
+---
+class: inverse
+# Homework Exercise
+
+
+Use the HW 7 template to practice making maps of the restaurant inspection data. 
+
+If you wish to submit it for bonus points, turn it in via Canvas by midnight on Tuesday the 29th.
+
+There will be no peer review.
