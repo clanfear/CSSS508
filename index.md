@@ -143,7 +143,7 @@ layout: default
 ### 7. Writing Functions
    * [Slides for Lecture 7: Vectorization and writing functions](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.html)
        + [Rmd for Lecture 7 slides](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.Rmd)
-   * [Lecture Video for Lecture 7](https://youtu.be/bKxiUd4Qfqg), recorded Spring 2018
+   * [Lecture Video for Lecture 7](https://youtu.be/Eghfhtzr4jg), recorded November 7th, 2018
    * Homework 6, Part 1 due at 11:59 PM on November 13th
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
