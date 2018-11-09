@@ -82,18 +82,14 @@ mono_accent(base_color = "#342c5c",
 
 # Today
 
-# Basic Mapping in `ggplot2`
+### Basic Mapping in `ggplot2`
 * Mapping with raw `ggplot2` using coordinates
-* Labeling points and using `ggrepel` to avoid overlaps
 * `ggmap` for mashing up maps with `ggplot2`
+* Labeling points and using `ggrepel` to avoid overlaps
 
-# Advanced Mapping
+### Advanced Mapping
 * `sf`: [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) geometry for R
 * `tidycensus` for obtaining Census Bureau data
-
-```{r}
-library(ggplot2)
-```
 
 ---
 # Mapping in R: A quick plug
@@ -477,9 +473,9 @@ Geospatial data is typically stored in **shapefiles** which store geometric data
 
 Shapefiles actually consist of multiple individual files. There are always at least three (but up to 10+):
 
-`.shp`: The feature geometries
-`.shx`: Shape positional index
-`.dbf`: Attributes describing features<sup>1</sup>
+* `.shp`: The feature geometries
+* `.shx`: Shape positional index
+* `.dbf`: Attributes describing features<sup>1</sup>
 
 Often there will also be a `.prj` file defining the coordinate system.
 
@@ -549,7 +545,7 @@ class: inverse
 # `tidycensus`
 
 ---
-`tidycensus`
+# `tidycensus`
 
 `tidycensus` can be used to search the American Community Survey (ACS) and Dicennial
 Census for variables, then download them and automatically format them as tidy dataframes.
@@ -559,25 +555,27 @@ Census for variables, then download them and automatically format them as tidy d
 This package utilizes the Census API, so you will need to obtain a [Census API key](https://api.census.gov/data/key_signup.html).
 I talk more about APIs in the Social Media Data and Text Mining lecture.
 
-## The Basics:
-
 **Application Program Interface (API)**: A type of computer interface that exists as the 
 "native" method of communication between computers, often via http (usable via `httr` package).
 * R packages that interface with websites and databases typically use APIs.
 * APIs make accessing data easy while allowing websites to control access.
 
+---
+# Key `tidycensus` Functions
+
+* `census_api_key()` - Install a census api key.
+   * Note you will need to run this prior to using any `tidycensus` functions.
+
+* `load_variables()` - Load searchable variable lists.
+
+* `get_decennial()` - Load Census variables and geographical boundaries.
+
+* `get_acs()` - Load ACS variables and boundaries.
+
 ```{r tidycensus}
 library(tidycensus)
 # census_api_key("PUT YOUR KEY HERE", install=TRUE)
 ```
-
----
-# Key `tidycensus` Functions
-
-* `census_api_key()` - Install a census api key
-* `load_variables()` - Load searchable variable lists
-* `get_decennial()` - Load Census variables and geographical boundaries.
-* `get_acs()` - Load ACS variables and boundaries
 
 ---
 # Searching for Variables
@@ -591,34 +589,51 @@ acs_2015_vars[10:18,] %>% print()
 # Processing Data
 
 ```{r, include=FALSE, cache=TRUE}
-king_county <- get_acs(geography="tract", state="WA", county="King",
-                       geometry = TRUE,
-                       variables=c("B02001_001E", "B02009_001E")) %>% 
-  select(-moe) %>% group_by(GEOID) %>% spread(variable, estimate) %>% 
-  rename(`Total Population`=B02001_001, `Any Black`=B02009_001) %>%
+king_county <- get_acs(geography="tract", state="WA", 
+                       county="King", geometry = TRUE,
+                       variables=c("B02001_001E", 
+                                   "B02009_001E")) %>% 
+  select(-moe) %>% group_by(GEOID) %>% 
+  spread(variable, estimate) %>% 
+  rename(`Total Population`=B02001_001,
+         `Any Black`=B02009_001) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
-head(king_county)
+
 ```
 
 ```{r, eval=FALSE}
-king_county <- get_acs(geography="tract", state="WA", county="King",
-                       geometry = TRUE,
-                       variables=c("B02001_001E", "B02009_001E")) %>% 
-  select(-moe) %>% group_by(GEOID) %>% spread(variable, estimate) %>% 
-  rename(`Total Population`=B02001_001, `Any Black`=B02009_001) %>%
+king_county <- get_acs(geography="tract", state="WA", 
+                       county="King", geometry = TRUE,
+                       variables=c("B02001_001E", 
+                                   "B02009_001E")) %>% 
+  select(-moe) %>% group_by(GEOID) %>% 
+  spread(variable, estimate) %>% 
+  rename(`Total Population`=B02001_001,
+         `Any Black`=B02009_001) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
-head(king_county)
+
 ```
+
+---
+# The Data
+
+.smallish[
+```{r}
+head(king_county, 10)
+```
+]
 
 ---
 # Mapping Code
 
-```{r, eval=FALSE, fig.height = 4, dev="svg"}
+```{r, eval=FALSE}
 king_county %>% 
   ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(size=0.2, color="white") + 
+  geom_sf(size=0.1, color="white") + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", low="#d4d5f9", high="#00025b") + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9",
+                        high="#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")
 ```
 
@@ -630,13 +645,15 @@ New functions:
    * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
 
 ---
-# Map
-```{r king_plot, eval=TRUE, echo=FALSE, fig.height = 4, dev="svg"}
+
+```{r king_plot, eval=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
 king_county %>% 
   ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(size=0.2, color="white") + 
+  geom_sf(size=0.1, color="white") + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", low="#d4d5f9", high="#00025b") + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9",
+                        high="#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")
 ```
 

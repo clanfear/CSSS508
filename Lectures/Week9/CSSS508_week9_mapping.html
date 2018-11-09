@@ -25,19 +25,14 @@ class: center, top, title-slide
 
 # Today
 
-# Basic Mapping in `ggplot2`
+### Basic Mapping in `ggplot2`
 * Mapping with raw `ggplot2` using coordinates
 * Labeling points and using `ggrepel` to avoid overlaps
 * `ggmap` for mashing up maps with `ggplot2`
 
-# Advanced Mapping
+### Advanced Mapping
 * `sf`: [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) geometry for R
 * `tidycensus` for obtaining Census Bureau data
-
-
-```r
-library(ggplot2)
-```
 
 ---
 # Mapping in R: A quick plug
@@ -103,7 +98,7 @@ ggplot(spd_raw,
 ]
 
 .pull-right[
-![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -380,9 +375,9 @@ Geospatial data is typically stored in **shapefiles** which store geometric data
 
 Shapefiles actually consist of multiple individual files. There are always at least three (but up to 10+):
 
-`.shp`: The feature geometries
-`.shx`: Shape positional index
-`.dbf`: Attributes describing features&lt;sup&gt;1&lt;/sup&gt;
+* `.shp`: The feature geometries
+* `.shx`: Shape positional index
+* `.dbf`: Attributes describing features&lt;sup&gt;1&lt;/sup&gt;
 
 Often there will also be a `.prj` file defining the coordinate system.
 
@@ -398,10 +393,6 @@ class: inverse
 
 ```r
 library(sf)
-```
-
-```
-## Linking to GEOS 3.6.1, GDAL 2.2.3, proj.4 4.9.3
 ```
 
 ---
@@ -439,14 +430,14 @@ ggplot(seattle_tracts, aes(fill=Experiment)) +
 
 ---
 
-![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-11-1.svg)&lt;!-- --&gt;
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-10-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
 # `tidycensus`
 
 ---
-`tidycensus`
+# `tidycensus`
 
 `tidycensus` can be used to search the American Community Survey (ACS) and Dicennial
 Census for variables, then download them and automatically format them as tidy dataframes.
@@ -456,26 +447,28 @@ Census for variables, then download them and automatically format them as tidy d
 This package utilizes the Census API, so you will need to obtain a [Census API key](https://api.census.gov/data/key_signup.html).
 I talk more about APIs in the Social Media Data and Text Mining lecture.
 
-## The Basics:
-
 **Application Program Interface (API)**: A type of computer interface that exists as the 
 "native" method of communication between computers, often via http (usable via `httr` package).
 * R packages that interface with websites and databases typically use APIs.
 * APIs make accessing data easy while allowing websites to control access.
+
+---
+# Key `tidycensus` Functions
+
+* `census_api_key()` - Install a census api key.
+   * Note you will need to run this prior to using any `tidycensus` functions.
+
+* `load_variables()` - Load searchable variable lists.
+
+* `get_decennial()` - Load Census variables and geographical boundaries.
+
+* `get_acs()` - Load ACS variables and boundaries.
 
 
 ```r
 library(tidycensus)
 # census_api_key("PUT YOUR KEY HERE", install=TRUE)
 ```
-
----
-# Key `tidycensus` Functions
-
-* `census_api_key()` - Install a census api key
-* `load_variables()` - Load searchable variable lists
-* `get_decennial()` - Load Census variables and geographical boundaries.
-* `get_acs()` - Load ACS variables and boundaries
 
 ---
 # Searching for Variables
@@ -508,14 +501,49 @@ acs_2015_vars[10:18,] %&gt;% print()
 
 
 ```r
-king_county &lt;- get_acs(geography="tract", state="WA", county="King",
-                       geometry = TRUE,
-                       variables=c("B02001_001E", "B02009_001E")) %&gt;% 
-  select(-moe) %&gt;% group_by(GEOID) %&gt;% spread(variable, estimate) %&gt;% 
-  rename(`Total Population`=B02001_001, `Any Black`=B02009_001) %&gt;%
+king_county &lt;- get_acs(geography="tract", state="WA", 
+                       county="King", geometry = TRUE,
+                       variables=c("B02001_001E", 
+                                   "B02009_001E")) %&gt;% 
+  select(-moe) %&gt;% group_by(GEOID) %&gt;% 
+  spread(variable, estimate) %&gt;% 
+  rename(`Total Population`=B02001_001,
+         `Any Black`=B02009_001) %&gt;%
   mutate(`Any Black` = `Any Black` / `Total Population`)
-head(king_county)
 ```
+
+---
+# The Data
+
+.smallish[
+
+```r
+head(king_county, 10)
+```
+
+```
+## Simple feature collection with 10 features and 4 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -122.3799 ymin: 47.69462 xmax: -122.2541 ymax: 47.73414
+## epsg (SRID):    4269
+## proj4string:    +proj=longlat +datum=NAD83 +no_defs
+## # A tibble: 10 x 5
+## # Groups:   GEOID [10]
+##    GEOID  NAME    `Total Populati~ `Any Black`                    geometry
+##    &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;         &lt;MULTIPOLYGON [Â°]&gt;
+##  1 53033~ Census~             7261      0.175  (((-122.2965 47.73378, -12~
+##  2 53033~ Census~             7902      0.101  (((-122.3236 47.72309, -12~
+##  3 53033~ Census~             2830      0.0452 (((-122.3452 47.73413, -12~
+##  4 53033~ Census~             6258      0.195  (((-122.3609 47.73414, -12~
+##  5 53033~ Census~             5165      0.0771 (((-122.3609 47.72507, -12~
+##  6 53033~ Census~             3154      0.0130 (((-122.3799 47.71327, -12~
+##  7 53033~ Census~             8039      0.104  (((-122.345 47.72868, -122~
+##  8 53033~ Census~             4651      0.131  (((-122.3127 47.71944, -12~
+##  9 53033~ Census~             2474      0.0141 (((-122.2915 47.7155, -122~
+## 10 53033~ Census~             1823      0.0219 (((-122.285 47.7192, -122.~
+```
+]
 
 ---
 # Mapping Code
@@ -524,9 +552,11 @@ head(king_county)
 ```r
 king_county %&gt;% 
   ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(size=0.2, color="white") + 
+  geom_sf(size=0.1, color="white") + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", low="#d4d5f9", high="#00025b") + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9",
+                        high="#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")
 ```
 
@@ -538,7 +568,7 @@ New functions:
    * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
 
 ---
-# Map
+
 ![](CSSS508_week9_mapping_files/figure-html/king_plot-1.svg)&lt;!-- --&gt;
 
 ---
