@@ -58,7 +58,7 @@ csss508css <- list(
      ".short" = list("height" = "30%"),
      ".image-50 img" = list("width" = "50%"),
      ".image-75 img" = list("width" = "75%"),
-          ".image-full img" = list(
+     ".image-full img" = list(
         "height" = "480px",
         "display"="block",
         "margin-left"="auto",
@@ -116,20 +116,294 @@ You may also consider taking Jon Wakefield's **CSSS 554: Statistical Methods for
 
 ---
 class: inverse
-# Basic Mapping in `ggplot2`
+# Basic Mapping
 
-### Coordinates are just numbers!
+### `ggplot2` and `ggmap`
 
 ---
+# One Day of SPD Incidents
+
+In Week 5, we looked at types of incidents the Seattle Police Department responded to in a single day. Now, we'll look at where those were.
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+```{r read_spd_data, cache=TRUE, message=FALSE, warning=FALSE}
+spd_raw <- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Department_911_Incident_Response.csv")
+```
+
+---
+# `x`,`y` as Coordinates
+
+.pull-left[
+Coordinates, such as longitude and latitude, can be provided in `aes()` as `x` and `y` values.
+
+This is ideal when you don't need to place points over some map for reference.
+
+Sometimes we want to plot these points over existing maps.
+.small[
+```{r, eval=FALSE}
+ggplot(spd_raw, 
+       aes(Longitude, Latitude)) + 
+  geom_point() + 
+  coord_fixed() +
+  ggtitle("Seattle Police Incidents",
+          subtitle="3/25/2018") +
+  theme_classic()
+```
+]
+]
+
+.pull-right[
+```{r, echo=FALSE}
+ggplot(spd_raw, aes(Longitude, Latitude)) + 
+  geom_point() + 
+  coord_fixed() +
+  ggtitle("Seattle Police Incidents", subtitle="3/25/2018") +
+  theme_classic()
+```
+]
+
+---
+class: inverse
+# ggmap
+
+---
+# ggmap
+
+`ggmap` is a package that works with `ggplot2` to plot spatial data directly on map images downloaded from Google Maps<sup>1</sup>, OpenStreetMap, and Stamen Maps (good artistic/minimal options).
+
+What this package does for you:
+
+1. Queries servers for a map (`get_map()`) at the location and scale you want
+2. Plots the **raster** (bitmap) image as a `ggplot` object
+3. Lets you add more `ggplot` layers like points, 2D density plots, text annotations
+4. Additional functions for interacting with Google Maps (e.g. getting distances by bike)
+
+.footnote[[1] [Requires an API Key now.](https://cloud.google.com/maps-platform/)]
+
+---
+# Installation
+
+As of `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`, the current version of `ggmap` must be downloaded from GitHub.
+
+This can be done using the `devtools` package.
+
+```{r, eval=FALSE}
+if(!requireNamespace("devtools")) install.packages("devtools")
+devtools::install_github("dkahle/ggmap", ref = "tidyup")
+```
+
+```{r, message=FALSE, warning=FALSE}
+library(ggmap)
+```
+
+This may require compilation on your computer. If you get errors during install, please consult 
+
+---
+# Quick Maps with `qmplot()`
+
+.pull-left[
+`qmplot` will automatically set the map region based on your data:
+
+```{r, message = FALSE, cache=TRUE, eval=FALSE}
+qmplot(data = spd_raw, 
+       x = Longitude, 
+       y = Latitude, 
+       color = I("#342c5c"), 
+       alpha = I(0.5))
+```
+
+All I provided was numeric latitude and longitude, and it placed the data points correctly on a raster map of Seattle.
+
+`I()` is used here to specify *set* (constant) rather than *mapped* values.
+]
+
+.pull-right[
+```{r qmplot, message = FALSE, echo=FALSE, fig.height = 5, fig.width=2.5, dev="svg"}
+qmplot(data = spd_raw, x = Longitude, y = Latitude, color = I("#342c5c"), alpha = I(0.5))
+```
+]
+
+---
+# `get_map()`
+
+Both `qmplot()` and `qmap()` are wrappers for a function called `get_map()` that retrieves a base map layer. Some options:
+
+* `location=` search query or numeric vector of longitude and latitude
+* `zoom=` a zoom level (3 = continent, 10 = city, 21 = building)
+* `source=` 
+    + `"google"`: Google Maps for general purpose maps<sup>1</sup>
+    + `"osm"`: OpenStreetMaps, general purpose but open access
+    + `"stamen"`: Aesthetically pleasing alternatives based on OpenStreetMaps
+* `maptype=`
+    + Google types: `"terrain"`, `"terrain-background"`, `"satellite"`, `"roadmap"`, `"hybrid"`
+    + Stamen types: `"watercolor"`, `"toner"`, `"toner-background"`, `"toner-lite"`
+* `color=` `"color"` or `"bw"`
+
+.footnote[[1] Requires API key!]
+
+---
+# Adding Density Layers
+
+.pull-left[
+Call `qmplot()` with no `geom()`, and then add density layers:
+
+.small[
+```{r quick_plot_density_1, eval=FALSE}
+qmplot(data = spd_raw, 
+  geom = "blank", 
+  x = Longitude,
+  y = Latitude, 
+  maptype = "toner-lite", 
+  darken = 0.5) + 
+  stat_density_2d(
+    aes(fill = ..level..), 
+      geom = "polygon", 
+      alpha = .2,
+      color = NA) + 
+  scale_fill_gradient2(
+      "Incident\nConcentration", 
+      low = "white", 
+      mid = "yellow", 
+      high = "red") + 
+  theme(legend.position = "bottom")
+```
+]
+]
+
+.pull-right[
+```{r quick_plot_density_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 5, fig.width=2.5, dev="svg"}
+qmplot(data = spd_raw, 
+  geom = "blank", 
+  x = Longitude,
+  y = Latitude, 
+  maptype = "toner-lite", 
+  darken = 0.5) + 
+  stat_density_2d(
+    aes(fill = ..level..), 
+      geom = "polygon", 
+      alpha = .2,
+      color = NA) + 
+  scale_fill_gradient2(
+      "Incident\nConcentration", 
+      low = "white", 
+      mid = "yellow", 
+      high = "red") + 
+  theme(legend.position = "bottom")
+```
+]
+---
+# Labeling Points
+
+Let's label the assaults and robberies specifically in downtown:
+
+```{r flag_assaults}
+assaults <- spd_raw %>% 
+  mutate(assault_label = 
+           ifelse(`Event Clearance Group` %in%
+                  c("ASSAULTS", "ROBBERY"), 
+                  `Event Clearance Description`, "")) %>% 
+  filter(assault_label != "")
+```
+
+---
+# Plotting with Labels
+
+.pull-left[
+Now let's plot the events and label them with `geom_label()` (`geom_text()` without background or border):
+
+.smallish[
+```{r labels_1, eval=FALSE}
+qmplot(data = 
+       spd_raw,
+       x = Longitude,
+       y = Latitude,
+       maptype = "toner-lite",
+       color = I("firebrick"),
+       alpha = I(0.5)) + 
+  geom_label(data = assaults,
+       aes(label = assault_label))
+```
+]
+
+Placing the arguments for `color=` and `alpha=` inside `I()` prevents them from also applying to the labels. We would get transparent red labels otherwise!
+]
+
+.pull-right[
+```{r labels_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 5, fig.width=2.5, dev="svg"}
+qmplot(data = 
+       spd_raw,
+       x = Longitude,
+       y = Latitude,
+       maptype = "toner-lite",
+       color = I("firebrick"),
+       alpha = I(0.5)) + 
+  geom_label(data = assaults,
+       aes(label = assault_label))
+```
+]
+
+---
+# `ggrepel`
+
+.pull-left[
+You can also try `geom_label_repel()` or `geom_text_repel()` in the `ggrepel` package to fix or reduce overlaps (total space is limited here):
+
+.small[
+```{r ggrepel_1, eval=FALSE}
+library(ggrepel)
+qmplot(data = 
+    spd_raw,
+    x = Longitude,
+    y = Latitude,
+    maptype = "toner-lite", 
+    color = I("firebrick"), 
+    alpha = I(0.5)) + 
+  geom_label_repel(
+    data = assaults,
+    aes(label = assault_label), 
+    fill = "black", 
+    color = "white", 
+    segment.color = "black")
+```
+]
+]
+
+.pull-right[
+```{r ggrepel_2, echo=FALSE, message = FALSE, cache=TRUE, warning=FALSE, fig.height = 5, fig.width=2.5, dev="svg"}
+library(ggrepel)
+qmplot(data = 
+    spd_raw,
+    x = Longitude,
+    y = Latitude,
+    maptype = "toner-lite", 
+    color = I("firebrick"), 
+    alpha = I(0.5)) + 
+  geom_label_repel(
+    data = assaults,
+    aes(label = assault_label), 
+    fill = "black", 
+    color = "white", 
+    segment.color = "black")
+```
+]
 
 
+---
+class: inverse
+# Advanced Mapping
+
+### GIS and R with `sf`
 
 ---
 # Terminology
 
 * Simple Features (`sf`)
-* Shapefile
 * Coordinate Reference System (CRS)
+* Shapefile
+
 
 ---
 # `sf`
@@ -212,11 +486,23 @@ Often there will also be a `.prj` file defining the coordinate system.
 .footnote[[1] This is just a dBase IV file which is an ancient and common database storage file format.]
 
 ---
-# `sf`
+class: inverse
+# Using `sf`
+---
+
+# Loading Data
 
 ```{r}
 library(sf)
 ```
+
+---
+
+# Basic Data Manipulation
+
+---
+
+# CRS?
 
 ---
 
@@ -225,6 +511,7 @@ library(sf)
 ```
 
 ---
+# Map Syntax
 ```{r, eval=FALSE}
 load("seattle_tracts.RData")
 
@@ -327,10 +614,11 @@ head(king_county)
 # Mapping Code
 
 ```{r, eval=FALSE, fig.height = 4, dev="svg"}
-king_county %>% ggplot(aes(fill=`Any Black`)) + geom_sf() + 
+king_county %>% 
+  ggplot(aes(fill=`Any Black`)) + 
+  geom_sf(size=0.2, color="white") + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", 
-                        low="#d4d5f9", high="#00025b") + 
+  scale_fill_continuous(name="Any Black\n", low="#d4d5f9", high="#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")
 ```
 
@@ -344,7 +632,9 @@ New functions:
 ---
 # Map
 ```{r king_plot, eval=TRUE, echo=FALSE, fig.height = 4, dev="svg"}
-king_county %>% ggplot(aes(fill=`Any Black`)) + geom_sf() + 
+king_county %>% 
+  ggplot(aes(fill=`Any Black`)) + 
+  geom_sf(size=0.2, color="white") + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
   scale_fill_continuous(name="Any Black\n", low="#d4d5f9", high="#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")

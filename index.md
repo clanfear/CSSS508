@@ -138,7 +138,7 @@ layout: default
    * Homework 5, Part 2 due at 11:59 PM on November 6th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p2.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5_p2.html)
-       + Homework 5, Part 2 Key: HTML, RMD
+       + Homework 5, Part 2 Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW5/HW5_Keys/homework_5_p2_key.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW5/HW5_Keys/homework_5_p2_key.Rmd)
    
 ### 7. Writing Functions
    * [Slides for Lecture 7: Vectorization and writing functions](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.html)
