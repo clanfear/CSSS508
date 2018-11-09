@@ -503,42 +503,29 @@ library(sf)
 ---
 
 ```{r}
-# Use sf to create the seattle_tracts df
+precinct_shape <- st_read("./data/district/votdst.shp",
+                          stringsAsFactors = F) %>% 
+  select(Precinct=NAME, geometry)
+
+king_county_elections_2016 <- read_csv("./data/king_county_elections_2016.txt")
+
+presidential_race <- king_county_elections_2016 %>%
+  filter(Race=="US President & Vice President", str_detect(Precinct, "SEA ")) %>% 
+  select(Precinct, CounterType, SumOfCount) %>%
+  group_by(Precinct) %>%
+  filter(CounterType %in% c("Donald J. Trump & Michael R. Pence", "Hillary Clinton & Tim Kaine", "Registered Voters", "Times Counted")) %>%
+  mutate(CounterType=recode(CounterType, 
+                            `Donald J. Trump & Michael R. Pence` = "Trump",
+                            `Hillary Clinton & Tim Kaine` = "Clinton",
+                            `Registered Voters`="RegisteredVoters",
+                            `Times Counted` = "TotalVotes")) %>%
+  spread(CounterType, SumOfCount) %>%
+  mutate(P_Dem=Clinton/TotalVotes, P_Rep=Trump/TotalVotes, Turnout=TotalVotes/RegisteredVoters) %>%
+  select(Precinct, P_Dem, P_Rep, Turnout) %>% filter(!is.na(P_Dem))
+
+precincts_votes_sf <- precinct_shape %>% right_join(presidential_race)
 ```
 
----
-# Map Syntax
-```{r, eval=FALSE}
-load("seattle_tracts.RData")
-
-ggplot(seattle_tracts, aes(fill=Experiment)) + 
-  geom_sf(size=0.1, color="white") + # Thin white outline
-  coord_sf(datum=NA) +               # Remove graticule lines
-  scale_fill_manual(values = c(      # Manual hex colors
-    "Mailbox, Litter Intervention" = "#342c5c",
-    "Mailbox"                      = "#458490",
-    "Litter Intervention"          = "#905145",
-    "No Letters"                   = "grey",
-    "Only Letters"                 = "#cbd3a3")) +
-  theme_minimal(base_size = 20)      # Large text
-```
-
----
-
-```{r, echo=FALSE, dev="svg", fig.height=6.15}
-load("seattle_tracts.RData")
-
-ggplot(seattle_tracts, aes(fill=Experiment)) + 
-  geom_sf(size=0.1, color="white") + # Thin white outline
-  coord_sf(datum=NA) + # Remove graticule lines
-  scale_fill_manual(values = c(
-    "Mailbox, Litter Intervention" = "#342c5c",
-    "Mailbox" = "#458490",
-    "Litter Intervention" = "#905145",
-    "No Letters" = "grey",
-    "Only Letters" = "#cbd3a3")) +
-  theme_minimal(base_size = 20)
-```
 
 ---
 class: inverse
@@ -560,6 +547,8 @@ I talk more about APIs in the Social Media Data and Text Mining lecture.
 * R packages that interface with websites and databases typically use APIs.
 * APIs make accessing data easy while allowing websites to control access.
 
+See [the developer's GitHub page](https://walkerke.github.io/tidycensus/articles/basic-usage.html) for detailed instructions.
+
 ---
 # Key `tidycensus` Functions
 
@@ -567,20 +556,27 @@ I talk more about APIs in the Social Media Data and Text Mining lecture.
    * Note you will need to run this prior to using any `tidycensus` functions.
 
 * `load_variables()` - Load searchable variable lists.
+   * `year =`: Sets census year or endyear of 5-year ACS
+   * `dataset =`: Sets dataset (see `?load_variables`)
 
 * `get_decennial()` - Load Census variables and geographical boundaries.
+   * `variables = `: Provide vector of variable IDs
+   * `geography =`: Sets unit of analysis (e.g. `state`, `tract`, `block`)
+   * `year =`: Census year (`1990`, `2000`, or `2010`)
+   * `geometry = TRUE`: Returns `sf` geometry
 
 * `get_acs()` - Load ACS variables and boundaries.
-
-```{r tidycensus}
-library(tidycensus)
-# census_api_key("PUT YOUR KEY HERE", install=TRUE)
-```
 
 ---
 # Searching for Variables
 
+```{r, echo=FALSE}
+library(tidycensus)
+```
+
 ```{r, cache=TRUE, message=FALSE, warning=FALSE}
+library(tidycensus)
+# census_api_key("PUT YOUR KEY HERE", install=TRUE)
 acs_2015_vars <- load_variables(2015, "acs5")
 acs_2015_vars[10:18,] %>% print() 
 ```
@@ -606,13 +602,17 @@ king_county <- get_acs(geography="tract", state="WA",
                        county="King", geometry = TRUE,
                        variables=c("B02001_001E", 
                                    "B02009_001E")) %>% 
-  select(-moe) %>% group_by(GEOID) %>% 
+  select(-moe) %>% 
+  group_by(GEOID) %>% #<<
   spread(variable, estimate) %>% 
   rename(`Total Population`=B02001_001,
          `Any Black`=B02009_001) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 
 ```
+
+* I remove the *margin of error (moe)* column before spreading.
+
 
 ---
 # The Data
@@ -639,9 +639,9 @@ king_county %>%
 
 New functions:
 
-* `geom_sf()` draws Simple Feature coordinate data.
+* `geom_sf()` draws Simple Features coordinate data.
 * `coord_sf()` is used here with these arguments:
-   * `crs`: Modifies the coordinate reference system (CRS), often called a "projection"; WGS84 is possibly the most commonly used CRS.
+   * `crs`: Modifies the coordinate reference system (CRS); WGS84 is possibly the most commonly used CRS.
    * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
 
 ---
@@ -658,8 +658,51 @@ king_county %>%
 ```
 
 ---
+# Removing Water
+
+With a simple function and boundaries of water bodies in King County, we can replace water with empty space.
+
+```{r, include=FALSE, cache=TRUE}
+st_erase <- function(x, y) {
+  st_difference(x, st_union(st_combine(y)))
+}
+
+kc_water <- tigris::area_water("WA", "King", class = "sf")
+
+kc_nowater <- king_county %>% 
+  st_erase(kc_water)
+```
+
+```{r, eval=FALSE}
+st_erase <- function(x, y) {
+  st_difference(x, st_union(st_combine(y)))
+}
+
+kc_water <- tigris::area_water("WA", "King", class = "sf")
+
+kc_nowater <- king_county %>% 
+  st_erase(kc_water)
+```
+
+* `st_combine()` merges all geometries into one
+* `st_union()` resolves internal boundaries
+* `st_difference()` subtracts `y` geometry from `x`
+* `area_water()` obtains `sf` geometry of water bodies.
+
+---
+```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
+  ggplot(kc_nowater, 
+         aes(fill=`Any Black`)) + 
+  geom_sf(size=0.1, color="white") + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9",
+                        high="#00025b") + 
+  theme_minimal() + ggtitle("Proportion Any Black")
+```						
+---
 class: inverse
-# Homework Exercise
+# Optional Exercise
 
 
 Use the HW 7 template to practice making maps of the restaurant inspection data. 

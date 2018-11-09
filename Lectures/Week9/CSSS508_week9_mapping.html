@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### Nov 21, 2018<br>Updated: Nov 8, 2018
+### Nov 21, 2018<br>Updated: Nov 9, 2018
 
 ---
 
@@ -27,8 +27,8 @@ class: center, top, title-slide
 
 ### Basic Mapping in `ggplot2`
 * Mapping with raw `ggplot2` using coordinates
-* Labeling points and using `ggrepel` to avoid overlaps
 * `ggmap` for mashing up maps with `ggplot2`
+* Labeling points and using `ggrepel` to avoid overlaps
 
 ### Advanced Mapping
 * `sf`: [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) geometry for R
@@ -122,7 +122,7 @@ What this package does for you:
 ---
 # Installation
 
-As of Nov 8, 2018, the current version of `ggmap` must be downloaded from GitHub.
+As of Nov 9, 2018, the current version of `ggmap` must be downloaded from GitHub.
 
 This can be done using the `devtools` package.
 
@@ -395,6 +395,10 @@ class: inverse
 library(sf)
 ```
 
+```
+## Linking to GEOS 3.6.1, GDAL 2.2.3, proj.4 4.9.3
+```
+
 ---
 
 # Basic Data Manipulation
@@ -407,30 +411,62 @@ library(sf)
 
 
 ```r
-# Use sf to create the seattle_tracts df
+precinct_shape &lt;- st_read("./data/district/votdst.shp",
+                          stringsAsFactors = F) %&gt;% 
+  select(Precinct=NAME, geometry)
 ```
 
----
-# Map Syntax
+```
+## Reading layer `votdst' from data source `C:\Users\cclan\OneDrive\GitHub\CSSS508\Lectures\Week9\data\district\votdst.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 2592 features and 5 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: 1220179 ymin: 31555.16 xmax: 1583562 ymax: 287678
+## epsg (SRID):    NA
+## proj4string:    +proj=lcc +lat_1=47.5 +lat_2=48.73333333333333 +lat_0=47 +lon_0=-120.8333333333333 +x_0=500000.0000000001 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs
+```
 
 ```r
-load("seattle_tracts.RData")
-
-ggplot(seattle_tracts, aes(fill=Experiment)) + 
-  geom_sf(size=0.1, color="white") + # Thin white outline
-  coord_sf(datum=NA) +               # Remove graticule lines
-  scale_fill_manual(values = c(      # Manual hex colors
-    "Mailbox, Litter Intervention" = "#342c5c",
-    "Mailbox"                      = "#458490",
-    "Litter Intervention"          = "#905145",
-    "No Letters"                   = "grey",
-    "Only Letters"                 = "#cbd3a3")) +
-  theme_minimal(base_size = 20)      # Large text
+king_county_elections_2016 &lt;- read_csv("./data/king_county_elections_2016.txt")
 ```
 
----
+```
+## Parsed with column specification:
+## cols(
+##   Precinct = col_character(),
+##   Race = col_character(),
+##   LEG = col_integer(),
+##   CC = col_integer(),
+##   CG = col_integer(),
+##   CounterGroup = col_character(),
+##   Party = col_character(),
+##   CounterType = col_character(),
+##   SumOfCount = col_double()
+## )
+```
 
-![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-10-1.svg)&lt;!-- --&gt;
+```r
+presidential_race &lt;- king_county_elections_2016 %&gt;%
+  filter(Race=="US President &amp; Vice President", str_detect(Precinct, "SEA ")) %&gt;% 
+  select(Precinct, CounterType, SumOfCount) %&gt;%
+  group_by(Precinct) %&gt;%
+  filter(CounterType %in% c("Donald J. Trump &amp; Michael R. Pence", "Hillary Clinton &amp; Tim Kaine", "Registered Voters", "Times Counted")) %&gt;%
+  mutate(CounterType=recode(CounterType, 
+                            `Donald J. Trump &amp; Michael R. Pence` = "Trump",
+                            `Hillary Clinton &amp; Tim Kaine` = "Clinton",
+                            `Registered Voters`="RegisteredVoters",
+                            `Times Counted` = "TotalVotes")) %&gt;%
+  spread(CounterType, SumOfCount) %&gt;%
+  mutate(P_Dem=Clinton/TotalVotes, P_Rep=Trump/TotalVotes, Turnout=TotalVotes/RegisteredVoters) %&gt;%
+  select(Precinct, P_Dem, P_Rep, Turnout) %&gt;% filter(!is.na(P_Dem))
+
+precincts_votes_sf &lt;- precinct_shape %&gt;% right_join(presidential_race)
+```
+
+```
+## Joining, by = "Precinct"
+```
+
 
 ---
 class: inverse
@@ -452,6 +488,8 @@ I talk more about APIs in the Social Media Data and Text Mining lecture.
 * R packages that interface with websites and databases typically use APIs.
 * APIs make accessing data easy while allowing websites to control access.
 
+See [the developer's GitHub page](https://walkerke.github.io/tidycensus/articles/basic-usage.html) for detailed instructions.
+
 ---
 # Key `tidycensus` Functions
 
@@ -459,22 +497,26 @@ I talk more about APIs in the Social Media Data and Text Mining lecture.
    * Note you will need to run this prior to using any `tidycensus` functions.
 
 * `load_variables()` - Load searchable variable lists.
+   * `year =`: Sets census year or endyear of 5-year ACS
+   * `dataset =`: Sets dataset (see `?load_variables`)
 
 * `get_decennial()` - Load Census variables and geographical boundaries.
+   * `variables = `: Provide vector of variable IDs
+   * `geography =`: Sets unit of analysis (e.g. `state`, `tract`, `block`)
+   * `year =`: Census year (`1990`, `2000`, or `2010`)
+   * `geometry = TRUE`: Returns `sf` geometry
 
 * `get_acs()` - Load ACS variables and boundaries.
-
-
-```r
-library(tidycensus)
-# census_api_key("PUT YOUR KEY HERE", install=TRUE)
-```
 
 ---
 # Searching for Variables
 
 
+
+
 ```r
+library(tidycensus)
+# census_api_key("PUT YOUR KEY HERE", install=TRUE)
 acs_2015_vars &lt;- load_variables(2015, "acs5")
 acs_2015_vars[10:18,] %&gt;% print() 
 ```
@@ -505,12 +547,16 @@ king_county &lt;- get_acs(geography="tract", state="WA",
                        county="King", geometry = TRUE,
                        variables=c("B02001_001E", 
                                    "B02009_001E")) %&gt;% 
-  select(-moe) %&gt;% group_by(GEOID) %&gt;% 
+  select(-moe) %&gt;% 
+* group_by(GEOID) %&gt;%
   spread(variable, estimate) %&gt;% 
   rename(`Total Population`=B02001_001,
          `Any Black`=B02009_001) %&gt;%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 ```
+
+* I remove the *margin of error (moe)* column before spreading.
+
 
 ---
 # The Data
@@ -572,8 +618,34 @@ New functions:
 ![](CSSS508_week9_mapping_files/figure-html/king_plot-1.svg)&lt;!-- --&gt;
 
 ---
+# Removing Water
+
+With a simple function and boundaries of water bodies in King County, we can replace water with empty space.
+
+
+
+
+```r
+st_erase &lt;- function(x, y) {
+  st_difference(x, st_union(st_combine(y)))
+}
+
+kc_water &lt;- tigris::area_water("WA", "King", class = "sf")
+
+kc_nowater &lt;- king_county %&gt;% 
+  st_erase(kc_water)
+```
+
+* `st_combine()` merges all geometries into one
+* `st_union()` resolves internal boundaries
+* `st_difference()` subtracts `y` geometry from `x`
+* `area_water()` obtains `sf` geometry of water bodies.
+
+---
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-17-1.svg)&lt;!-- --&gt;
+---
 class: inverse
-# Homework Exercise
+# Optional Exercise
 
 
 Use the HW 7 template to practice making maps of the restaurant inspection data. 
