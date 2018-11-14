@@ -564,11 +564,12 @@ If you are going to enter the world of GIS in R seriously, learn to navigate `sf
 
 ---
 class: inverse
-# Homework Exercise
+# Homework
 
+Homework 6, part 2 is due next week.
+
+# Optional Exercise
 
 Use the HW 7 template to practice making maps of the restaurant inspection data. 
 
-If you wish to submit it for bonus points, turn it in via Canvas by midnight on Tuesday the 29th.
-
-There will be no peer review.
+If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on December 4th.

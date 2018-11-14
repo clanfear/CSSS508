@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### Nov 21, 2018<br>Updated: Nov 9, 2018
+### Nov 21, 2018<br>Updated: Nov 12, 2018
 
 ---
 
@@ -69,10 +69,43 @@ In Week 5, we looked at types of incidents the Seattle Police Department respond
 library(tidyverse)
 ```
 
-
 ```r
 spd_raw &lt;- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Department_911_Incident_Response.csv")
 ```
+
+---
+# Taking a `glimpse()`
+
+.small[
+
+```r
+glimpse(spd_raw)
+```
+
+```
+## Observations: 706
+## Variables: 19
+## $ `CAD CDW ID`                  &lt;int&gt; 1701856, 1701857, 1701853, 17018...
+## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 160001...
+## $ `General Offense Number`      &lt;int&gt; 2016104006, 2016103970, 20161041...
+## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202...
+## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT",...
+## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS"...
+## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRE...
+## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25...
+## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOC...
+## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B...
+## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B...
+## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.106, 8...
+## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122.3420,...
+## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.61422, 47...
+## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47....
+## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIF...
+## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING",...
+## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "C...
+## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25...
+```
+]
 
 ---
 # `x`,`y` as Coordinates
@@ -98,7 +131,7 @@ ggplot(spd_raw,
 ]
 
 .pull-right[
-![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -122,7 +155,7 @@ What this package does for you:
 ---
 # Installation
 
-As of Nov 9, 2018, the current version of `ggmap` must be downloaded from GitHub.
+As of Nov 12, 2018, the current version of `ggmap` must be downloaded from GitHub.
 
 This can be done using the `devtools` package.
 
@@ -137,7 +170,7 @@ devtools::install_github("dkahle/ggmap", ref = "tidyup")
 library(ggmap)
 ```
 
-This may require compilation on your computer. If you get errors during install, please consult 
+This may require compilation on your computer. If you get errors during install, check with me after class or in lab.
 
 ---
 # Quick Maps with `qmplot()`
@@ -219,9 +252,19 @@ qmplot(data = spd_raw,
 
 Let's label the assaults and robberies specifically in downtown:
 
+First filter to downtown based on values "eyeballed" from our earlier map:
 
 ```r
-assaults &lt;- spd_raw %&gt;% 
+downtown &lt;- spd_raw %&gt;%
+  filter(Latitude &gt; 47.58, Latitude &lt; 47.64,
+         Longitude &gt; -122.36, Longitude &lt; -122.31)
+```
+
+
+Then make a dataframe of just assaults:
+
+```r
+assaults &lt;- downtown %&gt;% 
   mutate(assault_label = 
            ifelse(`Event Clearance Group` %in%
                   c("ASSAULTS", "ROBBERY"), 
@@ -239,7 +282,7 @@ Now let's plot the events and label them with `geom_label()` (`geom_text()` with
 
 ```r
 qmplot(data = 
-       spd_raw,
+       downtown,
        x = Longitude,
        y = Latitude,
        maptype = "toner-lite",
@@ -268,7 +311,7 @@ You can also try `geom_label_repel()` or `geom_text_repel()` in the `ggrepel` pa
 ```r
 library(ggrepel)
 qmplot(data = 
-    spd_raw,
+    downtown,
     x = Longitude,
     y = Latitude,
     maptype = "toner-lite", 
@@ -386,9 +429,6 @@ Often there will also be a `.prj` file defining the coordinate system.
 ---
 class: inverse
 # Using `sf`
----
-
-# Loading Data
 
 
 ```r
@@ -396,18 +436,26 @@ library(sf)
 ```
 
 ```
-## Linking to GEOS 3.6.1, GDAL 2.2.3, proj.4 4.9.3
+## Linking to GEOS 3.6.1, GDAL 2.2.3, PROJ 4.9.3
 ```
+---
+# Key `sf` Functions
+
+* `st_read()`, `st_write()`: Read and write shapefiles
+* `geom_sf()`: `ggplot()` layer for `sf` objects.
+
+# Other Useful Ones:
+
+* `st_transform()`: Convert between CRS
+* `st_set_geometry(., NULL)`: Remove geometry from a `sf` data frame. 
+* `st_relate()`: Compute relationships between geometries (like neighbor matrices)
 
 ---
+# Loading Data
 
-# Basic Data Manipulation
+You can obtain a shape file of King County voting precincts from the [county GIS data portal](https://gis-kingcounty.opendata.arcgis.com/datasets/voting-districts-of-king-county--votdst-area).
 
----
-
-# CRS?
-
----
+We can load the file using `st_read()`.
 
 
 ```r
@@ -426,47 +474,60 @@ precinct_shape &lt;- st_read("./data/district/votdst.shp",
 ## proj4string:    +proj=lcc +lat_1=47.5 +lat_2=48.73333333333333 +lat_0=47 +lon_0=-120.8333333333333 +x_0=500000.0000000001 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs
 ```
 
-```r
-king_county_elections_2016 &lt;- read_csv("./data/king_county_elections_2016.txt")
-```
+---
+# Voting Data
 
-```
-## Parsed with column specification:
-## cols(
-##   Precinct = col_character(),
-##   Race = col_character(),
-##   LEG = col_integer(),
-##   CC = col_integer(),
-##   CG = col_integer(),
-##   CounterGroup = col_character(),
-##   Party = col_character(),
-##   CounterType = col_character(),
-##   SumOfCount = col_double()
-## )
-```
+.small[
 
 ```r
-presidential_race &lt;- king_county_elections_2016 %&gt;%
-  filter(Race=="US President &amp; Vice President", str_detect(Precinct, "SEA ")) %&gt;% 
+precincts_votes_sf &lt;- 
+  read_csv("./data/king_county_elections_2016.txt") %&gt;%
+  filter(Race=="US President &amp; Vice President",
+         str_detect(Precinct, "SEA ")) %&gt;% 
   select(Precinct, CounterType, SumOfCount) %&gt;%
   group_by(Precinct) %&gt;%
-  filter(CounterType %in% c("Donald J. Trump &amp; Michael R. Pence", "Hillary Clinton &amp; Tim Kaine", "Registered Voters", "Times Counted")) %&gt;%
-  mutate(CounterType=recode(CounterType, 
-                            `Donald J. Trump &amp; Michael R. Pence` = "Trump",
-                            `Hillary Clinton &amp; Tim Kaine` = "Clinton",
-                            `Registered Voters`="RegisteredVoters",
-                            `Times Counted` = "TotalVotes")) %&gt;%
+  filter(CounterType %in% 
+           c("Donald J. Trump &amp; Michael R. Pence",
+             "Hillary Clinton &amp; Tim Kaine",
+             "Registered Voters", "Times Counted")) %&gt;%
+  mutate(CounterType =
+           recode(CounterType, 
+                  `Donald J. Trump &amp; Michael R. Pence` = "Trump",
+                  `Hillary Clinton &amp; Tim Kaine` = "Clinton",
+                  `Registered Voters`="RegisteredVoters",
+                  `Times Counted` = "TotalVotes")) %&gt;%
   spread(CounterType, SumOfCount) %&gt;%
-  mutate(P_Dem=Clinton/TotalVotes, P_Rep=Trump/TotalVotes, Turnout=TotalVotes/RegisteredVoters) %&gt;%
-  select(Precinct, P_Dem, P_Rep, Turnout) %&gt;% filter(!is.na(P_Dem))
-
-precincts_votes_sf &lt;- precinct_shape %&gt;% right_join(presidential_race)
+  mutate(P_Dem = Clinton / TotalVotes, 
+         P_Rep = Trump / TotalVotes, 
+         Turnout = TotalVotes / RegisteredVoters) %&gt;%
+  select(Precinct, P_Dem, P_Rep, Turnout) %&gt;% 
+  filter(!is.na(P_Dem)) %&gt;%
+  left_join(precinct_shape)
 ```
+]
 
-```
-## Joining, by = "Precinct"
-```
+---
 
+.pull-left[
+
+```r
+ggplot(precincts_votes_sf, 
+       aes(fill=P_Dem)) + 
+  geom_sf(color="white", 
+          size=0.1) +
+  coord_sf(datum=NULL) + 
+  theme(legend.position = 
+          "bottom")
+```
+]
+
+.pull-right[
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-13-1.svg)&lt;!-- --&gt;
+]
+
+---
+
+# Basic Data Manipulation
 
 ---
 class: inverse
@@ -608,9 +669,9 @@ king_county %&gt;%
 
 New functions:
 
-* `geom_sf()` draws Simple Feature coordinate data.
+* `geom_sf()` draws Simple Features coordinate data.
 * `coord_sf()` is used here with these arguments:
-   * `crs`: Modifies the coordinate reference system (CRS), often called a "projection"; WGS84 is possibly the most commonly used CRS.
+   * `crs`: Modifies the coordinate reference system (CRS); WGS84 is possibly the most commonly used CRS.
    * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
 
 ---
@@ -642,7 +703,7 @@ kc_nowater &lt;- king_county %&gt;%
 * `area_water()` obtains `sf` geometry of water bodies.
 
 ---
-![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-17-1.svg)&lt;!-- --&gt;
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-22-1.svg)&lt;!-- --&gt;
 ---
 class: inverse
 # Optional Exercise
@@ -693,7 +754,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

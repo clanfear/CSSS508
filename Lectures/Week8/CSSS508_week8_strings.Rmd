@@ -131,7 +131,7 @@ restaurants %>%
 ```
 
 ---
-`substr()`
+# `substr()`
 
 You may be familiar with `substr()` from the voting homework. We can use it to pull out just the first 5 digits of the ZIP code.
 
@@ -142,7 +142,7 @@ restaurants %>% distinct(ZIP_5) %>% head()
 ```
 
 ---
-`paste()`
+# `paste()`
 
 We can combine parts of strings together using the `paste()` function, e.g. to make a whole mailing address:
 
@@ -329,7 +329,11 @@ Let's take each unique business identifier, keep the most recent inspection scor
 
 .small[
 ```{r coffee_histogram, fig.height = 3, dev = "svg" }
-with(coffee %>% select(Business_ID, Name, Inspection_Score, Date) %>% group_by(Business_ID) %>% filter(Date == max(Date)) %>% distinct(.keep_all=TRUE), hist(Inspection_Score, xlab = "Most recent inspection score", main = "Most recent inspection scores\nfor Seattle coffee shops"))
+coffee %>% select(Business_ID, Name, Inspection_Score, Date) %>%
+       group_by(Business_ID) %>% filter(Date == max(Date)) %>% 
+       distinct(.keep_all=TRUE) %>% ggplot(aes(Inspection_Score)) + 
+    geom_histogram(bins=8) + xlab("Most recent inspection score") + ylab("") +
+    ggtitle("Histogram of inspection scores for Seattle coffee shops")
 ```
 ]
 
@@ -523,16 +527,16 @@ head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
 ---
 # Other Useful `stringr` Functions
 
-`str_pad(string, width, side, pad)` - Adds "padding" to any string to make it a given minimum width.
+`str_pad(string, width, side, pad)`: Adds "padding" to any string to make it a given minimum width.
 
-`str_subset(string, pattern)` - Returns all elements that contain matches of the pattern.
+`str_subset(string, pattern)`: Returns all elements that contain matches of the pattern.
 
-`str_which(string, pattern)` - Returns numeric indices of elements that match the pattern.
+`str_which(string, pattern)`: Returns numeric indices of elements that match the pattern.
 
-`str_replace_all(string, pattern, replacement)` - Performs multiple replacements simultaneously
+`str_replace_all(string, pattern, replacement)`: Performs multiple replacements simultaneously
 
 ---
 class: inverse
 # Coming Up
 
-Homework 6, Part 2 is due next week, and peer reviews due the week after.
+Homework 6, Part 1 is due next week, and peer reviews due the week after.

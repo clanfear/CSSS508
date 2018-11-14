@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 8
 ## Strings
 ### Chuck Lanfear
-### Nov 14, 2018<br>Updated: Nov 5, 2018
+### Nov 14, 2018<br>Updated: Nov 14, 2018
 
 ---
 
@@ -81,7 +81,7 @@ restaurants %&gt;%
 ```
 
 ---
-`substr()`
+# `substr()`
 
 You may be familiar with `substr()` from the voting homework. We can use it to pull out just the first 5 digits of the ZIP code.
 
@@ -105,7 +105,7 @@ restaurants %&gt;% distinct(ZIP_5) %&gt;% head()
 ```
 
 ---
-`paste()`
+# `paste()`
 
 We can combine parts of strings together using the `paste()` function, e.g. to make a whole mailing address:
 
@@ -411,7 +411,11 @@ Let's take each unique business identifier, keep the most recent inspection scor
 .small[
 
 ```r
-with(coffee %&gt;% select(Business_ID, Name, Inspection_Score, Date) %&gt;% group_by(Business_ID) %&gt;% filter(Date == max(Date)) %&gt;% distinct(.keep_all=TRUE), hist(Inspection_Score, xlab = "Most recent inspection score", main = "Most recent inspection scores\nfor Seattle coffee shops"))
+coffee %&gt;% select(Business_ID, Name, Inspection_Score, Date) %&gt;%
+       group_by(Business_ID) %&gt;% filter(Date == max(Date)) %&gt;% 
+       distinct(.keep_all=TRUE) %&gt;% ggplot(aes(Inspection_Score)) + 
+    geom_histogram(bins=8) + xlab("Most recent inspection score") + ylab("") +
+    ggtitle("Histogram of inspection scores for Seattle coffee shops")
 ```
 
 ![](CSSS508_week8_strings_files/figure-html/coffee_histogram-1.svg)&lt;!-- --&gt;
@@ -722,19 +726,19 @@ head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
 ---
 # Other Useful `stringr` Functions
 
-`str_pad(string, width, side, pad)` - Adds "padding" to any string to make it a given minimum width.
+`str_pad(string, width, side, pad)`: Adds "padding" to any string to make it a given minimum width.
 
-`str_subset(string, pattern)` - Returns all elements that contain matches of the pattern.
+`str_subset(string, pattern)`: Returns all elements that contain matches of the pattern.
 
-`str_which(string, pattern)` - Returns numeric indices of elements that match the pattern.
+`str_which(string, pattern)`: Returns numeric indices of elements that match the pattern.
 
-`str_replace_all(string, pattern, replacement)` - Performs multiple replacements simultaneously
+`str_replace_all(string, pattern, replacement)`: Performs multiple replacements simultaneously
 
 ---
 class: inverse
 # Coming Up
 
-Homework 6, Part 2 is due next week, and peer reviews due the week after.
+Homework 6, Part 1 is due next week, and peer reviews due the week after.
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
@@ -775,7 +779,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

@@ -121,13 +121,21 @@ class: inverse
 
 In Week 5, we looked at types of incidents the Seattle Police Department responded to in a single day. Now, we'll look at where those were.
 
-```{r warning=FALSE, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 ```
-
 ```{r read_spd_data, cache=TRUE, message=FALSE, warning=FALSE}
 spd_raw <- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Department_911_Incident_Response.csv")
 ```
+
+---
+# Taking a `glimpse()`
+
+.small[
+```{r}
+glimpse(spd_raw)
+```
+]
 
 ---
 # `x`,`y` as Coordinates
@@ -195,7 +203,7 @@ devtools::install_github("dkahle/ggmap", ref = "tidyup")
 library(ggmap)
 ```
 
-This may require compilation on your computer. If you get errors during install, please consult 
+This may require compilation on your computer. If you get errors during install, check with me after class or in lab.
 
 ---
 # Quick Maps with `qmplot()`
@@ -203,7 +211,7 @@ This may require compilation on your computer. If you get errors during install,
 .pull-left[
 `qmplot` will automatically set the map region based on your data:
 
-```{r, message = FALSE, cache=TRUE, eval=FALSE}
+```{r, eval=FALSE}
 qmplot(data = spd_raw, 
        x = Longitude, 
        y = Latitude, 
@@ -217,7 +225,7 @@ All I provided was numeric latitude and longitude, and it placed the data points
 ]
 
 .pull-right[
-```{r qmplot, message = FALSE, echo=FALSE, fig.height = 5, fig.width=2.5, dev="svg"}
+```{r qmplot, cache=TRUE, message = FALSE, echo=FALSE, fig.height = 5, fig.width=2.5, dev="svg"}
 qmplot(data = spd_raw, x = Longitude, y = Latitude, color = I("#342c5c"), alpha = I(0.5))
 ```
 ]
@@ -295,8 +303,17 @@ qmplot(data = spd_raw,
 
 Let's label the assaults and robberies specifically in downtown:
 
+First filter to downtown based on values "eyeballed" from our earlier map:
 ```{r flag_assaults}
-assaults <- spd_raw %>% 
+downtown <- spd_raw %>%
+  filter(Latitude > 47.58, Latitude < 47.64,
+         Longitude > -122.36, Longitude < -122.31)
+```
+
+
+Then make a dataframe of just assaults:
+```{r}
+assaults <- downtown %>% 
   mutate(assault_label = 
            ifelse(`Event Clearance Group` %in%
                   c("ASSAULTS", "ROBBERY"), 
@@ -313,7 +330,7 @@ Now let's plot the events and label them with `geom_label()` (`geom_text()` with
 .smallish[
 ```{r labels_1, eval=FALSE}
 qmplot(data = 
-       spd_raw,
+       downtown,
        x = Longitude,
        y = Latitude,
        maptype = "toner-lite",
@@ -330,7 +347,7 @@ Placing the arguments for `color=` and `alpha=` inside `I()` prevents them from 
 .pull-right[
 ```{r labels_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 5, fig.width=2.5, dev="svg"}
 qmplot(data = 
-       spd_raw,
+       downtown,
        x = Longitude,
        y = Latitude,
        maptype = "toner-lite",
@@ -351,7 +368,7 @@ You can also try `geom_label_repel()` or `geom_text_repel()` in the `ggrepel` pa
 ```{r ggrepel_1, eval=FALSE}
 library(ggrepel)
 qmplot(data = 
-    spd_raw,
+    downtown,
     x = Longitude,
     y = Latitude,
     maptype = "toner-lite", 
@@ -371,7 +388,7 @@ qmplot(data =
 ```{r ggrepel_2, echo=FALSE, message = FALSE, cache=TRUE, warning=FALSE, fig.height = 5, fig.width=2.5, dev="svg"}
 library(ggrepel)
 qmplot(data = 
-    spd_raw,
+    downtown,
     x = Longitude,
     y = Latitude,
     maptype = "toner-lite", 
@@ -484,48 +501,91 @@ Often there will also be a `.prj` file defining the coordinate system.
 ---
 class: inverse
 # Using `sf`
----
-
-# Loading Data
 
 ```{r}
 library(sf)
 ```
+---
+# Selected `sf` Functions
+
+* `st_read()`, `st_write()`: Read and write shapefiles
+* `geom_sf()`: `ggplot()` layer for `sf` objects.
+* `st_join()`: Join data by spatial relationship.
+* `st_transform()`: Convert between CRS
+* `st_set_geometry(., NULL)`: Remove geometry from a `sf` data frame. 
+* `st_relate()`: Compute relationships between geometries (like neighbor matrices).
+* `st_interpolate_aw()`: Areal-weighted interpolation of polygons.
+
+---
+# Loading Data
+
+You can obtain a shape file of King County voting precincts from the [county GIS data portal](https://gis-kingcounty.opendata.arcgis.com/datasets/voting-districts-of-king-county--votdst-area).
+
+We can load the file using `st_read()`.
+
+```{r, cache=T, message=FALSE, warning=FALSE}
+precinct_shape <- st_read("./data/district/votdst.shp",
+                          stringsAsFactors = F) %>% 
+  select(Precinct=NAME, geometry)
+```
+
+---
+# Voting Data
+
+.small[
+```{r, cache=TRUE, message=FALSE, warning=FALSE}
+precincts_votes_sf <- 
+  read_csv("./data/king_county_elections_2016.txt") %>%
+  filter(Race=="US President & Vice President",
+         str_detect(Precinct, "SEA ")) %>% 
+  select(Precinct, CounterType, SumOfCount) %>%
+  group_by(Precinct) %>%
+  filter(CounterType %in% 
+           c("Donald J. Trump & Michael R. Pence",
+             "Hillary Clinton & Tim Kaine",
+             "Registered Voters", "Times Counted")) %>%
+  mutate(CounterType =
+           recode(CounterType, 
+                  `Donald J. Trump & Michael R. Pence` = "Trump",
+                  `Hillary Clinton & Tim Kaine` = "Clinton",
+                  `Registered Voters`="RegisteredVoters",
+                  `Times Counted` = "TotalVotes")) %>%
+  spread(CounterType, SumOfCount) %>%
+  mutate(P_Dem = Clinton / TotalVotes, 
+         P_Rep = Trump / TotalVotes, 
+         Turnout = TotalVotes / RegisteredVoters) %>%
+  select(Precinct, P_Dem, P_Rep, Turnout) %>% 
+  filter(!is.na(P_Dem)) %>%
+  left_join(precinct_shape)
+```
+]
+
+---
+
+.pull-left[
+```{r, eval=FALSE}
+ggplot(precincts_votes_sf, 
+       aes(fill=P_Dem)) + 
+  geom_sf(color="white", 
+          size=0.1) +
+  coord_sf(datum=NULL) + 
+  theme(legend.position = 
+          "bottom")
+```
+]
+
+.pull-right[
+```{r, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dev="svg", fig.height=5.5, fig.width=2.75}
+ggplot(precincts_votes_sf, aes(fill=P_Dem)) + 
+  geom_sf(color="white", size=0.1) +
+  coord_sf(datum=NULL) + 
+  theme(legend.position = "bottom")
+```
+]
 
 ---
 
 # Basic Data Manipulation
-
----
-
-# CRS?
-
----
-
-```{r}
-precinct_shape <- st_read("./data/district/votdst.shp",
-                          stringsAsFactors = F) %>% 
-  select(Precinct=NAME, geometry)
-
-king_county_elections_2016 <- read_csv("./data/king_county_elections_2016.txt")
-
-presidential_race <- king_county_elections_2016 %>%
-  filter(Race=="US President & Vice President", str_detect(Precinct, "SEA ")) %>% 
-  select(Precinct, CounterType, SumOfCount) %>%
-  group_by(Precinct) %>%
-  filter(CounterType %in% c("Donald J. Trump & Michael R. Pence", "Hillary Clinton & Tim Kaine", "Registered Voters", "Times Counted")) %>%
-  mutate(CounterType=recode(CounterType, 
-                            `Donald J. Trump & Michael R. Pence` = "Trump",
-                            `Hillary Clinton & Tim Kaine` = "Clinton",
-                            `Registered Voters`="RegisteredVoters",
-                            `Times Counted` = "TotalVotes")) %>%
-  spread(CounterType, SumOfCount) %>%
-  mutate(P_Dem=Clinton/TotalVotes, P_Rep=Trump/TotalVotes, Turnout=TotalVotes/RegisteredVoters) %>%
-  select(Precinct, P_Dem, P_Rep, Turnout) %>% filter(!is.na(P_Dem))
-
-precincts_votes_sf <- precinct_shape %>% right_join(presidential_race)
-```
-
 
 ---
 class: inverse
@@ -701,12 +761,14 @@ kc_nowater <- king_county %>%
   theme_minimal() + ggtitle("Proportion Any Black")
 ```						
 ---
-class: inverse
-# Optional Exercise
 
+class: inverse
+# Homework
+
+Homework 6, part 2 is due next week.
+
+# Optional Exercise
 
 Use the HW 7 template to practice making maps of the restaurant inspection data. 
 
-If you wish to submit it for bonus points, turn it in via Canvas by midnight on Tuesday the 29th.
-
-There will be no peer review.
+If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on December 4th.
