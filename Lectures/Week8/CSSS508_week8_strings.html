@@ -42,6 +42,41 @@ restaurants &lt;-
 ]
 
 ---
+.smallish[
+
+```r
+glimpse(restaurants)
+```
+
+```
+## Observations: 258,630
+## Variables: 23
+## $ Name                       &lt;chr&gt; "@ THE SHACK, LLC ", "10 MERCER RES...
+## $ Program_Identifier         &lt;chr&gt; "SHACK COFFEE", "10 MERCER RESTAURA...
+## $ Inspection_Date            &lt;chr&gt; NA, "01/24/2017", "01/24/2017", "01...
+## $ Description                &lt;chr&gt; "Seating 0-12 - Risk Category I", "...
+## $ Address                    &lt;chr&gt; "2920 SW AVALON WAY", "10 MERCER ST...
+## $ City                       &lt;chr&gt; "Seattle", "Seattle", "Seattle", "S...
+## $ Zip_Code                   &lt;chr&gt; "98126", "98109", "98109", "98109",...
+## $ Phone                      &lt;chr&gt; "(206) 938-5665", NA, NA, NA, NA, N...
+## $ Longitude                  &lt;dbl&gt; -122.3709, -122.3562, -122.3562, -1...
+## $ Latitude                   &lt;dbl&gt; 47.57043, 47.62506, 47.62506, 47.62...
+## $ Inspection_Business_Name   &lt;chr&gt; NA, "10 MERCER RESTAURANT", "10 MER...
+## $ Inspection_Type            &lt;chr&gt; NA, "Routine Inspection/Field Revie...
+## $ Inspection_Score           &lt;int&gt; NA, 10, 10, 10, 15, 15, 15, 0, 15, ...
+## $ Inspection_Result          &lt;chr&gt; NA, "Unsatisfactory", "Unsatisfacto...
+## $ Inspection_Closed_Business &lt;chr&gt; NA, "false", "false", "false", "fal...
+## $ Violation_Type             &lt;chr&gt; NA, "blue", "blue", "red", "blue", ...
+## $ Violation_Description      &lt;chr&gt; NA, "4300 - Non-food contact surfac...
+## $ Violation_Points           &lt;int&gt; 0, 3, 2, 5, 5, 5, 5, 0, 5, 10, 25, ...
+## $ Business_ID                &lt;chr&gt; "PR0048053", "PR0049572", "PR004957...
+## $ Inspection_Serial_Num      &lt;chr&gt; NA, "DAHSIBSJT", "DAHSIBSJT", "DAHS...
+## $ Violation_Record_ID        &lt;chr&gt; NA, "IV43WZVLN", "IVCQ1ZIV0", "IVRE...
+## $ Grade                      &lt;int&gt; NA, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2...
+## $ Date                       &lt;date&gt; NA, 2017-01-24, 2017-01-24, 2017-0...
+```
+]
+---
 # Strings
 
 A general programming term for a unit of character data is a **string**, which is defined
@@ -207,11 +242,11 @@ paste0(1:5, letters[1:5])
 ```
 
 ---
-# `paste()` practice
+# `paste()` Practice
 
 `sep=` controls what happens when doing entry-wise squishing of vectors you give to `paste()`, while `collapse=` controls if/how they go from a vector to a single string.
 
-Here are some examples; make sure you understand how the arguments produce the results:
+Here are some examples; make sure you understand how each set of arguments produce their results:
 
 
 ```r
@@ -244,10 +279,10 @@ It provides functions that:
 * Replace some basic string functions like `paste()` and `nchar()` in a way that's a bit less touchy with missing values or factors
 * Remove whitespace or pad it out
 * Perform tasks related to **pattern matching**: Detect, locate, extract, match, replace, split.
-    + The functions use **regular expressions** to describe patterns
-    + Base R and `stringi` versions for these exist but are more confusing to use
+    + These functions use **regular expressions** to describe patterns
+    + Base R and `stringi` versions for these exist but are harder to use
 
-Conveniently, most `stringr` functions also begin with "`str_`" to make RStudio auto-complete more useful.
+Conveniently, *most* `stringr` functions begin with "`str_`" to make RStudio auto-complete more useful.
     
 
 ```r
@@ -318,7 +353,8 @@ head(unique(restaurants$City))
 
 ```r
 restaurants &lt;- restaurants %&gt;%
-    mutate_at(vars(Name, Address, City), funs(str_to_upper))
+    mutate_at(vars(Name, Address, City), 
+              funs(str_to_upper))
 head(unique(restaurants$City))
 ```
 
@@ -571,7 +607,7 @@ Let's break down `"^[0-9]*-?[A-Z]? (1/2 )?"`:
 
 --
 
-* Then we match a space ( )
+* Then we match a space (` `)
 
 --
 

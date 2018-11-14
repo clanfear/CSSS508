@@ -101,6 +101,12 @@ restaurants <-
 ]
 
 ---
+.smallish[
+```{r}
+glimpse(restaurants)
+```
+]
+---
 # Strings
 
 A general programming term for a unit of character data is a **string**, which is defined
@@ -195,11 +201,11 @@ paste0(1:5, letters[1:5])
 ```
 
 ---
-# `paste()` practice
+# `paste()` Practice
 
 `sep=` controls what happens when doing entry-wise squishing of vectors you give to `paste()`, while `collapse=` controls if/how they go from a vector to a single string.
 
-Here are some examples; make sure you understand how the arguments produce the results:
+Here are some examples; make sure you understand how each set of arguments produce their results:
 
 ```{r paste_practice, eval=TRUE, results="hold"}
 paste(letters[1:5], collapse = "!")
@@ -223,10 +229,10 @@ It provides functions that:
 * Replace some basic string functions like `paste()` and `nchar()` in a way that's a bit less touchy with missing values or factors
 * Remove whitespace or pad it out
 * Perform tasks related to **pattern matching**: Detect, locate, extract, match, replace, split.
-    + The functions use **regular expressions** to describe patterns
-    + Base R and `stringi` versions for these exist but are more confusing to use
+    + These functions use **regular expressions** to describe patterns
+    + Base R and `stringi` versions for these exist but are harder to use
 
-Conveniently, most `stringr` functions also begin with "`str_`" to make RStudio auto-complete more useful.
+Conveniently, *most* `stringr` functions begin with "`str_`" to make RStudio auto-complete more useful.
     
 ```{r load_stringr}
 library(stringr)
@@ -266,7 +272,8 @@ str_length("weasels")
 ```{r make_seattle_uppercase}
 head(unique(restaurants$City))
 restaurants <- restaurants %>%
-    mutate_at(vars(Name, Address, City), funs(str_to_upper))
+    mutate_at(vars(Name, Address, City), 
+              funs(str_to_upper))
 head(unique(restaurants$City))
 ```
 
@@ -444,7 +451,7 @@ Let's break down `"^[0-9]*-?[A-Z]? (1/2 )?"`:
 
 --
 
-* Then we match a space ( )
+* Then we match a space (` `)
 
 --
 
