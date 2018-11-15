@@ -28,7 +28,7 @@ layout: default
 ### 1. RStudio and R Markdown
    * [Slides for Lecture 1: Course logistics, R/RStudio, and R Markdown](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
        + [Rmd for Lecture 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
-   * [Lecture Video for Lecture 1](https://youtu.be/u6_uhABKia4), recorded Sep. 26, 2018
+   * [Lecture Video for Lecture 1](https://youtu.be/u6_uhABKia4), recorded September 26, 2018
    * Homework 1: Due at 11:59PM on October 2nd
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
        + Homework 1 Key #1: [HTML](https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_1.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_1.Rmd)
@@ -53,7 +53,7 @@ layout: default
 ### 2. Visualizing Data
    * [Slides for Lecture 2: Plotting with `ggplot2`](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.html)
        + [Rmd for Lecture 2 slides](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.Rmd)
-   * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded Oct. 3, 2018
+   * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded October 3, 2018
    * Homework 2: Due at 11:59PM on October 9th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
@@ -71,7 +71,7 @@ layout: default
 ### 3. Manipulating and Summarizing Data
    * [Slides for Lecture 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
        + [Rmd for Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.Rmd)
-   * [Lecture Video for Lecture 3](https://youtu.be/giKghK_7z7c), recorded Oct. 10, 2018
+   * [Lecture Video for Lecture 3](https://youtu.be/giKghK_7z7c), recorded October 10, 2018
    * Homework 3: Due at 11:59PM on October 16th
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
@@ -87,7 +87,7 @@ layout: default
 ### 4. Understanding R Data Structures
    * [Slides for Lecture 4: R data structures](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.html)
        + [Rmd for Lecture 4 slides](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.Rmd)
-   * [Lecture Video for Lecture 4](https://youtu.be/fc6Rc7Fbv0g), recorded Oct. 17, 2018
+   * [Lecture Video for Lecture 4](https://youtu.be/fc6Rc7Fbv0g), recorded October 17, 2018
    * Homework 4 (two options, complete one): Due at 11:59PM on October 23rd
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
@@ -156,7 +156,7 @@ layout: default
 ### 8.  Working with Text Data
    * [Slides for Lecture 8: Working with strings and character data](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.html)
        + [Rmd for Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.Rmd)
-   * [Lecture Video for Lecture 8](https://youtu.be/UosA8PxcVPM), recorded Spring 2018
+   * [Lecture Video for Lecture 8](https://youtu.be/ZwjncjjTwC4), recorded November 14th, 2018
    * Homework 6, Part 2 due at 11:59 PM on November 20th
        + Homework 6, Part 2: R Markdown template
        + Homework 6, Part 2 Key: HTML, RMD
