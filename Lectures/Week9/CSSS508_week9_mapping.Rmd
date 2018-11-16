@@ -171,18 +171,21 @@ ggplot(spd_raw, aes(Longitude, Latitude)) +
 
 ---
 class: inverse
-# ggmap
+# `ggmap`
 
 ---
-# ggmap
+# `ggmap`
 
 `ggmap` is a package that works with `ggplot2` to plot spatial data directly on map images downloaded from Google Maps<sup>1</sup>, OpenStreetMap, and Stamen Maps (good artistic/minimal options).
 
 What this package does for you:
 
 1. Queries servers for a map (`get_map()`) at the location and scale you want
+
 2. Plots the **raster** (bitmap) image as a `ggplot` object
+
 3. Lets you add more `ggplot` layers like points, 2D density plots, text annotations
+
 4. Additional functions for interacting with Google Maps (e.g. getting distances by bike)
 
 .footnote[[1] [Requires an API Key now.](https://cloud.google.com/maps-platform/)]
@@ -414,7 +417,9 @@ class: inverse
 # Terminology
 
 * Simple Features (`sf`)
+
 * Coordinate Reference System (CRS)
+
 * Shapefile
 
 
@@ -430,10 +435,18 @@ The more recent `sf` package implements the GIS standard of [**Simple Feature**]
 `sf` is also integrated into the `tidyverse`: e.g. `geom_sf()` in `ggplot2`.
 
 The package is somewhat new but is expected to *replace* `sp` eventually. The principle
-authors and contributors to `sf` are the same authors as `sp` (including Bivand and Pebesma) but with new developers
+authors and contributors to `sf` are the same authors as `sp` but with new developers
 from the `tidyverse` as well.
 
 Because `sf` is the new standard, we will focus on it today.
+
+```{r, eval=FALSE}
+library(sf)
+```
+
+```{r, include=FALSE}
+library(sf)
+```
 
 ---
 # Simple Features
@@ -491,7 +504,9 @@ Geospatial data is typically stored in **shapefiles** which store geometric data
 Shapefiles actually consist of multiple individual files. There are always at least three (but up to 10+):
 
 * `.shp`: The feature geometries
+
 * `.shx`: Shape positional index
+
 * `.dbf`: Attributes describing features<sup>1</sup>
 
 Often there will also be a `.prj` file defining the coordinate system.
@@ -502,16 +517,13 @@ Often there will also be a `.prj` file defining the coordinate system.
 class: inverse
 # Using `sf`
 
-```{r}
-library(sf)
-```
 ---
 # Selected `sf` Functions
 
-* `st_read()`, `st_write()`: Read and write shapefiles
+* `st_read()`, `st_write()`: Read and write shapefiles.
 * `geom_sf()`: `ggplot()` layer for `sf` objects.
 * `st_join()`: Join data by spatial relationship.
-* `st_transform()`: Convert between CRS
+* `st_transform()`: Convert between CRS.
 * `st_set_geometry(., NULL)`: Remove geometry from a `sf` data frame. 
 * `st_relate()`: Compute relationships between geometries (like neighbor matrices).
 * `st_interpolate_aw()`: Areal-weighted interpolation of polygons.
@@ -543,7 +555,8 @@ precincts_votes_sf <-
   filter(CounterType %in% 
            c("Donald J. Trump & Michael R. Pence",
              "Hillary Clinton & Tim Kaine",
-             "Registered Voters", "Times Counted")) %>%
+             "Registered Voters",
+             "Times Counted")) %>%
   mutate(CounterType =
            recode(CounterType, 
                   `Donald J. Trump & Michael R. Pence` = "Trump",
@@ -563,6 +576,7 @@ precincts_votes_sf <-
 ---
 
 .pull-left[
+# Voting Map
 ```{r, eval=FALSE}
 ggplot(precincts_votes_sf, 
        aes(fill=P_Dem)) + 
@@ -582,10 +596,6 @@ ggplot(precincts_votes_sf, aes(fill=P_Dem)) +
   theme(legend.position = "bottom")
 ```
 ]
-
----
-
-# Basic Data Manipulation
 
 ---
 class: inverse
@@ -671,7 +681,7 @@ king_county <- get_acs(geography="tract", state="WA",
 
 ```
 
-* I remove the *margin of error (moe)* column before spreading.
+.footnote[I remove the *margin of error (moe)* column before spreading.]
 
 
 ---

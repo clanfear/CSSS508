@@ -105,12 +105,12 @@
 <clipPath id="clip1">
   <path d="M 444.300781 195.53125 L 461.582031 195.53125 L 461.582031 281.929688 L 444.300781 281.929688 Z M 444.300781 195.53125 "/>
 </clipPath>
-<image id="image5" width="1" height="20" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAUCAIAAADDbMD2AAAABmJLR0QA/wD/AP+gvaeTAAAAN0lEQVQImU3GsQ2AMBRDwehV/rYRVabL/nvQgER1txaHbXFb1CIRsbCFv2dwhPv+bwd3yCXceQB5cwLJiMRBZwAAAABJRU5ErkJggg=="/>
+<image id="image13" width="1" height="20" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAUCAIAAADDbMD2AAAABmJLR0QA/wD/AP+gvaeTAAAAN0lEQVQImU3GsQ2AMBRDwehV/rYRVabL/nvQgER1txaHbXFb1CIRsbCFv2dwhPv+bwd3yCXceQB5cwLJiMRBZwAAAABJRU5ErkJggg=="/>
 <pattern id="pattern0" patternUnits="userSpaceOnUse" width="1" height="20"  patternTransform="matrix(17.28,0,0,4.32,444.300096,195.532866)">
-  <use xlink:href="#image5"/>
+  <use xlink:href="#image13"/>
 </pattern>
 </defs>
-<g id="surface1">
+<g id="surface9">
 <rect x="0" y="0" width="504" height="432" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/>
 <path style="fill-rule:evenodd;fill:rgb(52.156863%,47.058824%,71.372549%);fill-opacity:1;stroke-width:0.213396;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 85.5 107.816406 L 86.574219 107.832031 L 87.277344 107.835938 L 88.277344 107.835938 L 89.328125 107.886719 L 92.515625 107.9375 L 92.886719 110.683594 L 93.21875 113.625 L 90.355469 113.589844 L 90.003906 113.535156 L 89.789063 113.492188 L 88.527344 113.476563 L 88.1875 113.472656 L 87.007813 113.460938 L 86.496094 113.453125 L 85.554688 113.445313 L 85.53125 110.640625 L 85.507813 109.230469 Z M 85.5 107.816406 "/>
 <path style="fill-rule:evenodd;fill:rgb(65.098039%,61.960784%,82.352941%);fill-opacity:1;stroke-width:0.213396;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 78.398438 111.96875 L 78.394531 107.714844 L 80.53125 107.742188 L 81.238281 107.753906 L 82.304688 107.769531 L 84.074219 107.800781 L 85.5 107.816406 L 85.507813 109.230469 L 85.53125 110.640625 L 85.554688 113.445313 L 85.140625 113.445313 L 84.097656 113.433594 L 82.195313 113.410156 L 81.257813 113.386719 L 80.027344 113.363281 L 79.824219 113.269531 L 79.109375 113.375 L 78.390625 113.367188 Z M 78.398438 111.96875 "/>
