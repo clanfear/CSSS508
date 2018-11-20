@@ -338,8 +338,248 @@ Others can copy your project ("pull"), and if you permit, make suggestions for c
 Constantly committing and pulling changes automatically generates a running "history" that documents the evolution of a project.
 
 ---
+class: inverse
 # Advanced Data Manipulation
 
----
+This section walks you through an example of a real-world data management scenario.
 
-Birthtiming stuff?
+We will use a small extract from the **Denver Youth Survey**, a 10-wave (in this example) panel data set with 1526 respondents aged 7 to 26.
+
+---
+# Example Data
+
+```{r}
+load("mar_ages.RData") # Tiny sample of my real data
+mar_ages
+```
+
+---
+# Structure of the Data
+
+These data are in "long" format where each individual has multiple observations.
+Our "time" is in *age* rather than years and our observations are *person-marriages*.
+
+Variables:
+
+* **seqid** - Individual identifier
+* **byr** - Birth year
+* **marriage_n** - Marriage number (most never married or once)
+* **marriage_age** - If married, the age at which they married
+* **divorce_age** - If divorced, the age at which they divorced
+* **censored_age** - Last age they were observed in data
+
+---
+# The Goal
+
+The goal is to get a dataframe that looks like this:
+
+* Each *row* corresponds to a *person*
+* Each *column* corresponds to an *age*, from 10 to 27.
+* Each cell value is...
+   + Married = 1
+   + Not Married = 0
+   + Unknown/Missing = NA
+
+How are we going to do this?
+
+---
+# Some Comments
+
+I like to type out long comments that describe my problem and possible strategies!
+
+![](img/comment_cap.PNG)
+
+If interested, [here is a link to my *unedited script* this is all taken from.](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week11/marriage_dates_to_age_year_110317.R)
+It is a bit messy, long, and inefficient but is a realistic example of "in-use" code. Note that it assumes access to the full data set, which I cannot share.
+
+---
+# Strategy
+
+There are many ways to approach this problem, but this was the strategy I came up with:
+
+1. Get the ages in which individuals were known to be married.
+   * If married once and never divorced, this is all ages from `marriage_age` to `censored_age`
+   * If divorced, it is from `marriage_age` to `divorce_age`.
+   * Multiple marriages are just more of the above.
+2. Get the ages in which individuals were known to be not married.
+   * If never married, they were not married up until `censored_age`.
+   * If married and divorced, they were not married until `marriage_age` and after `divorce_age`, until another marriage.
+3. What remains is the unknown or missing ages.
+4. Make a matrix of individuals (rows) and ages (columns) and populate the cells using 1, 2, and 3.
+
+---
+# Coding Married Ages 1
+
+First, get a **list** where each **element** is a **vector** of married ages for *each marriage*.
+
+```{r, eval=TRUE}
+married_years <- vector("list", nrow(mar_ages))
+names(married_years) <- paste0(mar_ages$seqid, "-", mar_ages$marriage_n)
+for (i in 1:nrow(mar_ages)){
+  if (is.na(mar_ages$marriage_age[i])){
+    married_years[[i]] <- NA # Assign NA if no marriage
+  } else if (!is.na(mar_ages$marriage_age[i]) & # Was married...
+              is.na(mar_ages$divorce_age[i])) { # but not divorced
+      if (mar_ages$marriage_age[i] <= mar_ages$censored_age[i]){
+         married_years[[i]] <- # Marriage age to censored age
+           mar_ages$marriage_age[i]:mar_ages$censored_age[i]
+      } else { # If married for only one year
+         married_years[[i]] <- mar_ages$marriage_age[i]
+      }
+  } else if (!is.na(mar_ages$marriage_age[i]) & # Married...
+             !is.na(mar_ages$divorce_age[i])) { # ... and divorced
+    married_years[[i]] <- # Marriage age to divorce age
+      mar_ages$marriage_age[i]:mar_ages$divorce_age[i]
+  } else { # Print ERROR if none of above conditions apply
+    married_years[[i]] <- "ERROR"; print(paste0("Error on ", i))
+  }}
+```
+
+---
+# Coding Married Ages 2
+
+```{r, eval=TRUE}
+head(married_years)
+```
+
+---
+# Coding Married Ages 3
+
+Next, *combine* each person's *three vectors* into *one vector* of married ages.
+
+```{r, eval=TRUE}
+age_year_yes_list <- vector("list", length(unique(mar_ages$seqid)))
+names(age_year_yes_list) <- paste0("seqid_", unique(mar_ages$seqid))
+for (i in 1:length(age_year_yes_list)){
+  vals <- c(married_years[[(3*i)-2]],
+            married_years[[(3*i)-1]], 
+            married_years[[(3*i)]])
+  if (all(is.na(vals))) {
+    age_year_yes_list[[i]] <- NA # NA if all values are NA
+  } else { # Otherwise, assign non-NA values
+  age_year_yes_list[[i]] <- unique(vals[!is.na(vals)])
+  }
+}
+```
+
+---
+# Coding Married Ages 4
+
+```{r, eval=TRUE}
+head(age_year_yes_list)
+```
+
+---
+# Coding Unmarried Ages 1
+
+Similar to the married code, but now I assume no one was married at age 10 and work from there up.
+
+```{r, eval=TRUE}
+unmarried_years <- vector("list", nrow(mar_ages))
+names(unmarried_years) <- paste0(mar_ages$seqid, "-", mar_ages$marriage_n)
+for (i in 1:nrow(mar_ages)){
+  if (is.na(mar_ages$censored_age[i])) {
+    unmarried_years[[i]] <- NA # NA if always censored
+  } else if (is.na(mar_ages$marriage_age[i])) { # If never married
+    unmarried_years[[i]] <- 10:mar_ages$censored_age[i]
+  } else if (!is.na(mar_ages$marriage_age[i]) & # Married...
+              is.na(mar_ages$divorce_age[i])){ # ... without divorce
+    unmarried_years[[i]] <- 10:mar_ages$marriage_age[i]
+  } else if (!is.na(mar_ages$marriage_age[i]) & # Married...
+             !is.na(mar_ages$divorce_age[i])) { # ... and divorced
+    unmarried_years[[i]] <- c(10:mar_ages$marriage_age[i],
+            mar_ages$divorce_age[i]:mar_ages$censored_age[i])
+  } else {
+    unmarried_years[[i]] <- "ERROR"; print(paste0("Error on ", i))
+  }
+}
+```
+
+---
+# Coding Unarried Ages 2
+
+```{r, eval=TRUE}
+head(unmarried_years)
+```
+
+---
+# Coding Unmarried Ages 3
+
+Combine all unmarried ages into a single vector per person.
+
+```{r, eval=TRUE}
+age_year_no_list <- vector("list", length(unique(mar_ages$seqid)))
+names(age_year_no_list) <- paste0("seqid_", unique(mar_ages$seqid))
+for (i in 1:length(age_year_no_list)){
+  vals <- c(unmarried_years[[(3*i)-2]],
+            unmarried_years[[(3*i)-1]],
+            unmarried_years[[(3*i)]])
+  if (all(is.na(vals))) {
+    age_year_no_list[[i]] <- NA
+  } else {
+    age_year_no_list[[i]] <- unique(vals[!is.na(vals)])
+    age_year_no_list[[i]] <- 
+      age_year_no_list[[i]][age_year_no_list[[i]] %!in%
+                              age_year_yes_list[[i]]]
+  }
+}
+```
+
+---
+# Coding Unmarried Ages 4
+
+```{r, eval=TRUE}
+head(age_year_no_list)
+```
+
+---
+# A Function to Convert from Lists to a Matrix
+
+```{r, eval=TRUE}
+ay_list_to_ay_mat <- function(age_year_yes_list, age_year_no_list){
+  age_year_mat <- setNames(as.data.frame(matrix(as.numeric(NA), 
+              ncol=length(10:27), nrow=6)), paste0("age_", 10:27))
+  for(i in 1:6){ # Six individuals!
+    if (any(!is.na(age_year_yes_list[[i]]))){
+      age_year_mat[i, age_year_yes_list[[i]]-9 ] <- 1
+    } # Above: If any married ages, assign 1 to corresponding cells
+    if (any(!is.na(age_year_no_list[[i]]))){
+      age_year_mat[i, age_year_no_list[[i]]-9 ] <- 0
+    } # Above: If any unmarried ages, assign 1 to corresponding cells
+  }
+  return(age_year_mat)
+}
+
+mar_age_year_mat <- 
+  ay_list_to_ay_mat(age_year_yes_list = age_year_yes_list,
+                    age_year_no_list = age_year_no_list)
+mar_age_year_mat <- mar_age_year_mat %>% 
+  mutate(seqid=c(1,2,10,18,280,417)) %>% 
+  select(seqid, starts_with("age"), -age_27)
+```
+
+---
+# What Did We get?
+```{r, eval=TRUE}
+mar_age_year_mat %>% select(seqid, age_10:age_17)
+mar_age_year_mat %>% select(seqid, age_18:age_25)
+```
+
+---
+# Conclusion
+
+Data wrangling can be very complicated, with many valid ways of accomplishing it.
+
+I believe the best general approach is the following:
+
+1. Look carefully at the **starting data** to figure out what you can get from them.
+2. Determine *precisely* what you want the **end product** to look like.
+3. Identify individual steps needed to go from Step 1 to Step 2.
+4. Make each discrete step its own set of functions or function calls.
+   + If any step is confusing or complicated, **break it into more steps**.
+5. Complete each step *separately and in order*.
+   + Do not continue until a step is producing what you need for the next step.
+   + **Do not worry about combining steps for efficiency until everything works**.
+   
+Once finished, if you need to do this again, *convert the prior steps into functions*!
+

@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### Nov 21, 2018<br>Updated: Nov 16, 2018
+### Nov 21, 2018<br>Updated: Nov 19, 2018
 
 ---
 
@@ -115,7 +115,6 @@ Coordinates, such as longitude and latitude, can be provided in `aes()` as `x` a
 
 This is ideal when you don't need to place points over some map for reference.
 
-Sometimes we want to plot these points over existing maps.
 .small[
 
 ```r
@@ -128,6 +127,9 @@ ggplot(spd_raw,
   theme_classic()
 ```
 ]
+
+Sometimes, however, we want to plot these points over existing maps.
+
 ]
 
 .pull-right[
@@ -158,7 +160,7 @@ What this package does for you:
 ---
 # Installation
 
-As of Nov 16, 2018, the current version of `ggmap` must be downloaded from GitHub.
+As of Nov 19, 2018, the current version of `ggmap` must be downloaded from GitHub.
 
 This can be done using the `devtools` package.
 
@@ -358,9 +360,13 @@ Until recently, the main way to work with geospatial data in R was through the `
 package. `sp` works well but does not store data the same way as most GIS packages
 and can be bulky and complicated.
 
-The more recent `sf` package implements the GIS standard of [**Simple Feature**](https://en.wikipedia.org/wiki/Simple_Features) in R.
+--
+
+The more recent `sf` package implements the GIS standard of [**Simple Features**](https://en.wikipedia.org/wiki/Simple_Features) in R.
 
 `sf` is also integrated into the `tidyverse`: e.g. `geom_sf()` in `ggplot2`.
+
+--
 
 The package is somewhat new but is expected to *replace* `sp` eventually. The principle
 authors and contributors to `sf` are the same authors as `sp` but with new developers
@@ -390,7 +396,7 @@ A [**Simple Feature**](https://en.wikipedia.org/wiki/Simple_Features) is a singl
 .footnote[
 [1] A list-column is the same length as all other columns in the data, but each element contains *sub-elements* (class `sfg`) with all the geometrical components. 
 
-*List-columns* require special functions to manipulate *including removing them*.
+*List-columns* require special functions to manipulate, *including removing them*.
 ]
 
 --
@@ -406,13 +412,19 @@ A [**Simple Feature**](https://en.wikipedia.org/wiki/Simple_Features) is a singl
 
 **Coordinate reference systems** (**CRS**) specify what location on Earth geometry coordinates are *relative to* (i.e. what location is (0,0) when plotting).
 
+--
+
 The most commonly used is [**WGS84**](https://en.wikipedia.org/wiki/World_Geodetic_System), the standard for Google Earth, the Department of Defense, and GPS satellites.
+
+--
 
 There are two common ways to define a CRS:
 
 * [**EPSG codes**](http://spatialreference.org/ref/epsg/) (`epsg` in R)
    * Numeric codes which *refer to a predefined projection*
    * Ex: WGS84 is `4326`
+
+--
 
 * [**PROJ.4 strings**](https://proj4.org/usage/quickstart.html) (`proj4string` in R)
    * Text strings which *define a projection*
@@ -427,6 +439,8 @@ There are two common ways to define a CRS:
 # Shapefiles
 
 Geospatial data is typically stored in **shapefiles** which store geometric data as **vectors** with associated attributes (variables)
+
+--
 
 Shapefiles actually consist of multiple individual files. There are always at least three (but up to 10+):
 
@@ -447,18 +461,28 @@ class: inverse
 ---
 # Selected `sf` Functions
 
+`sf` is a huge, feature-rich package. Here is a sample of useful functions:
+
 * `st_read()`, `st_write()`: Read and write shapefiles.
+
 * `geom_sf()`: `ggplot()` layer for `sf` objects.
+
 * `st_join()`: Join data by spatial relationship.
+
 * `st_transform()`: Convert between CRS.
+
 * `st_set_geometry(., NULL)`: Remove geometry from a `sf` data frame. 
+
 * `st_relate()`: Compute relationships between geometries (like neighbor matrices).
+
 * `st_interpolate_aw()`: Areal-weighted interpolation of polygons.
 
 ---
 # Loading Data
 
-You can obtain a shape file of King County voting precincts from the [county GIS data portal](https://gis-kingcounty.opendata.arcgis.com/datasets/voting-districts-of-king-county--votdst-area).
+We will work with the voting data from Homework 5. You can obtain a shape file of King County voting precincts from the [county GIS data portal](https://gis-kingcounty.opendata.arcgis.com/datasets/voting-districts-of-king-county--votdst-area).
+
+--
 
 We can load the file using `st_read()`.
 
@@ -480,7 +504,7 @@ precinct_shape &lt;- st_read("./data/district/votdst.shp",
 ```
 
 ---
-# Voting Data
+# Voting Data: Processing
 
 .small[
 
@@ -517,15 +541,23 @@ precincts_votes_sf &lt;-
 .pull-left[
 # Voting Map
 
+We can plot `sf` geometry using `geom_sf()`.
+
+
 ```r
 ggplot(precincts_votes_sf, 
-       aes(fill=P_Dem)) + 
-  geom_sf(color="white", 
+*      aes(fill=P_Dem)) +
+* geom_sf(color="white",
           size=0.1) +
-  coord_sf(datum=NULL) + 
+* coord_sf(datum=NULL) +
   theme(legend.position = 
           "bottom")
 ```
+
+* `fill=P_Dem` maps color inside precincts to `P_Dem`.
+* `color="white"` sets boundaries to white.
+* `coord_sf(datum=NULL)` removes graticule lines.
+
 ]
 
 .pull-right[
@@ -543,6 +575,8 @@ class: inverse
 Census for variables, then download them and automatically format them as tidy dataframes.
 
 **These dataframes include geographical boundaries such as tracts!**
+
+--
 
 This package utilizes the Census API, so you will need to obtain a [Census API key](https://api.census.gov/data/key_signup.html).
 I talk more about APIs in the Social Media Data and Text Mining lecture.
@@ -601,7 +635,7 @@ acs_2015_vars[10:18,] %&gt;% print()
 ```
 
 ---
-# Processing Data
+# Getting Data
 
 
 
@@ -610,9 +644,39 @@ acs_2015_vars[10:18,] %&gt;% print()
 king_county &lt;- get_acs(geography="tract", state="WA", 
                        county="King", geometry = TRUE,
                        variables=c("B02001_001E", 
-                                   "B02009_001E")) %&gt;% 
-  select(-moe) %&gt;% 
-* group_by(GEOID) %&gt;%
+                                   "B02009_001E"))
+```
+
+What do these look like?
+
+.smallish[
+
+```r
+glimpse(king_county)
+```
+
+```
+## Observations: 796
+## Variables: 6
+## $ GEOID    &lt;chr&gt; "53033000100", "53033000100", "53033000200", "5303300...
+## $ NAME     &lt;chr&gt; "Census Tract 1, King County, Washington", "Census Tr...
+## $ variable &lt;chr&gt; "B02001_001", "B02009_001", "B02001_001", "B02009_001...
+## $ estimate &lt;dbl&gt; 7261, 1271, 7902, 797, 2830, 128, 6258, 1220, 5165, 3...
+## $ moe      &lt;dbl&gt; 479, 406, 438, 257, 222, 96, 502, 452, 480, 263, 182,...
+## $ geometry &lt;MULTIPOLYGON [Â°]&gt; MULTIPOLYGON (((-122.2965 4..., MULTIPO...
+```
+]
+
+---
+# Processing Data
+
+To get one row per precinct, we want to `spread()` key (`variable`) and value (`estimate`) columns into separate columns for each variable. Then we get `mutate()` `Any Black` into a proportion measure.
+
+
+```r
+king_county &lt;-  king_county %&gt;% 
+* select(-moe) %&gt;%
+  group_by(GEOID) %&gt;% 
   spread(variable, estimate) %&gt;% 
   rename(`Total Population`=B02001_001,
          `Any Black`=B02009_001) %&gt;%
@@ -678,7 +742,6 @@ New functions:
    * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
 
 ---
-
 ![](CSSS508_week9_mapping_files/figure-html/king_plot-1.svg)&lt;!-- --&gt;
 
 ---
@@ -705,8 +768,10 @@ kc_nowater &lt;- king_county %&gt;%
 * `st_difference()` subtracts `y` geometry from `x`
 * `area_water()` obtains `sf` geometry of water bodies.
 
+Then we can reproduce the same plot using `kc_nowater`...
+
 ---
-![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-23-1.svg)&lt;!-- --&gt;
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
 ---
 
 class: inverse

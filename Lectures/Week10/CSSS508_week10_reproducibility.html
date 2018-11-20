@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSSS508, Week 10</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Chuck Lanfear" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, top, title-slide
+
+# CSSS508, Week 10
+## Reproducibility and Best Practices
+### Chuck Lanfear
+### Nov 21, 2018<br>Updated: Nov 16, 2018
+
+---
+
+
+
+
+
+
+---
+class: inverse
+# Organization
+
+---
+# A System
+
+Developing an organization system for research is something you either do accidentally—and badly—or purposefully with some upfront labor.
+
+--
+
+Every paper, project, or presentation should be organized the same way.
+
+--
+
+I suggest something like the following (an R example):
+
+.pull-left[
+```
+project/
+   readme.md
+   data/
+     derived/
+       processed_data.RData
+     raw/
+       core_data.csv
+   docs/
+     paper.Rmd
+   scripts/
+     functions.R
+     models.R
+```
+]
+.pull-right[
+1. There is a clear hierarchy
+   * Written content is in `docs`
+   * Code is in `scripts`
+   * Data is in `data`
+2. Naming is uniform
+   * All lower case
+   * Words separated by underscores
+3. Names are self-descriptive
+
+]
+
+---
+class: inverse
+# Tools
+
+---
+# On Formats
+
+Avoid "closed" or commercial software and file formats except where absolutely necessary.
+
+--
+
+Use open source software and file formats.
+
+--
+
+* It is always better for *science*:
+
+   + People should be able to explore your research without buying commercial software.
+   + You do not want your research to be inaccessible when software is updated.
+
+--
+
+* It is often just *better*.
+
+   + It is usually updated more quickly
+   + It tends to be more secure
+   + It is rarely abandoned
+
+--
+
+**The ideal:** Use software that reads and writes *raw text*.
+
+---
+# Text
+
+Writing and formatting documents are two completely separate jobs.
+   * Write first
+   * Format later
+   * [Markdown](https://en.wikipedia.org/wiki/Markdown) was made for this
+
+--
+
+Word processors—like Microsoft Word—try to do both at the same time, usually badly.
+
+They waste time by leading you to format instead of writing.
+
+--
+
+Find a good modular text editor and learn to use it:
+   * [Atom](https://atom.io/)
+   * [Sublime](https://www.sublimetext.com/) (Commercial)
+   * Vim&lt;sup&gt;1&lt;/sup&gt;
+   * Emacs&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] These are powerful but complex. RStudio has a Vim mode too.]
+
+---
+class: inverse
+
+# Reproducible Research
+
+---
+## Reproducibility Definitions
+
+Reproducibility comes in three forms (Stodden 2014):
+
+--
+
+1. **Empirical:** Repeatability in data collection.
+
+--
+
+2. **Statistical:** Verification with alternate methods of inference.
+
+--
+
+3. **Computational:** Reproducibility in cleaning, organizing, and presenting data and results.
+
+--
+
+R and Python are particularly well suited to enabling **computational reproducibility**.
+
+--
+
+They will not fix flawed experimental methods or observations, nor offer a remedy for improper application of statistical methods.
+
+Those are the difficult, non-repetitive things you want skills in.
+
+---
+
+## Computational Reproducibility
+
+Elements of computational reproducibility:
+* Shared data
+* Shared code
+* Documentation
+* **Version Control**
+
+---
+
+## Levels of Reproducibility
+
+For academic papers, degrees of reproducibility vary:
+
+0. "Read the article"
+--
+
+1. Shared data with documentation
+--
+
+2. Shared data and all code
+--
+
+3. **Interactive document**
+--
+
+4. **Research compendium**
+--
+
+5. Docker File: Self-contained ecosystem
+
+---
+## Interactive Documents
+
+Interactive documents combine code and text together
+   * Loading and process data
+   * Run models
+   * Generate tables and plots in-line with text
+   * In-text values automatically filled in
+
+--
+
+Interactive documents allow a reader to examine your computational methods within the document itself.
+
+--
+
+By re-running the code, they reproduce your results on demand.
+
+--
+
+Platforms:
+ * **R:** RMarkdown ([an example of mine](https://clanfear.github.io/birthtiming/inst/paper/paper.html))
+ * **Python:** Jupyter Notebooks
+
+---
+## Research Compendia
+
+A research compendium is an R package used not to share statistical or computational *methods* but to organize and share reproducible *projects*.
+
+--
+
+Research compendia feature:
+
+* Files organized in a recognizable structure (R packages)
+* Clear separation of data, method, and output. *Data are read only*.
+* A well-documented or even *preserved* computational environment
+
+`rrtools` by UW's Ben Markwick provides a simplified workflow to accomplish this in R.
+
+---
+## Bookdown
+
+If using your compendium to generate an article, thesis, or dissertation, `rrtools` makes formatting simple by integrating `bookdown`.
+
+`bookdown` provides an accessible alternative to manually writing `\(\LaTeX\)` for typesetting and reference management.
+
+You can integrate citations and automate reference page generation using bibtex files (such as produced by Zotero).
+
+`bookdown` supports `.html` output for ease and speed and also renders `.pdf` files through `\(\LaTeX\)` for publication-ready documents.
+
+For University of Washington theses and dissertations, consider Ben Marwick's `huskydown` package which uses Markdown but renders via a UW approved `\(\LaTeX\)` template.
+
+---
+# Version Control
+
+Version control originates in collaborative software development.
+
+**The Idea:** All changes ever made to a piece of software are documented, saved automatically, and revertible.
+
+--
+
+Version control allows all decisions ever made in a research project to be documented automatically.
+
+--
+
+Version control can:
+
+1. Protect your work from destructive changes
+2. Simplify collaboration by merging changes
+3. Document design decisions
+4. Make your research process transparent
+
+---
+# Git and GitHub
+
+[Git](https://en.wikipedia.org/wiki/Git) is the dominant platform for version control, and [GitHub](https://github.com/) is a (now Microsoft owned) platform for hosting **repositories**.
+
+--
+
+Repositories are folders on your computer where all changes are tracked by Git.
+
+--
+
+Once satisfied with changes, you "commit" them then "push" them to a remote repository that stores your project.
+
+--
+
+Others can copy your project ("pull"), and if you permit, make suggestions for changes.
+
+--
+
+Constantly committing and pulling changes automatically generates a running "history" that documents the evolution of a project.
+
+---
+# Advanced Data Manipulation
+
+---
+
+Birthtiming stuff?
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "tomorrow-night-bright",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
