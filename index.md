@@ -182,29 +182,31 @@ layout: default
    * [`ggmap` package examples](https://github.com/dkahle/ggmap)
    * [More in depth `ggmap` examples](http://vita.had.co.nz/papers/ggmap.pdf)
    * [`ggrepel` package vignette](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html)
+   * [`sf` Vignette: Overview](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)
+   * [`sf` Home Page](https://r-spatial.github.io/sf/)
 
 ### 10. Reproducibility and Best Practices
-   * Slides for Lecture 10: Reproducibility and Best Practices
-      + Rmd for Lecture 10 slides
-   * Leacture Video for Lecture 11
+   * [Slides for Lecture 10: Reproducibility and Best Practices](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_reproducibility.html)
+      + [Rmd for Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_reproducibility.Rmd)
+   * Leacture Video for Lecture 10
    * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
    * R Packages:
       + [`huskydown`](https://github.com/benmarwick/huskydown)
       + [`rrtools`](https://github.com/benmarwick/rrtools)
       
-### 11. Working with Model Results
-   * [Slides for Lecture 11: Tidy Model Results and Applied Data Cleaning](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_broom.html)
-       + [Rmd for Lecture 11 slides](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_broom.Rmd)
+### 11. Working with Model Results (Under Renovation)
+   * [Slides for Lecture 11: Tidy Model Results and Applied Data Cleaning](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_model_results.html)
+       + [Rmd for Lecture 11 slides](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_model_results.Rmd)
    * [Lecture Video for Lecture 11](https://youtu.be/JjM0VYNGkUo), recorded Spring 2018
    * [`broom` vignette](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)
    * [`ggeffects` vignette](https://cran.r-project.org/web/packages/ggeffects/vignettes/marginaleffects.html)
    * [`sjPlot` home page](http://www.strengejacke.de/sjPlot/)
    * [Overleaf online LaTeX editor](http://www.overleaf.com/)
 
-### 12. Working with Social Media Data (A bit out of date)
+### 12. Working with Social Media Data (Out of Date)
    * [Slides for Lecture 12: Social media and text mining](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_scraping.html)
        + [Rmd for Lecture 12 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_scraping.Rpres)
-   * [Lecture Video for Week 10](https://youtu.be/DJIgMr8GrzM)
+   * [Lecture Video for Week 12](https://youtu.be/DJIgMr8GrzM), recorded Autumn 2017
    * [Twitter Apps portal](https://apps.twitter.com/)
    * [Fabulous analysis of Trump tweets using R](http://varianceexplained.org/r/trump-tweets/)
    * [Absolute Beginner's Guide to `SocialMediaLab`](http://www.academia.edu/19064267/Absolute_Beginners_Guide_to_the_SocialMediaLab_package_in_R)

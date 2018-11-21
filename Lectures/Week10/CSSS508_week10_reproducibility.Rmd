@@ -125,6 +125,17 @@ project/
 ]
 
 ---
+# Portability
+
+STUFF HERE
+* Relative paths only
+
+---
+# Many File Approach
+
+RScript files
+
+---
 class: inverse
 # Tools
 
