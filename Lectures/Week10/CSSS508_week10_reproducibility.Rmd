@@ -94,7 +94,7 @@ Every paper, project, or presentation should be organized the same way.
 
 --
 
-I suggest something like the following (an R example):
+I suggest something like the following:
 
 .pull-left[
 ```
@@ -204,7 +204,9 @@ Reproducibility comes in three forms (Stodden 2014):
 
 --
 
-R and Python are particularly well suited to enabling **computational reproducibility**.
+R are particularly well suited to enabling **computational reproducibility**.<sup>1</sup>
+
+.footnote[[1] Python is equally well suited.]
 
 --
 
@@ -217,10 +219,27 @@ Those are the difficult, non-repetitive things you want skills in.
 ## Computational Reproducibility
 
 Elements of computational reproducibility:
+
+--
+
 * Shared data
+   + Researchers need your original data to verify and replicate your work.
+
+--
+
 * Shared code
+   + Your code must be shared to make decisions transparent.
+
+--
+
 * Documentation
+   + The operation of code should be either self-documenting or have written descriptions to make its use clear.
+
+--
+
 * **Version Control**
+   + Changes to code document the research process.
+   + Also protects from losing work and facilitates sharing.
 
 ---
 
@@ -229,18 +248,23 @@ Elements of computational reproducibility:
 For academic papers, degrees of reproducibility vary:
 
 0. "Read the article"
+
 --
 
 1. Shared data with documentation
+
 --
 
 2. Shared data and all code
+
 --
 
 3. **Interactive document**
+
 --
 
 4. **Research compendium**
+
 --
 
 5. Docker File: Self-contained ecosystem
@@ -248,7 +272,7 @@ For academic papers, degrees of reproducibility vary:
 ---
 ## Interactive Documents
 
-Interactive documents combine code and text together
+*Interactive documents*—like R Markdown docs—combine code and text together into a self-contained document.
    * Loading and process data
    * Run models
    * Generate tables and plots in-line with text
@@ -256,7 +280,7 @@ Interactive documents combine code and text together
 
 --
 
-Interactive documents allow a reader to examine your computational methods within the document itself.
+Interactive documents allow a reader to examine your computational methods within the document itself; in effect, they are self-documenting.
 
 --
 
@@ -265,7 +289,7 @@ By re-running the code, they reproduce your results on demand.
 --
 
 Platforms:
- * **R:** RMarkdown ([an example of mine](https://clanfear.github.io/birthtiming/inst/paper/paper.html))
+ * **R:** R Markdown ([an example of mine](https://clanfear.github.io/birthtiming/inst/paper/paper.html))
  * **Python:** Jupyter Notebooks
 
 ---
@@ -319,11 +343,11 @@ Version control can:
 ---
 # Git and GitHub
 
-[Git](https://en.wikipedia.org/wiki/Git) is the dominant platform for version control, and [GitHub](https://github.com/) is a (now Microsoft owned) platform for hosting **repositories**.
+[`git`](https://en.wikipedia.org/wiki/Git) is the dominant platform for version control, and [GitHub](https://github.com/) is a free (and now Microsoft owned) platform for hosting **repositories**.
 
 --
 
-Repositories are folders on your computer where all changes are tracked by Git.
+**Repositories** are folders on your computer where all changes are tracked by Git.
 
 --
 
@@ -337,44 +361,66 @@ Others can copy your project ("pull"), and if you permit, make suggestions for c
 
 Constantly committing and pulling changes automatically generates a running "history" that documents the evolution of a project.
 
+--
+
+`git` is integrated into RStudio under the *Tools* menu. [It requires some setup.](http://happygitwithr.com/)
+
 ---
 class: inverse
 # Advanced Data Manipulation
 
 This section walks you through an example of a real-world data management scenario.
 
-We will use a small extract from the **Denver Youth Survey**, a 10-wave (in this example) panel data set with 1526 respondents aged 7 to 26.
+We will use a small extract from the *Denver Youth Survey*, a 10-wave (in this example) panel data set with 1526 respondents aged 7 to 26.
+
+---
+# Setup
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+`%!in%` <- Negate(`%in%`) #<<
+```
+
+`%!in%` is a useful custom operator. It is the *opposite* of `%in%`. It returns a `TRUE` for every element of the object on its left that is *not* an element of the object on its right.
+
+Because `!` *inverts* logical vectors, these statments would be equivalent:
+
+```{r, eval=FALSE}
+!(x %in% y)
+x %!in% y
+```
 
 ---
 # Example Data
 
+.smallish[
 ```{r}
 load("mar_ages.RData") # Tiny sample of my real data
 mar_ages
 ```
-
+]
 ---
-# Structure of the Data
+# What We Have
 
 These data are in "long" format where each individual has multiple observations.
+
 Our "time" is in *age* rather than years and our observations are *person-marriages*.
 
 Variables:
 
-* **seqid** - Individual identifier
-* **byr** - Birth year
-* **marriage_n** - Marriage number (most never married or once)
-* **marriage_age** - If married, the age at which they married
-* **divorce_age** - If divorced, the age at which they divorced
-* **censored_age** - Last age they were observed in data
+* **seqid**: Individual identifier
+* **byr**: Birth year
+* **marriage_n**: Marriage number (most never married or once)
+* **marriage_age**: If married, the age at which they married
+* **divorce_age**: If divorced, the age at which they divorced
+* **censored_age**: Last age they were observed in data
 
 ---
-# The Goal
+# What We Want
 
 The goal is to get a dataframe that looks like this:
 
 * Each *row* corresponds to a *person*
-* Each *column* corresponds to an *age*, from 10 to 27.
+* Each *column* corresponds to an *age*, from 10 to 26.
 * Each cell value is...
    + Married = 1
    + Not Married = 0
@@ -397,14 +443,14 @@ It is a bit messy, long, and inefficient but is a realistic example of "in-use" 
 
 There are many ways to approach this problem, but this was the strategy I came up with:
 
-1. Get the ages in which individuals were known to be married.
+1. Get the ages in which individuals were known to be *married*.
    * If married once and never divorced, this is all ages from `marriage_age` to `censored_age`
    * If divorced, it is from `marriage_age` to `divorce_age`.
    * Multiple marriages are just more of the above.
-2. Get the ages in which individuals were known to be not married.
+2. Get the ages in which individuals were known to be *not married*.
    * If never married, they were not married up until `censored_age`.
    * If married and divorced, they were not married until `marriage_age` and after `divorce_age`, until another marriage.
-3. What remains is the unknown or missing ages.
+3. What remains is the unknown or *missing ages*.
 4. Make a matrix of individuals (rows) and ages (columns) and populate the cells using 1, 2, and 3.
 
 ---
@@ -412,6 +458,7 @@ There are many ways to approach this problem, but this was the strategy I came u
 
 First, get a **list** where each **element** is a **vector** of married ages for *each marriage*.
 
+.smallish[
 ```{r, eval=TRUE}
 married_years <- vector("list", nrow(mar_ages))
 names(married_years) <- paste0(mar_ages$seqid, "-", mar_ages$marriage_n)
@@ -434,6 +481,7 @@ for (i in 1:nrow(mar_ages)){
     married_years[[i]] <- "ERROR"; print(paste0("Error on ", i))
   }}
 ```
+]
 
 ---
 # Coding Married Ages 2
@@ -474,6 +522,7 @@ head(age_year_yes_list)
 
 Similar to the married code, but now I assume no one was married at age 10 and work from there up.
 
+.smallish[
 ```{r, eval=TRUE}
 unmarried_years <- vector("list", nrow(mar_ages))
 names(unmarried_years) <- paste0(mar_ages$seqid, "-", mar_ages$marriage_n)
@@ -494,6 +543,7 @@ for (i in 1:nrow(mar_ages)){
   }
 }
 ```
+]
 
 ---
 # Coding Unarried Ages 2
@@ -510,6 +560,7 @@ Combine all unmarried ages into a single vector per person.
 ```{r, eval=TRUE}
 age_year_no_list <- vector("list", length(unique(mar_ages$seqid)))
 names(age_year_no_list) <- paste0("seqid_", unique(mar_ages$seqid))
+
 for (i in 1:length(age_year_no_list)){
   vals <- c(unmarried_years[[(3*i)-2]],
             unmarried_years[[(3*i)-1]],
@@ -535,6 +586,7 @@ head(age_year_no_list)
 ---
 # A Function to Convert from Lists to a Matrix
 
+.smallish[
 ```{r, eval=TRUE}
 ay_list_to_ay_mat <- function(age_year_yes_list, age_year_no_list){
   age_year_mat <- setNames(as.data.frame(matrix(as.numeric(NA), 
@@ -557,6 +609,7 @@ mar_age_year_mat <- mar_age_year_mat %>%
   mutate(seqid=c(1,2,10,18,280,417)) %>% 
   select(seqid, starts_with("age"), -age_27)
 ```
+]
 
 ---
 # What Did We get?
