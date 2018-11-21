@@ -204,8 +204,8 @@ layout: default
    * [Overleaf online LaTeX editor](http://www.overleaf.com/)
 
 ### 12. Working with Social Media Data (Out of Date)
-   * [Slides for Lecture 12: Social media and text mining](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_scraping.html)
-       + [Rmd for Lecture 12 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_scraping.Rpres)
+   * [Slides for Lecture 12: Social media and text mining](http://clanfear.github.io/CSSS508/Lectures/Week12/CSSS508_week10_scraping.html)
+       + [Rmd for Lecture 12 slides](http://clanfear.github.io/CSSS508/Lectures/Week12/CSSS508_week10_scraping.Rpres)
    * [Lecture Video for Week 12](https://youtu.be/DJIgMr8GrzM), recorded Autumn 2017
    * [Twitter Apps portal](https://apps.twitter.com/)
    * [Fabulous analysis of Trump tweets using R](http://varianceexplained.org/r/trump-tweets/)

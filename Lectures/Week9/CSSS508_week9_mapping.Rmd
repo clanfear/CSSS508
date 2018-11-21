@@ -152,7 +152,7 @@ ggplot(spd_raw,
   geom_point() + 
   coord_fixed() +
   ggtitle("Seattle Police Incidents",
-          subtitle="3/25/2018") +
+          subtitle="March 25, 2016") +
   theme_classic()
 ```
 ]
@@ -166,7 +166,7 @@ Sometimes, however, we want to plot these points over existing maps.
 ggplot(spd_raw, aes(Longitude, Latitude)) + 
   geom_point() + 
   coord_fixed() +
-  ggtitle("Seattle Police Incidents", subtitle="3/25/2018") +
+  ggtitle("Seattle Police Incidents", subtitle="March 25, 2016") +
   theme_classic()
 ```
 ]
@@ -261,17 +261,14 @@ Call `qmplot()` with no `geom()`, and then add density layers:
 
 .small[
 ```{r quick_plot_density_1, eval=FALSE}
-qmplot(data = spd_raw, 
-  geom = "blank", 
-  x = Longitude,
-  y = Latitude, 
+qmplot(data = spd_raw, geom = "blank",
+  x = Longitude, y = Latitude, 
   maptype = "toner-lite", 
   darken = 0.5) + 
   stat_density_2d(
-    aes(fill = ..level..), 
+    aes(fill = stat(level)), #<<
       geom = "polygon", 
-      alpha = .2,
-      color = NA) + 
+      alpha = .2, color = NA) + 
   scale_fill_gradient2(
       "Incident\nConcentration", 
       low = "white", 
@@ -280,6 +277,9 @@ qmplot(data = spd_raw,
   theme(legend.position = "bottom")
 ```
 ]
+
+`stat(level)` indicates we want `fill=` to be based on `level` values calculated by the layer.
+
 ]
 
 .pull-right[
@@ -291,7 +291,7 @@ qmplot(data = spd_raw,
   maptype = "toner-lite", 
   darken = 0.5) + 
   stat_density_2d(
-    aes(fill = ..level..), 
+    aes(fill = stat(level)), 
       geom = "polygon", 
       alpha = .2,
       color = NA) + 
@@ -316,7 +316,7 @@ downtown <- spd_raw %>%
 ```
 
 
-Then make a dataframe of just assaults:
+Then make a dataframe of just assaults and robberies:
 ```{r}
 assaults <- downtown %>% 
   mutate(assault_label = 
@@ -334,13 +334,12 @@ Now let's plot the events and label them with `geom_label()` (`geom_text()` with
 
 .smallish[
 ```{r labels_1, eval=FALSE}
-qmplot(data = 
-       downtown,
+qmplot(data = downtown,
        x = Longitude,
        y = Latitude,
        maptype = "toner-lite",
-       color = I("firebrick"),
-       alpha = I(0.5)) + 
+       color = I("firebrick"), #<<
+       alpha = I(0.5)) +  #<<
   geom_label(data = assaults,
        aes(label = assault_label))
 ```
@@ -351,8 +350,7 @@ Placing the arguments for `color=` and `alpha=` inside `I()` prevents them from 
 
 .pull-right[
 ```{r labels_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 5, fig.width=2.5, dev="svg"}
-qmplot(data = 
-       downtown,
+qmplot(data = downtown,
        x = Longitude,
        y = Latitude,
        maptype = "toner-lite",
@@ -515,7 +513,7 @@ Geospatial data is typically stored in **shapefiles** which store geometric data
 
 --
 
-Shapefiles actually consist of multiple individual files. There are always at least three (but up to 10+):
+Shapefiles actually consist of multiple individual files. There are usually at least three (but up to 10+):
 
 * `.shp`: The feature geometries
 
@@ -594,6 +592,15 @@ precincts_votes_sf <-
   select(Precinct, P_Dem, P_Rep, Turnout) %>% 
   filter(!is.na(P_Dem)) %>%
   left_join(precinct_shape)
+```
+]
+
+---
+# Taking a `glimpse()`
+
+.smallish[
+```{r}
+glimpse(precincts_votes_sf)
 ```
 ]
 

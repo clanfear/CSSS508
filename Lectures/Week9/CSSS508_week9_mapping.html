@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### Nov 21, 2018<br>Updated: Nov 19, 2018
+### Nov 21, 2018<br>Updated: Nov 21, 2018
 
 ---
 
@@ -123,7 +123,7 @@ ggplot(spd_raw,
   geom_point() + 
   coord_fixed() +
   ggtitle("Seattle Police Incidents",
-          subtitle="3/25/2018") +
+          subtitle="March 25, 2016") +
   theme_classic()
 ```
 ]
@@ -160,7 +160,7 @@ What this package does for you:
 ---
 # Installation
 
-As of Nov 19, 2018, the current version of `ggmap` must be downloaded from GitHub.
+As of Nov 21, 2018, the current version of `ggmap` must be downloaded from GitHub.
 
 This can be done using the `devtools` package.
 
@@ -228,17 +228,14 @@ Call `qmplot()` with no `geom()`, and then add density layers:
 .small[
 
 ```r
-qmplot(data = spd_raw, 
-  geom = "blank", 
-  x = Longitude,
-  y = Latitude, 
+qmplot(data = spd_raw, geom = "blank",
+  x = Longitude, y = Latitude, 
   maptype = "toner-lite", 
   darken = 0.5) + 
   stat_density_2d(
-    aes(fill = ..level..), 
+*   aes(fill = stat(level)),
       geom = "polygon", 
-      alpha = .2,
-      color = NA) + 
+      alpha = .2, color = NA) + 
   scale_fill_gradient2(
       "Incident\nConcentration", 
       low = "white", 
@@ -247,6 +244,9 @@ qmplot(data = spd_raw,
   theme(legend.position = "bottom")
 ```
 ]
+
+`stat(level)` indicates we want `fill=` to be based on `level` values calculated by the layer.
+
 ]
 
 .pull-right[
@@ -266,7 +266,7 @@ downtown &lt;- spd_raw %&gt;%
 ```
 
 
-Then make a dataframe of just assaults:
+Then make a dataframe of just assaults and robberies:
 
 ```r
 assaults &lt;- downtown %&gt;% 
@@ -286,13 +286,12 @@ Now let's plot the events and label them with `geom_label()` (`geom_text()` with
 .smallish[
 
 ```r
-qmplot(data = 
-       downtown,
+qmplot(data = downtown,
        x = Longitude,
        y = Latitude,
        maptype = "toner-lite",
-       color = I("firebrick"),
-       alpha = I(0.5)) + 
+*      color = I("firebrick"),
+*      alpha = I(0.5)) +
   geom_label(data = assaults,
        aes(label = assault_label))
 ```
@@ -442,7 +441,7 @@ Geospatial data is typically stored in **shapefiles** which store geometric data
 
 --
 
-Shapefiles actually consist of multiple individual files. There are always at least three (but up to 10+):
+Shapefiles actually consist of multiple individual files. There are usually at least three (but up to 10+):
 
 * `.shp`: The feature geometries
 
@@ -537,6 +536,26 @@ precincts_votes_sf &lt;-
 ]
 
 ---
+# Taking a `glimpse()`
+
+.smallish[
+
+```r
+glimpse(precincts_votes_sf)
+```
+
+```
+## Observations: 960
+## Variables: 5
+## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 11-...
+## $ P_Dem    &lt;dbl&gt; 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.8325991...
+## $ P_Rep    &lt;dbl&gt; 0.15612648, 0.07789474, 0.13418530, 0.08649469, 0.085...
+## $ Turnout  &lt;dbl&gt; 0.6931507, 0.7274119, 0.7347418, 0.7522831, 0.7579299...
+## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((1273698 193...
+```
+]
+
+---
 
 .pull-left[
 # Voting Map
@@ -561,7 +580,7 @@ ggplot(precincts_votes_sf,
 ]
 
 .pull-right[
-![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-14-1.svg)&lt;!-- --&gt;
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-15-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -771,7 +790,7 @@ kc_nowater &lt;- king_county %&gt;%
 Then we can reproduce the same plot using `kc_nowater`...
 
 ---
-![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
+![](CSSS508_week9_mapping_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
 ---
 
 class: inverse
