@@ -147,7 +147,7 @@ layout: default
    * Homework 6, Part 1 due at 11:59 PM on November 13th
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
-       + Homework 6, Part 1 Key: HTML, RMD
+       + Homework 6, Part 1 Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW6/HW6_Keys/homework_6_p1_key.html), [HTML](https://clanfear.github.io/CSSS508/Homework/HW6/HW6_Keys/homework_6_p1_key.Rmd)
    * [The R Inferno by Patrick Burns [PDF]](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf): "Circles" 2, 3, and 4 are relevant after this week's material, and Circle 8 covers a lot of miscellaneous R weird things that may trip you up.
    * [Reference material on writing functions](http://r4ds.had.co.nz/functions.html) with lots of examples
    * [Code style guide](http://adv-r.had.co.nz/Style.html) for writing functions, etc.
