@@ -686,10 +686,12 @@ glimpse(king_county)
 ```
 ]
 
+Variable names are in `variables` and values are in `estimate`.
+
 ---
 # Processing Data
 
-To get one row per precinct, we want to `spread()` key (`variable`) and value (`estimate`) columns into separate columns for each variable. Then we get `mutate()` `Any Black` into a proportion measure.
+To get one row per precinct, we want to `spread()` key (`variable`) and value (`estimate`) columns into separate columns for each variable. Then we `mutate()` `Any Black` into a proportion measure.
 
 
 ```r
@@ -702,7 +704,7 @@ king_county &lt;-  king_county %&gt;%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 ```
 
-.footnote[I remove the *margin of error (moe)* column before spreading.]
+.footnote[I remove the *margin of error* (`moe`) column before spreading.]
 
 
 ---
