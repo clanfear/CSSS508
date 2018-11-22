@@ -27,7 +27,7 @@ layout: default
 
 ### 1. RStudio and R Markdown
    * [Slides for Lecture 1: Course logistics, R/RStudio, and R Markdown](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
-       + [Rmd for Lecture 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
+       + [Rmd for Lecture 1 slides](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
    * [Lecture Video for Lecture 1](https://youtu.be/u6_uhABKia4), recorded September 26, 2018
    * Homework 1: Due at 11:59PM on October 2nd
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
@@ -52,7 +52,7 @@ layout: default
    
 ### 2. Visualizing Data
    * [Slides for Lecture 2: Plotting with `ggplot2`](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.html)
-       + [Rmd for Lecture 2 slides](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.Rmd)
+       + [Rmd for Lecture 2 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/CSSS508_Week2_ggplot2.Rmd)
    * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded October 3, 2018
    * Homework 2: Due at 11:59PM on October 9th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
@@ -70,7 +70,7 @@ layout: default
 
 ### 3. Manipulating and Summarizing Data
    * [Slides for Lecture 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
-       + [Rmd for Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.Rmd)
+       + [Rmd for Lecture 3 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week3/CSSS508_Week3_dplyr.Rmd)
    * [Lecture Video for Lecture 3](https://youtu.be/giKghK_7z7c), recorded October 10, 2018
    * Homework 3: Due at 11:59PM on October 16th
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
@@ -86,7 +86,7 @@ layout: default
    
 ### 4. Understanding R Data Structures
    * [Slides for Lecture 4: R data structures](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.html)
-       + [Rmd for Lecture 4 slides](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.Rmd)
+       + [Rmd for Lecture 4 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week4/CSSS508_week4_data_structures.Rmd)
    * [Lecture Video for Lecture 4](https://youtu.be/fc6Rc7Fbv0g), recorded October 17, 2018
    * Homework 4 (two options, complete one): Due at 11:59PM on October 23rd
        + Homework 4: R Data Structures (Less Advanced)
@@ -102,7 +102,7 @@ layout: default
 
 ### 5. Importing, Exporting, and Cleaning Data
    * [Slides for Lecture 5: Data import, export, and cleaning](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.html)
-       + [Rmd for Lecture 5 slides](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.Rmd)
+       + [Rmd for Lecture 5 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.Rmd)
    * [Lecture Video for Lecture 5](https://youtu.be/vPjW6jKVINI), recorded October 24, 2018
    * Homework 5, Part 1 due at 11:59 PM on October 30th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
@@ -133,7 +133,7 @@ layout: default
        
 ### 6. Using Loops
    * [Slides for Lecture 6: Looping with `for()` loops](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.html)
-       + [Rmd for Lecture 6 slides](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.Rmd)
+       + [Rmd for Lecture 6 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week6/CSSS508_week6_loops.Rmd)
    * [Lecture Video for Lecture 6](https://youtu.be/D0Zz3Sfxpxw), recorded October 31, 2018
    * Homework 5, Part 2 due at 11:59 PM on November 6th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p2.Rmd) (you will download this, fill in and submit on Canvas)
@@ -142,7 +142,7 @@ layout: default
    
 ### 7. Writing Functions
    * [Slides for Lecture 7: Vectorization and writing functions](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.html)
-       + [Rmd for Lecture 7 slides](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.Rmd)
+       + [Rmd for Lecture 7 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week7/CSSS508_week7_vectorization.Rmd)
    * [Lecture Video for Lecture 7](https://youtu.be/Eghfhtzr4jg), recorded November 7th, 2018
    * Homework 6, Part 1 due at 11:59 PM on November 13th
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
@@ -155,7 +155,7 @@ layout: default
 
 ### 8.  Working with Text Data
    * [Slides for Lecture 8: Working with strings and character data](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.html)
-       + [Rmd for Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.Rmd)
+       + [Rmd for Lecture 8 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week8/CSSS508_week8_strings.Rmd)
    * [Lecture Video for Lecture 8](https://youtu.be/ZwjncjjTwC4), recorded November 14th, 2018
    * Homework 6, Part 2 due at 11:59 PM on November 20th
        + Homework 6, Part 2: R Markdown template
@@ -170,8 +170,8 @@ layout: default
    
 ### 9. Working with Geographical Data
    * [Slides for Lecture 9: Mapping and labels in `ggplot2`](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_week9_mapping.html)
-       + [R code in Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_week9_mapping.Rmd)
-   * [Lecture Video for Lecture 9](https://youtu.be/NUL9ndVbuOE), recorded Spring 2018
+       + [R code in Lecture 9 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/CSSS508_week9_mapping.Rmd)
+   * [Lecture Video for Lecture 9](https://youtu.be/tt4FxrLvOkE), recorded November 21, 2018
    * Optional Homework 7: Due at 11:59 PM on November 27th
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
@@ -187,7 +187,7 @@ layout: default
 
 ### 10. Reproducibility and Best Practices
    * [Slides for Lecture 10: Reproducibility and Best Practices](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_reproducibility.html)
-      + [Rmd for Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_reproducibility.Rmd)
+      + [Rmd for Lecture 10 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week10/CSSS508_week10_reproducibility.Rmd)
    * Leacture Video for Lecture 10
    * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
    * R Packages:
@@ -205,7 +205,7 @@ layout: default
 
 ### 12. Working with Social Media Data (Out of Date)
    * [Slides for Lecture 12: Social media and text mining](http://clanfear.github.io/CSSS508/Lectures/Week12/CSSS508_week10_scraping.html)
-       + [Rmd for Lecture 12 slides](http://clanfear.github.io/CSSS508/Lectures/Week12/CSSS508_week10_scraping.Rpres)
+       + [Rmd for Lecture 12 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week12/CSSS508_week10_scraping.Rpres)
    * [Lecture Video for Week 12](https://youtu.be/DJIgMr8GrzM), recorded Autumn 2017
    * [Twitter Apps portal](https://apps.twitter.com/)
    * [Fabulous analysis of Trump tweets using R](http://varianceexplained.org/r/trump-tweets/)
