@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 10
 ## Reproducibility and Best Practices
 ### Chuck Lanfear
-### Nov 21, 2018<br>Updated: Nov 20, 2018
+### Nov 21, 2018<br>Updated: Nov 24, 2018
 
 ---
 
@@ -22,106 +22,17 @@ class: center, top, title-slide
 
 
 
----
-class: inverse
-# Organization
+# Today
 
----
-# A System
+### Reproducible Research
 
-Developing an organization system for research is something you either do accidentally—and badly—or purposefully with some upfront labor.
+### Best Practices
 
---
+   * Organization
+   * Portability
+   * Version Control
 
-Every paper, project, or presentation should be organized the same way.
-
---
-
-I suggest something like the following:
-
-.pull-left[
-```
-project/
-   readme.md
-   data/
-     derived/
-       processed_data.RData
-     raw/
-       core_data.csv
-   docs/
-     paper.Rmd
-   scripts/
-     functions.R
-     models.R
-```
-]
-.pull-right[
-1. There is a clear hierarchy
-   * Written content is in `docs`
-   * Code is in `scripts`
-   * Data is in `data`
-2. Naming is uniform
-   * All lower case
-   * Words separated by underscores
-3. Names are self-descriptive
-
-]
-
----
-class: inverse
-# Tools
-
----
-# On Formats
-
-Avoid "closed" or commercial software and file formats except where absolutely necessary.
-
---
-
-Use open source software and file formats.
-
---
-
-* It is always better for *science*:
-
-   + People should be able to explore your research without buying commercial software.
-   + You do not want your research to be inaccessible when software is updated.
-
---
-
-* It is often just *better*.
-
-   + It is usually updated more quickly
-   + It tends to be more secure
-   + It is rarely abandoned
-
---
-
-**The ideal:** Use software that reads and writes *raw text*.
-
----
-# Text
-
-Writing and formatting documents are two completely separate jobs.
-   * Write first
-   * Format later
-   * [Markdown](https://en.wikipedia.org/wiki/Markdown) was made for this
-
---
-
-Word processors—like Microsoft Word—try to do both at the same time, usually badly.
-
-They waste time by leading you to format instead of writing.
-
---
-
-Find a good modular text editor and learn to use it:
-   * [Atom](https://atom.io/)
-   * [Sublime](https://www.sublimetext.com/) (Commercial)
-   * Vim&lt;sup&gt;1&lt;/sup&gt;
-   * Emacs&lt;sup&gt;1&lt;/sup&gt;
-
-.footnote[[1] These are powerful but complex. RStudio has a Vim mode too.]
+### Advanced Data Manipulation
 
 ---
 class: inverse
@@ -153,7 +64,7 @@ R are particularly well suited to enabling **computational reproducibility**.&lt
 
 --
 
-They will not fix flawed experimental methods or observations, nor offer a remedy for improper application of statistical methods.
+They will not fix flawed research design, nor offer a remedy for improper application of statistical methods.
 
 Those are the difficult, non-repetitive things you want skills in.
 
@@ -166,6 +77,7 @@ Elements of computational reproducibility:
 --
 
 * Shared data
+
    + Researchers need your original data to verify and replicate your work.
 
 --
@@ -181,8 +93,8 @@ Elements of computational reproducibility:
 --
 
 * **Version Control**
-   + Changes to code document the research process.
-   + Also protects from losing work and facilitates sharing.
+   + Documents the research process.
+   + Prevents losing work and facilitates sharing.
 
 ---
 
@@ -231,7 +143,8 @@ By re-running the code, they reproduce your results on demand.
 
 --
 
-Platforms:
+Common Platforms:
+
  * **R:** R Markdown ([an example of mine](https://clanfear.github.io/birthtiming/inst/paper/paper.html))
  * **Python:** Jupyter Notebooks
 
@@ -245,23 +158,241 @@ A research compendium is an R package used not to share statistical or computati
 Research compendia feature:
 
 * Files organized in a recognizable structure (R packages)
+
 * Clear separation of data, method, and output. *Data are read only*.
+
 * A well-documented or even *preserved* computational environment
 
-`rrtools` by UW's Ben Markwick provides a simplified workflow to accomplish this in R.
+--
+
+`rrtools` by UW's [Ben Markwick](https://github.com/benmarwick) provides a simplified workflow to accomplish this in R.
+
+[Here is an example compendium of mine.](https://github.com/clanfear/birthtiming)
 
 ---
 ## Bookdown
 
-If using your compendium to generate an article, thesis, or dissertation, `rrtools` makes formatting simple by integrating `bookdown`.
+[`bookdown`](https://bookdown.org/yihui/bookdown/)—which is integrated into `rrtools`—can generate documents in the proper format for articles, theses, books, or dissertations.
 
-`bookdown` provides an accessible alternative to manually writing `\(\LaTeX\)` for typesetting and reference management.
+`bookdown` provides an accessible alternative to writing `\(\LaTeX\)` for typesetting and reference management.
 
 You can integrate citations and automate reference page generation using bibtex files (such as produced by Zotero).
 
 `bookdown` supports `.html` output for ease and speed and also renders `.pdf` files through `\(\LaTeX\)` for publication-ready documents.
 
-For University of Washington theses and dissertations, consider Ben Marwick's `huskydown` package which uses Markdown but renders via a UW approved `\(\LaTeX\)` template.
+For University of Washington theses and dissertations, consider Ben Marwick's [`huskydown` package](https://github.com/benmarwick/huskydown) which uses Markdown but renders via a UW approved `\(\LaTeX\)` template.
+
+---
+class: inverse
+# Best Practices
+
+## Organization and Portability
+
+*Past you is your worst enemy.*
+
+---
+# Organization Systems
+
+Organizing research projects is something you either do accidentally—and badly—or purposefully with some upfront labor.
+
+--
+
+Uniform organization makes switching between or revisiting projects easier.
+
+--
+
+I suggest something like the following:
+
+.pull-left[
+```
+project/
+   readme.md
+   data/
+     derived/
+       processed_data.RData
+     raw/
+       core_data.csv
+   docs/
+     paper.Rmd
+   syntax/
+     functions.R
+     models.R
+```
+]
+.pull-right[
+1. There is a clear hierarchy
+   * Written content is in `docs`
+   * Code is in `syntax`
+   * Data is in `data`
+2. Naming is uniform
+   * All lower case
+   * Words separated by underscores
+3. Names are self-descriptive
+
+]
+
+---
+# Workflow versus Projects
+
+To summarize Jenny Bryan, [one should separate workflow from projects.](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
+
+--
+
+.pull-left[
+### Workflow
+
+The software you use to write your code (e.g. RStudio)
+
+The location you store your files
+
+The specific computer you use
+
+The code you ran earlier or typed into your console
+]
+
+--
+
+.pull-right[
+### Project
+
+The raw data
+
+The code that operates on your raw data
+
+The output files or documents
+]
+
+--
+
+Projects *should not modify anything outside of the project* nor need to be modified by someone else (or future you) to run.
+
+**Projects *should be independent of your workflow*.**
+
+---
+# Portability
+
+For research to be reproducible, it must also be *portable*. Portable software operates *independent of workflow* such as fixed file locations.
+
+--
+
+**Do Not:**
+
+* Use `setwd()` in scripts or .Rmd files.
+* Use *absolute paths* except for *fixed, immovable sources* (secure data).
+  + `read_csv("C:/my_project/data/my_data.csv")`
+* Use `install.packages()` in a script or .Rmd files.
+* Use `rm(list=ls())` anywhere but your console.
+
+--
+
+**Do:**
+
+* Use RStudio projects (or the [`here` package](https://github.com/jennybc/here_here)) to set directories.
+* Use *relative paths* to load and save files:
+  + `read_csv("./data/my_data.csv")`
+* Load all required packages using `library()`.
+* Clear your environment when closing RStudio.
+
+---
+# Divide and Conquer
+
+Often you do not want to include all the code for a project in a single .Rmd file:
+
+   * The code takes too long to knit.
+   * The file is so long it is difficult to read.
+
+--
+
+There are two ways to deal with this:
+
+1. Use separate `.R` scripts or `.Rmd` files which save results from complicated parts of a project, then load these results in the main `.Rmd` file.
+
+   + This is good for loading and cleaning large data.
+   + Also for running slow models.
+
+--
+
+2. Use `source()` to run external `.R` scripts.
+
+   + This can be used to run large files that aren't impractically slow.
+   + Also good for loading project-specific functions.
+
+---
+# The Way of Many Files
+
+I find it beneficial to break projects into *many* files:
+   * Scripts with specialized functions.
+   * Scripts to load each set of variables.
+   * Scripts to run each set of models.
+   * Scripts to make tables and plots.
+   * A main .Rmd that runs some or all of these to reproduce the entire project.
+
+--
+
+Splitting up a project carries benefits:
+   * Once a portion of the project is done and in its own file, *it is out of your way.*
+   * If you need to make changes, you don't need to search through huge files.
+   * Entire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)
+
+---
+class: inverse
+# Tools
+
+### *Some opinionated advice*
+
+---
+# On Formats
+
+Avoid "closed" or commercial software and file formats except where absolutely necessary.
+
+--
+
+Use open source software and file formats.
+
+--
+
+* It is always better for *science*:
+
+   + People should be able to explore your research without buying commercial software.
+   + You do not want your research to be inaccessible when software is updated.
+
+--
+
+* It is often just *better*.
+
+   + It is usually updated more quickly
+   + It tends to be more secure
+   + It is rarely abandoned
+
+--
+
+**The ideal:** Use software that reads and writes *raw text*.
+
+---
+# Text
+
+Writing and formatting documents are two completely separate jobs.
+   * Write first
+   * Format later
+   * [Markdown](https://en.wikipedia.org/wiki/Markdown) was made for this
+
+--
+
+Word processors—like Microsoft Word—try to do both at the same time, usually badly.
+
+They waste time by leading you to format instead of writing.
+
+--
+
+Find a good modular text editor and learn to use it:
+   * [Atom](https://atom.io/)
+   * [Sublime](https://www.sublimetext.com/) (Commercial)
+   * Emacs
+   * Vim
+
+---
+class: inverse
+# Version Control
 
 ---
 # Version Control
@@ -306,7 +437,28 @@ Constantly committing and pulling changes automatically generates a running "his
 
 --
 
-`git` is integrated into RStudio under the *Tools* menu. [It requires some setup.](http://happygitwithr.com/)
+`git` is integrated into RStudio under the *Tools* menu. [It requires some setup.](http://happygitwithr.com/)&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] You can also use the [GitHub desktop application](https://desktop.github.com/).]
+
+
+---
+# GitHub as a CV
+
+Beyond archiving projects and allowing sharing, GitHub also serves as a sort of curriculum vitae for the programmer.
+
+--
+
+By allowing others to view your projects, you can display competence in programming and research.
+
+--
+
+If you are planning on working in the private sector, an active GitHub profile will give you a leg up on the competition.
+
+--
+
+If you are aiming for academia, a GitHub account signals technical competence and an interest in research transparency.
+
 
 ---
 class: inverse
@@ -324,7 +476,9 @@ library(tidyverse)
 *`%!in%` &lt;- Negate(`%in%`)
 ```
 
-`%!in%` is a custom operator. It is the *opposite* of `%in%`. It returns a `TRUE` for every element of the object on its left that is *not* an element of the object on its right.
+`%!in%` is a useful custom operator. It is the *opposite* of `%in%`.
+
+`%!in%` returns a `TRUE` for every element of the object on its left that is *not* an element of the object on its right.
 
 Because `!` *inverts* logical vectors, these statments would be equivalent:
 
@@ -367,7 +521,7 @@ mar_ages
 ```
 ]
 ---
-# Structure of the Data
+# What We Have
 
 These data are in "long" format where each individual has multiple observations.
 
@@ -383,7 +537,7 @@ Variables:
 * **censored_age**: Last age they were observed in data
 
 ---
-# The Goal
+# What We Want
 
 The goal is to get a dataframe that looks like this:
 
@@ -595,6 +749,7 @@ Combine all unmarried ages into a single vector per person.
 ```r
 age_year_no_list &lt;- vector("list", length(unique(mar_ages$seqid)))
 names(age_year_no_list) &lt;- paste0("seqid_", unique(mar_ages$seqid))
+
 for (i in 1:length(age_year_no_list)){
   vals &lt;- c(unmarried_years[[(3*i)-2]],
             unmarried_years[[(3*i)-1]],

@@ -102,7 +102,9 @@ Displaying Model Results
    + Using `sjTable()` in `sjPlot`
 * Advanced data manipulation example
 * Wrapping up the course
-  
+
+https://modelr.tidyverse.org/ ?
+https://broom.tidyverse.org/articles/bootstrapping.html ?
   
 ---
 class: inverse
