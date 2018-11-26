@@ -268,6 +268,18 @@ You can add values in square brackets in the `terms=` argument to specify counte
 glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
   ggpredict(terms=c("wt [2,3,4]", "cyl [4,6]")) %>% plot(facet=TRUE)
 ```
+---
+# Representative Values
+
+* meansd
+* minmax
+
+```{r, fig.width=11, fig.height=6, out.width="1100px", out.height="600px"}
+glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
+  ggpredict(terms=c("wt [meansd]", "hp [minmax]")) %>% plot(facet=TRUE)
+```
+
+
 
 ---
 # Dot plots with `ggpredict()`
@@ -289,6 +301,85 @@ but is not limited to:
 * Predicted values for polynomial and interaction terms
 * Getting predictions from models from dozens of other packages
 * Sending `ggeffects` objects to `ggplot2` to freely modify plots
+
+---
+# An Advanced Example
+
+```{r}
+load("data/any_arrest_data.RData")
+mod_arrest <- glm(arrest ~ white_comp_wit_vict*black_arr_susp + 
+                  crime_type*white_comp_wit_vict + caller_type + 
+                  arr_susp_subj_count + comp_wit_vict_count +
+                  black_arr_susp*neighb_type + crime_type*neighb_type + 
+                  serious_rate + pbl + pot + dis + year,
+                  family=binomial(link="logit"), data= any_arrest_data)
+```
+
+---
+
+```{r}
+mod_arrest %>% ggpredict(terms=c("black_arr_susp", "white_comp_wit_vict", "neighb_type")) %>% plot()
+```
+---
+# Doing it Manually
+
+.small[
+```{r}
+sim_model <- mod_arrest
+
+sim_params <- MASS::mvrnorm(n=10000, mu=coef(sim_model), Sigma=vcov(sim_model))
+raw_matrix <- model.matrix(sim_model)
+x_values   <- colMeans(raw_matrix)
+
+# Reporter * Target * Crime Type * Neighb Type
+n_scen <- (2*2*2*3)
+x_frame <- setNames(data.frame(matrix(x_values, nrow=n_scen, ncol=length(x_values), byrow=T)), names(x_values))
+cf_vals <- arrangements::permutations(c(0,1), k=5, replace=T)
+cf_vals <- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,]
+colnames(cf_vals) <- c("white_comp_wit_vict1", "black_arr_susp1", "crime_typeNuisance", 
+                       "neighb_typeBlackDisadv", "neighb_typeChanging")
+x_frame[colnames(cf_vals)] <- cf_vals
+x_frame <- x_frame %>%
+  mutate(`white_comp_wit_vict1:black_arr_susp1` = white_comp_wit_vict1*black_arr_susp1,
+         `white_comp_wit_vict1:crime_typeNuisance` = white_comp_wit_vict1*crime_typeNuisance,
+         `black_arr_susp1:neighb_typeBlackDisadv` = black_arr_susp1*neighb_typeBlackDisadv,
+         `black_arr_susp1:neighb_typeChanging` = black_arr_susp1*neighb_typeChanging,
+         `crime_typeNuisance:neighb_typeBlackDisadv` = crime_typeNuisance*neighb_typeBlackDisadv,
+         `crime_typeNuisance:neighb_typeChanging` = crime_typeNuisance*neighb_typeChanging,
+         `black_arr_susp1:neighb_typeBlackDisadv` = black_arr_susp1*neighb_typeBlackDisadv,
+         `black_arr_susp1:neighb_typeChanging` = black_arr_susp1*neighb_typeChanging)
+
+extract_pe_ci <- function(x){
+  vals <- c(mean(x), quantile(x, probs=c(.025, .975)))
+  names(vals) <- c("PE", "LB", "UB")
+  return(vals)
+}
+
+sims_logodds <- as.matrix(x_frame) %*% t(sim_params)
+sims_prob <- exp(sims_logodds) / (1 + exp(sims_logodds))
+estimated_pes <- as.data.frame( t(apply(sims_prob, 1, extract_pe_ci)))
+
+estimated_pes$`Reporter` <- ifelse(cf_vals[,1]==1, "Any White", "All Black")
+estimated_pes$`Target` <- ifelse(cf_vals[,2]==1, "Any Black", "All White")
+estimated_pes$`Crime Type` <- ifelse(cf_vals[,3]==1, "Nuisance Crime", "Serious Crime")
+estimated_pes$`Neighborhood` <- case_when(
+  cf_vals[,4]==1 ~ "Disadvantaged",
+  cf_vals[,5]==1 ~ "Changing",
+  TRUE ~ "Stable White"
+)
+
+
+arrest_pe_plot <- ggplot(estimated_pes, aes(x=Target, y=PE, group=Reporter)) + 
+  facet_grid(`Crime Type`~Neighborhood) +
+  geom_errorbar(aes(ymin=LB, ymax=UB), position=position_dodge(width=.4), size=0.75, width=0.15) +
+  geom_point(shape=21, position=position_dodge(width=.4), size=2, aes(fill=Reporter)) + 
+  scale_fill_manual("Reporter", values=c("Any White"="white", "All Black"="black")) +
+  ggtitle("Figure 3. Probability of Arrest", 
+          subtitle="by Reporter and Target Race, Neighborhood and Crime Type") +
+  xlab("Race of Target") + ylab("Estimated Probability") + 
+  theme_bw() + theme(legend.position = c(0.86,0.15),legend.background = element_rect(color=1))
+```
+]
 
 ---
 class: inverse

@@ -179,7 +179,7 @@ For academic papers, degrees of reproducibility vary:
 
 --
 
-5. Docker File: Self-contained ecosystem
+5. Docker Compendium: Self-contained ecosystem
 
 ---
 ## Interactive Documents
@@ -208,17 +208,19 @@ Common Platforms:
 ---
 ## Research Compendia
 
-A research compendium is an R package used not to share statistical or computational *methods* but to organize and share reproducible *projects*.
+A research compendium is a portable, reproducible distribution of an article or other project.
 
 --
 
 Research compendia feature:
 
-* Files organized in a recognizable structure (R packages)
+* An interactive document as the foundation
+
+* Files organized in a recognizable structure (e.g. an R package)
 
 * Clear separation of data, method, and output. *Data are read only*.
 
-* A well-documented or even *preserved* computational environment
+* A well-documented or even *preserved* computational environment (e.g. Docker)
 
 --
 
@@ -379,9 +381,8 @@ There are two ways to deal with this:
 
 I find it beneficial to break projects into *many* files:
    * Scripts with specialized functions.
-   * Scripts to load each set of variables.
-   * Scripts to run each set of models.
-   * Scripts to make tables and plots.
+   * Scripts to load and clean each set of variables.
+   * Scripts to run each set of models and make tables and plots.
    * A main .Rmd that runs some or all of these to reproduce the entire project.
 
 --
@@ -390,6 +391,39 @@ Splitting up a project carries benefits:
    * Once a portion of the project is done and in its own file, *it is out of your way.*
    * If you need to make changes, you don't need to search through huge files.
    * Entire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)
+   * **It is the only way to build a proper *pipeline* for a project. **
+
+---
+# Pipelines
+
+Professional researchers and teams design projects as a **pipeline**.
+
+--
+
+A **pipeline** is a series of consecutive processing elements (scripts and functions in R).
+
+--
+
+Each stage of a pipeline...
+
+1. Has clearly defined inputs and outputs
+2. Does not modify its inputs.
+3. Produces the exact same output every time it is re-run.
+
+--
+
+This means...
+
+1. When you modify one stage, you only need to rerun *subsequent stages*.
+2. Different people can work on each stage.
+3. Problems are isolated within stages.
+4. You can depict your project as a directed graph of *dependencies*.
+
+---
+
+# Example Pipeline
+
+![](img/pipeline.svg)
 
 ---
 class: inverse
