@@ -460,7 +460,7 @@ library(sjPlot)
 
 ```{r, eval=FALSE}
 model_1 <- lm(mpg ~ wt, data = mtcars)
-sjt.lm(model_1)
+tab_model(model_1)
 ```
 
 ```{r, echo=FALSE, out.width = "600px"}
@@ -484,7 +484,7 @@ this easy to do: just give it more models!
 ```{r, eval=FALSE}
 model_2 <- lm(mpg ~ hp + wt, data = mtcars)
 model_3 <- lm(mpg ~ hp + wt + factor(am), data = mtcars)
-sjt.lm(model_1, model_2, model_3)
+tab_model(model_1, model_2, model_3)
 ```
 
 ```{r, echo=FALSE, out.width = "1280px"}

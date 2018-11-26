@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 10
 ## Reproducibility and Best Practices
 ### Chuck Lanfear
-### Nov 21, 2018<br>Updated: Nov 25, 2018
+### Nov 21, 2018<br>Updated: Nov 26, 2018
 
 ---
 
@@ -40,7 +40,30 @@ class: inverse
 # Reproducible Research
 
 ---
-## Reproducibility Definitions
+# Why Reproducibility?
+
+Reproducibility is not *replication*.
+
+* **Replication** is running a new study to show if and how results of a prior study hold.
+* **Reproducibility** is about rerunning *the same study* and getting the *same results*.
+
+--
+
+Reproducible studies can still be *wrong*... and in fact reproducibility makes proving a study wrong *much easier*.
+
+--
+
+Reproducibility means:
+
+* Transparent research practices.
+* Minimal barriers to verifying your results.
+
+--
+
+*Any study that isn't reproducible can be trusted only on faith.*
+
+---
+# Reproducibility Definitions
 
 Reproducibility comes in three forms (Stodden 2014):
 
@@ -58,7 +81,7 @@ Reproducibility comes in three forms (Stodden 2014):
 
 --
 
-R are particularly well suited to enabling **computational reproducibility**.&lt;sup&gt;1&lt;/sup&gt;
+R is particularly well suited to enabling **computational reproducibility**.&lt;sup&gt;1&lt;/sup&gt;
 
 .footnote[[1] Python is equally well suited.]
 
@@ -66,7 +89,7 @@ R are particularly well suited to enabling **computational reproducibility**.&lt
 
 They will not fix flawed research design, nor offer a remedy for improper application of statistical methods.
 
-Those are the difficult, non-repetitive things you want skills in.
+Those are the difficult, non-automatable things you want skills in.
 
 ---
 
@@ -127,8 +150,8 @@ For academic papers, degrees of reproducibility vary:
 ---
 ## Interactive Documents
 
-*Interactive documents*—like R Markdown docs—combine code and text together into a self-contained document.
-   * Loading and process data
+**Interactive documents**—like R Markdown docs—combine code and text together into a self-contained document.
+   * Load and process data
    * Run models
    * Generate tables and plots in-line with text
    * In-text values automatically filled in
@@ -151,7 +174,7 @@ Common Platforms:
 ---
 ## Research Compendia
 
-A research compendium is a portable, reproducible distribution of an article or other project.
+A **research compendium** is a portable, reproducible distribution of an article or other project.
 
 --
 
@@ -176,11 +199,19 @@ Research compendia feature:
 
 [`bookdown`](https://bookdown.org/yihui/bookdown/)—which is integrated into `rrtools`—can generate documents in the proper format for articles, theses, books, or dissertations.
 
+--
+
 `bookdown` provides an accessible alternative to writing `\(\LaTeX\)` for typesetting and reference management.
+
+--
 
 You can integrate citations and automate reference page generation using bibtex files (such as produced by Zotero).
 
+--
+
 `bookdown` supports `.html` output for ease and speed and also renders `.pdf` files through `\(\LaTeX\)` for publication-ready documents.
+
+--
 
 For University of Washington theses and dissertations, consider Ben Marwick's [`huskydown` package](https://github.com/benmarwick/huskydown) which uses Markdown but renders via a UW approved `\(\LaTeX\)` template.
 
@@ -189,8 +220,6 @@ class: inverse
 # Best Practices
 
 ## Organization and Portability
-
-*Past you is your worst enemy.*
 
 ---
 # Organization Systems
@@ -261,6 +290,8 @@ The raw data
 
 The code that operates on your raw data
 
+The packages you use
+
 The output files or documents
 ]
 
@@ -298,7 +329,7 @@ For research to be reproducible, it must also be *portable*. Portable software o
 ---
 # Divide and Conquer
 
-Often you do not want to include all the code for a project in a single .Rmd file:
+Often you do not want to include all the code for a project in a single `.Rmd` file:
 
    * The code takes too long to knit.
    * The file is so long it is difficult to read.
@@ -360,11 +391,13 @@ This means...
 1. When you modify one stage, you only need to rerun *subsequent stages*.
 2. Different people can work on each stage.
 3. Problems are isolated within stages.
-4. You can depict your project as a directed graph of *dependencies*.
+4. You can depict your project as a *directed graph* of **dependencies**.
 
 ---
 
 # Example Pipeline
+
+Every stage (oval) has an unambiguous input and output. Everything that precedes a given stage is a **dependency**—something required to run it.
 
 ![](img/pipeline.svg)
 
@@ -514,7 +547,7 @@ library(tidyverse)
 
 `%!in%` returns a `TRUE` for every element of the object on its left that is *not* an element of the object on its right.
 
-Because `!` *inverts* logical vectors, these statments would be equivalent:
+Because `!` *inverts* logical vectors, these statements are equivalent:
 
 
 ```r
@@ -522,6 +555,7 @@ Because `!` *inverts* logical vectors, these statments would be equivalent:
 x %!in% y
 ```
 
+.footnote[`Negate()` is akin to `!` for functions.]
 ---
 # Example Data
 
@@ -573,7 +607,7 @@ Variables:
 ---
 # What We Want
 
-The goal is to get a dataframe that looks like this:
+The goal is to get a "wide" dataframe that looks like this:
 
 * Each *row* corresponds to a *person*
 * Each *column* corresponds to an *age*, from 10 to 26.
@@ -591,7 +625,7 @@ I like to type out long comments that describe my problem and possible strategie
 
 ![](img/comment_cap.PNG)
 
-If interested, [here is a link to my *unedited script* this is all taken from.](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week11/marriage_dates_to_age_year_110317.R)
+If interested, [here is a link to my *unedited script* this is all taken from.](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week10/marriage_dates_to_age_year_110317.R)
 It is a bit messy, long, and inefficient but is a realistic example of "in-use" code. Note that it assumes access to the full data set, which I cannot share.
 
 ---
@@ -635,7 +669,7 @@ for (i in 1:nrow(mar_ages)){
     married_years[[i]] &lt;- # Marriage age to divorce age
       mar_ages$marriage_age[i]:mar_ages$divorce_age[i]
   } else { # Print ERROR if none of above conditions apply
-    married_years[[i]] &lt;- "ERROR"; print(paste0("Error on ", i))
+*   married_years[[i]] &lt;- "ERROR"; print(paste0("Error on ", i))
   }}
 ```
 ]
