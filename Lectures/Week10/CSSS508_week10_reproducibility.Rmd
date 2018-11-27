@@ -2,7 +2,7 @@
 title: "CSSS508, Week 10"
 subtitle: "Reproducibility and Best Practices"
 author: "Chuck Lanfear"
-date: "Nov 21, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Nov 27, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -361,7 +361,7 @@ Projects *should not modify anything outside of the project* nor need to be modi
 ---
 # Portability
 
-For research to be reproducible, it must also be *portable*. Portable software operates *independent of workflow* such as fixed file locations.
+For research to be reproducible, it must also be *portable*. Portable software operates *independently of workflow* such as fixed file locations.
 
 --
 
