@@ -1,7 +1,7 @@
 ---
-title: "Lab/HW 7: Visualizing temporal and spatial data"
+title: "Lab/HW 7: Mapping with `ggmap`"
 author: "YOUR NAME"
-date: "November 21st, 2017"
+date: "November 27th, 2017"
 output:
   html_document:
     toc: true
@@ -10,11 +10,17 @@ output:
 
 # Instructions
 
-> Fill in this lab worksheet at your own pace. Knit it periodically to check that things are working the same way they are when you are working in RStudio interactively. Ask questions, consult with others, use Google, etc. At the end of the class session, email what you have to yourself so you don't lose progress. You do not need to turn in your work, but feedback will probided if you as Homework 7 on Canvas (both Rmd and HTML files). These will be evaluated by Chuck rather than peer reviewed.
+> Fill in this lab worksheet at your own pace. Knit it periodically to check that things are working the same way they are when you are working in RStudio interactively. Ask questions, consult with others, use Google, etc. At the end of the class session, email what you have to yourself so you don't lose progress. You do not need to turn in your work, but feedback will probided if you as Homework 7 on Canvas (both `.Rmd` and `.html` files). These will be evaluated by Chuck rather than peer reviewed.
 
-You will probably want to have the following libraries loaded (you can add more in if needed):
+```{r, eval=FALSE, echo=FALSE}
+# Run this to install ggmap from GitHub
+if(!requireNamespace("devtools")) install.packages("devtools")
+devtools::install_github("dkahle/ggmap", ref = "tidyup")
+```
+
 
 ```{r load_libraries, include=FALSE}
+# You will probably want to have the following libraries loaded (you can add more in if needed):
 library(tidyverse)
 library(lubridate)
 library(stringr)
@@ -56,7 +62,7 @@ str(restaurants)
 
 ## Preparing to label bad scores
 
-> In order to label restaurants with bad scores (say, 40 and above), you'll want to make a column called `Label_40` on `scores_over_time`. It should have the `Name` if the `Score` is greater than or equal to 40, and be blank (i.e. `""`) if the `Score` is below that. Use `mutate` and `ifelse` to make this `Label_40` column.
+> In order to label restaurants with bad scores (say, 40 and above), you'll want to make a column called `Label_40` on `scores_over_time`. It should have the `Name` if the `Score` is greater than or equal to 40, and be blank (i.e. `""`) if the `Score` is below that. Use `mutate()` and `ifelse()` to make this `Label_40` column.
 
 [YOUR CODE HERE]
 
@@ -70,19 +76,19 @@ str(restaurants)
 
 # Mapping the recent scores
 
-> Now, use the `ggmap` package and the longitude and latitude information to plot the most recent inspection scores for restaurants on top of a map of Seattle. Experiment with zoom levels to get the right region bounds. Try coloring and/or sizing the points according to their most recent inspection score (bigger points = higher score). You can use [`scale_color_gradient`](http://docs.ggplot2.org/current/scale_gradient.html) to set the colors so that establishments with lower scores are white or gray, and establishments with higher scores are red, and [`scale_size`](http://docs.ggplot2.org/current/scale_size.html) to set the sizes. Play with these options and map settings until you get something you think looks good.
+> Now, use the `ggmap` package and the longitude and latitude information to plot the most recent inspection scores for restaurants on top of a map of Seattle. Try coloring and/or sizing the points according to their most recent inspection score (bigger points = higher score). You can use [`scale_color_gradient()`](http://docs.ggplot2.org/current/scale_gradient.html) to set the colors so that establishments with lower scores are white or gray, and establishments with higher scores are red, and [`scale_size=`](http://docs.ggplot2.org/current/scale_size.html) to set the sizes. Play with these options and map settings until you get something you think looks good.
 
 [YOUR CODE AND PLOT HERE]
 
 ## The U District
 
-> Now repeat the plot, but zoomed in on the U District area. Add some text labels using `Label_40` for businesses whose scores were 40 or higher on their most recent inspection. See the [`ggplot2` docs on `geom_text()` and `geom_label()`](http://docs.ggplot2.org/current/geom_text.html) for how you can get these to look good, perhaps trying out the [`ggrepel` package](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html) to avoid overlaps.
+> Now repeat the plot, but `filter()` the data to the U District area (latitude above 47.674 and below 47.651, longitude above -122.322 and below -122.301). Add some text labels using `Label_40` for businesses whose scores were 40 or higher on their most recent inspection. See the [`ggplot2` docs on `geom_text()` and `geom_label()`](http://docs.ggplot2.org/current/geom_text.html) for how you can get these to look good, perhaps trying out the [`ggrepel` package](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html) to avoid overlaps.
 
 [YOUR CODE AND PLOT HERE]
 
 ## Capitol Hill
 
-> Repeat the above, but for Capitol Hill instead.
+> Repeat the above, but for Capitol Hill instead (latitude between 47.614 and 47.642, longitude between -122.329 and -122.302).
 
 [YOUR CODE AND PLOT HERE]
 
@@ -92,7 +98,7 @@ str(restaurants)
 
 ## Sub-sampling the data
 
-> Now we want to look at inspection scores over time for restaurants, but there are far too many to visualize. Pick something more limited to investigate and subset the `scores_over_time` data to include somewhere between around 5 and 25 establishments. To do this, you'll want to make a vector that has just the `Business_ID` or `Name` values of restaurants of interest, and then `filter()` the `scores_over_time()` data based on this. Some examples of angles you could choose for doing this subsetting:
+> Now we want to look at inspection scores over time for restaurants, but there are far too many to visualize. Pick something more limited to investigate and subset the `scores_over_time` data to include somewhere between around 5 and 25 establishments. To do this, you'll want to make a vector that has just the `Business_ID` or `Name` values of restaurants of interest, and then `filter()` the `scores_over_time` data based on this. Some examples of angles you could choose for doing this subsetting:
 
 > * Restaurants in your ZIP code
 > * Your favorite chain restaurant
@@ -113,6 +119,6 @@ str(restaurants)
 
 ## Plotting time trends
 
-> Now make a longitudinal plot! You should use `facet_wrap()` by restaurant name so that you have one panel per restaurant. The x axis should be the `Date` (maybe reformatted using [`scale_x_date`](http://docs.ggplot2.org/current/scale_date.html) to avoid extra clutter) and the y axis should be the `Score`. Use a `geom_line` layer to show the trend in scores for each restaurant. Do you observe anything interesting about the scores for the restaurants you've chosen? (This doesn't involve any new skills, just a refresher on `ggplot2` practice!)
+> Now make a longitudinal plot! You should use `facet_wrap()` by restaurant name so that you have one panel per restaurant. The x axis should be the `Date` (maybe reformatted using [`scale_x_date()`](http://docs.ggplot2.org/current/scale_date.html) to avoid extra clutter) and the y axis should be the `Score`. Use a `geom_line` layer to show the trend in scores for each restaurant. Do you observe anything interesting about the scores for the restaurants you've chosen? (This doesn't involve any new skills, just a refresher on `ggplot2` practice!)
 
 [YOUR CODE, PLOT, OBSERVATIONS HERE]
