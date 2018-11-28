@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSSS508, Week 11</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Chuck Lanfear" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, top, title-slide
+
+# CSSS508, Week 11
+## Working with Model Results
+### Chuck Lanfear
+### Dec 11, 2018<br>Updated: Nov 27, 2018
+
+---
+
+
+
+
+
+
+
+
+
+---
+# Topics for Today
+
+Displaying Model Results
+
+* `broom`
+   + Turning model output lists into dataframes
+   + Summarizing models
+* `ggeffects`
+   + Creating predicted values
+   + Plotting marginal effects
+* Making regression tables
+   + Using `pander` for models
+   + Using `sjTable()` in `sjPlot`
+* Advanced data manipulation example
+* Wrapping up the course
+
+https://modelr.tidyverse.org/ ?
+https://broom.tidyverse.org/articles/bootstrapping.html ?
+  
+---
+class: inverse
+# broom
+
+---
+# broom
+
+`broom` is a package that "tidies up" the output from models such a `lm()` and `glm()`.
+
+It has a small number of key functions:
+
+* `tidy()` - Creates a dataframe summary of a model.
+* `augment()` - Adds columns---such as fitted values---to the data used in the model.
+* `glance()` - Provides one row of fit statistics for models.
+
+
+```r
+library(broom)
+```
+
+---
+# Standard Output is Lists
+
+`lm()` and `summary()` produce lists as output, which cannot go directly into 
+tidyverse functions, particularly those in `ggplot2`.
+
+.small[
+
+```r
+lm_1 &lt;- lm(mpg~wt+hp, data=mtcars)
+summary(lm_1)
+```
+
+```
+## 
+## Call:
+## lm(formula = mpg ~ wt + hp, data = mtcars)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -3.941 -1.600 -0.182  1.050  5.854 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
+## wt          -3.87783    0.63273  -6.129 1.12e-06 ***
+## hp          -0.03177    0.00903  -3.519  0.00145 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.593 on 29 degrees of freedom
+## Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8148 
+## F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
+```
+]
+
+---
+## Standard Output Varies!
+
+.smallish[
+Each type of model also produces somewhat different output, so you can't just reuse
+the same code to handle output from every model.
+]
+
+.small[
+
+```r
+glm_1 &lt;- glm(am~hp+wt, data=mtcars, family=binomial(link="logit"))
+summary(glm_1)
+```
+
+```
+## 
+## Call:
+## glm(formula = am ~ hp + wt, family = binomial(link = "logit"), 
+##     data = mtcars)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.2537  -0.1568  -0.0168   0.1543   1.3449  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept) 18.86630    7.44356   2.535  0.01126 * 
+## hp           0.03626    0.01773   2.044  0.04091 * 
+## wt          -8.08348    3.06868  -2.634  0.00843 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 43.230  on 31  degrees of freedom
+....
+```
+]
+
+---
+`broom::tidy()`
+
+`tidy()` produces the same output, but as a dataframe.
+
+
+```r
+lm_1 %&gt;% tidy()
+```
+
+```
+## # A tibble: 3 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)  37.2      1.60        23.3  2.57e-20
+## 2 wt           -3.88     0.633       -6.13 1.12e- 6
+## 3 hp           -0.0318   0.00903     -3.52 1.45e- 3
+```
+
+---
+`broom::tidy()`
+
+This output is also completely identical between different models. This can be very 
+useful and important if running models with different test statistics... or just running
+a lot of models!
+
+
+```r
+glm_1 %&gt;% tidy()
+```
+
+```
+## # A tibble: 3 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)  18.9       7.44        2.53 0.0113 
+## 2 hp            0.0363    0.0177      2.04 0.0409 
+## 3 wt           -8.08      3.07       -2.63 0.00843
+```
+
+---
+# `broom::glance()`
+
+`glance()` produces dataframes of fit statistics for models. If you run many models,
+you can compare each model row-by-row in each column... or even plot their different
+fit statistics to allow holistic comparison.
+
+.small[
+
+```r
+glance(lm_1)
+```
+
+```
+## # A tibble: 1 x 11
+##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
+## *     &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.827         0.815  2.59      69.2 9.11e-12     3  -74.3  157.  163.
+## # ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;
+```
+]
+
+---
+# `broom augment()`
+
+`augment()` takes values generated by a model and adds them back to the original data.
+This includes fitted values, residuals, and leverage statistics.
+
+.small[
+
+```r
+augment(lm_1) %&gt;% head()
+```
+
+```
+## # A tibble: 6 x 11
+##   .rownames   mpg    wt    hp .fitted .se.fit .resid   .hat .sigma .cooksd
+##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Mazda RX4  21    2.62   110    23.6   0.546 -2.57  0.0443   2.59 1.59e-2
+## 2 Mazda RX~  21    2.88   110    22.6   0.522 -1.58  0.0405   2.62 5.46e-3
+## 3 Datsun 7~  22.8  2.32    93    25.3   0.636 -2.48  0.0602   2.59 2.07e-2
+## 4 Hornet 4~  21.4  3.22   110    21.3   0.565  0.135 0.0475   2.64 4.72e-5
+## 5 Hornet S~  18.7  3.44   175    18.3   0.498  0.373 0.0369   2.64 2.74e-4
+## 6 Valiant    18.1  3.46   105    20.5   0.672 -2.37  0.0672   2.60 2.16e-2
+## # ... with 1 more variable: .std.resid &lt;dbl&gt;
+```
+]
+
+---
+# The Power of broom
+
+The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `cyl`:
+
+.small[
+
+```r
+mtcars %&gt;% group_by(cyl) %&gt;% 
+  do(tidy(lm(mpg ~  wt + hp + disp, data=.)))
+```
+
+```
+## # A tibble: 12 x 6
+## # Groups:   cyl [3]
+##      cyl term            estimate std.error  statistic   p.value
+##    &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+##  1     4 (Intercept)  44.9           5.03    8.92      0.0000452
+##  2     4 wt           -2.59          3.52   -0.735     0.486    
+##  3     4 hp           -0.0645        0.0549 -1.18      0.278    
+##  4     4 disp         -0.0663        0.0818 -0.810     0.445    
+##  5     6 (Intercept)  30.3           5.63    5.38      0.0126   
+##  6     6 wt           -3.90          1.41   -2.75      0.0705   
+##  7     6 hp           -0.0110        0.0213 -0.514     0.643    
+##  8     6 disp          0.0161        0.0135  1.20      0.317    
+##  9     8 (Intercept)  26.7           3.91    6.82      0.0000461
+## 10     8 wt           -2.18          1.16   -1.88      0.0902   
+## 11     8 hp           -0.0137        0.0114 -1.20      0.258    
+## 12     8 disp          0.00000110    0.0131  0.0000843 1.000
+```
+]
+
+---
+class: inverse
+# `ggeffects`
+
+---
+# `ggeffects`
+
+While `broom` produces tidy model *summaries*, `ggeffects` is used to create tidy 
+*marginal effects*. That is, tidy dataframes of *ranges* of predicted values that can be
+fed straight into `ggplot2` for plotting model results.
+
+* `ggpredict()` - Computes predicted values for the outcome variable at margins of specific variables.
+* `plot.ggeffects()` - A plot method for `ggeffects` objects (like `ggredict()` output)
+
+
+```r
+library(ggeffects)
+```
+
+---
+# `ggpredict()`
+
+When you run  `ggpredict()`, it produces a dataframe with a row for every unique 
+value of a supplied predictor ("independent") variable (`term`). 
+
+Each row contains a predicted value for the outcome ("dependent") variable, plus confidence intervals. 
+
+The argument `interval="prediction"` will give predicted intervals instead.
+
+
+```r
+lm_1_predicted &lt;- ggpredict(lm_1, terms="wt")
+```
+
+---
+#`ggpredict()` output
+
+.smallish[
+
+```r
+lm_1_predicted
+```
+
+```
+## 
+## # Predicted values for mpg 
+## # x = wt 
+## 
+##    x predicted conf.low conf.high
+##  1.4    27.138   24.711    29.564
+##  1.6    26.362   24.164    28.560
+##  1.8    25.586   23.613    27.560
+##  2.0    24.811   23.054    26.568
+##  2.2    24.035   22.487    25.584
+##  2.4    23.260   21.905    24.614
+##  2.6    22.484   21.304    23.665
+##  2.8    21.709   20.672    22.746
+##  3.0    20.933   19.995    21.871
+##  3.2    20.158   19.259    21.056
+##  ... and 11 more rows.
+## 
+## Adjusted for:
+## * hp = 146.69
+```
+]
+
+---
+# `plot()` for `ggpredict()`
+
+`ggeffects` features a `plot()` *method* (`plot.ggeffects()`), which produces
+a ggplot when you give `plot()`  output from `ggpredict()`.
+
+.small[
+
+```r
+plot(lm_1_predicted)
+```
+
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-12-1.svg)&lt;!-- --&gt;
+]
+
+---
+# Grouping with `ggpredict()`
+
+When using a vector of `terms`, `ggeffects` will plot the first along the x-axis and use
+others for *grouping*. Note we can pipe a model into `ggpredict()`!
+
+.small[
+
+```r
+glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %&gt;%
+  ggpredict(terms=c("wt", "cyl")) %&gt;% plot()
+```
+
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-13-1.svg)&lt;!-- --&gt;
+]
+
+---
+# Faceting with `ggpredict()`
+
+You can add `facet=TRUE` to the `plot()` call to facet over *grouping terms*.
+
+.small[
+
+```r
+glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %&gt;%
+  ggpredict(terms=c("wt", "cyl")) %&gt;% plot(facet=TRUE)
+```
+
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-14-1.svg)&lt;!-- --&gt;
+]
+
+---
+# Counterfactual Values
+
+You can add values in square brackets in the `terms=` argument to specify counterfactual values.
+
+.small[
+
+```r
+glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %&gt;%
+  ggpredict(terms=c("wt [2,3,4]", "cyl [4,6]")) %&gt;% plot(facet=TRUE)
+```
+
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-15-1.svg)&lt;!-- --&gt;
+]
+
+---
+# Representative Values
+
+You can also use `[meansd]` or `[minmax]` to set representative values.
+
+.small[
+
+```r
+glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %&gt;%
+  ggpredict(terms=c("wt [meansd]", "hp [minmax]")) %&gt;% plot(facet=TRUE)
+```
+
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
+]
+
+---
+# Dot plots with `ggpredict()`
+
+`ggpredict` will produce dot plots with error bars for categorical predictors.
+
+.small[
+
+```r
+lm(mpg~as.factor(am)+as.factor(cyl), data=mtcars) %&gt;% 
+  ggpredict(terms=c("am", "cyl")) %&gt;% plot()
+```
+
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-17-1.svg)&lt;!-- --&gt;
+]
+
+---
+# Notes on `ggeffects`
+
+There is a lot more to the `ggeffects` package that you can see in [the package vignette](https://cran.r-project.org/web/packages/ggeffects/vignettes/marginaleffects.html)
+and the [github repository](https://github.com/strengejacke/ggeffects). This includes,
+but is not limited to:
+
+* Predicted values for polynomial and interaction terms
+
+* Getting predictions from models from dozens of other packages
+
+* Sending `ggeffects` objects to `ggplot2` to freely modify plots
+
+---
+# An Advanced Example
+
+Here is an example using a model from a [recent article I worked on](https://onlinelibrary.wiley.com/doi/abs/10.1111/cico.12346?af=R).
+
+This models the likelihood of arrest of a target in a police contact conditional on neighborhood, race of target, and race of who called the police.
+
+.smallish[
+
+```r
+load("data/any_arrest_data.RData")
+mod_arrest &lt;- glm(arrest ~ white_comp_wit_vict*black_arr_susp + 
+                  crime_type*white_comp_wit_vict + caller_type + 
+                  arr_susp_subj_count + comp_wit_vict_count +
+                  black_arr_susp*neighb_type + crime_type*neighb_type + 
+                  serious_rate + pbl + pot + dis + year,
+                  family = binomial(link = "logit"),
+                  data = any_arrest_data)
+```
+]
+
+There are a lot of interactions here:
+
+* Target Race x Caller Race
+* Crime Type x Caller Race
+* Target Race x Neigbhorhood Type
+* Crime Type x Neighborhood Type
+
+---
+# `ggeffects` Output
+
+.smallish[
+
+```r
+mod_arrest %&gt;% ggpredict(terms=c("black_arr_susp", 
+              "white_comp_wit_vict", "neighb_type")) %&gt;% plot()
+```
+
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
+]
+
+---
+# A Complex Example
+
+`ggpredict()` can only handle three variables in its `terms=` argument.
+
+--
+
+For my article, I wanted to plot estimates across counterfactual values of all four variables in my interaction terms:
+
+* Caller Race
+* Target Race
+* Crime Type
+* Neighborhood Type
+
+How could I do this?
+
+--
+
+Stats + Math + Code = `\(\heartsuit\)`
+
+---
+# Some Background
+
+Given we've estimate a model, consider the following:
+
+1. `\(\hat{y} = X\hat{\beta}\)`, where `\(X\)` is the model matrix and `\(\hat{\beta}\)` is the coefficients.
+2. `\(\hat{\beta}\)` is a vector of *random variables* whose distribution is estimated by the variance-covariance matrix.
+
+--
+
+Using this, we can do the following:
+
+1. Extract the model matrix `\(X\)`, estimated coefficients ( `\(\hat{\beta}\)` ), and *variance-covariance matrix* from our fitted model.
+2. Make lots of random draws of `\(\hat{\beta}\)` using the distribution described by the variance-covariance matrix.
+3. Multiply *each* of these draws by the *counterfactual values* to get `\(\hat{y}\)` values.
+4. Take the mean plus the 2.5% and 97.% quantiles of these `\(\hat{y}\)` values.
+
+--
+
+This produces a *simulated* mean and confidence interval. This is called the **percentile method**, a type of *bootstrapping*.
+
+---
+# Simulating Coefficients
+
+We can make random draws from our estimated distribution of parameters using `MASS::mvrnorm()` which takes three main arguments:
+1. The number of draws
+2. A meanour coefficient estimates—obtained via `coef()`)
+3. A covariance matrix (obtained via `vcov()`)
+
+.smallish[
+
+```r
+sim_params &lt;- MASS::mvrnorm(n=10000, mu=coef(mod_arrest),
+                            Sigma=vcov(mod_arrest))
+sim_params[1:6, 1:4]
+```
+
+```
+##      (Intercept) white_comp_wit_vict1 black_arr_susp1 crime_typeNuisance
+## [1,]    2.857807           -0.3156557      -0.3338401         -0.6274545
+## [2,]    2.598760           -0.1794737      -0.2082136         -0.6316484
+## [3,]    2.751606           -0.1686754      -0.2291603         -0.6481949
+## [4,]    2.529833           -0.2023503      -0.2070015         -0.5626676
+## [5,]    2.796618           -0.2261581      -0.2761188         -0.5849027
+## [6,]    2.765810           -0.2793601      -0.3689626         -0.6001661
+```
+]
+
+---
+# Counterfactual Values
+
+Next we need a data frame with our counterfactual values. 
+We want one row per estimate to plot, and all variables at their means *except* the ones we are varying.
+
+
+
+.smallish[
+
+```r
+x_values &lt;- colMeans(model.matrix(mod_arrest))
+n_scen   &lt;- (2*2*2*3)
+x_frame  &lt;- setNames(data.frame(matrix(x_values, nrow=n_scen, 
+                                       ncol=length(x_values), 
+                                       byrow=T)), 
+                     names(x_values))
+cf_vals  &lt;- arrangements::permutations(c(0,1), k=5, replace=T)
+cf_vals  &lt;- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,]
+colnames(cf_vals) &lt;- c("white_comp_wit_vict1", "black_arr_susp1", 
+                       "crime_typeNuisance", "neighb_typeBlackDisadv",
+                       "neighb_typeChanging")
+x_frame[colnames(cf_vals)] &lt;- cf_vals
+```
+]
+
+---
+# What Do We Have?
+
+.smallish[
+
+```r
+glimpse(x_frame)
+```
+
+```
+## Observations: 24
+## Variables: 24
+## $ `(Intercept)`                               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, ...
+## $ white_comp_wit_vict1                        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
+## $ black_arr_susp1                             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
+## $ crime_typeNuisance                          &lt;dbl&gt; 0, 0, 0, 1, 1, 1, ...
+## $ caller_typeVictim                           &lt;dbl&gt; 0.8019442, 0.80194...
+## $ caller_typeWitness                          &lt;dbl&gt; 0.08516245, 0.0851...
+## $ arr_susp_subj_count                         &lt;dbl&gt; 1.552955, 1.552955...
+## $ comp_wit_vict_count                         &lt;dbl&gt; 1.571604, 1.571604...
+## $ neighb_typeBlackDisadv                      &lt;dbl&gt; 0, 0, 1, 0, 0, 1, ...
+## $ neighb_typeChanging                         &lt;dbl&gt; 0, 1, 0, 0, 1, 0, ...
+## $ serious_rate                                &lt;dbl&gt; 2.157661e-17, 2.15...
+## $ pbl                                         &lt;dbl&gt; 1.185962e-16, 1.18...
+## $ pot                                         &lt;dbl&gt; -2.808814e-17, -2....
+## $ dis                                         &lt;dbl&gt; 9.987197e-18, 9.98...
+## $ year2009                                    &lt;dbl&gt; 0.2829368, 0.28293...
+## $ year2010                                    &lt;dbl&gt; 0.1670504, 0.16705...
+## $ year2011                                    &lt;dbl&gt; 0.09201842, 0.0920...
+## $ year2012                                    &lt;dbl&gt; 0.1232284, 0.12322...
+## $ `white_comp_wit_vict1:black_arr_susp1`      &lt;dbl&gt; 0.4452034, 0.44520...
+## $ `white_comp_wit_vict1:crime_typeNuisance`   &lt;dbl&gt; 0.1614479, 0.16144...
+## $ `black_arr_susp1:neighb_typeBlackDisadv`    &lt;dbl&gt; 0.04893835, 0.0489...
+## $ `black_arr_susp1:neighb_typeChanging`       &lt;dbl&gt; 0.111691, 0.111691...
+## $ `crime_typeNuisance:neighb_typeBlackDisadv` &lt;dbl&gt; 0.0154771, 0.01547...
+## $ `crime_typeNuisance:neighb_typeChanging`    &lt;dbl&gt; 0.03300077, 0.0330...
+```
+]
+
+---
+# Fixing Interactions
+
+Our main variables are correct... but we need to make our interaction terms.
+
+The interaction terms in the model matrix have specific form `var1:var2`.
+
+Their counterfactual values are just equal to the products of their components.
+
+.small[
+
+```r
+x_frame &lt;- x_frame %&gt;%
+ mutate(
+  `white_comp_wit_vict1:black_arr_susp1`      = white_comp_wit_vict1*black_arr_susp1,
+  `white_comp_wit_vict1:crime_typeNuisance`   = white_comp_wit_vict1*crime_typeNuisance,
+  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
+  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging,
+  `crime_typeNuisance:neighb_typeBlackDisadv` = crime_typeNuisance*neighb_typeBlackDisadv,
+  `crime_typeNuisance:neighb_typeChanging`    = crime_typeNuisance*neighb_typeChanging,
+  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
+  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging)
+```
+]
+
+---
+# Estimates!
+
+Then we just multiply our parameters by our counterfactual data:
+
+
+```r
+sims_logodds &lt;- sim_params %*% t(as.matrix(x_frame))  
+sims_logodds[1:6, 1:6]
+```
+
+```
+##          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]
+## [1,] 2.262912 2.759243 2.759350 1.635457 2.304152 2.167756
+## [2,] 2.090914 2.628753 2.589986 1.459266 2.048349 1.677668
+## [3,] 2.138049 2.596479 2.473538 1.489854 2.262681 1.860681
+## [4,] 2.096853 2.536975 2.564602 1.534185 2.052345 1.915148
+## [5,] 2.157261 2.458947 2.757545 1.572358 2.135640 2.029469
+## [6,] 2.222959 2.712875 2.864712 1.622793 2.536144 2.137307
+```
+
+```r
+dim(sims_logodds)
+```
+
+```
+## [1] 10000    24
+```
+
+Now we have 24 counterfactual scenarios (columns) with 10,000 estimates each (rows).
+
+---
+# Getting Probabilities
+
+The model for this example is a *logistic regression*, which produces estimates in *log-odds* ( `\(ln(Odds(x))\)` ).
+
+We can convert these to probabilities based on two identities:
+
+1. `\(Odds(x) = e^{ln(Odds(x))}\)`
+2. `\(Pr(x) = \frac{Odds(x)}{(1 + Odds(x))}\)`
+
+
+```r
+sims_prob    &lt;- exp(sims_logodds) / (1 + exp(sims_logodds))
+sims_prob[1:6, 1:6]
+```
+
+```
+##           [,1]      [,2]      [,3]      [,4]      [,5]      [,6]
+## [1,] 0.9057585 0.9404332 0.9404392 0.8369159 0.9092203 0.8973164
+## [2,] 0.8900169 0.9326893 0.9302143 0.8114204 0.8857807 0.8425956
+## [3,] 0.8945467 0.9306346 0.9222658 0.8160563 0.9057388 0.8653763
+## [4,] 0.8905969 0.9266936 0.9285484 0.8226178 0.8861844 0.8715964
+## [5,] 0.8963453 0.9212133 0.9403380 0.8281195 0.8943192 0.8838565
+## [6,] 0.9022924 0.9377821 0.9460742 0.8351800 0.9266371 0.8944767
+```
+
+---
+# A Quick Function
+
+We are going to want to grab the mean and 95% confidence interval from our simulation estimates.
+
+Here's a quick function to do it and make it pretty.
+
+
+```r
+extract_pe_ci &lt;- function(x){
+  vals &lt;- c(mean(x), quantile(x, probs=c(.025, .975)))
+  names(vals) &lt;- c("PE", "LB", "UB")
+  return(vals)
+}
+```
+
+This returns a length 3 vector with the following names:
+* **PE** for *point estimate*
+* **LB** for *lower bound* of the confidence interval
+* **UB** for *upper bound*
+
+---
+# Prep for Plotting
+
+First we extract our point estimates and confidence intervals by *applying* `extract_pe_ci()` to each column of estimated probabilities.
+
+Then I add columns describing the scenarios to color, group, and facet over.
+
+.small[
+
+```r
+estimated_pes &lt;- as.data.frame( t(apply(sims_prob, 2, extract_pe_ci)))
+estimated_pes$`Reporter`     &lt;- ifelse(cf_vals[,1]==1, "Any White", "All Black")
+estimated_pes$`Target`       &lt;- ifelse(cf_vals[,2]==1, "Any Black", "All White")
+estimated_pes$`Crime Type`   &lt;- ifelse(cf_vals[,3]==1, "Nuisance Crime", "Serious Crime")
+estimated_pes$`Neighborhood` &lt;- case_when(
+  cf_vals[,4]==1 ~ "Disadvantaged",
+  cf_vals[,5]==1 ~ "Changing",
+  TRUE ~ "Stable White")
+```
+]
+---
+# Final Tidy Data
+
+.small[
+
+```r
+estimated_pes %&gt;% mutate_if(is.numeric, round, digits=3)
+```
+
+```
+##       PE    LB    UB  Reporter    Target     Crime Type  Neighborhood
+## 1  0.894 0.877 0.909 All Black All White  Serious Crime  Stable White
+## 2  0.929 0.913 0.942 All Black All White  Serious Crime      Changing
+## 3  0.927 0.909 0.943 All Black All White  Serious Crime Disadvantaged
+## 4  0.831 0.801 0.858 All Black All White Nuisance Crime  Stable White
+## 5  0.898 0.873 0.919 All Black All White Nuisance Crime      Changing
+## 6  0.879 0.844 0.909 All Black All White Nuisance Crime Disadvantaged
+## 7  0.866 0.852 0.879 All Black Any Black  Serious Crime  Stable White
+## 8  0.855 0.834 0.874 All Black Any Black  Serious Crime      Changing
+## 9  0.850 0.824 0.874 All Black Any Black  Serious Crime Disadvantaged
+## 10 0.791 0.760 0.820 All Black Any Black Nuisance Crime  Stable White
+## 11 0.799 0.762 0.833 All Black Any Black Nuisance Crime      Changing
+## 12 0.765 0.713 0.812 All Black Any Black Nuisance Crime Disadvantaged
+## 13 0.873 0.866 0.880 Any White All White  Serious Crime  Stable White
+## 14 0.914 0.900 0.927 Any White All White  Serious Crime      Changing
+## 15 0.912 0.895 0.928 Any White All White  Serious Crime Disadvantaged
+## 16 0.749 0.731 0.766 Any White All White Nuisance Crime  Stable White
+## 17 0.842 0.812 0.869 Any White All White Nuisance Crime      Changing
+## 18 0.816 0.775 0.853 Any White All White Nuisance Crime Disadvantaged
+## 19 0.941 0.937 0.946 Any White Any Black  Serious Crime  Stable White
+## 20 0.936 0.927 0.945 Any White Any Black  Serious Crime      Changing
+## 21 0.934 0.922 0.945 Any White Any Black  Serious Crime Disadvantaged
+## 22 0.875 0.863 0.885 Any White Any Black Nuisance Crime  Stable White
+## 23 0.880 0.857 0.900 Any White Any Black Nuisance Crime      Changing
+## 24 0.857 0.825 0.886 Any White Any Black Nuisance Crime Disadvantaged
+```
+]
+
+---
+# Plot Code
+.smallish[
+
+```r
+ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) + 
+  facet_grid(`Crime Type` ~ Neighborhood) +
+  geom_errorbar(aes(ymin = LB, ymax = UB), 
+                position = position_dodge(width = .4), 
+                size = 0.75, width = 0.15) +
+  geom_point(shape = 21, aes(fill = Reporter),
+             position = position_dodge(width = .4), 
+             size = 2) + 
+  scale_fill_manual("Reporter", values=c("Any White" = "white", 
+                                         "All Black" = "black")) +
+  ggtitle("Figure 3. Probability of Arrest", 
+      subtitle = "by Reporter and Target Race, Neighborhood and Crime Type") +
+  xlab("Race of Target") + ylab("Estimated Probability") + 
+  theme_bw() + theme(legend.position = c(0.86,0.15),
+                     legend.background = element_rect(color = 1))
+```
+]
+---
+# Plot
+
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
+
+---
+class: inverse
+# Making Tables
+
+---
+# `pander` Regression Tables
+
+We've used `pander` to create nice tables for dataframes. But `pander` has *methods*
+to handle all sort of objects that you might want displayed nicely.
+
+This includes 
+model output, such as from `lm()`, `glm()`, and `summary()`.
+
+
+
+```r
+library(pander)
+```
+
+
+
+---
+# `pander()` and `lm()`
+
+You can send an `lm()` object straight to `pander`:
+
+
+```r
+pander(lm_1)
+```
+
+| &amp;nbsp;          | Estimate | Std. Error | t value | Pr(&gt;t)    |
+|:----------------|:--------:|:----------:|:-------:|:---------:|
+| **(Intercept)** |  37.23   |   1.599    |  23.28  | 2.565e-20 |
+| **wt**          |  -3.878  |   0.6327   | -6.129  | 1.12e-06  |
+| **hp**          | -0.03177 |  0.00903   | -3.519  | 0.001451  |
+
+Table: Fitting linear model: mpg ~ wt + hp
+
+---
+# `pander()` and `summary()`
+
+You can do this with `summary()` as well, for added information:
+
+
+```r
+pander(summary(lm_1))
+```
+
+| &amp;nbsp;          | Estimate | Std. Error | t value | Pr(&gt;t)  |
+|:----------------|:--------:|:----------:|:-------:|:---------:|
+| **(Intercept)** |  37.23   |   1.599    |  23.28  | 2.565e-20 |
+| **wt**          |  -3.878  |   0.6327   | -6.129  | 1.12e-06  |
+| **hp**          | -0.03177 |  0.00903   | -3.519  | 0.001451  |
+
+
+
+| Observations | Residual Std. Error | `\(R^2\)`  | Adjusted `\(R^2\)` |
+|:------------:|:-------------------:|:------:|:--------------:|
+|      32      |        2.593        | 0.8268 |     0.8148     |
+
+Table: Fitting linear model: mpg ~ wt + hp
+
+---
+# `sjPlot`
+
+`pander` tables are great for basic `rmarkdown` documents, but they're not 
+generally publication ready.
+
+The `sjPlot` package produces `html` tables that look more like
+those you may find in journal articles.
+
+
+```r
+library(sjPlot)
+```
+
+---
+# `sjPlot` Tables
+
+`tab_model()` will produce tables for most models.
+
+
+```r
+model_1 &lt;- lm(mpg ~ wt, data = mtcars)
+tab_model(model_1)
+```
+
+&lt;img src="img/sjPlot_table.PNG" width="400px" /&gt;
+
+---
+# Multi-Model Tables with `sjTable`
+
+Often in journal articles you will see a single table that compares multiple models.
+
+Typically, authors will start with a simple model on the left, then add variables, 
+until they have their most complex model on the right.
+
+The `sjPlot` package makes this easy to do: just give `tab_model()` more models!
+
+---
+# Multiple `tab_model()`
+
+
+```r
+model_2 &lt;- lm(mpg ~ hp + wt, data = mtcars)
+model_3 &lt;- lm(mpg ~ hp + wt + factor(am), data = mtcars)
+tab_model(model_1, model_2, model_3)
+```
+
+&lt;img src="img/sjPlot_mtable.PNG" width="1280px" /&gt;
+
+---
+# `sjPlot` does a lot more
+
+The `sjPlot` package does *a lot* more than just make pretty tables. It is a rabbit hole
+of *incredibly* powerful and useful functions for displaying descriptive and inferential results.
+
+View the [package website](http://www.strengejacke.de/sjPlot/) for extensive documentation.
+
+`sjPlot` is a bit more complicated than `ggeffects` but can do just about everything 
+it can do as well; they were written by the same author!
+
+`sjPlot` is fairly new but offers a fairly comprehensive solution for `ggplot`
+based publication-ready social science data visualization. All graphical functions in
+`sjPlot` are based on `ggplot2`, so it should not take terribly long to figure out.
+
+---
+# `sjPlot` Example: Likert plots
+
+&lt;img src="img/sjPlot_likert.PNG" width="600px" /&gt;
+
+---
+# `sjPlot` Example: Crosstabs
+
+&lt;img src="img/sjPlot_crosstab.PNG" width="500px" /&gt;
+
+---
+# LaTeX Tables
+
+For tables in `\(\LaTeX\)`—as is needed for `.pdf` files—I recommend looking into the `stargazer` or `kableExtra` packages.
+
+--
+
+`kableExtra` allows the construction of complex tables in either HTML or `\(\LaTeX\)` using
+additive syntax similar to `ggplot2`.
+
+`stargazer` produces nicely formatted `\(\LaTeX\)` tables but is idiosyncratic.
+
+--
+
+If you want to edit `\(\LaTeX\)` documents, you can do it in R using Sweave documents (.Rnw).
+Alternatively, you may want to work in a dedicated `\(\LaTeX\)` editor. I recommend [Overleaf](http://www.overleaf.com)
+for this purpose.
+
+--
+
+RMarkdown has support for a fair amount of basic `\(\LaTeX\)` syntax if you aren't trying to 
+get too fancy!
+
+--
+
+Another approach I have used is to manually format `\(\LaTeX\)` tables but use in-line R calls to 
+fill in the values dynamically. This gets you the *exact* format you want but without 
+forcing you to update values any time something changes.
+
+---
+# Bonus: `corrplot`
+
+The `corrplot` package has functions for displaying correlograms.
+
+These make visualizing the correlations between variables in a data set easier.
+
+The first argument is a call to `cor()`, the base R function for generating a correlation matrix.
+
+[See the vignette for customization options.](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html)
+
+
+```r
+library(corrplot)
+corrplot(
+  cor(mtcars),
+  addCoef.col = "white",
+  addCoefasPercent=T,
+  type="upper", 
+  order="AOE")
+```
+
+---
+## Correlogram
+
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-42-1.svg)&lt;!-- --&gt;
+
+---
+class: inverse
+# Wrapping up the Course
+
+---
+# What You've Learned
+
+A lot!
+
+* How to get data into R from a variety of formats
+* How to do "data custodian" work to manipulate and clean data
+* How to make pretty visualizations
+* How to automate with loops and functions
+* How to combine text, calculations, plots, and tables into dynamic R Markdown reports 
+* How to acquire and work with spatial data
+
+---
+# What Comes Next?
+
+* Statistical inference (e.g. more CSSS courses)
+    + Functions for hypothesis testing, hierarchical/mixed effect models, machine learning, survey design, etc. are straightforward to use... once data are clean
+    + Access output by working with list structures (like from regression models) or using `broom` and `ggeffects`
+* Practice, practice, practice!
+    + Replicate analyses you've done in Excel, SPSS, or Stata
+    + Think about data using `dplyr` verbs, tidy data principles
+    + R Markdown for reproducibility
+* More advanced projects
+    + Using version control (git) in RStudio
+    + Interactive Shiny web apps
+    + Write your own functions and put them in a package
+    
+---
+# Course Plugs
+
+If you...
+
+* have no stats background yet - **SOC504: Applied Social Statistics**
+* want to learn more social science computing - **SOC590: Big Data and Population Processes** &lt;sup&gt;1&lt;/sup&gt;
+* have (only) finished SOC506 - **CSSS510: Maximum Likelihood**
+* want to master visualization - **CSSS569: Visualizing Data**
+* study events or durations - **CSSS544: Event History Analysis** &lt;sup&gt;2&lt;/sup&gt;
+* want to use network data - **CSSS567: Social Network Analysis**
+* want to work with spatial data - **CSSS554: Spatial Statistics**
+
+.footnote[
+[1] We're hoping to offer that again soon!&lt;br&gt;
+[2] Also a great maximum likelihood introduction.
+]
+
+---
+class: inverse
+# Thank you!
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "tomorrow-night-bright",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
