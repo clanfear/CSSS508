@@ -2,7 +2,7 @@
 title: "CSSS508, Week 10"
 subtitle: "Reproducibility and Best Practices"
 author: "Chuck Lanfear"
-date: "Nov 27, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Nov 28, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
