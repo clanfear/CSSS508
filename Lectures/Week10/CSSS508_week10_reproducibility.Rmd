@@ -202,7 +202,7 @@ For academic papers, degrees of reproducibility vary:
 
 --
 
-5. Docker Compendium: Self-contained ecosystem
+5. Docker compendium: Self-contained ecosystem
 
 ---
 ## Interactive Documents
@@ -320,7 +320,7 @@ project/
 ]
 
 ---
-# Workflow versus Projects
+# Workflow versus Project
 
 To summarize Jenny Bryan, [one should separate workflow from projects.](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
 
@@ -329,13 +329,13 @@ To summarize Jenny Bryan, [one should separate workflow from projects.](https://
 .pull-left[
 ### Workflow
 
-The software you use to write your code (e.g. RStudio)
+* The software you use to write your code (e.g. RStudio)
 
-The location you store your files
+* The location you store a project
 
-The specific computer you use
+* The specific computer you use
 
-The code you ran earlier or typed into your console
+* The code you ran earlier or typed into your console
 ]
 
 --
@@ -343,13 +343,13 @@ The code you ran earlier or typed into your console
 .pull-right[
 ### Project
 
-The raw data
+* The raw data
 
-The code that operates on your raw data
+* The code that operates on your raw data
 
-The packages you use
+* The packages you use
 
-The output files or documents
+* The output files or documents
 ]
 
 --
@@ -370,7 +370,7 @@ For research to be reproducible, it must also be *portable*. Portable software o
 * Use `setwd()` in scripts or .Rmd files.
 * Use *absolute paths* except for *fixed, immovable sources* (secure data).
   + `read_csv("C:/my_project/data/my_data.csv")`
-* Use `install.packages()` in a script or .Rmd files.
+* Use `install.packages()` in script or .Rmd files.
 * Use `rm(list=ls())` anywhere but your console.
 
 --
@@ -381,7 +381,8 @@ For research to be reproducible, it must also be *portable*. Portable software o
 * Use *relative paths* to load and save files:
   + `read_csv("./data/my_data.csv")`
 * Load all required packages using `library()`.
-* Clear your environment when closing RStudio.
+* Clear your workspace when closing RStudio.
+  + Set *Tools > Global Options... > Save workspace...* to **Never**
 
 ---
 # Divide and Conquer
