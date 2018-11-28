@@ -859,3 +859,8 @@ I believe the best general approach is the following:
    
 Once finished, if you need to do this again, *convert the prior steps into functions*!
 
+---
+class: inverse
+# Optional HW
+
+Your optional Homework 7 on mapping with `ggmap` is due next Tuesday (12/4)!
