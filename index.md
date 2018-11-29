@@ -188,7 +188,7 @@ layout: default
 ### 10. Reproducibility and Best Practices
    * [Slides for Lecture 10: Reproducibility and Best Practices](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_week10_reproducibility.html)
       + [Rmd for Lecture 10 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week10/CSSS508_week10_reproducibility.Rmd)
-   * Leacture Video for Lecture 10
+   * [Leacture Video for Lecture 10](https://youtu.be/ALfCcu3jYkQ), recorded November 28, 2018
    * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
    * R Packages:
       + [`huskydown`](https://github.com/benmarwick/huskydown)
