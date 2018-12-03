@@ -2,7 +2,7 @@
 title: "CSSS508, Week 11"
 subtitle: "Working with Model Results"
 author: "Chuck Lanfear"
-date: "Dec 11, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Dec 5, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -98,9 +98,17 @@ knit_hooks$set(output = function(x, options) {
   hook_output(x, options)
 })
 opts_chunk$set(out.lines = 20)
+
+ex_dat <- data.frame(x1 = rnorm(200, 1, 2), 
+                     x2 = sample(c(1, 2, 3), 200, TRUE),
+                     x3 = rnorm(200, 0, 3),
+                     x4 = sample(c(1, 2))) %>%
+  mutate(yn = x1*0.5 + x2*1.1 + x3*0.7 + x4-1.5  + rnorm(200, 0, 2)) %>% 
+  mutate(yb = as.numeric(yn > mean(yn))) %>%
+  mutate(x2 = factor(x2, labels=c("A", "B", "C")),
+         x4 = factor(x4, labels=c("Yes", "No")))
 ```
 
----
 # Topics for Today
 
 Displaying Model Results
@@ -109,30 +117,27 @@ Displaying Model Results
    + Turning model output lists into dataframes
    + Summarizing models
 * `ggeffects`
-   + Creating predicted values
+   + Creating counterfactual estimates
    + Plotting marginal effects
+* Manual counterfactual plots
 * Making regression tables
    + Using `pander` for models
    + Using `sjTable()` in `sjPlot`
-* Advanced data manipulation example
 * Wrapping up the course
 
-https://modelr.tidyverse.org/ ?
-https://broom.tidyverse.org/articles/bootstrapping.html ?
-  
 ---
 class: inverse
-# broom
+# `broom`
 
 ---
-# broom
+# `broom`
 
 `broom` is a package that "tidies up" the output from models such a `lm()` and `glm()`.
 
 It has a small number of key functions:
 
 * `tidy()` - Creates a dataframe summary of a model.
-* `augment()` - Adds columns---such as fitted values---to the data used in the model.
+* `augment()` - Adds columns—such as fitted values—to the data used in the model.
 * `glance()` - Provides one row of fit statistics for models.
 
 ```{r}
@@ -140,20 +145,20 @@ library(broom)
 ```
 
 ---
-# Standard Output is Lists
+# Model Output is a List
 
 `lm()` and `summary()` produce lists as output, which cannot go directly into 
 tidyverse functions, particularly those in `ggplot2`.
 
 .small[
 ```{r}
-lm_1 <- lm(mpg~wt+hp, data=mtcars)
+lm_1 <- lm(yn~x1+x2, data=ex_dat)
 summary(lm_1)
 ```
 ]
 
 ---
-## Standard Output Varies!
+# Model Output Varies!
 
 .smallish[
 Each type of model also produces somewhat different output, so you can't just reuse
@@ -162,24 +167,28 @@ the same code to handle output from every model.
 
 .small[
 ```{r, op}
-glm_1 <- glm(am~hp+wt, data=mtcars, family=binomial(link="logit"))
+glm_1 <- glm(yb~x1+x2, data=ex_dat, family=binomial(link="logit"))
 summary(glm_1)
 ```
 ]
 
 ---
-`broom::tidy()`
+# `broom::tidy()`
 
-`tidy()` produces the same output, but as a dataframe.
+`tidy()` produces the similar output, but as a dataframe.
 
 ```{r}
 lm_1 %>% tidy()
 ```
 
----
-`broom::tidy()`
+Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
 
-This output is also completely identical between different models. This can be very 
+---
+# `broom::tidy()`
+
+This output is also completely identical between different models.
+
+This can be very 
 useful and important if running models with different test statistics... or just running
 a lot of models!
 
@@ -190,7 +199,9 @@ glm_1 %>% tidy()
 ---
 # `broom::glance()`
 
-`glance()` produces dataframes of fit statistics for models. If you run many models,
+`glance()` produces dataframes of fit statistics for models.
+
+If you run many models,
 you can compare each model row-by-row in each column... or even plot their different
 fit statistics to allow holistic comparison.
 
@@ -213,27 +224,52 @@ augment(lm_1) %>% head()
 ]
 
 ---
-# The Power of broom
+# The Power of `broom`
 
-The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `cyl`:
+The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `x2`:
 
 .small[
 ```{r}
-mtcars %>% group_by(cyl) %>% 
-  do(tidy(lm(mpg ~  wt + hp + disp, data=.)))
+ex_dat %>% group_by(x2) %>% do(tidy(lm(yn ~  x1 + x3 + x4, data=ex_dat))) #<<
 ```
 ]
 
+.footnote[`do()` repeats whatever is inside it once for each level of the variable(s) in `group_by()` then puts them together as a data frame.]
 ---
 class: inverse
 # `ggeffects`
 
 ---
+# But first, vocab!
+
+We are often interested in what might happen if some variables take particular values, often ones not seen in the actual data.
+
+--
+
+When we set variables to certain values, we refer to them as **counterfactual values** or just **counterfactuals**.
+
+--
+
+For example, if we know nothing about a new observation, our prediction for that estimate is often based on assuming every variable is at its mean.
+
+--
+
+Sometimes, however, we might have very specific questions which require setting (possibly many) combinations of variables to particular values and making an estimate or prediction.
+
+--
+
+Providing specific estimates, conditional on values of covariates, is a nice way to summarize results, particularly for models with unintuitive parameters (e.g. logit models).
+
+---
 # `ggeffects`
 
 While `broom` produces tidy model *summaries*, `ggeffects` is used to create tidy 
-*marginal effects*. That is, tidy dataframes of *ranges* of predicted values that can be
+*marginal effects*.
+
+That is, tidy dataframes of *ranges* of predicted values that can be
 fed straight into `ggplot2` for plotting model results.
+
+We will focus on two `ggeffects` functions:
 
 * `ggpredict()` - Computes predicted values for the outcome variable at margins of specific variables.
 * `plot.ggeffects()` - A plot method for `ggeffects` objects (like `ggredict()` output)
@@ -248,32 +284,32 @@ library(ggeffects)
 When you run  `ggpredict()`, it produces a dataframe with a row for every unique 
 value of a supplied predictor ("independent") variable (`term`). 
 
-Each row contains a predicted value for the outcome ("dependent") variable, plus confidence intervals. 
-
-The argument `interval="prediction"` will give predicted intervals instead.
+Each row contains an expected (estimated) value for the outcome ("dependent") variable, plus confidence intervals. 
 
 ```{r}
-lm_1_predicted <- ggpredict(lm_1, terms="wt")
+lm_1_est<- ggpredict(lm_1, terms="x1")
 ```
+
+If desired, the argument `interval="prediction"` will give predicted intervals instead.
 
 ---
 #`ggpredict()` output
 
 .smallish[
 ```{r}
-lm_1_predicted
+lm_1_est
 ```
 ]
 
 ---
 # `plot()` for `ggpredict()`
 
-`ggeffects` features a `plot()` *method* (`plot.ggeffects()`), which produces
-a ggplot when you give `plot()`  output from `ggpredict()`.
+`ggeffects` features a `plot()` *method*, `plot.ggeffects()`, which produces
+a ggplot when you give `plot()` output from `ggpredict()`.
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=4}
-plot(lm_1_predicted)
+plot(lm_1_est)
 ```
 ]
 
@@ -285,8 +321,8 @@ others for *grouping*. Note we can pipe a model into `ggpredict()`!
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
-  ggpredict(terms=c("wt", "cyl")) %>% plot()
+glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %>%
+  ggpredict(terms=c("x1", "x2")) %>% plot()
 ```
 ]
 
@@ -297,8 +333,8 @@ You can add `facet=TRUE` to the `plot()` call to facet over *grouping terms*.
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
-  ggpredict(terms=c("wt", "cyl")) %>% plot(facet=TRUE)
+glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %>%
+  ggpredict(terms=c("x1", "x2")) %>% plot(facet=TRUE)
 ```
 ]
 
@@ -309,8 +345,8 @@ You can add values in square brackets in the `terms=` argument to specify counte
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
-  ggpredict(terms=c("wt [2,3,4]", "cyl [4,6]")) %>% plot(facet=TRUE)
+glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %>%
+  ggpredict(terms=c("x1 [-1,0,1]", "x2 [A,B]")) %>% plot(facet=TRUE)
 ```
 ]
 
@@ -321,8 +357,8 @@ You can also use `[meansd]` or `[minmax]` to set representative values.
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
-  ggpredict(terms=c("wt [meansd]", "hp [minmax]")) %>% plot(facet=TRUE)
+glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %>%
+  ggpredict(terms=c("x1 [meansd]", "x3 [minmax]")) %>% plot(facet=TRUE)
 ```
 ]
 
@@ -333,8 +369,8 @@ glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %>%
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-lm(mpg~as.factor(am)+as.factor(cyl), data=mtcars) %>% 
-  ggpredict(terms=c("am", "cyl")) %>% plot()
+lm(yn ~ x2 + x4, data=ex_dat) %>% 
+  ggpredict(terms=c("x2", "x4")) %>% plot()
 ```
 ]
 
@@ -413,17 +449,17 @@ Stats + Math + Code = $\heartsuit$
 
 Given we've estimate a model, consider the following:
 
-1. $\hat{y} = X\hat{\beta}$, where $X$ is the model matrix and $\hat{\beta}$ is the coefficients.
-2. $\hat{\beta}$ is a vector of *random variables* whose distribution is estimated by the variance-covariance matrix.
+1. $\hat{Y} = X\hat{\beta}$, where $X$ is the model matrix and $\hat{\beta}$ is the coefficients.
+2. $\hat{\beta}$ is a vector of *random variables* whose estimated distribution is described by parameter variance-covariance matrix $\Sigma$.
 
 --
 
 Using this, we can do the following:
 
-1. Extract the model matrix $X$, estimated coefficients ( $\hat{\beta}$ ), and *variance-covariance matrix* from our fitted model.
-2. Make lots of random draws of $\hat{\beta}$ using the distribution described by the variance-covariance matrix.
-3. Multiply *each* of these draws by the *counterfactual values* to get $\hat{y}$ values.
-4. Take the mean plus the 2.5% and 97.% quantiles of these $\hat{y}$ values.
+1. Extract the model matrix $X$, estimated coefficients ( $\hat{\beta}$ ), and $\Sigma$ from our fitted model.
+2. Make lots of random parameter draws centered on $\hat{\beta}$ and distributed according to $\Sigma$.
+3. Multiply *each* of these draws by *counterfactual* $X$ *values* to get $\hat{Y}$ values.
+4. Take the 2.5% and 97.% quantiles of these $\hat{Y}$ values.
 
 --
 
@@ -433,13 +469,14 @@ This produces a *simulated* mean and confidence interval. This is called the **p
 # Simulating Coefficients
 
 We can make random draws from our estimated distribution of parameters using `MASS::mvrnorm()` which takes three main arguments:
-1. The number of draws
-2. A meanour coefficient estimates—obtained via `coef()`)
-3. A covariance matrix (obtained via `vcov()`)
+1. `n`: The number of draws
+2. `mu`: mean—our coefficient estimates—obtained via `coef()`.
+3. `Sigma`: a covariance matrix, obtained via `vcov()`.
 
 .smallish[
 ```{r}
-sim_params <- MASS::mvrnorm(n=10000, mu=coef(mod_arrest),
+sim_params <- MASS::mvrnorm(n=10000, 
+                            mu=coef(mod_arrest),
                             Sigma=vcov(mod_arrest))
 sim_params[1:6, 1:4]
 ```
@@ -448,8 +485,9 @@ sim_params[1:6, 1:4]
 ---
 # Counterfactual Values
 
-Next we need a data frame with our counterfactual values. 
-We want one row per estimate to plot, and all variables at their means *except* the ones we are varying.
+Next we need a data frame with our counterfactual values.
+
+We want one row (or *scenario*) per estimate to plot, and all variables at their means *except* the ones we are varying. We also don't want impossible values; `neighb_type` values are mutually exclusive.
 
 ```{r, echo=FALSE}
 opts_chunk$set(out.lines = 30)
@@ -457,25 +495,26 @@ opts_chunk$set(out.lines = 30)
 
 .smallish[
 ```{r}
-x_values <- colMeans(model.matrix(mod_arrest))
-n_scen   <- (2*2*2*3)
+x_values <- colMeans(model.matrix(mod_arrest)) # vars at mean
+n_scen   <- (2*2*2*3) # Number of scenarios
 x_frame  <- setNames(data.frame(matrix(x_values, nrow=n_scen, 
                                        ncol=length(x_values), 
-                                       byrow=T)), 
-                     names(x_values))
-cf_vals  <- arrangements::permutations(c(0,1), k=5, replace=T)
-cf_vals  <- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,]
+                                       byrow=T)), names(x_values))
+cf_vals  <- arrangements::permutations(c(0,1), k=5, replace=T) #<<
+cf_vals  <- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,] # Remove impossible vals
 colnames(cf_vals) <- c("white_comp_wit_vict1", "black_arr_susp1", 
                        "crime_typeNuisance", "neighb_typeBlackDisadv",
                        "neighb_typeChanging")
-x_frame[colnames(cf_vals)] <- cf_vals
+x_frame[colnames(cf_vals)] <- cf_vals # assign to countefactual df
 ```
 ]
+
+.footnote[`permutations()` is a quick way to get all combinations of some values.]
 
 ---
 # What Do We Have?
 
-.smallish[
+.small[
 ```{r}
 glimpse(x_frame)
 ```
@@ -506,6 +545,15 @@ x_frame <- x_frame %>%
 ]
 
 ---
+# Fixed
+
+.small[
+```{r}
+glimpse(x_frame)
+```
+]
+
+---
 # Estimates!
 
 Then we just multiply our parameters by our counterfactual data:
@@ -516,7 +564,7 @@ sims_logodds[1:6, 1:6]
 dim(sims_logodds)
 ```
 
-Now we have 24 counterfactual scenarios (columns) with 10,000 estimates each (rows).
+Now we log-odds 10,000 estimates each (rows) of 24 counterfactual scenarios (columns).
 
 ---
 # Getting Probabilities
@@ -558,11 +606,16 @@ This returns a length 3 vector with the following names:
 
 First we extract our point estimates and confidence intervals by *applying* `extract_pe_ci()` to each column of estimated probabilities.
 
-Then I add columns describing the scenarios to color, group, and facet over.
-
 .small[
 ```{r}
 estimated_pes <- as.data.frame( t(apply(sims_prob, 2, extract_pe_ci)))
+```
+]
+
+Then I add columns describing the scenarios to color, group, and facet over based on the counterfactual values.
+
+.small[
+```{r}
 estimated_pes$`Reporter`     <- ifelse(cf_vals[,1]==1, "Any White", "All Black")
 estimated_pes$`Target`       <- ifelse(cf_vals[,2]==1, "Any Black", "All White")
 estimated_pes$`Crime Type`   <- ifelse(cf_vals[,3]==1, "Nuisance Crime", "Serious Crime")
@@ -577,12 +630,15 @@ estimated_pes$`Neighborhood` <- case_when(
 
 .small[
 ```{r}
-estimated_pes %>% mutate_if(is.numeric, round, digits=3)
+estimated_pes %>% mutate_if(is.numeric, round, digits=3) # round for display
 ```
 ]
 
 ---
 # Plot Code
+
+Finally we plot estimates (`PE`) as points with error bars (`UB`, `LB`) stratified on `Target` and `Reporter` and faceted by `Crime Type` and `Neighborhood`.
+
 .smallish[
 ```{r, eval=FALSE}
 ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) + 

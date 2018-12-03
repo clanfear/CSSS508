@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 11
 ## Working with Model Results
 ### Chuck Lanfear
-### Dec 11, 2018<br>Updated: Nov 27, 2018
+### Dec 5, 2018<br>Updated: Dec 3, 2018
 
 ---
 
@@ -25,7 +25,6 @@ class: center, top, title-slide
 
 
 
----
 # Topics for Today
 
 Displaying Model Results
@@ -34,30 +33,27 @@ Displaying Model Results
    + Turning model output lists into dataframes
    + Summarizing models
 * `ggeffects`
-   + Creating predicted values
+   + Creating counterfactual estimates
    + Plotting marginal effects
+* Manual counterfactual plots
 * Making regression tables
    + Using `pander` for models
    + Using `sjTable()` in `sjPlot`
-* Advanced data manipulation example
 * Wrapping up the course
 
-https://modelr.tidyverse.org/ ?
-https://broom.tidyverse.org/articles/bootstrapping.html ?
-  
 ---
 class: inverse
-# broom
+# `broom`
 
 ---
-# broom
+# `broom`
 
 `broom` is a package that "tidies up" the output from models such a `lm()` and `glm()`.
 
 It has a small number of key functions:
 
 * `tidy()` - Creates a dataframe summary of a model.
-* `augment()` - Adds columns---such as fitted values---to the data used in the model.
+* `augment()` - Adds columns—such as fitted values—to the data used in the model.
 * `glance()` - Provides one row of fit statistics for models.
 
 
@@ -66,7 +62,7 @@ library(broom)
 ```
 
 ---
-# Standard Output is Lists
+# Model Output is a List
 
 `lm()` and `summary()` produce lists as output, which cannot go directly into 
 tidyverse functions, particularly those in `ggplot2`.
@@ -74,35 +70,37 @@ tidyverse functions, particularly those in `ggplot2`.
 .small[
 
 ```r
-lm_1 &lt;- lm(mpg~wt+hp, data=mtcars)
+lm_1 &lt;- lm(yn~x1+x2, data=ex_dat)
 summary(lm_1)
 ```
 
 ```
 ## 
 ## Call:
-## lm(formula = mpg ~ wt + hp, data = mtcars)
+## lm(formula = yn ~ x1 + x2, data = ex_dat)
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
-## -3.941 -1.600 -0.182  1.050  5.854 
+## -9.403 -1.736 -0.251  1.920  8.126 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
-## wt          -3.87783    0.63273  -6.129 1.12e-06 ***
-## hp          -0.03177    0.00903  -3.519  0.00145 ** 
+## (Intercept)   1.0228     0.4151   2.464 0.014593 *  
+## x1            0.5205     0.1015   5.128 7.01e-07 ***
+## x2B           1.3096     0.5192   2.522 0.012453 *  
+## x2C           1.8982     0.5420   3.502 0.000572 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.593 on 29 degrees of freedom
-## Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8148 
-## F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
+## Residual standard error: 2.903 on 196 degrees of freedom
+## Multiple R-squared:  0.1797,	Adjusted R-squared:  0.1672 
+## F-statistic: 14.32 on 3 and 196 DF,  p-value: 1.796e-08
+....
 ```
 ]
 
 ---
-## Standard Output Varies!
+# Model Output Varies!
 
 .smallish[
 Each type of model also produces somewhat different output, so you can't just reuse
@@ -112,39 +110,39 @@ the same code to handle output from every model.
 .small[
 
 ```r
-glm_1 &lt;- glm(am~hp+wt, data=mtcars, family=binomial(link="logit"))
+glm_1 &lt;- glm(yb~x1+x2, data=ex_dat, family=binomial(link="logit"))
 summary(glm_1)
 ```
 
 ```
 ## 
 ## Call:
-## glm(formula = am ~ hp + wt, family = binomial(link = "logit"), 
-##     data = mtcars)
+## glm(formula = yb ~ x1 + x2, family = binomial(link = "logit"), 
+##     data = ex_dat)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -2.2537  -0.1568  -0.0168   0.1543   1.3449  
+## -1.6858  -1.1167  -0.5858   1.1152   1.8117  
 ## 
 ## Coefficients:
-##             Estimate Std. Error z value Pr(&gt;|z|)   
-## (Intercept) 18.86630    7.44356   2.535  0.01126 * 
-## hp           0.03626    0.01773   2.044  0.04091 * 
-## wt          -8.08348    3.06868  -2.634  0.00843 **
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -0.72146    0.31058  -2.323 0.020179 *  
+## x1           0.29742    0.07853   3.787 0.000152 ***
+## x2B          0.35743    0.37776   0.946 0.344056    
+## x2C          0.60670    0.39431   1.539 0.123897    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 43.230  on 31  degrees of freedom
 ....
 ```
 ]
 
 ---
-`broom::tidy()`
+# `broom::tidy()`
 
-`tidy()` produces the same output, but as a dataframe.
+`tidy()` produces the similar output, but as a dataframe.
 
 
 ```r
@@ -152,18 +150,23 @@ lm_1 %&gt;% tidy()
 ```
 
 ```
-## # A tibble: 3 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)  37.2      1.60        23.3  2.57e-20
-## 2 wt           -3.88     0.633       -6.13 1.12e- 6
-## 3 hp           -0.0318   0.00903     -3.52 1.45e- 3
+## # A tibble: 4 x 5
+##   term        estimate std.error statistic     p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 (Intercept)    1.02      0.415      2.46 0.0146     
+## 2 x1             0.521     0.102      5.13 0.000000701
+## 3 x2B            1.31      0.519      2.52 0.0125     
+## 4 x2C            1.90      0.542      3.50 0.000572
 ```
 
----
-`broom::tidy()`
+Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
 
-This output is also completely identical between different models. This can be very 
+---
+# `broom::tidy()`
+
+This output is also completely identical between different models.
+
+This can be very 
 useful and important if running models with different test statistics... or just running
 a lot of models!
 
@@ -173,18 +176,21 @@ glm_1 %&gt;% tidy()
 ```
 
 ```
-## # A tibble: 3 x 5
-##   term        estimate std.error statistic p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-## 1 (Intercept)  18.9       7.44        2.53 0.0113 
-## 2 hp            0.0363    0.0177      2.04 0.0409 
-## 3 wt           -8.08      3.07       -2.63 0.00843
+## # A tibble: 4 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   -0.721    0.311     -2.32  0.0202  
+## 2 x1             0.297    0.0785     3.79  0.000152
+## 3 x2B            0.357    0.378      0.946 0.344   
+## 4 x2C            0.607    0.394      1.54  0.124
 ```
 
 ---
 # `broom::glance()`
 
-`glance()` produces dataframes of fit statistics for models. If you run many models,
+`glance()` produces dataframes of fit statistics for models.
+
+If you run many models,
 you can compare each model row-by-row in each column... or even plot their different
 fit statistics to allow holistic comparison.
 
@@ -196,9 +202,9 @@ glance(lm_1)
 
 ```
 ## # A tibble: 1 x 11
-##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
-## *     &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.827         0.815  2.59      69.2 9.11e-12     3  -74.3  157.  163.
+##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
+## *     &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.180         0.167  2.90      14.3 1.80e-8     4  -495. 1000. 1016.
 ## # ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;
 ```
 ]
@@ -216,61 +222,86 @@ augment(lm_1) %&gt;% head()
 ```
 
 ```
-## # A tibble: 6 x 11
-##   .rownames   mpg    wt    hp .fitted .se.fit .resid   .hat .sigma .cooksd
-##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-## 1 Mazda RX4  21    2.62   110    23.6   0.546 -2.57  0.0443   2.59 1.59e-2
-## 2 Mazda RX~  21    2.88   110    22.6   0.522 -1.58  0.0405   2.62 5.46e-3
-## 3 Datsun 7~  22.8  2.32    93    25.3   0.636 -2.48  0.0602   2.59 2.07e-2
-## 4 Hornet 4~  21.4  3.22   110    21.3   0.565  0.135 0.0475   2.64 4.72e-5
-## 5 Hornet S~  18.7  3.44   175    18.3   0.498  0.373 0.0369   2.64 2.74e-4
-## 6 Valiant    18.1  3.46   105    20.5   0.672 -2.37  0.0672   2.60 2.16e-2
+## # A tibble: 6 x 10
+##        yn     x1 x2    .fitted .se.fit .resid   .hat .sigma .cooksd
+##     &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1  3.18   -1.61  B       1.49    0.431  1.68  0.0220   2.91 1.94e-3
+## 2  7.45    1.27  B       3.00    0.321  4.46  0.0122   2.89 7.36e-3
+## 3  0.0650  0.169 A       1.11    0.412 -1.05  0.0201   2.91 6.80e-4
+## 4  2.18    3.33  C       4.65    0.407 -2.48  0.0197   2.90 3.73e-3
+## 5 -1.48   -0.343 A       0.844   0.423 -2.32  0.0213   2.91 3.56e-3
+## 6  5.60    4.77  B       4.82    0.482  0.785 0.0276   2.91 5.34e-4
 ## # ... with 1 more variable: .std.resid &lt;dbl&gt;
 ```
 ]
 
 ---
-# The Power of broom
+# The Power of `broom`
 
-The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `cyl`:
+The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `x2`:
 
 .small[
 
 ```r
-mtcars %&gt;% group_by(cyl) %&gt;% 
-  do(tidy(lm(mpg ~  wt + hp + disp, data=.)))
+*ex_dat %&gt;% group_by(x2) %&gt;% do(tidy(lm(yn ~  x1 + x3 + x4, data=ex_dat)))
 ```
 
 ```
 ## # A tibble: 12 x 6
-## # Groups:   cyl [3]
-##      cyl term            estimate std.error  statistic   p.value
-##    &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
-##  1     4 (Intercept)  44.9           5.03    8.92      0.0000452
-##  2     4 wt           -2.59          3.52   -0.735     0.486    
-##  3     4 hp           -0.0645        0.0549 -1.18      0.278    
-##  4     4 disp         -0.0663        0.0818 -0.810     0.445    
-##  5     6 (Intercept)  30.3           5.63    5.38      0.0126   
-##  6     6 wt           -3.90          1.41   -2.75      0.0705   
-##  7     6 hp           -0.0110        0.0213 -0.514     0.643    
-##  8     6 disp          0.0161        0.0135  1.20      0.317    
-##  9     8 (Intercept)  26.7           3.91    6.82      0.0000461
-## 10     8 wt           -2.18          1.16   -1.88      0.0902   
-## 11     8 hp           -0.0137        0.0114 -1.20      0.258    
-## 12     8 disp          0.00000110    0.0131  0.0000843 1.000
+## # Groups:   x2 [3]
+##    x2    term        estimate std.error statistic  p.value
+##    &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 A     (Intercept)    1.61     0.217       7.42 3.46e-12
+##  2 A     x1             0.564    0.0694      8.12 5.09e-14
+##  3 A     x3             0.690    0.0449     15.4  1.83e-35
+##  4 A     x4No           0.984    0.282       3.49 6.02e- 4
+##  5 B     (Intercept)    1.61     0.217       7.42 3.46e-12
+##  6 B     x1             0.564    0.0694      8.12 5.09e-14
+##  7 B     x3             0.690    0.0449     15.4  1.83e-35
+##  8 B     x4No           0.984    0.282       3.49 6.02e- 4
+##  9 C     (Intercept)    1.61     0.217       7.42 3.46e-12
+## 10 C     x1             0.564    0.0694      8.12 5.09e-14
+## 11 C     x3             0.690    0.0449     15.4  1.83e-35
+## 12 C     x4No           0.984    0.282       3.49 6.02e- 4
 ```
 ]
 
+.footnote[`do()` repeats whatever is inside it once for each level of the variable(s) in `group_by()` then puts them together as a data frame.]
 ---
 class: inverse
 # `ggeffects`
 
 ---
+# But first, vocab!
+
+We are often interested in what might happen if some variables take particular values, often ones not seen in the actual data.
+
+--
+
+When we set variables to certain values, we refer to them as **counterfactual values** or just **counterfactuals**.
+
+--
+
+For example, if we know nothing about a new observation, our prediction for that estimate is often based on assuming every variable is at its mean.
+
+--
+
+Sometimes, however, we might have very specific questions which require setting (possibly many) combinations of variables to particular values and making an estimate or prediction.
+
+--
+
+Providing specific estimates, conditional on values of covariates, is a nice way to summarize results, particularly for models with unintuitive parameters (e.g. logit models).
+
+---
 # `ggeffects`
 
 While `broom` produces tidy model *summaries*, `ggeffects` is used to create tidy 
-*marginal effects*. That is, tidy dataframes of *ranges* of predicted values that can be
+*marginal effects*.
+
+That is, tidy dataframes of *ranges* of predicted values that can be
 fed straight into `ggplot2` for plotting model results.
+
+We will focus on two `ggeffects` functions:
 
 * `ggpredict()` - Computes predicted values for the outcome variable at margins of specific variables.
 * `plot.ggeffects()` - A plot method for `ggeffects` objects (like `ggredict()` output)
@@ -286,14 +317,14 @@ library(ggeffects)
 When you run  `ggpredict()`, it produces a dataframe with a row for every unique 
 value of a supplied predictor ("independent") variable (`term`). 
 
-Each row contains a predicted value for the outcome ("dependent") variable, plus confidence intervals. 
-
-The argument `interval="prediction"` will give predicted intervals instead.
+Each row contains an expected (estimated) value for the outcome ("dependent") variable, plus confidence intervals. 
 
 
 ```r
-lm_1_predicted &lt;- ggpredict(lm_1, terms="wt")
+lm_1_est&lt;- ggpredict(lm_1, terms="x1")
 ```
+
+If desired, the argument `interval="prediction"` will give predicted intervals instead.
 
 ---
 #`ggpredict()` output
@@ -301,42 +332,38 @@ lm_1_predicted &lt;- ggpredict(lm_1, terms="wt")
 .smallish[
 
 ```r
-lm_1_predicted
+lm_1_est
 ```
 
 ```
 ## 
-## # Predicted values for mpg 
-## # x = wt 
+## # Predicted values for yn 
+## # x = x1 
 ## 
-##    x predicted conf.low conf.high
-##  1.4    27.138   24.711    29.564
-##  1.6    26.362   24.164    28.560
-##  1.8    25.586   23.613    27.560
-##  2.0    24.811   23.054    26.568
-##  2.2    24.035   22.487    25.584
-##  2.4    23.260   21.905    24.614
-##  2.6    22.484   21.304    23.665
-##  2.8    21.709   20.672    22.746
-##  3.0    20.933   19.995    21.871
-##  3.2    20.158   19.259    21.056
-##  ... and 11 more rows.
+##   x predicted conf.low conf.high
+##  -4    -1.059   -2.307     0.188
+##  -2    -0.018   -0.994     0.957
+##   0     1.023    0.209     1.836
+##   2     2.064    1.234     2.894
+##   4     3.105    2.089     4.121
+##   6     4.146    2.845     5.448
+##   8     5.187    3.553     6.822
 ## 
 ## Adjusted for:
-## * hp = 146.69
+## * x2 = A
 ```
 ]
 
 ---
 # `plot()` for `ggpredict()`
 
-`ggeffects` features a `plot()` *method* (`plot.ggeffects()`), which produces
-a ggplot when you give `plot()`  output from `ggpredict()`.
+`ggeffects` features a `plot()` *method*, `plot.ggeffects()`, which produces
+a ggplot when you give `plot()` output from `ggpredict()`.
 
 .small[
 
 ```r
-plot(lm_1_predicted)
+plot(lm_1_est)
 ```
 
 ![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-12-1.svg)&lt;!-- --&gt;
@@ -351,8 +378,8 @@ others for *grouping*. Note we can pipe a model into `ggpredict()`!
 .small[
 
 ```r
-glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %&gt;%
-  ggpredict(terms=c("wt", "cyl")) %&gt;% plot()
+glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %&gt;%
+  ggpredict(terms=c("x1", "x2")) %&gt;% plot()
 ```
 
 ![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-13-1.svg)&lt;!-- --&gt;
@@ -366,8 +393,8 @@ You can add `facet=TRUE` to the `plot()` call to facet over *grouping terms*.
 .small[
 
 ```r
-glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %&gt;%
-  ggpredict(terms=c("wt", "cyl")) %&gt;% plot(facet=TRUE)
+glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %&gt;%
+  ggpredict(terms=c("x1", "x2")) %&gt;% plot(facet=TRUE)
 ```
 
 ![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-14-1.svg)&lt;!-- --&gt;
@@ -381,8 +408,8 @@ You can add values in square brackets in the `terms=` argument to specify counte
 .small[
 
 ```r
-glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %&gt;%
-  ggpredict(terms=c("wt [2,3,4]", "cyl [4,6]")) %&gt;% plot(facet=TRUE)
+glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %&gt;%
+  ggpredict(terms=c("x1 [-1,0,1]", "x2 [A,B]")) %&gt;% plot(facet=TRUE)
 ```
 
 ![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-15-1.svg)&lt;!-- --&gt;
@@ -396,8 +423,8 @@ You can also use `[meansd]` or `[minmax]` to set representative values.
 .small[
 
 ```r
-glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %&gt;%
-  ggpredict(terms=c("wt [meansd]", "hp [minmax]")) %&gt;% plot(facet=TRUE)
+glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %&gt;%
+  ggpredict(terms=c("x1 [meansd]", "x3 [minmax]")) %&gt;% plot(facet=TRUE)
 ```
 
 ![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
@@ -411,8 +438,8 @@ glm(am ~ hp + wt + cyl, data=mtcars, family=binomial(link="logit")) %&gt;%
 .small[
 
 ```r
-lm(mpg~as.factor(am)+as.factor(cyl), data=mtcars) %&gt;% 
-  ggpredict(terms=c("am", "cyl")) %&gt;% plot()
+lm(yn ~ x2 + x4, data=ex_dat) %&gt;% 
+  ggpredict(terms=c("x2", "x4")) %&gt;% plot()
 ```
 
 ![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-17-1.svg)&lt;!-- --&gt;
@@ -497,17 +524,17 @@ Stats + Math + Code = `\(\heartsuit\)`
 
 Given we've estimate a model, consider the following:
 
-1. `\(\hat{y} = X\hat{\beta}\)`, where `\(X\)` is the model matrix and `\(\hat{\beta}\)` is the coefficients.
-2. `\(\hat{\beta}\)` is a vector of *random variables* whose distribution is estimated by the variance-covariance matrix.
+1. `\(\hat{Y} = X\hat{\beta}\)`, where `\(X\)` is the model matrix and `\(\hat{\beta}\)` is the coefficients.
+2. `\(\hat{\beta}\)` is a vector of *random variables* whose estimated distribution is described by parameter variance-covariance matrix `\(\Sigma\)`.
 
 --
 
 Using this, we can do the following:
 
-1. Extract the model matrix `\(X\)`, estimated coefficients ( `\(\hat{\beta}\)` ), and *variance-covariance matrix* from our fitted model.
-2. Make lots of random draws of `\(\hat{\beta}\)` using the distribution described by the variance-covariance matrix.
-3. Multiply *each* of these draws by the *counterfactual values* to get `\(\hat{y}\)` values.
-4. Take the mean plus the 2.5% and 97.% quantiles of these `\(\hat{y}\)` values.
+1. Extract the model matrix `\(X\)`, estimated coefficients ( `\(\hat{\beta}\)` ), and `\(\Sigma\)` from our fitted model.
+2. Make lots of random parameter draws centered on `\(\hat{\beta}\)` and distributed according to `\(\Sigma\)`.
+3. Multiply *each* of these draws by *counterfactual* `\(X\)` *values* to get `\(\hat{Y}\)` values.
+4. Take the 2.5% and 97.% quantiles of these `\(\hat{Y}\)` values.
 
 --
 
@@ -517,59 +544,62 @@ This produces a *simulated* mean and confidence interval. This is called the **p
 # Simulating Coefficients
 
 We can make random draws from our estimated distribution of parameters using `MASS::mvrnorm()` which takes three main arguments:
-1. The number of draws
-2. A meanour coefficient estimates—obtained via `coef()`)
-3. A covariance matrix (obtained via `vcov()`)
+1. `n`: The number of draws
+2. `mu`: mean—our coefficient estimates—obtained via `coef()`.
+3. `Sigma`: a covariance matrix, obtained via `vcov()`.
 
 .smallish[
 
 ```r
-sim_params &lt;- MASS::mvrnorm(n=10000, mu=coef(mod_arrest),
+sim_params &lt;- MASS::mvrnorm(n=10000, 
+                            mu=coef(mod_arrest),
                             Sigma=vcov(mod_arrest))
 sim_params[1:6, 1:4]
 ```
 
 ```
 ##      (Intercept) white_comp_wit_vict1 black_arr_susp1 crime_typeNuisance
-## [1,]    2.857807           -0.3156557      -0.3338401         -0.6274545
-## [2,]    2.598760           -0.1794737      -0.2082136         -0.6316484
-## [3,]    2.751606           -0.1686754      -0.2291603         -0.6481949
-## [4,]    2.529833           -0.2023503      -0.2070015         -0.5626676
-## [5,]    2.796618           -0.2261581      -0.2761188         -0.5849027
-## [6,]    2.765810           -0.2793601      -0.3689626         -0.6001661
+## [1,]    2.588985           -0.1824904      -0.1909731         -0.4362330
+## [2,]    2.876980           -0.3423833      -0.3469296         -0.4920686
+## [3,]    2.895096           -0.3223082      -0.4528482         -0.5534518
+## [4,]    2.544341           -0.1316294      -0.2077112         -0.5963321
+## [5,]    2.647856           -0.1552346      -0.2005195         -0.4578715
+## [6,]    2.710290           -0.2878294      -0.3440114         -0.5908317
 ```
 ]
 
 ---
 # Counterfactual Values
 
-Next we need a data frame with our counterfactual values. 
-We want one row per estimate to plot, and all variables at their means *except* the ones we are varying.
+Next we need a data frame with our counterfactual values.
+
+We want one row (or *scenario*) per estimate to plot, and all variables at their means *except* the ones we are varying. We also don't want impossible values; `neighb_type` values are mutually exclusive.
 
 
 
 .smallish[
 
 ```r
-x_values &lt;- colMeans(model.matrix(mod_arrest))
-n_scen   &lt;- (2*2*2*3)
+x_values &lt;- colMeans(model.matrix(mod_arrest)) # vars at mean
+n_scen   &lt;- (2*2*2*3) # Number of scenarios
 x_frame  &lt;- setNames(data.frame(matrix(x_values, nrow=n_scen, 
                                        ncol=length(x_values), 
-                                       byrow=T)), 
-                     names(x_values))
-cf_vals  &lt;- arrangements::permutations(c(0,1), k=5, replace=T)
-cf_vals  &lt;- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,]
+                                       byrow=T)), names(x_values))
+*cf_vals  &lt;- arrangements::permutations(c(0,1), k=5, replace=T)
+cf_vals  &lt;- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,] # Remove impossible vals
 colnames(cf_vals) &lt;- c("white_comp_wit_vict1", "black_arr_susp1", 
                        "crime_typeNuisance", "neighb_typeBlackDisadv",
                        "neighb_typeChanging")
-x_frame[colnames(cf_vals)] &lt;- cf_vals
+x_frame[colnames(cf_vals)] &lt;- cf_vals # assign to countefactual df
 ```
 ]
+
+.footnote[`permutations()` is a quick way to get all combinations of some values.]
 
 ---
 # What Do We Have?
 
-.smallish[
+.small[
 
 ```r
 glimpse(x_frame)
@@ -631,6 +661,45 @@ x_frame &lt;- x_frame %&gt;%
 ]
 
 ---
+# Fixed
+
+.small[
+
+```r
+glimpse(x_frame)
+```
+
+```
+## Observations: 24
+## Variables: 24
+## $ `(Intercept)`                               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, ...
+## $ white_comp_wit_vict1                        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
+## $ black_arr_susp1                             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
+## $ crime_typeNuisance                          &lt;dbl&gt; 0, 0, 0, 1, 1, 1, ...
+## $ caller_typeVictim                           &lt;dbl&gt; 0.8019442, 0.80194...
+## $ caller_typeWitness                          &lt;dbl&gt; 0.08516245, 0.0851...
+## $ arr_susp_subj_count                         &lt;dbl&gt; 1.552955, 1.552955...
+## $ comp_wit_vict_count                         &lt;dbl&gt; 1.571604, 1.571604...
+## $ neighb_typeBlackDisadv                      &lt;dbl&gt; 0, 0, 1, 0, 0, 1, ...
+## $ neighb_typeChanging                         &lt;dbl&gt; 0, 1, 0, 0, 1, 0, ...
+## $ serious_rate                                &lt;dbl&gt; 2.157661e-17, 2.15...
+## $ pbl                                         &lt;dbl&gt; 1.185962e-16, 1.18...
+## $ pot                                         &lt;dbl&gt; -2.808814e-17, -2....
+## $ dis                                         &lt;dbl&gt; 9.987197e-18, 9.98...
+## $ year2009                                    &lt;dbl&gt; 0.2829368, 0.28293...
+## $ year2010                                    &lt;dbl&gt; 0.1670504, 0.16705...
+## $ year2011                                    &lt;dbl&gt; 0.09201842, 0.0920...
+## $ year2012                                    &lt;dbl&gt; 0.1232284, 0.12322...
+## $ `white_comp_wit_vict1:black_arr_susp1`      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
+## $ `white_comp_wit_vict1:crime_typeNuisance`   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
+## $ `black_arr_susp1:neighb_typeBlackDisadv`    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
+## $ `black_arr_susp1:neighb_typeChanging`       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
+## $ `crime_typeNuisance:neighb_typeBlackDisadv` &lt;dbl&gt; 0, 0, 0, 0, 0, 1, ...
+## $ `crime_typeNuisance:neighb_typeChanging`    &lt;dbl&gt; 0, 0, 0, 0, 1, 0, ...
+```
+]
+
+---
 # Estimates!
 
 Then we just multiply our parameters by our counterfactual data:
@@ -643,12 +712,12 @@ sims_logodds[1:6, 1:6]
 
 ```
 ##          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]
-## [1,] 2.262912 2.759243 2.759350 1.635457 2.304152 2.167756
-## [2,] 2.090914 2.628753 2.589986 1.459266 2.048349 1.677668
-## [3,] 2.138049 2.596479 2.473538 1.489854 2.262681 1.860681
-## [4,] 2.096853 2.536975 2.564602 1.534185 2.052345 1.915148
-## [5,] 2.157261 2.458947 2.757545 1.572358 2.135640 2.029469
-## [6,] 2.222959 2.712875 2.864712 1.622793 2.536144 2.137307
+## [1,] 2.093925 2.671597 2.633305 1.657692 2.321426 2.087289
+## [2,] 2.211533 2.784163 2.881929 1.719465 2.419802 2.437506
+## [3,] 2.259469 2.799533 2.559559 1.706017 2.399168 2.161228
+## [4,] 2.058906 2.593432 2.547376 1.462574 2.050717 1.742114
+## [5,] 2.094920 2.569084 2.490661 1.637049 2.226454 1.858524
+## [6,] 2.173123 2.583600 2.566639 1.582291 2.201723 2.078012
 ```
 
 ```r
@@ -659,7 +728,7 @@ dim(sims_logodds)
 ## [1] 10000    24
 ```
 
-Now we have 24 counterfactual scenarios (columns) with 10,000 estimates each (rows).
+Now we log-odds 10,000 estimates each (rows) of 24 counterfactual scenarios (columns).
 
 ---
 # Getting Probabilities
@@ -679,12 +748,12 @@ sims_prob[1:6, 1:6]
 
 ```
 ##           [,1]      [,2]      [,3]      [,4]      [,5]      [,6]
-## [1,] 0.9057585 0.9404332 0.9404392 0.8369159 0.9092203 0.8973164
-## [2,] 0.8900169 0.9326893 0.9302143 0.8114204 0.8857807 0.8425956
-## [3,] 0.8945467 0.9306346 0.9222658 0.8160563 0.9057388 0.8653763
-## [4,] 0.8905969 0.9266936 0.9285484 0.8226178 0.8861844 0.8715964
-## [5,] 0.8963453 0.9212133 0.9403380 0.8281195 0.8943192 0.8838565
-## [6,] 0.9022924 0.9377821 0.9460742 0.8351800 0.9266371 0.8944767
+## [1,] 0.8903113 0.9353297 0.9329745 0.8399279 0.9106360 0.8896616
+## [2,] 0.9012804 0.9418140 0.9469459 0.8480599 0.9183249 0.9196429
+## [3,] 0.9054642 0.9426506 0.9282131 0.8463190 0.9167639 0.8967133
+## [4,] 0.8868444 0.9304377 0.9273970 0.8119260 0.8860201 0.8509554
+## [5,] 0.8904085 0.9288452 0.9234845 0.8371329 0.9026001 0.8651248
+## [6,] 0.8978099 0.9297986 0.9286834 0.8295288 0.9004041 0.8887477
 ```
 
 ---
@@ -713,12 +782,18 @@ This returns a length 3 vector with the following names:
 
 First we extract our point estimates and confidence intervals by *applying* `extract_pe_ci()` to each column of estimated probabilities.
 
-Then I add columns describing the scenarios to color, group, and facet over.
-
 .small[
 
 ```r
 estimated_pes &lt;- as.data.frame( t(apply(sims_prob, 2, extract_pe_ci)))
+```
+]
+
+Then I add columns describing the scenarios to color, group, and facet over based on the counterfactual values.
+
+.small[
+
+```r
 estimated_pes$`Reporter`     &lt;- ifelse(cf_vals[,1]==1, "Any White", "All Black")
 estimated_pes$`Target`       &lt;- ifelse(cf_vals[,2]==1, "Any Black", "All White")
 estimated_pes$`Crime Type`   &lt;- ifelse(cf_vals[,3]==1, "Nuisance Crime", "Serious Crime")
@@ -734,40 +809,43 @@ estimated_pes$`Neighborhood` &lt;- case_when(
 .small[
 
 ```r
-estimated_pes %&gt;% mutate_if(is.numeric, round, digits=3)
+estimated_pes %&gt;% mutate_if(is.numeric, round, digits=3) # round for display
 ```
 
 ```
 ##       PE    LB    UB  Reporter    Target     Crime Type  Neighborhood
 ## 1  0.894 0.877 0.909 All Black All White  Serious Crime  Stable White
-## 2  0.929 0.913 0.942 All Black All White  Serious Crime      Changing
+## 2  0.929 0.914 0.942 All Black All White  Serious Crime      Changing
 ## 3  0.927 0.909 0.943 All Black All White  Serious Crime Disadvantaged
-## 4  0.831 0.801 0.858 All Black All White Nuisance Crime  Stable White
-## 5  0.898 0.873 0.919 All Black All White Nuisance Crime      Changing
-## 6  0.879 0.844 0.909 All Black All White Nuisance Crime Disadvantaged
+## 4  0.831 0.801 0.859 All Black All White Nuisance Crime  Stable White
+## 5  0.897 0.872 0.919 All Black All White Nuisance Crime      Changing
+## 6  0.879 0.845 0.909 All Black All White Nuisance Crime Disadvantaged
 ## 7  0.866 0.852 0.879 All Black Any Black  Serious Crime  Stable White
 ## 8  0.855 0.834 0.874 All Black Any Black  Serious Crime      Changing
 ## 9  0.850 0.824 0.874 All Black Any Black  Serious Crime Disadvantaged
-## 10 0.791 0.760 0.820 All Black Any Black Nuisance Crime  Stable White
-## 11 0.799 0.762 0.833 All Black Any Black Nuisance Crime      Changing
-## 12 0.765 0.713 0.812 All Black Any Black Nuisance Crime Disadvantaged
+## 10 0.790 0.759 0.820 All Black Any Black Nuisance Crime  Stable White
+## 11 0.798 0.761 0.832 All Black Any Black Nuisance Crime      Changing
+## 12 0.764 0.713 0.811 All Black Any Black Nuisance Crime Disadvantaged
 ## 13 0.873 0.866 0.880 Any White All White  Serious Crime  Stable White
 ## 14 0.914 0.900 0.927 Any White All White  Serious Crime      Changing
-## 15 0.912 0.895 0.928 Any White All White  Serious Crime Disadvantaged
+## 15 0.912 0.895 0.927 Any White All White  Serious Crime Disadvantaged
 ## 16 0.749 0.731 0.766 Any White All White Nuisance Crime  Stable White
-## 17 0.842 0.812 0.869 Any White All White Nuisance Crime      Changing
+## 17 0.841 0.812 0.868 Any White All White Nuisance Crime      Changing
 ## 18 0.816 0.775 0.853 Any White All White Nuisance Crime Disadvantaged
 ## 19 0.941 0.937 0.946 Any White Any Black  Serious Crime  Stable White
 ## 20 0.936 0.927 0.945 Any White Any Black  Serious Crime      Changing
-## 21 0.934 0.922 0.945 Any White Any Black  Serious Crime Disadvantaged
+## 21 0.934 0.922 0.944 Any White Any Black  Serious Crime Disadvantaged
 ## 22 0.875 0.863 0.885 Any White Any Black Nuisance Crime  Stable White
 ## 23 0.880 0.857 0.900 Any White Any Black Nuisance Crime      Changing
-## 24 0.857 0.825 0.886 Any White Any Black Nuisance Crime Disadvantaged
+## 24 0.857 0.824 0.886 Any White Any Black Nuisance Crime Disadvantaged
 ```
 ]
 
 ---
 # Plot Code
+
+Finally we plot estimates (`PE`) as points with error bars (`UB`, `LB`) stratified on `Target` and `Reporter` and faceted by `Crime Type` and `Neighborhood`.
+
 .smallish[
 
 ```r
@@ -791,7 +869,7 @@ ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) +
 ---
 # Plot
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -868,6 +946,10 @@ those you may find in journal articles.
 
 ```r
 library(sjPlot)
+```
+
+```
+## Learn more about sjPlot with 'browseVignettes("sjPlot")'.
 ```
 
 ---
@@ -984,7 +1066,7 @@ corrplot(
 ---
 ## Correlogram
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-42-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-44-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
