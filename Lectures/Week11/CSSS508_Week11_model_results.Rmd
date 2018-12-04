@@ -99,14 +99,14 @@ knit_hooks$set(output = function(x, options) {
 })
 opts_chunk$set(out.lines = 20)
 
-ex_dat <- data.frame(x1 = rnorm(200, 1, 2), 
-                     x2 = sample(c(1, 2, 3), 200, TRUE),
-                     x3 = rnorm(200, 0, 3),
-                     x4 = sample(c(1, 2))) %>%
-  mutate(yn = x1*0.5 + x2*1.1 + x3*0.7 + x4-1.5  + rnorm(200, 0, 2)) %>% 
+ex_dat <- data.frame(num1 = rnorm(200, 1, 2), 
+                     fac1 = sample(c(1, 2, 3), 200, TRUE),
+                     num2 = rnorm(200, 0, 3),
+                     fac2 = sample(c(1, 2))) %>%
+  mutate(yn = num1*0.5 + fac1*1.1 + num2*0.7 + fac2-1.5  + rnorm(200, 0, 2)) %>% 
   mutate(yb = as.numeric(yn > mean(yn))) %>%
-  mutate(x2 = factor(x2, labels=c("A", "B", "C")),
-         x4 = factor(x4, labels=c("Yes", "No")))
+  mutate(fac1 = factor(fac1, labels=c("A", "B", "C")),
+         fac2 = factor(fac2, labels=c("Yes", "No")))
 ```
 
 # Topics for Today
@@ -152,7 +152,7 @@ tidyverse functions, particularly those in `ggplot2`.
 
 .small[
 ```{r}
-lm_1 <- lm(yn~x1+x2, data=ex_dat)
+lm_1 <- lm(yn ~ num1 + fac1, data = ex_dat)
 summary(lm_1)
 ```
 ]
@@ -167,7 +167,7 @@ the same code to handle output from every model.
 
 .small[
 ```{r, op}
-glm_1 <- glm(yb~x1+x2, data=ex_dat, family=binomial(link="logit"))
+glm_1 <- glm(yb ~ num1 + fac1, data = ex_dat, family=binomial(link="logit"))
 summary(glm_1)
 ```
 ]
@@ -226,11 +226,11 @@ augment(lm_1) %>% head()
 ---
 # The Power of `broom`
 
-The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `x2`:
+The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `fac1`:
 
 .small[
 ```{r}
-ex_dat %>% group_by(x2) %>% do(tidy(lm(yn ~  x1 + x3 + x4, data=ex_dat))) #<<
+ex_dat %>% group_by(fac1) %>% do(tidy(lm(yn ~  num1 + fac2 + num2, data = ex_dat))) #<<
 ```
 ]
 
@@ -287,7 +287,7 @@ value of a supplied predictor ("independent") variable (`term`).
 Each row contains an expected (estimated) value for the outcome ("dependent") variable, plus confidence intervals. 
 
 ```{r}
-lm_1_est<- ggpredict(lm_1, terms="x1")
+lm_1_est<- ggpredict(lm_1, terms = "num1")
 ```
 
 If desired, the argument `interval="prediction"` will give predicted intervals instead.
@@ -321,8 +321,8 @@ others for *grouping*. Note we can pipe a model into `ggpredict()`!
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %>%
-  ggpredict(terms=c("x1", "x2")) %>% plot()
+glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family=binomial(link = "logit")) %>%
+  ggpredict(terms = c("num1", "fac1")) %>% plot()
 ```
 ]
 
@@ -333,8 +333,8 @@ You can add `facet=TRUE` to the `plot()` call to facet over *grouping terms*.
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %>%
-  ggpredict(terms=c("x1", "x2")) %>% plot(facet=TRUE)
+glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "logit")) %>%
+  ggpredict(terms = c("num1", "fac1")) %>% plot(facet=TRUE)
 ```
 ]
 
@@ -345,8 +345,8 @@ You can add values in square brackets in the `terms=` argument to specify counte
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %>%
-  ggpredict(terms=c("x1 [-1,0,1]", "x2 [A,B]")) %>% plot(facet=TRUE)
+glm(yb ~ num1 + fac1 + num2 + fac2, data=ex_dat, family=binomial(link="logit")) %>%
+  ggpredict(terms = c("num1 [-1,0,1]", "fac1 [A,B]")) %>% plot(facet=TRUE)
 ```
 ]
 
@@ -357,8 +357,8 @@ You can also use `[meansd]` or `[minmax]` to set representative values.
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %>%
-  ggpredict(terms=c("x1 [meansd]", "x3 [minmax]")) %>% plot(facet=TRUE)
+glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "logit")) %>%
+  ggpredict(terms = c("num1 [meansd]", "num2 [minmax]")) %>% plot(facet=TRUE)
 ```
 ]
 
@@ -369,8 +369,8 @@ glm(yb ~ x1 + x2 + x3 + x4, data=ex_dat, family=binomial(link="logit")) %>%
 
 .small[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
-lm(yn ~ x2 + x4, data=ex_dat) %>% 
-  ggpredict(terms=c("x2", "x4")) %>% plot()
+lm(yn ~ fac1 + fac2, data = ex_dat) %>% 
+  ggpredict(terms=c("fac1", "fac2")) %>% plot()
 ```
 ]
 
@@ -419,7 +419,7 @@ There are a lot of interactions here:
 
 .smallish[
 ```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=4}
-mod_arrest %>% ggpredict(terms=c("black_arr_susp", 
+mod_arrest %>% ggpredict(terms = c("black_arr_susp", 
               "white_comp_wit_vict", "neighb_type")) %>% plot()
 ```
 ]
@@ -475,9 +475,9 @@ We can make random draws from our estimated distribution of parameters using `MA
 
 .smallish[
 ```{r}
-sim_params <- MASS::mvrnorm(n=10000, 
-                            mu=coef(mod_arrest),
-                            Sigma=vcov(mod_arrest))
+sim_params <- MASS::mvrnorm(n = 10000, 
+                            mu = coef(mod_arrest),
+                            Sigma = vcov(mod_arrest))
 sim_params[1:6, 1:4]
 ```
 ]
