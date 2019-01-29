@@ -12,7 +12,6 @@ On a Mac, you only need to install Xcode Command Line Tools. This is simple:
 
 
 2. Copy and paste the following into the terminal, then press enter.
-
 ```
 xcode-select --install
 ```
