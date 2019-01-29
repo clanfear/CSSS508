@@ -1,11 +1,5 @@
----
-title: "Compiling R Packages"
-output: html_document
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# Compiling R Packages
 
 The newest versions of R packages are often available only as source code. When you install or update the package, it may indicate it needs compilation. To enable your computer to compile the code in these packages, you need to do a small amount of additional setup. Before you start, make sure R is closed. I recommend rebooting after installing, as well, but it is not a requirement.
 
@@ -18,6 +12,7 @@ On a Mac, you only need to install Xcode Command Line Tools. This is simple:
 
 
 2. Copy and paste the following into the terminal, then press enter.
+
 ```
 xcode-select --install
 ```
