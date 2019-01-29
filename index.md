@@ -15,7 +15,7 @@ layout: default
 * [Class Mailing List](mailto:csss508a_au18@uw.edu)
 * [Class Slack Channel](https://uwcsss508au18.slack.com/)
 * [R and RStudio Installation Instructions](https://clanfear.github.io/CSSS508/docs/installation.html)
-   + [Enabling compilation of packages](https://clanfear.github.io/CSSS508/docs/compiling.html)
+* [Enabling compilation of packages](https://clanfear.github.io/CSSS508/docs/compiling.html)
 * [Function Lecture Reference](https://clanfear.github.io/CSSS508/docs/functions.html)
 
 ## Helpful resources:
