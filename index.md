@@ -15,6 +15,7 @@ layout: default
 * [Class Mailing List](mailto:csss508a_au18@uw.edu)
 * [Class Slack Channel](https://uwcsss508au18.slack.com/)
 * [R and RStudio Installation Instructions](https://clanfear.github.io/CSSS508/docs/installation.html)
+   + [Enabling compilation of packages](https://clanfear.github.io/CSSS508/docs/compiling.html)
 * [Function Lecture Reference](https://clanfear.github.io/CSSS508/docs/functions.html)
 
 ## Helpful resources:
@@ -22,6 +23,7 @@ layout: default
 * [R for Data Science online](http://r4ds.had.co.nz/) textbook by Garrett Grolemund and Hadley Wickham. One of many good R texts available, but importantly it is free and focuses on the [`tidyverse`](http://tidyverse.org/) collection of R packages which form the backbone of this course.
 * [Advanced R](http://adv-r.had.co.nz/) online textbook by Hadley Wickham. A great source for more in-depth and advanced R programming.
 * [DataCamp for CSSS508 AU18](https://www.datacamp.com/enterprise/csss508-autumn-2018): Interactive R tutorials provided free of charge for six months to registered CSSS508 students courtesy of [DataCamp](https://www.datacamp.com/).
+* [Introduction to R Workshop, Panopto Recording](https://uw.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3a74dbec-2b0a-46c0-807e-a97601418534), recorded Oct. 11, 2018 (Requires UW NetID)
 
 ## Weekly lecture notes and links:
 
