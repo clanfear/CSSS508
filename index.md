@@ -23,7 +23,8 @@ layout: default
 * [R for Data Science online](http://r4ds.had.co.nz/) textbook by Garrett Grolemund and Hadley Wickham. One of many good R texts available, but importantly it is free and focuses on the [`tidyverse`](http://tidyverse.org/) collection of R packages which form the backbone of this course.
 * [Advanced R](http://adv-r.had.co.nz/) online textbook by Hadley Wickham. A great source for more in-depth and advanced R programming.
 * [DataCamp for CSSS508 AU18](https://www.datacamp.com/enterprise/csss508-autumn-2018): Interactive R tutorials provided free of charge for six months to registered CSSS508 students courtesy of [DataCamp](https://www.datacamp.com/).
-* [Introduction to R Workshop, Panopto Recording](https://uw.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3a74dbec-2b0a-46c0-807e-a97601418534), recorded Oct. 11, 2018 (Requires UW NetID)
+* [Introduction to R Workshop](https://youtu.be/HbFaPArTIjo), recorded Oct. 11, 2018, with [companion webpage](https://clanfear.github.io/Intro_R_Workshop/).
+* [Intermediate R Workshop](https://youtu.be/pSWaOOniVBk), recorded Jan. 31, 2019, with [companion webpage](https://clanfear.github.io/Intermediate_R_Workshop/).
 
 ## Weekly lecture notes and links:
 
