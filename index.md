@@ -232,4 +232,4 @@ layout: default
        + [`Rfacebook`](https://github.com/pablobarbera/Rfacebook)
    * [Shiny](http://shiny.rstudio.com/gallery/) for interactive R apps
 
-This project is maintained by [clanfear](https://github.com/clanfear) and based on material from [rebeccaferrell](https://github.com/rebeccaferrell) with permission.
+This project is maintained by [clanfear](https://github.com/clanfear) and includes materials from [rebeccaferrell](https://github.com/rebeccaferrell) with permission.
