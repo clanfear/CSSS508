@@ -34,8 +34,8 @@ layout: default
    * [Lecture Video for Lecture 1](https://youtu.be/u6_uhABKia4), recorded September 26, 2018
    * Homework 1: Due at 11:59PM on October 2nd
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
-       + Homework 1 Key #1: [HTML](https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_1.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_1.Rmd)
-       + Homework 1 Key #2: [HTML](https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_2.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW1/HW1_Keys/homework_1_key_2.Rmd)
+       + Homework 1 Key #1: HTML, RMD
+       + Homework 1 Key #2: HTML, RMD
    * [Get R](https://cran.r-project.org/)
    * [Get RStudio](https://www.rstudio.com/)
    * [R Markdown Installation](https://bookdown.org/yihui/rmarkdown/installation.html#installation) - Also has LaTeX installation instructions
@@ -59,6 +59,7 @@ layout: default
    * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded October 3, 2018
    * Homework 2: Due at 11:59PM on October 9th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
+       + Homework 2 Key: HML, RMD
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
    * [`ggplot2` documentation](http://docs.ggplot2.org/current/)
    * [`ggplot2` Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
@@ -95,11 +96,11 @@ layout: default
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: R Data Structures, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4/homework_4.html)
-           * Homework 4: Data Structures, Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/homework_4_key.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/homework_4_key.Rmd)
+           * Homework 4: Data Structures, Key: HTML, RMD
        + Homework 4: Linear Regression (More Advanced)
            * [Homework 4: Linear Regression, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4_regression/HW4_regression.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: Linear Regression, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4_regression/HW4_regression.html)
-           * Homework 4: Linear Regression, Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/HW4_regression_key.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW4/HW4_Keys/HW4_regression_key.Rmd)
+           * Homework 4: Linear Regression, Key: HTML, RMD
    * [Setting up swirl for practice](http://swirlstats.com/students.html)
    * Reading: **[Data Structures chapter in Advanced R](http://adv-r.had.co.nz/Data-structures.html)**
 
@@ -110,7 +111,7 @@ layout: default
    * Homework 5, Part 1 due at 11:59 PM on October 30th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
-       + Homework 5, Part 1 Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW5/HW5_Keys/homework_5_p1_key.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW5/HW5_Keys/homework_5_p1_key.Rmd)
+       + Homework 5, Part 1 Key: HTML, RMD
        + [2016 general election voting data for King County](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt) (60 MB download; save, *don't load in browser*!)
    * Data in-class:
        + [Billboard Hot 100 data from 2000](https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv)
@@ -141,7 +142,7 @@ layout: default
    * Homework 5, Part 2 due at 11:59 PM on November 6th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p2.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5_p2.html)
-       + Homework 5, Part 2 Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW5/HW5_Keys/homework_5_p2_key.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW5/HW5_Keys/homework_5_p2_key.Rmd)
+       + Homework 5, Part 2 Key: HTML, RMD
    
 ### 7. Writing Functions
    * [Slides for Lecture 7: Vectorization and writing functions](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.html)
@@ -150,7 +151,7 @@ layout: default
    * Homework 6, Part 1 due at 11:59 PM on November 13th
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
-       + Homework 6, Part 1 Key: [HTML](https://clanfear.github.io/CSSS508/Homework/HW6/HW6_Keys/homework_6_p1_key.html), [RMD](https://clanfear.github.io/CSSS508/Homework/HW6/HW6_Keys/homework_6_p1_key.Rmd)
+       + Homework 6, Part 1 Key: HTML, RMD
    * [The R Inferno by Patrick Burns [PDF]](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf): "Circles" 2, 3, and 4 are relevant after this week's material, and Circle 8 covers a lot of miscellaneous R weird things that may trip you up.
    * [Reference material on writing functions](http://r4ds.had.co.nz/functions.html) with lots of examples
    * [Code style guide](http://adv-r.had.co.nz/Style.html) for writing functions, etc.
@@ -179,7 +180,7 @@ layout: default
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
        + [Seattle restaurant inspection data since 2012](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata) (CSV, about 16 MB) from King County
-       + Homework 7 Key: HTML, RMD [Posted after HW7]
+       + Homework 7 Key: HTML, RMD
    * Suggested text: [Applied Spatial Data Analysis with R](http://www.springer.com/us/book/9781461476177)  by Bivand et al.
    * [RSpatial.org](http://www.rspatial.org/index.html): Massive resource for spatial analysis in R
    * [`ggmap` package examples](https://github.com/dkahle/ggmap)
