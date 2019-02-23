@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 1
 ## RStudio and RMarkdown
 ### Chuck Lanfear
-### Sep 26, 2018<br>Updated: Oct 1, 2018
+### Sep 26, 2018<br>Updated: Feb 22, 2019
 
 ---
 
@@ -152,7 +152,7 @@ drop.unused.levels = TRUE) : variable lengths differ
 
 # Slack Channel
 
-This term I experimenting with a [Slack Channel](https://uwcsss508au18.slack.com/) for class communication.
+This course uses a [Slack Channel](https://uwcsss508au18.slack.com/) for additional communication.
 
 Use it like the mailing list to ask questions, particularly for simple questions.
 
@@ -165,7 +165,7 @@ of other students and share links.
 
 # A Note on Slide Formatting
 
-**Bold** usually indicates an important vocabulary term. These are terms to remember!
+**Bold** usually indicates an important vocabulary term. Remember these!
 
 --
 
@@ -173,11 +173,11 @@ of other students and share links.
 
 --
 
-`Code` usually represents R code you might type into the editor or console or keystrokes used to perform actions, for example: "Please press `Ctrl-P` to open the print dialogue."
+`Code` represents R code you type into the editor or console or keystrokes used to perform actions, for example: "Press `Ctrl-P` to open the print dialogue."
 
 --
 
-Code chunks that span the page like the one below represent *actual R code that runs inside these slides*.
+Code chunks that span the page represent *actual R code embedded in the slides*.
 
 
 ```r
@@ -219,15 +219,11 @@ The lines preceded by `##` represent the output, or result, of running the code 
 8. Strings / Text Processing
 --
 
-9. Geospatial Data and Maps
---
+9. Geospatial Data and Maps*
+10. Working with Model Results*
+11. Reproducibility and Applied Data Cleaning*
 
-10. Working with Model Results
---
-
-11. Reproducibility and Applied Data Cleaning&lt;sup&gt;1&lt;/sup&gt; 
-
-.footnote[[1] New for this term!]
+.footnote[[\*] We will do *two* of these!]
 
 --
 
@@ -786,13 +782,12 @@ For handouts, memos, and homeworks, default R Markdown PDFs look surprisingly go
 Inside RMarkdown, lines of R code are called **chunks**. Code is sandwiched between sets of three backticks and `{r}`. This chunk of code...
 
     ```{r}
-    data(cars)
     summary(cars)
     ```
+
 Produces this output in your document:
 
 ```r
-data(cars)
 summary(cars)
 ```
 
@@ -993,7 +988,7 @@ summary(cars)
 hist(cars$speed) # Histogram
 ```
 
-![](CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-8-1.png" height="330px" /&gt;
 ]
 
 .pull-right[
@@ -1002,7 +997,7 @@ hist(cars$speed) # Histogram
 hist(cars$dist)
 ```
 
-![](CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-9-1.png" height="330px" /&gt;
 ]
 
 ---
@@ -1061,7 +1056,7 @@ abline(h = dist_mean, col = "firebrick")
 abline(v = speed_mean, col = "cornflowerblue")
 ```
 
-&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-12-1.png" height="400px" /&gt;
+&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-12-1.png" height="340px" /&gt;
 ]
 
 .pull-right[
@@ -1098,7 +1093,7 @@ You might experiment with [colors](http://www.stat.columbia.edu/~tzheng/files/Rc
       main = "Pairwise comparisons of Swiss variables")
 ```
 
-![](CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-13-1.png" height="340px" /&gt;
 
 .pull-right30[
 .footnote[`pairs()` is a pairwise scatterplot function. Good for a quick look at small datasets, but mostly useless for larger data.]
@@ -1171,11 +1166,11 @@ class: inverse
 
 Write up a .Rmd file showing some exploratory analyses of the Swiss fertility data. Upload both the `.Rmd` file and the `.html` file to Canvas. You must upload *both* for credit.
 
-Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. with functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`, `quantile()`) and *may not hard-code any numbers referenced in your text*.
+Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`, `quantile()`) and *may not hard-code any numbers referenced in your text*.
 
 Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (e.g. round `x` with `round(x, 2)`).
 
-### DUE: 11:59 PM, Tuesday, October 2nd, 2018
+### DUE: 11:59 PM, Tuesday, April 9th, 2018
 
 ---
 
@@ -1195,6 +1190,7 @@ Your document should be pleasant for a peer to look at, with some organization u
 
 3 - Nailed it!
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "tomorrow-night-bright",
@@ -1204,16 +1200,57 @@ Your document should be pleasant for a peer to look at, with some organization u
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
 })();</script>
 
 <script>
 (function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -1227,14 +1264,15 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

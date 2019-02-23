@@ -34,8 +34,8 @@ h1, h2, h3 {
 .remark-slide-content {
   background-color: #FFFFFF;
   font-size: 20px;
-  
-  
+  background-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg);
+  background-size: cover;
   
   padding: 1em 4em 1em 4em;
 }
@@ -93,7 +93,7 @@ a, a > code {
 }
 .title-slide {
   background-color: #342c5c;
-  background-image: url(https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/img/title_slide_img.png);
+  background-image: url(https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/img/title_slide_img.png);
   background-size: contain;
   background-position: bottom;
 }
@@ -192,8 +192,14 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   border-radius: 3px;
   padding: 2px;
 }
+.smallish {
+  font-size: 85%;
+}
 .small {
   font-size: 75%;
+}
+.smaller {
+  font-size: 60%;
 }
 .remark-code-line-highlighted {
   background-color: rgba(255,0,255,0.2);
@@ -213,10 +219,6 @@ h1, h2, h3 {
   float: right;
   width: 38%;
 }
-.pull-right30 {
-  float: right;
-  width: 30%;
-}
 a {
   text-decoration: underline;
 }
@@ -225,4 +227,27 @@ a {
 }
 body {
   line-height: 1.4;
+}
+.inverse {
+  background-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg);
+}
+.short {
+  height: 30%;
+}
+.image-50 img {
+  width: 50%;
+}
+.image-75 img {
+  width: 75%;
+}
+.image-full img {
+  height: 480px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.title-slide {
+  background-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg), url(https://clanfear.github.io/CSSS508/Lectures/img/title_slide_img.png);
+  background-position: center center, center bottom;
+  background-size: contain, contain;
 }
