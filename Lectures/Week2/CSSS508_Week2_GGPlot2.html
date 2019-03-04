@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 2
 ## Plotting with <code>ggplot2</code>
 ### Chuck Lanfear
-### Oct 3, 2018<br>Updated: Oct 2, 2018
+### Oct 3, 2018<br>Updated: Mar 4, 2019
 
 ---
 
@@ -132,7 +132,7 @@ For large projects containing many files, I recommend using RStudio's built in p
 
 --
 
-For journal articles I recommend Ben Marwick's [`rrtools`](https://github.com/benmarwick/rrtools) and his [`huskydown`](https://github.com/benmarwick/huskydown) for UW dissertations and theses. [I made a demo presentation for `rrtools` here](https://clanfear.github.io/birthtiming/inst/presentation/presentation.html#/).
+For journal articles I recommend Ben Marwick's [`rrtools`](https://github.com/benmarwick/rrtools) and [`huskydown`](https://github.com/benmarwick/huskydown) for UW dissertations and theses. [I made an `rrtools` demo presentation here](https://clanfear.github.io/birthtiming/inst/presentation/presentation.html#/).
 
 ---
 
@@ -165,7 +165,7 @@ class: inverse
 # Now, our GGPlot2 Unit
 
 .center[
-&lt;img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/img/ggplot2unit.jpg" style="width: 70%;"/&gt;
+&lt;img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/img/ggplot2unit.jpg" style="width: 60%;"/&gt;
 ]
 
 ---
@@ -191,6 +191,7 @@ library(gapminder)
 
 The data frame we will work with is called `gapminder`, available once you have loaded the package. Let's see its structure:
 
+.small[
 
 ```r
 str(gapminder)
@@ -205,7 +206,7 @@ str(gapminder)
 ##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
 ##  $ gdpPercap: num  779 821 853 836 740 ...
 ```
-
+]
 
 ---
 
@@ -455,17 +456,29 @@ class: inverse
 ---
 
 ## Base R Plots from Last Week
-.small[
+
+.pull-left[
+ .small[
 
 ```r
-plot(lifeExp ~ year, data = China, xlab = "Year", ylab = "Life expectancy",
-     main = "Life expectancy in China", col = "red", cex = 1, pch = 16)
+plot(lifeExp ~ year, 
+     data = China, 
+     xlab = "Year", 
+     ylab = "Life expectancy",
+     main = "Life expectancy in China", 
+     col = "red", 
+     cex.lab = 1.5,
+     cex.main= 1.5,
+     pch = 16)
 ```
-
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
  ]
----
+]
 
+.pull-right[
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+]
+
+---
 # ggplot2
 
 An alternative way of plotting many prefer (myself included)&lt;sup&gt;1&lt;/sup&gt; uses the `ggplot2` package in R, which is part of the `tidyverse`.
@@ -482,29 +495,163 @@ The core idea underlying this package is the [**layered grammar of graphics**](h
 ---
 ## Chinese Life Expectancy in `ggplot`
 
+.pull-left[
+ .small[
 
 ```r
-ggplot(data = China, aes(x = year, y = lifeExp)) +
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
     geom_point()
 ```
+]
+]
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
+.pull-right[
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
+]
 
+--
+
+.footnote[
+But what are the layers here?
+
+Let's see an example!
+]
 ---
 ## Axis Labels, Points, No Background
 
-.small[
+### 1: Base Plot
+
+.pull-left[
+ .small[
 
 ```r
-ggplot(data = China, aes(x = year, y = lifeExp)) +
-*   geom_point(color = "red", size = 3) +
-    xlab("Year") + ylab("Life expectancy") +
-    ggtitle("Life expectancy in China") +
-*   theme_bw()
+*ggplot(data = China,
+*      aes(x = year, y = lifeExp))
 ```
-
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-17-1.svg)&lt;!-- --&gt;
 ]
+]
+.pull-right[
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-20-1.svg)&lt;!-- --&gt;
+]
+
+.footnote[We initialize the plot with `ggplot()` and an aesthetic.]
+
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 2: Scatterplot
+
+.pull-left[
+ .small[
+
+```r
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+* geom_point(color = "red", size = 3)
+```
+]
+]
+.pull-right[
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-22-1.svg)&lt;!-- --&gt;
+]
+
+.footnote[Add a scatterplot of points.]
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 3: X-Axis Label
+
+.pull-left[
+ .small[
+
+```r
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+* xlab("Year")
+```
+]
+]
+.pull-right[
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-24-1.svg)&lt;!-- --&gt;
+]
+
+.footnote[Capitalize the x-axis label.]
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 4: Y-Axis Label
+
+.pull-left[
+ .small[
+
+```r
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+* ylab("Life expectancy")
+```
+]
+]
+.pull-right[
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+]
+
+.footnote[Clean up the y-axis label.]
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 5: Title
+
+.pull-left[
+ .small[
+
+```r
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+* ggtitle("Life expectancy in China")
+```
+]
+]
+.pull-right[
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
+]
+
+.footnote[Add a title.]
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 6: Theme
+
+.pull-left[
+ .small[
+
+```r
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China") +
+* theme_bw(base_size=18)
+```
+]
+]
+.pull-right[
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
+]
+
+.footnote[Pick a better theme and increase the text size.]
 ---
 ## Color Observations by Variable
 .small[
@@ -517,7 +664,7 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
     theme_bw()
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -532,7 +679,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country, color = con
     ggtitle("Life expectancy over time") + theme_bw()
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-32-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -633,7 +780,7 @@ The graph won't be displayed when you do this. You can show the graph using a si
 lifeExp_by_year
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-21-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
 
 ---
 
@@ -645,7 +792,7 @@ lifeExp_by_year +
     geom_line(aes(group = country))
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-22-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-35-1.svg)&lt;!-- --&gt;
 
 ---
 
@@ -674,7 +821,7 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
     geom_point()
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-23-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -689,7 +836,7 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
     geom_point(position = position_jitter(width = 0.5, height = 2))
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-24-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-37-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -715,7 +862,7 @@ ggplot(data = China, aes(x = year, y = gdpPercap)) +
     xlim(1940, 2010) + ggtitle("Chinese GDP per capita")
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
 
 ---
 
@@ -729,7 +876,7 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
 *   theme_gray(base_size = 20)
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-39-1.svg)&lt;!-- --&gt;
 
 ---
 
@@ -774,7 +921,7 @@ lifeExp_by_year +
                "Asia" = "royalblue", "Europe" = "violetred1", "Oceania" = "yellow"))
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-40-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -809,7 +956,7 @@ Wow, there's a lot going on here!
 
 ## Fussy Manual Legend Result!
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-29-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-42-1.svg)&lt;!-- --&gt;
 
 Observation: One could use `filter()` to identify the countries with dips in life expectancy and investigate.
 
@@ -837,14 +984,14 @@ If you didn't manually set font sizes, these will usually come out at a reasonab
 
 **Bad/non-reproducible way**&lt;sup&gt;1&lt;/sup&gt;: choose *Export* on the plot preview or take a screenshot / snip.
 
-.footnote[[1] I still do this for quick emails of quick plots. Bad me!]
+.footnote[[1] I still do this for quick emails of simple plots. Bad me!]
 
 ---
 # Bonus Plot
 
 `ggplot2` is well suited to making complex, publication ready plots.
 
-This is the complete syntax for one plot from a recent journal article revise and resubmit.&lt;sup&gt;1&lt;/sup&gt;
+This is the complete syntax for one plot from a recent article of mine.&lt;sup&gt;1&lt;/sup&gt;
 
 .small[
 
@@ -866,11 +1013,13 @@ ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) +
 ]
 
 .footnote[
-[1] Lanfear, Charles C., Lindsey R. Beach, Timothy A. Thomas. 2018. "Formal Social Control in Changing Neighborhoods: Racial Implications of Neighborhood Context on Reactive Policing." Under review, *City &amp; Community*
+[1] [Lanfear, Charles C., Lindsey R. Beach, Timothy A. Thomas. 2018. "Formal Social Control in Changing Neighborhoods: Racial Implications of Neighborhood Context on Reactive Policing." *City &amp; Community* 17(4):1075-1099](https://onlinelibrary.wiley.com/doi/10.1111/cico.12346)
 ]
 ---
 
-![](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png)
+.center[
+&lt;img src="https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png" style="width: 80%;"/&gt;
+]
 
 ---
 class: inverse
@@ -888,6 +1037,7 @@ Pick some relationship to look at in the Gapminder data and write up a .Rmd file
 
 Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Use chunk options `echo` and `results` to limit the code/output you show in the `.html`.
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "tomorrow-night-bright",
@@ -897,16 +1047,57 @@ Your document should be pleasant for a peer to look at, with some organization. 
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
 })();</script>
 
 <script>
 (function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -920,14 +1111,15 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

@@ -36,7 +36,9 @@ csss508css <- list(
         "color" = "#ececf8",
         "border-radius" = "3px",
         "padding" = "2px"),
+     ".smallish" = list("font-size" = "85%"),
      ".small" = list("font-size" = "75%"),
+     ".smaller" = list("font-size" = "60%"),
      ".remark-code-line-highlighted" = list(
         "background-color" = "rgba(255,0,255,0.2)"),
      "sup" = list("font-size" = "14px"),
@@ -45,22 +47,41 @@ csss508css <- list(
         "margin-bottom"=".25em"),
      ".pull-left60" = list(
         "float" = "left",
-        "width" = "58%" ),
+        "width" = "60%" ),
      ".pull-right40" = list(
         "float" = "right",
-        "width" = "38%" ),
+        "width" = "40%" ),
+     ".pull-left40" = list(
+        "float" = "left",
+        "width" = "40%" ),
+     ".pull-right60" = list(
+        "float" = "right",
+        "width" = "60%" ),
      "a" = list("text-decoration" = "underline"),
      ".inverse a" = list("color" = "#cbd3a3"),
-     "body" = list("line-height" = "1.4")
+     "body" = list("line-height" = "1.4"),
+     ".inverse" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg)"),
+     ".short" = list("height" = "30%"),
+     ".image-50 img" = list("width" = "50%"),
+     ".image-75 img" = list("width" = "75%"),
+     ".image-full img" = list(
+        "height" = "480px",
+        "display"="block",
+        "margin-left"="auto",
+        "margin-right"="auto"),
+     ".title-slide" = list("background-image" = "url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg), url(https://clanfear.github.io/CSSS508/Lectures/img/title_slide_img.png)",
+                           "background-position" = "center center, center bottom",
+                           "background-size" = "contain, contain")
     )
  
 mono_accent(base_color = "#342c5c",
             code_font_google = google_font("Fira Mono"),
             header_font_google = google_font("Quattrocento"),
             extra_css = csss508css,
-            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/title_slide_img.png",
+            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/img/title_slide_img.png",
             title_slide_background_position = "bottom",
-            title_slide_background_size = "contain"
+            title_slide_background_size = "contain",
+            background_image = "https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg"
 )
 ```
 
@@ -165,7 +186,7 @@ For large projects containing many files, I recommend using RStudio's built in p
 
 --
 
-For journal articles I recommend Ben Marwick's [`rrtools`](https://github.com/benmarwick/rrtools) and his [`huskydown`](https://github.com/benmarwick/huskydown) for UW dissertations and theses. [I made a demo presentation for `rrtools` here](https://clanfear.github.io/birthtiming/inst/presentation/presentation.html#/).
+For journal articles I recommend Ben Marwick's [`rrtools`](https://github.com/benmarwick/rrtools) and [`huskydown`](https://github.com/benmarwick/huskydown) for UW dissertations and theses. [I made an `rrtools` demo presentation here](https://clanfear.github.io/birthtiming/inst/presentation/presentation.html#/).
 
 ---
 
@@ -198,7 +219,7 @@ class: inverse
 # Now, our GGPlot2 Unit
 
 .center[
-<img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/img/ggplot2unit.jpg" style="width: 70%;"/>
+<img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/img/ggplot2unit.jpg" style="width: 60%;"/>
 ]
 
 ---
@@ -223,10 +244,11 @@ library(gapminder)
 
 The data frame we will work with is called `gapminder`, available once you have loaded the package. Let's see its structure:
 
+.small[
 ```{r}
 str(gapminder)
 ```
-
+]
 
 ---
 
@@ -407,14 +429,31 @@ class: inverse
 ---
 
 ## Base R Plots from Last Week
-.small[
-```{r}
+
+.pull-left[
+ .small[
+```{r, eval=FALSE}
+plot(lifeExp ~ year, 
+     data = China, 
+     xlab = "Year", 
+     ylab = "Life expectancy",
+     main = "Life expectancy in China", 
+     col = "red", 
+     cex.lab = 1.5,
+     cex.main= 1.5,
+     pch = 16)
+```
+ ]
+]
+
+.pull-right[
+```{r, echo=FALSE}
 plot(lifeExp ~ year, data = China, xlab = "Year", ylab = "Life expectancy",
      main = "Life expectancy in China", col = "red", cex = 1, pch = 16)
 ```
- ]
----
+]
 
+---
 # ggplot2
 
 An alternative way of plotting many prefer (myself included)<sup>1</sup> uses the `ggplot2` package in R, which is part of the `tidyverse`.
@@ -430,23 +469,192 @@ The core idea underlying this package is the [**layered grammar of graphics**](h
 ---
 ## Chinese Life Expectancy in `ggplot`
 
-```{r, fig.height=4, dev='svg'}
+.pull-left[
+ .small[
+```{r,  dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+    geom_point()
+```
+]
+]
+
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
 ggplot(data = China, aes(x = year, y = lifeExp)) +
     geom_point()
 ```
+]
 
+--
+
+.footnote[
+But what are the layers here?
+
+Let's see an example!
+]
 ---
 ## Axis Labels, Points, No Background
 
-.small[
-```{r, fig.height=4, dev='svg'}
-ggplot(data = China, aes(x = year, y = lifeExp)) +
-    geom_point(color = "red", size = 3) + #<<
-    xlab("Year") + ylab("Life expectancy") +
-    ggtitle("Life expectancy in China") +
-    theme_bw() #<<
+### 1: Base Plot
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China,  #<<
+       aes(x = year, y = lifeExp)) #<<
 ```
 ]
+]
+.pull-right[
+```{r, dev='svg', echo=FALSE}
+ggplot(data = China,  
+       aes(x = year, y = lifeExp)) 
+```
+]
+
+.footnote[We initialize the plot with `ggplot()` and an aesthetic.]
+
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 2: Scatterplot
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) 
+```
+]
+
+.footnote[Add a scatterplot of points.]
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 3: X-Axis Label
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") 
+```
+]
+
+.footnote[Capitalize the x-axis label.]
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 4: Y-Axis Label
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy")
+```
+]
+
+.footnote[Clean up the y-axis label.]
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 5: Title
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China") #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China")
+```
+]
+
+.footnote[Add a title.]
+---
+count: false
+## Axis Labels, Points, No Background
+
+### 6: Theme
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China") +
+  theme_bw(base_size=18) #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China") +
+  theme_bw(base_size=18) #<<
+```
+]
+
+.footnote[Pick a better theme and increase the text size.]
 ---
 ## Color Observations by Variable
 .small[
@@ -630,7 +838,7 @@ We can modify the axes in a variety of ways, such as:
 
 # Axis Changes
 
-```{r, fig.height=4, dev='svg'}
+```{r, fig.height=3.5, dev='svg'}
 ggplot(data = China, aes(x = year, y = gdpPercap)) +
     geom_line() +
     scale_y_log10(breaks = c(1000, 2000, 3000, 4000, 5000)) + #<<
@@ -641,7 +849,7 @@ ggplot(data = China, aes(x = year, y = gdpPercap)) +
 
 # Fonts Too Small?
 
-```{r, fig.height=4, dev='svg'}
+```{r, fig.height=3.5, dev='svg'}
 ggplot(data = China, aes(x = year, y = lifeExp)) +
     geom_line() +
     ggtitle("Chinese life expectancy") +
@@ -722,7 +930,7 @@ Wow, there's a lot going on here!
 
 ## Fussy Manual Legend Result!
 
-```{r, echo=FALSE, fig.height=4, dev='svg'}
+```{r, echo=FALSE, fig.height=3.5, dev='svg'}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
     geom_line(stat = "smooth", method = "loess", aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
@@ -758,14 +966,14 @@ If you didn't manually set font sizes, these will usually come out at a reasonab
 
 **Bad/non-reproducible way**<sup>1</sup>: choose *Export* on the plot preview or take a screenshot / snip.
 
-.footnote[[1] I still do this for quick emails of quick plots. Bad me!]
+.footnote[[1] I still do this for quick emails of simple plots. Bad me!]
 
 ---
 # Bonus Plot
 
 `ggplot2` is well suited to making complex, publication ready plots.
 
-This is the complete syntax for one plot from a recent journal article revise and resubmit.<sup>1</sup>
+This is the complete syntax for one plot from a recent article of mine.<sup>1</sup>
 
 .small[
 ```{r, eval=FALSE}
@@ -786,11 +994,13 @@ ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) +
 ]
 
 .footnote[
-[1] Lanfear, Charles C., Lindsey R. Beach, Timothy A. Thomas. 2018. "Formal Social Control in Changing Neighborhoods: Racial Implications of Neighborhood Context on Reactive Policing." Under review, *City & Community*
+[1] [Lanfear, Charles C., Lindsey R. Beach, Timothy A. Thomas. 2018. "Formal Social Control in Changing Neighborhoods: Racial Implications of Neighborhood Context on Reactive Policing." *City & Community* 17(4):1075-1099](https://onlinelibrary.wiley.com/doi/10.1111/cico.12346)
 ]
 ---
 
-![](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png)
+.center[
+<img src="https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png" style="width: 80%;"/>
+]
 
 ---
 class: inverse
