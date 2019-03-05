@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### Oct 24, 2018<br>Updated: Oct 23, 2018
+### Oct 24, 2018<br>Updated: Mar 4, 2019
 
 ---
 
@@ -266,6 +266,90 @@ str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 ##  $ wk74: chr  NA NA NA NA ...
 ##  $ wk75: chr  NA NA NA NA ...
 ##  $ wk76: chr  NA NA NA NA ...
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   year = col_integer(),
+##   ..   artist = col_character(),
+##   ..   track = col_character(),
+##   ..   time = col_time(format = ""),
+##   ..   date.entered = col_date(format = ""),
+##   ..   wk1 = col_integer(),
+##   ..   wk2 = col_integer(),
+##   ..   wk3 = col_integer(),
+##   ..   wk4 = col_integer(),
+##   ..   wk5 = col_integer(),
+##   ..   wk6 = col_integer(),
+##   ..   wk7 = col_integer(),
+##   ..   wk8 = col_integer(),
+##   ..   wk9 = col_integer(),
+##   ..   wk10 = col_integer(),
+##   ..   wk11 = col_integer(),
+##   ..   wk12 = col_integer(),
+##   ..   wk13 = col_integer(),
+##   ..   wk14 = col_integer(),
+##   ..   wk15 = col_integer(),
+##   ..   wk16 = col_integer(),
+##   ..   wk17 = col_integer(),
+##   ..   wk18 = col_integer(),
+##   ..   wk19 = col_integer(),
+##   ..   wk20 = col_integer(),
+##   ..   wk21 = col_integer(),
+##   ..   wk22 = col_integer(),
+##   ..   wk23 = col_integer(),
+##   ..   wk24 = col_integer(),
+##   ..   wk25 = col_integer(),
+##   ..   wk26 = col_integer(),
+##   ..   wk27 = col_integer(),
+##   ..   wk28 = col_integer(),
+##   ..   wk29 = col_integer(),
+##   ..   wk30 = col_integer(),
+##   ..   wk31 = col_integer(),
+##   ..   wk32 = col_integer(),
+##   ..   wk33 = col_integer(),
+##   ..   wk34 = col_integer(),
+##   ..   wk35 = col_integer(),
+##   ..   wk36 = col_integer(),
+##   ..   wk37 = col_integer(),
+##   ..   wk38 = col_integer(),
+##   ..   wk39 = col_integer(),
+##   ..   wk40 = col_integer(),
+##   ..   wk41 = col_integer(),
+##   ..   wk42 = col_integer(),
+##   ..   wk43 = col_integer(),
+##   ..   wk44 = col_integer(),
+##   ..   wk45 = col_integer(),
+##   ..   wk46 = col_integer(),
+##   ..   wk47 = col_integer(),
+##   ..   wk48 = col_integer(),
+##   ..   wk49 = col_integer(),
+##   ..   wk50 = col_integer(),
+##   ..   wk51 = col_integer(),
+##   ..   wk52 = col_integer(),
+##   ..   wk53 = col_integer(),
+##   ..   wk54 = col_integer(),
+##   ..   wk55 = col_integer(),
+##   ..   wk56 = col_integer(),
+##   ..   wk57 = col_integer(),
+##   ..   wk58 = col_integer(),
+##   ..   wk59 = col_integer(),
+##   ..   wk60 = col_integer(),
+##   ..   wk61 = col_integer(),
+##   ..   wk62 = col_integer(),
+##   ..   wk63 = col_integer(),
+##   ..   wk64 = col_integer(),
+##   ..   wk65 = col_integer(),
+##   ..   wk66 = col_character(),
+##   ..   wk67 = col_character(),
+##   ..   wk68 = col_character(),
+##   ..   wk69 = col_character(),
+##   ..   wk70 = col_character(),
+##   ..   wk71 = col_character(),
+##   ..   wk72 = col_character(),
+##   ..   wk73 = col_character(),
+##   ..   wk74 = col_character(),
+##   ..   wk75 = col_character(),
+##   ..   wk76 = col_character()
+##   .. )
 ```
 ]
 
@@ -1133,7 +1217,7 @@ spd_vol &lt;- spd_times %&gt;%
 # set levels using order from sorted frequency table
 spd_times_2 &lt;- spd_times %&gt;% 
   mutate(`Initial Type Group` = 
-         parse_factor(`Initial Type Group`,
+         factor(`Initial Type Group`,
 *                     levels = spd_vol$`Initial Type Group`))
 
 # replot
@@ -1257,6 +1341,7 @@ This homework is two parts to be completed in each of the next two weeks. It can
 ## PART 1 DUE: 11:59 PM, May 1st
 ## PART 2 DUE: 11:59 PM, May 8th
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "tomorrow-night-bright",
@@ -1266,16 +1351,57 @@ This homework is two parts to be completed in each of the next two weeks. It can
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
 })();</script>
 
 <script>
 (function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -1289,14 +1415,15 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

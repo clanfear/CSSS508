@@ -213,11 +213,19 @@ h1, h2, h3 {
 }
 .pull-left60 {
   float: left;
-  width: 58%;
+  width: 60%;
 }
 .pull-right40 {
   float: right;
-  width: 38%;
+  width: 40%;
+}
+.pull-left40 {
+  float: left;
+  width: 40%;
+}
+.pull-right60 {
+  float: right;
+  width: 60%;
 }
 a {
   text-decoration: underline;
