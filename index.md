@@ -31,8 +31,8 @@ layout: default
 ### 1. RStudio and R Markdown
    * [Slides for Lecture 1: Course logistics, R/RStudio, and R Markdown](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.html)
        + [Rmd for Lecture 1 slides](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
-   * [Lecture Video for Lecture 1](https://youtu.be/u6_uhABKia4), recorded September 26, 2018
-   * Homework 1: Due at 11:59PM on October 2nd
+   * [Lecture Video for Lecture 1](https://youtu.be/u6_uhABKia4), recorded September 26th, 2018
+   * Homework 1: Due at 11:59PM on April 9th
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
        + Homework 1 Key #1: HTML, RMD
        + Homework 1 Key #2: HTML, RMD
@@ -56,8 +56,8 @@ layout: default
 ### 2. Visualizing Data
    * [Slides for Lecture 2: Plotting with `ggplot2`](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_GGPlot2.html)
        + [Rmd for Lecture 2 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/CSSS508_Week2_ggplot2.Rmd)
-   * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded October 3, 2018
-   * Homework 2: Due at 11:59PM on October 9th
+   * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded October 3rd, 2018
+   * Homework 2: Due at 11:59PM on April 16th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Key: HML, RMD
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
@@ -76,8 +76,8 @@ layout: default
 ### 3. Manipulating and Summarizing Data
    * [Slides for Lecture 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
        + [Rmd for Lecture 3 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week3/CSSS508_Week3_dplyr.Rmd)
-   * [Lecture Video for Lecture 3](https://youtu.be/giKghK_7z7c), recorded October 10, 2018
-   * Homework 3: Due at 11:59PM on October 16th
+   * [Lecture Video for Lecture 3](https://youtu.be/giKghK_7z7c), recorded October 10th, 2018
+   * Homework 3: Due at 11:59PM on April 23rd
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
    * Reading: **[Data Transformation chapter in R for Data Science](http://r4ds.had.co.nz/transform.html)**
@@ -92,8 +92,8 @@ layout: default
 ### 4. Understanding R Data Structures
    * [Slides for Lecture 4: R data structures](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_week4_data_structures.html)
        + [Rmd for Lecture 4 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week4/CSSS508_week4_data_structures.Rmd)
-   * [Lecture Video for Lecture 4](https://youtu.be/fc6Rc7Fbv0g), recorded October 17, 2018
-   * Homework 4 (two options, complete one): Due at 11:59PM on October 23rd
+   * [Lecture Video for Lecture 4](https://youtu.be/fc6Rc7Fbv0g), recorded October 17th, 2018
+   * Homework 4 (two options, complete one): Due at 11:59PM on April 30th
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: R Data Structures, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4/homework_4.html)
@@ -108,8 +108,8 @@ layout: default
 ### 5. Importing, Exporting, and Cleaning Data
    * [Slides for Lecture 5: Data import, export, and cleaning](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.html)
        + [Rmd for Lecture 5 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/CSSS508_week5_data_import_export_cleaning.Rmd)
-   * [Lecture Video for Lecture 5](https://youtu.be/vPjW6jKVINI), recorded October 24, 2018
-   * Homework 5, Part 1 due at 11:59 PM on October 30th
+   * [Lecture Video for Lecture 5](https://youtu.be/vPjW6jKVINI), recorded October 24th, 2018
+   * Homework 5, Part 1 due at 11:59 PM on May 7th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
        + Homework 5, Part 1 Key: HTML, RMD
@@ -139,8 +139,8 @@ layout: default
 ### 6. Using Loops
    * [Slides for Lecture 6: Looping with `for()` loops](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_week6_loops.html)
        + [Rmd for Lecture 6 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week6/CSSS508_week6_loops.Rmd)
-   * [Lecture Video for Lecture 6](https://youtu.be/D0Zz3Sfxpxw), recorded October 31, 2018
-   * Homework 5, Part 2 due at 11:59 PM on November 6th
+   * [Lecture Video for Lecture 6](https://youtu.be/D0Zz3Sfxpxw), recorded October 31st, 2018
+   * Homework 5, Part 2 due at 11:59 PM on May 14th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p2.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5_p2.html)
        + Homework 5, Part 2 Key: HTML, RMD
@@ -149,7 +149,7 @@ layout: default
    * [Slides for Lecture 7: Vectorization and writing functions](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_week7_vectorization.html)
        + [Rmd for Lecture 7 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week7/CSSS508_week7_vectorization.Rmd)
    * [Lecture Video for Lecture 7](https://youtu.be/Eghfhtzr4jg), recorded November 7th, 2018
-   * Homework 6, Part 1 due at 11:59 PM on November 13th
+   * Homework 6, Part 1 due at 11:59 PM on May 21st
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
        + Homework 6, Part 1 Key: HTML, RMD
@@ -162,7 +162,7 @@ layout: default
    * [Slides for Lecture 8: Working with strings and character data](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_week8_strings.html)
        + [Rmd for Lecture 8 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week8/CSSS508_week8_strings.Rmd)
    * [Lecture Video for Lecture 8](https://youtu.be/ZwjncjjTwC4), recorded November 14th, 2018
-   * Homework 6, Part 2 due at 11:59 PM on November 20th
+   * Homework 6, Part 2 due at 11:59 PM on May 28th
        + Homework 6, Part 2: R Markdown template
        + Homework 6, Part 2 Key: HTML, RMD
    * Data In-Class:
@@ -176,8 +176,8 @@ layout: default
 ### 9. Working with Geographical Data
    * [Slides for Lecture 9: Mapping and labels in `ggplot2`](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_week9_mapping.html)
        + [R code in Lecture 9 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/CSSS508_week9_mapping.Rmd)
-   * [Lecture Video for Lecture 9](https://youtu.be/tt4FxrLvOkE), recorded November 21, 2018
-   * Optional Homework 7: Due at 11:59 PM on November 27th
+   * [Lecture Video for Lecture 9](https://youtu.be/tt4FxrLvOkE), recorded November 21st, 2018
+   * Optional Homework 7: Due at 11:59 PM on June 4th
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
        + [Seattle restaurant inspection data since 2012](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata) (CSV, about 16 MB) from King County

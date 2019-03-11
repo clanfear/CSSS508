@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
     <title>CSSS508, Week 2</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 2
 ## Plotting with <code>ggplot2</code>
 ### Chuck Lanfear
-### Oct 3, 2018<br>Updated: Mar 4, 2019
+### Oct 3, 2018<br>Updated: Mar 11, 2019
 
 ---
 
@@ -97,7 +97,7 @@ setwd("C:/Users/cclan/Documents")
 
 --
 
-Don't set a working directory in R Markdown documents! They automatically set the directory they are in as the working directory.
+*Don't set a working directory in R Markdown documents!* They automatically set the directory they are in as the working directory.
 
 ---
 
@@ -935,7 +935,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
           aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
 *   facet_wrap(~ continent, nrow = 2) +
 *   scale_color_manual(name = "Life Exp. for:",
-*                      values = c("Country" = "black", "Continent" = "dodgerblue1")) +
+*                      values = c("Country" = "black", "Continent" = "blue")) +
     scale_size_manual(name = "Life Exp. for:", 
                       values = c("Country" = 0.25, "Continent" = 3)) +
     theme_minimal(base_size = 14) + 
@@ -954,9 +954,182 @@ Wow, there's a lot going on here!
 
 ---
 
-## Fussy Manual Legend Result!
+.smaller[
+
+```r
+*ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country))
+  #
+  #
+  #  
+  #
+  #
+  #
+  #
+  #
+  #
+```
 
 ![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-42-1.svg)&lt;!-- --&gt;
+]
+
+---
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+* geom_line(alpha = 0.5, aes(color = "Country", size = "Country"))
+  #
+  #  
+  #
+  #
+  #
+  #
+  #
+  #
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-43-1.svg)&lt;!-- --&gt;
+]
+---
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+* geom_line(stat = "smooth", method = "loess",
+*           aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5)
+  #
+  #
+  #
+  #
+  #
+  #
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-44-1.svg)&lt;!-- --&gt;
+]
+---
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+* facet_wrap(~ continent, nrow = 2)
+  #
+  #
+  #
+  #
+  #
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-45-1.svg)&lt;!-- --&gt;
+]
+---
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+* scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue"))
+  #
+  #
+  #
+  #
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-46-1.svg)&lt;!-- --&gt;
+]
+---
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+* scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3))
+  #
+  #
+  #
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-47-1.svg)&lt;!-- --&gt;
+]
+
+---
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
+* theme_minimal(base_size = 14) + ylab("Years") + xlab("")
+  #
+  #
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-48-1.svg)&lt;!-- --&gt;
+]
+---
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
+* ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country")
+  #
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-49-1.svg)&lt;!-- --&gt;
+]
+---
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
+* theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-50-1.svg)&lt;!-- --&gt;
+]
+---
+
+## Fussy Manual Legend
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-51-1.svg)&lt;!-- --&gt;
 
 Observation: One could use `filter()` to identify the countries with dips in life expectancy and investigate.
 

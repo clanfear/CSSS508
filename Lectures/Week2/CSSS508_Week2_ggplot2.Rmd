@@ -99,7 +99,7 @@ setwd("C:/Users/cclan/Documents")
 
 --
 
-Don't set a working directory in R Markdown documents! They automatically set the directory they are in as the working directory.
+*Don't set a working directory in R Markdown documents!* They automatically set the directory they are in as the working directory.
 
 ---
 
@@ -857,7 +857,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
           aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
     facet_wrap(~ continent, nrow = 2) + #<<
     scale_color_manual(name = "Life Exp. for:", #<<
-                       values = c("Country" = "black", "Continent" = "dodgerblue1")) + #<<
+                       values = c("Country" = "black", "Continent" = "blue")) + #<<
     scale_size_manual(name = "Life Exp. for:", 
                       values = c("Country" = 0.25, "Continent" = 3)) +
     theme_minimal(base_size = 14) + 
@@ -876,14 +876,160 @@ Wow, there's a lot going on here!
 
 ---
 
-## Fussy Manual Legend Result!
+.smaller[
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) #<<
+  #
+  #
+  #  
+  #
+  #
+  #
+  #
+  #
+  #
+```
+]
+
+---
+
+.smaller[
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) #<<
+  #
+  #  
+  #
+  #
+  #
+  #
+  #
+  #
+```
+]
+---
+
+.smaller[
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", #<<
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) #<<
+  #
+  #
+  #
+  #
+  #
+  #
+```
+]
+---
+
+.smaller[
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) #<<
+  #
+  #
+  #
+  #
+  #
+```
+]
+---
+
+.smaller[
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) #<<
+  #
+  #
+  #
+  #
+```
+]
+---
+
+.smaller[
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) #<<
+  #
+  #
+  #
+```
+]
+
+---
+
+.smaller[
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + ylab("Years") + xlab("") #<<
+  #
+  #
+```
+]
+---
+
+.smaller[
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") #<<
+  #
+```
+]
+---
+
+.smaller[
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
+  theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45)) #<<
+```
+]
+---
+
+## Fussy Manual Legend
 
 ```{r, echo=FALSE, fig.height=3.5, dev='svg'}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
     geom_line(stat = "smooth", method = "loess", aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
     facet_wrap(~ continent, nrow = 2) +
-    scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "dodgerblue1")) +
+    scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
     scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
     theme_minimal(base_size = 14) + ylab("Years") + xlab("") + ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
     theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))

@@ -33,6 +33,10 @@ csss508css <- list(
   ".pull-right60" = list(
     "float" = "right",
     "width" = "60%" ),
+  ".bottom" = list(
+    "position"="absolute",
+    "bottom"="0",
+    "left"="0"),
   "a" = list("text-decoration" = "underline"),
   ".inverse a" = list("color" = "#cbd3a3"),
   "body" = list("line-height" = "1.4"),
