@@ -164,11 +164,7 @@ ask for clarification if needed!
 ---
 class: inverse
 
-# Now, our GGPlot2 Unit
-
-.center[
-<img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/img/ggplot2unit.jpg" style="width: 60%;"/>
-]
+# Data and Subsetting
 
 ---
 
@@ -374,6 +370,10 @@ class: inverse
 
 # `ggplot2`
 
+.center[
+<img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/img/ggplot2unit.jpg" style="width: 60%;"/>
+]
+
 ---
 
 ## Base R Plots from Last Week
@@ -402,7 +402,7 @@ plot(lifeExp ~ year, data = China, xlab = "Year", ylab = "Life expectancy",
 ]
 
 ---
-# ggplot2
+# `ggplot2`
 
 An alternative way of plotting many prefer (myself included)<sup>1</sup> uses the `ggplot2` package in R, which is part of the `tidyverse`.
 
@@ -725,7 +725,7 @@ lifeExp_by_year
 
 ---
 
-## Adding a Layer: Lines connecting each country
+## Adding a Layer
 
 ```{r, fig.height=4, dev='svg'}
 lifeExp_by_year +
@@ -762,7 +762,7 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
 
 ## Fixing Overplotting with Jitter
 
-Inside `geom_point()`, `position = position_jitter(width=a, height=b)` will randomly shift each point up to `a` units horizontally and `b` units vertically.
+Inside `geom_point()`, `position = position_jitter(width=a, height=b)` shifts points up to `a` units horizontally and `b` units vertically.
 
 .small[
 ```{r, fig.height=4, dev='svg'}
@@ -1095,6 +1095,7 @@ ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) +
 .center[
 <img src="https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png" style="width: 80%;"/>
 ]
+.footnote[We'll build this plot in the lecture on model results!]
 
 ---
 class: inverse

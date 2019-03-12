@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 2
 ## Plotting with <code>ggplot2</code>
 ### Chuck Lanfear
-### Oct 3, 2018<br>Updated: Mar 11, 2019
+### Oct 3, 2018<br>Updated: Mar 12, 2019
 
 ---
 
@@ -162,11 +162,7 @@ ask for clarification if needed!
 ---
 class: inverse
 
-# Now, our GGPlot2 Unit
-
-.center[
-&lt;img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/img/ggplot2unit.jpg" style="width: 60%;"/&gt;
-]
+# Data and Subsetting
 
 ---
 
@@ -453,6 +449,10 @@ class: inverse
 
 # `ggplot2`
 
+.center[
+&lt;img src="https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/img/ggplot2unit.jpg" style="width: 60%;"/&gt;
+]
+
 ---
 
 ## Base R Plots from Last Week
@@ -479,7 +479,7 @@ plot(lifeExp ~ year,
 ]
 
 ---
-# ggplot2
+# `ggplot2`
 
 An alternative way of plotting many prefer (myself included)&lt;sup&gt;1&lt;/sup&gt; uses the `ggplot2` package in R, which is part of the `tidyverse`.
 
@@ -784,7 +784,7 @@ lifeExp_by_year
 
 ---
 
-## Adding a Layer: Lines connecting each country
+## Adding a Layer
 
 
 ```r
@@ -827,7 +827,7 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
 
 ## Fixing Overplotting with Jitter
 
-Inside `geom_point()`, `position = position_jitter(width=a, height=b)` will randomly shift each point up to `a` units horizontally and `b` units vertically.
+Inside `geom_point()`, `position = position_jitter(width=a, height=b)` shifts points up to `a` units horizontally and `b` units vertically.
 
 .small[
 
@@ -1193,6 +1193,7 @@ ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) +
 .center[
 &lt;img src="https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png" style="width: 80%;"/&gt;
 ]
+.footnote[We'll build this plot in the lecture on model results!]
 
 ---
 class: inverse
