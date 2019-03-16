@@ -58,26 +58,27 @@ office hours and collaborative work time. You are highly encouraged to attend an
 about homework, lectures, or programming in R in general.
 
 ### Extra Help
+
+This course features both a Slack channel and a mailing list for obtaining extra help. As you 
+develop your skills, you will find that learning *how* to ask questions well makes 
+finding answers much easier. Please note that this course
+has a large number of students but no teaching assistant, so students are encouraged
+and expected to assist one another with technical problems, both in and out of class.
+Diagnosing problems in others' code is a very effective way to improve your understanding of programming.
+
 #### [Mailing List](mailto:csss508a_sp19@uw.edu)
 
-This course features a mailing list for asking questions related to homeworks. I encourage
-you to use this list as your primary means of answering technical questions. As you 
-develop your skills, you will find that learning *how* to ask questions well makes 
-finding answers much easier. To use the mailing list, send your email to `csss508a_sp19@uw.edu`
+This course features a mailing list for asking questions. I encourage
+you to use this list as your primary means of answering *long technical questions*. To use the mailing list, address your email to `csss508a_sp19@uw.edu`
 and it will be sent to the instructor and all students in the class. Unless you specifically
-request otherwise, emailed questions directed to me ([clanfear@uw.edu](mailto:clanfear@uw.edu)) that may be useful to others in the class
-will be answered with a response to the class mailing list. Please note that this course
-has a large number of students but no teaching assistant, so students are both encouraged
-and expected to assist one another with technical problems, both in and out of class.
-Diagnosing problems inothers' code is a very effective way to improve your understanding of programming.
+request otherwise, emailed questions directed to me ([clanfear@uw.edu](mailto:clanfear@uw.edu)) that may be useful to others in the class will be answered with a response to the class mailing list. 
 
 #### [Slack Channel](https://uwcsss508.slack.com/)
 
-This term I am experimenting with using a Slack channel for student communication.
+We will also use a Slack channel for communication.
 You may ask and answer questions in the Slack channel instead of the mailing list.
-Additionally, I encourage you to have the Slack channel open during class and use it 
-to ask and answer questions or share liinks between yourselves. Your `@uw.edu` email
-must be used to register for the channel.
+Slack is best-suited for *short technical questions* or *extended conversations*.
+Your `@uw.edu` email must be used to register for the channel.
 
 #### DataCamp (Link pending)
 
