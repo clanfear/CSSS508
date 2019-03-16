@@ -157,7 +157,7 @@ urged to use your own computer so that you will be more comfortable and have eas
 access. In terms of R packages, this course will ephasize the [`tidyverse`](https://tidyverse.org) family of 
 packages for manipulating and displaying data. You can acquire R from the
 [Comprehensive R Archive Network (CRAN)](https://cran.rstudio.com/) and RStudio from
-the [RStudio home page](https://www.rstudio.com/products/rstudio/download/)(you want
+the [RStudio home page](https://www.rstudio.com/products/rstudio/download/) (you want
 the free RStudio desktop version). The instructor can provide support with installing
 R or RStudio in office hours or over email.
 
