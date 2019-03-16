@@ -63,7 +63,7 @@ layout: default
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
    * [`ggplot2` documentation](http://docs.ggplot2.org/current/)
    * [`ggplot2` Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
-   * [The ggplot Flipbook](https://evamaerey.github.io/ggplot_flipbook/ggplot_flipbook_xaringan.html) by [Gina Reynolds](https://github.com/EvaMaeRey) - *Highly recommended!*
+   * [The ggplot Flipbook](https://evamaerey.github.io/ggplot_flipbook/ggplot_flipbook_xaringan.html) by [Gina Reynolds](https://github.com/EvaMaeRey)
    * [Cookbook for R graph reference](http://www.cookbook-r.com/Graphs/)
    * [R graph catalog at UBC](http://shiny.stat.ubc.ca/r-graph-catalog/)
    * `ggplot2` add-ons
@@ -72,6 +72,7 @@ layout: default
        + [`gganimate` package](https://github.com/dgrtwo/gganimate) for easy animations (saving GIFs requires [ImageMagick](https://www.imagemagick.org/script/index.php) or [GraphicsMagick](http://www.graphicsmagick.org/))
    * [Hadley Wickham on the grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.html)
    * [Tufte in R](http://motioninsocial.com/tufte/) (if that's your sort of thing)
+   * Recommended text: [Data Visualization: A Practical Introduction](https://kieranhealy.org/publications/dataviz/) by Kieran Healy
 
 ### 3. Manipulating and Summarizing Data
    * [Slides for Lecture 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
