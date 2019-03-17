@@ -2,7 +2,7 @@
 title: "CSSS508, Week 1"
 subtitle: "RStudio and RMarkdown"
 author: "Chuck Lanfear"
-date: "Sep 26, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Apr 3, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs

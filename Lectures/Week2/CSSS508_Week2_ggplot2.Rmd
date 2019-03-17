@@ -2,7 +2,7 @@
 title: "CSSS508, Week 2"
 subtitle: "Plotting with `ggplot2`"
 author: "Chuck Lanfear"
-date: "Oct 3, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Apr 10, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -434,199 +434,6 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
 ```
 ]
 
---
-
-.footnote[
-But what are the layers here?
-
-Let's see an example!
-]
----
-## Axis Labels, Points, No Background
-
-### 1: Base Plot
-
-.pull-left[
- .small[
-```{r, fig.height=4, dev='svg', eval=FALSE}
-ggplot(data = China,  #<<
-       aes(x = year, y = lifeExp)) #<<
-```
-]
-]
-.pull-right[
-```{r, dev='svg', echo=FALSE}
-ggplot(data = China,  
-       aes(x = year, y = lifeExp)) 
-```
-]
-
-.footnote[We initialize the plot with `ggplot()` and an aesthetic.]
-
----
-count: false
-## Axis Labels, Points, No Background
-
-### 2: Scatterplot
-
-.pull-left[
- .small[
-```{r, fig.height=4, dev='svg', eval=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) #<<
-```
-]
-]
-.pull-right[
-```{r,  dev='svg', echo=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) 
-```
-]
-
-.footnote[Add a scatterplot of points.]
----
-count: false
-## Axis Labels, Points, No Background
-
-### 3: X-Axis Label
-
-.pull-left[
- .small[
-```{r, fig.height=4, dev='svg', eval=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) +
-  xlab("Year") #<<
-```
-]
-]
-.pull-right[
-```{r,  dev='svg', echo=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) +
-  xlab("Year") 
-```
-]
-
-.footnote[Capitalize the x-axis label.]
----
-count: false
-## Axis Labels, Points, No Background
-
-### 4: Y-Axis Label
-
-.pull-left[
- .small[
-```{r, fig.height=4, dev='svg', eval=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) +
-  xlab("Year") + 
-  ylab("Life expectancy") #<<
-```
-]
-]
-.pull-right[
-```{r,  dev='svg', echo=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) +
-  xlab("Year") + 
-  ylab("Life expectancy")
-```
-]
-
-.footnote[Clean up the y-axis label.]
----
-count: false
-## Axis Labels, Points, No Background
-
-### 5: Title
-
-.pull-left[
- .small[
-```{r, fig.height=4, dev='svg', eval=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) +
-  xlab("Year") + 
-  ylab("Life expectancy") +
-  ggtitle("Life expectancy in China") #<<
-```
-]
-]
-.pull-right[
-```{r,  dev='svg', echo=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) +
-  xlab("Year") + 
-  ylab("Life expectancy") +
-  ggtitle("Life expectancy in China")
-```
-]
-
-.footnote[Add a title.]
----
-count: false
-## Axis Labels, Points, No Background
-
-### 6: Theme
-
-.pull-left[
- .small[
-```{r, fig.height=4, dev='svg', eval=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) +
-  xlab("Year") + 
-  ylab("Life expectancy") +
-  ggtitle("Life expectancy in China") +
-  theme_bw(base_size=18) #<<
-```
-]
-]
-.pull-right[
-```{r,  dev='svg', echo=FALSE}
-ggplot(data = China, 
-       aes(x = year, y = lifeExp)) +
-  geom_point(color = "red", size = 3) +
-  xlab("Year") + 
-  ylab("Life expectancy") +
-  ggtitle("Life expectancy in China") +
-  theme_bw(base_size=18) #<<
-```
-]
-
-.footnote[Pick a better theme and increase the text size.]
----
-## Color Observations by Variable
-.small[
-```{r, fig.height=4, dev='svg'}
-ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) + #<<
-    geom_point() +
-    xlab("Year") + ylab("Life expectancy") +
-    ggtitle("Life expectancy over time") +
-    theme_bw()
-```
-]
-
----
-## **Facet** Observations by Variable
-.small[
-```{r, fig.height=4, dev='svg'}
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country, color = continent)) +
-    geom_line(alpha = 0.5) + 
-    facet_wrap( ~ continent) + #<<
-    xlab("Year") + ylab("Life expectancy") +
-    ggtitle("Life expectancy over time") + theme_bw()
-```
-]
-
 ---
 # Structure of a ggplot
 
@@ -697,6 +504,433 @@ Layers take arguments to control their appearance, such as point/line colors or 
 
 This may seem pedantic, but precise language makes searching for help easier.
 
+--
+
+Now let's see all this jargon in action.
+
+---
+## Axis Labels, Points, No Background
+
+### 1: Base Plot
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China,  #<<
+       aes(x = year, y = lifeExp)) #<<
+```
+]
+]
+.pull-right[
+```{r, dev='svg', echo=FALSE}
+ggplot(data = China,  
+       aes(x = year, y = lifeExp)) 
+```
+]
+
+.footnote[We initialize the plot with `ggplot()` and an aesthetic.]
+
+---
+count: false
+
+## Axis Labels, Points, No Background
+
+### 2: Scatterplot
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) 
+```
+]
+
+.footnote[Add a scatterplot of points.]
+---
+count: false
+
+## Axis Labels, Points, No Background
+
+### 3: X-Axis Label
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") 
+```
+]
+
+.footnote[Capitalize the x-axis label.]
+---
+count: false
+
+## Axis Labels, Points, No Background
+
+### 4: Y-Axis Label
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy")
+```
+]
+
+.footnote[Clean up the y-axis label.]
+---
+count: false
+
+## Axis Labels, Points, No Background
+
+### 5: Title
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China") #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China")
+```
+]
+
+.footnote[Add a title.]
+---
+count: false
+
+## Axis Labels, Points, No Background
+
+### 6: Theme
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China") +
+  theme_bw(base_size=18) #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China") +
+  theme_bw(base_size=18) #<<
+```
+]
+
+.footnote[Pick a better theme and increase the text size.]
+---
+# Plotting All Countries
+
+We have a plot we like for China... 
+
+... but what if we want *all the countries*?
+
+---
+count: false
+
+# Plotting All Countries
+
+### 1: A Mess!
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = gapminder,#<<
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18)
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = gapminder, #<<
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18)
+```
+]
+
+.footnote[We can't tell countries apart! Maybe we could follow *lines*?]
+
+---
+count: false
+
+# Plotting All Countries
+
+### 2: Lines
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp)) +
+  geom_line(color = "red", size = 3) + #<<
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18)
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp)) +
+  geom_line(color = "red", size = 3) + #<<
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18)
+```
+]
+
+.footnote[`ggplot2` doesn't know how to connect the lines!]
+
+---
+count: false
+
+# Plotting All Countries
+
+### 3: Grouping
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country)) + #<<
+  geom_line(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18)
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country)) + #<<
+  geom_line(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18)
+```
+]
+
+.footnote[That looks more reasonable... but the lines are too thick!]
+---
+count: false
+
+# Plotting All Countries
+
+### 4: Size
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country)) +
+  geom_line(color = "red") + #<<
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18)
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country)) +
+  geom_line(color = "red") + #<<
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18)
+```
+]
+
+.footnote[Much better... but maybe we can do highlight regional differences?]
+
+---
+count: false
+
+# Plotting All Countries
+
+### 5: Color
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) + #<<
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18)
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) + #<<
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18) #<<
+```
+]
+
+.footnote[Patterns are obvious... but why not separate continents completely?]
+
+---
+count: false
+
+# Plotting All Countries
+
+### 6: Facets
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18) + 
+  facet_wrap(~ continent) #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw(base_size=18) +
+  facet_wrap(~ continent) #<<
+```
+]
+
+.footnote[Now the text is too big!]
+---
+count: false
+
+# Plotting All Countries
+
+### 7: Facets
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw() +  #<<
+  facet_wrap(~ continent)
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw() + #<<
+  facet_wrap(~ continent)
+```
+]
+
+.footnote[Looking good!]
+
 ---
 
 # Storing Plots
@@ -704,13 +938,15 @@ This may seem pedantic, but precise language makes searching for help easier.
 We can assign a `ggplot` object to a name:
 
 ```{r}
-lifeExp_by_year <- ggplot(data = gapminder,
-       aes(x = year, y = lifeExp, color = continent)) +
-    geom_point() +
-    xlab("Year") +
-    ylab("Life expectancy") +
-    ggtitle("Life expectancy over time") +
-    theme_bw()
+lifeExp_by_year <- ggplot(data = gapminder, 
+                          aes(x = year, y = lifeExp, 
+                              group = country, color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw() + 
+  facet_wrap(~ continent)
 ```
 
 The graph won't be displayed when you do this. You can show the graph using a single line of code with just the object name, *or take the object and add more layers*.
@@ -729,7 +965,7 @@ lifeExp_by_year
 
 ```{r, fig.height=4, dev='svg'}
 lifeExp_by_year +
-    geom_line(aes(group = country))
+    theme(legend.position = "bottom")
 ```
 
 ---
@@ -789,7 +1025,8 @@ We can modify the axes in a variety of ways, such as:
 ```{r, fig.height=3.5, dev='svg'}
 ggplot(data = China, aes(x = year, y = gdpPercap)) +
     geom_line() +
-    scale_y_log10(breaks = c(1000, 2000, 3000, 4000, 5000)) + #<<
+    scale_y_log10(breaks = c(1000, 2000, 3000, 4000, 5000), #<<
+                  labels=scales::dollar) + #<<
     xlim(1940, 2010) + ggtitle("Chinese GDP per capita")
 ```
 
@@ -1104,6 +1341,26 @@ ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) +
 <img src="https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png" style="width: 80%;"/>
 ]
 .footnote[We'll build this plot in the lecture on model results!]
+
+---
+class: inverse
+
+# Book Recommendation
+
+.pull-left[
+![](img/dv-cover-pupress.jpg)
+]
+.pull-right[
+* Targeted at Social Scientists without technical backgrounds
+
+* Teaches good visualization principles
+
+* Uses R, `ggplot2`, and `tidyverse`
+
+* [Free online version!](https://socviz.co/)
+
+* Affordable in print
+]
 
 ---
 class: inverse
