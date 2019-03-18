@@ -53,7 +53,7 @@ Anything written on the same line *after* `#` will not be run by R.
 This is useful for annotating your code to remind you (or others) what you are doing in a section.<sup>1</sup>
 
 .footnote[
-In R Markdown documents, comments only work in chunks. Outside of a chunk, `#` creates **headers** like "comments" at the top of this slide.
+[1] In R Markdown documents, comments only work in chunks. Outside of a chunk, `#` creates **headers** like "comments" at the top of this slide.
 ]
 
 ---
@@ -554,7 +554,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Add a scatterplot of points.]
+.footnote[Add a scatterplot of large red points.]
 ---
 count: false
 
@@ -674,7 +674,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Pick a better theme and increase the text size.]
+.footnote[Pick a theme and increase the text size.]
 ---
 # Plotting All Countries
 
@@ -830,7 +830,7 @@ ggplot(data = gapminder,
        aes(x = year, y = lifeExp, 
            group = country, 
            color = continent)) + #<<
-  geom_line() +
+  geom_line() + #<<
   xlab("Year") + 
   ylab("Life expectancy") +
   ggtitle("Life expectancy over time") +
@@ -844,7 +844,7 @@ ggplot(data = gapminder,
        aes(x = year, y = lifeExp, 
            group = country, 
            color = continent)) + #<<
-  geom_line() +
+  geom_line() + #<<
   xlab("Year") + 
   ylab("Life expectancy") +
   ggtitle("Life expectancy over time") +
@@ -1026,7 +1026,7 @@ We can modify the axes in a variety of ways, such as:
 ggplot(data = China, aes(x = year, y = gdpPercap)) +
     geom_line() +
     scale_y_log10(breaks = c(1000, 2000, 3000, 4000, 5000), #<<
-                  labels=scales::dollar) + #<<
+                  labels = scales::dollar) + #<<
     xlim(1940, 2010) + ggtitle("Chinese GDP per capita")
 ```
 
