@@ -1367,7 +1367,6 @@ class: inverse
 
 # Homework
 
-
 Pick some relationship to look at in the Gapminder data and write up a .Rmd file investigating that question graphically. You might work with a subset of the data (e.g. just Africa). Upload both the `.Rmd` file and the `.html` file to Canvas. 
 
 * Include 4 to 8 plots.

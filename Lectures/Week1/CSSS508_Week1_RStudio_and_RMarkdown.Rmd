@@ -31,6 +31,10 @@ mono_accent(base_color = "#342c5c",
             title_slide_background_size = "contain",
             background_image = "https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg"
 )
+rinline <- function(code){
+  html <- '<code  class="r">``` `r CODE` ```</code>'
+  sub("CODE", code, html)
+}
 ```
 
 
@@ -93,9 +97,9 @@ mono_accent(base_color = "#342c5c",
 # Logistics
 
 Location: 
-* Lecture: SAV117 on Wednesdays, 3:30-5:20
-* Optional Lab: SAV117 on Mondays, 3:30-5:20
-* Office Hours: SAV255 by Appointment
+* Lecture: SIG 134 on Wednesdays, 3:30-5:20
+* Recommended Lab: SAV 117 on Mondays, 3:30-5:20
+* Office Hours: SAV 255 by Appointment
 
 Materials: http://clanfear.github.io/CSSS508
 
@@ -114,7 +118,7 @@ Grading:
 Yes, peer grading...
 --
 
-* **35+ students, no TA**
+* **50+ students, no TA**
 --
 
 * You will write your reports better knowing others will see them
@@ -159,15 +163,17 @@ drop.unused.levels = TRUE) : variable lengths differ
 </pre>
 </blockquote>
 
+.footnote[Try to use fixed-width font for code in emails.]
+
 ---
 
 # Slack Channel
 
-This course uses a [Slack Channel](https://uwcsss508au18.slack.com/) for additional communication.
+This course uses a [Slack Channel](https://uwcsss508.slack.com/) for additional communication.
 
-Use it like the mailing list to ask questions, particularly for simple questions.
+Use it like the mailing list to ask questions, particularly for *short questions*.
 
-Use the mailing list for long questions or those requiring you to attach a file.
+Use the mailing list for *long questions* or those requiring you to attach a file.
 
 In addition, I encourage you to use Slack *during class* to ask quick questions
 of other students and share links.
@@ -233,7 +239,7 @@ The lines preceded by `##` represent the output, or result, of running the code 
 
 --
 
-If you miss any lecture, lecture videos are available on the course website.
+If you miss any lecture or want to see a lecture not offered this term, recordings are available on the course website.
 
 
 ---
@@ -317,7 +323,7 @@ A killer feature of R/RStudio is ease of making R Markdown files:
 
   + PDF documents
   + HTML webpages and reports
-  + Word documents 
+  + Word and PowerPoint documents  
   + Presentations (like these slides)
 
 --
@@ -448,7 +454,7 @@ new.object <- 144
 **Operators** like `<-` are functions that look like symbols but typically sit between their arguments 
 (e.g. numbers or objects) instead of having them inside `()` like in `sqrt(x)`<sup>1</sup>. 
 
-.footnote[[1] We can actually call operators like other functions by stuffing them between backticks: <code>\`+\`(x,y)</code>]
+.footnote[[1] We can actually call operators like other functions by stuffing them between backticks: <code  class="r">``` \`+\`(x,y) ```</code>]
 
 --
 
@@ -943,9 +949,8 @@ If you put an assignment such as `x <- y` in parentheses `()`, R will print the 
 
 # Drawing Still Ugly Pictures
 
-
 .small[
-```{r, out.height="340px"}
+```{r, out.height="330px"}
 plot(dist ~ speed, data = cars, #<<
      xlab = "Speed (mph)",
      ylab = "Stopping distance (ft)",
@@ -1048,11 +1053,11 @@ class: inverse
 
 Write up a .Rmd file showing some exploratory analyses of the Swiss fertility data. Upload both the `.Rmd` file and the `.html` file to Canvas. You must upload *both* for credit.
 
-Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`, `quantile()`) and *may not hard-code any numbers referenced in your text*.
+Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`) and *may not hard-code any numbers referenced in your text*.
 
 Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (e.g. round `x` with `round(x, 2)`).
 
-### DUE: 11:59 PM, Tuesday, April 9th, 2018
+### DUE: 11:59 PM, Tuesday, April 9th, 2019
 
 ---
 
