@@ -75,7 +75,7 @@ rinline <- function(code){
   + Quantitative Sociology
 --
 
-  + Computational Demography
+  + Computational Social Science
 --
 
   + Experimental Criminology
