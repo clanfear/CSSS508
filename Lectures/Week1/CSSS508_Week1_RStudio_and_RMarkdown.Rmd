@@ -476,7 +476,7 @@ Object names can contain `_` and `.` in them, but cannot *begin* with numbers. T
 to be consistent in naming objects. RStudio auto-complete means *long names are better 
 than vague ones*! 
 
-*Good names<sup>1</sup> save confusion later.*
+*Good names save confusion later.<sup>1</sup>*
 
 .footnote[[1] "There are only two hard things in Computer Science: cache invalidation and naming things." - Phil Karlton]
 
