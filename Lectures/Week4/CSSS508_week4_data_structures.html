@@ -1280,6 +1280,55 @@ swiss %&gt;%
 ```
 
 ---
+# Tibbles
+
+.smallish[
+`tidyverse` functions often use a type of data frame called a *tibble*. You can create them manually with `tibble()` as with `data.frame()` or convert existing data frames into tibbles using `as_tibble()`. Tibbles display better than data frames: they truncate output and include column types. They also do not convert strings to factors!
+
+Because the `tidyverse` has abolished row names, `tibbles()` have none. You can convert row names to columns using `tibble::rownames_to_column()` or with the `rownames=` argument in `as_tibble()`.
+]
+
+.small[
+.pull-left[
+
+```r
+swiss %&gt;% select(2:3) %&gt;% head()
+```
+
+```
+##              Agriculture Examination
+## Courtelary          17.0          15
+## Delemont            45.1           6
+## Franches-Mnt        39.7           5
+## Moutier             36.5          12
+## Neuveville          43.5          17
+## Porrentruy          35.3           9
+```
+]
+.pull-right[
+
+```r
+swiss %&gt;% select(2:3) %&gt;% 
+  as_tibble(rownames="Name") %&gt;% head()
+```
+
+```
+## # A tibble: 6 x 3
+##   Name         Agriculture Examination
+##   &lt;chr&gt;              &lt;dbl&gt;       &lt;int&gt;
+## 1 Courtelary          17            15
+## 2 Delemont            45.1           6
+## 3 Franches-Mnt        39.7           5
+## 4 Moutier             36.5          12
+## 5 Neuveville          43.5          17
+## 6 Porrentruy          35.3           9
+```
+]
+]
+
+
+
+---
 class: inverse
 # An Aside
 
@@ -1345,7 +1394,7 @@ summary(my_list[[3]]) # this prints output
 ---
 # Getting Standard Errors
 
-.small[
+.smallish[
 
 ```r
 summary(my_list[[3]])[["coefficients"]] # a matrix

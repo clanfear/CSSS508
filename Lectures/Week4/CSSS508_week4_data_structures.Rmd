@@ -17,6 +17,7 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(comment = "##")
+library(dplyr)
 ```
 
 ```{r xaringan-themer, include = FALSE}
@@ -689,6 +690,31 @@ swiss %>%
 ```
 
 ---
+# Tibbles
+
+.smallish[
+`tidyverse` functions often use a type of data frame called a *tibble*. You can create them manually with `tibble()` as with `data.frame()` or convert existing data frames into tibbles using `as_tibble()`. Tibbles display better than data frames: they truncate output and include column types. They also do not convert strings to factors!
+
+Because the `tidyverse` has abolished row names, `tibbles()` have none. You can convert row names to columns using `tibble::rownames_to_column()` or with the `rownames=` argument in `as_tibble()`.
+]
+
+.small[
+.pull-left[
+```{r}
+swiss %>% select(2:3) %>% head()
+```
+]
+.pull-right[
+```{r}
+swiss %>% select(2:3) %>% 
+  as_tibble(rownames="Name") %>% head()
+```
+]
+]
+
+
+
+---
 class: inverse
 # An Aside
 
@@ -718,7 +744,7 @@ summary(my_list[[3]]) # this prints output
 ---
 # Getting Standard Errors
 
-.small[
+.smallish[
 ```{r}
 summary(my_list[[3]])[["coefficients"]] # a matrix
 (speed_SE <- summary(my_list[[3]])[["coefficients"]]["speed", "Std. Error"])
@@ -729,10 +755,10 @@ summary(my_list[[3]])[["coefficients"]] # a matrix
 # Example: 95% confidence interval
 
 ```{r}
-speed_CI <- speed_beta + c(-qnorm(0.975), qnorm(0.975)) * speed_SE
+speed_CI <- speed_beta + c(-qnorm(0.975), qnorm(0.975)) * speed_SE #<<
 names(speed_CI) <- c("lower", "upper")
 ```
-.footnote[[1] `qnorm(0.975)` is `r round(qnorm(0.975),2)`]
+.footnote[ `qnorm(0.975)` is `r round(qnorm(0.975),2)`]
 
 --
 
