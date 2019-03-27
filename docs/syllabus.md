@@ -80,14 +80,6 @@ You may ask and answer questions in the Slack channel instead of the mailing lis
 Slack is best-suited for *short technical questions* or *extended conversations*.
 Your `@uw.edu` email must be used to register for the channel.
 
-#### DataCamp (Link pending)
-
-Students registered for this course are provided with free access to [DataCamp](http://www.datacamp.com) R courses for the duration of the term.
-DataCamp provides commercial interactive tutorials created by experts in data science, statistics, and general programming. These tutorials
-are provided as *optional* resources for additional practice and deeper learning. Free access to DataCamp is available
-for approximately six months, so you may review and work on them after the course has ended. 
-If you are registered for the course and did not receive a DataCamp email by the end of Wednesday 10/3/18, please [email the instructor](mailto:clanfear@uw.edu).
-
 ## Course Requirements
 This course is graded as credit / no credit. To pass you need to receive 
 at least 60% of the available points. There will be approximately 7 graded homeworks,

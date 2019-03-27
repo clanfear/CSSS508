@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
     <title>CSSS508, Week 9</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### Nov 21, 2018<br>Updated: Nov 21, 2018
+### May 29, 2019<br>Updated: Mar 27, 2019
 
 ---
 
@@ -160,7 +160,7 @@ What this package does for you:
 ---
 # Installation
 
-As of Nov 21, 2018, the current version of `ggmap` must be downloaded from GitHub.
+As of Mar 27, 2019, the current version of `ggmap` must be downloaded from GitHub.
 
 This can be done using the `devtools` package.
 
@@ -546,7 +546,16 @@ glimpse(precincts_votes_sf)
 
 ```
 ## Observations: 960
+```
+
+```
+## Warning: Detecting old grouped_df format, replacing `vars` attribute by
+## `groups`
+```
+
+```
 ## Variables: 5
+## Groups: Precinct [960]
 ## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 11-...
 ## $ P_Dem    &lt;dbl&gt; 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.8325991...
 ## $ P_Rep    &lt;dbl&gt; 0.15612648, 0.07789474, 0.13418530, 0.08649469, 0.085...
@@ -725,18 +734,18 @@ head(king_county, 10)
 ## proj4string:    +proj=longlat +datum=NAD83 +no_defs
 ## # A tibble: 10 x 5
 ## # Groups:   GEOID [10]
-##    GEOID  NAME    `Total Populati~ `Any Black`                    geometry
-##    &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;         &lt;MULTIPOLYGON [Â°]&gt;
-##  1 53033~ Census~             7261      0.175  (((-122.2965 47.73378, -12~
-##  2 53033~ Census~             7902      0.101  (((-122.3236 47.72309, -12~
-##  3 53033~ Census~             2830      0.0452 (((-122.3452 47.73413, -12~
-##  4 53033~ Census~             6258      0.195  (((-122.3609 47.73414, -12~
-##  5 53033~ Census~             5165      0.0771 (((-122.3609 47.72507, -12~
-##  6 53033~ Census~             3154      0.0130 (((-122.3799 47.71327, -12~
-##  7 53033~ Census~             8039      0.104  (((-122.345 47.72868, -122~
-##  8 53033~ Census~             4651      0.131  (((-122.3127 47.71944, -12~
-##  9 53033~ Census~             2474      0.0141 (((-122.2915 47.7155, -122~
-## 10 53033~ Census~             1823      0.0219 (((-122.285 47.7192, -122.~
+##    GEOID  NAME    `Total Populati~ `Any Black`                     geometry
+##    &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;          &lt;MULTIPOLYGON [Â°]&gt;
+##  1 53033~ Census~             7261      0.175  (((-122.2965 47.73378, -122~
+##  2 53033~ Census~             7902      0.101  (((-122.3236 47.72309, -122~
+##  3 53033~ Census~             2830      0.0452 (((-122.3452 47.73413, -122~
+##  4 53033~ Census~             6258      0.195  (((-122.3609 47.73414, -122~
+##  5 53033~ Census~             5165      0.0771 (((-122.3609 47.72507, -122~
+##  6 53033~ Census~             3154      0.0130 (((-122.3799 47.71327, -122~
+##  7 53033~ Census~             8039      0.104  (((-122.345 47.72868, -122.~
+##  8 53033~ Census~             4651      0.131  (((-122.3127 47.71944, -122~
+##  9 53033~ Census~             2474      0.0141 (((-122.2915 47.7155, -122.~
+## 10 53033~ Census~             1823      0.0219 (((-122.285 47.7192, -122.2~
 ```
 ]
 
@@ -806,6 +815,7 @@ Use the HW 7 template to practice making maps of the restaurant inspection data.
 
 If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on December 4th.
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "tomorrow-night-bright",
@@ -815,16 +825,57 @@ If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on 
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
 })();</script>
 
 <script>
 (function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -838,7 +889,8 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

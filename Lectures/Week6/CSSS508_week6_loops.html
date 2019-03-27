@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
     <title>CSSS508, Week 6</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 6
 ## Loops
 ### Chuck Lanfear
-### Oct 31, 2018<br>Updated: Mar 4, 2019
+### May 8, 2019<br>Updated: Mar 27, 2019
 
 ---
 
@@ -830,7 +830,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##    5.87    0.22    6.12
+##    6.21    0.11    6.31
 ```
 
 ---
@@ -847,7 +847,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.14    0.15    0.33
+##    0.14    0.15    0.30
 ```
 
 ```r
@@ -856,10 +856,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-##   41.93    1.47   18.55
+##  44.357   0.733  21.033
 ```
 
-The vectorized method was 42 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 44 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples

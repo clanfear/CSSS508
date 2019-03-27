@@ -2,7 +2,7 @@
 title: "CSSS508, Week 3"
 subtitle: "Manipulating and Summarizing Data"
 author: "Chuck Lanfear"
-date: "Oct 10, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Apr 17, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -23,15 +23,6 @@ library(ggplot2)
 ```{r xaringan-themer, include = FALSE}
 library(xaringanthemer)
 source("../csss508css.R")
-mono_accent(base_color = "#342c5c",
-            code_font_google = google_font("Fira Mono"),
-            header_font_google = google_font("Quattrocento"),
-            extra_css = csss508css,
-            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/img/title_slide_img.png",
-            title_slide_background_position = "bottom",
-            title_slide_background_size = "contain",
-            background_image = "https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg"
-)
 ```
 
 

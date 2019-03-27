@@ -227,6 +227,11 @@ h1, h2, h3 {
   float: right;
   width: 60%;
 }
+.bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
 a {
   text-decoration: underline;
 }

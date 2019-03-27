@@ -2,7 +2,7 @@
 title: "CSSS508, Week 7"
 subtitle: "Vectorization and Functions"
 author: "Chuck Lanfear"
-date: "Nov 7, 2018<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "May 15, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -22,15 +22,6 @@ knitr::opts_chunk$set(comment = "##")
 ```{r xaringan-themer, include = FALSE}
 library(xaringanthemer)
 source("../csss508css.R")
-mono_accent(base_color = "#342c5c",
-            code_font_google = google_font("Fira Mono"),
-            header_font_google = google_font("Quattrocento"),
-            extra_css = csss508css,
-            title_slide_background_image = "https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/img/title_slide_img.png",
-            title_slide_background_position = "bottom",
-            title_slide_background_size = "contain",
-            background_image = "https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1.svg"
-)
 ```
 
 class: inverse
