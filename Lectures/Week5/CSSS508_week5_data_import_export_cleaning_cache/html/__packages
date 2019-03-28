@@ -1,10 +1,12 @@
 base
 xaringanthemer
-readr
+knitr
 pander
+gapminder
 dplyr
-tidyr
-bindrcpp
 ggplot2
+nycflights13
+readr
+tidyr
 lubridate
 forcats

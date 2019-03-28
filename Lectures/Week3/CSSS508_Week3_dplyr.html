@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 3
 ## Manipulating and Summarizing Data
 ### Chuck Lanfear
-### Apr 17, 2019<br>Updated: Mar 27, 2019
+### Apr 17, 2019<br>Updated: Mar 28, 2019
 
 ---
 
@@ -585,18 +585,6 @@ Maybe you need to calculate the mean and standard deviation of a bunch of column
 yugoslavia %&gt;%
     filter(year == 1982) %&gt;%
     summarize_at(vars(lifeExp, pop), funs(mean, sd))
-```
-
-```
-## Warning: funs() is soft deprecated as of dplyr 0.8.0
-## please use list() instead
-## 
-## # Before:
-## funs(name = f(.)
-## 
-## # After: 
-## list(name = ~f(.))
-## This warning is displayed once per session.
 ```
 
 ```

@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 8
 ## Strings
 ### Chuck Lanfear
-### May 22, 2019<br>Updated: Mar 27, 2019
+### May 22, 2019<br>Updated: Mar 28, 2019
 
 ---
 
@@ -59,8 +59,8 @@ glimpse(restaurants)
 ## $ City                       &lt;chr&gt; "Seattle", "Seattle", "Seattle", "S...
 ## $ Zip_Code                   &lt;chr&gt; "98126", "98109", "98109", "98109",...
 ## $ Phone                      &lt;chr&gt; "(206) 938-5665", NA, NA, NA, NA, N...
-## $ Longitude                  &lt;dbl&gt; -122.3709, -122.3562, -122.3562, -1...
-## $ Latitude                   &lt;dbl&gt; 47.57043, 47.62506, 47.62506, 47.62...
+## $ Longitude                  &lt;dbl&gt; -122, -122, -122, -122, -122, -122,...
+## $ Latitude                   &lt;dbl&gt; 47.6, 47.6, 47.6, 47.6, 47.6, 47.6,...
 ## $ Inspection_Business_Name   &lt;chr&gt; NA, "10 MERCER RESTAURANT", "10 MER...
 ## $ Inspection_Type            &lt;chr&gt; NA, "Routine Inspection/Field Revie...
 ## $ Inspection_Score           &lt;int&gt; NA, 10, 10, 10, 15, 15, 15, 0, 15, ...
@@ -355,21 +355,6 @@ head(unique(restaurants$City))
 restaurants &lt;- restaurants %&gt;%
     mutate_at(vars(Name, Address, City), 
               funs(str_to_upper))
-```
-
-```
-## Warning: funs() is soft deprecated as of dplyr 0.8.0
-## please use list() instead
-## 
-## # Before:
-## funs(name = f(.)
-## 
-## # After: 
-## list(name = ~f(.))
-## This warning is displayed once per session.
-```
-
-```r
 head(unique(restaurants$City))
 ```
 
@@ -469,7 +454,7 @@ coffee %&gt;% select(Business_ID, Name, Inspection_Score, Date) %&gt;%
     ggtitle("Histogram of inspection scores for Seattle coffee shops")
 ```
 
-![](CSSS508_week8_strings_files/figure-html/coffee_histogram-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week8_strings_files/figure-html/coffee_histogram-1.svg)&lt;!-- --&gt;
 ]
 
 ---
