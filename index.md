@@ -35,8 +35,8 @@ layout: default
    * [Lecture Video for Lecture 1](https://youtu.be/u6_uhABKia4), recorded September 26th, 2018
    * Homework 1: Due at 11:59PM on April 9th
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
-       + Homework 1 Key #1: HTML, RMD
-       + Homework 1 Key #2: HTML, RMD
+       + Homework 1 Example #1: HTML, RMD
+       + Homework 1 Example #2: HTML, RMD
    * [Get R](https://cran.r-project.org/)
    * [Get RStudio](https://www.rstudio.com/)
    * [R Markdown Installation](https://bookdown.org/yihui/rmarkdown/installation.html#installation) - Also has LaTeX installation instructions
@@ -61,7 +61,7 @@ layout: default
    * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded October 3rd, 2018
    * Homework 2: Due at 11:59PM on April 16th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
-       + Homework 2 Key: HML, RMD
+       + Homework 2 Example: HTML, RMD
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
    * [`ggplot2` documentation](http://docs.ggplot2.org/current/)
    * [`ggplot2` Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
@@ -84,6 +84,7 @@ layout: default
    * Homework 3: Due at 11:59PM on April 23rd
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
+       + Homework 3 Example: HTML, RMD
    * Reading: **[Data Transformation chapter in R for Data Science](http://r4ds.had.co.nz/transform.html)**
    * [A cautionary tale about Excel](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history)
    * `dplyr` stuff:
