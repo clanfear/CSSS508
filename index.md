@@ -24,6 +24,7 @@ layout: default
 * [Advanced R](http://adv-r.had.co.nz/) online textbook by Hadley Wickham. A great source for more in-depth and advanced R programming.
 * [Introduction to R Workshop](https://youtu.be/HbFaPArTIjo), recorded Oct. 11, 2018, with [companion webpage](https://clanfear.github.io/Intro_R_Workshop/).
 * [Intermediate R Workshop](https://youtu.be/pSWaOOniVBk), recorded Jan. 31, 2019, with [companion webpage](https://clanfear.github.io/Intermediate_R_Workshop/).
+* [What They Forgot to Teach You About R](https://whattheyforgot.org/) by Jenny Bryan and Jim Hester. Great information on best practices for managing projects and R itself.
 
 ## Weekly lecture notes and links:
 
@@ -164,6 +165,7 @@ layout: default
    * [Reference material on writing functions](http://r4ds.had.co.nz/functions.html) with lots of examples
    * [Code style guide](http://adv-r.had.co.nz/Style.html) for writing functions, etc.
    * [R, the master troll of statistical languages](http://www.talyarkoni.org/blog/2012/06/08/r-the-master-troll-of-statistical-languages/) (to read if you feel a bit frustrated!)
+   * [Tutorial on `purrr` ](https://jennybc.github.io/purrr-tutorial/) for vectorization by Jenny Bryan.
 
 ### 8.  Working with Text Data
    * [Slides for Lecture 8: Working with strings and character data](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_Week8_strings.html)
