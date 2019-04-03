@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 1
 ## RStudio and RMarkdown
 ### Chuck Lanfear
-### Apr 3, 2019<br>Updated: Mar 28, 2019
+### Apr 3, 2019<br>Updated: Apr 3, 2019
 
 ---
 
@@ -81,6 +81,7 @@ class: center, top, title-slide
 Location: 
 * Lecture: SIG 134 on Wednesdays, 3:30-5:20
 * Recommended Lab: SAV 117 on Mondays, 3:30-5:20
+   * Note: Limited capacity!
 * Office Hours: SAV 255 by Appointment
 
 Materials: http://clanfear.github.io/CSSS508
@@ -100,7 +101,7 @@ Grading:
 Yes, peer grading...
 --
 
-* **50+ students, no TA**
+* **60+ students, no TA**
 --
 
 * You will write your reports better knowing others will see them
@@ -153,12 +154,16 @@ drop.unused.levels = TRUE) : variable lengths differ
 
 This course uses a [Slack Channel](https://uwcsss508.slack.com/) for additional communication.
 
+You will receive a link to join via the email list.
+
 Use it like the mailing list to ask questions, particularly for *short questions*.
 
 Use the mailing list for *long questions* or those requiring you to attach a file.
 
 In addition, I encourage you to use Slack *during class* to ask quick questions
 of other students and share links.
+
+Don't be afraid to answer each others' questions!
 
 ---
 
@@ -346,11 +351,11 @@ You can change the layout in *Preferences &gt; Pane Layout*
 There are several ways to run R code in RStudio:
 --
 
-* Highlight lines in the **editor** window and click *Run* at the top or hit `Ctrl+Enter` or `âŒ˜+Enter` to run them all.
+* Highlight lines in the **editor** window and click *Run* at the top or hit `Ctrl+Enter` or `⌘+Enter` to run them all.
 
 --
 
-* With your **caret** on a line you want to run, hit `Ctrl+Enter` or `âŒ˜+Enter`. Note your caret moves to the next line, so you can run code sequentially with repeated presses. 
+* With your **caret** on a line you want to run, hit `Ctrl+Enter` or `⌘+Enter`. Note your caret moves to the next line, so you can run code sequentially with repeated presses. 
 
 --
 
@@ -401,7 +406,7 @@ The `[1]` in the output indicates the numeric **index** of the first element on 
 --
 
 Now in your blank R document in the **editor**, try typing the line `sqrt(400)` and either
-clicking *Run* or hitting `Ctrl+Enter` or `âŒ˜+Enter`.
+clicking *Run* or hitting `Ctrl+Enter` or `⌘+Enter`.
 
 --
 
@@ -477,7 +482,7 @@ new.object
 
 --
 
-Object names can contain `_` and `.` in them, but cannot *begin* with numbers. Try
+Object names can contain `_` and `.` in them but cannot *begin* with numbers. Try
 to be consistent in naming objects. RStudio auto-complete means *long names are better 
 than vague ones*! 
 
@@ -760,6 +765,7 @@ Try tinkering with `my_first_rmd.Rmd` to give it some pizzazz: Add sections, hav
 
 To keep R Markdown dead-simple, it lacks some features you might occasionally want to use. Your options for fancier documents are:
 
+* Templates
 * Use HTML with CSS for custom formatting&lt;sup&gt;1&lt;/sup&gt;
 * Use LaTeX and .Rnw files instead of .Rmd&lt;sup&gt;2&lt;/sup&gt;
 
@@ -809,7 +815,7 @@ Chunks have options that control what happens with their code, such as:
 
 * `echo=FALSE`: Keeps R code from being shown in the document
 
-* `eval=FALSE`: Show R code in the document without running it
+* `eval=FALSE`: Shows R code in the document without running it
 
 * `include=FALSE`: Hides all output but still runs code (good for `setup` chunks where you load packages!)
 
@@ -896,10 +902,11 @@ In your YAML header, make the date come from R's `Sys.time()` function by changi
 to:
 
     date: "`r Sys.time()`"
-Fancier option: Use this instead to take today's date and make it read nicely:
+Fancier option: Use this instead to take today's date and make it read nicely:&lt;sup&gt;1&lt;/sup&gt;
 
     date: "`r format(Sys.Date(), format='%B %d, %Y')`"
 
+.footnote[[1] `format(Sys.Date(), format='%B %d, %Y')` says "format system date as month name (`%B`), day-of-month (`%d`), and four-digit year (`%Y`): April 03, 2019. See `?strptime` for these format codes.]
 ---
 class: inverse
 
@@ -1157,6 +1164,8 @@ pander(head(swiss, 5), style = "rmarkdown", split.tables = 120)
 |   **Moutier**    |   85.8    |    36.5     |     12      |     7     |  33.77   |       20.3       |
 |  **Neuveville**  |   76.9    |    43.5     |     17      |    15     |   5.16   |       20.6       |
 ]
+
+.footnote[`split.tables = 120` tells `pander` to break a table into multiple tables if it will be over 120 characters wide. Adjust this to get widths *just right*.]
 ---
 class: inverse
 
