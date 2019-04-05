@@ -1,17 +1,13 @@
 render_and_print_slides <- function(week){
-  if (Sys.info()["user"]=="cclan"){
     week_dir     <- paste0(getwd(), "/Lectures/", "Week", week, "/")
-    current_rmd  <- paste0(week_dir, stringr::str_subset(list.files(week_dir), "^CSSS508_Week.*\\.Rmd$"))
+    current_rmd  <- paste0(week_dir, stringr::str_subset(list.files(week_dir),
+                                                     "^CSSS508_Week.*\\.Rmd$"))
     rmarkdown::render(current_rmd, encoding = "UTF-8")
-    current_html <- stringr::str_replace(current_rmd, "\\.Rmd", "\\.html")
+    current_html <- stringr::str_replace(current_rmd,  "\\.Rmd",  "\\.html")
     new_file     <- stringr::str_replace(current_html, "\\.html", "\\.pdf")
+    message("Slides rendered, waiting 5 seconds.")
     Sys.sleep(5)
-    system_call  <- paste0('"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe" --headless --print-to-pdf=', 
-                           new_file, 
-                           " ", 
-                           current_html)
-    system(system_call)
-  } else {
-    warning("Script not portable, modify for your machine.")
-  }
+    message("Printing from Chrome.")
+    pagedown::chrome_print(current_html, format="pdf")
+    message(paste0("Printing complete at ", week_dir))
 }
