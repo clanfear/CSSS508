@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 2
 ## Plotting with <code>ggplot2</code>
 ### Chuck Lanfear
-### Apr 10, 2019<br>Updated: Apr 4, 2019
+### Apr 10, 2019<br>Updated: Apr 8, 2019
 
 ---
 
@@ -256,6 +256,23 @@ This will install a *large* number of R packages we will use throughout the term
 
 ```r
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
 ```
 
 ---
@@ -1108,7 +1125,7 @@ Wow, there's a lot going on here!
 * Custom labels, titles, and rotated x axis text
 
 ---
-
+## 1. Base Plot
 .smaller[
 
 ```r
@@ -1130,11 +1147,13 @@ Wow, there's a lot going on here!
 ---
 count: false
 
+## 2. Lines
+
 .smaller[
 
 ```r
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-* geom_line(alpha = 0.5, aes(color = "Country", size = "Country"))
+* geom_line()
   #
   #  
   #
@@ -1150,13 +1169,15 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ---
 count: false
 
+## 3. Continent Average
+
 .smaller[
 
 ```r
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line() +
 * geom_line(stat = "smooth", method = "loess",
-*           aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5)
+*           aes(group = continent))
   #
   #
   #
@@ -1170,13 +1191,15 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ---
 count: false
 
+## 4. Facets
+
 .smaller[
 
 ```r
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line() +
   geom_line(stat = "smooth", method = "loess", 
-            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+            aes(group = continent)) +
 * facet_wrap(~ continent, nrow = 2)
   #
   #
@@ -1190,13 +1213,15 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ---
 count: false
 
+## 5. Color Scale
+
 .smaller[
 
 ```r
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+* geom_line(aes(color = "Country")) +
   geom_line(stat = "smooth", method = "loess", 
-            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+*           aes(group = continent, color = "Continent")) +
   facet_wrap(~ continent, nrow = 2) +
 * scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue"))
   #
@@ -1210,13 +1235,14 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ---
 count: false
 
+## 6. Size Scale
 .smaller[
 
 ```r
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+* geom_line(aes(color = "Country", size = "Country")) +
   geom_line(stat = "smooth", method = "loess", 
-            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+*           aes(group = continent, color = "Continent", size = "Continent")) +
   facet_wrap(~ continent, nrow = 2) +
   scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
 * scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3))
@@ -1227,9 +1253,33 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 
 ![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-59-1.svg)&lt;!-- --&gt;
 ]
+---
+count: false
+
+## 7. Alpha (Transparency)
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+* geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+*           aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3))
+  #
+  #
+  #
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-60-1.svg)&lt;!-- --&gt;
+]
 
 ---
 count: false
+
+## 8. Theme and Labels
 
 .smaller[
 
@@ -1246,10 +1296,12 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-60-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-61-1.svg)&lt;!-- --&gt;
 ]
 ---
 count: false
+
+## 9. Title and Subtitle
 
 .smaller[
 
@@ -1266,10 +1318,36 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-61-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-62-1.svg)&lt;!-- --&gt;
 ]
 ---
 count: false
+
+## 10. Angled Tick Values
+
+.smaller[
+
+```r
+ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+  facet_wrap(~ continent, nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
+* theme(axis.text.x = element_text(angle = 45))
+```
+
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-63-1.svg)&lt;!-- --&gt;
+]
+
+.footnote[Note: Fewer values might be better than angled labels!]
+---
+count: false
+
+## 11. Legend Position
 
 .smaller[
 
@@ -1286,13 +1364,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 * theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-62-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-64-1.svg)&lt;!-- --&gt;
 ]
 ---
 
 ## Fussy Manual Legend
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-63-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-65-1.svg)&lt;!-- --&gt;
 
 Observation: One could use `filter()` to identify the countries with dips in life expectancy and investigate.
 
