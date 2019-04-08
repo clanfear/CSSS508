@@ -209,6 +209,8 @@ layout: default
       + [Rmd for Lecture 10 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week10/CSSS508_Week10_reproducibility.Rmd)
    * [Leacture Video for Lecture 10](https://youtu.be/ALfCcu3jYkQ), recorded November 28, 2018
    * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
+   * [Initial Steps Toward Reproducible Research](https://kbroman.org/steps2rr/) by Karl Broman
+   * [The Plain Person's Guide to Plain Text Social Science](http://plain-text.co) by Kieran Healy
    * R Packages:
       + [`huskydown`](https://github.com/benmarwick/huskydown)
       + [`rrtools`](https://github.com/benmarwick/rrtools)
