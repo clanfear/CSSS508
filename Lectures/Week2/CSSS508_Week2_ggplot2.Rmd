@@ -533,6 +533,31 @@ count: false
 ```{r, fig.height=4, dev='svg', eval=FALSE}
 ggplot(data = China, 
        aes(x = year, y = lifeExp)) +
+  geom_point() #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point() 
+```
+]
+
+.footnote[Add a scatterplot.]
+---
+count: false
+
+## Axis Labels, Points, No Background
+
+### 3: Point Color and Size
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
   geom_point(color = "red", size = 3) #<<
 ```
 ]
@@ -545,13 +570,13 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Add a scatterplot of large red points.]
+.footnote[Make the points large and red.]
 ---
 count: false
 
 ## Axis Labels, Points, No Background
 
-### 3: X-Axis Label
+### 4: X-Axis Label
 
 .pull-left[
  .small[
@@ -578,7 +603,7 @@ count: false
 
 ## Axis Labels, Points, No Background
 
-### 4: Y-Axis Label
+### 5: Y-Axis Label
 
 .pull-left[
  .small[
@@ -607,7 +632,7 @@ count: false
 
 ## Axis Labels, Points, No Background
 
-### 5: Title
+### 6: Title
 
 .pull-left[
  .small[
@@ -638,7 +663,40 @@ count: false
 
 ## Axis Labels, Points, No Background
 
-### 6: Theme
+### 7: Theme
+
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China") +
+  theme_bw() #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = China, 
+       aes(x = year, y = lifeExp)) +
+  geom_point(color = "red", size = 3) +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy in China") +
+  theme_bw() #<<
+```
+]
+
+.footnote[Pick a nicer theme.]
+---
+count: false
+
+## Axis Labels, Points, No Background
+
+### 8: Text Size
 
 .pull-left[
  .small[
@@ -665,7 +723,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Pick a theme and increase the text size.]
+.footnote[Increase the base text size.]
 ---
 # Plotting All Countries
 
@@ -929,9 +987,10 @@ ggplot(data = gapminder,
 We can assign a `ggplot` object to a name:
 
 ```{r}
-lifeExp_by_year <- ggplot(data = gapminder, 
-                          aes(x = year, y = lifeExp, 
-                              group = country, color = continent)) +
+lifeExp_by_year <- 
+  ggplot(data = gapminder, 
+         aes(x = year, y = lifeExp, 
+             group = country, color = continent)) +
   geom_line() +
   xlab("Year") + 
   ylab("Life expectancy") +
@@ -959,19 +1018,6 @@ lifeExp_by_year +
     theme(legend.position = "bottom")
 ```
 
----
-
-# Tinkering Suggestions
-
-Start experimenting with making some graphs in `ggplot2` of the Gapminder data. You can look at a subset of the data using `filter()` to limit rows, plot different $x$ and $y$ variables, facet by a factor, etc.
-
-Some other options:
-
-* `geom_histogram()`, `geom_density()`, `geom_boxplot()` (see the [Cookbook for R site](http://www.cookbook-r.com/Graphs/Plotting_distributions_%28ggplot2%29/) for a reference)
-
-* `geom_smooth()` for adding loess or regression lines (see the [`ggplot2` documentation](http://docs.ggplot2.org/current/geom_smooth.html))
-
-* Install [Jeff Arnold's `ggthemes` package](https://github.com/jrnold/ggthemes), load it, and try `theme_economist()`, `theme_stata()`, `theme_excel()` instead of no theme or `theme_bw()`
 
 ---
 
@@ -1334,7 +1380,7 @@ Know Your History: What happened in Africa in the early 1990s and Asia in the mi
 
 ## More on Customizing Legends
 
-You can move the legends around, flip their orientation, remove them altogether, etc. The [Cookbook for R website](http://www.cookbook-r.com/Graphs/Legends_%28ggplot2%29) is my go-to for burning questions such as how to change the legend labels.
+You can move the legends around, flip their orientation, remove them altogether, etc. The [Cookbook for R website](http://www.cookbook-r.com/Graphs/Legends_%28ggplot2%29) is a good resource for questions such as changing legend labels.
 
 ---
 
@@ -1409,6 +1455,20 @@ class: inverse
 ]
 
 ---
+
+# Tinkering Suggestions
+
+Experiment with making some graphs in `ggplot2` of the Gapminder data. You can look at a subset of the data using `filter()` to limit rows, plot different $x$ and $y$ variables, facet by a factor, etc.
+
+Some other options:
+
+* `geom_histogram()`, `geom_density()`, `geom_boxplot()` (see the [Cookbook for R site](http://www.cookbook-r.com/Graphs/Plotting_distributions_%28ggplot2%29/) for a reference)
+
+* `geom_smooth()` for adding loess or regression lines (see the [`ggplot2` documentation](http://docs.ggplot2.org/current/geom_smooth.html))
+
+* Install [Jeff Arnold's `ggthemes` package](https://github.com/jrnold/ggthemes), load it, and try `theme_economist()`, `theme_stata()`, `theme_excel()` instead of no theme or `theme_bw()`
+
+---
 class: inverse
 
 # Homework
@@ -1421,4 +1481,4 @@ Pick some relationship to look at in the Gapminder data and write up a .Rmd file
 * You must include at least one manually specified legend.
 * You can use other `geoms` like histograms, bar charts, add vertical or horizontal lines, etc. [You may find this data visualization cheat sheet helpful](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf).
 
-Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Use chunk options `echo` and `results` to limit the code/output you show in the `.html`.
+Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Use chunk options like `echo=FALSE` to limit the code/output you show in the `.html`.
