@@ -59,7 +59,8 @@ layout: default
    * [Slides for Lecture 2: Plotting with `ggplot2`](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_ggplot2.html)
        + [PDF of Lecture 2 slides](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_ggplot2.pdf)
        + [Rmd for Lecture 2 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/CSSS508_Week2_ggplot2.Rmd)
-   * [Lecture Video for Lecture 2](https://youtu.be/1vxyNzcuswk), recorded October 3rd, 2018
+   * [Lecture Video for Lecture 2](https://youtu.be/9HQYdqWEbgU), recorded April 10th, 2019
+       + For second half, see [last term's recording](https://youtu.be/1vxyNzcuswk), recorded October 3rd, 2018
    * Homework 2: Due at 11:59PM on April 16th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Example: HTML, RMD
