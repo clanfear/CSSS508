@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>CSSS508, Week 9</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Chuck Lanfear" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, top, title-slide
+
+# CSSS508, Week 9
+## Mapping
+### Chuck Lanfear
+### May 29, 2019<br>Updated: Mar 28, 2019
+
+---
+
+
+
+
+
+
+
+# Today
+
+### Basic Mapping in `ggplot2`
+* Mapping with raw `ggplot2` using coordinates
+* `ggmap` for mashing up maps with `ggplot2`
+* Labeling points and using `ggrepel` to avoid overlaps
+
+### Advanced Mapping
+* `sf`: [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) geometry for R
+* `tidycensus` for obtaining Census Bureau data
+
+---
+# Mapping in R: A quick plug
+
+.pull-left[
+.image-75[
+![](img/bivand.jpg)
+]
+]
+
+.pull-right[
+If you are interested in mapping, GIS, and geospatial analysis in R, *acquire this book*.
+
+[RSpatial.org](http://rspatial.org/) is a great resource as well.
+
+You may also consider taking Jon Wakefield's **CSSS 554: Statistical Methods for Spatial Data**, however it is challenging and focuses more heavily on statistics than mapping.
+
+[CSDE offers workshops](https://csde.washington.edu/training/workshops/) using [QGIS](https://qgis.org/en/site/) and/or ArcGIS. I recommend QGIS because it is free software with an extensive feature set and large user community.
+]
+
+---
+class: inverse
+# Basic Mapping
+
+### `ggplot2` and `ggmap`
+
+---
+# One Day of SPD Incidents
+
+In Week 5, we looked at types of incidents the Seattle Police Department responded to in a single day. Now, we'll look at where those were.
+
+
+```r
+library(tidyverse)
+```
+
+```r
+spd_raw &lt;- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Department_911_Incident_Response.csv")
+```
+
+---
+# Taking a `glimpse()`
+
+.small[
+
+```r
+glimpse(spd_raw)
+```
+
+```
+## Observations: 706
+## Variables: 19
+## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 17018...
+## $ `CAD Event Number`            &lt;dbl&gt; 1.6e+10, 1.6e+10, 1.6e+10, 1.6e+...
+## $ `General Offense Number`      &lt;dbl&gt; 2.02e+09, 2.02e+09, 2.02e+09, 2....
+## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202...
+## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT",...
+## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS"...
+## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRE...
+## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25...
+## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOC...
+## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B...
+## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B...
+## $ `Census Tract`                &lt;dbl&gt; 9100, 11801, 7200, 8002, 8100, 5...
+## $ Longitude                     &lt;dbl&gt; -122, -122, -122, -122, -122, -1...
+## $ Latitude                      &lt;dbl&gt; 47.6, 47.5, 47.6, 47.6, 47.6, 47...
+## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47....
+## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIF...
+## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING",...
+## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "C...
+## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25...
+```
+]
+
+---
+# `x`,`y` as Coordinates
+
+.pull-left[
+Coordinates, such as longitude and latitude, can be provided in `aes()` as `x` and `y` values.
+
+This is ideal when you don't need to place points over some map for reference.
+
+.small[
+
+```r
+ggplot(spd_raw, 
+       aes(Longitude, Latitude)) + 
+  geom_point() + 
+  coord_fixed() +
+  ggtitle("Seattle Police Incidents",
+          subtitle="March 25, 2016") +
+  theme_classic()
+```
+]
+
+Sometimes, however, we want to plot these points over existing maps.
+
+]
+
+.pull-right[
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+]
+
+---
+class: inverse
+# `ggmap`
+
+---
+# `ggmap`
+
+`ggmap` is a package that works with `ggplot2` to plot spatial data directly on map images downloaded from Google Maps&lt;sup&gt;1&lt;/sup&gt;, OpenStreetMap, and Stamen Maps (good artistic/minimal options).
+
+What this package does for you:
+
+1. Queries servers for a map (`get_map()`) at the location and scale you want
+
+2. Plots the **raster** (bitmap) image as a `ggplot` object
+
+3. Lets you add more `ggplot` layers like points, 2D density plots, text annotations
+
+4. Additional functions for interacting with Google Maps (e.g. getting distances by bike)
+
+.footnote[[1] [Requires an API Key now.](https://cloud.google.com/maps-platform/)]
+
+---
+# Installation
+
+As of Mar 28, 2019, the current version of `ggmap` must be downloaded from GitHub.
+
+This can be done using the `devtools` package.
+
+
+```r
+if(!requireNamespace("devtools")) install.packages("devtools")
+devtools::install_github("dkahle/ggmap", ref = "tidyup")
+```
+
+
+```r
+library(ggmap)
+```
+
+This may require compilation on your computer. If you get errors during install, check with me after class or in lab.
+
+---
+# Quick Maps with `qmplot()`
+
+.pull-left[
+`qmplot` will automatically set the map region based on your data:
+
+
+```r
+qmplot(data = spd_raw, 
+       x = Longitude, 
+       y = Latitude, 
+       color = I("#342c5c"), 
+       alpha = I(0.5))
+```
+
+All I provided was numeric latitude and longitude, and it placed the data points correctly on a raster map of Seattle.
+
+`I()` is used here to specify *set* (constant) rather than *mapped* values.
+]
+
+.pull-right[
+![](CSSS508_Week9_mapping_files/figure-html/qmplot-1.svg)&lt;!-- --&gt;
+]
+
+---
+# `get_map()`
+
+Both `qmplot()` and `qmap()` are wrappers for a function called `get_map()` that retrieves a base map layer. Some options:
+
+* `location=` search query or numeric vector of longitude and latitude
+* `zoom=` a zoom level (3 = continent, 10 = city, 21 = building)
+* `source=` 
+    + `"google"`: Google Maps for general purpose maps&lt;sup&gt;1&lt;/sup&gt;
+    + `"osm"`: OpenStreetMaps, general purpose but open access
+    + `"stamen"`: Aesthetically pleasing alternatives based on OpenStreetMaps
+* `maptype=`
+    + Google types: `"terrain"`, `"terrain-background"`, `"satellite"`, `"roadmap"`, `"hybrid"`
+    + Stamen types: `"watercolor"`, `"toner"`, `"toner-background"`, `"toner-lite"`
+* `color=` `"color"` or `"bw"`
+
+.footnote[[1] Requires API key!]
+
+---
+# Adding Density Layers
+
+.pull-left[
+Call `qmplot()` with no `geom()`, and then add density layers:
+
+.small[
+
+```r
+qmplot(data = spd_raw, geom = "blank",
+  x = Longitude, y = Latitude, 
+  maptype = "toner-lite", 
+  darken = 0.5) + 
+  stat_density_2d(
+*   aes(fill = stat(level)),
+      geom = "polygon", 
+      alpha = .2, color = NA) + 
+  scale_fill_gradient2(
+      "Incident\nConcentration", 
+      low = "white", 
+      mid = "yellow", 
+      high = "red") + 
+  theme(legend.position = "bottom")
+```
+]
+
+`stat(level)` indicates we want `fill=` to be based on `level` values calculated by the layer.
+
+]
+
+.pull-right[
+![](CSSS508_Week9_mapping_files/figure-html/quick_plot_density_2-1.svg)&lt;!-- --&gt;
+]
+---
+# Labeling Points
+
+Let's label the assaults and robberies specifically in downtown:
+
+First filter to downtown based on values "eyeballed" from our earlier map:
+
+```r
+downtown &lt;- spd_raw %&gt;%
+  filter(Latitude &gt; 47.58, Latitude &lt; 47.64,
+         Longitude &gt; -122.36, Longitude &lt; -122.31)
+```
+
+
+Then make a dataframe of just assaults and robberies:
+
+```r
+assaults &lt;- downtown %&gt;% 
+  mutate(assault_label = 
+           ifelse(`Event Clearance Group` %in%
+                  c("ASSAULTS", "ROBBERY"), 
+                  `Event Clearance Description`, "")) %&gt;% 
+  filter(assault_label != "")
+```
+
+---
+# Plotting with Labels
+
+.pull-left[
+Now let's plot the events and label them with `geom_label()` (`geom_text()` without background or border):
+
+.smallish[
+
+```r
+qmplot(data = downtown,
+       x = Longitude,
+       y = Latitude,
+       maptype = "toner-lite",
+*      color = I("firebrick"),
+*      alpha = I(0.5)) +
+  geom_label(data = assaults,
+       aes(label = assault_label))
+```
+]
+
+Placing the arguments for `color=` and `alpha=` inside `I()` prevents them from also applying to the labels. We would get transparent red labels otherwise!
+]
+
+.pull-right[
+![](CSSS508_Week9_mapping_files/figure-html/labels_2-1.svg)&lt;!-- --&gt;
+]
+
+---
+# `ggrepel`
+
+.pull-left[
+You can also try `geom_label_repel()` or `geom_text_repel()` in the `ggrepel` package to fix or reduce overlaps (total space is limited here):
+
+.small[
+
+```r
+library(ggrepel)
+qmplot(data = 
+    downtown,
+    x = Longitude,
+    y = Latitude,
+    maptype = "toner-lite", 
+    color = I("firebrick"), 
+    alpha = I(0.5)) + 
+  geom_label_repel(
+    data = assaults,
+    aes(label = assault_label), 
+    fill = "black", 
+    color = "white", 
+    segment.color = "black")
+```
+]
+]
+
+.pull-right[
+![](CSSS508_Week9_mapping_files/figure-html/ggrepel_2-1.svg)&lt;!-- --&gt;
+]
+
+
+---
+class: inverse
+# Advanced Mapping
+
+### GIS and R with `sf`
+
+---
+# Terminology
+
+* Simple Features (`sf`)
+
+* Coordinate Reference System (CRS)
+
+* Shapefile
+
+
+---
+# `sf`
+
+Until recently, the main way to work with geospatial data in R was through the `sp` 
+package. `sp` works well but does not store data the same way as most GIS packages
+and can be bulky and complicated.
+
+--
+
+The more recent `sf` package implements the GIS standard of [**Simple Features**](https://en.wikipedia.org/wiki/Simple_Features) in R.
+
+`sf` is also integrated into the `tidyverse`: e.g. `geom_sf()` in `ggplot2`.
+
+--
+
+The package is somewhat new but is expected to *replace* `sp` eventually. The principle
+authors and contributors to `sf` are the same authors as `sp` but with new developers
+from the `tidyverse` as well.
+
+Because `sf` is the new standard, we will focus on it today.
+
+
+```r
+library(sf)
+```
+
+
+
+---
+# Simple Features
+
+A [**Simple Feature**](https://en.wikipedia.org/wiki/Simple_Features) is a single observation with some defined geospatial location(s). Features are stored in special data frames (class `sf`) with two properties:
+
+--
+
+* **Geometry**: Properties describing a location (usually on Earth).
+   * Usually 2 dimensions, but support for up to 4. 
+   * Stored in a single reserved *list-column* (`geom`, of class `sfc`).&lt;sup&gt;1&lt;/sup&gt;
+   * Contain a defined coordinate reference system.
+
+.footnote[
+[1] A list-column is the same length as all other columns in the data, but each element contains *sub-elements* (class `sfg`) with all the geometrical components. 
+
+*List-columns* require special functions to manipulate, *including removing them*.
+]
+
+--
+
+* **Attributes**: Characteristics of the location (such as population).
+   * These are non-spatial measures that describe a feature.
+   * Standard data frame columns.
+
+
+
+---
+## Coordinate Reference Systems
+
+**Coordinate reference systems** (**CRS**) specify what location on Earth geometry coordinates are *relative to* (i.e. what location is (0,0) when plotting).
+
+--
+
+The most commonly used is [**WGS84**](https://en.wikipedia.org/wiki/World_Geodetic_System), the standard for Google Earth, the Department of Defense, and GPS satellites.
+
+--
+
+There are two common ways to define a CRS:
+
+* [**EPSG codes**](http://spatialreference.org/ref/epsg/) (`epsg` in R)
+   * Numeric codes which *refer to a predefined projection*
+   * Ex: WGS84 is `4326`
+
+--
+
+* [**PROJ.4 strings**](https://proj4.org/usage/quickstart.html) (`proj4string` in R)
+   * Text strings which *define a projection*
+   * WGS84 looks like this:
+
+```
++init=epsg:4326 +proj=longlat +ellps=WGS84
++datum=WGS84 +no_defs +towgs84=0,0,0
+```
+
+---
+# Shapefiles
+
+Geospatial data is typically stored in **shapefiles** which store geometric data as **vectors** with associated attributes (variables)
+
+--
+
+Shapefiles actually consist of multiple individual files. There are usually at least three (but up to 10+):
+
+* `.shp`: The feature geometries
+
+* `.shx`: Shape positional index
+
+* `.dbf`: Attributes describing features&lt;sup&gt;1&lt;/sup&gt;
+
+Often there will also be a `.prj` file defining the coordinate system.
+
+.footnote[[1] This is just a dBase IV file which is an ancient and common database storage file format.]
+
+---
+class: inverse
+# Using `sf`
+
+---
+# Selected `sf` Functions
+
+`sf` is a huge, feature-rich package. Here is a sample of useful functions:
+
+* `st_read()`, `st_write()`: Read and write shapefiles.
+
+* `geom_sf()`: `ggplot()` layer for `sf` objects.
+
+* `st_join()`: Join data by spatial relationship.
+
+* `st_transform()`: Convert between CRS.
+
+* `st_set_geometry(., NULL)`: Remove geometry from a `sf` data frame. 
+
+* `st_relate()`: Compute relationships between geometries (like neighbor matrices).
+
+* `st_interpolate_aw()`: Areal-weighted interpolation of polygons.
+
+---
+# Loading Data
+
+We will work with the voting data from Homework 5. You can obtain a shape file of King County voting precincts from the [county GIS data portal](https://gis-kingcounty.opendata.arcgis.com/datasets/voting-districts-of-king-county--votdst-area).
+
+--
+
+We can load the file using `st_read()`.
+
+
+```r
+precinct_shape &lt;- st_read("./data/district/votdst.shp",
+                          stringsAsFactors = F) %&gt;% 
+  select(Precinct=NAME, geometry)
+```
+
+```
+## Reading layer `votdst' from data source `C:\Users\cclan\OneDrive\GitHub\CSSS508\Lectures\Week9\data\district\votdst.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 2592 features and 5 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: 1220000 ymin: 31600 xmax: 1580000 ymax: 288000
+## epsg (SRID):    NA
+## proj4string:    +proj=lcc +lat_1=47.5 +lat_2=48.73333333333333 +lat_0=47 +lon_0=-120.8333333333333 +x_0=500000.0000000001 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs
+```
+
+---
+# Voting Data: Processing
+
+.small[
+
+```r
+precincts_votes_sf &lt;- 
+  read_csv("./data/king_county_elections_2016.txt") %&gt;%
+  filter(Race=="US President &amp; Vice President",
+         str_detect(Precinct, "SEA ")) %&gt;% 
+  select(Precinct, CounterType, SumOfCount) %&gt;%
+  group_by(Precinct) %&gt;%
+  filter(CounterType %in% 
+           c("Donald J. Trump &amp; Michael R. Pence",
+             "Hillary Clinton &amp; Tim Kaine",
+             "Registered Voters",
+             "Times Counted")) %&gt;%
+  mutate(CounterType =
+           recode(CounterType, 
+                  `Donald J. Trump &amp; Michael R. Pence` = "Trump",
+                  `Hillary Clinton &amp; Tim Kaine` = "Clinton",
+                  `Registered Voters`="RegisteredVoters",
+                  `Times Counted` = "TotalVotes")) %&gt;%
+  spread(CounterType, SumOfCount) %&gt;%
+  mutate(P_Dem = Clinton / TotalVotes, 
+         P_Rep = Trump / TotalVotes, 
+         Turnout = TotalVotes / RegisteredVoters) %&gt;%
+  select(Precinct, P_Dem, P_Rep, Turnout) %&gt;% 
+  filter(!is.na(P_Dem)) %&gt;%
+  left_join(precinct_shape)
+```
+]
+
+---
+# Taking a `glimpse()`
+
+.smallish[
+
+```r
+glimpse(precincts_votes_sf)
+```
+
+```
+## Observations: 960
+## Variables: 5
+## Groups: Precinct [960]
+## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 11-...
+## $ P_Dem    &lt;dbl&gt; 0.771, 0.817, 0.751, 0.838, 0.833, 0.815, 0.828, 0.83...
+## $ P_Rep    &lt;dbl&gt; 0.1561, 0.0779, 0.1342, 0.0865, 0.0859, 0.0803, 0.110...
+## $ Turnout  &lt;dbl&gt; 0.693, 0.727, 0.735, 0.752, 0.758, 0.771, 0.687, 0.67...
+## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((1273698 193...
+```
+]
+
+---
+
+.pull-left[
+# Voting Map
+
+We can plot `sf` geometry using `geom_sf()`.
+
+
+```r
+ggplot(precincts_votes_sf, 
+*      aes(fill=P_Dem)) +
+* geom_sf(color="white",
+          size=0.1) +
+* coord_sf(datum=NULL) +
+  theme(legend.position = 
+          "bottom")
+```
+
+* `fill=P_Dem` maps color inside precincts to `P_Dem`.
+* `color="white"` sets boundaries to white.
+* `coord_sf(datum=NULL)` removes graticule lines.
+
+]
+
+.pull-right[
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-15-1.svg)&lt;!-- --&gt;
+]
+
+---
+class: inverse
+# `tidycensus`
+
+---
+# `tidycensus`
+
+`tidycensus` can be used to search the American Community Survey (ACS) and Dicennial
+Census for variables, then download them and automatically format them as tidy dataframes.
+
+**These dataframes include geographical boundaries such as tracts!**
+
+--
+
+This package utilizes the Census API, so you will need to obtain a [Census API key](https://api.census.gov/data/key_signup.html).
+I talk more about APIs in the Social Media Data and Text Mining lecture.
+
+**Application Program Interface (API)**: A type of computer interface that exists as the 
+"native" method of communication between computers, often via http (usable via `httr` package).
+* R packages that interface with websites and databases typically use APIs.
+* APIs make accessing data easy while allowing websites to control access.
+
+See [the developer's GitHub page](https://walkerke.github.io/tidycensus/articles/basic-usage.html) for detailed instructions.
+
+---
+# Key `tidycensus` Functions
+
+* `census_api_key()` - Install a census api key.
+   * Note you will need to run this prior to using any `tidycensus` functions.
+
+* `load_variables()` - Load searchable variable lists.
+   * `year =`: Sets census year or endyear of 5-year ACS
+   * `dataset =`: Sets dataset (see `?load_variables`)
+
+* `get_decennial()` - Load Census variables and geographical boundaries.
+   * `variables = `: Provide vector of variable IDs
+   * `geography =`: Sets unit of analysis (e.g. `state`, `tract`, `block`)
+   * `year =`: Census year (`1990`, `2000`, or `2010`)
+   * `geometry = TRUE`: Returns `sf` geometry
+
+* `get_acs()` - Load ACS variables and boundaries.
+
+---
+# Searching for Variables
+
+
+
+
+```r
+library(tidycensus)
+# census_api_key("PUT YOUR KEY HERE", install=TRUE)
+acs_2015_vars &lt;- load_variables(2015, "acs5")
+acs_2015_vars[10:18,] %&gt;% print() 
+```
+
+```
+## # A tibble: 9 x 3
+##   name       label                                 concept   
+##   &lt;chr&gt;      &lt;chr&gt;                                 &lt;chr&gt;     
+## 1 B01001_008 Estimate!!Total!!Male!!20 years       SEX BY AGE
+## 2 B01001_009 Estimate!!Total!!Male!!21 years       SEX BY AGE
+## 3 B01001_010 Estimate!!Total!!Male!!22 to 24 years SEX BY AGE
+## 4 B01001_011 Estimate!!Total!!Male!!25 to 29 years SEX BY AGE
+## 5 B01001_012 Estimate!!Total!!Male!!30 to 34 years SEX BY AGE
+## 6 B01001_013 Estimate!!Total!!Male!!35 to 39 years SEX BY AGE
+## 7 B01001_014 Estimate!!Total!!Male!!40 to 44 years SEX BY AGE
+## 8 B01001_015 Estimate!!Total!!Male!!45 to 49 years SEX BY AGE
+## 9 B01001_016 Estimate!!Total!!Male!!50 to 54 years SEX BY AGE
+```
+
+---
+# Getting Data
+
+
+
+
+```r
+king_county &lt;- get_acs(geography="tract", state="WA", 
+                       county="King", geometry = TRUE,
+                       variables=c("B02001_001E", 
+                                   "B02009_001E"))
+```
+
+What do these look like?
+
+.smallish[
+
+```r
+glimpse(king_county)
+```
+
+```
+## Observations: 796
+## Variables: 6
+## $ GEOID    &lt;chr&gt; "53033000100", "53033000100", "53033000200", "5303300...
+## $ NAME     &lt;chr&gt; "Census Tract 1, King County, Washington", "Census Tr...
+## $ variable &lt;chr&gt; "B02001_001", "B02009_001", "B02001_001", "B02009_001...
+## $ estimate &lt;dbl&gt; 7963, 1550, 7973, 422, 2822, 170, 6721, 1168, 5300, 3...
+## $ moe      &lt;dbl&gt; 529, 449, 377, 254, 201, 92, 454, 441, 571, 218, 165,...
+## $ geometry &lt;MULTIPOLYGON [Â°]&gt; MULTIPOLYGON (((-122 47.7, ..., MULTIPO...
+```
+]
+
+Variable names are in `variables` and values are in `estimate`.
+
+---
+# Processing Data
+
+To get one row per precinct, we want to `spread()` key (`variable`) and value (`estimate`) columns into separate columns for each variable. Then we `mutate()` `Any Black` into a proportion measure.
+
+
+```r
+king_county &lt;-  king_county %&gt;% 
+* select(-moe) %&gt;%
+  group_by(GEOID) %&gt;% 
+  spread(variable, estimate) %&gt;% 
+  rename(`Total Population`=B02001_001,
+         `Any Black`=B02009_001) %&gt;%
+  mutate(`Any Black` = `Any Black` / `Total Population`)
+```
+
+.footnote[I remove the *margin of error* (`moe`) column before spreading.]
+
+
+---
+# The Data
+
+.smallish[
+
+```r
+head(king_county, 10)
+```
+
+```
+## Simple feature collection with 10 features and 4 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -122 ymin: 47.7 xmax: -122 ymax: 47.7
+## epsg (SRID):    4269
+## proj4string:    +proj=longlat +datum=NAD83 +no_defs
+## # A tibble: 10 x 5
+## # Groups:   GEOID [10]
+##    GEOID  NAME    `Total Populati~ `Any Black`                     geometry
+##    &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;          &lt;MULTIPOLYGON [Â°]&gt;
+##  1 53033~ Census~             7963      0.195  (((-122 47.7, -122 47.7, -1~
+##  2 53033~ Census~             7973      0.0529 (((-122 47.7, -122 47.7, -1~
+##  3 53033~ Census~             2822      0.0602 (((-122 47.7, -122 47.7, -1~
+##  4 53033~ Census~             6721      0.174  (((-122 47.7, -122 47.7, -1~
+##  5 53033~ Census~             5300      0.0570 (((-122 47.7, -122 47.7, -1~
+##  6 53033~ Census~             3052      0.0131 (((-122 47.7, -122 47.7, -1~
+##  7 53033~ Census~             8061      0.111  (((-122 47.7, -122 47.7, -1~
+##  8 53033~ Census~             4854      0.142  (((-122 47.7, -122 47.7, -1~
+##  9 53033~ Census~             2582      0.0352 (((-122 47.7, -122 47.7, -1~
+## 10 53033~ Census~             1972      0.0152 (((-122 47.7, -122 47.7, -1~
+```
+]
+
+---
+# Mapping Code
+
+
+```r
+king_county %&gt;% 
+  ggplot(aes(fill=`Any Black`)) + 
+  geom_sf(size=0.1, color="white") + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9",
+                        high="#00025b") + 
+  theme_minimal() + ggtitle("Proportion Any Black")
+```
+
+New functions:
+
+* `geom_sf()` draws Simple Features coordinate data.
+* `coord_sf()` is used here with these arguments:
+   * `crs`: Modifies the coordinate reference system (CRS); WGS84 is possibly the most commonly used CRS.
+   * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
+
+---
+![](CSSS508_Week9_mapping_files/figure-html/king_plot-1.svg)&lt;!-- --&gt;
+
+---
+# Removing Water
+
+With a simple function and boundaries of water bodies in King County, we can replace water with empty space.
+
+
+
+
+```r
+st_erase &lt;- function(x, y) {
+  st_difference(x, st_union(st_combine(y)))
+}
+
+kc_water &lt;- tigris::area_water("WA", "King", class = "sf")
+
+kc_nowater &lt;- king_county %&gt;% 
+  st_erase(kc_water)
+```
+
+* `st_combine()` merges all geometries into one
+* `st_union()` resolves internal boundaries
+* `st_difference()` subtracts `y` geometry from `x`
+* `area_water()` obtains `sf` geometry of water bodies.
+
+Then we can reproduce the same plot using `kc_nowater`...
+
+---
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+---
+
+class: inverse
+# Homework
+
+Homework 6, part 2 is due next week.
+
+# Optional Exercise
+
+Use the HW 7 template to practice making maps of the restaurant inspection data. 
+
+If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on December 4th.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "tomorrow-night-bright",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
