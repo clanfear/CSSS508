@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 3
 ## Manipulating and Summarizing Data
 ### Chuck Lanfear
-### Apr 17, 2019<br>Updated: Mar 28, 2019
+### Apr 17, 2019<br>Updated: Apr 13, 2019
 
 ---
 
@@ -78,7 +78,7 @@ Pipes are clearer to read when you have each function on a separate line (incons
 
 
 ```r
-take_this_data %&gt;%
+take_these_data %&gt;%
     do_first_thing(with = this_value) %&gt;%
     do_next_thing(using = that_value) %&gt;% ...
 ```
@@ -94,6 +94,22 @@ If you ever find yourself piping a function where data are not the first argumen
 ```r
 yugoslavia %&gt;% lm(pop ~ year, data = .)
 ```
+
+---
+# Pipe Assignment
+
+When creating a new object from the output of piped functions, place the assignment operator at the beginning.
+
+
+```r
+lm_pop_year &lt;- gapminder %&gt;% 
+  filter(continent == "Americas") %&gt;%
+  lm(pop ~ year, data = .)
+```
+
+No matter how long the chain of functions is, assignment is always done at the top.&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] Note this is just a stylistic convention: If you prefer, you *can* do assignment at the end of the chain.]
 
 ---
 # Filtering Rows (subsetting)
@@ -459,8 +475,8 @@ ifelse(example &gt; 0, "Positive", "Not Positive")
 
 ```r
 yugoslavia %&gt;% mutate(short_country = 
-               ifelse(country == "Bosnia and Herzegovina", 
-                    "B and H", as.character(country))) %&gt;%
+                 ifelse(country == "Bosnia and Herzegovina", 
+                        "B and H", as.character(country))) %&gt;%
     select(short_country, year, pop) %&gt;%
     arrange(year, short_country) %&gt;%
     head(3)
@@ -509,30 +525,27 @@ yugoslavia %&gt;%
 # `case_when()`
 
 `case_when()` performs multiple `ifelse()` operations at the same time. `case_when()` allows you to create a new variable with values based on multiple logical statements. This is useful for making categorical variables or variables from combinations of other variables.
-.small[
+
+.smallish[
 
 ```r
-gapminder %&gt;% mutate(gdpPercap_ordinal = case_when(
-    gdpPercap &lt; 700 ~ "low",
-    gdpPercap &gt;= 700 &amp; gdpPercap &lt; 800 ~ "moderate",
-    TRUE ~ "high" )) # Value when all other statements are FALSE
+gapminder %&gt;% 
+  mutate(gdpPercap_ordinal = 
+    case_when(
+      gdpPercap &lt;  700 ~ "low",
+      gdpPercap &gt;= 700 &amp; gdpPercap &lt; 800 ~ "moderate",
+      TRUE ~ "high" )) %&gt;% # Value when all other statements are FALSE
+  slice(6:9) # get rows 6 through 9
 ```
 
 ```
-## # A tibble: 1,704 x 7
-##    country     continent  year lifeExp      pop gdpPercap gdpPercap_ordinal
-##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;            
-##  1 Afghanistan Asia       1952    28.8  8425333      779. moderate         
-##  2 Afghanistan Asia       1957    30.3  9240934      821. high             
-##  3 Afghanistan Asia       1962    32.0 10267083      853. high             
-##  4 Afghanistan Asia       1967    34.0 11537966      836. high             
-##  5 Afghanistan Asia       1972    36.1 13079460      740. moderate         
-##  6 Afghanistan Asia       1977    38.4 14880372      786. moderate         
-##  7 Afghanistan Asia       1982    39.9 12881816      978. high             
-##  8 Afghanistan Asia       1987    40.8 13867957      852. high             
-##  9 Afghanistan Asia       1992    41.7 16317921      649. low              
-## 10 Afghanistan Asia       1997    41.8 22227415      635. low              
-## # ... with 1,694 more rows
+## # A tibble: 4 x 7
+##   country     continent  year lifeExp      pop gdpPercap gdpPercap_ordinal
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;            
+## 1 Afghanistan Asia       1977    38.4 14880372      786. moderate         
+## 2 Afghanistan Asia       1982    39.9 12881816      978. high             
+## 3 Afghanistan Asia       1987    40.8 13867957      852. high             
+## 4 Afghanistan Asia       1992    41.7 16317921      649. low
 ```
 ]
 
@@ -544,22 +557,27 @@ class: inverse
 ---
 ## General Aggregation: `summarize()`
 
-`summarize()` takes your rows of data and computes something across them: count how many rows there are, calculate the mean or total, etc. You can use any function that aggregates *multiple values* into a *single value* (like `sd()`).
+`summarize()` takes your column(s) of data and computes something using every row:
 
-In a spreadsheet:
+* Count how many rows there are
+* Calculate the mean
+* Compute the sum
+* Obtain a minimum or maximum value
 
-![Excel equivalent of summing a column](https://osiprodeusodcspstoa01.blob.core.windows.net/en-us/media/5feb1ba8-a0fb-49d1-8188-dcf1ba878a42.jpg)
+You can use any function in `summarize()` that aggregates multiple values into a single value (like `sd()`, `mean()`, or `max()`).
 
 ---
 # `summarize()` Example
+
+For the year 1982, let's get the number of observations, total population, mean life expectancy, and range of life expectancy for former Yugoslavian countries.
 
 
 ```r
 yugoslavia %&gt;%
     filter(year == 1982) %&gt;%
-    summarize(n_obs = n(),
-              total_pop = sum(pop),
-              mean_life_exp = mean(lifeExp),
+    summarize(n_obs          = n(),
+              total_pop      = sum(pop),
+              mean_life_exp  = mean(lifeExp),
               range_life_exp = max(lifeExp) - min(lifeExp))
 ```
 
@@ -578,20 +596,20 @@ These new variables are calculated using *all of the rows* in `yugoslavia`
 ### `summarize_at()`
 
 
-Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_at()`, put the variables to compute over first in `vars()` (like `select()` syntax) and put the functions to use in a `funs()` after.
+Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_at()`, put the variables to compute over first in `vars()` (like `select()` syntax) and put the functions to use in a `list()` after.
 
 
 ```r
 yugoslavia %&gt;%
     filter(year == 1982) %&gt;%
-    summarize_at(vars(lifeExp, pop), funs(mean, sd))
+    summarize_at(vars(lifeExp, pop), list(mean, sd))
 ```
 
 ```
 ## # A tibble: 1 x 4
-##   lifeExp_mean pop_mean lifeExp_sd   pop_sd
-##          &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-## 1         71.3  4008537       1.60 3237282.
+##   lifeExp_fn1 pop_fn1 lifeExp_fn2  pop_fn2
+##         &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;
+## 1        71.3 4008537        1.60 3237282.
 ```
 
 Note it automatically names the summarized variables based on the functions used to summarize.
@@ -608,14 +626,14 @@ There are additional `dplyr` functions similar to `summarize_at()`:
 
 
 ```r
-dataframe %&gt;% summarize_all(funs(mean, sd))
+dataframe %&gt;% summarize_all(list(mean, sd))
 ```
 
 * `summarize_if()` and `mutate_if()` summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:
 
 
 ```r
-dataframe %&gt;% summarize_if(is.numeric, funs(mean, sd))
+dataframe %&gt;% summarize_if(is.numeric, list(mean, sd))
 ```
 
 You can use all of these to avoid typing out the same code repeatedly!
@@ -633,15 +651,15 @@ Excel analogue: pivot tables
 .image-50[![Pivot table](http://www.excel-easy.com/data-analysis/images/pivot-tables/two-dimensional-pivot-table.png)]
 
 ---
-`group_by()` example
+# `group_by()` example
 
 
 
 ```r
 yugoslavia %&gt;%
 * group_by(year) %&gt;%
-    summarize(num_countries = n_distinct(country),
-              total_pop = sum(pop),
+    summarize(num_countries     = n_distinct(country),
+              total_pop         = sum(pop),
               total_gdp_per_cap = sum(pop*gdpPercap)/total_pop) %&gt;%
     head(5)
 ```
@@ -693,14 +711,13 @@ class: inverse
 ---
 ## When Do We Need to Join Tables?
 
-* Want to make columns using criteria too complicated for `ifelse()` or `case_when()`
-* Combine data stored in separate places: e.g. UW registrar information with student homework grades
+* Want to make columns using criteria too complicated for ifelse() or case_when()
 
-Excel equivalents: `VLOOKUP`, `MATCH`
+  + We can work with small sets of variables then combine them back together.
 
-.image-75[
-![VLOOKUP example](https://cdn.ablebits.com/_img-blog/excel-vlookup/excel-vlookup.png)
-]
+* Combine data stored in separate data sets: e.g. UW registrar data with police stop records.
+
+  + Often large surveys are broken into different data sets for each level (e.g. household, individual, neighborhood)
 
 ---
 ## Joining in Concept
@@ -722,9 +739,9 @@ There are many types of joins&lt;sup&gt;1&lt;/sup&gt;...
 
 * `A %&gt;% right_join(B)`: keep all rows from `B`, matched with `A` wherever possible (`NA` when not), keep columns from both `A` and `B`
 
-* `A %&gt;% inner_join(B)`: keep rows from `A` that match rows in `B`, keep columns from both `A` and `B`
+* `A %&gt;% inner_join(B)`: keep only rows from `A` and `B` that match, keep columns from both `A` and `B`
 
-* `A %&gt;% full_join(B)`: keep all rows from either `A` or `B`, matched wherever possible (`NA` when not), keep columns from both `A` and `B`
+* `A %&gt;% full_join(B)`: keep all rows from both `A` and `B`, matched wherever possible (`NA` when not), keep columns from both `A` and `B`
 
 * `A %&gt;% semi_join(B)`: keep rows from `A` that match rows in `B`, keep columns from only `A`
 
@@ -790,7 +807,7 @@ Who manufactures the planes that flew to Seattle?
 flights %&gt;% filter(dest == "SEA") %&gt;% select(tailnum) %&gt;%
 *   left_join(planes %&gt;% select(tailnum, manufacturer),
               by = "tailnum") %&gt;%
-    count(manufacturer) %&gt;% # Count observations of by manufacturer
+    count(manufacturer) %&gt;% # Count observations by manufacturer
     arrange(desc(n)) # Arrange data descending by count
 ```
 
@@ -806,7 +823,7 @@ flights %&gt;% filter(dest == "SEA") %&gt;% select(tailnum) %&gt;%
 ## 6 CIRRUS DESIGN CORP     2
 ```
 
-Note you can perform operations on the data inside functions such as `left_join()` and the *result* will be used by the function.
+Note you can perform operations on the data inside functions such as `left_join()` and the *output* will be used by the function.
 
 ---
 ## Join Example #2
@@ -860,7 +877,7 @@ Because the data are the first argument for `ggplot()`, we can pipe them straigh
 ---
 ## Wind Gusts and Delays
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
 
 Check out those 1200 mph winds!&lt;sup&gt;1&lt;/sup&gt;
 
@@ -890,7 +907,7 @@ I removed `geom_point()` to focus on the mean trend produced by `geom_smooth()`.
 ---
 ## Wind Gusts and Delays: Mean Trend
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-35-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
 
 ---
 ## Tinkering Suggestions

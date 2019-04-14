@@ -1,3 +1,17 @@
+# Try this stuff at top
+library(dplyr)
+library(modelr)
+
+test_lm1 <- lm(mpg ~ wt + forcats::as_factor(cyl) + qsec, data=mtcars)
+
+mtcars %>% 
+  mutate(cyl = forcats::as_factor(cyl)) %>%
+  data_grid(cyl, wt = seq_range(wt, 4), qsec = seq_range(qsec, 4), .model = test_lm1) %>% 
+  model_matrix(~ wt + cyl + qsec)
+
+
+# Old below, could probably augment with above
+
 modelr::data_grid(mtcars, wt=modelr::seq_range(wt, 10), cyl, vs)
 load("./Lectures/Week11/data/any_arrest_data.RData")
 

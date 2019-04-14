@@ -73,7 +73,7 @@ Pipes are clearer to read when you have each function on a separate line (incons
 --
 
 ```{r, eval=FALSE}
-take_this_data %>%
+take_these_data %>%
     do_first_thing(with = this_value) %>%
     do_next_thing(using = that_value) %>% ...
 ```
@@ -88,6 +88,21 @@ If you ever find yourself piping a function where data are not the first argumen
 ```{r, eval=FALSE}
 yugoslavia %>% lm(pop ~ year, data = .)
 ```
+
+---
+# Pipe Assignment
+
+When creating a new object from the output of piped functions, place the assignment operator at the beginning.
+
+```{r, eval=FALSE}
+lm_pop_year <- gapminder %>% 
+  filter(continent == "Americas") %>%
+  lm(pop ~ year, data = .)
+```
+
+No matter how long the chain of functions is, assignment is always done at the top.<sup>1</sup>
+
+.footnote[[1] Note this is just a stylistic convention: If you prefer, you *can* do assignment at the end of the chain.]
 
 ---
 # Filtering Rows (subsetting)
@@ -299,8 +314,8 @@ ifelse(example > 0, "Positive", "Not Positive")
 
 ```{r}
 yugoslavia %>% mutate(short_country = 
-               ifelse(country == "Bosnia and Herzegovina", 
-                    "B and H", as.character(country))) %>%
+                 ifelse(country == "Bosnia and Herzegovina", 
+                        "B and H", as.character(country))) %>%
     select(short_country, year, pop) %>%
     arrange(year, short_country) %>%
     head(3)
@@ -328,12 +343,16 @@ yugoslavia %>%
 # `case_when()`
 
 `case_when()` performs multiple `ifelse()` operations at the same time. `case_when()` allows you to create a new variable with values based on multiple logical statements. This is useful for making categorical variables or variables from combinations of other variables.
-.small[
+
+.smallish[
 ```{r}
-gapminder %>% mutate(gdpPercap_ordinal = case_when(
-    gdpPercap < 700 ~ "low",
-    gdpPercap >= 700 & gdpPercap < 800 ~ "moderate",
-    TRUE ~ "high" )) # Value when all other statements are FALSE
+gapminder %>% 
+  mutate(gdpPercap_ordinal = 
+    case_when(
+      gdpPercap <  700 ~ "low",
+      gdpPercap >= 700 & gdpPercap < 800 ~ "moderate",
+      TRUE ~ "high" )) %>% # Value when all other statements are FALSE
+  slice(6:9) # get rows 6 through 9
 ```
 ]
 
@@ -345,21 +364,26 @@ class: inverse
 ---
 ## General Aggregation: `summarize()`
 
-`summarize()` takes your rows of data and computes something across them: count how many rows there are, calculate the mean or total, etc. You can use any function that aggregates *multiple values* into a *single value* (like `sd()`).
+`summarize()` takes your column(s) of data and computes something using every row:
 
-In a spreadsheet:
+* Count how many rows there are
+* Calculate the mean
+* Compute the sum
+* Obtain a minimum or maximum value
 
-![Excel equivalent of summing a column](https://osiprodeusodcspstoa01.blob.core.windows.net/en-us/media/5feb1ba8-a0fb-49d1-8188-dcf1ba878a42.jpg)
+You can use any function in `summarize()` that aggregates multiple values into a single value (like `sd()`, `mean()`, or `max()`).
 
 ---
 # `summarize()` Example
 
+For the year 1982, let's get the number of observations, total population, mean life expectancy, and range of life expectancy for former Yugoslavian countries.
+
 ```{r}
 yugoslavia %>%
     filter(year == 1982) %>%
-    summarize(n_obs = n(),
-              total_pop = sum(pop),
-              mean_life_exp = mean(lifeExp),
+    summarize(n_obs          = n(),
+              total_pop      = sum(pop),
+              mean_life_exp  = mean(lifeExp),
               range_life_exp = max(lifeExp) - min(lifeExp))
 ```
 
@@ -371,12 +395,12 @@ These new variables are calculated using *all of the rows* in `yugoslavia`
 ### `summarize_at()`
 
 
-Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_at()`, put the variables to compute over first in `vars()` (like `select()` syntax) and put the functions to use in a `funs()` after.
+Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_at()`, put the variables to compute over first in `vars()` (like `select()` syntax) and put the functions to use in a `list()` after.
 
 ```{r}
 yugoslavia %>%
     filter(year == 1982) %>%
-    summarize_at(vars(lifeExp, pop), funs(mean, sd))
+    summarize_at(vars(lifeExp, pop), list(mean, sd))
 ```
 
 Note it automatically names the summarized variables based on the functions used to summarize.
@@ -392,13 +416,13 @@ There are additional `dplyr` functions similar to `summarize_at()`:
 * `summarize_all()` and `mutate_all()` summarize / mutate *all* variables sent to them in the same way. For instance, getting the mean and standard deviation of an entire dataframe:
 
 ```{r, eval=FALSE}
-dataframe %>% summarize_all(funs(mean, sd))
+dataframe %>% summarize_all(list(mean, sd))
 ```
 
 * `summarize_if()` and `mutate_if()` summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:
 
 ```{r, eval=FALSE}
-dataframe %>% summarize_if(is.numeric, funs(mean, sd))
+dataframe %>% summarize_if(is.numeric, list(mean, sd))
 ```
 
 You can use all of these to avoid typing out the same code repeatedly!
@@ -416,14 +440,14 @@ Excel analogue: pivot tables
 .image-50[![Pivot table](http://www.excel-easy.com/data-analysis/images/pivot-tables/two-dimensional-pivot-table.png)]
 
 ---
-`group_by()` example
+# `group_by()` example
 
 
 ```{r}
 yugoslavia %>%
   group_by(year) %>% #<<
-    summarize(num_countries = n_distinct(country),
-              total_pop = sum(pop),
+    summarize(num_countries     = n_distinct(country),
+              total_pop         = sum(pop),
               total_gdp_per_cap = sum(pop*gdpPercap)/total_pop) %>%
     head(5)
 ```
@@ -452,14 +476,13 @@ class: inverse
 ---
 ## When Do We Need to Join Tables?
 
-* Want to make columns using criteria too complicated for `ifelse()` or `case_when()`
-* Combine data stored in separate places: e.g. UW registrar information with student homework grades
+* Want to make columns using criteria too complicated for ifelse() or case_when()
 
-Excel equivalents: `VLOOKUP`, `MATCH`
+  + We can work with small sets of variables then combine them back together.
 
-.image-75[
-![VLOOKUP example](https://cdn.ablebits.com/_img-blog/excel-vlookup/excel-vlookup.png)
-]
+* Combine data stored in separate data sets: e.g. UW registrar data with police stop records.
+
+  + Often large surveys are broken into different data sets for each level (e.g. household, individual, neighborhood)
 
 ---
 ## Joining in Concept
@@ -481,9 +504,9 @@ There are many types of joins<sup>1</sup>...
 
 * `A %>% right_join(B)`: keep all rows from `B`, matched with `A` wherever possible (`NA` when not), keep columns from both `A` and `B`
 
-* `A %>% inner_join(B)`: keep rows from `A` that match rows in `B`, keep columns from both `A` and `B`
+* `A %>% inner_join(B)`: keep only rows from `A` and `B` that match, keep columns from both `A` and `B`
 
-* `A %>% full_join(B)`: keep all rows from either `A` or `B`, matched wherever possible (`NA` when not), keep columns from both `A` and `B`
+* `A %>% full_join(B)`: keep all rows from both `A` and `B`, matched wherever possible (`NA` when not), keep columns from both `A` and `B`
 
 * `A %>% semi_join(B)`: keep rows from `A` that match rows in `B`, keep columns from only `A`
 
@@ -546,11 +569,11 @@ Who manufactures the planes that flew to Seattle?
 flights %>% filter(dest == "SEA") %>% select(tailnum) %>%
     left_join(planes %>% select(tailnum, manufacturer), #<<
               by = "tailnum") %>%
-    count(manufacturer) %>% # Count observations of by manufacturer
+    count(manufacturer) %>% # Count observations by manufacturer
     arrange(desc(n)) # Arrange data descending by count
 ```
 
-Note you can perform operations on the data inside functions such as `left_join()` and the *result* will be used by the function.
+Note you can perform operations on the data inside functions such as `left_join()` and the *output* will be used by the function.
 
 ---
 ## Join Example #2
@@ -591,7 +614,7 @@ Because the data are the first argument for `ggplot()`, we can pipe them straigh
 ---
 ## Wind Gusts and Delays
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE, cache=FALSE, fig.height=4, dev='svg'}
+```{r, warning=FALSE, message=FALSE, echo=FALSE, cache=FALSE, fig.height=4, dev='png', dpi=600}
 flights %>% select(origin, year, month, day, hour, dep_delay) %>%
     inner_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
     select(dep_delay, wind_gust) %>%
