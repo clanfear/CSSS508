@@ -1,18 +1,30 @@
 # Try this stuff at top
 library(dplyr)
 library(modelr)
+library(tidyr)
 
-test_lm1 <- lm(mpg ~ wt + forcats::as_factor(cyl) + qsec, data=mtcars)
+cf_data <- data_grid(any_arrest_data, white_comp_wit_vict, black_arr_susp,
+                     crime_type, neighb_type, .model=mod_arrest) %>%
+  mutate(caller_type = factor("Complainant", 
+                              levels=c("Victim", "Witness", "Complainant")),
+         year        = factor("2010", 
+                              levels = as.character(2008:2012))) %>%
+  model_matrix(formula(delete.response(terms(mod_arrest))))
 
-mtcars %>% 
-  mutate(cyl = forcats::as_factor(cyl)) %>%
-  data_grid(cyl, wt = seq_range(wt, 4), qsec = seq_range(qsec, 4), .model = test_lm1) %>% 
-  model_matrix(~ wt + cyl + qsec)
-
-
+# -- for predict!
+predict(mod_arrest, newdata = data_grid(any_arrest_data, white_comp_wit_vict, black_arr_susp,
+                                        crime_type, neighb_type, .model=mod_arrest) %>%
+          mutate(caller_type = factor("Complainant", 
+                                      levels=c("Victim", "Witness", "Complainant")),
+                 year        = factor("2010", 
+                                      levels = as.character(2008:2012))))
+#--
 # Old below, could probably augment with above
 
+model_matrix(any_arrest_data, formula(mod_arrest))
+
 modelr::data_grid(mtcars, wt=modelr::seq_range(wt, 10), cyl, vs)
+
 load("./Lectures/Week11/data/any_arrest_data.RData")
 
 mod_arrest <- glm(arrest ~ white_comp_wit_vict*black_arr_susp + 
@@ -23,8 +35,8 @@ mod_arrest <- glm(arrest ~ white_comp_wit_vict*black_arr_susp +
                   family = binomial(link = "logit"),
                   data = any_arrest_data)
 
-library(modelr)
-cf_data <- data_grid(any_arrest_data, white_comp_wit_vict, black_arr_susp, crime_type, neighb_type, .model=mod_arrest)
+
+
 
 mod_arrest_pred <- predict(mod_arrest, newdata=cf_data, se.fit=TRUE)
 mod_arrest_pred_df <- data.frame(pe=mod_arrest_pred$fit, 

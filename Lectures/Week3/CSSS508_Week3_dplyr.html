@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 3
 ## Manipulating and Summarizing Data
 ### Chuck Lanfear
-### Apr 17, 2019<br>Updated: Apr 13, 2019
+### Apr 17, 2019<br>Updated: Apr 15, 2019
 
 ---
 
@@ -550,6 +550,55 @@ gapminder %&gt;%
 ]
 
 ---
+
+# `pull()`
+
+Sometimes you want to extract a single column from a data frame as a *vector* (or single value). 
+
+`pull()` *pulls* a column of a data frame out as a vector.
+
+
+```r
+gapminder %&gt;% pull(lifeExp) %&gt;% head(4)
+```
+
+```
+## [1] 28.801 30.332 31.997 34.020
+```
+
+
+```r
+gapminder %&gt;% select(lifeExp) %&gt;% head(4)
+```
+
+```
+## # A tibble: 4 x 1
+##   lifeExp
+##     &lt;dbl&gt;
+## 1    28.8
+## 2    30.3
+## 3    32.0
+## 4    34.0
+```
+
+.pull-right[.footnote[Note the difference between these two operations: The second yields only one column but is still a data frame.]]
+---
+
+# In-Line `pull()`
+
+`pull()` is particularly useful when you want to use a vector-only command in a `dplyr` chain of functions (say, in an in-line expression).
+
+This in-line code...
+
+&lt;p&gt;&lt;code&gt;The average life expectancy in Afghanistan from 1952 to 2007 was &lt;/code&gt;&lt;code  class="r"&gt;`&lt;/code&gt;&lt;code class="r"&gt;r gapminder %&gt;% filter(country=="Afghanistan") %&gt;% pull(lifeExp) %&gt;% mean() %&gt;% round(1)`&lt;/code&gt;&lt;code&gt; years.&lt;/code&gt;&lt;/p&gt;
+
+... will produce this output:
+
+The average life expectancy in Afghanistan from 1952 to 2007 was 37.5 years.
+
+`mean()` can only take a *vector* input, not a dataframe, so this won't work with `select(lifeExp)` instead of `pull(lifeExp)`.
+
+---
 class: inverse
 
 # Summarizing with `dplyr`
@@ -877,7 +926,7 @@ Because the data are the first argument for `ggplot()`, we can pipe them straigh
 ---
 ## Wind Gusts and Delays
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
 
 Check out those 1200 mph winds!&lt;sup&gt;1&lt;/sup&gt;
 
@@ -907,7 +956,7 @@ I removed `geom_point()` to focus on the mean trend produced by `geom_smooth()`.
 ---
 ## Wind Gusts and Delays: Mean Trend
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
 
 ---
 ## Tinkering Suggestions

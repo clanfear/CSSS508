@@ -357,6 +357,39 @@ gapminder %>%
 ]
 
 ---
+
+# `pull()`
+
+Sometimes you want to extract a single column from a data frame as a *vector* (or single value). 
+
+`pull()` *pulls* a column of a data frame out as a vector.
+
+```{r}
+gapminder %>% pull(lifeExp) %>% head(4)
+```
+
+```{r}
+gapminder %>% select(lifeExp) %>% head(4)
+```
+
+.pull-right[.footnote[Note the difference between these two operations: The second yields only one column but is still a data frame.]]
+---
+
+# In-Line `pull()`
+
+`pull()` is particularly useful when you want to use a vector-only command in a `dplyr` chain of functions (say, in an in-line expression).
+
+This in-line code...
+
+<p><code>The average life expectancy in Afghanistan from 1952 to 2007 was </code><code  class="r">`</code><code class="r">r gapminder %>% filter(country=="Afghanistan") %>% pull(lifeExp) %>% mean() %>% round(1)`</code><code> years.</code></p>
+
+... will produce this output:
+
+The average life expectancy in Afghanistan from 1952 to 2007 was `r gapminder %>% filter(country=="Afghanistan") %>% pull(lifeExp) %>% mean() %>% round(1)` years.
+
+`mean()` can only take a *vector* input, not a dataframe, so this won't work with `select(lifeExp)` instead of `pull(lifeExp)`.
+
+---
 class: inverse
 
 # Summarizing with `dplyr`
