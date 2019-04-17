@@ -433,10 +433,10 @@ Maybe you need to calculate the mean and standard deviation of a bunch of column
 ```{r}
 yugoslavia %>%
     filter(year == 1982) %>%
-    summarize_at(vars(lifeExp, pop), list(mean, sd))
+    summarize_at(vars(lifeExp, pop), list(mean = mean, sd = sd))
 ```
 
-Note it automatically names the summarized variables based on the functions used to summarize.
+You can also use `purrr` syntax (e.g. `~ mean(.)`) and it will automatically name the outputs.
 
 ---
 # Avoiding Repetition
@@ -446,16 +446,16 @@ Note it automatically names the summarized variables based on the functions used
 
 There are additional `dplyr` functions similar to `summarize_at()`:
 
-* `summarize_all()` and `mutate_all()` summarize / mutate *all* variables sent to them in the same way. For instance, getting the mean and standard deviation of an entire dataframe:
+* `summarize_all()` and `mutate_all()` summarize / mutate *all* variables sent to them in the same way. For instance, getting the mean and standard deviation of an entire dataframe (using `purrr` style functions):
 
 ```{r, eval=FALSE}
-dataframe %>% summarize_all(list(mean, sd))
+dataframe %>% summarize_all(list(~mean(.), ~sd(.)))
 ```
 
 * `summarize_if()` and `mutate_if()` summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:
 
 ```{r, eval=FALSE}
-dataframe %>% summarize_if(is.numeric, list(mean, sd))
+dataframe %>% summarize_if(is.numeric, list(~mean(.), ~sd(.)))
 ```
 
 You can use all of these to avoid typing out the same code repeatedly!
@@ -509,7 +509,7 @@ class: inverse
 ---
 ## When Do We Need to Join Tables?
 
-* Want to make columns using criteria too complicated for ifelse() or case_when()
+* Want to make columns using criteria too complicated for `ifelse()` or `case_when()`
 
   + We can work with small sets of variables then combine them back together.
 
@@ -724,4 +724,4 @@ This time, *include all your code in your output document* (`echo=TRUE`), using 
 
 Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one*: `airlines`, `airports`, `flights`, `planes`, and `weather` (e.g. `data(flights)`).
 
-## DUE: 11:59 PM, April 17th
+## DUE: 11:59 PM, April 23rd
