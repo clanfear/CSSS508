@@ -83,7 +83,7 @@ layout: default
    * [Slides for Lecture 3: Manipulating and summarizing data with `dplyr`](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.html)
        + [PDF of Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.pdf)
        + [Rmd for Lecture 3 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week3/CSSS508_Week3_dplyr.Rmd)
-   * [Lecture Video for Lecture 3](https://youtu.be/giKghK_7z7c), recorded October 10th, 2018
+   * [Lecture Video for Lecture 3](https://youtu.be/qrJOFEenmLE), recorded April 17th, 2019
    * Homework 3: Due at 11:59PM on April 23rd
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
