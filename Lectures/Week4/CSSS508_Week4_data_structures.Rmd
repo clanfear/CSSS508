@@ -143,7 +143,7 @@ The `scale()` function performs the above operation!
 --
 
 * **numeric**: `c(1, 10*3, 4, -3.14)` <sup>1</sup>
-.footnote[[1] R is perfectly happy with you including a calculation—or any other valid object—as an element!]
+.footnote[[1] R is perfectly happy with you including a calculation--or any other valid object--as an element!]
 
 --
 
