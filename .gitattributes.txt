@@ -1,1 +1,6 @@
 *.Rmd linguist-language=R
+*.rmd linguist-language=R
+*.RData linguist-language=R
+*.rdata linguist-language=R
+*.rds linguist-language=R
+*.Rds linguist-language=R
