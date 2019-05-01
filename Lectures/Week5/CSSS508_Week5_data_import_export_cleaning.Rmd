@@ -460,7 +460,7 @@ Week columns continue up to `wk76`!
 2. The values for a single variable are in their own column.
 --
 
-3. The observations are all of the same nature.
+3. There is only one value per cell.
 
 --
 
@@ -641,7 +641,7 @@ billboard_2000 <- billboard_2000 %>%
 ---
 # Charts of 2000: `ggplot2`
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(ggplot2)
 billboard_trajectories <- 
   ggplot(data = billboard_2000,
@@ -983,7 +983,7 @@ Vote tallies in King County from the 2016 general election are in a 60 MB comma-
 
 The data have no documentation (aside from what I provide), so show your detective work to answer questions about the data and clean them up in the R Markdown template on the course website. Use *⌘-Click* on Mac or *Right-Click * on Windows to download the .Rmd to the folder you plan to work from, then open it in RStudio.
 
-This homework is two parts to be completed in each of the next two weeks. It can be daunting, so do not wait until Monday to start. I recommend reading instructions closely, working with others, and using the mailing list.
+This homework is two parts to be completed in each of the next two weeks. It can be daunting, so do not wait until Monday to start. I recommend reading instructions closely, working with others, and using the mailing list and Slack.
 
-## PART 1 DUE: 11:59 PM, May 1st
-## PART 2 DUE: 11:59 PM, May 8th
+## PART 1 DUE: 11:59 PM, May 7th
+## PART 2 DUE: 11:59 PM, May 14th
