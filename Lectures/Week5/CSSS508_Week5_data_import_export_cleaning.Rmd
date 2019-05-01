@@ -289,7 +289,7 @@ I pretty much always just save as `.Rdata`.
 ---
 # dput()
 
-For asking for help, it is useful to prepare a snippet of your data with `dput()`:
+For asking for help, it is useful to prepare a snippet of your data with `dput()`:<sup>1</sup>
 
 ```{r}
 dput(head(cars, 8))
@@ -304,6 +304,8 @@ temp <- structure(list(speed = c(4, 4, 7, 7, 8, 9, 10, 10),
                        .Names = c("speed", "dist"),
                        row.names = c(NA, 8L), class = "data.frame")
 ```
+
+.footnote[[1] A [reprex](https://reprex.tidyverse.org/) is even better!]
 
 ---
 # Reading in Data from Other Software
