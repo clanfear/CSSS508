@@ -118,7 +118,7 @@ layout: default
    * [Slides for Lecture 5: Data import, export, and cleaning](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_Week5_data_import_export_cleaning.html)
        + [PDF of Lecture 5 slides](https://clanfear.github.io/CSSS508/Lectures/Week5/CSSS508_Week5_data_import_export_cleaning.pdf)
        + [Rmd for Lecture 5 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/CSSS508_Week5_data_import_export_cleaning.Rmd)
-   * [Lecture Video for Lecture 5](https://youtu.be/vPjW6jKVINI), recorded October 24th, 2018
+   * [Lecture Video for Lecture 5](https://youtu.be/_HmXw7sLbCw), recorded MAy 1st, 2019
    * Homework 5, Part 1 due at 11:59 PM on May 7th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
