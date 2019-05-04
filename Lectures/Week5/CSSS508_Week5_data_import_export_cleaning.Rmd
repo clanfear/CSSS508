@@ -204,6 +204,9 @@ billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/hadley/
 ```
 ]
 
+```{r}
+write_csv(billboard_2000_raw, path="billboard_2000_raw.csv")
+```
 ---
 # Did It Load?
 
