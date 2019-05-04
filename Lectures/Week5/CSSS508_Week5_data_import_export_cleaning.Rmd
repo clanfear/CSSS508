@@ -234,7 +234,7 @@ Since it encountered no values, `readr` assumed the `wk66`-`wk76` columns were *
 bb_types <- paste(c("icccD", rep("i", 76)), collapse="") #<<
 
 billboard_2000_raw <- 
-  read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv",
+  read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv",
            col_types = bb_types) #<<
 ```
 
