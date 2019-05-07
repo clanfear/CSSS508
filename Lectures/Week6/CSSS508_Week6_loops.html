@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 6
 ## Loops
 ### Chuck Lanfear
-### May 8, 2019<br>Updated: Mar 28, 2019
+### May 8, 2019<br>Updated: May 7, 2019
 
 ---
 
@@ -46,7 +46,7 @@ How upset would they be if the `swiss` data had 200 columns instead of 6?
 
 
 
-You will learn general solutions todayâ€”and better but more specific ones next week:
+You will learn general solutions today—and better but more specific ones next week:
 
 
 ```r
@@ -116,7 +116,7 @@ class: inverse
 
 `for()` loops are the most general kind of *loop*, found in pretty much every programming language.
 
-"**For** each of these valuesâ€”in orderâ€”do *this*"
+"**For** each of these values—in order—do *this*"
 
 Conceptually:
 
@@ -761,8 +761,8 @@ They are also useful for producing error messages, by generating a message *if* 
 ---
 # Loading Files with a Loop
 
-One common use of a loop in R is for loading many individual data files at onceâ€”like
-an entire directory of Excel filesâ€”to combine them into one data set.
+One common use of a loop in R is for loading many individual data files at once—like
+an entire directory of Excel files—to combine them into one data set.
 
 Alternatively, you might want to use a loops and `if()` to download and clean files that are all
 from different URLs... which might go poorly.
@@ -830,7 +830,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##  110.11    0.28  110.50
+##  237.14    0.25  238.01
 ```
 
 ---
@@ -847,7 +847,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.14    0.07    0.22
+##    0.16    0.17    0.33
 ```
 
 ```r
@@ -856,10 +856,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-##     786       4     502
+## 1482.13    1.47  721.24
 ```
 
-The vectorized method was 786 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 1482 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples
