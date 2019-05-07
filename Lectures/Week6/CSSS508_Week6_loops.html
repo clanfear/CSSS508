@@ -299,7 +299,6 @@ Examples of what to pre-allocate based on what you store:
 
 
 ```r
-# preallocate numeric vector
 iters &lt;- 10 # Set number of interations
 output &lt;- numeric(iters) # Pre-allocate numeric vector 
 
@@ -830,7 +829,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##  237.14    0.25  238.01
+##  264.75    0.36  266.67
 ```
 
 ---
@@ -847,7 +846,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.16    0.17    0.33
+##    0.25    0.17    0.43
 ```
 
 ```r
@@ -856,10 +855,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-## 1482.13    1.47  721.24
+## 1059.00    2.12  620.16
 ```
 
-The vectorized method was 1482 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 1059 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples

@@ -239,7 +239,6 @@ Examples of what to pre-allocate based on what you store:
 # Pre-Allocation: Numeric
 
 ```{r}
-# preallocate numeric vector
 iters <- 10 # Set number of interations
 output <- numeric(iters) # Pre-allocate numeric vector 
 
