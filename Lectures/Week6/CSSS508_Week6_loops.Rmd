@@ -54,8 +54,7 @@ options(digits = 3)
 You will learn general solutions today—and better but more specific ones next week:
 
 ```{r}
-swiss_means <- setNames(numeric(ncol(swiss)), #<<
-                        colnames(swiss))
+swiss_means <- setNames(numeric(ncol(swiss)), colnames(swiss)) #<<
 for(i in seq_along(swiss)) {
     swiss_means[i] <- mean(swiss[[i]])
 }
@@ -310,7 +309,7 @@ This generates a dataframe of 300 observations where `y` is dependent on `x`, wi
 Aside: If you followed the 2014 scandal in political science when a grad student faked data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
 
 ---
-# Plot of sim_data
+# Plot of `sim_data`
 
 ```{r, dev="svg", fig.height=4}
 ggplot(data = sim_data, aes(x = x, y = y)) +
@@ -353,9 +352,9 @@ Let's make a *named character vector* for the formulas we'll use in `lm()`:
 .small[
 ```{r}
 models <- c("intercept only" = "y ~ 1", # Name on left, formula on right
-            "linear" = "y ~ x",
-            "quadratic" = "y ~ x + I(x^2)",
-            "cubic" = "y ~ x + I(x^2) + I(x^3)")
+            "linear"         = "y ~ x",
+            "quadratic"      = "y ~ x + I(x^2)",
+            "cubic"          = "y ~ x + I(x^2) + I(x^3)")
 ```
 ]
 
@@ -363,7 +362,7 @@ Then pre-allocate a list to *store* the fitted models:
 
 .small[
 ```{r}
-fitted_lms <- vector("list", length(models)) # initialize list
+fitted_lms        <- vector("list", length(models)) # initialize list
 names(fitted_lms) <- names(models) # give entries good names
 fitted_lms # display the pre-allocated (empty) list
 ```
@@ -449,12 +448,12 @@ ggplot(data = sim_data, # Original data!
            y = y)) +
     geom_point() + # Original data as points
     geom_line(data = tidy_predicted_data, # Predicted data! #<<
-              aes(x = x, 
-                  y = Prediction, 
+              aes(x     = x, 
+                  y     = Prediction, 
                   group = Model, 
                   color = Model),
               alpha = 0.5, 
-              size = 2) +
+              size  = 2) +
     ggtitle("Predicted trends from regression") +
     theme_bw()
 ```
@@ -513,10 +512,10 @@ We'll get the folds using the `sample()` function without replacement on a vecto
 .smallish[
 ```{r}
 K <- 10
-CV_predictions <- sim_data
+CV_predictions      <- sim_data
 CV_predictions$fold <- sample(rep(1:K, length.out = nrow(CV_predictions)),
                               replace = FALSE)
-CV_predictions[, names(models)] <- NA
+CV_predictions[ , names(models)] <- NA
 head(CV_predictions)
 ```
 ]
@@ -524,7 +523,7 @@ head(CV_predictions)
 ---
 # Double-Looping for CV
 
-Next, let's loop over models, and within each model, loop over folds to fit the model and make predictions.
+Next, let's loop *over* each model (`mod`), and *within* each model loop over each fold (`k`) to fit the model and make predictions.
 
 ```{r}
 for(mod in names(models)) {
@@ -541,7 +540,7 @@ for(mod in names(models)) {
 }
 ```
 
-Note the models are fit *without* the fold rows, but prediction is done on *only the fold rows*.
+Note the models are fit *without* the fold rows, but prediction is done on *only the left-out fold rows*.
 
 ---
 # Which Did Best?
@@ -573,7 +572,7 @@ You've seen `ifelse()` before for logical checks on a whole vector. For checking
 
 ```{r, eval=FALSE}
 for(i in 1:10) {
-  if(i %% 2 == 0) {
+  if(i %% 2 == 0) { # %% gets remainder after division
     print(paste0("The number ", i, " is even."))
   } else if(i %% 3 == 0) {
     print(paste0("The number ", i, " is divisible by 3."))
