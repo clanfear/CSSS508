@@ -122,7 +122,7 @@ layout: default
    * Homework 5, Part 1 due at 11:59 PM on May 7th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
-       + Homework 5, Part 1 Key: HTML, RMD
+           * Homework 5: Key: [HTML](https://clanfear.github.io/CSSS508/Homework/keys/homework_5_p1_key.html), [RMD](https://clanfear.github.io/CSSS508/Homework/keys/homework_5_p1_key.Rmd)
        + [2016 general election voting data for King County](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt) (60 MB download; save, *don't load in browser*!)
    * Data in-class:
        + [Billboard Hot 100 data from 2000](https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv)
