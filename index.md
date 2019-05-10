@@ -150,7 +150,7 @@ layout: default
    * [Slides for Lecture 6: Looping with `for()` loops](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_Week6_loops.html)
        + [PDF of Lecture 6 slides](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_Week6_loops.pdf)
        + [Rmd for Lecture 6 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week6/CSSS508_Week6_loops.Rmd)
-   * [Lecture Video for Lecture 6](https://youtu.be/D0Zz3Sfxpxw), recorded October 31st, 2018
+   * [Lecture Video for Lecture 6](https://youtu.be/uIoem_GFva4), recorded May 9th, 2019
    * Homework 5, Part 2 due at 11:59 PM on May 14th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p2.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5_p2.html)
