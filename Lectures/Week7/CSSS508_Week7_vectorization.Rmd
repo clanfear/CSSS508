@@ -275,7 +275,7 @@ lapply(swiss, FUN = quantile_report)[1:3]
 ---
 #  `sapply()`: Simple `lapply()` 
 
-A downside to `lapply()` is that lists are hard to work with. `sapply()` **s**implifies the output by making each element a column in a matrix:
+A downside to `lapply()` is that lists are hard to work with. `sapply()` **s**implifies the output by making each element a column in a matrix... usually:
 
 .small[
 ```{r}
@@ -377,7 +377,7 @@ remove_extremes(school_data$pr_passing_exam, low = 0, high = 1)
 ```{r, message=FALSE, warning=FALSE}
 library(dplyr)
 school_data %>%
-   mutate_at(vars(-school), funs(remove_extremes(x = ., low = 0, high = 1)))
+   mutate_at(vars(-school), ~ remove_extremes(x = ., low = 0, high = 1))
 ```
 ]
 
@@ -393,7 +393,7 @@ Example converting character data to dates from the data downloading demo:
 yearly_frames[[i]] <- yearly_frames[[i]] %>%
     # cnames is a character vector of var names
     # 4th and 5th variables are strings to become dates
-    mutate_at(vars(cnames[4:5]), (funs(mdy))
+    mutate_at(vars(cnames[4:5]), ~ mdy(.))
 ```
 
 ---
@@ -403,7 +403,7 @@ You can skip naming your function in `dplyr` if you won't use it again. Code bel
 
 ```{r}
 swiss %>%
-    summarize_all(funs(mean(., na.rm = TRUE) / sd(., na.rm = TRUE)))
+    summarize_all( ~ mean(., na.rm = TRUE) / sd(., na.rm = TRUE))
 ```
 
 ---
