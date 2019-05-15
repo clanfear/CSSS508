@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 7
 ## Vectorization and Functions
 ### Chuck Lanfear
-### May 15, 2019<br>Updated: May 14, 2019
+### May 15, 2019<br>Updated: May 15, 2019
 
 ---
 
@@ -259,7 +259,7 @@ smarter_first_and_last
 ##         return(c("first" = first, "last" = last))        
 ##     }
 ## }
-## &lt;environment: 0x000001757647a908&gt;
+## &lt;environment: 0x000001faa5f20368&gt;
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -313,9 +313,9 @@ quantile_report(rnorm(10000))
 
 ```
 ##   Bottom 1%   Bottom 5%  Bottom 10%  Bottom 25%      Median     Top 25% 
-## -2.29762653 -1.63397583 -1.28377337 -0.67478367  0.01282137  0.67917904 
+## -2.25954375 -1.64436447 -1.27750944 -0.67129471  0.02992877  0.69094684 
 ##     Top 10%      Top 5%      Top 1% 
-##  1.30589118  1.65663188  2.38166519
+##  1.33852354  1.70544012  2.38022028
 ```
 ]
 
@@ -464,7 +464,7 @@ bucketed_random_data &lt;- bucket(random_data,
 plot(x = bucketed_random_data, y = random_data, main = "Buckets and values")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-40-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -637,12 +637,12 @@ ggplot(gapminder %&gt;% filter(country == "Afghanistan"),
 ---
 # Example of Desired Chart
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-49-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
 
 ---
 # Another Example
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-50-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
 
 ---
 # Making Country Flexible
@@ -674,7 +674,7 @@ What `cntry` does:
 gapminder_lifeplot(cntry = "Turkey")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-52-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
 
 ---
 # Making `y` Value Flexible
@@ -740,7 +740,7 @@ gapminder_plot &lt;- function(cntry, yvar) {
 gapminder_plot(cntry = "Turkey", yvar = "pop")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-55-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
 
 ---
 # Debugging
@@ -796,14 +796,14 @@ class: inverse
 
 Using the provided template, you will write: 
 
-1. A loop to read in the data from multiple files.
+1. A loop (or `lapply()`) to read in the data from multiple files.
 2. Functions to clean up the data 
 3. A function to visualize ridership over the first year.
 
 There is some string processing needed—much of which you have already seen or can probably Google—but *some will come in next week's lecture*. I give suggestions in the template, but I can cover string processing in detail in lab if needed before next week.
 
-## PART 1 DUE: 11:59 PM, Nov 13th
-## PART 2 DUE: 11:59 PM, Nov 20th
+## PART 1 DUE: 11:59 PM, May 21st
+## PART 2 DUE: 11:59 PM, May 28th
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
