@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 8
 ## Strings
 ### Chuck Lanfear
-### May 22, 2019<br>Updated: Mar 28, 2019
+### May 22, 2019<br>Updated: May 21, 2019
 
 ---
 
@@ -59,8 +59,8 @@ glimpse(restaurants)
 ## $ City                       &lt;chr&gt; "Seattle", "Seattle", "Seattle", "S...
 ## $ Zip_Code                   &lt;chr&gt; "98126", "98109", "98109", "98109",...
 ## $ Phone                      &lt;chr&gt; "(206) 938-5665", NA, NA, NA, NA, N...
-## $ Longitude                  &lt;dbl&gt; -122, -122, -122, -122, -122, -122,...
-## $ Latitude                   &lt;dbl&gt; 47.6, 47.6, 47.6, 47.6, 47.6, 47.6,...
+## $ Longitude                  &lt;dbl&gt; -122.3709, -122.3562, -122.3562, -1...
+## $ Latitude                   &lt;dbl&gt; 47.57043, 47.62506, 47.62506, 47.62...
 ## $ Inspection_Business_Name   &lt;chr&gt; NA, "10 MERCER RESTAURANT", "10 MER...
 ## $ Inspection_Type            &lt;chr&gt; NA, "Routine Inspection/Field Revie...
 ## $ Inspection_Score           &lt;int&gt; NA, 10, 10, 10, 15, 15, 15, 0, 15, ...
@@ -118,7 +118,7 @@ restaurants %&gt;%
 ---
 # `substr()`
 
-You may be familiar with `substr()` from the voting homework. We can use it to pull out just the first 5 digits of the ZIP code.
+You should be familiar with `substr()` from the homeworks. We can use it to pull out just the first 5 digits of the ZIP code.
 
 
 ```r
@@ -162,53 +162,6 @@ restaurants %&gt;% distinct(mailing_address) %&gt;% head()
 ## 4 1225 1ST AVE, SEATTLE, WA 98101                  
 ## 5 18114 E VALLEY HWY, KENT, WA 98032               
 ## 6 121 11TH AVE E, SEATTLE, WA 98102
-```
-
----
-# `paste()` with `collapse=`
-
-`readr` functions can take an argument like `col_types = "cciDcnncii"`.
-
-You can build this yourself from existing data using `class()` to get the type of data, and `substr()`, and `paste()` with the `collapse = ""` argument to take a vector and make it a single character string:
-
-
-```r
-# use the class function to get the type of data
-column_types &lt;- sapply(restaurants, class)
-# extract 1st character
-column_types_1 &lt;- substr(column_types, 1, 1)
-# use paste with collapse to get one string
-(column_types_collapse &lt;- paste(column_types_1, collapse = ""))
-```
-
-```
-## [1] "ccccccccnnccicccciccciDcc"
-```
-
----
-# Make a function out of this!
-
-I typically read in data using `read_csv()` without `col_types()`. You could use the functions above together to get column types to feed back into `read_csv()`:
-
-
-```r
-readr_input_types &lt;- function(data) {
-    column_types_1 &lt;- substr(sapply(data, class), 1, 1)
-    return(paste(column_types_1, collapse = ""))
-}
-readr_input_types(swiss)
-```
-
-```
-## [1] "nniinn"
-```
-
-```r
-readr_input_types(restaurants)
-```
-
-```
-## [1] "ccccccccnnccicccciccciDcc"
 ```
 
 ---
@@ -355,6 +308,21 @@ head(unique(restaurants$City))
 restaurants &lt;- restaurants %&gt;%
     mutate_at(vars(Name, Address, City), 
               funs(str_to_upper))
+```
+
+```
+## Warning: funs() is soft deprecated as of dplyr 0.8.0
+## please use list() instead
+## 
+## # Before:
+## funs(name = f(.)
+## 
+## # After: 
+## list(name = ~f(.))
+## This warning is displayed once per session.
+```
+
+```r
 head(unique(restaurants$City))
 ```
 
@@ -478,7 +446,7 @@ str_detect(phone_test_examples, area_code_206_pattern)
 
 * `^` is a metacharacter meaning "look only at the *beginning* of the string"
 * `\\(?` means look for a left parenthesis (`\\(`), but it's optional (`?`)
-* `206` is the literal character to look for after the optional parenthesis
+* `206` is the literal string to look for after the optional parenthesis
 
 ---
 # `str_view()`
@@ -774,7 +742,7 @@ head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
 class: inverse
 # Coming Up
 
-Homework 6, Part 1 is due next week, and peer reviews due the week after.
+Homework 6, Part 2 is due next week, and peer reviews due the week after.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -84,7 +84,7 @@ restaurants %>%
 ---
 # `substr()`
 
-You may be familiar with `substr()` from the voting homework. We can use it to pull out just the first 5 digits of the ZIP code.
+You should be familiar with `substr()` from the homeworks. We can use it to pull out just the first 5 digits of the ZIP code.
 
 ```{r substr}
 restaurants <- restaurants %>%
@@ -102,36 +102,6 @@ restaurants <- restaurants %>%
     mutate(mailing_address = paste(Address, ", ", City, 
                                    ", WA ", ZIP_5, sep = ""))
 restaurants %>% distinct(mailing_address) %>% head()
-```
-
----
-# `paste()` with `collapse=`
-
-`readr` functions can take an argument like `col_types = "cciDcnncii"`.
-
-You can build this yourself from existing data using `class()` to get the type of data, and `substr()`, and `paste()` with the `collapse = ""` argument to take a vector and make it a single character string:
-
-```{r readr_types_example}
-# use the class function to get the type of data
-column_types <- sapply(restaurants, class)
-# extract 1st character
-column_types_1 <- substr(column_types, 1, 1)
-# use paste with collapse to get one string
-(column_types_collapse <- paste(column_types_1, collapse = ""))
-```
-
----
-# Make a function out of this!
-
-I typically read in data using `read_csv()` without `col_types()`. You could use the functions above together to get column types to feed back into `read_csv()`:
-
-```{r function_to_get_types}
-readr_input_types <- function(data) {
-    column_types_1 <- substr(sapply(data, class), 1, 1)
-    return(paste(column_types_1, collapse = ""))
-}
-readr_input_types(swiss)
-readr_input_types(restaurants)
 ```
 
 ---
@@ -305,7 +275,7 @@ str_detect(phone_test_examples, area_code_206_pattern)
 
 * `^` is a metacharacter meaning "look only at the *beginning* of the string"
 * `\\(?` means look for a left parenthesis (`\\(`), but it's optional (`?`)
-* `206` is the literal character to look for after the optional parenthesis
+* `206` is the literal string to look for after the optional parenthesis
 
 ---
 # `str_view()`
@@ -491,4 +461,4 @@ head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
 class: inverse
 # Coming Up
 
-Homework 6, Part 1 is due next week, and peer reviews due the week after.
+Homework 6, Part 2 is due next week, and peer reviews due the week after.
