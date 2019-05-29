@@ -763,13 +763,72 @@ Then we can reproduce the same plot using `kc_nowater`...
 ```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
   ggplot(kc_nowater, 
          aes(fill=`Any Black`)) + 
-  geom_sf(size=0.1, color="white") + 
+  geom_sf(size=0, color="white") + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
   scale_fill_continuous(name="Any Black\n", 
                         low="#d4d5f9",
                         high="#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")
 ```						
+
+---
+# State Example Data
+
+```{r, include=FALSE, cache=TRUE}
+pb_state <- 
+  get_acs(geography = "tract", state = "IL",
+          geometry  = TRUE,
+          variables = c("B02001_001E", 
+                        "B02009_001E")) %>%
+  select(-moe) %>%
+  group_by(GEOID) %>% 
+  spread(variable, estimate) %>% 
+  rename(`Total Population` = B02001_001,
+         `Any Black` = B02009_001) %>%
+  mutate(`Any Black` = `Any Black` / `Total Population`)
+```
+
+```{r, eval=FALSE}
+pb_state <- 
+  get_acs(geography = "tract", state = "IL",
+          geometry  = TRUE,
+          variables = c("B02001_001E", 
+                        "B02009_001E")) %>%
+  select(-moe) %>%
+  group_by(GEOID) %>% 
+  spread(variable, estimate) %>% 
+  rename(`Total Population` = B02001_001,
+         `Any Black` = B02009_001) %>%
+  mutate(`Any Black` = `Any Black` / `Total Population`)
+```
+
+---
+# State Example Plot
+
+```{r, eval=FALSE}
+pb_state %>% 
+  ggplot(aes(fill=`Any Black`)) + 
+  geom_sf(lwd=0) + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9",
+                        high="#00025b") + 
+  theme_minimal()
+```
+
+---
+
+```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
+pb_state %>% 
+  ggplot(aes(fill=`Any Black`)) + 
+  geom_sf(lwd=0) + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name="Any Black\n", 
+                        low="#d4d5f9",
+                        high="#00025b") + 
+  theme_minimal()
+```
+
 ---
 
 class: inverse
@@ -781,4 +840,4 @@ Homework 6, part 2 is due next week.
 
 Use the HW 7 template to practice making maps of the restaurant inspection data. 
 
-If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on December 4th.
+If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on June 11th.
