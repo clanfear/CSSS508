@@ -175,7 +175,7 @@ layout: default
    * [Slides for Lecture 8: Working with strings and character data](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_Week8_strings.html)
        + [PDF of Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_Week8_strings.pdf)
        + [Rmd for Lecture 8 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week8/CSSS508_Week8_strings.Rmd)
-   * [Lecture Video for Lecture 8](https://youtu.be/ZwjncjjTwC4), recorded November 14th, 2018
+   * [Lecture Video for Lecture 8](https://youtu.be/i29advFBxEg), recorded May 22nd, 2019
    * Homework 6, Part 2 due at 11:59 PM on May 28th
        + Homework 6, Part 2: [RMD](https://clanfear.github.io/CSSS508/Homework/keys/homework_6_p1_key.Rmd)
        + Homework 6, Part 2 Key: HTML, RMD
@@ -191,7 +191,7 @@ layout: default
    * [Slides for Lecture 9: Mapping and labels in `ggplot2`](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.html)
        + [PDF of Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.pdf)
        + [Rmd for Lecture 9 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/CSSS508_Week9_mapping.Rmd)
-   * [Lecture Video for Lecture 9](https://youtu.be/tt4FxrLvOkE), recorded November 21st, 2018
+   * [Lecture Video for Lecture 9](https://youtu.be/joCRAq1TiWs), recorded May 29th, 2019
    * Optional Homework 7: Due at 11:59 PM on June 4th
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)

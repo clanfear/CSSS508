@@ -21,7 +21,7 @@ output:
 
 ## Loading the Data
 
-> Set your working directory to be the `open_data_year_one` folder. Then use the `list.files()` command to return a character vector giving all the files in that folder, and store it to an object called `files_in_year_one`. Then use vector subsetting on `files_in_year_one` to remove the entries for `README.txt` (which isn't data) and for `2015_status_data.csv` (which is massive and doesn't have interesting information, so we're going to exclude it). Thus, `files_in_year_one` should be a **character vector with three entries**.
+> Use the `list.files()` on the `open_data_year_one` folder to return a character vector giving all the files in that folder, and store it to an object called `files_in_year_one`. Then use vector subsetting on `files_in_year_one` to remove the entries for `README.txt` (which isn't data) and for `2015_status_data.csv` (which is massive and doesn't have interesting information, so we're going to exclude it). Thus, `files_in_year_one` should be a **character vector with three entries**.
 
 [YOUR WORK]
 
