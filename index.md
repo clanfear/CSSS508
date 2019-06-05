@@ -205,7 +205,7 @@ layout: default
    * [`sf` Vignette: Overview](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)
    * [`sf` Home Page](https://r-spatial.github.io/sf/)
 
-### 10. Reproducibility and Best Practices
+### 10. Reproducibility and Best Practices (Not given Spring 2019)
    * [Slides for Lecture 10: Reproducibility and Best Practices](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility.html)
       + [PDF of Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility.pdf)
       + [Rmd for Lecture 10 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week10/CSSS508_Week10_reproducibility.Rmd)
@@ -219,6 +219,7 @@ layout: default
       
 ### 11. Working with Model Results (Under Renovation)
    * [Slides for Lecture 11: Tidy Model Results and Applied Data Cleaning](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_model_results.html)
+       + [PDF of Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_model_results.pdf)
        + [Rmd for Lecture 11 slides](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_model_results.Rmd)
    * [Lecture Video for Lecture 11](https://youtu.be/T1g4ZQ3xZvw), recorded December 5th, 2018
    * [`broom` vignette](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)

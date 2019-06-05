@@ -180,9 +180,71 @@ ex_dat %>% group_by(fac1) %>% do(tidy(lm(yn ~  num1 + fac2 + num2, data = ex_dat
 ]
 
 .footnote[`do()` repeats whatever is inside it once for each level of the variable(s) in `group_by()` then puts them together as a data frame.]
+
 ---
 class: inverse
-# `ggeffects`
+# Plotting Model Results
+
+---
+# `geom_smooth()`
+
+I have used `geom_smooth()` in many past examples.
+
+`geom_smooth()` generates "smoothed conditional means" including loess curves and generalized additive models (GAMs).
+
+--
+
+Note, however, that most regression models are conditional mean models, such as ordinary least squares, generalized linear models. 
+
+--
+
+We can use `geom_smooth()` to add a layer depicting common bivariate models.
+
+---
+# Default `geom_smooth()`
+
+```{r, fig.height = 2.75, fig.width = 7, dev="svg", warning=FALSE, message=FALSE}
+library(gapminder)
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, color = continent)) +
+  geom_point(position = position_jitter(1,0), size = 0.5) +
+  geom_smooth()
+```
+
+By default, `geom_smooth()` chooses either a loess smoother (N < 1000) or a GAM depending on the number of observations.
+
+
+---
+# Linear `glm`
+
+```{r, fig.height = 2.75, fig.width = 7, dev="svg", warning=FALSE, message=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, color = continent)) +
+  geom_point(position = position_jitter(1,0), size = 0.5) +
+  geom_smooth(method = "glm", formula = y ~ x) #<<
+```
+
+We could also fit a standard linear model using either `method = "glm"` or `method = "lm"` and a formula like `y ~ x`.
+---
+# Polynomial `glm`
+```{r, fig.height = 2.75, fig.width = 7, dev="svg", warning=FALSE, message=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, color = continent)) +
+  geom_point(position = position_jitter(1,0), size = 0.5) +
+  geom_smooth(method = "glm", formula = y ~ poly(x, 2)) #<<
+```
+
+`poly(x, 2)` produces a quadratic model which contains a linear term (`x`) and a quadratic term (`x^2`).
+
+---
+
+# More Complex Models
+
+What if we want something more complex than a bivariate model?
+
+What if we have a statistically complex model, like nonlinear probability model or multilevel model?
+
+We need to go beyond `geom_smooth()`!
 
 ---
 # But first, vocab!
@@ -206,9 +268,13 @@ Sometimes, however, we might have very specific questions which require setting 
 Providing specific estimates, conditional on values of covariates, is a nice way to summarize results, particularly for models with unintuitive parameters (e.g. logit models).
 
 ---
+class: inverse
 # `ggeffects`
 
-While `broom` produces tidy model *summaries*, `ggeffects` is used to create tidy 
+---
+# `ggeffects`
+
+If we want to look at more complex models, we can use `ggeffects` to create and plot tidy 
 *marginal effects*.
 
 That is, tidy dataframes of *ranges* of predicted values that can be
@@ -224,6 +290,26 @@ library(ggeffects)
 ```
 
 ---
+# Quick Simulated Data
+
+To best show off `ggeffects`, I need a data frame with numeric and categorical variables with strong relationships. It is easiest to just simulate it:
+
+```{r}
+ex_dat <- data.frame(num1 = rnorm(200, 1, 2), 
+                     fac1 = sample(c(1, 2, 3), 200, TRUE),
+                     num2 = rnorm(200, 0, 3),
+                     fac2 = sample(c(1, 2))) %>%
+  mutate(yn = num1 * 0.5 + fac1 * 1.1 + num2 * 0.7 +
+              fac2 - 1.5  + rnorm(200, 0, 2)) %>% 
+  mutate(yb = as.numeric(yn > mean(yn))) %>%
+  mutate(fac1 = factor(fac1, labels = c("A", "B", "C")),
+         fac2 = factor(fac2, labels = c("Yes", "No")))
+```
+
+Now we can get `ggpredict`ing!
+
+
+---
 # `ggpredict()`
 
 When you run  `ggpredict()`, it produces a dataframe with a row for every unique 
@@ -232,7 +318,8 @@ value of a supplied predictor ("independent") variable (`term`).
 Each row contains an expected (estimated) value for the outcome ("dependent") variable, plus confidence intervals. 
 
 ```{r}
-lm_1_est<- ggpredict(lm_1, terms = "num1")
+lm_1 <- lm(yn ~ num1 + fac1, data = ex_dat)
+lm_1_est <- ggpredict(lm_1, terms = "num1")
 ```
 
 If desired, the argument `interval="prediction"` will give predicted intervals instead.
@@ -773,12 +860,12 @@ knitr::include_graphics("img/sjPlot_crosstab.PNG")
 ---
 # LaTeX Tables
 
-For tables in $\LaTeX$—as is needed for `.pdf` files—I recommend looking into the `stargazer` or `kableExtra` packages.
+For tables in $\LaTeX$—as is needed for `.pdf` files—I recommend looking into the `gt`, `stargazer`, or `kableExtra` packages.
 
 --
 
-`kableExtra` allows the construction of complex tables in either HTML or $\LaTeX$ using
-additive syntax similar to `ggplot2`.
+`gt` and `kableExtra` allow the construction of complex tables in either HTML or $\LaTeX$ using
+additive syntax similar to `ggplot2` and `dplyr`.
 
 `stargazer` produces nicely formatted $\LaTeX$ tables but is idiosyncratic.
 
@@ -871,6 +958,7 @@ If you...
 * study events or durations - **CSSS544: Event History Analysis** <sup>2</sup>
 * want to use network data - **CSSS567: Social Network Analysis**
 * want to work with spatial data - **CSSS554: Spatial Statistics**
+* want to work with time series - **CSSS512: Time Series and Panel Data**
 
 .footnote[
 [1] We're hoping to offer that again soon!<br>

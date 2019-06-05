@@ -3,7 +3,7 @@ library(dplyr)
 library(modelr)
 library(tidyr)
 
-cf_data <- data_grid(any_arrest_data, white_comp_wit_vict, black_arr_susp,
+cf_data<- data_grid(any_arrest_data, white_comp_wit_vict, black_arr_susp,
                      crime_type, neighb_type, .model=mod_arrest) %>%
   mutate(caller_type = factor("Complainant", 
                               levels=c("Victim", "Witness", "Complainant")),
@@ -11,13 +11,17 @@ cf_data <- data_grid(any_arrest_data, white_comp_wit_vict, black_arr_susp,
                               levels = as.character(2008:2012))) %>%
   model_matrix(formula(delete.response(terms(mod_arrest))))
 
+
 # -- for predict!
-predict(mod_arrest, newdata = data_grid(any_arrest_data, white_comp_wit_vict, black_arr_susp,
+cf_pred <- predict(mod_arrest, newdata = data_grid(any_arrest_data, white_comp_wit_vict, black_arr_susp,
                                         crime_type, neighb_type, .model=mod_arrest) %>%
           mutate(caller_type = factor("Complainant", 
                                       levels=c("Victim", "Witness", "Complainant")),
                  year        = factor("2010", 
-                                      levels = as.character(2008:2012))))
+                                      levels = as.character(2008:2012))), type = "response", se.fit=T)
+
+estimated_pes_2 <- cf_data %>% select(Reporter, Target, `Crime Type`, Neighborhood)
+
 #--
 # Old below, could probably augment with above
 
