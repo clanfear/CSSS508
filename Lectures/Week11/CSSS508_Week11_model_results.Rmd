@@ -95,7 +95,7 @@ library(broom)
 `lm()` and `summary()` produce lists as output, which cannot go directly into 
 tidyverse functions, particularly those in `ggplot2`.
 
-.small[
+.smaller[
 ```{r}
 lm_1 <- lm(yn ~ num1 + fac1, data = ex_dat)
 summary(lm_1)
@@ -110,7 +110,7 @@ Each type of model also produces somewhat different output, so you can't just re
 the same code to handle output from every model.
 ]
 
-.small[
+.smaller[
 ```{r, op}
 glm_1 <- glm(yb ~ num1 + fac1, data = ex_dat, family=binomial(link="logit"))
 summary(glm_1)
@@ -200,11 +200,16 @@ Note, however, that most regression models are conditional mean models, such as 
 
 We can use `geom_smooth()` to add a layer depicting common bivariate models.
 
+We'll look at this with the `gapminder` data from Week 2.
+
+```{r}
+library(gapminder)
+```
+
 ---
 # Default `geom_smooth()`
 
 ```{r, fig.height = 2.75, fig.width = 7, dev="svg", warning=FALSE, message=FALSE}
-library(gapminder)
 ggplot(data = gapminder, 
        aes(x = year, y = lifeExp, color = continent)) +
   geom_point(position = position_jitter(1,0), size = 0.5) +
@@ -546,7 +551,7 @@ x_frame[colnames(cf_vals)] <- cf_vals # assign to countefactual df
 ---
 # What Do We Have?
 
-.small[
+.smaller[
 ```{r}
 glimpse(x_frame)
 ```
@@ -579,7 +584,7 @@ x_frame <- x_frame %>%
 ---
 # Fixed
 
-.small[
+.smaller[
 ```{r}
 glimpse(x_frame)
 ```
