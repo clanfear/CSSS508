@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 11
 ## Working with Model Results
 ### Chuck Lanfear
-### Jun 5, 2019<br>Updated: Jun 5, 2019
+### Jun 5, 2019<br>Updated: Jun 7, 2019
 
 ---
 
@@ -81,20 +81,20 @@ summary(lm_1)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -8.9084 -2.2065 -0.0777  2.3720  9.7703 
+## -9.3746 -2.0569 -0.0685  2.1940  8.3739 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   0.9888     0.4107   2.408   0.0170 *  
-## num1          0.5360     0.1079   4.967 1.48e-06 ***
-## fac1B         0.9451     0.5369   1.760   0.0799 .  
-## fac1C         2.4673     0.5401   4.568 8.69e-06 ***
+## (Intercept)   1.4196     0.4215   3.368 0.000912 ***
+## num1          0.4192     0.1084   3.867 0.000150 ***
+## fac1B         0.6294     0.5423   1.161 0.247195    
+## fac1C         1.7502     0.5472   3.198 0.001612 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.063 on 196 degrees of freedom
-## Multiple R-squared:  0.207,	Adjusted R-squared:  0.1949 
-## F-statistic: 17.06 on 3 and 196 DF,  p-value: 6.982e-10
+## Residual standard error: 3.067 on 196 degrees of freedom
+## Multiple R-squared:  0.1128,	Adjusted R-squared:  0.09922 
+## F-statistic: 8.307 on 3 and 196 DF,  p-value: 3.15e-05
 ....
 ```
 ]
@@ -122,14 +122,14 @@ summary(glm_1)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -1.7394  -1.0974   0.5753   1.0107   1.8075  
+## -1.6209  -1.0734  -0.6453   1.0818   2.1621  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -0.85493    0.29926  -2.857  0.00428 ** 
-## num1         0.33270    0.08192   4.061 4.88e-05 ***
-## fac1B        0.47663    0.37525   1.270  0.20403    
-## fac1C        1.02774    0.38210   2.690  0.00715 ** 
+## (Intercept) -0.80227    0.30262  -2.651 0.008023 ** 
+## num1         0.28284    0.07915   3.573 0.000353 ***
+## fac1B        0.37719    0.37295   1.011 0.311844    
+## fac1C        0.84695    0.38039   2.227 0.025979 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -151,12 +151,12 @@ lm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic    p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-## 1 (Intercept)    0.989     0.411      2.41 0.0170    
-## 2 num1           0.536     0.108      4.97 0.00000148
-## 3 fac1B          0.945     0.537      1.76 0.0799    
-## 4 fac1C          2.47      0.540      4.57 0.00000869
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    1.42      0.422      3.37 0.000912
+## 2 num1           0.419     0.108      3.87 0.000150
+## 3 fac1B          0.629     0.542      1.16 0.247   
+## 4 fac1C          1.75      0.547      3.20 0.00161
 ```
 
 Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
@@ -177,12 +177,12 @@ glm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic   p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1 (Intercept)   -0.855    0.299      -2.86 0.00428  
-## 2 num1           0.333    0.0819      4.06 0.0000488
-## 3 fac1B          0.477    0.375       1.27 0.204    
-## 4 fac1C          1.03     0.382       2.69 0.00715
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   -0.802    0.303      -2.65 0.00802 
+## 2 num1           0.283    0.0792      3.57 0.000353
+## 3 fac1B          0.377    0.373       1.01 0.312   
+## 4 fac1C          0.847    0.380       2.23 0.0260
 ```
 
 ---
@@ -202,9 +202,9 @@ glance(lm_1)
 
 ```
 ## # A tibble: 1 x 11
-##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.207         0.195  3.06      17.1 6.98e-10     4  -506. 1021. 1038.
+##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.113        0.0992  3.07      8.31 3.15e-5     4  -506. 1022. 1038.
 ## # ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;
 ```
 ]
@@ -223,14 +223,14 @@ augment(lm_1) %&gt;% head()
 
 ```
 ## # A tibble: 6 x 10
-##       yn   num1 fac1  .fitted .se.fit .resid   .hat .sigma .cooksd
-##    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-## 1  0.406  1.83  B        2.92   0.379 -2.51  0.0153   3.07 2.65e-3
-## 2  3.37   3.38  C        5.27   0.419 -1.90  0.0187   3.07 1.86e-3
-## 3  5.86   0.829 C        3.90   0.376  1.96  0.0151   3.07 1.59e-3
-## 4  6.56   2.80  A        2.49   0.432  4.07  0.0199   3.06 9.14e-3
-## 5 -2.43   1.86  B        2.93   0.379 -5.36  0.0153   3.05 1.21e-2
-## 6  1.98  -3.65  C        1.50   0.670  0.482 0.0478   3.07 3.26e-4
+##       yn    num1 fac1  .fitted .se.fit .resid   .hat .sigma .cooksd
+##    &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1  0.139  0.834  A        1.77   0.407  -1.63 0.0176   3.07 1.29e-3
+## 2  6.85   4.53   A        3.32   0.555   3.53 0.0328   3.06 1.16e-2
+## 3 -0.735 -1.15   B        1.57   0.440  -2.30 0.0206   3.07 3.02e-3
+## 4  7.44   0.316  C        3.30   0.372   4.14 0.0147   3.06 6.91e-3
+## 5  3.34   0.0845 A        1.46   0.419   1.89 0.0187   3.07 1.83e-3
+## 6  1.83   0.521  C        3.39   0.369  -1.56 0.0145   3.07 9.62e-4
 ## # ... with 1 more variable: .std.resid &lt;dbl&gt;
 ```
 ]
@@ -243,7 +243,7 @@ The real advantage of `broom` becomes apparent when running many models at once.
 .small[
 
 ```r
-*ex_dat %&gt;% group_by(fac1) %&gt;% do(tidy(lm(yn ~  num1 + fac2 + num2, data = ex_dat)))
+*ex_dat %&gt;% group_by(fac1) %&gt;% do(tidy(lm(yn ~  num1 + fac2 + num2, data = .)))
 ```
 
 ```
@@ -251,18 +251,18 @@ The real advantage of `broom` becomes apparent when running many models at once.
 ## # Groups:   fac1 [3]
 ##    fac1  term        estimate std.error statistic  p.value
 ##    &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1 A     (Intercept)    1.54     0.239       6.43 9.35e-10
-##  2 A     num1           0.582    0.0775      7.51 2.03e-12
-##  3 A     fac2No         1.07     0.313       3.40 8.04e- 4
-##  4 A     num2           0.777    0.0539     14.4  1.44e-32
-##  5 B     (Intercept)    1.54     0.239       6.43 9.35e-10
-##  6 B     num1           0.582    0.0775      7.51 2.03e-12
-##  7 B     fac2No         1.07     0.313       3.40 8.04e- 4
-##  8 B     num2           0.777    0.0539     14.4  1.44e-32
-##  9 C     (Intercept)    1.54     0.239       6.43 9.35e-10
-## 10 C     num1           0.582    0.0775      7.51 2.03e-12
-## 11 C     fac2No         1.07     0.313       3.40 8.04e- 4
-## 12 C     num2           0.777    0.0539     14.4  1.44e-32
+##  1 A     (Intercept)    1.15     0.451      2.55  1.38e- 2
+##  2 A     num1           0.436    0.126      3.46  1.07e- 3
+##  3 A     fac2No         0.289    0.585      0.493 6.24e- 1
+##  4 A     num2           0.743    0.0878     8.46  2.09e-11
+##  5 B     (Intercept)    1.03     0.368      2.79  6.73e- 3
+##  6 B     num1           0.482    0.135      3.57  6.59e- 4
+##  7 B     fac2No         1.76     0.508      3.47  8.99e- 4
+##  8 B     num2           0.694    0.0773     8.99  3.13e-13
+##  9 C     (Intercept)    2.79     0.324      8.61  2.19e-12
+## 10 C     num1           0.670    0.124      5.41  9.42e- 7
+## 11 C     fac2No         0.761    0.477      1.59  1.16e- 1
+## 12 C     num2           0.689    0.0880     7.83  5.26e-11
 ```
 ]
 
@@ -305,7 +305,7 @@ ggplot(data = gapminder,
   geom_smooth()
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-10-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
 
 By default, `geom_smooth()` chooses either a loess smoother (N &lt; 1000) or a GAM depending on the number of observations.
 
@@ -321,7 +321,7 @@ ggplot(data = gapminder,
 * geom_smooth(method = "glm", formula = y ~ x)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-11-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
 
 We could also fit a standard linear model using either `method = "glm"` or `method = "lm"` and a formula like `y ~ x`.
 ---
@@ -334,7 +334,7 @@ ggplot(data = gapminder,
 * geom_smooth(method = "glm", formula = y ~ poly(x, 2))
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-12-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-20-1.svg)&lt;!-- --&gt;
 
 `poly(x, 2)` produces a quadratic model which contains a linear term (`x`) and a quadratic term (`x^2`).
 
@@ -444,13 +444,12 @@ lm_1_est
 ## # x = num1
 ## 
 ##   x predicted std.error conf.low conf.high
-##  -6    -1.803     0.845   -3.459    -0.146
-##  -4    -0.711     0.653   -1.990     0.569
-##  -2     0.381     0.481   -0.562     1.324
-##   0     1.473     0.361    0.764     2.181
-##   2     2.564     0.351    1.876     3.253
-##   4     3.656     0.458    2.758     4.554
-##   6     4.748     0.625    3.523     5.972
+##  -4    -1.864     0.651   -3.141    -0.587
+##  -2    -0.399     0.484   -1.347     0.550
+##   0     1.066     0.376    0.329     1.803
+##   2     2.531     0.382    1.784     3.279
+##   4     3.997     0.497    3.023     4.971
+##   6     5.462     0.667    4.154     6.770
 ## 
 ## Adjusted for:
 ## * fac1 = A
@@ -469,7 +468,7 @@ a ggplot when you give `plot()` output from `ggpredict()`.
 plot(lm_1_est)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-17-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -485,7 +484,7 @@ glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family=binomial(link = "logit
   ggpredict(terms = c("num1", "fac1")) %&gt;% plot()
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -500,7 +499,7 @@ glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "log
   ggpredict(terms = c("num1", "fac1")) %&gt;% plot(facet=TRUE)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -515,7 +514,7 @@ glm(yb ~ num1 + fac1 + num2 + fac2, data=ex_dat, family=binomial(link="logit")) 
   ggpredict(terms = c("num1 [-1,0,1]", "fac1 [A,B]")) %&gt;% plot(facet=TRUE)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-20-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -530,7 +529,7 @@ glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "log
   ggpredict(terms = c("num1 [meansd]", "num2 [minmax]")) %&gt;% plot(facet=TRUE)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-21-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-29-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -545,7 +544,7 @@ lm(yn ~ fac1 + fac2, data = ex_dat) %&gt;%
   ggpredict(terms=c("fac1", "fac2")) %&gt;% plot()
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-22-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -599,7 +598,7 @@ mod_arrest %&gt;% ggpredict(terms = c("black_arr_susp",
               "white_comp_wit_vict", "neighb_type")) %&gt;% plot()
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-24-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-32-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -662,12 +661,12 @@ sim_params[1:6, 1:4]
 
 ```
 ##      (Intercept) white_comp_wit_vict1 black_arr_susp1 crime_typeNuisance
-## [1,]    2.659962           -0.1955104      -0.2348306         -0.3760454
-## [2,]    2.603289           -0.1946484      -0.2271517         -0.4541046
-## [3,]    2.651878           -0.1428139      -0.2018081         -0.5316541
-## [4,]    2.928947           -0.3480432      -0.2378363         -0.7051916
-## [5,]    2.707396           -0.1771476      -0.2637052         -0.6045481
-## [6,]    2.736390           -0.1374440      -0.2122567         -0.5988672
+## [1,]    2.649874          -0.24837403      -0.4269412         -0.4063155
+## [2,]    2.788417          -0.15061167      -0.1473641         -0.4704289
+## [3,]    2.704444          -0.34618448      -0.3178364         -0.3906221
+## [4,]    2.609430          -0.09684517      -0.2334463         -0.4445482
+## [5,]    2.793919          -0.21388214      -0.2317792         -0.5622488
+## [6,]    2.733762          -0.26654232      -0.2280260         -0.5613452
 ```
 ]
 
@@ -815,12 +814,12 @@ sims_logodds[1:6, 1:6]
 
 ```
 ##          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]
-## [1,] 2.136858 2.482359 2.608291 1.760812 2.196613 2.057274
-## [2,] 2.124170 2.767013 2.592928 1.670065 2.425921 1.928907
-## [3,] 2.122723 2.385345 2.464977 1.591069 1.961383 1.968219
-## [4,] 2.272151 2.556717 2.673569 1.566959 2.044325 1.956578
-## [5,] 2.110649 2.513879 2.495734 1.506101 2.011359 2.003984
-## [6,] 2.097371 2.580647 2.305211 1.498504 2.167306 1.823808
+## [1,] 2.177016 2.582403 2.589639 1.770700 2.297997 2.157879
+## [2,] 2.059036 2.527301 2.685111 1.588607 2.183050 2.127477
+## [3,] 2.279709 2.798278 2.722473 1.889087 2.531622 2.265328
+## [4,] 1.992662 2.504421 2.434744 1.548114 2.112916 1.995474
+## [5,] 2.145578 2.531906 2.512737 1.583329 2.066743 1.716077
+## [6,] 2.158352 2.622928 2.660889 1.597007 2.236660 2.181941
 ```
 
 ```r
@@ -851,12 +850,12 @@ sims_prob[1:6, 1:6]
 
 ```
 ##           [,1]      [,2]      [,3]      [,4]      [,5]      [,6]
-## [1,] 0.8944343 0.9228958 0.9313933 0.8533114 0.8999450 0.8866805
-## [2,] 0.8932302 0.9408670 0.9304051 0.8415845 0.9187826 0.8731284
-## [3,] 0.8930922 0.9157030 0.9216498 0.8307664 0.8766825 0.8774197
-## [4,] 0.9065442 0.9280235 0.9354489 0.8273497 0.8853729 0.8761621
-## [5,] 0.8919339 0.9251091 0.9238422 0.8184826 0.8819846 0.8812147
-## [6,] 0.8906474 0.9296056 0.9093077 0.8173513 0.8972749 0.8610225
+## [1,] 0.8981664 0.9297205 0.9301918 0.8545447 0.9087110 0.8964028
+## [2,] 0.8868574 0.9260337 0.9361423 0.8304200 0.8987170 0.8935453
+## [3,] 0.9071826 0.9425827 0.9383398 0.8686514 0.9263291 0.9059645
+## [4,] 0.8800245 0.9244512 0.9194386 0.8246412 0.8921523 0.8803210
+## [5,] 0.8952548 0.9263485 0.9250299 0.8296755 0.8876285 0.8476229
+## [6,] 0.8964467 0.9323227 0.9346789 0.8315996 0.9034937 0.8986160
 ```
 
 ---
@@ -917,30 +916,30 @@ estimated_pes %&gt;% mutate_if(is.numeric, round, digits=3) # round for display
 
 ```
 ##       PE    LB    UB  Reporter    Target     Crime Type  Neighborhood
-## 1  0.894 0.878 0.909 All Black All White  Serious Crime  Stable White
-## 2  0.929 0.913 0.942 All Black All White  Serious Crime      Changing
+## 1  0.894 0.877 0.909 All Black All White  Serious Crime  Stable White
+## 2  0.929 0.914 0.942 All Black All White  Serious Crime      Changing
 ## 3  0.927 0.909 0.943 All Black All White  Serious Crime Disadvantaged
-## 4  0.831 0.801 0.857 All Black All White Nuisance Crime  Stable White
+## 4  0.831 0.799 0.859 All Black All White Nuisance Crime  Stable White
 ## 5  0.897 0.872 0.919 All Black All White Nuisance Crime      Changing
-## 6  0.879 0.843 0.909 All Black All White Nuisance Crime Disadvantaged
+## 6  0.879 0.845 0.909 All Black All White Nuisance Crime Disadvantaged
 ## 7  0.866 0.852 0.879 All Black Any Black  Serious Crime  Stable White
-## 8  0.855 0.835 0.874 All Black Any Black  Serious Crime      Changing
-## 9  0.850 0.824 0.873 All Black Any Black  Serious Crime Disadvantaged
-## 10 0.791 0.759 0.820 All Black Any Black Nuisance Crime  Stable White
-## 11 0.799 0.761 0.832 All Black Any Black Nuisance Crime      Changing
-## 12 0.765 0.710 0.811 All Black Any Black Nuisance Crime Disadvantaged
+## 8  0.855 0.834 0.874 All Black Any Black  Serious Crime      Changing
+## 9  0.850 0.825 0.874 All Black Any Black  Serious Crime Disadvantaged
+## 10 0.790 0.758 0.820 All Black Any Black Nuisance Crime  Stable White
+## 11 0.799 0.760 0.833 All Black Any Black Nuisance Crime      Changing
+## 12 0.765 0.712 0.813 All Black Any Black Nuisance Crime Disadvantaged
 ## 13 0.873 0.866 0.880 Any White All White  Serious Crime  Stable White
 ## 14 0.914 0.900 0.927 Any White All White  Serious Crime      Changing
-## 15 0.912 0.895 0.928 Any White All White  Serious Crime Disadvantaged
+## 15 0.912 0.896 0.928 Any White All White  Serious Crime Disadvantaged
 ## 16 0.749 0.732 0.766 Any White All White Nuisance Crime  Stable White
-## 17 0.842 0.810 0.869 Any White All White Nuisance Crime      Changing
-## 18 0.816 0.774 0.852 Any White All White Nuisance Crime Disadvantaged
-## 19 0.941 0.937 0.945 Any White Any Black  Serious Crime  Stable White
+## 17 0.842 0.811 0.869 Any White All White Nuisance Crime      Changing
+## 18 0.816 0.774 0.853 Any White All White Nuisance Crime Disadvantaged
+## 19 0.941 0.937 0.946 Any White Any Black  Serious Crime  Stable White
 ## 20 0.936 0.927 0.945 Any White Any Black  Serious Crime      Changing
 ## 21 0.934 0.922 0.944 Any White Any Black  Serious Crime Disadvantaged
-## 22 0.875 0.863 0.886 Any White Any Black Nuisance Crime  Stable White
-## 23 0.880 0.857 0.900 Any White Any Black Nuisance Crime      Changing
-## 24 0.857 0.824 0.886 Any White Any Black Nuisance Crime Disadvantaged
+## 22 0.875 0.863 0.885 Any White Any Black Nuisance Crime  Stable White
+## 23 0.880 0.856 0.901 Any White Any Black Nuisance Crime      Changing
+## 24 0.857 0.825 0.886 Any White Any Black Nuisance Crime Disadvantaged
 ```
 ]
 
@@ -972,7 +971,7 @@ ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) +
 ---
 # Plot
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-46-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -1165,7 +1164,7 @@ corrplot(
 ---
 ## Correlogram
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-49-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-57-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse

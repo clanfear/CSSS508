@@ -175,7 +175,7 @@ The real advantage of `broom` becomes apparent when running many models at once.
 
 .small[
 ```{r}
-ex_dat %>% group_by(fac1) %>% do(tidy(lm(yn ~  num1 + fac2 + num2, data = ex_dat))) #<<
+ex_dat %>% group_by(fac1) %>% do(tidy(lm(yn ~  num1 + fac2 + num2, data = .))) #<<
 ```
 ]
 
