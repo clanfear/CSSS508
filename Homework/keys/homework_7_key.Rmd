@@ -21,14 +21,17 @@ library(dplyr)
 library(ggplot2)
 library(ggmap)
 library(ggrepel)
+devtools::install_github("dkahle/ggmap")
 ```
 
 # Background
 
-> Last week we saw data from health inspections of restaurants in Seattle since 2012 and used them to practice working with character/string data and regular expressions. Load in the data directly from the URL (this will work because a CSV is just a text file) and use `cache=TRUE` so that we don't have to repeat this each time we re-knit:
+> Last week we saw data from health inspections of restaurants in Seattle since 2012 and used them to practice working with character/string data and regular expressions. Load in the data directly from the URL (this will work because a CSV is just a text file) and use `cache=TRUE` so that we dont have to repeat this each time we re-knit:
+
 
 ```{r load_restaurant_data, cache=TRUE}
-restaurants <- read_csv("https://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.csv",  col_types = "ccccccccnnccicccciccciD")
+load("./restaurants.Rdata")
+restaurants2 <- read_csv("https://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.csv",  col_types = "ccccccccnnccicccciccciD")
 ```
 
 > As a reminder of what these data look like:
@@ -59,11 +62,9 @@ restaurants_only <- restaurants %>%
 ```{r scores_over_time, cache=TRUE}
 scores_over_time <- restaurants_only %>%
     select(Business_ID, Name, Date, Address, Zip_Code, Longitude, Latitude, Inspection_Score) %>%
-    distinct(Business_ID, Date, .keep_all = T) %>%
+    distinct(Business_ID, Date, .keep_all = TRUE) %>%
     arrange(Business_ID, Date)
 ```
-
-
 ## Preparing to label bad scores
 
 > In order to label restaurants with bad scores (say, 40 and above), you'll want to make a column called `Label_40` on `scores_over_time`. It should have the `Name` if the `Score` is greater than or equal to 40, and be blank (i.e. `""`) if the `Score` is below that. Use `mutate` and `ifelse` to make this `Label_40` column.
@@ -72,6 +73,8 @@ scores_over_time <- restaurants_only %>%
 ```{r construct_labels, cache=TRUE}
 scores_over_time <- scores_over_time %>%
     mutate(Label_40 = ifelse(Inspection_Score >= 40, str_c(Name, " (", Inspection_Score,")"), ""))
+
+scores_over_time
 ```
 
 
@@ -122,9 +125,9 @@ ll <- c(47.650, -122.322)
 # subset the data based on bounding box
 ud_recent_scores <- recent_scores %>%
     filter(ll[1] <= Latitude &
-               Latitude <= ur[1] &
-               ll[2] <= Longitude &
-               Longitude <= ur[2])
+           Latitude <= ur[1] &
+           ll[2] <= Longitude &
+           Longitude <= ur[2])
 
 qmplot(data = ud_recent_scores,
        x = Longitude, y = Latitude,
