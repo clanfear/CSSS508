@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 3
 ## Manipulating and Summarizing Data
 ### Chuck Lanfear
-### Apr 17, 2019<br>Updated: Apr 17, 2019
+### Apr 17, 2019<br>Updated: Jul 26, 2019
 
 ---
 
@@ -218,14 +218,14 @@ yugoslavia %&gt;% sample_n(size = 6, replace = FALSE)
 
 ```
 ## # A tibble: 6 x 6
-##   country    continent  year lifeExp     pop gdpPercap
-##   &lt;fct&gt;      &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
-## 1 Montenegro Europe     1962    63.7  474528     4650.
-## 2 Montenegro Europe     1982    74.1  562548    11223.
-## 3 Serbia     Europe     1962    64.5 7616060     6290.
-## 4 Slovenia   Europe     1952    65.6 1489518     4215.
-## 5 Serbia     Europe     1952    58.0 6860147     3581.
-## 6 Croatia    Europe     1997    73.7 4444595     9876.
+##   country                continent  year lifeExp     pop gdpPercap
+##   &lt;fct&gt;                  &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+## 1 Bosnia and Herzegovina Europe     1987    71.1 4338977     4314.
+## 2 Bosnia and Herzegovina Europe     1967    64.8 3585000     2172.
+## 3 Montenegro             Europe     2002    74.0  720230     6557.
+## 4 Montenegro             Europe     1987    74.9  569473    11733.
+## 5 Slovenia               Europe     1952    65.6 1489518     4215.
+## 6 Serbia                 Europe     1982    70.2 9032824    15181.
 ```
 
 .footnote[Use `set.seed()` to make all random numbers in a file come up *exactly the same* each time it is run. Read *Details* in `?set.seed` if you like your brain to hurt.]
