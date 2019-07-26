@@ -14,12 +14,12 @@ output:
       titleSlideClass: ["center","top"]
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, purl=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(comment = "##")
 ```
 
-```{r xaringan-themer, include=FALSE}
+```{r xaringan-themer, include=FALSE, purl=FALSE}
 library(xaringanthemer)
 source("../csss508css.R")
 ```
