@@ -55,7 +55,9 @@ available in full after the term has ended as a reference.
 Lab time is scheduled in [Savery 117](https://www.washington.edu/maps/#!/sav)
 on Mondays from 3:30 to 5:20. Attendance is optional for labs and this time should be considered a form of extended
 office hours and collaborative work time. You are highly encouraged to attend and ask questions
-about homework, lectures, or programming in R in general.
+about homework, lectures, or programming in R in general. Beginning in week 5, we will walk
+through homeworks in lab. This gives students an opportunity to be guided through
+more challenging tasks.
 
 ### Extra Help
 

@@ -1,5 +1,5 @@
 ---
-title: "Homework 5"
+title: "Homework 5: 2016 Elections"
 author: "YOUR NAME"
 date: "DATE"
 output: 
@@ -7,7 +7,6 @@ output:
     preserve_yaml: true
     toc: true
     toc_float: true
-    keep_md: true
 published: false
 ---
 
@@ -19,13 +18,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Instructions
 
-> Questions for you to answer are as quoted blocks of text. Put your code used to address these questions and interpretation below each block. Make sure your answers are NOT in block quotes like these. Load all libraries you want to use in the `setup` chunk; when you discover you want to lose a library later, add it to the setup chunk at the top. Part 1 is due Tuesday October 30th, at 11:59 PM. Part 2 is due Tuesday November 6th, at 11:59 PM. You will upload the entire template each time, with whatever progress you have made.
+> Questions for you to answer are as quoted blocks of text. Put your code used to address these questions and interpretation below each block. Make sure your answers are NOT in block quotes like these. Load all libraries you want to use in the `setup` chunk; when you discover you want to use a library later, add it to the setup chunk at the top. Part 1 is due Tuesday October 30th, at 11:59 PM. Part 2 is due Tuesday November 6th, at 11:59 PM. You will upload the entire template each time, with whatever progress you have made.
 
 # Part 1
 
 ## Getting the data in
 
-> Download the data from <https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt>. It is a plain text file of data, about 60 MB in size. Values are separated with commas (you can see this by opening it with a *good* text editor, e.g. not Notepad). Save it somewhere on your computer---in the same folder as this template is easiest---and read the file into R. You will want to use the `cache=TRUE` chunk option for this (and potentially other chunks). `cache=TRUE` will allow R to read the file only once to save time.
+> Download the data from <https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt>. It is a plain text file of data, about 60 MB in size. Values are separated with commas (you can see this by opening it with a *good* text editor, e.g. Atom or Sublime *but not Notepad*). **Save it in the same folder as this template** and read the file into R. You will want to use the `cache=TRUE` chunk option for this (and potentially other chunks). `cache=TRUE` will allow R to read the file only once to save time.
 
 
 ```{r import_data, cache=TRUE}
@@ -34,20 +33,27 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Inspecting the data
 
-> Use a function like `str()` or `glimpse()` to look at the data.  Describe the data in their current state. How many rows are there? What variables are there? What kinds of values do they take (don't list them all if there are many)? Are the column types sensible? 
+> Use `glimpse()` to look at the data.  Describe the data in their current state. How many rows are there? What variables are there? What kinds of values do they take (don't list them all if there are many)? Are the column types sensible? 
 
 
 ```{r}
 # [YOUR CODE HERE]
 ```
 
+YOUR TEXT HERE
+
 > In addition to looking generally, look at each variable individually... except consider `LEG`, `CC` and `CG` at the same time (I will tell you now these three aren't likely to be useful to you, but maybe guess what they are!). Remember these are real administrative data so they may be *really strangely structured* and some variables are indecipherable; in real world data work, you often have to get by with intuition or poking around online with regard to the nature of your data. Here useful way to look at 10 unique values of individual columns, given some `data` and a `variable` of interest:
 
 ```
 data %>%
-    select(variable) %>%
     distinct(variable) %>%
     head(10)
+```
+
+> Another thing you may want to do is get a frequency (count) of distinct values:
+
+```
+data %>% count(variable)
 ```
 
 ### Precinct
@@ -86,6 +92,8 @@ data %>%
 # [YOUR CODE HERE]
 ```
 
+> Notice something odd about CounterType in particular? It tells you what a given row of votes was for... but it also has `Registered Voters` and `Times Counted`. What is `Times Counted`?
+
 ### SumOfCount
 
 ```{r}
@@ -107,7 +115,7 @@ data %>%
 
 > You will perform most of the data management for #1 and #2 in Part 1. Part 2 will contain most of the work for #3 and also covers visualizing results.
 
-> The primary goal to accomplish over Parts 1 and 2 will be to get the data to one **row per precinct** with the following 7 columns:
+> The goal to accomplish over Parts 1 and 2 will be to get the data to one **row per precinct** with the following 7 columns:
 
 > * Precinct identifier
 > * Indicator for whether the precinct is in Seattle or not
@@ -129,7 +137,9 @@ data %>%
 
 ## Seattle precincts
 
-> We want to determine which precincts are in Seattle and which are not. You will probably want to look at values of the `Precinct` variable and see if you can figure out what uniquely identifies Seattle precincts. You will then want to create a binary variable that identifies Seattle tracts (for instance, with values `"Seattle"` and `"Not Seattle"`). Hint: You can use `substr()` to grab a number of characters---a sub-string---from text (say, to test if they equal something); if you use this with `ifelse()` inside `mutate()` you can make a new variable based on whether the sub-string of `Precinct` equals a value.
+> We want to determine which precincts are in Seattle and which are not. You should look at values of the `Precinct` variable and see if you can figure out what *uniquely identifies* Seattle precincts. Hint: All Seattle tracts have the same naming scheme... but some non-Seattle tracts are *similar* so be careful!
+
+> You will then want to create a binary variable that identifies Seattle tracts (for instance, with values `"Seattle"` and `"Not Seattle"`). One approach: You can use `stringr::str_sub()` or base R's `substr()` to grab a number of characters---a sub-string---from text (say, to test if they equal something); if you use this with `ifelse()` inside `mutate()` you can make a new variable based on whether the sub-string of `Precinct` equals a value.
 
 
 ```{r}
@@ -139,18 +149,19 @@ data %>%
 
 ## Registered voters and turnout rates
 
-> We want to calculate turnout rates as total votes (including normal votes, blank votes, over votes, write-ins) for the Presidential race divided by registered voters.  Hint: You will want to look at `CounterType` and `SumOfCount` at the same time, within each `Precinct` and `Race`. Examine how the `SumOfCount` values for `CounterType` value `"Times Counted"` relate to all the other `CounterType` values.
+> We want to calculate turnout rates as total votes (including normal votes, blank votes, over votes, write-ins) for the Presidential race divided by registered voters. $Turnout = \frac{Total Votes}{Registered Voters}$.  Hint: You will want to look at `CounterType` and `SumOfCount` at the same time, within each `Precinct` and `Race`. Examine how the `SumOfCount` values for `CounterType` value `"Times Counted"` relate to all the other `CounterType` values.
 
 ```{r}
 # [YOUR CODE HERE]
 ```
 
+> That's it for Part 1!
 
 # Part 2
 
 ## Democratic support rates
 
-> We want to get measures of democratic support in each Precinct for each of our three races. You are asked to measure support as the *percentage of votes* in a precinct for the Democratic candidate *out of all votes for candidates or write-ins*, but this time *do not to include blank votes or "over votes"* (where the voter indicated multiple choices) in the overall vote count for the denominator. Hint: A good approach here is to compute the denominator (total votes) for each precinct, and then *merge* (e.g. `left_join()`) on the Democratic vote count for each race and divide by the total votes.
+> We want to get measures of democratic support in each Precinct for each of our three races. You are asked to measure support as the *percentage of votes* in a precinct for the Democratic candidate *out of all votes for candidates or write-ins*, but this time *do not to include blank votes or "over votes"* (where the voter indicated multiple choices) in the overall vote count for the denominator. Hint: A good approach here is to compute the total votes (denominator) for each precinct, and then *merge* (e.g. `left_join()`) on the Democratic vote count for each race (numerator) and divide by the total votes. That is, $Dem Support = \frac{Dem Count}{Total Votes}$.
 
 ### Computing candidate votes
 
@@ -158,7 +169,7 @@ data %>%
 
 > 1. Make a new dataframe with the total number of votes cast for any actual candidates (including `"Write-In"`) in each precinct and race. Hint: You will likely want to use `filter()` followed by `group_by()` and `summarize()` using the `SumOfCount` variable.
 
-> 2. MAke another dataframe with the total number of votes for democratic candidates in each precinct and race. You will want to check the `Party` of candidates and work only with the democratic observations to get these vote counts. Hint: There are different democratic parties for different races (e.g. `"Dem"` or `"DPN"`).
+> 2. Make another dataframe with the total number of votes for democratic candidates in each precinct and race. You will want to check the `Party` of candidates and work only with the democratic observations to get these vote counts. Hint: There are different democratic parties for different races (e.g. `"Dem"` and `"DPN"`).
 
 > 3. Merge the total votes data with the democratic votes data, then calculate a percent democratic votes variable for each race.
 
@@ -178,7 +189,7 @@ data %>%
 
 ### Turnout
 
-> Make a scatterplot where the horizontal axis is number of registered voters in the precinct, and the vertical axis is turnout rate. Color the precincts in Seattle one color, and use a different color for other precincts. Do you observe anything?
+> Make a scatterplot where the horizontal axis (`x=`) is number of registered voters in the precinct, and the vertical axis (`y=`) is turnout rate. Color (`color=`) the precincts in Seattle one color, and use a different color for other precincts. Do you observe anything?
 
 ```{r}
 # [YOUR CODE HERE]
@@ -187,11 +198,11 @@ data %>%
 
 ### Democratic support
 
-> Now let's visualize the Democratic support rates for the three races within each precinct for sufficently large precincts. Limit the data to precincts with at least 500 registered voters. Make a line plot where the horizontal axis indicates precincts, and the vertical axis shows the Democratic support rates. There should be three lines in different colors (one for each race of interest).
+> Now let's visualize the Democratic support rates for the three races within each precinct for sufficently large precincts. Limit the data to precincts with at least 500 registered voters (use `filter()`). Make a line plot where the horizontal axis (`x=`) indicates precincts, and the vertical axis (`y=`) shows the Democratic support rates. There should be three lines in different colors (one for each race of interest).
 
-> **Do not** *label* the precincts on the horizontal axis (you will probably have to search to figure out how). You should, however, *arrange them on the axis in order from smallest to largest* in terms of support for the Democratic candidate for president --- that is, the line plotting percentage support for Obama should be smoothly increasing from left to right. The order of the lines in the legend should follow the order of the lines at the right edge of the plot.
+> **Do not** *label* the precincts on the horizontal axis: `scale_x_discrete(breaks=NULL)` is one method for doing this. You should, however, *arrange them on the axis in order from smallest to largest* in terms of support for the Democratic candidate for president---that is, the line plotting percentage support for Obama should be smoothly increasing from left to right. The order of the lines in the legend should follow the order of the lines at the right edge of the plot.
 
-> To do this, we need to use the "wide" version of the data (one row per precinct), and order `Precinct` based on Democratic support for the Presidential race (Hint: You will probably want to use `fct_reorder()` on `Precinct`). Then we can reshape back from "wide" to "tidy" form using `gather()` so that we have one variable giving the race---and another giving vote percentage---and can plot a separate line for each race.
+> To do this, we need to use the "wide" version of the data (one row per precinct), and order `Precinct` based on Democratic support for the Presidential race (Hint: You will probably want to use `forcats::fct_reorder()` on `Precinct`). Then we can reshape back from "wide" to "tidy" form using `gather()` so that we have one variable giving the race---and another giving vote percentage---and can plot a separate line for each race.
 
 ```{r}
 # [YOUR CODE HERE]

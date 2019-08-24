@@ -27,6 +27,7 @@ layout: default
 * [Introduction to R Workshop](https://youtu.be/HbFaPArTIjo), recorded Oct. 11, 2018, with [companion webpage](https://clanfear.github.io/Intro_R_Workshop/).
 * [Intermediate R Workshop](https://youtu.be/pSWaOOniVBk), recorded Jan. 31, 2019, with [companion webpage](https://clanfear.github.io/Intermediate_R_Workshop/).
 * [What They Forgot to Teach You About R](https://whattheyforgot.org/) by Jenny Bryan and Jim Hester. Great information on best practices for managing projects and R itself.
+* [Teacups, Giraffes, and Statistics](https://tinystats.github.io/teacups-giraffes-and-statistics/index.html), an illustrated and interactive introduction to R and statistics.
 
 ## Weekly lecture notes and links:
 

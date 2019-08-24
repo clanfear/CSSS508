@@ -144,24 +144,31 @@ data_list[["trip_data"]] <- data_list[["trip_data"]] %>%
 
 > Note: if you cannot get this working and need to move on with your life, try writing your function to just take the first two characters using `str_sub()` and use that.
 
-[YOUR WORK]
+```{r}
+# YOUR WORK
+```
 
 > Then on `data_list[["station_data"]]` and `data_list[["trip_data"]]`, make new columns called `terminal_region`, `to_station_region`, and `from_station_region` using your `region_extract()` function.
 
+```{r}
+# YOUR WORK
+```
 
 ## Identifying Rainy Days
 
 > The `Events` column in `data_list[["weather_data"]]` mentions if there was rain, thunderstorms, fog, etc. On some days you can see multiple weather events. Add a column to this data frame called `Rain` that takes the value `"Rain"` if there was rain, and `"No rain"` otherwise. You will need to use some string parsing since `"Rain"` is not always at the beginning of the string. The function `str_detect()` may be useful here, but again, if you are running short on time, just look for `"Rain"` at the beginning using `str_sub()` as a working but imperfect approach. Then convert the `Rain` variable to a factor.
 
-[YOUR WORK]
-
+```{r}
+# YOUR WORK
+```
 
 ## Merging Rainy Weather and Trips
 
 > You have bike station region information now, and rainy weather information. Make a new data frame called `trips_weather` that joins `data_list[["trip_data"]]` with `data_list[["weather_data"]]` by trip start date so that the `Rain` column is added to the trip-level data (just the `Rain` column please, *none of the rest of the weather info*). You may need to do some date manipulation and extraction as seen in Week 5 slides to get a date variable from the `starttime` column that you can use in merging.
 
-[YOUR WORK]
-
+```{r}
+# YOUR WORK
+```
 
 ## Making a Summarizing and Plotting Function
 
@@ -187,4 +194,6 @@ daily_rain_rides <- function(region_code, direction){
 
 > Then, test out your function: make *three plots* using `daily_rain_rides()`, trying out different values of the region code and direction to show it works.
 
-[YOUR WORK]
+```{r}
+# YOUR WORK
+```

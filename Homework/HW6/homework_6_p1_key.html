@@ -1531,28 +1531,113 @@ div.tocify {
 <div id="loading-the-data-with-a-loop" class="section level2">
 <h2>Loading the Data with a Loop</h2>
 <blockquote>
-<p>Use the <code>list.files()</code> on the <code>open_data_year_one</code> folder to return a character vector giving all the files in that folder, and store it to an object called <code>files_in_year_one</code>. Then use subsetting on <code>files_in_year_one</code> to remove the entries for <code>README.txt</code> (which isn’t data) and for <code>2015_status_data.csv</code> (which is massive and doesn’t have interesting information, so we’re going to exclude it). Thus, <code>files_in_year_one</code> should be a <strong>character vector with three entries</strong>.</p>
+<p>Make sure the <code>open_data_year_one</code> folder is in the same directory as this template. Use the <code>list.files()</code> on the <code>open_data_year_one</code> folder to return a character vector giving all the files in that folder, and store it to an object called <code>files_in_year_one</code>. Then use subsetting on <code>files_in_year_one</code> to remove the entries for <code>README.txt</code> (which isn’t data) and for <code>2015_status_data.csv</code> (which is massive and doesn’t have interesting information, so we’re going to exclude it). Thus, <code>files_in_year_one</code> should be a <strong>character vector with three entries</strong>.</p>
 </blockquote>
-<pre class="r"><code># YOUR WORK HERE</code></pre>
+<pre class="r"><code># load the libraries
+library(readr)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(ggplot2)
+library(lubridate)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</code></pre>
+<pre class="r"><code>library(stringr)
+
+# make my vector of filenames in the open_data_year_one folder
+(files_in_year_one &lt;- list.files(&quot;open_data_year_one&quot;))</code></pre>
+<pre><code>## [1] &quot;2015_station_data.csv&quot; &quot;2015_status_data.csv&quot;  &quot;2015_trip_data.csv&quot;   
+## [4] &quot;2015_weather_data.csv&quot; &quot;README.txt&quot;</code></pre>
+<pre class="r"><code># remove the status data and README
+(files_in_year_one &lt;- files_in_year_one[-c(2, 5)])</code></pre>
+<pre><code>## [1] &quot;2015_station_data.csv&quot; &quot;2015_trip_data.csv&quot;    &quot;2015_weather_data.csv&quot;</code></pre>
 <blockquote>
 <p>We want to read the remaining .csv files into data frames stored in a <strong>list</strong> called <code>data_list</code>. Preallocate this using <code>data_list &lt;- vector(&quot;list&quot;, length(files_in_year_one))</code>.</p>
 </blockquote>
-<pre class="r"><code># YOUR WORK HERE</code></pre>
+<pre class="r"><code>data_list &lt;- vector(&quot;list&quot;, length(files_in_year_one))</code></pre>
 <blockquote>
 <p>We would like the names of the list entries to be simpler than the file names. For example, we want to read the <code>2015_station_data.csv</code> file into <code>data_list[[&quot;station_data&quot;]]</code>, and <code>2015_trip_data.csv</code> into <code>data_list[[&quot;trip_data&quot;]]</code>. So, you should make a new vector called <code>data_list_names</code> giving the names of the objects to read in these CSV files to using <code>files_in_year_one</code>. Use the <code>str_sub()</code> function in <code>library(stringr)</code> to keep the portion of the <code>files_in_year_one</code> entries starting from the sixth character (which will drop the <code>2015_</code> part) and stopping at number of characters of each filename string, minus 4 (which will drop the <code>.csv</code> part). Remember to load <code>stringr</code> with <code>library</code> and use <code>?str_sub</code> in the console to get help on the function.</p>
 </blockquote>
-<pre class="r"><code># YOUR WORK HERE</code></pre>
+<pre class="r"><code>(data_list_names &lt;- str_sub(files_in_year_one, 6, -5))</code></pre>
+<pre><code>## [1] &quot;station_data&quot; &quot;trip_data&quot;    &quot;weather_data&quot;</code></pre>
 <blockquote>
 <p>Set the names for <code>data_list</code> using the <code>names()</code> function and the <code>data_list_names</code> vector.</p>
 </blockquote>
-<pre class="r"><code># YOUR WORK HERE</code></pre>
+<pre class="r"><code>names(data_list) &lt;- data_list_names
+data_list</code></pre>
+<pre><code>## $station_data
+## NULL
+## 
+## $trip_data
+## NULL
+## 
+## $weather_data
+## NULL</code></pre>
 <blockquote>
 <p>Then, write a <code>for()</code> loop that uses <code>read_csv()</code> from the <code>readr</code> package to read in all the CSV files contained in the ZIP file, <code>seq_along</code>ing the <code>files_in_year_one</code> vector. Store each of these files to its corresponding entry in <code>data_list</code>. The <a href="https://rebeccaferrell.github.io/CSSS508/Lectures/data_download_demo.html">data download demo</a> might be a helpful reference.</p>
 </blockquote>
 <blockquote>
 <p>You will want to use the <code>cache=TRUE</code> chunk option for this chunk—otherwise you’ll have to wait for the data to get read in every single time you knit. You will also want to make sure you are using <code>read_csv()</code> in the <code>readr</code> package and not base R’s <code>read.csv()</code> as <code>readr</code>’s version is faster, gives you a progress bar, and won’t convert all character variables to factors automatically.</p>
 </blockquote>
-<pre class="r"><code># YOUR WORK HERE</code></pre>
+<pre class="r"><code># read in the data in the open_data_year_one folder
+# paste0 to get the filepaths right
+for(i in seq_along(files_in_year_one)) {
+    data_list[[i]] &lt;- read_csv(paste0(&quot;open_data_year_one/&quot;, files_in_year_one[i]))
+}</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   id = col_double(),
+##   name = col_character(),
+##   terminal = col_character(),
+##   lat = col_double(),
+##   long = col_double(),
+##   dockcount = col_double(),
+##   online = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   trip_id = col_double(),
+##   starttime = col_character(),
+##   stoptime = col_character(),
+##   bikeid = col_character(),
+##   tripduration = col_double(),
+##   from_station_name = col_character(),
+##   to_station_name = col_character(),
+##   from_station_id = col_character(),
+##   to_station_id = col_character(),
+##   usertype = col_character(),
+##   gender = col_character(),
+##   birthyear = col_double()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   Date = col_character(),
+##   Max_Gust_Speed_MPH = col_character(),
+##   Events = col_character()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<p>Note we could also load these data in using <code>lapply()</code> or <code>purrr::map()</code> instead:</p>
+<pre class="r"><code>data_list &lt;- 
+  files_in_year_one %&gt;%                   # start with file names
+  file.path(&quot;open_data_year_one/&quot;, .) %&gt;% # add path
+  lapply(function(x) read_csv(x)) %&gt;%     # read files
+  setNames(data_list_names)               # set names of list elements
+
+data_list &lt;- 
+  files_in_year_one %&gt;%                   # start with file names
+  file.path(&quot;open_data_year_one/&quot;, .) %&gt;% # add path
+  purrr::map( ~ read_csv(.)) %&gt;%          # read files
+  setNames(data_list_names)               # set names of list elements</code></pre>
 </div>
 <div id="fixing-data-types" class="section level2">
 <h2>Fixing Data Types</h2>
@@ -1562,11 +1647,32 @@ div.tocify {
 <blockquote>
 <p>First, patch up the missing values for <code>gender</code> in <code>data_list[[&quot;trip_data&quot;]]</code>: if a user is a <code>Short-Term Pass Holder</code>, then put <code>&quot;Unknown&quot;</code> as their <code>gender</code>. Don’t make new objects, but rather modify the entries in <code>data_list</code> directly (e.g. <code>data_list[[&quot;trip_data&quot;]] &lt;- data_list[[&quot;trip_data&quot;]] %&gt;% mutate(...)</code>.</p>
 </blockquote>
-<pre class="r"><code># YOUR WORK HERE</code></pre>
+<pre class="r"><code>str(data_list) # Output suppressed due to length</code></pre>
+<pre class="r"><code># make gender Unknown when user is a short term ride
+data_list[[&quot;trip_data&quot;]] &lt;- data_list[[&quot;trip_data&quot;]] %&gt;%
+    mutate(gender = ifelse(usertype == &quot;Short-Term Pass Holder&quot;,
+                           &quot;Unknown&quot;, gender))</code></pre>
 <blockquote>
 <p>Now, use <code>dplyr</code>’s <code>mutate_at()</code> and/or <code>mutate()</code>, functions from the <code>lubridate</code> package, and the <code>factor</code> function to (1) fix any date/times, as well as to (2) convert the <code>usertype</code> and <code>gender</code> variables to factor variables from the trip data. <em>Don’t make new objects</em>, but rather modify the entries in <code>data_list</code> directly.</p>
 </blockquote>
-<pre class="r"><code># YOUR WORK HERE</code></pre>
+<pre class="r"><code># make the date-times valid:
+
+# station_data: make online a date
+data_list[[&quot;station_data&quot;]] &lt;- data_list[[&quot;station_data&quot;]] %&gt;%
+    mutate(online=mdy(online))
+
+# trip_data: starttime, stoptime should be date-time
+data_list[[&quot;trip_data&quot;]] &lt;- data_list[[&quot;trip_data&quot;]] %&gt;%
+    mutate_at(vars(starttime, stoptime), ~ mdy_hm(.))
+
+# weather_data: make Date a date
+data_list[[&quot;weather_data&quot;]] &lt;- data_list[[&quot;weather_data&quot;]] %&gt;%
+    mutate(Date=mdy(Date))</code></pre>
+<pre class="r"><code># change variables with a few values to factors:
+
+# trip_data: usertype, gender
+data_list[[&quot;trip_data&quot;]] &lt;- data_list[[&quot;trip_data&quot;]] %&gt;%
+    mutate_at(vars(usertype, gender), ~ factor(.))</code></pre>
 </div>
 </div>
 <div id="part-2" class="section level1">

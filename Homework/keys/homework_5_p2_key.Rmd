@@ -1,36 +1,36 @@
 ---
-title: "Homework 5 Key"
-author: "Charles Lanfear"
-date: "April 22, 2018"
-output:
+title: "Homework 5: 2016 Elections"
+author: "YOUR NAME"
+date: "DATE"
+output: 
   html_document:
+    preserve_yaml: true
     toc: true
     toc_float: true
+published: false
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(forcats)
 ```
 
 # Instructions
 
-> Questions for you to answer are as quoted blocks of text. Put your code used to address these questions and interpretation below each block. Make sure your answers are NOT in block quotes like these. Load all libraries you want to use in the `setup` chunk; when you discover you want to lose a library later, add it to the setup chunk at the top. Part 1 is due Tuesday May 1st, at 11:59 PM. Part 2 is due Tuesday May 8th, at 11:59 PM. You will upload the entire template each time, with whatever progress you have made.
+> Questions for you to answer are as quoted blocks of text. Put your code used to address these questions and interpretation below each block. Make sure your answers are NOT in block quotes like these. Load all libraries you want to use in the `setup` chunk; when you discover you want to use a library later, add it to the setup chunk at the top. Part 1 is due Tuesday October 30th, at 11:59 PM. Part 2 is due Tuesday November 6th, at 11:59 PM. You will upload the entire template each time, with whatever progress you have made.
 
 # Part 1
 
 ## Getting the data in
 
-> Download the data from <https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt>. It is a plain text file of data, about 60 MB in size. Values are separated with commas (you can see this by opening it with a *good* text editor, e.g. not Notepad). Save it somewhere on your computer---in the same folder as this template is easiest---and read the file into R. You will want to use the `cache=TRUE` chunk option for this (and potentially other chunks). `cache=TRUE` will allow R to read the file only once to save time.
+> Download the data from <https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt>. It is a plain text file of data, about 60 MB in size. Values are separated with commas (you can see this by opening it with a *good* text editor, e.g. Atom or Sublime *but not Notepad*). **Save it in the same folder as this template** and read the file into R. You will want to use the `cache=TRUE` chunk option for this (and potentially other chunks). `cache=TRUE` will allow R to read the file only once to save time.
 
-This file is comma separated (a CSV), so we'll use the `read_csv` function in `readr` without any fancy options:
-
-```{r load_libraries, warning=FALSE, message=FALSE}
-library(readr)
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(forcats)
-```
 
 ```{r import_data, cache=TRUE}
 king_raw <- read_csv("king_county_elections_2016.txt")
@@ -38,20 +38,14 @@ king_raw <- read_csv("king_county_elections_2016.txt")
 
 ## Inspecting the data
 
-> Use a function like `str()` or `glimpse()` to look at the data.  Describe the data in their current state. How many rows are there? What variables are there? What kinds of values do they take (don't list them all if there are many)? Are the column types sensible? 
+> Use `glimpse()` to look at the data.  Describe the data in their current state. How many rows are there? What variables are there? What kinds of values do they take (don't list them all if there are many)? Are the column types sensible? 
 
 
-```
-data %>%
-    select(variable) %>%
-    distinct(variable) %>%
-    head(10)
+```{r}
+glimpse(king_raw)
 ```
 
 There are `r nrow(king_raw)` rows and `r ncol(king_raw)` columns, as follows:
-```{r inspect_raw}
-str(king_raw)
-```
 
 > In addition to looking generally, look at each variable individually... except consider `LEG`, `CC` and `CG` at the same time (I will tell you now these three aren't likely to be useful to you, but maybe guess what they are!). Remember these are real administrative data so they may be *really strangely structured* and some variables are indecipherable; in real world data work, you often have to get by with intuition or poking around online with regard to the nature of your data. Here useful way to look at 10 unique values of individual columns, given some `data` and a `variable` of interest:
 
@@ -61,7 +55,6 @@ data %>%
     distinct(variable) %>%
     head(10)
 ```
-
 ### Precinct
 
 `Precinct` has a precinct identifier, which is sometimes a city or neighborhood name, sometimes some text followed by an ID number:
@@ -149,9 +142,6 @@ We see quite a few different values here. `Dem` and `Rep` stand out as being Dem
 
 ### CounterType
 
-`CounterType` appears to contain a mix of candidate names or position votes (e.g. "Bob Ferguson", "Approved", "No") and overall summaries for the particular race in the precinct (e.g. "Registered Voters", "Times Blank Voted", "Times Counted").
-
-I would say this column has a lot of the info we want, and that it is currently structured "too long" since all of these are different rows corresponding to the same precinct for the same race.
 
 ```{r inspect_countertype}
 king_raw %>%
@@ -159,6 +149,13 @@ king_raw %>%
     distinct() %>%
     head(20)
 ```
+
+> Notice something odd about CounterType in particular? It tells you what a given row of votes was for... but it also has `Registered Voters` and `Times Counted`. What is `Times Counted`?
+
+
+`CounterType` appears to contain a mix of candidate names or position votes (e.g. "Bob Ferguson", "Approved", "No") and overall summaries for the particular race in the precinct (e.g. "Registered Voters", "Times Blank Voted", "Times Counted").
+
+I would say this column has a lot of the info we want, and that it is currently structured "too long" since all of these are different rows corresponding to the same precinct for the same race.
 
 ### SumOfCount
 
@@ -169,7 +166,6 @@ king_raw %>%
     select(SumOfCount) %>%
     summary()
 ```
-
 
 ## The quantities of interest
 
@@ -186,7 +182,7 @@ king_raw %>%
 
 > You will perform most of the data management for #1 and #2 in Part 1. Part 2 will contain most of the work for #3 and also covers visualizing results.
 
-> The primary goal to accomplish over Parts 1 and 2 will be to get the data to one **row per precinct** with the following 7 columns:
+> The goal to accomplish over Parts 1 and 2 will be to get the data to one **row per precinct** with the following 7 columns:
 
 > * Precinct identifier
 > * Indicator for whether the precinct is in Seattle or not
@@ -222,10 +218,11 @@ king_rel_races <- king_raw %>%
     filter(Race %in% rel_races)
 ```
 
-
 ## Seattle precincts
 
-> We want to determine which precincts are in Seattle and which are not. You will probably want to look at values of the `Precinct` variable and see if you can figure out what uniquely identifies Seattle precincts. You will then want to create a binary variable that identifies Seattle tracts (for instance, with values `"Seattle"` and `"Not Seattle"`). Hint: You can use `substr()` to grab a number of characters---a sub-string---from text (say, to test if they equal something); if you use this with `ifelse()` inside `mutate()` you can make a new variable based on whether the sub-string of `Precinct` equals a value.
+> We want to determine which precincts are in Seattle and which are not. You should look at values of the `Precinct` variable and see if you can figure out what *uniquely identifies* Seattle precincts. Hint: All Seattle tracts have the same naming scheme... but some non-Seattle tracts are *similar* so be careful!
+
+> You will then want to create a binary variable that identifies Seattle tracts (for instance, with values `"Seattle"` and `"Not Seattle"`). One approach: You can use `stringr::str_sub()` or base R's `substr()` to grab a number of characters---a sub-string---from text (say, to test if they equal something); if you use this with `ifelse()` inside `mutate()` you can make a new variable based on whether the sub-string of `Precinct` equals a value.
 
 
 How can I figure out which precincts are in Seattle? I'm going to make a dataset with the whole list and eyeball it to see if anything jumps out.
@@ -235,50 +232,31 @@ precincts <- king_rel_races %>%
     select(Precinct) %>%
     distinct(Precinct) %>%
     arrange(Precinct)
+# precincts # omitted because I don't want to print it all in the document!
 ```
 
-Scrolling to the "S" section, it looks like Seattle precincts all start with `SEA` followed by a space and a precinct number. Looking at a [map on the King County website](http://www.kingcounty.gov/depts/elections/elections/maps/find-my-districts.aspx) and zooming in enough to see the precinct numbers confirms it. Precincts near but not in Seattle like in Shoreline to the north or Tukwila to the south have a different naming system. Thus, I am confident that identifying Seattle precincts as those whose first four characters are `SEA ` will work to flag those. Just the three characters `SEA` on its own won't -- there are precincts called `SEALTH`, `SEAN`, and `SEAVIEW` we don't want to flag as in Seattle.
+Scrolling to the "S" section, it looks like Seattle precincts all start with `SEA` followed by a space and a precinct number. Looking at a [map on the King County website](http://www.kingcounty.gov/depts/elections/elections/maps/find-my-districts.aspx) and zooming in enough to see the precinct numbers confirms it. Precincts near but not in Seattle like in Shoreline to the north or Tukwila to the south have a different naming system. Thus, I am confident that identifying Seattle precincts as those whose first four characters are `SEA ` will work to flag those. Just the three characters `SEA` on their own won't---there are precincts called `SEALTH`, `SEAN`, and `SEAVIEW` we don't want to flag as in Seattle.
 
-One way to proceed is to use the `substr` function (seen in Week 4 when checking if the second letter of some first names was "a") to pull out the first four characters of `Precinct` and check if they are equal to `SEA `.
+One way to proceed is to use the `substr()` or `stringr::str_sub()` functions (seen in Week 4 when checking if the second letter of some first names was "a") to pull out the first four characters of `Precinct` and check if they are equal to `SEA `.
 
 ```{r flag_seattle}
-king_flag <- king_rel_races %>%
-    mutate(Location = ifelse(substr(Precinct, start = 1, stop = 4) == "SEA ",
+king_seattle <- king_rel_races %>%
+    mutate(Location = ifelse(str_sub(Precinct, 1, 4) == "SEA ",
                              "Seattle",
                              "Not Seattle"))
 ```
-
-An alternative way is to use the `separate` function in `tidyr` (which we used to take a character representation of song length and split it into minutes and seconds). We could split these precincts at the first space and then check if the stuff in the first part of the split says `SEA`:
-
-```{r flag_seattle_alt}
-king_flag_alt <- king_rel_races %>%
-    separate(Precinct, into = c("part1", "part2"), sep = " ") %>%
-    mutate(Location = ifelse(part1 == "SEA",
-                             "Seattle",
-                             "Not Seattle"))
-```
-
-Note that we get a warning message when doing this with `separate` because some precincts only have one word in them, so there is no space to split on. This is fine. (We'll see more ways to match text patterns in Week 8.)
-
-Sanity check: do we get the same answer either way? Let's sum how many times the approaches disagree.
-
-```{r check_both_wasy_work}
-sum(king_flag$Location != king_flag_alt$Location)
-```
-
-Both ways give the same answers, so we're all good!
 
 
 ## Registered voters and turnout rates
 
-> We want to calculate turnout rates as total votes (including normal votes, blank votes, over votes, write-ins) for the Presidential race divided by registered voters.  Hint: You will want to look at `CounterType` and `SumOfCount` at the same time, within each `Precinct` and `Race`. Examine how the `SumOfCount` values for `CounterType` value `"Times Counted"` relate to all the other `CounterType` values.
+> We want to calculate turnout rates as total votes (including normal votes, blank votes, over votes, write-ins) for the Presidential race divided by registered voters. $Turnout = \frac{Total Votes}{Registered Voters}$.  Hint: You will want to look at `CounterType` and `SumOfCount` at the same time, within each `Precinct` and `Race`. Examine how the `SumOfCount` values for `CounterType` value `"Times Counted"` relate to all the other `CounterType` values.
 
 First, I see there is a value in `CounterType` called "Times Counted". It would be nice if this was the numerator we were after. I'm going to check this by summing `SumOfCount` up within each precinct and race of interest over all the rows besides where `CounterType` is "Registered Voters" or "Times Counted". Then I'll compare these to the "Times Counted" rows. We'll use joins to do this:
 
 ```{r check_times_counted}
 # sum over rows besides "Registered Voters" or "Times Counted"
 # within each precinct and race
-times_counted_manual <- king_flag %>%
+times_counted_manual <- king_seattle %>%
     select(Precinct, Race, CounterType, SumOfCount) %>%
     filter(CounterType != "Registered Voters" & CounterType != "Times Counted") %>%
     group_by(Precinct, Race) %>%
@@ -286,7 +264,7 @@ times_counted_manual <- king_flag %>%
 head(times_counted_manual)
 
 # now just grab the "Times Counted" rows and merge
-times_counted_compare <- king_flag %>%
+times_counted_compare <- king_seattle %>%
     select(Precinct, Race, CounterType, SumOfCount) %>%
     filter(CounterType == "Times Counted") %>%
     # rename the column on filtered data for clarity
@@ -302,7 +280,7 @@ summary(times_counted_compare$diff)
 They're always the same! That means "Times Counted" is including every possible kind of vote for each race, such as blanks, write-ins, accidental over-votes, or your usual ones. Now we can make a data frame that has registered voters and turnout rates (for the Presidential race) for each precinct:
 
 ```{r calculate_turnout_rates}
-turnout_rates <- king_flag %>%
+turnout_rates <- king_seattle %>%
     # filter to just the presidential election
     filter(Race == rel_races[3]) %>%
     # filter to just registered voters or times counted
@@ -316,12 +294,13 @@ turnout_rates <- king_flag %>%
 head(turnout_rates)
 ```
 
+> That's it for Part 1!
 
 # Part 2
 
 ## Democratic support rates
 
-> We want to get measures of democratic support in each Precinct for each of our three races. You are asked to measure support as the *percentage of votes* in a precinct for the Democratic candidate *out of all votes for candidates or write-ins*, but this time *do not to include blank votes or "over votes"* (where the voter indicated multiple choices) in the overall vote count for the denominator. Hint: A good approach here is to compute the denominator (total votes) for each precinct, and then *merge* (e.g. `left_join()`) on the Democratic vote count for each race and divide by the total votes.
+> We want to get measures of democratic support in each Precinct for each of our three races. You are asked to measure support as the *percentage of votes* in a precinct for the Democratic candidate *out of all votes for candidates or write-ins*, but this time *do not to include blank votes or "over votes"* (where the voter indicated multiple choices) in the overall vote count for the denominator. Hint: A good approach here is to compute the total votes (denominator) for each precinct, and then *merge* (e.g. `left_join()`) on the Democratic vote count for each race (numerator) and divide by the total votes. That is, $Dem Support = \frac{Dem Count}{Total Votes}$.
 
 ### Computing candidate votes
 
@@ -329,14 +308,14 @@ head(turnout_rates)
 
 > 1. Make a new dataframe with the total number of votes cast for any actual candidates (including `"Write-In"`) in each precinct and race. Hint: You will likely want to use `filter()` followed by `group_by()` and `summarize()` using the `SumOfCount` variable.
 
-> 2. MAke another dataframe with the total number of votes for democratic candidates in each precinct and race. You will want to check the `Party` of candidates and work only with the democratic observations to get these vote counts. Hint: There are different democratic parties for different races (e.g. `"Dem"` or `"DPN"`).
+> 2. Make another dataframe with the total number of votes for democratic candidates in each precinct and race. You will want to check the `Party` of candidates and work only with the democratic observations to get these vote counts. Hint: There are different democratic parties for different races (e.g. `"Dem"` and `"DPN"`).
 
 > 3. Merge the total votes data with the democratic votes data, then calculate a percent democratic votes variable for each race.
 
 I observe that for the races of interest, the proper candidates all have rows where `Party` is not `NP`:
 
 ```{r figure_out_votes_for_candidates}
-king_flag %>%
+king_seattle %>%
     select(Race, Party, CounterType) %>%
     distinct()
 ```
@@ -344,7 +323,7 @@ king_flag %>%
 I could keep those rows or rows for "Write-in" and that would be perfect.
 
 ```{r subset_candidate_votes}
-candidate_vote_rows <- king_flag %>%
+candidate_vote_rows <- king_seattle %>%
     # keep just not NP rows, or write-in rows
     filter(Party != "NP" | CounterType == "Write-In") %>%
     select(Precinct, Location, Race, Party, CounterType, SumOfCount)
@@ -414,7 +393,7 @@ wide_precinct_data
 
 ### Turnout
 
-> Make a scatterplot where the horizontal axis is number of registered voters in the precinct, and the vertical axis is turnout rate. Color the precincts in Seattle one color, and use a different color for other precincts. Do you observe anything?
+> Make a scatterplot where the horizontal axis (`x=`) is number of registered voters in the precinct, and the vertical axis (`y=`) is turnout rate. Color (`color=`) the precincts in Seattle one color, and use a different color for other precincts. Do you observe anything?
 
 ```{r plot_turnout}
 ggplot(data = wide_precinct_data,
@@ -429,19 +408,14 @@ ggplot(data = wide_precinct_data,
     theme_bw()
 ```
 
-I'm getting warnings when plotting because of precincts with zero registered voters whose turnout rate is `NaN` (coming from division by zero), which isn't a big deal. I've also superimposed a smooth trend line for each location to see the average relationship between registered voters and turnout rates.
-
-We can see that Seattle precincts are bigger on average, with almost all above 250 registered voters, while precincts can be quite a bit smaller elsewhere in King County. It looks like within Seattle, there is a slight negative relationship between the number of registered voters in a precinct and the proportion of whom actually vote in the Presidential race. The trend is instead flat-to-slightly-increasing for precincts outside of Seattle. However, for precincts of the same size (in terms of registered voters), Seattle precincts actually had slightly higher turnout rates on average than non-Seattle precincts.
-
-The overall level of turnout seems pretty impressive, with many not-too-small precincts having rates of 80% or higher. However, keep in mind this is just calculated out of registered voters. We would need to use Census data and do something much more sophisticated if we wanted to account for all eligible voters residing in King County who are not registered.
 
 ### Democratic support
 
-> Now let's visualize the Democratic support rates for the three races within each precinct for sufficently large precincts. Limit the data to precincts with at least 500 registered voters. Make a line plot where the horizontal axis indicates precincts, and the vertical axis shows the Democratic support rates. There should be three lines in different colors (one for each race of interest).
+> Now let's visualize the Democratic support rates for the three races within each precinct for sufficently large precincts. Limit the data to precincts with at least 500 registered voters (use `filter()`). Make a line plot where the horizontal axis (`x=`) indicates precincts, and the vertical axis (`y=`) shows the Democratic support rates. There should be three lines in different colors (one for each race of interest).
 
-> **Do not** *label* the precincts on the horizontal axis (you will probably have to search to figure out how). You should, however, *arrange them on the axis in order from smallest to largest* in terms of support for the Democratic candidate for president --- that is, the line plotting percentage support for Obama should be smoothly increasing from left to right. The order of the lines in the legend should follow the order of the lines at the right edge of the plot.
+> **Do not** *label* the precincts on the horizontal axis: `scale_x_discrete(breaks=NULL)` is one method for doing this. You should, however, *arrange them on the axis in order from smallest to largest* in terms of support for the Democratic candidate for president---that is, the line plotting percentage support for Obama should be smoothly increasing from left to right. The order of the lines in the legend should follow the order of the lines at the right edge of the plot.
 
-> To do this, we need to use the "wide" version of the data (one row per precinct), and order `Precinct` based on Democratic support for the Presidential race (Hint: You will probably want to use `fct_reorder()` on `Precinct`). Then we can reshape back from "wide" to "tidy" form using `gather()` so that we have one variable giving the race---and another giving vote percentage---and can plot a separate line for each race.
+> To do this, we need to use the "wide" version of the data (one row per precinct), and order `Precinct` based on Democratic support for the Presidential race (Hint: You will probably want to use `forcats::fct_reorder()` on `Precinct`). Then we can reshape back from "wide" to "tidy" form using `gather()` so that we have one variable giving the race---and another giving vote percentage---and can plot a separate line for each race.
 
 ```{r tidy_demo_data}
 tidy_big_precinct_data <- wide_precinct_data %>%
