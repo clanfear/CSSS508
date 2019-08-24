@@ -612,15 +612,66 @@ They are also useful for producing error messages, by generating a message *if* 
 
 
 ---
-# Loading Files with a Loop
+# Loop Load Example 1
 
-One common use of a loop in R is for loading many individual data files at once—like
+One common use of a loop is for loading many individual data files at once—like
 an entire directory of Excel files—to combine them into one data set.
 
-Alternatively, you might want to use a loops and `if()` to download and clean files that are all
-from different URLs... which might go poorly.
+(1) Let's say we have a folder filled with .csv files. We can get the file names in a folder using `list.files()`.
 
-For an example, read Rebecca Ferrell's [extended writeup on data hell on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html).
+```{r}
+(file_list  <- list.files("./example_data/"))
+```
+
+---
+# Loop Load Example 2
+
+(2) Let's populate an empty list of the same length as our file list:
+
+```{r}
+data_list  <- vector("list", length(file_list))
+
+```
+
+(3) For nice object names, we can use `stringr` to remove the `.csv`.
+```{r}
+(data_names <- stringr::str_remove(file_list, ".csv"))
+```
+
+(4) Then assign those names to the list.
+
+```{r}
+names(data_list) <- data_names
+```
+
+---
+# Loop Load Example 3
+
+(5) Then, let's run a loop that reads in each data file and writes it to the appropriate element of `data_list`.
+
+```{r, message = FALSE, warnings = FALSE}
+library(readr) # readr to load the csv files
+for (i in seq_along(file_list)){
+  data_list[[ data_names[i] ]] <- 
+    read_csv(paste0("./example_data/", file_list[i]))
+}
+head(data_list[[1]], 3)
+```
+
+---
+# Loop Load Example 4
+
+```{r}
+names(data_list[[1]])
+names(data_list[[2]])
+```
+
+In this case every data frame has the same columns, so we can combine them all into one data frame.
+
+```{r}
+complete_data <- bind_rows(data_list)
+glimpse(complete_data)
+```
 
 ---
 class: inverse

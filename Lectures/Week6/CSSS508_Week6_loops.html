@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 6
 ## Loops
 ### Chuck Lanfear
-### May 8, 2019<br>Updated: May 8, 2019
+### May 8, 2019<br>Updated: Aug 24, 2019
 
 ---
 
@@ -757,15 +757,111 @@ They are also useful for producing error messages, by generating a message *if* 
 
 
 ---
-# Loading Files with a Loop
+# Loop Load Example 1
 
-One common use of a loop in R is for loading many individual data files at once—like
+One common use of a loop is for loading many individual data files at once—like
 an entire directory of Excel files—to combine them into one data set.
 
-Alternatively, you might want to use a loops and `if()` to download and clean files that are all
-from different URLs... which might go poorly.
+(1) Let's say we have a folder filled with .csv files. We can get the file names in a folder using `list.files()`.
 
-For an example, read Rebecca Ferrell's [extended writeup on data hell on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html).
+
+```r
+(file_list  &lt;- list.files("./example_data/"))
+```
+
+```
+##  [1] "ex_dat_1.csv"  "ex_dat_10.csv" "ex_dat_2.csv"  "ex_dat_3.csv" 
+##  [5] "ex_dat_4.csv"  "ex_dat_5.csv"  "ex_dat_6.csv"  "ex_dat_7.csv" 
+##  [9] "ex_dat_8.csv"  "ex_dat_9.csv"
+```
+
+---
+# Loop Load Example 2
+
+(2) Let's populate an empty list of the same length as our file list:
+
+
+```r
+data_list  &lt;- vector("list", length(file_list))
+```
+
+(3) For nice object names, we can use `stringr` to remove the `.csv`.
+
+```r
+(data_names &lt;- stringr::str_remove(file_list, ".csv"))
+```
+
+```
+##  [1] "ex_dat_1"  "ex_dat_10" "ex_dat_2"  "ex_dat_3"  "ex_dat_4" 
+##  [6] "ex_dat_5"  "ex_dat_6"  "ex_dat_7"  "ex_dat_8"  "ex_dat_9"
+```
+
+(4) Then assign those names to the list.
+
+
+```r
+names(data_list) &lt;- data_names
+```
+
+---
+# Loop Load Example 3
+
+(5) Then, let's run a loop that reads in each data file and writes it to the appropriate element of `data_list`.
+
+
+```r
+library(readr) # readr to load the csv files
+for (i in seq_along(file_list)){
+  data_list[[ data_names[i] ]] &lt;- 
+    read_csv(paste0("./example_data/", file_list[i]))
+}
+head(data_list[[1]], 3)
+```
+
+```
+## # A tibble: 3 x 3
+##      id      x     z
+##   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1    44  0.516 0.381
+## 2    49  2.17  0.346
+## 3    50 -0.122 0.711
+```
+
+---
+# Loop Load Example 4
+
+
+```r
+names(data_list[[1]])
+```
+
+```
+## [1] "id" "x"  "z"
+```
+
+```r
+names(data_list[[2]])
+```
+
+```
+## [1] "id" "x"  "z"
+```
+
+In this case every data frame has the same columns, so we can combine them all into one data frame.
+
+
+```r
+complete_data &lt;- bind_rows(data_list)
+glimpse(complete_data)
+```
+
+```
+## Observations: 10,000
+## Variables: 3
+## $ id &lt;dbl&gt; 44, 49, 50, 60, 62, 76, 81, 91, 113, 114, 116, 156, 157, 16...
+## $ x  &lt;dbl&gt; 0.5156, 2.1673, -0.1216, 1.0551, 0.6660, -0.0213, 1.9835, 2...
+## $ z  &lt;dbl&gt; 0.3808, 0.3460, 0.7115, 0.4344, 0.6379, 0.6739, 0.9808, 0.8...
+```
 
 ---
 class: inverse
@@ -828,7 +924,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##  103.72    0.31  104.10
+##    4.60    0.14    4.76
 ```
 
 ---
@@ -845,7 +941,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.13    0.11    0.24
+##    0.14    0.12    0.26
 ```
 
 ```r
@@ -854,10 +950,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-##  797.85    2.82  433.75
+##   32.86    1.17   18.31
 ```
 
-The vectorized method was 798 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 33 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples

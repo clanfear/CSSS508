@@ -258,6 +258,10 @@ quantile_report(rnorm(10000))
 ]
 
 ---
+class: inverse
+# An Aside on Apply functions
+
+---
 # `lapply()`: List + Functions
 
 `lapply()` is used to **apply** a function over a **l**ist of any kind (e.g. a data frame) and return a list. This is a lot easier than preparing a `for()` loop!
@@ -293,6 +297,40 @@ There is also `apply()` which works over matrices or data frames. You can apply 
 apply(swiss, MARGIN = 2, FUN = quantile_report)
 ```
 ]
+---
+# Vectorized Data Loading
+
+Remember the loop for loading data files from last week?
+
+```{r, message = FALSE, warnings = FALSE}
+library(dplyr); library(readr)
+file_list  <- list.files("./example_data/")
+file_paths <- paste0("./example_data/", file_list)
+data_names <- stringr::str_remove(file_list, ".csv")
+data_list  <- vector("list", length(file_list))
+names(data_list) <- data_names
+for (i in seq_along(file_list)){
+  data_list[[ data_names[i] ]] <- read_csv(file_paths[i])
+} 
+complete_data <- bind_rows(data_list)
+head(complete_data, 3)
+```
+
+---
+# Vectorized Data Loading
+
+Another way to load these files would be to... `lapply()` over the file names then bind the rows together. Faster and easier!
+
+```{r, warning=FALSE, message=FALSE}
+complete_data <- lapply(file_paths, read_csv) %>%
+  bind_rows()
+head(complete_data, 3)
+```
+
+---
+class: inverse
+# Back to Making functions!
+
 ---
 # Example: Discretizing Continuous Data
 

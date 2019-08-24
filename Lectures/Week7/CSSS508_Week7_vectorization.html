@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 7
 ## Vectorization and Functions
 ### Chuck Lanfear
-### May 15, 2019<br>Updated: May 15, 2019
+### May 15, 2019<br>Updated: Aug 24, 2019
 
 ---
 
@@ -259,7 +259,7 @@ smarter_first_and_last
 ##         return(c("first" = first, "last" = last))        
 ##     }
 ## }
-## &lt;environment: 0x000001faa5f20368&gt;
+## &lt;bytecode: 0x000000001960c348&gt;
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -313,11 +313,15 @@ quantile_report(rnorm(10000))
 
 ```
 ##   Bottom 1%   Bottom 5%  Bottom 10%  Bottom 25%      Median     Top 25% 
-## -2.25954375 -1.64436447 -1.27750944 -0.67129471  0.02992877  0.69094684 
+## -2.38228719 -1.64780442 -1.31068621 -0.67687966  0.00241613  0.66880979 
 ##     Top 10%      Top 5%      Top 1% 
-##  1.33852354  1.70544012  2.38022028
+##  1.27601023  1.62961964  2.38028004
 ```
 ]
+
+---
+class: inverse
+# An Aside on Apply functions
 
 ---
 # `lapply()`: List + Functions
@@ -422,6 +426,60 @@ apply(swiss, MARGIN = 2, FUN = quantile_report)
 ```
 ]
 ---
+# Vectorized Data Loading
+
+Remember the loop for loading data files from last week?
+
+
+```r
+library(dplyr); library(readr)
+file_list  &lt;- list.files("./example_data/")
+file_paths &lt;- paste0("./example_data/", file_list)
+data_names &lt;- stringr::str_remove(file_list, ".csv")
+data_list  &lt;- vector("list", length(file_list))
+names(data_list) &lt;- data_names
+for (i in seq_along(file_list)){
+  data_list[[ data_names[i] ]] &lt;- read_csv(file_paths[i])
+} 
+complete_data &lt;- bind_rows(data_list)
+head(complete_data, 3)
+```
+
+```
+## # A tibble: 3 x 3
+##      id      x     z
+##   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1    44  0.516 0.381
+## 2    49  2.17  0.346
+## 3    50 -0.122 0.711
+```
+
+---
+# Vectorized Data Loading
+
+Another way to load these files would be to... `lapply()` over the file names then bind the rows together. Faster and easier!
+
+
+```r
+complete_data &lt;- lapply(file_paths, read_csv) %&gt;%
+  bind_rows()
+head(complete_data, 3)
+```
+
+```
+## # A tibble: 3 x 3
+##      id      x     z
+##   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1    44  0.516 0.381
+## 2    49  2.17  0.346
+## 3    50 -0.122 0.711
+```
+
+---
+class: inverse
+# Back to Making functions!
+
+---
 # Example: Discretizing Continuous Data
 
 Maybe you often want to bucket variables in your data into groups based on quantiles:
@@ -464,7 +522,7 @@ bucketed_random_data &lt;- bucket(random_data,
 plot(x = bucketed_random_data, y = random_data, main = "Buckets and values")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -637,12 +695,12 @@ ggplot(gapminder %&gt;% filter(country == "Afghanistan"),
 ---
 # Example of Desired Chart
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
 
 ---
 # Another Example
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
 
 ---
 # Making Country Flexible
@@ -674,7 +732,7 @@ What `cntry` does:
 gapminder_lifeplot(cntry = "Turkey")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
 
 ---
 # Making `y` Value Flexible
@@ -740,7 +798,7 @@ gapminder_plot &lt;- function(cntry, yvar) {
 gapminder_plot(cntry = "Turkey", yvar = "pop")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
 
 ---
 # Debugging
