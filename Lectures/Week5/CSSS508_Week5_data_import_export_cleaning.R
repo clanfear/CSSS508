@@ -1,9 +1,3 @@
-options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(comment = "##")
-
-library(xaringanthemer)
-source("../csss508css.R")
-
 getwd()
 
 ## library(ggplot2)
@@ -42,10 +36,10 @@ temp <- structure(list(speed = c(4, 4, 7, 7, 8, 9, 10, 10),
 library(pander)
 pander(head(billboard_2000_raw[,1:10], 12), split.tables=120, style="rmarkdown")
 
-library(dplyr)
-library(tidyr)
+library(tidyr); library(dplyr)
 billboard_2000 <- billboard_2000_raw %>%
-    gather(key = week, value = rank, starts_with("wk")) #<<
+  pivot_longer(starts_with("wk"), 
+               names_to ="week", values_to = "rank") #<<
 dim(billboard_2000)
 
 head(billboard_2000)
@@ -53,9 +47,22 @@ head(billboard_2000)
 summary(billboard_2000$rank)
 
 billboard_2000 <- billboard_2000_raw %>%
-    gather(key = week, value = rank, starts_with("wk"),
-           na.rm = TRUE) #<<
+  pivot_longer(starts_with("wk"), 
+               names_to ="week", values_to = "rank", 
+               values_drop_na = TRUE) #<<
 summary(billboard_2000$rank)
+
+billboard_2000 <- billboard_2000 %>%
+    mutate(week = parse_number(week)) #<<
+summary(billboard_2000$week)
+
+billboard_2000 <- billboard_2000_raw %>%
+  pivot_longer(starts_with("wk"), 
+               names_to ="week", values_to = "rank",
+               values_drop_na = TRUE,
+               names_prefix = "wk", #<<
+               names_ptypes = list("week" =numeric(0))) #<<
+head(billboard_2000)
 
 billboard_2000 <- billboard_2000 %>%
     separate(time, into = c("minutes", "seconds"),
@@ -64,16 +71,12 @@ billboard_2000 <- billboard_2000 %>%
     select(-minutes, -seconds)
 summary(billboard_2000$length)
 
-billboard_2000 <- billboard_2000 %>%
-    mutate(week = parse_number(week)) #<<
-summary(billboard_2000$week)
-
 (too_long_data <- data.frame(Group = c(rep("A", 3), rep("B", 3)),
                              Statistic = rep(c("Mean", "Median", "SD"), 2),
                              Value = c(1.28, 1.0, 0.72, 2.81, 2, 1.33)))
 
 (just_right_data <- too_long_data %>%
-    spread(key = Statistic, value = Value))
+    pivot_wider(names_from = Statistic, values_from = Value))
 
 # find best rank for each song
 best_rank <- billboard_2000 %>%

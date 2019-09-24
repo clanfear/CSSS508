@@ -8,7 +8,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu)
 ## Class Locations
 **Lecture**
 
-[Sieg 134](https://www.washington.edu/maps/#!/sig): Wednesdays 3:30-5:20
+[Sieg 117](https://www.washington.edu/maps/#!/sig): Wednesdays 3:30-5:20
 
 **Lab (Optional but highly recommended)**
 

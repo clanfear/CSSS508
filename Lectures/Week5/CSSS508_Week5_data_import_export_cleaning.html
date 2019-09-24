@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### May 1, 2019<br>Updated: Jul 26, 2019
+### May 1, 2019<br>Updated: Sep 24, 2019
 
 ---
 
@@ -554,40 +554,41 @@ Why do we want tidy data?
 * Fewer issues with missing values and "imbalanced" repeated measures data
 
 ---
-# tidyr
+# `tidyr`
 
 The `tidyr` package provides functions to tidy up data, similar to `reshape` in Stata or `varstocases` in SPSS. Key functions:
 
 --
 
-* `gather()`: takes a set of columns and rotates them down to make two new columns (which you can name yourself): 
-    * A `key` that stores the original column names
+* **`pivot_longer()`**: takes a set of columns and pivots them down to make two new columns (which you can name yourself): 
+    * A `name` column that stores the original column names
     * A `value` with the values in those original columns
 
 --
 
-* `spread()`: inverts `gather()` by taking two columns and rotating them up into multiple columns
+* **`pivot_wider()`**: inverts `pivot_longer()` by taking two columns and pivoting them up into multiple columns
 
 --
 
-* `separate()`: pulls apart one column into multiple columns (common with `gather`ed data where values had been embedded in column names)
+* **`separate()`**: pulls apart one column into multiple columns (common after `pivot_longer()` where values are embedded in column names)
     * `extract_numeric()` does a simple version of this for the common case when you just want grab the number part
 
 --
 
-* `unite()`: inverts `separate()` by gluing together multiple columns into one character column (less common)
+* **`extract()`** for pivoting a column into multiple *sets* of columns.
+   * See [Hadley's response to this question](https://stackoverflow.com/questions/25925556/gather-multiple-sets-of-columns) for an example.
 
 ---
-# `gather()`
+# `pivot_longer()`
 
-Let's use `gather()` to get the week and rank variables out of their current layout into two columns (big increase in rows, big drop in columns):
+Let's use `pivot_longer()` to get the week and rank variables out of their current layout into two columns (big increase in rows, big drop in columns):
 
 
 ```r
-library(dplyr)
-library(tidyr)
+library(tidyr); library(dplyr)
 billboard_2000 &lt;- billboard_2000_raw %&gt;%
-*   gather(key = week, value = rank, starts_with("wk"))
+  pivot_longer(starts_with("wk"), 
+*              names_to ="week", values_to = "rank")
 dim(billboard_2000)
 ```
 
@@ -597,10 +598,10 @@ dim(billboard_2000)
 
 `starts_with()` and other helper functions from `dplyr::select()` work here too.
 
-We could instead use: `gather(key = week, value = rank, wk1:wk76)` to pull out these contiguous columns.
+We could instead use: `pivot_longer(wk1:wk76, names_to = "week", values_to = "rank")` to pull out these contiguous columns.
 
 ---
-# `gather`ed Weeks
+# `pivot`ed Weeks
 
 .smallish[
 
@@ -610,21 +611,21 @@ head(billboard_2000)
 
 ```
 ## # A tibble: 6 x 7
-##    year artist       track                   time  date.entered week   rank
-##   &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;                   &lt;chr&gt; &lt;date&gt;       &lt;chr&gt; &lt;int&gt;
-## 1  2000 2 Pac        Baby Don't Cry (Keep... 4:22  2000-02-26   wk1      87
-## 2  2000 2Ge+her      The Hardest Part Of ... 3:15  2000-09-02   wk1      91
-## 3  2000 3 Doors Down Kryptonite              3:53  2000-04-08   wk1      81
-## 4  2000 3 Doors Down Loser                   4:24  2000-10-21   wk1      76
-## 5  2000 504 Boyz     Wobble Wobble           3:35  2000-04-15   wk1      57
-## 6  2000 98^0         Give Me Just One Nig... 3:24  2000-08-19   wk1      51
+##    year artist track                   time  date.entered week   rank
+##   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;chr&gt; &lt;date&gt;       &lt;chr&gt; &lt;int&gt;
+## 1  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26   wk1      87
+## 2  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26   wk2      82
+## 3  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26   wk3      72
+## 4  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26   wk4      77
+## 5  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26   wk5      87
+## 6  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26   wk6      94
 ```
 ]
 
 Now we have a single week column!
 
 ---
-# Gathering Better?
+# Pivoting Better?
 
 
 ```r
@@ -639,20 +640,66 @@ summary(billboard_2000$rank)
 This is an improvement, but we don't want to keep the 18785 rows with missing ranks (i.e. observations for weeks since entering the Hot 100 that the song was no longer on the Hot 100).
 
 ---
-# Gathering Better: `na.rm`
+## Pivoting Better: `values_drop_na`
 
-The argument `na.rm = TRUE` to `gather()` will remove rows with missing ranks.
+The argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with missing ranks.
 
 ```r
 billboard_2000 &lt;- billboard_2000_raw %&gt;%
-    gather(key = week, value = rank, starts_with("wk"),
-*          na.rm = TRUE)
+  pivot_longer(starts_with("wk"), 
+               names_to ="week", values_to = "rank", 
+*              values_drop_na = TRUE)
 summary(billboard_2000$rank)
 ```
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    1.00   26.00   51.00   51.05   76.00  100.00
+```
+
+---
+# `parse_number()`
+
+`tidyr` provides a convenience function to grab just the numeric information from a column that mixes text and numbers:
+
+
+```r
+billboard_2000 &lt;- billboard_2000 %&gt;%
+*   mutate(week = parse_number(week))
+summary(billboard_2000$week)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    5.00   10.00   11.47   16.00   65.00
+```
+
+For more sophisticated conversion or pattern checking, you'll need to use string parsing (to be covered in week 8).
+
+---
+# Or use `names_prefix`
+
+
+```r
+billboard_2000 &lt;- billboard_2000_raw %&gt;%
+  pivot_longer(starts_with("wk"), 
+               names_to ="week", values_to = "rank",
+               values_drop_na = TRUE,
+*              names_prefix = "wk",
+*              names_ptypes = list("week" =numeric(0)))
+head(billboard_2000)
+```
+
+```
+## # A tibble: 6 x 7
+##    year artist track                   time  date.entered  week  rank
+##   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;chr&gt; &lt;date&gt;       &lt;dbl&gt; &lt;int&gt;
+## 1  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       1    87
+## 2  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       2    82
+## 3  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       3    72
+## 4  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       4    77
+## 5  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       5    87
+## 6  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       6    94
 ```
 
 ---
@@ -679,33 +726,15 @@ summary(billboard_2000$length)
 
 Then we add `seconds / 60` to `minutes` to produce a numeric `length` in minutes.
 
----
-# `parse_number()`
-
-`tidyr` provides a convenience function to grab just the numeric information from a column that mixes text and numbers:
-
-
-```r
-billboard_2000 &lt;- billboard_2000 %&gt;%
-*   mutate(week = parse_number(week))
-summary(billboard_2000$week)
-```
-
-```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    1.00    5.00   10.00   11.47   16.00   65.00
-```
-
-For more sophisticated conversion or pattern checking, you'll need to use string parsing (to be covered in week 8).
 
 ---
-# `spread()` Motivation
+# `pivot_wider()` Motivation
 
-`spread()` is the opposite of `gather()`, which you use if you have data for the same observation taking up multiple rows.
+`pivot_wider()` is the opposite of `pivot_longer()`, which you use if you have data for the same observation taking up multiple rows.
 
 --
 
-Example of data that we probably want to spread (unless we want to plot each statistic in its own facet):
+Example of data that we probably want to pivot wider (unless we want to plot each statistic in its own facet):
 
 .small[
 | **Group** | **Statistic** | **Value** |
@@ -718,10 +747,10 @@ Example of data that we probably want to spread (unless we want to plot each sta
 | B     | SD        |  1.33 |
 ]
 
-A common cue to use `spread()` is having measurements of different quantities in the same column. 
+A common cue to use `pivot_wider()` is having measurements of different quantities in the same column. 
 
 ---
-# Before `spread()`
+# Before `pivot_wider()`
 
 .smallish[
 
@@ -743,18 +772,20 @@ A common cue to use `spread()` is having measurements of different quantities in
 ]
 
 ---
-# After `spread()`
+# After `pivot_wider()`
 
 
 ```r
 (just_right_data &lt;- too_long_data %&gt;%
-    spread(key = Statistic, value = Value))
+    pivot_wider(names_from = Statistic, values_from = Value))
 ```
 
 ```
-##   Group Mean Median   SD
-## 1     A 1.28      1 0.72
-## 2     B 2.81      2 1.33
+## # A tibble: 2 x 4
+##   Group  Mean Median    SD
+##   &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 A      1.28      1  0.72
+## 2 B      2.81      2  1.33
 ```
 
 ---
@@ -806,7 +837,7 @@ billboard_trajectories &lt;-
 ---
 # Charts of 2000: Beauty!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-23-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-24-1.svg)&lt;!-- --&gt;
 
 Observation: There appears to be censoring around week 20 for songs falling out of the top 50 that I'd want to follow up on.
 
@@ -889,7 +920,7 @@ plot_by_day &lt;-
 ---
 # Calendar Time Plot!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
 
 We see some of the entry dates are before 2000---presumably songs still charting during 2000 that came out earlier. 
 
@@ -1060,7 +1091,7 @@ time_spd_plot &lt;- ggplot(spd_times, aes(x = hour)) +
 ---
 ## SPD Event Clearances, March 25
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-35-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -1154,7 +1185,7 @@ time_spd_plot_2 &lt;- ggplot(spd_times_2, aes(x = hour)) +
 ---
 # Better Ordered Plot
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-37-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
 
 ---
 # Other Ways to Reorder
@@ -1199,7 +1230,7 @@ jayz_bad_legend &lt;-
 
 ---
 ## Jay-Z with Bad Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-40-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-41-1.svg)&lt;!-- --&gt;
 
 ---
 ## Better Ordering for Jay-Z
@@ -1221,7 +1252,7 @@ jayz_good_legend &lt;-
 
 ---
 ## Jay-Z with Good Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-42-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-43-1.svg)&lt;!-- --&gt;
 
 ---
 # Dropping Unused Levels

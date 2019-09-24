@@ -16,9 +16,7 @@ layout: default
 * [Class Slack Channel](https://uwcsss508.slack.com/)
 * [R and RStudio Installation Instructions](https://clanfear.github.io/CSSS508/docs/installation.html)
 * [Enabling compilation of packages](https://clanfear.github.io/CSSS508/docs/compiling.html)
-* [Function Lecture Reference](https://clanfear.github.io/CSSS508/docs/functions.html)
-
-<!--* [DataCamp for CSSS508](https://www.datacamp.com/enterprise/introduction-to-r-for-social-scientists-sp19): Interactive R tutorials provided free of charge to registered CSSS508 students by [DataCamp](https://www.datacamp.com). -->
+* [How to Read an R Help Page](https://socviz.co/appendix.html#a-little-more-about-r)
 
 ## Helpful resources:
 
