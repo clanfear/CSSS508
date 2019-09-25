@@ -139,7 +139,7 @@ If you find something on the website doesn't work, please Slack or email me.
 
 # Lab
 
-Lab is optional but strongly recommended. They are interactive and will not be recorded.
+Lab is optional but strongly recommended. They are interactive and are not recorded.
 
 --
 
