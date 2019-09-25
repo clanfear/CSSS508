@@ -1090,7 +1090,7 @@ Mix in-line R calculations, tables, R output, and plots with text describing the
 
 Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (e.g. round `x` with `round(x, 2)`).
 
-### DUE: 11:59 PM, Tuesday, April 9th, 2019
+### DUE: 11:59 PM, Tuesday, October 1st, 2019
 
 ---
 
