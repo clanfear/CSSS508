@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Charles Lanfear" />
@@ -269,7 +270,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -343,18 +343,6 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
@@ -376,6 +364,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">CSSS508: HW3</h1>
 <h4 class="author">Charles Lanfear</h4>
+<h4 class="date">Updated: Sep 25, 2019</h4>
 
 </div>
 
@@ -383,9 +372,6 @@ $(document).ready(function () {
 <p>Pick something to look at in the <code>nycflights13</code> data and write up a .Rmd file showing your investigation. Upload both the .Rmd file and the .html file to Canvas. You must use at least once: <code>mutate()</code>, <code>summarize()</code>, <code>group_by()</code>, and any join. <em>Include at least one nicely formatted plot (<code>ggplot2</code>) and one table (<code>pander</code>)</em>. In plots and tables, use “nice” variable names (try out spaces!) and rounded values (&lt;= 3 digits).</p>
 <p>This time, <em>include all your code in your output document</em> (<code>echo=TRUE</code>), using comments and line breaks separating commands so that it is clear to a peer what you are doing (or trying to do!). You must write up your observations briefly in words as well.</p>
 <p>Note: If you want to see the <code>nycflights13</code> dataframes in the environment, you will need to load <em>each one</em>: <code>airlines</code>, <code>airports</code>, <code>flights</code>, <code>planes</code>, and <code>weather</code> (e.g. <code>data(flights)</code>).</p>
-<div id="due-1159-pm-april-23rd" class="section level3">
-<h3>DUE: 11:59 PM, April 23rd</h3>
-</div>
 
 
 
@@ -404,6 +390,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

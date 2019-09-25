@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Charles Lanfear" />
@@ -269,7 +270,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -343,18 +343,6 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
@@ -376,7 +364,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">CSSS508: HW1</h1>
 <h4 class="author">Charles Lanfear</h4>
-<h4 class="date">September 26th, 2018</h4>
+<h4 class="date">Updated: Sep 25, 2019</h4>
 
 </div>
 
@@ -384,9 +372,6 @@ $(document).ready(function () {
 <p>Write up a .Rmd file showing some exploratory analyses of the Swiss fertility data. Upload both the <code>.Rmd</code> file and the <code>.html</code> file to Canvas. You must upload <em>both</em> for credit.</p>
 <p>Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include <em>at least</em> one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. functions like <code>nrow()</code>, <code>mean()</code>, <code>sd()</code>, <code>cor()</code>, <code>median()</code>, <code>min()</code>) and <em>may not hard-code any numbers referenced in your text</em>.</p>
 <p>Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options <code>echo</code> and <code>results</code> to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text—<em>not as printed code and output</em>—and rounded so as not to be absurdly precise (e.g. round <code>x</code> with <code>round(x, 2)</code>).</p>
-<div id="due-1159-pm-tuesday-april-9th-2019" class="section level3">
-<h3>DUE: 11:59 PM, Tuesday, April 9th, 2019</h3>
-</div>
 
 
 
@@ -405,6 +390,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
