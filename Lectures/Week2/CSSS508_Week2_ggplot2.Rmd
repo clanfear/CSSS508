@@ -1070,14 +1070,16 @@ We can assign a `ggplot` object to a name:
 ```{r}
 lifeExp_by_year <- 
   ggplot(data = gapminder, 
-         aes(x = year, y = lifeExp, 
-             group = country, color = continent)) +
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
   geom_line() +
   xlab("Year") + 
   ylab("Life expectancy") +
   ggtitle("Life expectancy over time") +
   theme_bw() + 
-  facet_wrap(~ continent)
+  facet_wrap(~ continent) +
+  theme(legend.position = "none")
 ```
 
 The graph won't be displayed when you do this. You can show the graph using a single line of code with just the object name, *or take the object and add more layers*.
@@ -1121,7 +1123,7 @@ Inside `geom_point()`, `position = position_jitter(width=a, height=b)` shifts po
 .small[
 ```{r, fig.height=4, dev='svg'}
 ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
-    geom_point(position = position_jitter(width = 0.5, height = 2))
+    geom_point(position = position_jitter(width = 0.5, height = 2)) #<<
 ```
 ]
 ---
@@ -1435,7 +1437,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
   theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
   ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
-  theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45)) #<<
+  theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45)) #<<
 ```
 ]
 ---
@@ -1450,7 +1452,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
     scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
     theme_minimal(base_size = 14) + ylab("Years") + xlab("") + ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
-    theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
+    theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45))
 ```
 
 Observation: One could use `filter()` to identify the countries with dips in life expectancy and investigate.
