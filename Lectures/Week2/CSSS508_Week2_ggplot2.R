@@ -1,9 +1,3 @@
-options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(comment = "##")
-
-library(xaringanthemer)
-source("../csss508css.R")
-
 new.object <- 1:10 # Making vector of 1 to 10 
 
 save(new.object, file="new_object.RData")
@@ -277,6 +271,54 @@ ggplot(data = gapminder,
   ggtitle("Life expectancy over time") +
   theme_bw() + #<<
   facet_wrap(~ continent)
+
+## ggplot(data = gapminder,
+##        aes(x = year, y = lifeExp,
+##            group = country,
+##            color = continent)) +
+##   geom_line() +
+##   xlab("Year") +
+##   ylab("Life expectancy") +
+##   ggtitle("Life expectancy over time") +
+##   theme_bw() +
+##   facet_wrap(~ continent) +
+##   theme(legend.position = c(0.8, 0.25)) #<<
+
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw() + 
+  facet_wrap(~ continent) +
+  theme(legend.position = c(0.8, 0.25)) #<<
+
+## ggplot(data = gapminder,
+##        aes(x = year, y = lifeExp,
+##            group = country,
+##            color = continent)) +
+##   geom_line() +
+##   xlab("Year") +
+##   ylab("Life expectancy") +
+##   ggtitle("Life expectancy over time") +
+##   theme_bw() +
+##   facet_wrap(~ continent) +
+##   theme(legend.position = "none") #<<
+
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw() + 
+  facet_wrap(~ continent) +
+  theme(legend.position = "none") #<<
 
 lifeExp_by_year <- 
   ggplot(data = gapminder, 

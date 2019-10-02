@@ -2,7 +2,7 @@
 title: "CSSS508, Week 2"
 subtitle: "Plotting with `ggplot2`"
 author: "Chuck Lanfear"
-date: "Apr 10, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Oct 2, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -254,7 +254,7 @@ Sometimes you may get a **warning message** when loading packages---usually beca
 
 ```
 Warning message:
-package `gapminder' was built under R version 3.4.1 
+package `gapminder' was built under R version 3.5.3 
 ```
 Chunk options `message=FALSE` or `include=FALSE` will hide this. *Update R* to deal with it completely!
 
@@ -946,7 +946,7 @@ count: false
 
 # Plotting All Countries
 
-### 7: Facets
+### 7: Text Size
 .pull-left[
  .small[
 ```{r, fig.height=4, dev='svg', eval=FALSE}
@@ -975,6 +975,87 @@ ggplot(data = gapminder,
   ggtitle("Life expectancy over time") +
   theme_bw() + #<<
   facet_wrap(~ continent)
+```
+]
+
+.footnote[Better, but could bring that legend in.]
+
+---
+count: false
+
+# Plotting All Countries
+
+### 8: Legend Position
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw() +  
+  facet_wrap(~ continent) +
+  theme(legend.position = c(0.8, 0.25)) #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw() + 
+  facet_wrap(~ continent) +
+  theme(legend.position = c(0.8, 0.25)) #<<
+```
+]
+
+.footnote[Better... but do we even need it?]
+---
+count: false
+
+# Plotting All Countries
+
+### 9: No Legend
+.pull-left[
+ .small[
+```{r, fig.height=4, dev='svg', eval=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw() +  
+  facet_wrap(~ continent) +
+  theme(legend.position = "none") #<<
+```
+]
+]
+.pull-right[
+```{r,  dev='svg', echo=FALSE}
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life expectancy") +
+  ggtitle("Life expectancy over time") +
+  theme_bw() + 
+  facet_wrap(~ continent) +
+  theme(legend.position = "none") #<<
 ```
 ]
 
