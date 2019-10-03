@@ -322,14 +322,16 @@ ggplot(data = gapminder,
 
 lifeExp_by_year <- 
   ggplot(data = gapminder, 
-         aes(x = year, y = lifeExp, 
-             group = country, color = continent)) +
+       aes(x = year, y = lifeExp, 
+           group = country, 
+           color = continent)) +
   geom_line() +
   xlab("Year") + 
   ylab("Life expectancy") +
   ggtitle("Life expectancy over time") +
   theme_bw() + 
-  facet_wrap(~ continent)
+  facet_wrap(~ continent) +
+  theme(legend.position = "none")
 
 lifeExp_by_year
 
@@ -340,7 +342,7 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
     geom_point()
 
 ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
-    geom_point(position = position_jitter(width = 0.5, height = 2))
+    geom_point(position = position_jitter(width = 0.5, height = 2)) #<<
 
 ggplot(data = China, aes(x = year, y = gdpPercap)) +
     geom_line() +
@@ -353,7 +355,8 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
     ggtitle("Chinese life expectancy") +
     theme_gray(base_size = 20) #<<
 
-lifeExp_by_year + 
+lifeExp_by_year +
+  theme(legend.position = c(0.8, 0.25)) +
   scale_color_manual(
     name = "Which\ncontinent\nare we\nlooking at?", # \n adds a line break #<<
     values = c("Africa" = "seagreen", "Americas" = "turquoise1", 
@@ -492,7 +495,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
   theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
   ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
-  theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45)) #<<
+  theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45)) #<<
 
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
@@ -501,7 +504,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
     scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
     theme_minimal(base_size = 14) + ylab("Years") + xlab("") + ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
-    theme(legend.position=c(0.75, 0.2), axis.text.x = element_text(angle = 45))
+    theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45))
 
 ## ggsave("I_saved_a_file.pdf", plot = lifeExp_by_year,
 ##        height = 3, width = 5, units = "in")

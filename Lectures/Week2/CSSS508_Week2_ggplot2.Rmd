@@ -522,7 +522,7 @@ ggplot(data = China,
 .footnote[We initialize the plot with `ggplot()` and an aesthetic.]
 
 ---
-count: false
+
 
 ## Axis Labels, Points, No Background
 
@@ -547,7 +547,7 @@ ggplot(data = China,
 
 .footnote[Add a scatterplot.]
 ---
-count: false
+
 
 ## Axis Labels, Points, No Background
 
@@ -572,7 +572,7 @@ ggplot(data = China,
 
 .footnote[Make the points large and red.]
 ---
-count: false
+
 
 ## Axis Labels, Points, No Background
 
@@ -599,7 +599,7 @@ ggplot(data = China,
 
 .footnote[Capitalize the x-axis label.]
 ---
-count: false
+
 
 ## Axis Labels, Points, No Background
 
@@ -628,7 +628,7 @@ ggplot(data = China,
 
 .footnote[Clean up the y-axis label.]
 ---
-count: false
+
 
 ## Axis Labels, Points, No Background
 
@@ -659,7 +659,7 @@ ggplot(data = China,
 
 .footnote[Add a title.]
 ---
-count: false
+
 
 ## Axis Labels, Points, No Background
 
@@ -692,7 +692,7 @@ ggplot(data = China,
 
 .footnote[Pick a nicer theme.]
 ---
-count: false
+
 
 ## Axis Labels, Points, No Background
 
@@ -732,7 +732,7 @@ We have a plot we like for China...
 ... but what if we want *all the countries*?
 
 ---
-count: false
+
 
 # Plotting All Countries
 
@@ -765,7 +765,7 @@ ggplot(data = gapminder, #<<
 .footnote[We can't tell countries apart! Maybe we could follow *lines*?]
 
 ---
-count: false
+
 
 # Plotting All Countries
 
@@ -798,7 +798,7 @@ ggplot(data = gapminder,
 .footnote[`ggplot2` doesn't know how to connect the lines!]
 
 ---
-count: false
+
 
 # Plotting All Countries
 
@@ -832,7 +832,7 @@ ggplot(data = gapminder,
 
 .footnote[That looks more reasonable... but the lines are too thick!]
 ---
-count: false
+
 
 # Plotting All Countries
 
@@ -867,7 +867,7 @@ ggplot(data = gapminder,
 .footnote[Much better... but maybe we can do highlight regional differences?]
 
 ---
-count: false
+
 
 # Plotting All Countries
 
@@ -904,7 +904,7 @@ ggplot(data = gapminder,
 .footnote[Patterns are obvious... but why not separate continents completely?]
 
 ---
-count: false
+
 
 # Plotting All Countries
 
@@ -942,7 +942,7 @@ ggplot(data = gapminder,
 
 .footnote[Now the text is too big!]
 ---
-count: false
+
 
 # Plotting All Countries
 
@@ -981,7 +981,7 @@ ggplot(data = gapminder,
 .footnote[Better, but could bring that legend in.]
 
 ---
-count: false
+
 
 # Plotting All Countries
 
@@ -1021,7 +1021,7 @@ ggplot(data = gapminder,
 
 .footnote[Better... but do we even need it?]
 ---
-count: false
+
 
 # Plotting All Countries
 
@@ -1196,7 +1196,8 @@ When confused... Google or StackOverflow it!
 ## Legend Name and Manual Colors
 .small[
 ```{r, fig.height=4, dev='svg'}
-lifeExp_by_year + 
+lifeExp_by_year +
+  theme(legend.position = c(0.8, 0.25)) +
   scale_color_manual(
     name = "Which\ncontinent\nare we\nlooking at?", # \n adds a line break #<<
     values = c("Africa" = "seagreen", "Americas" = "turquoise1", 
@@ -1249,7 +1250,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) #<<
 ]
 
 ---
-count: false
+
 
 ## 2. Lines
 
@@ -1268,7 +1269,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ```
 ]
 ---
-count: false
+
 
 ## 3. Continent Average
 
@@ -1287,7 +1288,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ```
 ]
 ---
-count: false
+
 
 ## 4. Facets
 
@@ -1306,7 +1307,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ```
 ]
 ---
-count: false
+
 
 ## 5. Color Scale
 
@@ -1325,7 +1326,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ```
 ]
 ---
-count: false
+
 
 ## 6. Size Scale
 .smaller[
@@ -1343,7 +1344,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ```
 ]
 ---
-count: false
+
 
 ## 7. Alpha (Transparency)
 
@@ -1363,7 +1364,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ]
 
 ---
-count: false
+
 
 ## 8. Theme and Labels
 
@@ -1382,7 +1383,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ```
 ]
 ---
-count: false
+
 
 ## 9. Title and Subtitle
 
@@ -1401,7 +1402,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ```
 ]
 ---
-count: false
+
 
 ## 10. Angled Tick Values
 
@@ -1422,7 +1423,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 
 .footnote[Note: Fewer values might be better than angled labels!]
 ---
-count: false
+
 
 ## 11. Legend Position
 
