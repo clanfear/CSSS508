@@ -2,7 +2,7 @@
 title: "CSSS508, Week 3"
 subtitle: "Manipulating and Summarizing Data"
 author: "Chuck Lanfear"
-date: "Apr 17, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Oct 8, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -724,4 +724,4 @@ This time, *include all your code in your output document* (`echo=TRUE`), using 
 
 Note: If you want to see the `nycflights13` dataframes in the environment, you will need to load *each one*: `airlines`, `airports`, `flights`, `planes`, and `weather` (e.g. `data(flights)`).
 
-## DUE: 11:59 PM, April 23rd
+## DUE: 11:59 PM, October 15th

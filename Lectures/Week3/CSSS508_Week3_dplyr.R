@@ -1,10 +1,3 @@
-options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(comment = "##")
-library(ggplot2)
-
-library(xaringanthemer)
-source("../csss508css.R")
-
 options(width = 90)
 
 library(dplyr)
