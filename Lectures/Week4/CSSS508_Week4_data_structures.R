@@ -1,10 +1,3 @@
-options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(comment = "##")
-library(dplyr)
-
-library(xaringanthemer)
-source("../csss508css.R")
-
 c(1, 3, 7, -0.5)
 
 length(c(1, 3, 7, -0.5))
