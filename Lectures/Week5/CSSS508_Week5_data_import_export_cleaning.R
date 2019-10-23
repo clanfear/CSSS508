@@ -7,9 +7,7 @@ getwd()
 
 library(readr)
 
-billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv")
-
-write_csv(billboard_2000_raw, path="billboard_2000_raw.csv")
+billboard_2000_raw <- read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv")
 
 str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 
@@ -218,7 +216,7 @@ jayz_bad_legend <-
 
 jayz_bad_legend
 
-jayz <- jayz %>% mutate(track = fct_reorder(track, rank, min))
+jayz <- jayz %>% mutate(track = fct_reorder(track, rank, min)) #<<
 
 jayz_good_legend <-
   ggplot(jayz, aes(x = week, y = rank, 

@@ -2,7 +2,7 @@
 title: "CSSS508, Week 5"
 subtitle: "Importing, Exporting, and Cleaning Data"
 author: "Chuck Lanfear"
-date: "May 1, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Oct 23, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -161,7 +161,7 @@ If you are working with a popular data source, try Googling to see if it has a d
 ---
 # Delimited Text Files
 
-Besides a package, the easiest way to work with external data is for it to be stored in a *delimited* text file, e.g. comma-separated values (**.csv**) or tab-separated values (**.tsv**). Here is `csv` data:
+Besides a package, the easiest way to work with external data is for it to be stored in a *delimited* text file, e.g. comma-separated values (**.csv**) or tab-separated values (**.tsv**). Here is **.csv** data:
 
 ```
 "Subject","Depression","Sex","Week","HamD","Imipramine"
@@ -200,13 +200,10 @@ Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 
 .small[
 ```{r, cache=TRUE}
-billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv")
+billboard_2000_raw <- read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv")
 ```
 ]
 
-```{r}
-write_csv(billboard_2000_raw, path="billboard_2000_raw.csv")
-```
 ---
 # Did It Load?
 
@@ -290,7 +287,7 @@ Exporting to a `.csv` drops R metadata, such as whether a variable is a characte
 I pretty much always just save as `.Rdata`.
 
 ---
-# dput()
+# `dput()`
 
 For asking for help, it is useful to prepare a snippet of your data with `dput()`:<sup>1</sup>
 
@@ -964,7 +961,7 @@ jayz_bad_legend
 ## Better Ordering for Jay-Z
 
 ```{r, cache=FALSE}
-jayz <- jayz %>% mutate(track = fct_reorder(track, rank, min))
+jayz <- jayz %>% mutate(track = fct_reorder(track, rank, min)) #<<
 
 jayz_good_legend <-
   ggplot(jayz, aes(x = week, y = rank, 

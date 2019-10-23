@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### May 1, 2019<br>Updated: Sep 24, 2019
+### Oct 23, 2019<br>Updated: Oct 22, 2019
 
 ---
 
@@ -165,7 +165,7 @@ If you are working with a popular data source, try Googling to see if it has a d
 ---
 # Delimited Text Files
 
-Besides a package, the easiest way to work with external data is for it to be stored in a *delimited* text file, e.g. comma-separated values (**.csv**) or tab-separated values (**.tsv**). Here is `csv` data:
+Besides a package, the easiest way to work with external data is for it to be stored in a *delimited* text file, e.g. comma-separated values (**.csv**) or tab-separated values (**.tsv**). Here is **.csv** data:
 
 ```
 "Subject","Depression","Sex","Week","HamD","Imipramine"
@@ -206,7 +206,7 @@ Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 .small[
 
 ```r
-billboard_2000_raw &lt;- read_csv(file = "https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv")
+billboard_2000_raw &lt;- read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv")
 ```
 
 ```
@@ -236,10 +236,6 @@ billboard_2000_raw &lt;- read_csv(file = "https://raw.githubusercontent.com/hadl
 ```
 ]
 
-
-```r
-write_csv(billboard_2000_raw, path="billboard_2000_raw.csv")
-```
 ---
 # Did It Load?
 
@@ -348,7 +344,7 @@ Exporting to a `.csv` drops R metadata, such as whether a variable is a characte
 I pretty much always just save as `.Rdata`.
 
 ---
-# dput()
+# `dput()`
 
 For asking for help, it is useful to prepare a snippet of your data with `dput()`:&lt;sup&gt;1&lt;/sup&gt;
 
@@ -837,7 +833,7 @@ billboard_trajectories &lt;-
 ---
 # Charts of 2000: Beauty!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-24-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-23-1.svg)&lt;!-- --&gt;
 
 Observation: There appears to be censoring around week 20 for songs falling out of the top 50 that I'd want to follow up on.
 
@@ -920,7 +916,7 @@ plot_by_day &lt;-
 ---
 # Calendar Time Plot!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
 
 We see some of the entry dates are before 2000---presumably songs still charting during 2000 that came out earlier. 
 
@@ -1091,7 +1087,7 @@ time_spd_plot &lt;- ggplot(spd_times, aes(x = hour)) +
 ---
 ## SPD Event Clearances, March 25
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-35-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -1185,7 +1181,7 @@ time_spd_plot_2 &lt;- ggplot(spd_times_2, aes(x = hour)) +
 ---
 # Better Ordered Plot
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-37-1.svg)&lt;!-- --&gt;
 
 ---
 # Other Ways to Reorder
@@ -1230,14 +1226,14 @@ jayz_bad_legend &lt;-
 
 ---
 ## Jay-Z with Bad Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-41-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-40-1.svg)&lt;!-- --&gt;
 
 ---
 ## Better Ordering for Jay-Z
 
 
 ```r
-jayz &lt;- jayz %&gt;% mutate(track = fct_reorder(track, rank, min))
+*jayz &lt;- jayz %&gt;% mutate(track = fct_reorder(track, rank, min))
 
 jayz_good_legend &lt;-
   ggplot(jayz, aes(x = week, y = rank, 
@@ -1252,7 +1248,7 @@ jayz_good_legend &lt;-
 
 ---
 ## Jay-Z with Good Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-43-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-42-1.svg)&lt;!-- --&gt;
 
 ---
 # Dropping Unused Levels
@@ -1339,7 +1335,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {
