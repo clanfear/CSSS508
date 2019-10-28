@@ -2,7 +2,7 @@
 title: "CSSS508, Week 6"
 subtitle: "Loops"
 author: "Chuck Lanfear"
-date: "May 8, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Oct 30, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -425,15 +425,15 @@ head(predicted_data, 10)
 ---
 # Gathering Predictions
 
-We can use `tidyr::gather()` to make the predictions tidy, and set the levels of the `Model` variable.
+We can use `tidyr::pivot_longer()` to tidy the predictions, then set the levels of the `Model` variable.
 
 .smallish[
 ```{r, warning=FALSE, message=FALSE}
 library(tidyr)
 tidy_predicted_data <- predicted_data %>%
-    gather(Model, Prediction, -x, -y) %>% #<<
+    pivot_longer(3:6, names_to="Model", values_to="Prediction") %>% #<<
     mutate(Model = factor(Model, levels = names(models))) #<<
-tidy_predicted_data[seq(1,1200,100),] # Displaying some rows
+head(tidy_predicted_data) # Displaying some rows
 ```
 ]
 
@@ -764,13 +764,6 @@ pmax(c(0, 2, 4), c(1, 1, 1), c(2, 2, 2))
 
 ---
 class: inverse
-# Recommended Reading
+# Homework
 
-For a look at a complex problem in loading data, read Rebecca Ferrell's [data downloading demonstration on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html) (it is shorter than it looks; it is more than half error messages).
-
-I hope any future forays into automated data downloading and cleaning are smoother than this one was!
-
-Note: *This reading will help if you have trouble using a loop to load files in the next homework!*
-
-
-**Reminder: HW 5 Part II assigned last week is due midnight Tuesday 11/6.**
+Reminder: HW 5 Part II assigned last week is due midnight Tuesday 11/5.

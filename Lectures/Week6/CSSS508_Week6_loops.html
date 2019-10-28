@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 6
 ## Loops
 ### Chuck Lanfear
-### May 8, 2019<br>Updated: Aug 24, 2019
+### Oct 30, 2019<br>Updated: Oct 28, 2019
 
 ---
 
@@ -396,7 +396,7 @@ ggplot(data = sim_data, aes(x = x, y = y)) +
   ggtitle("Simulated Data")
 ```
 
-![](CSSS508_Week6_loops_files/figure-html/unnamed-chunk-11-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week6_loops_files/figure-html/unnamed-chunk-49-1.svg)&lt;!-- --&gt;
 
 ---
 # Candidate Regression Models
@@ -539,32 +539,28 @@ head(predicted_data, 10)
 ---
 # Gathering Predictions
 
-We can use `tidyr::gather()` to make the predictions tidy, and set the levels of the `Model` variable.
+We can use `tidyr::pivot_longer()` to tidy the predictions, then set the levels of the `Model` variable.
 
 .smallish[
 
 ```r
 library(tidyr)
 tidy_predicted_data &lt;- predicted_data %&gt;%
-*   gather(Model, Prediction, -x, -y) %&gt;%
+*   pivot_longer(3:6, names_to="Model", values_to="Prediction") %&gt;%
 *   mutate(Model = factor(Model, levels = names(models)))
-tidy_predicted_data[seq(1,1200,100),] # Displaying some rows
+head(tidy_predicted_data) # Displaying some rows
 ```
 
 ```
-##         x      y          Model Prediction
-## 1    6.33  1.521 intercept only     -0.464
-## 101  5.69 -1.515 intercept only     -0.464
-## 201  2.04  0.279 intercept only     -0.464
-## 301  6.33  1.521         linear     -0.400
-## 401  5.69 -1.515         linear     -0.447
-## 501  2.04  0.279         linear     -0.712
-## 601  6.33  1.521      quadratic     -1.117
-## 701  5.69 -1.515      quadratic     -1.179
-## 801  2.04  0.279      quadratic     -0.794
-## 901  6.33  1.521          cubic     -1.106
-## 1001 5.69 -1.515          cubic     -1.176
-## 1101 2.04  0.279          cubic     -0.821
+## # A tibble: 6 x 4
+##       x     y Model          Prediction
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;               &lt;dbl&gt;
+## 1  6.33  1.52 intercept only     -0.464
+## 2  6.33  1.52 linear             -0.400
+## 3  6.33  1.52 quadratic          -1.12 
+## 4  6.33  1.52 cubic              -1.11 
+## 5  5.98  1.44 intercept only     -0.464
+## 6  5.98  1.44 linear             -0.426
 ```
 ]
 
@@ -593,7 +589,7 @@ ggplot(data = sim_data, # Original data!
 ---
 # Plotted Predictions
 
-![](CSSS508_Week6_loops_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week6_loops_files/figure-html/unnamed-chunk-57-1.svg)&lt;!-- --&gt;
 
 Which looks best to you?
 
@@ -646,12 +642,12 @@ head(CV_predictions)
 
 ```
 ##       x      y fold intercept only linear quadratic cubic
-## 1  6.33  1.521    9             NA     NA        NA    NA
-## 2  5.98  1.437    5             NA     NA        NA    NA
-## 3  6.50  0.887    8             NA     NA        NA    NA
-## 4  3.79 -1.928    3             NA     NA        NA    NA
-## 5 -1.06  1.880    1             NA     NA        NA    NA
-## 6  7.37 -0.514    6             NA     NA        NA    NA
+## 1  6.33  1.521   10             NA     NA        NA    NA
+## 2  5.98  1.437   10             NA     NA        NA    NA
+## 3  6.50  0.887    5             NA     NA        NA    NA
+## 4  3.79 -1.928   10             NA     NA        NA    NA
+## 5 -1.06  1.880    7             NA     NA        NA    NA
+## 6  7.37 -0.514    5             NA     NA        NA    NA
 ```
 ]
 
@@ -697,7 +693,7 @@ CV_MSE
 
 ```
 ## intercept only         linear      quadratic          cubic 
-##          1.953          1.910          0.955          0.981
+##          1.946          1.900          0.951          0.960
 ```
 
 Based on these results, which model would you choose?
@@ -893,7 +889,7 @@ num_flips # follows negative binomial distribution
 ```
 
 ```
-## [1] 11
+## [1] 5
 ```
 
 ---
@@ -924,7 +920,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##    4.60    0.14    4.76
+##   1e+02   9e-02   1e+02
 ```
 
 ---
@@ -941,7 +937,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.14    0.12    0.26
+##    0.10    0.08    0.17
 ```
 
 ```r
@@ -950,10 +946,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-##   32.86    1.17   18.31
+## 1001.70    1.13  590.53
 ```
 
-The vectorized method was 33 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 1002 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples
@@ -1005,16 +1001,9 @@ pmax(c(0, 2, 4), c(1, 1, 1), c(2, 2, 2))
 
 ---
 class: inverse
-# Recommended Reading
+# Homework
 
-For a look at a complex problem in loading data, read Rebecca Ferrell's [data downloading demonstration on the course page](https://clanfear.github.io/CSSS508/Lectures/Week6/data_download_demo.html) (it is shorter than it looks; it is more than half error messages).
-
-I hope any future forays into automated data downloading and cleaning are smoother than this one was!
-
-Note: *This reading will help if you have trouble using a loop to load files in the next homework!*
-
-
-**Reminder: HW 5 Part II assigned last week is due midnight Tuesday 11/6.**
+Reminder: HW 5 Part II assigned last week is due midnight Tuesday 11/5.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -1061,7 +1050,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

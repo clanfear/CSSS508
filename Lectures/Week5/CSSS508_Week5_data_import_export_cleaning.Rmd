@@ -1003,5 +1003,5 @@ The data have no documentation (aside from what I provide), so show your detecti
 
 This homework is two parts to be completed in each of the next two weeks. It can be daunting, so do not wait until Monday to start. I recommend reading instructions closely, working with others, and using the mailing list and Slack.
 
-## PART 1 DUE: 11:59 PM, May 7th
-## PART 2 DUE: 11:59 PM, May 14th
+## PART 1 DUE: 11:59 PM, Oct 29th
+## PART 2 DUE: 11:59 PM, Nov 5th

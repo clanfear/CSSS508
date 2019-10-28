@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### Oct 23, 2019<br>Updated: Oct 22, 2019
+### Oct 23, 2019<br>Updated: Oct 28, 2019
 
 ---
 
@@ -630,7 +630,7 @@ summary(billboard_2000$rank)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##    1.00   26.00   51.00   51.05   76.00  100.00   18785
+##       1      26      51      51      76     100   18785
 ```
 
 This is an improvement, but we don't want to keep the 18785 rows with missing ranks (i.e. observations for weeks since entering the Hot 100 that the song was no longer on the Hot 100).
@@ -650,7 +650,7 @@ summary(billboard_2000$rank)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    1.00   26.00   51.00   51.05   76.00  100.00
+##     1.0    26.0    51.0    51.1    76.0   100.0
 ```
 
 ---
@@ -667,7 +667,7 @@ summary(billboard_2000$week)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    1.00    5.00   10.00   11.47   16.00   65.00
+##     1.0     5.0    10.0    11.5    16.0    65.0
 ```
 
 For more sophisticated conversion or pattern checking, you'll need to use string parsing (to be covered in week 8).
@@ -715,7 +715,7 @@ summary(billboard_2000$length)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   2.600   3.667   3.933   4.031   4.283   7.833
+##    2.60    3.67    3.93    4.03    4.28    7.83
 ```
 
 `sep = :` tells `separate()` to split the column into two where it finds a colon (`:`).
@@ -970,8 +970,8 @@ glimpse(spd_raw)
 ## Observations: 706
 ## Variables: 19
 ## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 17018...
-## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 160001...
-## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 20161041...
+## $ `CAD Event Number`            &lt;dbl&gt; 1.6e+10, 1.6e+10, 1.6e+10, 1.6e+...
+## $ `General Offense Number`      &lt;dbl&gt; 2.02e+09, 2.02e+09, 2.02e+09, 2....
 ## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202...
 ## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT",...
 ## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS"...
@@ -980,9 +980,9 @@ glimpse(spd_raw)
 ## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOC...
 ## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B...
 ## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B...
-## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.106, 8...
-## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122.3420,...
-## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.61422, 47...
+## $ `Census Tract`                &lt;dbl&gt; 9100, 11801, 7200, 8002, 8100, 5...
+## $ Longitude                     &lt;dbl&gt; -122, -122, -122, -122, -122, -1...
+## $ Latitude                      &lt;dbl&gt; 47.6, 47.5, 47.6, 47.6, 47.6, 47...
 ## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47....
 ## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIF...
 ## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING",...
@@ -1287,8 +1287,8 @@ The data have no documentation (aside from what I provide), so show your detecti
 
 This homework is two parts to be completed in each of the next two weeks. It can be daunting, so do not wait until Monday to start. I recommend reading instructions closely, working with others, and using the mailing list and Slack.
 
-## PART 1 DUE: 11:59 PM, May 7th
-## PART 2 DUE: 11:59 PM, May 14th
+## PART 1 DUE: 11:59 PM, Oct 29th
+## PART 2 DUE: 11:59 PM, Nov 5th
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
