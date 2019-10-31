@@ -126,7 +126,7 @@ layout: default
    * Homework 5, Part 1 due at 11:59 PM on October 29th
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
-           * Homework 5: Key: HTML, RMD
+           * Homework 5: Key: [HTML](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p1_key.html), [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p1_key.Rmd)
        + [2016 general election voting data for King County](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt) (60 MB download; save, *don't load in browser*!)
    * Data in-class:
        + [Billboard Hot 100 data from 2000](https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv)
@@ -157,8 +157,8 @@ layout: default
        + [Rmd for Lecture 6 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week6/CSSS508_Week6_loops.Rmd)
    * [Lecture Video for Lecture 6](https://youtu.be/uIoem_GFva4), recorded May 9th, 2019
    * Homework 5, Part 2 due at 11:59 PM on TBD
-       + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p2.Rmd) (you will download this, fill in and submit on Canvas)
-       + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5_p2.html)
+       + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p1_key.Rmd) (you will download this, fill in and submit on Canvas)
+       + [Homework 5: HTML Document](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p1_key.html)
        + Homework 5, Part 2 Key: HTML, RMD
    
 ### 7. Writing Functions
