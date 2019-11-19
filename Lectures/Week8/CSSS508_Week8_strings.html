@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 8
 ## Strings
 ### Chuck Lanfear
-### May 22, 2019<br>Updated: May 21, 2019
+### Nov 20, 2019<br>Updated: Nov 18, 2019
 
 ---
 
@@ -37,9 +37,11 @@ Note these data are *quite large*. You will want to save them and load them from
 library(tidyverse)
 restaurants &lt;- 
   read_csv("https://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.csv",
-                        col_types = "ccccccccnnccicccciccciD")
+*                       col_types = "ccccccccnnccicccciccciD")
 ```
 ]
+
+.footnote[I recommend specifying the column types so they read in correctly.]
 
 ---
 .smallish[
@@ -84,12 +86,14 @@ as *a sequence of characters*. In R the terms "strings" and "character data" are
 
 --
 
-In other languages, a string often also refers a *sequence* of numeric information, such as
+In other languages, "string" often also refers to a *sequence* of numeric information, such as
 binary strings (e.g. "01110000 01101111 01101111 01110000"). We rarely use these in R.
 
 --
 
-Note that these are *sequences* of numbers rather than single numbers, and thus *strings*.
+Note that these are *sequences* of numbers rather than single numbers, and thus *strings*. 
+
+One thing that separates a string from a number is that the leading zeroes are meaningful: `01 != 1`
 
 ---
 class: inverse
@@ -147,8 +151,8 @@ We can combine parts of strings together using the `paste()` function, e.g. to m
 
 ```r
 restaurants &lt;- restaurants %&gt;%
-    mutate(mailing_address = paste(Address, ", ", City, 
-                                   ", WA ", ZIP_5, sep = ""))
+    mutate(mailing_address = 
+           paste(Address, ", ", City, ", WA ", ZIP_5, sep = ""))
 restaurants %&gt;% distinct(mailing_address) %&gt;% head()
 ```
 
@@ -257,7 +261,7 @@ str_sub("Washington", 1, -3)
 ```
 --
 
-* `str_c()` ("string combine") is just like `paste()` but where default is `sep = ""` (like `paste0()`)
+* `str_c()` ("string combine") is just like `paste()` but where the default is `sep = ""` (like `paste0()`)
 
 
 ```r
@@ -306,23 +310,7 @@ head(unique(restaurants$City))
 
 ```r
 restaurants &lt;- restaurants %&gt;%
-    mutate_at(vars(Name, Address, City), 
-              funs(str_to_upper))
-```
-
-```
-## Warning: funs() is soft deprecated as of dplyr 0.8.0
-## please use list() instead
-## 
-## # Before:
-## funs(name = f(.)
-## 
-## # After: 
-## list(name = ~f(.))
-## This warning is displayed once per session.
-```
-
-```r
+    mutate_at(vars(Name, Address, City), ~str_to_upper(.))
 head(unique(restaurants$City))
 ```
 
@@ -352,8 +340,7 @@ Any character column is potentially affected. We can use the `str_trim()` functi
 
 ```r
 # use mutate_if to trim all the character columns
-restaurants &lt;- restaurants %&gt;%
-    mutate_if(is.character, str_trim)
+*restaurants &lt;- restaurants %&gt;% mutate_if(is.character, str_trim)
 head(unique(restaurants$Name), 4)
 ```
 
@@ -361,6 +348,8 @@ head(unique(restaurants$Name), 4)
 ## [1] "@ THE SHACK, LLC"     "10 MERCER RESTAURANT" "100 LB CLAM"         
 ## [4] "1000 SPIRITS"
 ```
+
+.footnote[`mutate_if(x, y)` applies function `y` to every column for which `x` is `TRUE`.]
 
 ---
 class: inverse
@@ -789,7 +778,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

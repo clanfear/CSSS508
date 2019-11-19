@@ -2,7 +2,7 @@
 title: "CSSS508, Week 8"
 subtitle: "Strings"
 author: "Chuck Lanfear"
-date: "May 22, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Nov 20, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -41,9 +41,11 @@ load("restaurants.Rdata")
 library(tidyverse)
 restaurants <- 
   read_csv("https://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.csv",
-                        col_types = "ccccccccnnccicccciccciD")
+                        col_types = "ccccccccnnccicccciccciD") #<<
 ```
 ]
+
+.footnote[I recommend specifying the column types so they read in correctly.]
 
 ---
 .smallish[
@@ -59,12 +61,14 @@ as *a sequence of characters*. In R the terms "strings" and "character data" are
 
 --
 
-In other languages, a string often also refers a *sequence* of numeric information, such as
+In other languages, "string" often also refers to a *sequence* of numeric information, such as
 binary strings (e.g. "01110000 01101111 01101111 01110000"). We rarely use these in R.
 
 --
 
-Note that these are *sequences* of numbers rather than single numbers, and thus *strings*.
+Note that these are *sequences* of numbers rather than single numbers, and thus *strings*. 
+
+One thing that separates a string from a number is that the leading zeroes are meaningful: `01 != 1`
 
 ---
 class: inverse
@@ -99,8 +103,8 @@ We can combine parts of strings together using the `paste()` function, e.g. to m
 
 ```{r mailing_address}
 restaurants <- restaurants %>%
-    mutate(mailing_address = paste(Address, ", ", City, 
-                                   ", WA ", ZIP_5, sep = ""))
+    mutate(mailing_address = 
+           paste(Address, ", ", City, ", WA ", ZIP_5, sep = ""))
 restaurants %>% distinct(mailing_address) %>% head()
 ```
 
@@ -163,7 +167,7 @@ str_sub("Washington", 1, -3)
 ```
 --
 
-* `str_c()` ("string combine") is just like `paste()` but where default is `sep = ""` (like `paste0()`)
+* `str_c()` ("string combine") is just like `paste()` but where the default is `sep = ""` (like `paste0()`)
 
 ```{r str_c_example}
 str_c(letters[1:5], 1:5)
@@ -187,8 +191,7 @@ str_length("weasels")
 ```{r make_seattle_uppercase}
 head(unique(restaurants$City))
 restaurants <- restaurants %>%
-    mutate_at(vars(Name, Address, City), 
-              funs(str_to_upper))
+    mutate_at(vars(Name, Address, City), ~str_to_upper(.))
 head(unique(restaurants$City))
 ```
 
@@ -207,10 +210,11 @@ Any character column is potentially affected. We can use the `str_trim()` functi
 
 ```{r clean_whitespace}
 # use mutate_if to trim all the character columns
-restaurants <- restaurants %>%
-    mutate_if(is.character, str_trim)
+restaurants <- restaurants %>% mutate_if(is.character, str_trim) #<<
 head(unique(restaurants$Name), 4)
 ```
+
+.footnote[`mutate_if(x, y)` applies function `y` to every column for which `x` is `TRUE`.]
 
 ---
 class: inverse
