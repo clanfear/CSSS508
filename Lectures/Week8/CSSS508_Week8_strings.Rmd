@@ -53,6 +53,7 @@ restaurants <-
 glimpse(restaurants)
 ```
 ]
+
 ---
 # Strings
 
