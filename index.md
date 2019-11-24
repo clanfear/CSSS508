@@ -184,7 +184,7 @@ layout: default
        + [Rmd for Lecture 8 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week8/CSSS508_Week8_strings.Rmd)
    * [Lecture Video for Lecture 8](https://youtu.be/i29advFBxEg), recorded May 22nd, 2019
    * Homework 6, Part 2 due at 11:59 PM on TBD
-       + Homework 6, Part 2: [RMD](https://clanfear.github.io/CSSS508/Homework/keys/homework_6_p1_key.Rmd)
+       + Homework 6, Part 2: [RMD](https://clanfear.github.io/CSSS508/Homework/HW6/homework_6_p1_key.Rmd)
        + Homework 6, Part 2 Key: HTML, RMD
    * Data In-Class:
        + [Seattle restaurant inspection data from King County, cleaned.](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata)
