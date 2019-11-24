@@ -2,7 +2,7 @@
 title: "CSSS508, Week 9"
 subtitle: "Mapping"
 author: "Chuck Lanfear"
-date: "May 29, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Nov 27, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -107,7 +107,7 @@ Sometimes, however, we want to plot these points over existing maps.
 ]
 
 .pull-right[
-```{r, echo=FALSE}
+```{r, echo=FALSE, purl=FALSE}
 ggplot(spd_raw, aes(Longitude, Latitude)) + 
   geom_point() + 
   coord_fixed() +
@@ -149,7 +149,7 @@ if(!requireNamespace("devtools")) install.packages("devtools")
 devtools::install_github("dkahle/ggmap", ref = "tidyup")
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, purl=FALSE}
 library(ggmap)
 ```
 
@@ -161,7 +161,7 @@ This may require compilation on your computer. If you get errors during install,
 .pull-left[
 `qmplot` will automatically set the map region based on your data:
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, purl=FALSE}
 qmplot(data = spd_raw, 
        x = Longitude, 
        y = Latitude, 
@@ -205,7 +205,7 @@ Both `qmplot()` and `qmap()` are wrappers for a function called `get_map()` that
 Call `qmplot()` with no `geom()`, and then add density layers:
 
 .small[
-```{r quick_plot_density_1, eval=FALSE}
+```{r quick_plot_density_1, eval=FALSE, purl=FALSE}
 qmplot(data = spd_raw, geom = "blank",
   x = Longitude, y = Latitude, 
   maptype = "toner-lite", 
@@ -278,7 +278,7 @@ assaults <- downtown %>%
 Now let's plot the events and label them with `geom_label()` (`geom_text()` without background or border):
 
 .smallish[
-```{r labels_1, eval=FALSE}
+```{r labels_1, eval=FALSE, purl=FALSE}
 qmplot(data = downtown,
        x = Longitude,
        y = Latitude,
@@ -286,7 +286,8 @@ qmplot(data = downtown,
        color = I("firebrick"), #<<
        alpha = I(0.5)) +  #<<
   geom_label(data = assaults,
-       aes(label = assault_label))
+       aes(label = assault_label),
+       size=2.5)
 ```
 ]
 
@@ -302,7 +303,8 @@ qmplot(data = downtown,
        color = I("firebrick"),
        alpha = I(0.5)) + 
   geom_label(data = assaults,
-       aes(label = assault_label))
+       aes(label = assault_label),
+       size=2.5)
 ```
 ]
 
@@ -313,7 +315,7 @@ qmplot(data = downtown,
 You can also try `geom_label_repel()` or `geom_text_repel()` in the `ggrepel` package to fix or reduce overlaps (total space is limited here):
 
 .small[
-```{r ggrepel_1, eval=FALSE}
+```{r ggrepel_1, eval=FALSE, purl=FALSE}
 library(ggrepel)
 qmplot(data = 
     downtown,
@@ -327,7 +329,8 @@ qmplot(data =
     aes(label = assault_label), 
     fill = "black", 
     color = "white", 
-    segment.color = "black")
+    segment.color = "black",
+    size=2.5)
 ```
 ]
 ]
@@ -347,7 +350,8 @@ qmplot(data =
     aes(label = assault_label), 
     fill = "black", 
     color = "white", 
-    segment.color = "black")
+    segment.color = "black",
+    size=2.5)
 ```
 ]
 
@@ -389,7 +393,7 @@ from the `tidyverse` as well.
 
 Because `sf` is the new standard, we will focus on it today.
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, purl=FALSE}
 library(sf)
 ```
 
@@ -536,7 +540,8 @@ precincts_votes_sf <-
          Turnout = TotalVotes / RegisteredVoters) %>%
   select(Precinct, P_Dem, P_Rep, Turnout) %>% 
   filter(!is.na(P_Dem)) %>%
-  left_join(precinct_shape)
+  left_join(precinct_shape) %>%
+  st_as_sf() #<<
 ```
 ]
 
@@ -556,12 +561,13 @@ glimpse(precincts_votes_sf)
 
 We can plot `sf` geometry using `geom_sf()`.
 
-```{r, eval=FALSE}
+
+```{r, eval=FALSE, purl=FALSE}
 ggplot(precincts_votes_sf, 
        aes(fill=P_Dem)) + #<<
   geom_sf(color="white", #<<
           size=0.1) +
-  coord_sf(datum=NULL) + #<<
+  theme_void() +
   theme(legend.position = 
           "bottom")
 ```
@@ -574,10 +580,13 @@ ggplot(precincts_votes_sf,
 
 .pull-right[
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dev="svg", fig.height=5.5, fig.width=2.75}
-ggplot(precincts_votes_sf, aes(fill=P_Dem)) + 
-  geom_sf(color="white", size=0.1) +
-  coord_sf(datum=NULL) + 
-  theme(legend.position = "bottom")
+ggplot(precincts_votes_sf, 
+       aes(fill=P_Dem)) + #<<
+  geom_sf(color="white", #<<
+          size=0.1) +
+  theme_void() +
+  theme(legend.position = 
+          "bottom")
 ```
 ]
 
@@ -647,7 +656,7 @@ king_county <- get_acs(geography="tract", state="WA",
                                    "B02009_001E"))
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, purl=FALSE}
 king_county <- get_acs(geography="tract", state="WA", 
                        county="King", geometry = TRUE,
                        variables=c("B02001_001E", 
@@ -695,7 +704,7 @@ head(king_county, 10)
 ---
 # Mapping Code
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, purl=FALSE}
 king_county %>% 
   ggplot(aes(fill=`Any Black`)) + 
   geom_sf(size=0.1, color="white") + 
@@ -732,22 +741,18 @@ With a simple function and boundaries of water bodies in King County, we can rep
 
 ```{r, include=FALSE, cache=TRUE}
 st_erase <- function(x, y) {
-  st_difference(x, st_union(st_combine(y)))
+  st_difference(x, lwgeom::st_make_valid(st_union(st_combine(y))))
 }
-
 kc_water <- tigris::area_water("WA", "King", class = "sf")
-
 kc_nowater <- king_county %>% 
   st_erase(kc_water)
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, purl=FALSE}
 st_erase <- function(x, y) {
-  st_difference(x, st_union(st_combine(y)))
+  st_difference(x, lwgeom::st_make_valid(st_union(st_combine(y))))
 }
-
 kc_water <- tigris::area_water("WA", "King", class = "sf")
-
 kc_nowater <- king_county %>% 
   st_erase(kc_water)
 ```
@@ -755,9 +760,12 @@ kc_nowater <- king_county %>%
 * `st_combine()` merges all geometries into one
 * `st_union()` resolves internal boundaries
 * `st_difference()` subtracts `y` geometry from `x`
+* `lwgeom::st_make_valid()` fixes geometry errors from subtraction<sup>1</sup>
 * `area_water()` obtains `sf` geometry of water bodies.
 
 Then we can reproduce the same plot using `kc_nowater`...
+
+.footnote[[1] Requires the `lwgeom` pacakge: `install.packages("lwgeom")`]
 
 ---
 ```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
@@ -788,7 +796,7 @@ pb_state <-
   mutate(`Any Black` = `Any Black` / `Total Population`)
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, purl=FALSE}
 pb_state <- 
   get_acs(geography = "tract", state = "IL",
           geometry  = TRUE,
@@ -805,7 +813,7 @@ pb_state <-
 ---
 # State Example Plot
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, purl=FALSE}
 pb_state %>% 
   ggplot(aes(fill=`Any Black`)) + 
   geom_sf(lwd=0) + 
@@ -830,14 +838,10 @@ pb_state %>%
 ```
 
 ---
-
 class: inverse
-# Homework
-
-Homework 6, part 2 is due next week.
 
 # Optional Exercise
 
 Use the HW 7 template to practice making maps of the restaurant inspection data. 
 
-If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on June 11th.
+If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on December 3rd.

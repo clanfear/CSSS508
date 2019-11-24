@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### May 29, 2019<br>Updated: May 29, 2019
+### Nov 27, 2019<br>Updated: Nov 24, 2019
 
 ---
 
@@ -85,25 +85,25 @@ glimpse(spd_raw)
 ```
 ## Observations: 706
 ## Variables: 19
-## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 17018...
-## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 160001...
-## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 20161041...
-## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202...
-## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT",...
-## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS"...
-## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRE...
-## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25...
-## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOC...
-## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B...
-## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B...
-## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.106, 8...
-## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122.3420,...
-## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.61422, 47...
-## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47....
-## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIF...
-## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING",...
-## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "C...
-## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25...
+## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 1701846, 1701844, 1701855, 1701854, 1701847, 1701848, 1701841, 1701845, 1701849, 1701838, 1701842, 1701843, 1701839, 17018...
+## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 16000104108, 16000104094, 16000104117, 16000104026, 16000104081, 16000104085, 16000104005, 16000104083, 16000104099, 160001...
+## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 2016104108, 2016104094, 2016104117, 2016104026, 2016104081, 2016104085, 2016104005, 2016104083, 2016104099, 2016103396, 20161...
+## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202", "430", "186", "161", "242", "430", "280", "460", "161", "450", "460", "184", "281", "177", "460", "177", "161", "2...
+## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT", "TRESPASS", "DISTURBANCE, OTHER", "ALACAD - COMMERCIAL PANIC (FALSE)", "MOTOR VEHICLE COLLISION", "NARCOTICS, DRUG T...
+## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS", "DISTURBANCES", "PANIC ALACAD (FALSE)", "TRAFFIC RELATED CALLS", "NARCOTICS COMPLAINTS", "TRESPASS", "DISTURBANCES"...
+## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRESPASS", "DISTURBANCES", "FALSE ALACAD", "MOTOR VEHICLE COLLISION INVESTIGATION", "NARCOTICS COMPLAINTS", "TRESPASS", ...
+## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25/2016 11:57:22 PM", "03/25/2016 11:54:19 PM", "03/25/2016 11:53:42 PM", "03/25/2016 11:53:04 PM", "03/25/2016 11:52:3...
+## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOCK OF RAINIER AV S", "21XX BLOCK OF 4 AV", "19XX BLOCK OF 2 AV", "15XX BLOCK OF 3 AV", "N 45 ST / BAGLEY AV N", "N 59 ...
+## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B", "U", "E", "E", "E", "R", "U", "J", "K", "K", "U", "M", "K", "M", "R", "E", "Q", "E", "L", "E", "N", "L", "O", "K",...
+## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B3", "B3", "U2", "E2", "E1", "E3", "R3", "U2", "J3", "K3", "K3", "U3", "M1", "K1", "M1", "R3", "E1", "Q3", "E1", "L1",...
+## $ `Census Tract`                &lt;dbl&gt; 9100.1019, 11800.6020, 7200.1056, 8002.1002, 8100.2009, 5100.1020, 3500.3000, 5301.3008, 8400.1008, 7500.3014, 8200.2000, 10100.2019, 5301.3004, 2700...
+## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122.3420, -122.3411, -122.3383, -122.3325, -122.3473, -122.3132, -122.3208, -122.3204, -122.3294, -122.2849, -122.3171, -122.3...
+## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.61422, 47.61135, 47.61024, 47.66138, 47.67172, 47.65905, 47.61352, 47.62108, 47.60902, 47.56074, 47.66130, 47.68263, 47.59752,...
+## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47.51985, -122.26803)", "(47.614216, -122.34198)", "(47.611347, -122.3411)", "(47.610245, -122.33825)", "(47.661377, -12...
+## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIFT OR SVCS)", "SHOPLIFT - THEFT", "TRESPASS", "CRISIS - PERSON IN BEHAVIORAL/EMOTIONAL CRISIS", "ALARM - COMM, HOLD-UP...
+## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING", "TRESPASS", "BEHAVIORAL HEALTH", "ALACAD", "MOTOR VEHICLE COLLISION INVESTIGATION", "NARCOTICS COMPLAINTS", "MISCELL...
+## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "CRISIS CALL", "SUSPICIOUS CIRCUMSTANCES", "TRAFFIC RELATED CALLS", "NARCOTICS COMPLAINTS", "MISCELLANEOUS MISDEMEANORS...
+## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25/2016 09:54:23 PM", NA, NA, NA, "03/25/2016 10:40:59 PM", NA, NA, "03/25/2016 10:14:16 PM", NA, NA, "03/25/2016 01:01...
 ```
 ]
 
@@ -160,7 +160,7 @@ What this package does for you:
 ---
 # Installation
 
-As of May 29, 2019, the current version of `ggmap` must be downloaded from GitHub.
+As of Nov 24, 2019, the current version of `ggmap` must be downloaded from GitHub.
 
 This can be done using the `devtools` package.
 
@@ -293,7 +293,8 @@ qmplot(data = downtown,
 *      color = I("firebrick"),
 *      alpha = I(0.5)) +
   geom_label(data = assaults,
-       aes(label = assault_label))
+       aes(label = assault_label),
+       size=2.5)
 ```
 ]
 
@@ -326,7 +327,8 @@ qmplot(data =
     aes(label = assault_label), 
     fill = "black", 
     color = "white", 
-    segment.color = "black")
+    segment.color = "black",
+    size=2.5)
 ```
 ]
 ]
@@ -497,7 +499,7 @@ precinct_shape &lt;- st_read("./data/district/votdst.shp",
 ## Simple feature collection with 2592 features and 5 fields
 ## geometry type:  MULTIPOLYGON
 ## dimension:      XY
-## bbox:           xmin: 1220000 ymin: 31600 xmax: 1580000 ymax: 288000
+## bbox:           xmin: 1220179 ymin: 31555.16 xmax: 1583562 ymax: 287678
 ## epsg (SRID):    NA
 ## proj4string:    +proj=lcc +lat_1=47.5 +lat_2=48.73333333333333 +lat_0=47 +lon_0=-120.8333333333333 +x_0=500000.0000000001 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs
 ```
@@ -531,7 +533,8 @@ precincts_votes_sf &lt;-
          Turnout = TotalVotes / RegisteredVoters) %&gt;%
   select(Precinct, P_Dem, P_Rep, Turnout) %&gt;% 
   filter(!is.na(P_Dem)) %&gt;%
-  left_join(precinct_shape)
+  left_join(precinct_shape) %&gt;%
+* st_as_sf()
 ```
 ]
 
@@ -548,11 +551,11 @@ glimpse(precincts_votes_sf)
 ## Observations: 960
 ## Variables: 5
 ## Groups: Precinct [960]
-## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 11-...
-## $ P_Dem    &lt;dbl&gt; 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.8325991...
-## $ P_Rep    &lt;dbl&gt; 0.15612648, 0.07789474, 0.13418530, 0.08649469, 0.085...
-## $ Turnout  &lt;dbl&gt; 0.6931507, 0.7274119, 0.7347418, 0.7522831, 0.7579299...
-## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((1273698 193...
+## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 11-1597", "SEA 11-1600", "SEA 11-1602", "SEA 11-1624", "SEA 11-1639", "SEA 11-1641", "SEA 11-1928", "SEA 11-1941", "SEA ...
+## $ P_Dem    &lt;dbl&gt; 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.8325991, 0.8145315, 0.8280543, 0.8383838, 0.8213256, 0.8195489, 0.8214286, 0.8411017, 0.8193760, 0.8265306, 0.8588235, 0.808...
+## $ P_Rep    &lt;dbl&gt; 0.15612648, 0.07789474, 0.13418530, 0.08649469, 0.08590308, 0.08030593, 0.11085973, 0.12373737, 0.12391931, 0.07894737, 0.08163265, 0.07415254, 0.09688013, 0.08775510, 0....
+## $ Turnout  &lt;dbl&gt; 0.6931507, 0.7274119, 0.7347418, 0.7522831, 0.7579299, 0.7713864, 0.6874028, 0.6723260, 0.6218638, 0.7665706, 0.7871486, 0.7763158, 0.8076923, 0.7480916, 0.7249467, 0.903...
+## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((1273698 193..., MULTIPOLYGON (((1274424 195..., MULTIPOLYGON (((1269602 199..., MULTIPOLYGON (((1276346 207..., MULTIPOLYGON (((...
 ```
 ]
 
@@ -564,12 +567,13 @@ glimpse(precincts_votes_sf)
 We can plot `sf` geometry using `geom_sf()`.
 
 
+
 ```r
 ggplot(precincts_votes_sf, 
 *      aes(fill=P_Dem)) +
 * geom_sf(color="white",
           size=0.1) +
-* coord_sf(datum=NULL) +
+  theme_void() +
   theme(legend.position = 
           "bottom")
 ```
@@ -678,12 +682,12 @@ glimpse(king_county)
 ```
 ## Observations: 796
 ## Variables: 6
-## $ GEOID    &lt;chr&gt; "53033000100", "53033000100", "53033000200", "5303300...
-## $ NAME     &lt;chr&gt; "Census Tract 1, King County, Washington", "Census Tr...
-## $ variable &lt;chr&gt; "B02001_001", "B02009_001", "B02001_001", "B02009_001...
-## $ estimate &lt;dbl&gt; 7963, 1550, 7973, 422, 2822, 170, 6721, 1168, 5300, 3...
-## $ moe      &lt;dbl&gt; 529, 449, 377, 254, 201, 92, 454, 441, 571, 218, 165,...
-## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.2965 4..., MULTIPOL...
+## $ GEOID    &lt;chr&gt; "53033000100", "53033000100", "53033000200", "53033000200", "53033000300", "53033000300", "53033000401", "53033000401", "53033000402", "53033000402", "53033000500", "5303...
+## $ NAME     &lt;chr&gt; "Census Tract 1, King County, Washington", "Census Tract 1, King County, Washington", "Census Tract 2, King County, Washington", "Census Tract 2, King County, Washington"...
+## $ variable &lt;chr&gt; "B02001_001", "B02009_001", "B02001_001", "B02009_001", "B02001_001", "B02009_001", "B02001_001", "B02009_001", "B02001_001", "B02009_001", "B02001_001", "B02009_001", "B...
+## $ estimate &lt;dbl&gt; 7963, 1550, 7973, 422, 2822, 170, 6721, 1168, 5300, 302, 3052, 40, 8061, 891, 4854, 687, 2582, 91, 1972, 30, 1982, 330, 2791, 32, 7024, 445, 4468, 220, 5550, 92, 2548, 23...
+## $ moe      &lt;dbl&gt; 529, 449, 377, 254, 201, 92, 454, 441, 571, 218, 165, 37, 565, 281, 344, 213, 177, 77, 147, 28, 141, 182, 253, 32, 461, 293, 263, 144, 472, 69, 184, 26, 252, 164, 245, 19...
+## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.2965 4..., MULTIPOLYGON (((-122.2965 4..., MULTIPOLYGON (((-122.3236 4..., MULTIPOLYGON (((-122.3236 4..., MULTIPOLYGON (((-122.3452 4.....
 ```
 ]
 
@@ -726,18 +730,18 @@ head(king_county, 10)
 ## proj4string:    +proj=longlat +datum=NAD83 +no_defs
 ## # A tibble: 10 x 5
 ## # Groups:   GEOID [10]
-##    GEOID  NAME    `Total Populati~ `Any Black`                     geometry
-##    &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;           &lt;MULTIPOLYGON [°]&gt;
-##  1 53033~ Census~             7963      0.195  (((-122.2965 47.73378, -122~
-##  2 53033~ Census~             7973      0.0529 (((-122.3236 47.72309, -122~
-##  3 53033~ Census~             2822      0.0602 (((-122.3452 47.73413, -122~
-##  4 53033~ Census~             6721      0.174  (((-122.3609 47.73414, -122~
-##  5 53033~ Census~             5300      0.0570 (((-122.3609 47.72507, -122~
-##  6 53033~ Census~             3052      0.0131 (((-122.3764 47.71652, -122~
-##  7 53033~ Census~             8061      0.111  (((-122.345 47.72868, -122.~
-##  8 53033~ Census~             4854      0.142  (((-122.3127 47.71944, -122~
-##  9 53033~ Census~             2582      0.0352 (((-122.2915 47.7155, -122.~
-## 10 53033~ Census~             1972      0.0152 (((-122.285 47.7192, -122.2~
+##    GEOID       NAME                                                                                                                      geometry `Total Population` `Any Black`
+##    &lt;chr&gt;       &lt;chr&gt;                                                                                                           &lt;MULTIPOLYGON [°]&gt;              &lt;dbl&gt;       &lt;dbl&gt;
+##  1 53033000100 Census Tract 1, King County, Washington    (((-122.2965 47.73378, -122.2924 47.73375, -122.2898 47.73373, -122.286 47.73373, -1...               7963      0.195 
+##  2 53033000200 Census Tract 2, King County, Washington    (((-122.3236 47.72309, -122.3236 47.73405, -122.3154 47.73398, -122.3127 47.73395, -...               7973      0.0529
+##  3 53033000300 Census Tract 3, King County, Washington    (((-122.3452 47.73413, -122.337 47.73413, -122.3359 47.73413, -122.3247 47.73406, -1...               2822      0.0602
+##  4 53033000401 Census Tract 4.01, King County, Washington (((-122.3609 47.73414, -122.3556 47.73413, -122.3518 47.73413, -122.3452 47.73413, -...               6721      0.174 
+##  5 53033000402 Census Tract 4.02, King County, Washington (((-122.3609 47.72507, -122.3556 47.72505, -122.3555 47.72323, -122.3504 47.72322, -...               5300      0.0570
+##  6 53033000500 Census Tract 5, King County, Washington    (((-122.3764 47.71652, -122.3763 47.72259, -122.3731 47.72922, -122.3749 47.73416, -...               3052      0.0131
+##  7 53033000600 Census Tract 6, King County, Washington    (((-122.345 47.72868, -122.3356 47.72867, -122.3342 47.72867, -122.3265 47.72496, -1...               8061      0.111 
+##  8 53033000700 Census Tract 7, King County, Washington    (((-122.3127 47.71944, -122.3091 47.71938, -122.3019 47.71931, -122.2979 47.71929, -...               4854      0.142 
+##  9 53033000800 Census Tract 8, King County, Washington    (((-122.2915 47.7155, -122.2913 47.71781, -122.2908 47.71925, -122.2863 47.71921, -1...               2582      0.0352
+## 10 53033000900 Census Tract 9, King County, Washington    (((-122.285 47.7192, -122.2802 47.71916, -122.2794 47.71906, -122.278 47.71892, -122...               1972      0.0152
 ```
 ]
 
@@ -776,11 +780,9 @@ With a simple function and boundaries of water bodies in King County, we can rep
 
 ```r
 st_erase &lt;- function(x, y) {
-  st_difference(x, st_union(st_combine(y)))
+  st_difference(x, lwgeom::st_make_valid(st_union(st_combine(y))))
 }
-
 kc_water &lt;- tigris::area_water("WA", "King", class = "sf")
-
 kc_nowater &lt;- king_county %&gt;% 
   st_erase(kc_water)
 ```
@@ -788,9 +790,12 @@ kc_nowater &lt;- king_county %&gt;%
 * `st_combine()` merges all geometries into one
 * `st_union()` resolves internal boundaries
 * `st_difference()` subtracts `y` geometry from `x`
+* `lwgeom::st_make_valid()` fixes geometry errors from subtraction&lt;sup&gt;1&lt;/sup&gt;
 * `area_water()` obtains `sf` geometry of water bodies.
 
 Then we can reproduce the same plot using `kc_nowater`...
+
+.footnote[[1] Requires the `lwgeom` pacakge: `install.packages("lwgeom")`]
 
 ---
 ![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
@@ -835,17 +840,13 @@ pb_state %&gt;%
 ![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
 
 ---
-
 class: inverse
-# Homework
-
-Homework 6, part 2 is due next week.
 
 # Optional Exercise
 
 Use the HW 7 template to practice making maps of the restaurant inspection data. 
 
-If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on June 11th.
+If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on December 3rd.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -892,7 +893,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {
