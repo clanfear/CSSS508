@@ -512,6 +512,8 @@ precinct_shape <- st_read("./data/district/votdst.shp",
   select(Precinct=NAME, geometry)
 ```
 
+[If following along, click here to download a zip of the shapefile.](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/data/district.zip)
+
 ---
 # Voting Data: Processing
 
@@ -541,7 +543,7 @@ precincts_votes_sf <-
   select(Precinct, P_Dem, P_Rep, Turnout) %>% 
   filter(!is.na(P_Dem)) %>%
   left_join(precinct_shape) %>%
-  st_as_sf() #<<
+  st_as_sf() # Makes sure resulting object is an sf dataframe
 ```
 ]
 
@@ -553,6 +555,10 @@ precincts_votes_sf <-
 glimpse(precincts_votes_sf)
 ```
 ]
+
+Notice the `geometry` column and its unusual class: `MULTIPOLYGON`
+
+A single observation (row) has a geometry which may consist of multiple polygons.
 
 ---
 
@@ -574,7 +580,7 @@ ggplot(precincts_votes_sf,
 
 * `fill=P_Dem` maps color inside precincts to `P_Dem`.
 * `color="white"` sets boundaries to white.
-* `coord_sf(datum=NULL)` removes graticule lines.
+* `theme_void()` removes axes and background.
 
 ]
 
@@ -781,6 +787,8 @@ Then we can reproduce the same plot using `kc_nowater`...
 
 ---
 # State Example Data
+
+Let's do this again, but for the entire state of Illinois.
 
 ```{r, include=FALSE, cache=TRUE}
 pb_state <- 

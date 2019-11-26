@@ -115,7 +115,7 @@ precincts_votes_sf <-
   select(Precinct, P_Dem, P_Rep, Turnout) %>% 
   filter(!is.na(P_Dem)) %>%
   left_join(precinct_shape) %>%
-  st_as_sf() #<<
+  st_as_sf() # Makes sure resulting object is an sf dataframe
 
 glimpse(precincts_votes_sf)
 
