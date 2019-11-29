@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### Nov 27, 2019<br>Updated: Nov 26, 2019
+### Nov 27, 2019<br>Updated: Nov 29, 2019
 
 ---
 
@@ -160,7 +160,7 @@ What this package does for you:
 ---
 # Installation
 
-As of Nov 26, 2019, the current version of `ggmap` must be downloaded from GitHub.
+As of Nov 29, 2019, the current version of `ggmap` must be downloaded from GitHub.
 
 This can be done using the `devtools` package.
 
@@ -702,7 +702,7 @@ Variable names are in `variables` and values are in `estimate`.
 ---
 # Processing Data
 
-To get one row per precinct, we want to `spread()` key (`variable`) and value (`estimate`) columns into separate columns for each variable. Then we `mutate()` `Any Black` into a proportion measure.
+To get one row per precinct, we want to `spread()`&lt;sup&gt;1&lt;/sup&gt; key (`variable`) and value (`estimate`) columns into separate columns for each variable. Then we `mutate()` `Any Black` into a proportion measure.
 
 
 ```r
@@ -715,7 +715,7 @@ king_county &lt;-  king_county %&gt;%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 ```
 
-.footnote[I remove the *margin of error* (`moe`) column before spreading.]
+.footnote[[1] `pivot_wider()` is currently broken for `sf` objects, so we must spread. I remove the *margin of error* (`moe`) column before spreading.]
 
 
 ---
