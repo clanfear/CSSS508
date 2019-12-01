@@ -1,0 +1,311 @@
+---
+title: "CSSS508"
+subtitle: "Advanced Counterfactuals"
+author: "Chuck Lanfear"
+date: "Nov 29, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: tomorrow-night-bright
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: ["center","top"]
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggeffects)
+```
+
+# An Advanced Example
+
+Here is an example using a model from a [recent article I worked on](https://onlinelibrary.wiley.com/doi/abs/10.1111/cico.12346?af=R).
+
+This models the likelihood of arrest of a target in a police contact conditional on neighborhood, race of target, and race of who called the police.
+
+.smallish[
+```{r}
+load("data/any_arrest_data.RData")
+mod_arrest <- glm(arrest ~ white_comp_wit_vict*black_arr_susp + 
+                  crime_type*white_comp_wit_vict + caller_type + 
+                  arr_susp_subj_count + comp_wit_vict_count +
+                  black_arr_susp*neighb_type + crime_type*neighb_type + 
+                  serious_rate + pbl + pot + dis + year,
+                  family = binomial(link = "logit"),
+                  data = any_arrest_data)
+```
+]
+
+There are a lot of interactions here:
+
+* Target Race x Caller Race
+* Crime Type x Caller Race
+* Target Race x Neigbhorhood Type
+* Crime Type x Neighborhood Type
+
+---
+# `ggeffects` Output
+
+.smallish[
+```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=4}
+mod_arrest %>% ggpredict(terms = c("black_arr_susp", 
+              "white_comp_wit_vict", "neighb_type")) %>% plot()
+```
+]
+
+---
+# A Complex Example
+
+`ggpredict()` can only handle three variables in its `terms=` argument.
+
+--
+
+For my article, I wanted to plot estimates across counterfactual values of all four variables in my interaction terms:
+
+* Caller Race
+* Target Race
+* Crime Type
+* Neighborhood Type
+
+How could I do this?
+
+--
+
+Stats + Math + Code = $\heartsuit$
+
+---
+# Some Background
+
+Given we've estimate a model, consider the following:
+
+1. $\hat{Y} = X\hat{\beta}$, where $X$ is the model matrix and $\hat{\beta}$ is the coefficients.
+2. $\hat{\beta}$ is a vector of *random variables* whose estimated distribution is described by parameter variance-covariance matrix $\Sigma$.
+
+--
+
+Using this, we can do the following:
+
+1. Extract the model matrix $X$, estimated coefficients ( $\hat{\beta}$ ), and $\Sigma$ from our fitted model.
+2. Make lots of random parameter draws centered on $\hat{\beta}$ and distributed according to $\Sigma$.
+3. Multiply *each* of these draws by *counterfactual* $X$ *values* to get $\hat{Y}$ values.
+4. Take the 2.5% and 97.% quantiles of these $\hat{Y}$ values.
+
+--
+
+This produces a *simulated* mean and confidence interval. This is called the **percentile method**, a type of *bootstrapping*.
+
+---
+# Simulating Coefficients
+
+We can make random draws from our estimated distribution of parameters using `MASS::mvrnorm()` which takes three main arguments:
+1. `n`: The number of draws
+2. `mu`: mean—our coefficient estimates—obtained via `coef()`.
+3. `Sigma`: a covariance matrix, obtained via `vcov()`.
+
+.smallish[
+```{r}
+sim_params <- MASS::mvrnorm(n = 10000, 
+                            mu = coef(mod_arrest),
+                            Sigma = vcov(mod_arrest))
+sim_params[1:6, 1:4]
+```
+]
+
+---
+# Counterfactual Values
+
+Next we need a data frame with our counterfactual values.
+
+We want one row (or *scenario*) per estimate to plot, and all variables at their means *except* the ones we are varying. We also don't want impossible values; `neighb_type` values are mutually exclusive.
+
+```{r, include=FALSE}
+library(knitr)
+opts_chunk$set(out.lines = 30)
+```
+
+.smallish[
+```{r}
+x_values <- colMeans(model.matrix(mod_arrest)) # vars at mean
+n_scen   <- (2*2*2*3) # Number of scenarios
+x_frame  <- setNames(data.frame(matrix(x_values, nrow=n_scen, 
+                                       ncol=length(x_values), 
+                                       byrow=T)), names(x_values))
+cf_vals  <- arrangements::permutations(c(0,1), k=5, replace=T) #<<
+cf_vals  <- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,] # Remove impossible vals
+colnames(cf_vals) <- c("white_comp_wit_vict1", "black_arr_susp1", 
+                       "crime_typeNuisance", "neighb_typeBlackDisadv",
+                       "neighb_typeChanging")
+x_frame[colnames(cf_vals)] <- cf_vals # assign to countefactual df
+```
+]
+
+.footnote[`permutations()` is a quick way to get all combinations of some values.]
+
+---
+# What Do We Have?
+
+.smaller[
+```{r}
+glimpse(x_frame)
+```
+]
+
+---
+# Fixing Interactions
+
+Our main variables are correct... but we need to make our interaction terms.
+
+The interaction terms in the model matrix have specific form `var1:var2`.
+
+Their counterfactual values are just equal to the products of their components.
+
+.small[
+```{r}
+x_frame <- x_frame %>%
+ mutate(
+  `white_comp_wit_vict1:black_arr_susp1`      = white_comp_wit_vict1*black_arr_susp1,
+  `white_comp_wit_vict1:crime_typeNuisance`   = white_comp_wit_vict1*crime_typeNuisance,
+  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
+  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging,
+  `crime_typeNuisance:neighb_typeBlackDisadv` = crime_typeNuisance*neighb_typeBlackDisadv,
+  `crime_typeNuisance:neighb_typeChanging`    = crime_typeNuisance*neighb_typeChanging,
+  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
+  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging)
+```
+]
+
+---
+# Fixed
+
+.smaller[
+```{r}
+glimpse(x_frame)
+```
+]
+
+---
+# Estimates!
+
+Then we just multiply our parameters by our counterfactual data:
+
+```{r}
+sims_logodds <- sim_params %*% t(as.matrix(x_frame))  
+sims_logodds[1:6, 1:6]
+dim(sims_logodds)
+```
+
+Now we log-odds 10,000 estimates each (rows) of 24 counterfactual scenarios (columns).
+
+---
+# Getting Probabilities
+
+The model for this example is a *logistic regression*, which produces estimates in *log-odds* ( $ln(Odds(x))$ ).
+
+We can convert these to probabilities based on two identities:
+
+1. $Odds(x) = e^{ln(Odds(x))}$
+2. $Pr(x) = \frac{Odds(x)}{(1 + Odds(x))}$
+
+```{r}
+sims_prob    <- exp(sims_logodds) / (1 + exp(sims_logodds))
+sims_prob[1:6, 1:6]
+```
+
+---
+# A Quick Function
+
+We are going to want to grab the mean and 95% confidence interval from our simulation estimates.
+
+Here's a quick function to do it and make it pretty.
+
+```{r}
+extract_pe_ci <- function(x){
+  vals <- c(mean(x), quantile(x, probs=c(.025, .975)))
+  names(vals) <- c("PE", "LB", "UB")
+  return(vals)
+}
+```
+
+This returns a length 3 vector with the following names:
+* **PE** for *point estimate*
+* **LB** for *lower bound* of the confidence interval
+* **UB** for *upper bound*
+
+---
+# Prep for Plotting
+
+First we extract our point estimates and confidence intervals by *applying* `extract_pe_ci()` to each column of estimated probabilities.
+
+.small[
+```{r}
+estimated_pes <- as.data.frame( t(apply(sims_prob, 2, extract_pe_ci)))
+```
+]
+
+Then I add columns describing the scenarios to color, group, and facet over based on the counterfactual values.
+
+.small[
+```{r}
+estimated_pes$`Reporter`     <- ifelse(cf_vals[,1]==1, "Any White", "All Black")
+estimated_pes$`Target`       <- ifelse(cf_vals[,2]==1, "Any Black", "All White")
+estimated_pes$`Crime Type`   <- ifelse(cf_vals[,3]==1, "Nuisance Crime", "Serious Crime")
+estimated_pes$`Neighborhood` <- case_when(
+  cf_vals[,4]==1 ~ "Disadvantaged",
+  cf_vals[,5]==1 ~ "Changing",
+  TRUE ~ "Stable White")
+```
+]
+---
+# Final Tidy Data
+
+.small[
+```{r}
+estimated_pes %>% mutate_if(is.numeric, round, digits=3) # round for display
+```
+]
+
+---
+# Plot Code
+
+Finally we plot estimates (`PE`) as points with error bars (`UB`, `LB`) stratified on `Target` and `Reporter` and faceted by `Crime Type` and `Neighborhood`.
+
+.smallish[
+```{r, eval=FALSE}
+ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) + 
+  facet_grid(`Crime Type` ~ Neighborhood) +
+  geom_errorbar(aes(ymin = LB, ymax = UB), 
+                position = position_dodge(width = .4), 
+                size = 0.75, width = 0.15) +
+  geom_point(shape = 21, aes(fill = Reporter),
+             position = position_dodge(width = .4), 
+             size = 2) + 
+  scale_fill_manual("Reporter", values=c("Any White" = "white", 
+                                         "All Black" = "black")) +
+  ggtitle("Figure 3. Probability of Arrest", 
+      subtitle = "by Reporter and Target Race, Neighborhood and Crime Type") +
+  xlab("Race of Target") + ylab("Estimated Probability") + 
+  theme_bw() + theme(legend.position = c(0.86,0.15),
+                     legend.background = element_rect(color = 1))
+```
+]
+---
+# Plot
+
+```{r, eval=TRUE, echo=FALSE, dev="svg", fig.height=5}
+ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) + 
+  facet_grid(`Crime Type` ~ Neighborhood) +
+  geom_errorbar(aes(ymin = LB, ymax = UB), 
+                position = position_dodge(width = .4), 
+                size = 0.75, width = 0.15) +
+  geom_point(shape = 21, position = position_dodge(width = .4), 
+             size = 2, aes(fill = Reporter)) + 
+  scale_fill_manual("Reporter", values=c("Any White"="white", 
+                                         "All Black"="black")) +
+  ggtitle("Figure 3. Probability of Arrest", 
+          subtitle = "by Reporter and Target Race, Neighborhood and Crime Type") +
+  xlab("Race of Target") + ylab("Estimated Probability") + 
+  theme_bw() + theme(legend.position = c(0.86,0.15),
+                     legend.background = element_rect(color = 1))
+```

@@ -1,6 +1,6 @@
 ---
 title: "CSSS508, Week 11"
-subtitle: "Working with Model Results"
+subtitle: "Reproducibility and Model Results"
 author: "Chuck Lanfear"
 date: "Jun 5, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
@@ -56,23 +56,517 @@ ex_dat <- data.frame(num1 = rnorm(200, 1, 2),
 
 # Topics for Today
 
-Displaying Model Results
+### Reproducible Research
 
-* `broom`
-   + Turning model output lists into dataframes
-   + Summarizing models
-* `ggeffects`
-   + Creating counterfactual estimates
-   + Plotting marginal effects
-* Manual counterfactual plots
+### Best Practices
+   * Organization
+   * Portability
+   * Version Control
+
+### Working with Model Results
+
+* Tidy model output with `broom`
+* Visualizing models with `ggeffects`
 * Making regression tables
-   + Using `pander` for models
-   + Using `sjTable()` in `sjPlot`
-* Wrapping up the course
+
+### Wrapping up the course
 
 ---
 class: inverse
-# `broom`
+
+# Reproducible Research
+
+---
+# Why Reproducibility?
+
+Reproducibility is not *replication*.
+
+* **Replication** is running a new study to show if and how results of a prior study hold.
+* **Reproducibility** is about rerunning *the same study* and getting the *same results*.
+
+--
+
+Reproducible studies can still be *wrong*... and in fact reproducibility makes proving a study wrong *much easier*.
+
+--
+
+Reproducibility means:
+
+* Transparent research practices.
+* Minimal barriers to verifying your results.
+
+--
+
+*Any study that isn't reproducible can be trusted only on faith.*
+
+---
+# Reproducibility Definitions
+
+Reproducibility comes in three forms (Stodden 2014):
+
+--
+
+1. **Empirical:** Repeatability in data collection.
+
+--
+
+2. **Statistical:** Verification with alternate methods of inference.
+
+--
+
+3. **Computational:** Reproducibility in cleaning, organizing, and presenting data and results.
+
+--
+
+R is particularly well suited to enabling **computational reproducibility**.<sup>1</sup>
+
+.footnote[[1] Python is equally well suited.]
+
+--
+
+They will not fix flawed research design, nor offer a remedy for improper application of statistical methods.
+
+Those are the difficult, non-automatable things you want skills in.
+
+---
+
+## Computational Reproducibility
+
+Elements of computational reproducibility:
+
+--
+
+* Shared data
+
+   + Researchers need your original data to verify and replicate your work.
+
+--
+
+* Shared code
+   + Your code must be shared to make decisions transparent.
+
+--
+
+* Documentation
+   + The operation of code should be either self-documenting or have written descriptions to make its use clear.
+
+--
+
+* **Version Control**
+   + Documents the research process.
+   + Prevents losing work and facilitates sharing.
+
+---
+
+## Levels of Reproducibility
+
+For academic papers, degrees of reproducibility vary:
+
+0. "Read the article"
+
+--
+
+1. Shared data with documentation
+
+--
+
+2. Shared data and all code
+
+--
+
+3. **Interactive document**
+
+--
+
+4. **Research compendium**
+
+--
+
+5. Docker compendium: Self-contained ecosystem
+
+---
+## Interactive Documents
+
+**Interactive documents**—like R Markdown docs—combine code and text together into a self-contained document.
+   * Load and process data
+   * Run models
+   * Generate tables and plots in-line with text
+   * In-text values automatically filled in
+
+--
+
+Interactive documents allow a reader to examine your computational methods within the document itself; in effect, they are self-documenting.
+
+--
+
+By re-running the code, they reproduce your results on demand.
+
+--
+
+Common Platforms:
+
+ * **R:** R Markdown ([an example of mine](https://clanfear.github.io/birthtiming/inst/paper/paper.html))
+ * **Python:** Jupyter Notebooks
+
+---
+## Research Compendia
+
+A **research compendium** is a portable, reproducible distribution of an article or other project.
+
+--
+
+Research compendia feature:
+
+* An interactive document as the foundation
+
+* Files organized in a recognizable structure (e.g. an R package)
+
+* Clear separation of data, method, and output. *Data are read only*.
+
+* A well-documented or even *preserved* computational environment (e.g. Docker)
+
+--
+
+`rrtools` by UW's [Ben Markwick](https://github.com/benmarwick) provides a simplified workflow to accomplish this in R.
+
+[Here is an example compendium of mine.](https://github.com/clanfear/birthtiming)
+
+---
+## Bookdown
+
+[`bookdown`](https://bookdown.org/yihui/bookdown/)—which is integrated into `rrtools`—can generate documents in the proper format for articles, theses, books, or dissertations.
+
+--
+
+`bookdown` provides an accessible alternative to writing $\LaTeX$ for typesetting and reference management.
+
+--
+
+You can integrate citations and automate reference page generation using bibtex files (such as produced by Zotero).
+
+--
+
+`bookdown` supports `.html` output for ease and speed and also renders `.pdf` files through $\LaTeX$ for publication-ready documents.
+
+--
+
+For University of Washington theses and dissertations, consider Ben Marwick's [`huskydown` package](https://github.com/benmarwick/huskydown) which uses Markdown but renders via a UW approved $\LaTeX$ template.
+
+---
+class: inverse
+# Best Practices
+
+## Organization and Portability
+
+---
+# Organization Systems
+
+Organizing research projects is something you either do accidentally—and badly—or purposefully with some upfront labor.
+
+--
+
+Uniform organization makes switching between or revisiting projects easier.
+
+--
+
+I suggest something like the following:
+
+.pull-left[
+```
+project/
+   readme.md
+   data/
+     derived/
+       processed_data.RData
+     raw/
+       core_data.csv
+   docs/
+     paper.Rmd
+   syntax/
+     functions.R
+     models.R
+```
+]
+.pull-right[
+1. There is a clear hierarchy
+   * Written content is in `docs`
+   * Code is in `syntax`
+   * Data is in `data`
+2. Naming is uniform
+   * All lower case
+   * Words separated by underscores
+3. Names are self-descriptive
+
+]
+
+---
+# Workflow versus Project
+
+To summarize Jenny Bryan, [one should separate workflow from projects.](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
+
+--
+
+.pull-left[
+### Workflow
+
+* The software you use to write your code (e.g. RStudio)
+
+* The location you store a project
+
+* The specific computer you use
+
+* The code you ran earlier or typed into your console
+]
+
+--
+
+.pull-right[
+### Project
+
+* The raw data
+
+* The code that operates on your raw data
+
+* The packages you use
+
+* The output files or documents
+]
+
+--
+
+Projects *should not modify anything outside of the project* nor need to be modified by someone else (or future you) to run.
+
+**Projects *should be independent of your workflow*.**
+
+---
+# Portability
+
+For research to be reproducible, it must also be *portable*. Portable software operates *independently of workflow* such as fixed file locations.
+
+--
+
+**Do Not:**
+
+* Use `setwd()` in scripts or .Rmd files.
+* Use *absolute paths* except for *fixed, immovable sources* (secure data).
+  + `read_csv("C:/my_project/data/my_data.csv")`
+* Use `install.packages()` in script or .Rmd files.
+* Use `rm(list=ls())` anywhere but your console.
+
+--
+
+**Do:**
+
+* Use RStudio projects (or the [`here` package](https://github.com/jennybc/here_here)) to set directories.
+* Use *relative paths* to load and save files:
+  + `read_csv("./data/my_data.csv")`
+* Load all required packages using `library()`.
+* Clear your workspace when closing RStudio.
+  + Set *Tools > Global Options... > Save workspace...* to **Never**
+
+---
+# Divide and Conquer
+
+Often you do not want to include all the code for a project in a single `.Rmd` file:
+
+   * The code takes too long to knit.
+   * The file is so long it is difficult to read.
+
+--
+
+There are two ways to deal with this:
+
+1. Use separate `.R` scripts or `.Rmd` files which save results from complicated parts of a project, then load these results in the main `.Rmd` file.
+
+   + This is good for loading and cleaning large data.
+   + Also for running slow models.
+
+--
+
+2. Use `source()` to run external `.R` scripts.
+
+   + This can be used to run large files that aren't impractically slow.
+   + Also good for loading project-specific functions.
+
+---
+# The Way of Many Files
+
+I find it beneficial to break projects into *many* files:
+   * Scripts with specialized functions.
+   * Scripts to load and clean each set of variables.
+   * Scripts to run each set of models and make tables and plots.
+   * A main .Rmd that runs some or all of these to reproduce the entire project.
+
+--
+
+Splitting up a project carries benefits:
+   * Once a portion of the project is done and in its own file, *it is out of your way.*
+   * If you need to make changes, you don't need to search through huge files.
+   * Entire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)
+   * **It is the only way to build a proper *pipeline* for a project. **
+
+---
+# Pipelines
+
+Professional researchers and teams design projects as a **pipeline**.
+
+--
+
+A **pipeline** is a series of consecutive processing elements (scripts and functions in R).
+
+--
+
+Each stage of a pipeline...
+
+1. Has clearly defined inputs and outputs
+2. Does not modify its inputs.
+3. Produces the exact same output every time it is re-run.
+
+--
+
+This means...
+
+1. When you modify one stage, you only need to rerun *subsequent stages*.
+2. Different people can work on each stage.
+3. Problems are isolated within stages.
+4. You can depict your project as a *directed graph* of **dependencies**.
+
+---
+
+# Example Pipeline
+
+Every stage (oval) has an unambiguous input and output. Everything that precedes a given stage is a **dependency**—something required to run it.
+
+![](img/pipeline.svg)
+
+---
+class: inverse
+# Tools
+
+### *Some opinionated advice*
+
+---
+# On Formats
+
+Avoid "closed" or commercial software and file formats except where absolutely necessary.
+
+--
+
+Use open source software and file formats.
+
+--
+
+* It is always better for *science*:
+
+   + People should be able to explore your research without buying commercial software.
+   + You do not want your research to be inaccessible when software is updated.
+
+--
+
+* It is often just *better*.
+
+   + It is usually updated more quickly
+   + It tends to be more secure
+   + It is rarely abandoned
+
+--
+
+**The ideal:** Use software that reads and writes *raw text*.
+
+---
+# Text
+
+Writing and formatting documents are two completely separate jobs.
+   * Write first
+   * Format later
+   * [Markdown](https://en.wikipedia.org/wiki/Markdown) was made for this
+
+--
+
+Word processors—like Microsoft Word—try to do both at the same time, usually badly.
+
+They waste time by leading you to format instead of writing.
+
+--
+
+Find a good modular text editor and learn to use it:
+   * [Atom](https://atom.io/)
+   * [Sublime](https://www.sublimetext.com/) (Commercial)
+   * Emacs
+   * Vim
+
+---
+class: inverse
+# Version Control
+
+---
+# Version Control
+
+Version control originates in collaborative software development.
+
+**The Idea:** All changes ever made to a piece of software are documented, saved automatically, and revertible.
+
+--
+
+Version control allows all decisions ever made in a research project to be documented automatically.
+
+--
+
+Version control can:
+
+1. Protect your work from destructive changes
+2. Simplify collaboration by merging changes
+3. Document design decisions
+4. Make your research process transparent
+
+---
+# Git and GitHub
+
+[`git`](https://en.wikipedia.org/wiki/Git) is the dominant platform for version control, and [GitHub](https://github.com/) is a free (and now Microsoft owned) platform for hosting **repositories**.
+
+--
+
+**Repositories** are folders on your computer where all changes are tracked by Git.
+
+--
+
+Once satisfied with changes, you "commit" them then "push" them to a remote repository that stores your project.
+
+--
+
+Others can copy your project ("pull"), and if you permit, make suggestions for changes.
+
+--
+
+Constantly committing and pulling changes automatically generates a running "history" that documents the evolution of a project.
+
+--
+
+`git` is integrated into RStudio under the *Tools* menu. [It requires some setup.](http://happygitwithr.com/)<sup>1</sup>
+
+.footnote[[1] You can also use the [GitHub desktop application](https://desktop.github.com/).]
+
+
+---
+# GitHub as a CV
+
+Beyond archiving projects and allowing sharing, GitHub also serves as a sort of curriculum vitae for the programmer.
+
+--
+
+By allowing others to view your projects, you can display competence in programming and research.
+
+--
+
+If you are planning on working in the private sector, an active GitHub profile will give you a leg up on the competition.
+
+--
+
+If you are aiming for academia, a GitHub account signals technical competence and an interest in research transparency.
+
+---
+class: inverse
+# Working with Model Results
 
 ---
 # `broom`
@@ -424,296 +918,7 @@ but is not limited to:
 
 * Sending `ggeffects` objects to `ggplot2` to freely modify plots
 
----
-# An Advanced Example
-
-Here is an example using a model from a [recent article I worked on](https://onlinelibrary.wiley.com/doi/abs/10.1111/cico.12346?af=R).
-
-This models the likelihood of arrest of a target in a police contact conditional on neighborhood, race of target, and race of who called the police.
-
-.smallish[
-```{r}
-load("data/any_arrest_data.RData")
-mod_arrest <- glm(arrest ~ white_comp_wit_vict*black_arr_susp + 
-                  crime_type*white_comp_wit_vict + caller_type + 
-                  arr_susp_subj_count + comp_wit_vict_count +
-                  black_arr_susp*neighb_type + crime_type*neighb_type + 
-                  serious_rate + pbl + pot + dis + year,
-                  family = binomial(link = "logit"),
-                  data = any_arrest_data)
-```
-]
-
-There are a lot of interactions here:
-
-* Target Race x Caller Race
-* Crime Type x Caller Race
-* Target Race x Neigbhorhood Type
-* Crime Type x Neighborhood Type
-
----
-# `ggeffects` Output
-
-.smallish[
-```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=4}
-mod_arrest %>% ggpredict(terms = c("black_arr_susp", 
-              "white_comp_wit_vict", "neighb_type")) %>% plot()
-```
-]
-
----
-# A Complex Example
-
-`ggpredict()` can only handle three variables in its `terms=` argument.
-
---
-
-For my article, I wanted to plot estimates across counterfactual values of all four variables in my interaction terms:
-
-* Caller Race
-* Target Race
-* Crime Type
-* Neighborhood Type
-
-How could I do this?
-
---
-
-Stats + Math + Code = $\heartsuit$
-
----
-# Some Background
-
-Given we've estimate a model, consider the following:
-
-1. $\hat{Y} = X\hat{\beta}$, where $X$ is the model matrix and $\hat{\beta}$ is the coefficients.
-2. $\hat{\beta}$ is a vector of *random variables* whose estimated distribution is described by parameter variance-covariance matrix $\Sigma$.
-
---
-
-Using this, we can do the following:
-
-1. Extract the model matrix $X$, estimated coefficients ( $\hat{\beta}$ ), and $\Sigma$ from our fitted model.
-2. Make lots of random parameter draws centered on $\hat{\beta}$ and distributed according to $\Sigma$.
-3. Multiply *each* of these draws by *counterfactual* $X$ *values* to get $\hat{Y}$ values.
-4. Take the 2.5% and 97.% quantiles of these $\hat{Y}$ values.
-
---
-
-This produces a *simulated* mean and confidence interval. This is called the **percentile method**, a type of *bootstrapping*.
-
----
-# Simulating Coefficients
-
-We can make random draws from our estimated distribution of parameters using `MASS::mvrnorm()` which takes three main arguments:
-1. `n`: The number of draws
-2. `mu`: mean—our coefficient estimates—obtained via `coef()`.
-3. `Sigma`: a covariance matrix, obtained via `vcov()`.
-
-.smallish[
-```{r}
-sim_params <- MASS::mvrnorm(n = 10000, 
-                            mu = coef(mod_arrest),
-                            Sigma = vcov(mod_arrest))
-sim_params[1:6, 1:4]
-```
-]
-
----
-# Counterfactual Values
-
-Next we need a data frame with our counterfactual values.
-
-We want one row (or *scenario*) per estimate to plot, and all variables at their means *except* the ones we are varying. We also don't want impossible values; `neighb_type` values are mutually exclusive.
-
-```{r, echo=FALSE}
-opts_chunk$set(out.lines = 30)
-```
-
-.smallish[
-```{r}
-x_values <- colMeans(model.matrix(mod_arrest)) # vars at mean
-n_scen   <- (2*2*2*3) # Number of scenarios
-x_frame  <- setNames(data.frame(matrix(x_values, nrow=n_scen, 
-                                       ncol=length(x_values), 
-                                       byrow=T)), names(x_values))
-cf_vals  <- arrangements::permutations(c(0,1), k=5, replace=T) #<<
-cf_vals  <- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,] # Remove impossible vals
-colnames(cf_vals) <- c("white_comp_wit_vict1", "black_arr_susp1", 
-                       "crime_typeNuisance", "neighb_typeBlackDisadv",
-                       "neighb_typeChanging")
-x_frame[colnames(cf_vals)] <- cf_vals # assign to countefactual df
-```
-]
-
-.footnote[`permutations()` is a quick way to get all combinations of some values.]
-
----
-# What Do We Have?
-
-.smaller[
-```{r}
-glimpse(x_frame)
-```
-]
-
----
-# Fixing Interactions
-
-Our main variables are correct... but we need to make our interaction terms.
-
-The interaction terms in the model matrix have specific form `var1:var2`.
-
-Their counterfactual values are just equal to the products of their components.
-
-.small[
-```{r}
-x_frame <- x_frame %>%
- mutate(
-  `white_comp_wit_vict1:black_arr_susp1`      = white_comp_wit_vict1*black_arr_susp1,
-  `white_comp_wit_vict1:crime_typeNuisance`   = white_comp_wit_vict1*crime_typeNuisance,
-  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
-  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging,
-  `crime_typeNuisance:neighb_typeBlackDisadv` = crime_typeNuisance*neighb_typeBlackDisadv,
-  `crime_typeNuisance:neighb_typeChanging`    = crime_typeNuisance*neighb_typeChanging,
-  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
-  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging)
-```
-]
-
----
-# Fixed
-
-.smaller[
-```{r}
-glimpse(x_frame)
-```
-]
-
----
-# Estimates!
-
-Then we just multiply our parameters by our counterfactual data:
-
-```{r}
-sims_logodds <- sim_params %*% t(as.matrix(x_frame))  
-sims_logodds[1:6, 1:6]
-dim(sims_logodds)
-```
-
-Now we log-odds 10,000 estimates each (rows) of 24 counterfactual scenarios (columns).
-
----
-# Getting Probabilities
-
-The model for this example is a *logistic regression*, which produces estimates in *log-odds* ( $ln(Odds(x))$ ).
-
-We can convert these to probabilities based on two identities:
-
-1. $Odds(x) = e^{ln(Odds(x))}$
-2. $Pr(x) = \frac{Odds(x)}{(1 + Odds(x))}$
-
-```{r}
-sims_prob    <- exp(sims_logodds) / (1 + exp(sims_logodds))
-sims_prob[1:6, 1:6]
-```
-
----
-# A Quick Function
-
-We are going to want to grab the mean and 95% confidence interval from our simulation estimates.
-
-Here's a quick function to do it and make it pretty.
-
-```{r}
-extract_pe_ci <- function(x){
-  vals <- c(mean(x), quantile(x, probs=c(.025, .975)))
-  names(vals) <- c("PE", "LB", "UB")
-  return(vals)
-}
-```
-
-This returns a length 3 vector with the following names:
-* **PE** for *point estimate*
-* **LB** for *lower bound* of the confidence interval
-* **UB** for *upper bound*
-
----
-# Prep for Plotting
-
-First we extract our point estimates and confidence intervals by *applying* `extract_pe_ci()` to each column of estimated probabilities.
-
-.small[
-```{r}
-estimated_pes <- as.data.frame( t(apply(sims_prob, 2, extract_pe_ci)))
-```
-]
-
-Then I add columns describing the scenarios to color, group, and facet over based on the counterfactual values.
-
-.small[
-```{r}
-estimated_pes$`Reporter`     <- ifelse(cf_vals[,1]==1, "Any White", "All Black")
-estimated_pes$`Target`       <- ifelse(cf_vals[,2]==1, "Any Black", "All White")
-estimated_pes$`Crime Type`   <- ifelse(cf_vals[,3]==1, "Nuisance Crime", "Serious Crime")
-estimated_pes$`Neighborhood` <- case_when(
-  cf_vals[,4]==1 ~ "Disadvantaged",
-  cf_vals[,5]==1 ~ "Changing",
-  TRUE ~ "Stable White")
-```
-]
----
-# Final Tidy Data
-
-.small[
-```{r}
-estimated_pes %>% mutate_if(is.numeric, round, digits=3) # round for display
-```
-]
-
----
-# Plot Code
-
-Finally we plot estimates (`PE`) as points with error bars (`UB`, `LB`) stratified on `Target` and `Reporter` and faceted by `Crime Type` and `Neighborhood`.
-
-.smallish[
-```{r, eval=FALSE}
-ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) + 
-  facet_grid(`Crime Type` ~ Neighborhood) +
-  geom_errorbar(aes(ymin = LB, ymax = UB), 
-                position = position_dodge(width = .4), 
-                size = 0.75, width = 0.15) +
-  geom_point(shape = 21, aes(fill = Reporter),
-             position = position_dodge(width = .4), 
-             size = 2) + 
-  scale_fill_manual("Reporter", values=c("Any White" = "white", 
-                                         "All Black" = "black")) +
-  ggtitle("Figure 3. Probability of Arrest", 
-      subtitle = "by Reporter and Target Race, Neighborhood and Crime Type") +
-  xlab("Race of Target") + ylab("Estimated Probability") + 
-  theme_bw() + theme(legend.position = c(0.86,0.15),
-                     legend.background = element_rect(color = 1))
-```
-]
----
-# Plot
-
-```{r, eval=TRUE, echo=FALSE, dev="svg", fig.height=5}
-ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) + 
-  facet_grid(`Crime Type` ~ Neighborhood) +
-  geom_errorbar(aes(ymin = LB, ymax = UB), 
-                position = position_dodge(width = .4), 
-                size = 0.75, width = 0.15) +
-  geom_point(shape = 21, position = position_dodge(width = .4), 
-             size = 2, aes(fill = Reporter)) + 
-  scale_fill_manual("Reporter", values=c("Any White"="white", 
-                                         "All Black"="black")) +
-  ggtitle("Figure 3. Probability of Arrest", 
-          subtitle = "by Reporter and Target Race, Neighborhood and Crime Type") +
-  xlab("Race of Target") + ylab("Estimated Probability") + 
-  theme_bw() + theme(legend.position = c(0.86,0.15),
-                     legend.background = element_rect(color = 1))
-```
+If you need to do something more complex then `ggeffects` allows, see the [Advanced Counterfactuals](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Advanced_Counterfactuals.html) slides here.
 
 ---
 class: inverse

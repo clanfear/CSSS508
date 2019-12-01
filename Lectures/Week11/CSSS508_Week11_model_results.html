@@ -11,9 +11,9 @@
 class: center, top, title-slide
 
 # CSSS508, Week 11
-## Working with Model Results
+## Reproducibility and Model Results
 ### Chuck Lanfear
-### Jun 5, 2019<br>Updated: Jun 7, 2019
+### Jun 5, 2019<br>Updated: Nov 29, 2019
 
 ---
 
@@ -27,23 +27,517 @@ class: center, top, title-slide
 
 # Topics for Today
 
-Displaying Model Results
+### Reproducible Research
 
-* `broom`
-   + Turning model output lists into dataframes
-   + Summarizing models
-* `ggeffects`
-   + Creating counterfactual estimates
-   + Plotting marginal effects
-* Manual counterfactual plots
+### Best Practices
+   * Organization
+   * Portability
+   * Version Control
+
+### Working with Model Results
+
+* Tidy model output with `broom`
+* Visualizing models with `ggeffects`
 * Making regression tables
-   + Using `pander` for models
-   + Using `sjTable()` in `sjPlot`
-* Wrapping up the course
+
+### Wrapping up the course
 
 ---
 class: inverse
-# `broom`
+
+# Reproducible Research
+
+---
+# Why Reproducibility?
+
+Reproducibility is not *replication*.
+
+* **Replication** is running a new study to show if and how results of a prior study hold.
+* **Reproducibility** is about rerunning *the same study* and getting the *same results*.
+
+--
+
+Reproducible studies can still be *wrong*... and in fact reproducibility makes proving a study wrong *much easier*.
+
+--
+
+Reproducibility means:
+
+* Transparent research practices.
+* Minimal barriers to verifying your results.
+
+--
+
+*Any study that isn't reproducible can be trusted only on faith.*
+
+---
+# Reproducibility Definitions
+
+Reproducibility comes in three forms (Stodden 2014):
+
+--
+
+1. **Empirical:** Repeatability in data collection.
+
+--
+
+2. **Statistical:** Verification with alternate methods of inference.
+
+--
+
+3. **Computational:** Reproducibility in cleaning, organizing, and presenting data and results.
+
+--
+
+R is particularly well suited to enabling **computational reproducibility**.&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] Python is equally well suited.]
+
+--
+
+They will not fix flawed research design, nor offer a remedy for improper application of statistical methods.
+
+Those are the difficult, non-automatable things you want skills in.
+
+---
+
+## Computational Reproducibility
+
+Elements of computational reproducibility:
+
+--
+
+* Shared data
+
+   + Researchers need your original data to verify and replicate your work.
+
+--
+
+* Shared code
+   + Your code must be shared to make decisions transparent.
+
+--
+
+* Documentation
+   + The operation of code should be either self-documenting or have written descriptions to make its use clear.
+
+--
+
+* **Version Control**
+   + Documents the research process.
+   + Prevents losing work and facilitates sharing.
+
+---
+
+## Levels of Reproducibility
+
+For academic papers, degrees of reproducibility vary:
+
+0. "Read the article"
+
+--
+
+1. Shared data with documentation
+
+--
+
+2. Shared data and all code
+
+--
+
+3. **Interactive document**
+
+--
+
+4. **Research compendium**
+
+--
+
+5. Docker compendium: Self-contained ecosystem
+
+---
+## Interactive Documents
+
+**Interactive documents**—like R Markdown docs—combine code and text together into a self-contained document.
+   * Load and process data
+   * Run models
+   * Generate tables and plots in-line with text
+   * In-text values automatically filled in
+
+--
+
+Interactive documents allow a reader to examine your computational methods within the document itself; in effect, they are self-documenting.
+
+--
+
+By re-running the code, they reproduce your results on demand.
+
+--
+
+Common Platforms:
+
+ * **R:** R Markdown ([an example of mine](https://clanfear.github.io/birthtiming/inst/paper/paper.html))
+ * **Python:** Jupyter Notebooks
+
+---
+## Research Compendia
+
+A **research compendium** is a portable, reproducible distribution of an article or other project.
+
+--
+
+Research compendia feature:
+
+* An interactive document as the foundation
+
+* Files organized in a recognizable structure (e.g. an R package)
+
+* Clear separation of data, method, and output. *Data are read only*.
+
+* A well-documented or even *preserved* computational environment (e.g. Docker)
+
+--
+
+`rrtools` by UW's [Ben Markwick](https://github.com/benmarwick) provides a simplified workflow to accomplish this in R.
+
+[Here is an example compendium of mine.](https://github.com/clanfear/birthtiming)
+
+---
+## Bookdown
+
+[`bookdown`](https://bookdown.org/yihui/bookdown/)—which is integrated into `rrtools`—can generate documents in the proper format for articles, theses, books, or dissertations.
+
+--
+
+`bookdown` provides an accessible alternative to writing `\(\LaTeX\)` for typesetting and reference management.
+
+--
+
+You can integrate citations and automate reference page generation using bibtex files (such as produced by Zotero).
+
+--
+
+`bookdown` supports `.html` output for ease and speed and also renders `.pdf` files through `\(\LaTeX\)` for publication-ready documents.
+
+--
+
+For University of Washington theses and dissertations, consider Ben Marwick's [`huskydown` package](https://github.com/benmarwick/huskydown) which uses Markdown but renders via a UW approved `\(\LaTeX\)` template.
+
+---
+class: inverse
+# Best Practices
+
+## Organization and Portability
+
+---
+# Organization Systems
+
+Organizing research projects is something you either do accidentally—and badly—or purposefully with some upfront labor.
+
+--
+
+Uniform organization makes switching between or revisiting projects easier.
+
+--
+
+I suggest something like the following:
+
+.pull-left[
+```
+project/
+   readme.md
+   data/
+     derived/
+       processed_data.RData
+     raw/
+       core_data.csv
+   docs/
+     paper.Rmd
+   syntax/
+     functions.R
+     models.R
+```
+]
+.pull-right[
+1. There is a clear hierarchy
+   * Written content is in `docs`
+   * Code is in `syntax`
+   * Data is in `data`
+2. Naming is uniform
+   * All lower case
+   * Words separated by underscores
+3. Names are self-descriptive
+
+]
+
+---
+# Workflow versus Project
+
+To summarize Jenny Bryan, [one should separate workflow from projects.](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
+
+--
+
+.pull-left[
+### Workflow
+
+* The software you use to write your code (e.g. RStudio)
+
+* The location you store a project
+
+* The specific computer you use
+
+* The code you ran earlier or typed into your console
+]
+
+--
+
+.pull-right[
+### Project
+
+* The raw data
+
+* The code that operates on your raw data
+
+* The packages you use
+
+* The output files or documents
+]
+
+--
+
+Projects *should not modify anything outside of the project* nor need to be modified by someone else (or future you) to run.
+
+**Projects *should be independent of your workflow*.**
+
+---
+# Portability
+
+For research to be reproducible, it must also be *portable*. Portable software operates *independently of workflow* such as fixed file locations.
+
+--
+
+**Do Not:**
+
+* Use `setwd()` in scripts or .Rmd files.
+* Use *absolute paths* except for *fixed, immovable sources* (secure data).
+  + `read_csv("C:/my_project/data/my_data.csv")`
+* Use `install.packages()` in script or .Rmd files.
+* Use `rm(list=ls())` anywhere but your console.
+
+--
+
+**Do:**
+
+* Use RStudio projects (or the [`here` package](https://github.com/jennybc/here_here)) to set directories.
+* Use *relative paths* to load and save files:
+  + `read_csv("./data/my_data.csv")`
+* Load all required packages using `library()`.
+* Clear your workspace when closing RStudio.
+  + Set *Tools &gt; Global Options... &gt; Save workspace...* to **Never**
+
+---
+# Divide and Conquer
+
+Often you do not want to include all the code for a project in a single `.Rmd` file:
+
+   * The code takes too long to knit.
+   * The file is so long it is difficult to read.
+
+--
+
+There are two ways to deal with this:
+
+1. Use separate `.R` scripts or `.Rmd` files which save results from complicated parts of a project, then load these results in the main `.Rmd` file.
+
+   + This is good for loading and cleaning large data.
+   + Also for running slow models.
+
+--
+
+2. Use `source()` to run external `.R` scripts.
+
+   + This can be used to run large files that aren't impractically slow.
+   + Also good for loading project-specific functions.
+
+---
+# The Way of Many Files
+
+I find it beneficial to break projects into *many* files:
+   * Scripts with specialized functions.
+   * Scripts to load and clean each set of variables.
+   * Scripts to run each set of models and make tables and plots.
+   * A main .Rmd that runs some or all of these to reproduce the entire project.
+
+--
+
+Splitting up a project carries benefits:
+   * Once a portion of the project is done and in its own file, *it is out of your way.*
+   * If you need to make changes, you don't need to search through huge files.
+   * Entire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)
+   * **It is the only way to build a proper *pipeline* for a project. **
+
+---
+# Pipelines
+
+Professional researchers and teams design projects as a **pipeline**.
+
+--
+
+A **pipeline** is a series of consecutive processing elements (scripts and functions in R).
+
+--
+
+Each stage of a pipeline...
+
+1. Has clearly defined inputs and outputs
+2. Does not modify its inputs.
+3. Produces the exact same output every time it is re-run.
+
+--
+
+This means...
+
+1. When you modify one stage, you only need to rerun *subsequent stages*.
+2. Different people can work on each stage.
+3. Problems are isolated within stages.
+4. You can depict your project as a *directed graph* of **dependencies**.
+
+---
+
+# Example Pipeline
+
+Every stage (oval) has an unambiguous input and output. Everything that precedes a given stage is a **dependency**—something required to run it.
+
+![](img/pipeline.svg)
+
+---
+class: inverse
+# Tools
+
+### *Some opinionated advice*
+
+---
+# On Formats
+
+Avoid "closed" or commercial software and file formats except where absolutely necessary.
+
+--
+
+Use open source software and file formats.
+
+--
+
+* It is always better for *science*:
+
+   + People should be able to explore your research without buying commercial software.
+   + You do not want your research to be inaccessible when software is updated.
+
+--
+
+* It is often just *better*.
+
+   + It is usually updated more quickly
+   + It tends to be more secure
+   + It is rarely abandoned
+
+--
+
+**The ideal:** Use software that reads and writes *raw text*.
+
+---
+# Text
+
+Writing and formatting documents are two completely separate jobs.
+   * Write first
+   * Format later
+   * [Markdown](https://en.wikipedia.org/wiki/Markdown) was made for this
+
+--
+
+Word processors—like Microsoft Word—try to do both at the same time, usually badly.
+
+They waste time by leading you to format instead of writing.
+
+--
+
+Find a good modular text editor and learn to use it:
+   * [Atom](https://atom.io/)
+   * [Sublime](https://www.sublimetext.com/) (Commercial)
+   * Emacs
+   * Vim
+
+---
+class: inverse
+# Version Control
+
+---
+# Version Control
+
+Version control originates in collaborative software development.
+
+**The Idea:** All changes ever made to a piece of software are documented, saved automatically, and revertible.
+
+--
+
+Version control allows all decisions ever made in a research project to be documented automatically.
+
+--
+
+Version control can:
+
+1. Protect your work from destructive changes
+2. Simplify collaboration by merging changes
+3. Document design decisions
+4. Make your research process transparent
+
+---
+# Git and GitHub
+
+[`git`](https://en.wikipedia.org/wiki/Git) is the dominant platform for version control, and [GitHub](https://github.com/) is a free (and now Microsoft owned) platform for hosting **repositories**.
+
+--
+
+**Repositories** are folders on your computer where all changes are tracked by Git.
+
+--
+
+Once satisfied with changes, you "commit" them then "push" them to a remote repository that stores your project.
+
+--
+
+Others can copy your project ("pull"), and if you permit, make suggestions for changes.
+
+--
+
+Constantly committing and pulling changes automatically generates a running "history" that documents the evolution of a project.
+
+--
+
+`git` is integrated into RStudio under the *Tools* menu. [It requires some setup.](http://happygitwithr.com/)&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] You can also use the [GitHub desktop application](https://desktop.github.com/).]
+
+
+---
+# GitHub as a CV
+
+Beyond archiving projects and allowing sharing, GitHub also serves as a sort of curriculum vitae for the programmer.
+
+--
+
+By allowing others to view your projects, you can display competence in programming and research.
+
+--
+
+If you are planning on working in the private sector, an active GitHub profile will give you a leg up on the competition.
+
+--
+
+If you are aiming for academia, a GitHub account signals technical competence and an interest in research transparency.
+
+---
+class: inverse
+# Working with Model Results
 
 ---
 # `broom`
@@ -81,20 +575,20 @@ summary(lm_1)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -9.3746 -2.0569 -0.0685  2.1940  8.3739 
+## -6.1415 -2.2524 -0.1264  2.0719  7.9761 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   1.4196     0.4215   3.368 0.000912 ***
-## num1          0.4192     0.1084   3.867 0.000150 ***
-## fac1B         0.6294     0.5423   1.161 0.247195    
-## fac1C         1.7502     0.5472   3.198 0.001612 ** 
+## (Intercept)   1.3433     0.3344   4.017 8.39e-05 ***
+## num1          0.5386     0.1039   5.181 5.46e-07 ***
+## fac1B         0.5686     0.5020   1.133    0.259    
+## fac1C         2.4555     0.4829   5.085 8.55e-07 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.067 on 196 degrees of freedom
-## Multiple R-squared:  0.1128,	Adjusted R-squared:  0.09922 
-## F-statistic: 8.307 on 3 and 196 DF,  p-value: 3.15e-05
+## Residual standard error: 2.877 on 196 degrees of freedom
+## Multiple R-squared:  0.2209,	Adjusted R-squared:  0.209 
+## F-statistic: 18.52 on 3 and 196 DF,  p-value: 1.275e-10
 ....
 ```
 ]
@@ -122,14 +616,14 @@ summary(glm_1)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -1.6209  -1.0734  -0.6453   1.0818   2.1621  
+## -2.0674  -0.9718  -0.5026   1.0221   1.9325  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -0.80227    0.30262  -2.651 0.008023 ** 
-## num1         0.28284    0.07915   3.573 0.000353 ***
-## fac1B        0.37719    0.37295   1.011 0.311844    
-## fac1C        0.84695    0.38039   2.227 0.025979 *  
+## (Intercept) -1.02359    0.26746  -3.827 0.000130 ***
+## num1         0.32963    0.08623   3.823 0.000132 ***
+## fac1B        0.49361    0.37322   1.323 0.185977    
+## fac1C        1.62774    0.38094   4.273 1.93e-05 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -151,12 +645,12 @@ lm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)    1.42      0.422      3.37 0.000912
-## 2 num1           0.419     0.108      3.87 0.000150
-## 3 fac1B          0.629     0.542      1.16 0.247   
-## 4 fac1C          1.75      0.547      3.20 0.00161
+##   term        estimate std.error statistic     p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 (Intercept)    1.34      0.334      4.02 0.0000839  
+## 2 num1           0.539     0.104      5.18 0.000000546
+## 3 fac1B          0.569     0.502      1.13 0.259      
+## 4 fac1C          2.46      0.483      5.09 0.000000855
 ```
 
 Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
@@ -177,12 +671,12 @@ glm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)   -0.802    0.303      -2.65 0.00802 
-## 2 num1           0.283    0.0792      3.57 0.000353
-## 3 fac1B          0.377    0.373       1.01 0.312   
-## 4 fac1C          0.847    0.380       2.23 0.0260
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   -1.02     0.267      -3.83 0.000130 
+## 2 num1           0.330    0.0862      3.82 0.000132 
+## 3 fac1B          0.494    0.373       1.32 0.186    
+## 4 fac1C          1.63     0.381       4.27 0.0000193
 ```
 
 ---
@@ -202,9 +696,9 @@ glance(lm_1)
 
 ```
 ## # A tibble: 1 x 11
-##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.113        0.0992  3.07      8.31 3.15e-5     4  -506. 1022. 1038.
+##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.221         0.209  2.88      18.5 1.27e-10     4  -493.  996. 1013.
 ## # ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;
 ```
 ]
@@ -223,15 +717,14 @@ augment(lm_1) %&gt;% head()
 
 ```
 ## # A tibble: 6 x 10
-##       yn    num1 fac1  .fitted .se.fit .resid   .hat .sigma .cooksd
-##    &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-## 1  0.139  0.834  A        1.77   0.407  -1.63 0.0176   3.07 1.29e-3
-## 2  6.85   4.53   A        3.32   0.555   3.53 0.0328   3.06 1.16e-2
-## 3 -0.735 -1.15   B        1.57   0.440  -2.30 0.0206   3.07 3.02e-3
-## 4  7.44   0.316  C        3.30   0.372   4.14 0.0147   3.06 6.91e-3
-## 5  3.34   0.0845 A        1.46   0.419   1.89 0.0187   3.07 1.83e-3
-## 6  1.83   0.521  C        3.39   0.369  -1.56 0.0145   3.07 9.62e-4
-## # ... with 1 more variable: .std.resid &lt;dbl&gt;
+##        yn   num1 fac1  .fitted .se.fit .resid   .hat .sigma  .cooksd .std.resid
+##     &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+## 1  9.51    1.81  C       4.77    0.368   4.74 0.0164   2.86 0.0115        1.66 
+## 2  5.49   -0.985 C       3.27    0.417   2.22 0.0210   2.88 0.00326       0.780
+## 3  1.72   -1.57  A       0.496   0.410   1.23 0.0203   2.88 0.000962      0.430
+## 4 -2.29   -2.88  A      -0.209   0.506  -2.08 0.0310   2.88 0.00431      -0.735
+## 5  1.92   -0.749 C       3.40    0.405  -1.47 0.0198   2.88 0.00135      -0.517
+## 6  0.0354  1.88  A       2.36    0.338  -2.32 0.0138   2.88 0.00231      -0.812
 ```
 ]
 
@@ -251,18 +744,18 @@ The real advantage of `broom` becomes apparent when running many models at once.
 ## # Groups:   fac1 [3]
 ##    fac1  term        estimate std.error statistic  p.value
 ##    &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1 A     (Intercept)    1.15     0.451      2.55  1.38e- 2
-##  2 A     num1           0.436    0.126      3.46  1.07e- 3
-##  3 A     fac2No         0.289    0.585      0.493 6.24e- 1
-##  4 A     num2           0.743    0.0878     8.46  2.09e-11
-##  5 B     (Intercept)    1.03     0.368      2.79  6.73e- 3
-##  6 B     num1           0.482    0.135      3.57  6.59e- 4
-##  7 B     fac2No         1.76     0.508      3.47  8.99e- 4
-##  8 B     num2           0.694    0.0773     8.99  3.13e-13
-##  9 C     (Intercept)    2.79     0.324      8.61  2.19e-12
-## 10 C     num1           0.670    0.124      5.41  9.42e- 7
-## 11 C     fac2No         0.761    0.477      1.59  1.16e- 1
-## 12 C     num2           0.689    0.0880     7.83  5.26e-11
+##  1 A     (Intercept)    0.699    0.292       2.40 1.91e- 2
+##  2 A     num1           0.409    0.105       3.91 1.98e- 4
+##  3 A     fac2No         0.681    0.392       1.74 8.60e- 2
+##  4 A     num2           0.680    0.0720      9.44 1.88e-14
+##  5 B     (Intercept)    1.27     0.455       2.79 7.31e- 3
+##  6 B     num1           0.470    0.150       3.14 2.78e- 3
+##  7 B     fac2No         0.905    0.597       1.52 1.36e- 1
+##  8 B     num2           0.944    0.100       9.41 8.10e-13
+##  9 C     (Intercept)    2.85     0.349       8.15 2.67e-11
+## 10 C     num1           0.451    0.127       3.55 7.45e- 4
+## 11 C     fac2No         1.72     0.497       3.47 9.78e- 4
+## 12 C     num2           0.457    0.0887      5.16 2.96e- 6
 ```
 ]
 
@@ -305,7 +798,7 @@ ggplot(data = gapminder,
   geom_smooth()
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-10-1.svg)&lt;!-- --&gt;
 
 By default, `geom_smooth()` chooses either a loess smoother (N &lt; 1000) or a GAM depending on the number of observations.
 
@@ -321,7 +814,7 @@ ggplot(data = gapminder,
 * geom_smooth(method = "glm", formula = y ~ x)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-11-1.svg)&lt;!-- --&gt;
 
 We could also fit a standard linear model using either `method = "glm"` or `method = "lm"` and a formula like `y ~ x`.
 ---
@@ -334,7 +827,7 @@ ggplot(data = gapminder,
 * geom_smooth(method = "glm", formula = y ~ poly(x, 2))
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-20-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-12-1.svg)&lt;!-- --&gt;
 
 `poly(x, 2)` produces a quadratic model which contains a linear term (`x`) and a quadratic term (`x^2`).
 
@@ -444,12 +937,13 @@ lm_1_est
 ## # x = num1
 ## 
 ##   x predicted std.error conf.low conf.high
-##  -4    -1.864     0.651   -3.141    -0.587
-##  -2    -0.399     0.484   -1.347     0.550
-##   0     1.066     0.376    0.329     1.803
-##   2     2.531     0.382    1.784     3.279
-##   4     3.997     0.497    3.023     4.971
-##   6     5.462     0.667    4.154     6.770
+##  -6    -2.072     0.860   -3.757    -0.387
+##  -4    -1.096     0.667   -2.404     0.211
+##  -2    -0.121     0.502   -1.104     0.863
+##   0     0.855     0.400    0.070     1.639
+##   2     1.830     0.412    1.022     2.638
+##   4     2.806     0.530    1.766     3.845
+##   6     3.781     0.703    2.404     5.159
 ## 
 ## Adjusted for:
 ## * fac1 = A
@@ -468,7 +962,7 @@ a ggplot when you give `plot()` output from `ggpredict()`.
 plot(lm_1_est)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-17-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -484,7 +978,7 @@ glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family=binomial(link = "logit
   ggpredict(terms = c("num1", "fac1")) %&gt;% plot()
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -499,7 +993,7 @@ glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "log
   ggpredict(terms = c("num1", "fac1")) %&gt;% plot(facet=TRUE)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -514,7 +1008,7 @@ glm(yb ~ num1 + fac1 + num2 + fac2, data=ex_dat, family=binomial(link="logit")) 
   ggpredict(terms = c("num1 [-1,0,1]", "fac1 [A,B]")) %&gt;% plot(facet=TRUE)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-20-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -529,7 +1023,7 @@ glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "log
   ggpredict(terms = c("num1 [meansd]", "num2 [minmax]")) %&gt;% plot(facet=TRUE)
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-29-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-21-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -544,7 +1038,7 @@ lm(yn ~ fac1 + fac2, data = ex_dat) %&gt;%
   ggpredict(terms=c("fac1", "fac2")) %&gt;% plot()
 ```
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-22-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -560,418 +1054,7 @@ but is not limited to:
 
 * Sending `ggeffects` objects to `ggplot2` to freely modify plots
 
----
-# An Advanced Example
-
-Here is an example using a model from a [recent article I worked on](https://onlinelibrary.wiley.com/doi/abs/10.1111/cico.12346?af=R).
-
-This models the likelihood of arrest of a target in a police contact conditional on neighborhood, race of target, and race of who called the police.
-
-.smallish[
-
-```r
-load("data/any_arrest_data.RData")
-mod_arrest &lt;- glm(arrest ~ white_comp_wit_vict*black_arr_susp + 
-                  crime_type*white_comp_wit_vict + caller_type + 
-                  arr_susp_subj_count + comp_wit_vict_count +
-                  black_arr_susp*neighb_type + crime_type*neighb_type + 
-                  serious_rate + pbl + pot + dis + year,
-                  family = binomial(link = "logit"),
-                  data = any_arrest_data)
-```
-]
-
-There are a lot of interactions here:
-
-* Target Race x Caller Race
-* Crime Type x Caller Race
-* Target Race x Neigbhorhood Type
-* Crime Type x Neighborhood Type
-
----
-# `ggeffects` Output
-
-.smallish[
-
-```r
-mod_arrest %&gt;% ggpredict(terms = c("black_arr_susp", 
-              "white_comp_wit_vict", "neighb_type")) %&gt;% plot()
-```
-
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-32-1.svg)&lt;!-- --&gt;
-]
-
----
-# A Complex Example
-
-`ggpredict()` can only handle three variables in its `terms=` argument.
-
---
-
-For my article, I wanted to plot estimates across counterfactual values of all four variables in my interaction terms:
-
-* Caller Race
-* Target Race
-* Crime Type
-* Neighborhood Type
-
-How could I do this?
-
---
-
-Stats + Math + Code = `\(\heartsuit\)`
-
----
-# Some Background
-
-Given we've estimate a model, consider the following:
-
-1. `\(\hat{Y} = X\hat{\beta}\)`, where `\(X\)` is the model matrix and `\(\hat{\beta}\)` is the coefficients.
-2. `\(\hat{\beta}\)` is a vector of *random variables* whose estimated distribution is described by parameter variance-covariance matrix `\(\Sigma\)`.
-
---
-
-Using this, we can do the following:
-
-1. Extract the model matrix `\(X\)`, estimated coefficients ( `\(\hat{\beta}\)` ), and `\(\Sigma\)` from our fitted model.
-2. Make lots of random parameter draws centered on `\(\hat{\beta}\)` and distributed according to `\(\Sigma\)`.
-3. Multiply *each* of these draws by *counterfactual* `\(X\)` *values* to get `\(\hat{Y}\)` values.
-4. Take the 2.5% and 97.% quantiles of these `\(\hat{Y}\)` values.
-
---
-
-This produces a *simulated* mean and confidence interval. This is called the **percentile method**, a type of *bootstrapping*.
-
----
-# Simulating Coefficients
-
-We can make random draws from our estimated distribution of parameters using `MASS::mvrnorm()` which takes three main arguments:
-1. `n`: The number of draws
-2. `mu`: mean—our coefficient estimates—obtained via `coef()`.
-3. `Sigma`: a covariance matrix, obtained via `vcov()`.
-
-.smallish[
-
-```r
-sim_params &lt;- MASS::mvrnorm(n = 10000, 
-                            mu = coef(mod_arrest),
-                            Sigma = vcov(mod_arrest))
-sim_params[1:6, 1:4]
-```
-
-```
-##      (Intercept) white_comp_wit_vict1 black_arr_susp1 crime_typeNuisance
-## [1,]    2.649874          -0.24837403      -0.4269412         -0.4063155
-## [2,]    2.788417          -0.15061167      -0.1473641         -0.4704289
-## [3,]    2.704444          -0.34618448      -0.3178364         -0.3906221
-## [4,]    2.609430          -0.09684517      -0.2334463         -0.4445482
-## [5,]    2.793919          -0.21388214      -0.2317792         -0.5622488
-## [6,]    2.733762          -0.26654232      -0.2280260         -0.5613452
-```
-]
-
----
-# Counterfactual Values
-
-Next we need a data frame with our counterfactual values.
-
-We want one row (or *scenario*) per estimate to plot, and all variables at their means *except* the ones we are varying. We also don't want impossible values; `neighb_type` values are mutually exclusive.
-
-
-
-.smallish[
-
-```r
-x_values &lt;- colMeans(model.matrix(mod_arrest)) # vars at mean
-n_scen   &lt;- (2*2*2*3) # Number of scenarios
-x_frame  &lt;- setNames(data.frame(matrix(x_values, nrow=n_scen, 
-                                       ncol=length(x_values), 
-                                       byrow=T)), names(x_values))
-*cf_vals  &lt;- arrangements::permutations(c(0,1), k=5, replace=T)
-cf_vals  &lt;- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,] # Remove impossible vals
-colnames(cf_vals) &lt;- c("white_comp_wit_vict1", "black_arr_susp1", 
-                       "crime_typeNuisance", "neighb_typeBlackDisadv",
-                       "neighb_typeChanging")
-x_frame[colnames(cf_vals)] &lt;- cf_vals # assign to countefactual df
-```
-]
-
-.footnote[`permutations()` is a quick way to get all combinations of some values.]
-
----
-# What Do We Have?
-
-.smaller[
-
-```r
-glimpse(x_frame)
-```
-
-```
-## Observations: 24
-## Variables: 24
-## $ `(Intercept)`                               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, ...
-## $ white_comp_wit_vict1                        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
-## $ black_arr_susp1                             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
-## $ crime_typeNuisance                          &lt;dbl&gt; 0, 0, 0, 1, 1, 1, ...
-## $ caller_typeVictim                           &lt;dbl&gt; 0.8019442, 0.80194...
-## $ caller_typeWitness                          &lt;dbl&gt; 0.08516245, 0.0851...
-## $ arr_susp_subj_count                         &lt;dbl&gt; 1.552955, 1.552955...
-## $ comp_wit_vict_count                         &lt;dbl&gt; 1.571604, 1.571604...
-## $ neighb_typeBlackDisadv                      &lt;dbl&gt; 0, 0, 1, 0, 0, 1, ...
-## $ neighb_typeChanging                         &lt;dbl&gt; 0, 1, 0, 0, 1, 0, ...
-## $ serious_rate                                &lt;dbl&gt; 2.157661e-17, 2.15...
-## $ pbl                                         &lt;dbl&gt; 1.185962e-16, 1.18...
-## $ pot                                         &lt;dbl&gt; -2.808814e-17, -2....
-## $ dis                                         &lt;dbl&gt; 9.987197e-18, 9.98...
-## $ year2009                                    &lt;dbl&gt; 0.2829368, 0.28293...
-## $ year2010                                    &lt;dbl&gt; 0.1670504, 0.16705...
-## $ year2011                                    &lt;dbl&gt; 0.09201842, 0.0920...
-## $ year2012                                    &lt;dbl&gt; 0.1232284, 0.12322...
-## $ `white_comp_wit_vict1:black_arr_susp1`      &lt;dbl&gt; 0.4452034, 0.44520...
-## $ `white_comp_wit_vict1:crime_typeNuisance`   &lt;dbl&gt; 0.1614479, 0.16144...
-## $ `black_arr_susp1:neighb_typeBlackDisadv`    &lt;dbl&gt; 0.04893835, 0.0489...
-## $ `black_arr_susp1:neighb_typeChanging`       &lt;dbl&gt; 0.111691, 0.111691...
-## $ `crime_typeNuisance:neighb_typeBlackDisadv` &lt;dbl&gt; 0.0154771, 0.01547...
-## $ `crime_typeNuisance:neighb_typeChanging`    &lt;dbl&gt; 0.03300077, 0.0330...
-```
-]
-
----
-# Fixing Interactions
-
-Our main variables are correct... but we need to make our interaction terms.
-
-The interaction terms in the model matrix have specific form `var1:var2`.
-
-Their counterfactual values are just equal to the products of their components.
-
-.small[
-
-```r
-x_frame &lt;- x_frame %&gt;%
- mutate(
-  `white_comp_wit_vict1:black_arr_susp1`      = white_comp_wit_vict1*black_arr_susp1,
-  `white_comp_wit_vict1:crime_typeNuisance`   = white_comp_wit_vict1*crime_typeNuisance,
-  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
-  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging,
-  `crime_typeNuisance:neighb_typeBlackDisadv` = crime_typeNuisance*neighb_typeBlackDisadv,
-  `crime_typeNuisance:neighb_typeChanging`    = crime_typeNuisance*neighb_typeChanging,
-  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
-  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging)
-```
-]
-
----
-# Fixed
-
-.smaller[
-
-```r
-glimpse(x_frame)
-```
-
-```
-## Observations: 24
-## Variables: 24
-## $ `(Intercept)`                               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, ...
-## $ white_comp_wit_vict1                        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
-## $ black_arr_susp1                             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
-## $ crime_typeNuisance                          &lt;dbl&gt; 0, 0, 0, 1, 1, 1, ...
-## $ caller_typeVictim                           &lt;dbl&gt; 0.8019442, 0.80194...
-## $ caller_typeWitness                          &lt;dbl&gt; 0.08516245, 0.0851...
-## $ arr_susp_subj_count                         &lt;dbl&gt; 1.552955, 1.552955...
-## $ comp_wit_vict_count                         &lt;dbl&gt; 1.571604, 1.571604...
-## $ neighb_typeBlackDisadv                      &lt;dbl&gt; 0, 0, 1, 0, 0, 1, ...
-## $ neighb_typeChanging                         &lt;dbl&gt; 0, 1, 0, 0, 1, 0, ...
-## $ serious_rate                                &lt;dbl&gt; 2.157661e-17, 2.15...
-## $ pbl                                         &lt;dbl&gt; 1.185962e-16, 1.18...
-## $ pot                                         &lt;dbl&gt; -2.808814e-17, -2....
-## $ dis                                         &lt;dbl&gt; 9.987197e-18, 9.98...
-## $ year2009                                    &lt;dbl&gt; 0.2829368, 0.28293...
-## $ year2010                                    &lt;dbl&gt; 0.1670504, 0.16705...
-## $ year2011                                    &lt;dbl&gt; 0.09201842, 0.0920...
-## $ year2012                                    &lt;dbl&gt; 0.1232284, 0.12322...
-## $ `white_comp_wit_vict1:black_arr_susp1`      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
-## $ `white_comp_wit_vict1:crime_typeNuisance`   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
-## $ `black_arr_susp1:neighb_typeBlackDisadv`    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
-## $ `black_arr_susp1:neighb_typeChanging`       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, ...
-## $ `crime_typeNuisance:neighb_typeBlackDisadv` &lt;dbl&gt; 0, 0, 0, 0, 0, 1, ...
-## $ `crime_typeNuisance:neighb_typeChanging`    &lt;dbl&gt; 0, 0, 0, 0, 1, 0, ...
-```
-]
-
----
-# Estimates!
-
-Then we just multiply our parameters by our counterfactual data:
-
-
-```r
-sims_logodds &lt;- sim_params %*% t(as.matrix(x_frame))  
-sims_logodds[1:6, 1:6]
-```
-
-```
-##          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]
-## [1,] 2.177016 2.582403 2.589639 1.770700 2.297997 2.157879
-## [2,] 2.059036 2.527301 2.685111 1.588607 2.183050 2.127477
-## [3,] 2.279709 2.798278 2.722473 1.889087 2.531622 2.265328
-## [4,] 1.992662 2.504421 2.434744 1.548114 2.112916 1.995474
-## [5,] 2.145578 2.531906 2.512737 1.583329 2.066743 1.716077
-## [6,] 2.158352 2.622928 2.660889 1.597007 2.236660 2.181941
-```
-
-```r
-dim(sims_logodds)
-```
-
-```
-## [1] 10000    24
-```
-
-Now we log-odds 10,000 estimates each (rows) of 24 counterfactual scenarios (columns).
-
----
-# Getting Probabilities
-
-The model for this example is a *logistic regression*, which produces estimates in *log-odds* ( `\(ln(Odds(x))\)` ).
-
-We can convert these to probabilities based on two identities:
-
-1. `\(Odds(x) = e^{ln(Odds(x))}\)`
-2. `\(Pr(x) = \frac{Odds(x)}{(1 + Odds(x))}\)`
-
-
-```r
-sims_prob    &lt;- exp(sims_logodds) / (1 + exp(sims_logodds))
-sims_prob[1:6, 1:6]
-```
-
-```
-##           [,1]      [,2]      [,3]      [,4]      [,5]      [,6]
-## [1,] 0.8981664 0.9297205 0.9301918 0.8545447 0.9087110 0.8964028
-## [2,] 0.8868574 0.9260337 0.9361423 0.8304200 0.8987170 0.8935453
-## [3,] 0.9071826 0.9425827 0.9383398 0.8686514 0.9263291 0.9059645
-## [4,] 0.8800245 0.9244512 0.9194386 0.8246412 0.8921523 0.8803210
-## [5,] 0.8952548 0.9263485 0.9250299 0.8296755 0.8876285 0.8476229
-## [6,] 0.8964467 0.9323227 0.9346789 0.8315996 0.9034937 0.8986160
-```
-
----
-# A Quick Function
-
-We are going to want to grab the mean and 95% confidence interval from our simulation estimates.
-
-Here's a quick function to do it and make it pretty.
-
-
-```r
-extract_pe_ci &lt;- function(x){
-  vals &lt;- c(mean(x), quantile(x, probs=c(.025, .975)))
-  names(vals) &lt;- c("PE", "LB", "UB")
-  return(vals)
-}
-```
-
-This returns a length 3 vector with the following names:
-* **PE** for *point estimate*
-* **LB** for *lower bound* of the confidence interval
-* **UB** for *upper bound*
-
----
-# Prep for Plotting
-
-First we extract our point estimates and confidence intervals by *applying* `extract_pe_ci()` to each column of estimated probabilities.
-
-.small[
-
-```r
-estimated_pes &lt;- as.data.frame( t(apply(sims_prob, 2, extract_pe_ci)))
-```
-]
-
-Then I add columns describing the scenarios to color, group, and facet over based on the counterfactual values.
-
-.small[
-
-```r
-estimated_pes$`Reporter`     &lt;- ifelse(cf_vals[,1]==1, "Any White", "All Black")
-estimated_pes$`Target`       &lt;- ifelse(cf_vals[,2]==1, "Any Black", "All White")
-estimated_pes$`Crime Type`   &lt;- ifelse(cf_vals[,3]==1, "Nuisance Crime", "Serious Crime")
-estimated_pes$`Neighborhood` &lt;- case_when(
-  cf_vals[,4]==1 ~ "Disadvantaged",
-  cf_vals[,5]==1 ~ "Changing",
-  TRUE ~ "Stable White")
-```
-]
----
-# Final Tidy Data
-
-.small[
-
-```r
-estimated_pes %&gt;% mutate_if(is.numeric, round, digits=3) # round for display
-```
-
-```
-##       PE    LB    UB  Reporter    Target     Crime Type  Neighborhood
-## 1  0.894 0.877 0.909 All Black All White  Serious Crime  Stable White
-## 2  0.929 0.914 0.942 All Black All White  Serious Crime      Changing
-## 3  0.927 0.909 0.943 All Black All White  Serious Crime Disadvantaged
-## 4  0.831 0.799 0.859 All Black All White Nuisance Crime  Stable White
-## 5  0.897 0.872 0.919 All Black All White Nuisance Crime      Changing
-## 6  0.879 0.845 0.909 All Black All White Nuisance Crime Disadvantaged
-## 7  0.866 0.852 0.879 All Black Any Black  Serious Crime  Stable White
-## 8  0.855 0.834 0.874 All Black Any Black  Serious Crime      Changing
-## 9  0.850 0.825 0.874 All Black Any Black  Serious Crime Disadvantaged
-## 10 0.790 0.758 0.820 All Black Any Black Nuisance Crime  Stable White
-## 11 0.799 0.760 0.833 All Black Any Black Nuisance Crime      Changing
-## 12 0.765 0.712 0.813 All Black Any Black Nuisance Crime Disadvantaged
-## 13 0.873 0.866 0.880 Any White All White  Serious Crime  Stable White
-## 14 0.914 0.900 0.927 Any White All White  Serious Crime      Changing
-## 15 0.912 0.896 0.928 Any White All White  Serious Crime Disadvantaged
-## 16 0.749 0.732 0.766 Any White All White Nuisance Crime  Stable White
-## 17 0.842 0.811 0.869 Any White All White Nuisance Crime      Changing
-## 18 0.816 0.774 0.853 Any White All White Nuisance Crime Disadvantaged
-## 19 0.941 0.937 0.946 Any White Any Black  Serious Crime  Stable White
-## 20 0.936 0.927 0.945 Any White Any Black  Serious Crime      Changing
-## 21 0.934 0.922 0.944 Any White Any Black  Serious Crime Disadvantaged
-## 22 0.875 0.863 0.885 Any White Any Black Nuisance Crime  Stable White
-## 23 0.880 0.856 0.901 Any White Any Black Nuisance Crime      Changing
-## 24 0.857 0.825 0.886 Any White Any Black Nuisance Crime Disadvantaged
-```
-]
-
----
-# Plot Code
-
-Finally we plot estimates (`PE`) as points with error bars (`UB`, `LB`) stratified on `Target` and `Reporter` and faceted by `Crime Type` and `Neighborhood`.
-
-.smallish[
-
-```r
-ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) + 
-  facet_grid(`Crime Type` ~ Neighborhood) +
-  geom_errorbar(aes(ymin = LB, ymax = UB), 
-                position = position_dodge(width = .4), 
-                size = 0.75, width = 0.15) +
-  geom_point(shape = 21, aes(fill = Reporter),
-             position = position_dodge(width = .4), 
-             size = 2) + 
-  scale_fill_manual("Reporter", values=c("Any White" = "white", 
-                                         "All Black" = "black")) +
-  ggtitle("Figure 3. Probability of Arrest", 
-      subtitle = "by Reporter and Target Race, Neighborhood and Crime Type") +
-  xlab("Race of Target") + ylab("Estimated Probability") + 
-  theme_bw() + theme(legend.position = c(0.86,0.15),
-                     legend.background = element_rect(color = 1))
-```
-]
----
-# Plot
-
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-46-1.svg)&lt;!-- --&gt;
+If you need to do something more complex then `ggeffects` allows, see the [Advanced Counterfactuals](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Advanced_Counterfactuals.html) slides here.
 
 ---
 class: inverse
@@ -1164,7 +1247,7 @@ corrplot(
 ---
 ## Correlogram
 
-![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-57-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week11_model_results_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -1265,7 +1348,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>CSSS508</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Chuck Lanfear" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, top, title-slide
+
+# CSSS508
+## Advanced Counterfactuals
+### Chuck Lanfear
+### Nov 29, 2019<br>Updated: Nov 29, 2019
+
+---
+
+
+
+
+---
+# An Advanced Example
+
+Here is an example using a model from a [recent article I worked on](https://onlinelibrary.wiley.com/doi/abs/10.1111/cico.12346?af=R).
+
+This models the likelihood of arrest of a target in a police contact conditional on neighborhood, race of target, and race of who called the police.
+
+.smallish[
+
+```r
+load("data/any_arrest_data.RData")
+mod_arrest &lt;- glm(arrest ~ white_comp_wit_vict*black_arr_susp + 
+                  crime_type*white_comp_wit_vict + caller_type + 
+                  arr_susp_subj_count + comp_wit_vict_count +
+                  black_arr_susp*neighb_type + crime_type*neighb_type + 
+                  serious_rate + pbl + pot + dis + year,
+                  family = binomial(link = "logit"),
+                  data = any_arrest_data)
+```
+]
+
+There are a lot of interactions here:
+
+* Target Race x Caller Race
+* Crime Type x Caller Race
+* Target Race x Neigbhorhood Type
+* Crime Type x Neighborhood Type
+
+---
+# `ggeffects` Output
+
+.smallish[
+
+```r
+mod_arrest %&gt;% ggpredict(terms = c("black_arr_susp", 
+              "white_comp_wit_vict", "neighb_type")) %&gt;% plot()
+```
+
+![](CSSS508_Advanced_Counterfactuals_files/figure-html/unnamed-chunk-2-1.svg)&lt;!-- --&gt;
+]
+
+---
+# A Complex Example
+
+`ggpredict()` can only handle three variables in its `terms=` argument.
+
+--
+
+For my article, I wanted to plot estimates across counterfactual values of all four variables in my interaction terms:
+
+* Caller Race
+* Target Race
+* Crime Type
+* Neighborhood Type
+
+How could I do this?
+
+--
+
+Stats + Math + Code = `\(\heartsuit\)`
+
+---
+# Some Background
+
+Given we've estimate a model, consider the following:
+
+1. `\(\hat{Y} = X\hat{\beta}\)`, where `\(X\)` is the model matrix and `\(\hat{\beta}\)` is the coefficients.
+2. `\(\hat{\beta}\)` is a vector of *random variables* whose estimated distribution is described by parameter variance-covariance matrix `\(\Sigma\)`.
+
+--
+
+Using this, we can do the following:
+
+1. Extract the model matrix `\(X\)`, estimated coefficients ( `\(\hat{\beta}\)` ), and `\(\Sigma\)` from our fitted model.
+2. Make lots of random parameter draws centered on `\(\hat{\beta}\)` and distributed according to `\(\Sigma\)`.
+3. Multiply *each* of these draws by *counterfactual* `\(X\)` *values* to get `\(\hat{Y}\)` values.
+4. Take the 2.5% and 97.% quantiles of these `\(\hat{Y}\)` values.
+
+--
+
+This produces a *simulated* mean and confidence interval. This is called the **percentile method**, a type of *bootstrapping*.
+
+---
+# Simulating Coefficients
+
+We can make random draws from our estimated distribution of parameters using `MASS::mvrnorm()` which takes three main arguments:
+1. `n`: The number of draws
+2. `mu`: mean—our coefficient estimates—obtained via `coef()`.
+3. `Sigma`: a covariance matrix, obtained via `vcov()`.
+
+.smallish[
+
+```r
+sim_params &lt;- MASS::mvrnorm(n = 10000, 
+                            mu = coef(mod_arrest),
+                            Sigma = vcov(mod_arrest))
+sim_params[1:6, 1:4]
+```
+
+```
+##      (Intercept) white_comp_wit_vict1 black_arr_susp1 crime_typeNuisance
+## [1,]    2.607433           -0.1445400      -0.2088677         -0.4205213
+## [2,]    2.806746           -0.2730482      -0.4302104         -0.5307773
+## [3,]    2.767576           -0.2636265      -0.4485759         -0.4024931
+## [4,]    2.933782           -0.3577383      -0.4122848         -0.4578530
+## [5,]    2.876218           -0.2410347      -0.3211176         -0.5863339
+## [6,]    2.664710           -0.2202876      -0.3469391         -0.5536719
+```
+]
+
+---
+# Counterfactual Values
+
+Next we need a data frame with our counterfactual values.
+
+We want one row (or *scenario*) per estimate to plot, and all variables at their means *except* the ones we are varying. We also don't want impossible values; `neighb_type` values are mutually exclusive.
+
+
+
+.smallish[
+
+```r
+x_values &lt;- colMeans(model.matrix(mod_arrest)) # vars at mean
+n_scen   &lt;- (2*2*2*3) # Number of scenarios
+x_frame  &lt;- setNames(data.frame(matrix(x_values, nrow=n_scen, 
+                                       ncol=length(x_values), 
+                                       byrow=T)), names(x_values))
+*cf_vals  &lt;- arrangements::permutations(c(0,1), k=5, replace=T)
+cf_vals  &lt;- cf_vals[cf_vals[,4]+cf_vals[,5]!=2 ,] # Remove impossible vals
+colnames(cf_vals) &lt;- c("white_comp_wit_vict1", "black_arr_susp1", 
+                       "crime_typeNuisance", "neighb_typeBlackDisadv",
+                       "neighb_typeChanging")
+x_frame[colnames(cf_vals)] &lt;- cf_vals # assign to countefactual df
+```
+]
+
+.footnote[`permutations()` is a quick way to get all combinations of some values.]
+
+---
+# What Do We Have?
+
+.smaller[
+
+```r
+glimpse(x_frame)
+```
+
+```
+## Observations: 24
+## Variables: 24
+## $ `(Intercept)`                               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1,...
+## $ white_comp_wit_vict1                        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ black_arr_susp1                             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 1, 1,...
+## $ crime_typeNuisance                          &lt;dbl&gt; 0, 0, 0, 1, 1, 1, 0, 0,...
+## $ caller_typeVictim                           &lt;dbl&gt; 0.8019442, 0.8019442, 0...
+## $ caller_typeWitness                          &lt;dbl&gt; 0.08516245, 0.08516245,...
+## $ arr_susp_subj_count                         &lt;dbl&gt; 1.552955, 1.552955, 1.5...
+## $ comp_wit_vict_count                         &lt;dbl&gt; 1.571604, 1.571604, 1.5...
+## $ neighb_typeBlackDisadv                      &lt;dbl&gt; 0, 0, 1, 0, 0, 1, 0, 0,...
+## $ neighb_typeChanging                         &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 1,...
+## $ serious_rate                                &lt;dbl&gt; 2.157661e-17, 2.157661e...
+## $ pbl                                         &lt;dbl&gt; 1.185962e-16, 1.185962e...
+## $ pot                                         &lt;dbl&gt; -2.808814e-17, -2.80881...
+## $ dis                                         &lt;dbl&gt; 9.987197e-18, 9.987197e...
+## $ year2009                                    &lt;dbl&gt; 0.2829368, 0.2829368, 0...
+## $ year2010                                    &lt;dbl&gt; 0.1670504, 0.1670504, 0...
+## $ year2011                                    &lt;dbl&gt; 0.09201842, 0.09201842,...
+## $ year2012                                    &lt;dbl&gt; 0.1232284, 0.1232284, 0...
+## $ `white_comp_wit_vict1:black_arr_susp1`      &lt;dbl&gt; 0.4452034, 0.4452034, 0...
+## $ `white_comp_wit_vict1:crime_typeNuisance`   &lt;dbl&gt; 0.1614479, 0.1614479, 0...
+## $ `black_arr_susp1:neighb_typeBlackDisadv`    &lt;dbl&gt; 0.04893835, 0.04893835,...
+## $ `black_arr_susp1:neighb_typeChanging`       &lt;dbl&gt; 0.111691, 0.111691, 0.1...
+## $ `crime_typeNuisance:neighb_typeBlackDisadv` &lt;dbl&gt; 0.0154771, 0.0154771, 0...
+## $ `crime_typeNuisance:neighb_typeChanging`    &lt;dbl&gt; 0.03300077, 0.03300077,...
+```
+]
+
+---
+# Fixing Interactions
+
+Our main variables are correct... but we need to make our interaction terms.
+
+The interaction terms in the model matrix have specific form `var1:var2`.
+
+Their counterfactual values are just equal to the products of their components.
+
+.small[
+
+```r
+x_frame &lt;- x_frame %&gt;%
+ mutate(
+  `white_comp_wit_vict1:black_arr_susp1`      = white_comp_wit_vict1*black_arr_susp1,
+  `white_comp_wit_vict1:crime_typeNuisance`   = white_comp_wit_vict1*crime_typeNuisance,
+  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
+  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging,
+  `crime_typeNuisance:neighb_typeBlackDisadv` = crime_typeNuisance*neighb_typeBlackDisadv,
+  `crime_typeNuisance:neighb_typeChanging`    = crime_typeNuisance*neighb_typeChanging,
+  `black_arr_susp1:neighb_typeBlackDisadv`    = black_arr_susp1*neighb_typeBlackDisadv,
+  `black_arr_susp1:neighb_typeChanging`       = black_arr_susp1*neighb_typeChanging)
+```
+]
+
+---
+# Fixed
+
+.smaller[
+
+```r
+glimpse(x_frame)
+```
+
+```
+## Observations: 24
+## Variables: 24
+## $ `(Intercept)`                               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1,...
+## $ white_comp_wit_vict1                        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ black_arr_susp1                             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 1, 1,...
+## $ crime_typeNuisance                          &lt;dbl&gt; 0, 0, 0, 1, 1, 1, 0, 0,...
+## $ caller_typeVictim                           &lt;dbl&gt; 0.8019442, 0.8019442, 0...
+## $ caller_typeWitness                          &lt;dbl&gt; 0.08516245, 0.08516245,...
+## $ arr_susp_subj_count                         &lt;dbl&gt; 1.552955, 1.552955, 1.5...
+## $ comp_wit_vict_count                         &lt;dbl&gt; 1.571604, 1.571604, 1.5...
+## $ neighb_typeBlackDisadv                      &lt;dbl&gt; 0, 0, 1, 0, 0, 1, 0, 0,...
+## $ neighb_typeChanging                         &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 1,...
+## $ serious_rate                                &lt;dbl&gt; 2.157661e-17, 2.157661e...
+## $ pbl                                         &lt;dbl&gt; 1.185962e-16, 1.185962e...
+## $ pot                                         &lt;dbl&gt; -2.808814e-17, -2.80881...
+## $ dis                                         &lt;dbl&gt; 9.987197e-18, 9.987197e...
+## $ year2009                                    &lt;dbl&gt; 0.2829368, 0.2829368, 0...
+## $ year2010                                    &lt;dbl&gt; 0.1670504, 0.1670504, 0...
+## $ year2011                                    &lt;dbl&gt; 0.09201842, 0.09201842,...
+## $ year2012                                    &lt;dbl&gt; 0.1232284, 0.1232284, 0...
+## $ `white_comp_wit_vict1:black_arr_susp1`      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ `white_comp_wit_vict1:crime_typeNuisance`   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ `black_arr_susp1:neighb_typeBlackDisadv`    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ `black_arr_susp1:neighb_typeChanging`       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1,...
+## $ `crime_typeNuisance:neighb_typeBlackDisadv` &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 0, 0,...
+## $ `crime_typeNuisance:neighb_typeChanging`    &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 0, 0,...
+```
+]
+
+---
+# Estimates!
+
+Then we just multiply our parameters by our counterfactual data:
+
+
+```r
+sims_logodds &lt;- sim_params %*% t(as.matrix(x_frame))  
+sims_logodds[1:6, 1:6]
+```
+
+```
+##          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]
+## [1,] 2.049268 2.416886 2.410549 1.628747 2.135495 1.926557
+## [2,] 2.232431 2.500566 2.392254 1.701654 2.159411 1.777246
+## [3,] 2.218834 2.477549 2.479057 1.816341 2.152658 2.294699
+## [4,] 2.270398 2.854398 2.846685 1.812545 2.417454 2.157137
+## [5,] 2.210847 2.544949 2.441084 1.624513 2.029152 1.841072
+## [6,] 2.170479 2.614637 2.721156 1.616807 2.286051 2.081889
+```
+
+```r
+dim(sims_logodds)
+```
+
+```
+## [1] 10000    24
+```
+
+Now we log-odds 10,000 estimates each (rows) of 24 counterfactual scenarios (columns).
+
+---
+# Getting Probabilities
+
+The model for this example is a *logistic regression*, which produces estimates in *log-odds* ( `\(ln(Odds(x))\)` ).
+
+We can convert these to probabilities based on two identities:
+
+1. `\(Odds(x) = e^{ln(Odds(x))}\)`
+2. `\(Pr(x) = \frac{Odds(x)}{(1 + Odds(x))}\)`
+
+
+```r
+sims_prob    &lt;- exp(sims_logodds) / (1 + exp(sims_logodds))
+sims_prob[1:6, 1:6]
+```
+
+```
+##           [,1]      [,2]      [,3]      [,4]      [,5]      [,6]
+## [1,] 0.8858737 0.9181059 0.9176282 0.8359979 0.8943056 0.8728678
+## [2,] 0.9031242 0.9241815 0.9162347 0.8457506 0.8965450 0.8553565
+## [3,] 0.9019281 0.9225529 0.9226605 0.8601265 0.8959169 0.9084370
+## [4,] 0.9063956 0.9455456 0.9451471 0.8596692 0.9181486 0.8963338
+## [5,] 0.9012193 0.9272335 0.9199070 0.8354165 0.8838241 0.8630755
+## [6,] 0.8975670 0.9317977 0.9382636 0.8343543 0.9077152 0.8891304
+```
+
+---
+# A Quick Function
+
+We are going to want to grab the mean and 95% confidence interval from our simulation estimates.
+
+Here's a quick function to do it and make it pretty.
+
+
+```r
+extract_pe_ci &lt;- function(x){
+  vals &lt;- c(mean(x), quantile(x, probs=c(.025, .975)))
+  names(vals) &lt;- c("PE", "LB", "UB")
+  return(vals)
+}
+```
+
+This returns a length 3 vector with the following names:
+* **PE** for *point estimate*
+* **LB** for *lower bound* of the confidence interval
+* **UB** for *upper bound*
+
+---
+# Prep for Plotting
+
+First we extract our point estimates and confidence intervals by *applying* `extract_pe_ci()` to each column of estimated probabilities.
+
+.small[
+
+```r
+estimated_pes &lt;- as.data.frame( t(apply(sims_prob, 2, extract_pe_ci)))
+```
+]
+
+Then I add columns describing the scenarios to color, group, and facet over based on the counterfactual values.
+
+.small[
+
+```r
+estimated_pes$`Reporter`     &lt;- ifelse(cf_vals[,1]==1, "Any White", "All Black")
+estimated_pes$`Target`       &lt;- ifelse(cf_vals[,2]==1, "Any Black", "All White")
+estimated_pes$`Crime Type`   &lt;- ifelse(cf_vals[,3]==1, "Nuisance Crime", "Serious Crime")
+estimated_pes$`Neighborhood` &lt;- case_when(
+  cf_vals[,4]==1 ~ "Disadvantaged",
+  cf_vals[,5]==1 ~ "Changing",
+  TRUE ~ "Stable White")
+```
+]
+---
+# Final Tidy Data
+
+.small[
+
+```r
+estimated_pes %&gt;% mutate_if(is.numeric, round, digits=3) # round for display
+```
+
+```
+##       PE    LB    UB  Reporter    Target     Crime Type  Neighborhood
+## 1  0.894 0.877 0.909 All Black All White  Serious Crime  Stable White
+## 2  0.929 0.914 0.942 All Black All White  Serious Crime      Changing
+## 3  0.927 0.909 0.943 All Black All White  Serious Crime Disadvantaged
+## 4  0.831 0.801 0.858 All Black All White Nuisance Crime  Stable White
+## 5  0.898 0.873 0.919 All Black All White Nuisance Crime      Changing
+## 6  0.879 0.844 0.909 All Black All White Nuisance Crime Disadvantaged
+## 7  0.866 0.852 0.879 All Black Any Black  Serious Crime  Stable White
+## 8  0.855 0.835 0.874 All Black Any Black  Serious Crime      Changing
+## 9  0.850 0.825 0.873 All Black Any Black  Serious Crime Disadvantaged
+## 10 0.790 0.759 0.820 All Black Any Black Nuisance Crime  Stable White
+## 11 0.799 0.761 0.833 All Black Any Black Nuisance Crime      Changing
+## 12 0.765 0.712 0.812 All Black Any Black Nuisance Crime Disadvantaged
+## 13 0.873 0.866 0.880 Any White All White  Serious Crime  Stable White
+## 14 0.914 0.900 0.927 Any White All White  Serious Crime      Changing
+## 15 0.912 0.896 0.928 Any White All White  Serious Crime Disadvantaged
+## 16 0.749 0.731 0.766 Any White All White Nuisance Crime  Stable White
+## 17 0.842 0.812 0.868 Any White All White Nuisance Crime      Changing
+## 18 0.816 0.775 0.852 Any White All White Nuisance Crime Disadvantaged
+## 19 0.941 0.937 0.945 Any White Any Black  Serious Crime  Stable White
+## 20 0.936 0.927 0.945 Any White Any Black  Serious Crime      Changing
+## 21 0.934 0.922 0.944 Any White Any Black  Serious Crime Disadvantaged
+## 22 0.875 0.863 0.885 Any White Any Black Nuisance Crime  Stable White
+## 23 0.880 0.857 0.900 Any White Any Black Nuisance Crime      Changing
+## 24 0.857 0.825 0.886 Any White Any Black Nuisance Crime Disadvantaged
+```
+]
+
+---
+# Plot Code
+
+Finally we plot estimates (`PE`) as points with error bars (`UB`, `LB`) stratified on `Target` and `Reporter` and faceted by `Crime Type` and `Neighborhood`.
+
+.smallish[
+
+```r
+ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) + 
+  facet_grid(`Crime Type` ~ Neighborhood) +
+  geom_errorbar(aes(ymin = LB, ymax = UB), 
+                position = position_dodge(width = .4), 
+                size = 0.75, width = 0.15) +
+  geom_point(shape = 21, aes(fill = Reporter),
+             position = position_dodge(width = .4), 
+             size = 2) + 
+  scale_fill_manual("Reporter", values=c("Any White" = "white", 
+                                         "All Black" = "black")) +
+  ggtitle("Figure 3. Probability of Arrest", 
+      subtitle = "by Reporter and Target Race, Neighborhood and Crime Type") +
+  xlab("Race of Target") + ylab("Estimated Probability") + 
+  theme_bw() + theme(legend.position = c(0.86,0.15),
+                     legend.background = element_rect(color = 1))
+```
+]
+---
+# Plot
+
+![](CSSS508_Advanced_Counterfactuals_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "tomorrow-night-bright",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
