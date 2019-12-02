@@ -213,29 +213,24 @@ layout: default
    * [`sf` Vignette: Overview](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)
    * [`sf` Home Page](https://r-spatial.github.io/sf/)
 
-### 10. Reproducibility and Best Practices (Not given Spring 2019)
-   * [Slides for Lecture 10: Reproducibility and Best Practices](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility.html)
-      + [PDF of Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility.pdf)
-      + [Rmd for Lecture 10 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week10/CSSS508_Week10_reproducibility.Rmd)
-   * [Leacture Video for Lecture 10](https://youtu.be/ALfCcu3jYkQ), recorded November 28, 2018
+### 10. Reproducibility and Model Results
+   * [Slides for Lecture 10: Reproducibility and Model Results](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.html)
+      + [PDF of Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.pdf)
+      + [Rmd for Lecture 10 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.Rmd)
+   * Two videos:
+      * [Lecture Video for Reproducibility](https://youtu.be/ALfCcu3jYkQ), recorded November 28, 2018
+      * [Lecture Video for Model Results](https://youtu.be/UEmCaHjxn8c), recorded June 5th, 2019
    * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
    * [Initial Steps Toward Reproducible Research](https://kbroman.org/steps2rr/) by Karl Broman
    * [The Plain Person's Guide to Plain Text Social Science](http://plain-text.co) by Kieran Healy
    * R Packages:
       + [`huskydown`](https://github.com/benmarwick/huskydown)
       + [`rrtools`](https://github.com/benmarwick/rrtools)
-      
-### 11. Working with Model Results (Under Renovation)
-   * [Slides for Lecture 11: Tidy Model Results and Applied Data Cleaning](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_model_results.html)
-       + [R script for Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_model_results.R)
-       + [PDF of Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_model_results.pdf)
-       + [Rmd for Lecture 11 slides](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Week11_model_results.Rmd)
-   * [Lecture Video for Lecture 11](https://youtu.be/UEmCaHjxn8c), recorded June 5th, 2019
-   * [`broom` vignette](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)
-   * [`ggeffects` vignette](https://cran.r-project.org/web/packages/ggeffects/vignettes/marginaleffects.html)
-   * [`sjPlot` home page](http://www.strengejacke.de/sjPlot/)
+      * [`broom` vignette](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)
+      * [`ggeffects` vignette](https://cran.r-project.org/web/packages/ggeffects/vignettes/marginaleffects.html)
+      * [`sjPlot` home page](http://www.strengejacke.de/sjPlot/)
    * [Overleaf online LaTeX editor](http://www.overleaf.com/)
-
+      
 ### 12. Working with Social Media Data (Out of Date)
    * [Slides for Lecture 12: Social media and text mining](http://clanfear.github.io/CSSS508/Lectures/Week12/CSSS508_week10_scraping.html)
        + [Rmd for Lecture 12 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week12/CSSS508_week10_scraping.Rpres)
