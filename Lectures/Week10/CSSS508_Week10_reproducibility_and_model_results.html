@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 10
 ## Model Results and Reproducibility
 ### Chuck Lanfear
-### Dec 4, 2019<br>Updated: Dec 1, 2019
+### Dec 4, 2019<br>Updated: Jan 8, 2020
 
 ---
 
@@ -82,20 +82,20 @@ summary(lm_1)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -7.2778 -1.6992  0.0025  2.0232  5.6933 
+## -7.5764 -1.8440 -0.0477  1.7345  8.9030 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   1.2211     0.3612   3.381 0.000873 ***
-## num1          0.6458     0.1077   5.998 9.48e-09 ***
-## fac1B         0.9017     0.4972   1.813 0.071314 .  
-## fac1C         3.0343     0.4740   6.401 1.11e-09 ***
+## (Intercept)   0.6424     0.4155   1.546   0.1237    
+## num1          0.6687     0.1036   6.453 8.39e-10 ***
+## fac1B         1.6153     0.5592   2.889   0.0043 ** 
+## fac1C         2.7352     0.5163   5.297 3.14e-07 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.773 on 196 degrees of freedom
-## Multiple R-squared:  0.2905,	Adjusted R-squared:  0.2797 
-## F-statistic: 26.76 on 3 and 196 DF,  p-value: 1.503e-14
+## Residual standard error: 2.971 on 196 degrees of freedom
+## Multiple R-squared:  0.2554,	Adjusted R-squared:  0.244 
+## F-statistic: 22.41 on 3 and 196 DF,  p-value: 1.619e-12
 ....
 ```
 ]
@@ -123,14 +123,14 @@ summary(glm_1)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -2.0475  -0.9829   0.3838   0.9215   1.9303  
+## -2.0553  -0.9235  -0.2940   0.9142   2.1183  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -1.14201    0.30659  -3.725 0.000195 ***
-## num1         0.42943    0.09577   4.484 7.32e-06 ***
-## fac1B        0.36278    0.39470   0.919 0.358029    
-## fac1C        1.72404    0.39658   4.347 1.38e-05 ***
+## (Intercept) -1.67230    0.35992  -4.646 3.38e-06 ***
+## num1         0.40830    0.08693   4.697 2.64e-06 ***
+## fac1B        1.33152    0.43446   3.065  0.00218 ** 
+## fac1C        1.93527    0.42330   4.572 4.83e-06 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -152,12 +152,12 @@ lm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic       p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
-## 1 (Intercept)    1.22      0.361      3.38 0.000873     
-## 2 num1           0.646     0.108      6.00 0.00000000948
-## 3 fac1B          0.902     0.497      1.81 0.0713       
-## 4 fac1C          3.03      0.474      6.40 0.00000000111
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    0.642     0.415      1.55 1.24e- 1
+## 2 num1           0.669     0.104      6.45 8.39e-10
+## 3 fac1B          1.62      0.559      2.89 4.30e- 3
+## 4 fac1C          2.74      0.516      5.30 3.14e- 7
 ```
 
 Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
@@ -180,10 +180,10 @@ glm_1 %&gt;% tidy()
 ## # A tibble: 4 x 5
 ##   term        estimate std.error statistic    p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-## 1 (Intercept)   -1.14     0.307     -3.72  0.000195  
-## 2 num1           0.429    0.0958     4.48  0.00000732
-## 3 fac1B          0.363    0.395      0.919 0.358     
-## 4 fac1C          1.72     0.397      4.35  0.0000138
+## 1 (Intercept)   -1.67     0.360      -4.65 0.00000338
+## 2 num1           0.408    0.0869      4.70 0.00000264
+## 3 fac1B          1.33     0.434       3.06 0.00218   
+## 4 fac1C          1.94     0.423       4.57 0.00000483
 ```
 
 ---
@@ -205,7 +205,7 @@ glance(lm_1)
 ## # A tibble: 1 x 11
 ##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC deviance df.residual
 ##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
-## 1     0.291         0.280  2.77      26.8 1.50e-14     4  -486.  982.  998.    1507.         196
+## 1     0.255         0.244  2.97      22.4 1.62e-12     4  -500. 1009. 1026.    1730.         196
 ```
 ]
 
@@ -223,14 +223,14 @@ augment(lm_1) %&gt;% head()
 
 ```
 ## # A tibble: 6 x 10
-##      yn    num1 fac1  .fitted .se.fit .resid   .hat .sigma  .cooksd .std.resid
-##   &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
-## 1 4.03  -0.333  B        1.91   0.387  2.12  0.0195   2.78 0.00296       0.772
-## 2 2.30   2.07   B        3.46   0.366 -1.16  0.0174   2.78 0.000782     -0.421
-## 3 4.98  -0.0516 B        2.09   0.376  2.89  0.0183   2.77 0.00518       1.05 
-## 4 0.891  0.155  B        2.22   0.369 -1.33  0.0177   2.78 0.00105      -0.485
-## 5 2.67  -0.536  B        1.78   0.397  0.898 0.0205   2.78 0.000560      0.327
-## 6 1.07  -1.36   C        3.37   0.405 -2.31  0.0213   2.78 0.00385      -0.841
+##      yn   num1 fac1   .fitted .se.fit .resid   .hat .sigma   .cooksd .std.resid
+##   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 -1.10 -2.42  C      1.76      0.455 -2.86  0.0234   2.97 0.00570       -0.975
+## 2 -1.88 -0.956 A      0.00286   0.449 -1.89  0.0228   2.98 0.00241       -0.642
+## 3  6.38  1.03  C      4.06      0.322  2.32  0.0118   2.97 0.00183        0.784
+## 4  3.97  1.15  A      1.41      0.405  2.55  0.0186   2.97 0.00357        0.868
+## 5  1.22  1.31  A      1.52      0.406 -0.301 0.0187   2.98 0.0000500     -0.102
+## 6 -2.20 -3.46  A     -1.67      0.608 -0.531 0.0419   2.98 0.000365      -0.183
 ```
 ]
 
@@ -250,18 +250,18 @@ The real advantage of `broom` becomes apparent when running many models at once.
 ## # Groups:   fac1 [3]
 ##    fac1  term        estimate std.error statistic  p.value
 ##    &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1 A     (Intercept)    0.480    0.306       1.57 1.22e- 1
-##  2 A     num1           0.441    0.120       3.67 5.20e- 4
-##  3 A     fac2No         1.46     0.421       3.47 9.67e- 4
-##  4 A     num2           0.752    0.0717     10.5  4.16e-15
-##  5 B     (Intercept)    1.68     0.446       3.77 3.79e- 4
-##  6 B     num1           0.532    0.145       3.67 5.26e- 4
-##  7 B     fac2No         1.06     0.554       1.91 6.06e- 2
-##  8 B     num2           0.625    0.0990      6.31 4.13e- 8
-##  9 C     (Intercept)    3.18     0.350       9.09 1.58e-13
-## 10 C     num1           0.667    0.127       5.25 1.51e- 6
-## 11 C     fac2No         1.12     0.454       2.48 1.56e- 2
-## 12 C     num2           0.779    0.0976      7.97 1.86e-11
+##  1 A     (Intercept)    0.314    0.340      0.923 3.60e- 1
+##  2 A     num1           0.196    0.127      1.55  1.28e- 1
+##  3 A     fac2No         1.53     0.487      3.14  2.84e- 3
+##  4 A     num2           0.620    0.0840     7.38  1.51e- 9
+##  5 B     (Intercept)    2.03     0.447      4.55  2.95e- 5
+##  6 B     num1           0.505    0.149      3.38  1.31e- 3
+##  7 B     fac2No         0.751    0.563      1.33  1.88e- 1
+##  8 B     num2           0.714    0.113      6.29  5.07e- 8
+##  9 C     (Intercept)    2.61     0.329      7.93  9.56e-12
+## 10 C     num1           0.563    0.110      5.12  1.98e- 6
+## 11 C     fac2No         1.27     0.464      2.73  7.83e- 3
+## 12 C     num2           0.715    0.0688    10.4   1.22e-16
 ```
 ]
 
@@ -443,14 +443,14 @@ lm_1_est
 ## # x = num1
 ## 
 ##   x predicted std.error conf.low conf.high
-##  -6    -1.304     0.867   -3.003     0.395
-##  -4    -0.436     0.683   -1.775     0.903
-##  -2     0.433     0.521   -0.587     1.454
-##   0     1.302     0.406    0.507     2.097
-##   2     2.171     0.384    1.419     2.923
-##   4     3.040     0.468    2.123     3.957
-##   6     3.909     0.616    2.701     5.117
-##   8     4.778     0.793    3.223     6.333
+##  -6    -1.768     0.946   -3.621     0.086
+##  -4    -0.831     0.735   -2.271     0.609
+##  -2     0.105     0.545   -0.962     1.173
+##   0     1.042     0.406    0.247     1.836
+##   2     1.978     0.379    1.236     2.720
+##   4     2.914     0.483    1.967     3.862
+##   6     3.851     0.659    2.558     5.143
+##   8     4.787     0.864    3.093     6.481
 ## 
 ## Adjusted for:
 ## * fac1 = A
@@ -561,7 +561,7 @@ but is not limited to:
 
 * Sending `ggeffects` objects to `ggplot2` to freely modify plots
 
-If you need to do something more complex then `ggeffects` allows, see the [Advanced Counterfactuals](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Advanced_Counterfactuals.html) slides here.
+If you need to do something more complex then `ggeffects` allows, see the [Advanced Counterfactuals](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Advanced_Counterfactuals.html) slides here.
 
 ---
 class: inverse

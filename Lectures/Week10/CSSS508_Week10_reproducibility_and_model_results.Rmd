@@ -425,7 +425,7 @@ but is not limited to:
 
 * Sending `ggeffects` objects to `ggplot2` to freely modify plots
 
-If you need to do something more complex then `ggeffects` allows, see the [Advanced Counterfactuals](http://clanfear.github.io/CSSS508/Lectures/Week11/CSSS508_Advanced_Counterfactuals.html) slides here.
+If you need to do something more complex then `ggeffects` allows, see the [Advanced Counterfactuals](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Advanced_Counterfactuals.html) slides here.
 
 ---
 class: inverse
