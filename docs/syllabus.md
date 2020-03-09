@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 
 # CSSS 508
 ## Introduction to R for Social Scientists
@@ -68,10 +73,10 @@ has a large number of students but no teaching assistant, so students are encour
 and expected to assist one another with technical problems, both in and out of class.
 Diagnosing problems in others' code is a very effective way to improve your understanding of programming.
 
-#### [Mailing List](mailto:csss508a_sp19@uw.edu)
+#### [Mailing List](mailto:csss508a_sp20@uw.edu)
 
 This course features a mailing list for asking questions. I encourage
-you to use this list as your primary means of answering *long technical questions*. To use the mailing list, address your email to `csss508a_sp19@uw.edu`
+you to use this list as your primary means of answering *long technical questions*. To use the mailing list, address your email to `csss508a_sp20@uw.edu`
 and it will be sent to the instructor and all students in the class. Unless you specifically
 request otherwise, emailed questions directed to me ([clanfear@uw.edu](mailto:clanfear@uw.edu)) that may be useful to others in the class will be answered with a response to the class mailing list. 
 
@@ -166,6 +171,12 @@ R or RStudio in office hours or over email.
 7. Writing Functions
 8. Working with Text Data
 9. Working with Geographical Data
-10. Reproducibility and Best Practices
-11. Working with Model Results
-12. Working with Social Media Data
+10. Reproducibility and Model Results
+
+## Religious Accomodation
+
+Washington state law requires that UW develop a policy for accommodation of student absences or significant hardship due to reasons of faith or conscience, or for organized religious activities. The UW’s policy, including more information about how to request an accommodation, is available at [Religious Accommodations Policy](https://registrar.washington.edu/staffandfaculty/religious-accommodations-policy/). Accommodations must be requested within the first two weeks of this course using the [Religious Accommodations Request form](https://registrar.washington.edu/students/religious-accommodations-request/).
+
+## Disability Resources
+
+Your experience in this class is important to me. If you have already established accommodations with Disability Resources for Students (DRS), please communicate your approved accommodations to me at your earliest convenience so we can discuss your needs in this course. If you have not yet established services through DRS, but have a temporary health condition or permanent disability that requires accommodations (conditions include but not limited to; mental health, attention-related, learning, vision, hearing, physical or health impacts), you are welcome to contact DRS at 206-543-8924 or [uwdrs@uw.edu](uwdrs@uw.edu) or [disability.uw.edu](disability.uw.edu). DRS offers resources and coordinates reasonable accommodations for students with disabilities and/or temporary health conditions.  Reasonable accommodations are established through an interactive process between you, your instructor(s) and DRS.  It is the policy and practice of the University of Washington to create inclusive and accessible learning environments consistent with federal and state law.
