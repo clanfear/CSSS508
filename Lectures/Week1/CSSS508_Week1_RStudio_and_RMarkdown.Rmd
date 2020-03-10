@@ -19,14 +19,9 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(comment = "##")
 ```
 
-```{r xaringan-themer, include = FALSE, purl=FALSE}
-library(xaringanthemer)
-source("../csss508css.R")
-```
-
 # Course Goals
 
-* Develop intermediate data management and analysis skills in R
+* Develop intermediate data management and visualization skills in R
 
 --
 
@@ -83,7 +78,6 @@ source("../csss508css.R")
 Location: 
 * Lecture: SAV 117 on Wednesdays, 3:30-5:20
 * Recommended Lab: SAV 117 on Mondays, 3:30-5:20
-   * Note: Limited capacity!
 * Office Hours: SAV 255 by Appointment
 
 Materials: http://clanfear.github.io/CSSS508
@@ -96,28 +90,25 @@ Grading:
 
 ---
 
-# Peer grading, really?
+# Ugh, peer grading?
 
---
+Yes, because:
 
-Yes, peer grading...
---
-
-* **60+ students, no TA**
 --
 
 * You will write your reports better knowing others will see them
 --
 
-* Learn new tricks from reading others' code; "appreciate the little things"
+* You earn alternate approaches to the same problem
 --
 
+* It is a practical necessity: **40+ students, no TA**
 
 ### Format:
 
-* Randomly assigned peers, turnaround time: 1 week (due before next class)
-* You'll get a rubric and are expected to leave constructive comments
-* High scoring assignments may be adapted into keys (with your permission)
+* Randomly assigned peers, due before following Wednesday
+* Follow the [grading rubric](https://clanfear.github.io/CSSS508/docs/peer_review.html)
+* Leave constructive comments--more than just a "good job!"
 * **Email me** if you want more feedback
 
 ---
@@ -130,7 +121,7 @@ All course materials are on the course website. This includes:
 * An R script for the slides to follow along in class.
 * PDFs of slides if you like those.
 * Homework templates (HW 4+).
-* Video recordings of *last term's* lectures.
+* Video recordings of a *prior term's* lectures.
 * Useful links to other resources.
 
 If you find something on the website doesn't work, please Slack or email me.
@@ -139,7 +130,7 @@ If you find something on the website doesn't work, please Slack or email me.
 
 # Lab
 
-Lab is optional but strongly recommended. They are interactive and are not recorded.
+Lab is optional but strongly recommended. They are interactive and not recorded.
 
 --
 
@@ -235,36 +226,34 @@ The lines preceded by `##` represent the output, or result, of running the code 
 
 # Lecture Plan
 
-1. Intro to R, RStudio, and R Markdown
+1. RStudio and R Markdown
 --
 
-2. Plotting with `ggplot2`
+2. Visualizing Data
 --
 
-3. Summarizing and Combining Data: `dplyr`
+3. Manipulating and Summarizing Data
 --
 
-4. R Data Structures
+4. Understanding R Data Structures
 --
 
-5. Data Cleaning: Import/Export, `tidyr`, Dates
+5. Importing, Exporting, Cleaning Data
 --
 
-6. Loops and Functions
+6. Using Loops
 --
 
-7. Vectorization and Functions
+7. Writing Functions
 --
 
-8. Strings / Text Processing
+8. Working with Text Data
 --
 
-9. Geospatial Data and Maps*
-10. Working with Model Results*
-11. Reproducibility and Applied Data Cleaning*
+9. Working with Geographical Data
+--
 
-.footnote[[\*] We will do *one* of these!]
-
+10. Reproducibility and Model Results
 --
 
 If you miss any lecture or want to see a lecture not offered this term, recordings are available on the course website.
@@ -328,20 +317,20 @@ RStudio can:
 
 # Selling you on R Markdown
 
-A killer feature of R/RStudio is ease of making R Markdown files:
+The ability to create R Markdown files is a powerful advantage of R:
 --
 
-* Document analysis as you go with integrated text, code, and output
+* Document analyses by combining text, code, and output
 
 --
 
-  + No rerunning, recopying, or repasting
+  + No copying and pasting into Word
 --
 
   + Easy for collaborators to understand
 --
 
-  + Show as little or as much of the code as you want
+  + Show as little or as much code as you want
   
 --
 
@@ -356,7 +345,7 @@ A killer feature of R/RStudio is ease of making R Markdown files:
 
 --
 
-* Works with LaTeX for math and more formatting control
+* Works with LaTeX and HTML for math and more formatting control
 
 --
 
