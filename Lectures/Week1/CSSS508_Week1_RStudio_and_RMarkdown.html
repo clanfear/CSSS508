@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>CSSS508, Week 1</title>
     <meta charset="utf-8" />
@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 1
 ## RStudio and RMarkdown
 ### Chuck Lanfear
-### Sep 25, 2019<br>Updated: Mar 9, 2020
+### Apr 1, 2020<br>Updated: Mar 29, 2020
 
 ---
 
@@ -77,9 +77,9 @@ class: center, top, title-slide
 # Logistics
 
 Location: 
-* Lecture: SAV 117 on Wednesdays, 3:30-5:20
-* Recommended Lab: SAV 117 on Mondays, 3:30-5:20
-* Office Hours: SAV 255 by Appointment
+* Lecture: [Zoom (848-704-242)](https://washington.zoom.us/j/848704242) on Wednesdays, 3:30-5:20
+* Recommended Lab: [Zoom (848-704-242)](https://washington.zoom.us/j/848704242) on Mondays, 3:30-5:20
+* Office Hours: By Appointment
 
 Materials: http://clanfear.github.io/CSSS508
 
@@ -122,7 +122,7 @@ All course materials are on the course website. This includes:
 * An R script for the slides to follow along in class.
 * PDFs of slides if you like those.
 * Homework templates (HW 4+).
-* Video recordings of a *prior term's* lectures.
+* Video recordings of the lectures and labs.
 * Useful links to other resources.
 
 If you find something on the website doesn't work, please Slack or email me.
@@ -131,7 +131,7 @@ If you find something on the website doesn't work, please Slack or email me.
 
 # Lab
 
-Lab is optional but strongly recommended. They are interactive and not recorded.
+Lab is optional but strongly recommended. They will be recorded this term.
 
 --
 
@@ -938,7 +938,7 @@ Fancier option: Use this instead to take today's date and make it read nicely:&l
 
     date: "`r format(Sys.Date(), format='%B %d, %Y')`"
 
-.footnote[[1] `format(Sys.Date(), format='%B %d, %Y')` says "format system date as month name (`%B`), day-of-month (`%d`), and four-digit year (`%Y`): March 09, 2020. See `?strptime` for these format codes.]
+.footnote[[1] `format(Sys.Date(), format='%B %d, %Y')` says "format system date as month name (`%B`), day-of-month (`%d`), and four-digit year (`%Y`): March 29, 2020. See `?strptime` for these format codes.]
 ---
 class: inverse
 
@@ -1209,8 +1209,6 @@ Mix in-line R calculations, tables, R output, and plots with text describing the
 
 Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (e.g. round `x` with `round(x, 2)`).
 
-### DUE: 11:59 PM, Tuesday, October 1st, 2019
-
 ---
 
 # Grading Rubric
@@ -1275,6 +1273,42 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -1292,17 +1326,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

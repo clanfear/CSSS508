@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>CSSS508, Week 10</title>
     <meta charset="utf-8" />
@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 10
 ## Model Results and Reproducibility
 ### Chuck Lanfear
-### Dec 4, 2019<br>Updated: Jan 8, 2020
+### Jun 3, 2019<br>Updated: Mar 29, 2020
 
 ---
 
@@ -81,21 +81,21 @@ summary(lm_1)
 ## lm(formula = yn ~ num1 + fac1, data = ex_dat)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -7.5764 -1.8440 -0.0477  1.7345  8.9030 
+##    Min     1Q Median     3Q    Max 
+## -8.198 -2.231 -0.235  1.911  7.386 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   0.6424     0.4155   1.546   0.1237    
-## num1          0.6687     0.1036   6.453 8.39e-10 ***
-## fac1B         1.6153     0.5592   2.889   0.0043 ** 
-## fac1C         2.7352     0.5163   5.297 3.14e-07 ***
+## (Intercept)    1.503      0.351    4.28  2.9e-05 ***
+## num1           0.584      0.103    5.66  5.2e-08 ***
+## fac1B          1.205      0.503    2.40    0.018 *  
+## fac1C          1.142      0.501    2.28    0.024 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.971 on 196 degrees of freedom
-## Multiple R-squared:  0.2554,	Adjusted R-squared:  0.244 
-## F-statistic: 22.41 on 3 and 196 DF,  p-value: 1.619e-12
+## Residual standard error: 2.94 on 196 degrees of freedom
+## Multiple R-squared:  0.162,	Adjusted R-squared:  0.149 
+## F-statistic: 12.6 on 3 and 196 DF,  p-value: 1.43e-07
 ....
 ```
 ]
@@ -122,15 +122,15 @@ summary(glm_1)
 ##     data = ex_dat)
 ## 
 ## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.0553  -0.9235  -0.2940   0.9142   2.1183  
+##    Min      1Q  Median      3Q     Max  
+## -1.801  -1.077  -0.589   1.065   1.836  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -1.67230    0.35992  -4.646 3.38e-06 ***
-## num1         0.40830    0.08693   4.697 2.64e-06 ***
-## fac1B        1.33152    0.43446   3.065  0.00218 ** 
-## fac1C        1.93527    0.42330   4.572 4.83e-06 ***
+## (Intercept)  -0.6306     0.2595   -2.43  0.01511 *  
+## num1          0.3069     0.0797    3.85  0.00012 ***
+## fac1B         0.3626     0.3582    1.01  0.31137    
+## fac1C         0.4828     0.3605    1.34  0.18048    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -152,12 +152,12 @@ lm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)    0.642     0.415      1.55 1.24e- 1
-## 2 num1           0.669     0.104      6.45 8.39e-10
-## 3 fac1B          1.62      0.559      2.89 4.30e- 3
-## 4 fac1C          2.74      0.516      5.30 3.14e- 7
+##   term        estimate std.error statistic      p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1 (Intercept)    1.50      0.351      4.28 0.0000286   
+## 2 num1           0.584     0.103      5.66 0.0000000521
+## 3 fac1B          1.21      0.503      2.40 0.0175      
+## 4 fac1C          1.14      0.501      2.28 0.0237
 ```
 
 Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
@@ -178,12 +178,12 @@ glm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic    p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-## 1 (Intercept)   -1.67     0.360      -4.65 0.00000338
-## 2 num1           0.408    0.0869      4.70 0.00000264
-## 3 fac1B          1.33     0.434       3.06 0.00218   
-## 4 fac1C          1.94     0.423       4.57 0.00000483
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   -0.631    0.260      -2.43 0.0151  
+## 2 num1           0.307    0.0797      3.85 0.000119
+## 3 fac1B          0.363    0.358       1.01 0.311   
+## 4 fac1C          0.483    0.360       1.34 0.180
 ```
 
 ---
@@ -203,9 +203,10 @@ glance(lm_1)
 
 ```
 ## # A tibble: 1 x 11
-##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC deviance df.residual
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
-## 1     0.255         0.244  2.97      22.4 1.62e-12     4  -500. 1009. 1026.    1730.         196
+##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC deviance
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+## 1     0.162         0.149  2.94      12.6 1.43e-7     4  -497. 1004. 1021.    1688.
+## # ... with 1 more variable: df.residual &lt;int&gt;
 ```
 ]
 
@@ -223,14 +224,14 @@ augment(lm_1) %&gt;% head()
 
 ```
 ## # A tibble: 6 x 10
-##      yn   num1 fac1   .fitted .se.fit .resid   .hat .sigma   .cooksd .std.resid
-##   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-## 1 -1.10 -2.42  C      1.76      0.455 -2.86  0.0234   2.97 0.00570       -0.975
-## 2 -1.88 -0.956 A      0.00286   0.449 -1.89  0.0228   2.98 0.00241       -0.642
-## 3  6.38  1.03  C      4.06      0.322  2.32  0.0118   2.97 0.00183        0.784
-## 4  3.97  1.15  A      1.41      0.405  2.55  0.0186   2.97 0.00357        0.868
-## 5  1.22  1.31  A      1.52      0.406 -0.301 0.0187   2.98 0.0000500     -0.102
-## 6 -2.20 -3.46  A     -1.67      0.608 -0.531 0.0419   2.98 0.000365      -0.183
+##       yn     num1 fac1  .fitted .se.fit .resid   .hat .sigma    .cooksd .std.resid
+##    &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+## 1 -1.52   3.44    A       3.51    0.396 -5.03  0.0182   2.92 0.0139        -1.73  
+## 2 -0.980  1.69    A       2.49    0.329 -3.47  0.0126   2.93 0.00452       -1.19  
+## 3  4.90  -0.647   C       2.27    0.413  2.64  0.0198   2.94 0.00415        0.907 
+## 4  6.05   5.53    B       5.94    0.603  0.114 0.0422   2.94 0.0000173      0.0396
+## 5  2.77   0.00818 C       2.65    0.391  0.119 0.0177   2.94 0.00000754     0.0409
+## 6  3.01  -1.92    A       0.381   0.462  2.63  0.0248   2.94 0.00524        0.908
 ```
 ]
 
@@ -250,18 +251,18 @@ The real advantage of `broom` becomes apparent when running many models at once.
 ## # Groups:   fac1 [3]
 ##    fac1  term        estimate std.error statistic  p.value
 ##    &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1 A     (Intercept)    0.314    0.340      0.923 3.60e- 1
-##  2 A     num1           0.196    0.127      1.55  1.28e- 1
-##  3 A     fac2No         1.53     0.487      3.14  2.84e- 3
-##  4 A     num2           0.620    0.0840     7.38  1.51e- 9
-##  5 B     (Intercept)    2.03     0.447      4.55  2.95e- 5
-##  6 B     num1           0.505    0.149      3.38  1.31e- 3
-##  7 B     fac2No         0.751    0.563      1.33  1.88e- 1
-##  8 B     num2           0.714    0.113      6.29  5.07e- 8
-##  9 C     (Intercept)    2.61     0.329      7.93  9.56e-12
-## 10 C     num1           0.563    0.110      5.12  1.98e- 6
-## 11 C     fac2No         1.27     0.464      2.73  7.83e- 3
-## 12 C     num2           0.715    0.0688    10.4   1.22e-16
+##  1 A     (Intercept)   1.09      0.362      3.02  3.42e- 3
+##  2 A     num1          0.423     0.111      3.81  2.73e- 4
+##  3 A     fac2No        0.903     0.478      1.89  6.24e- 2
+##  4 A     num2          0.705     0.0686    10.3   4.39e-16
+##  5 B     (Intercept)   1.63      0.461      3.54  8.12e- 4
+##  6 B     num1          0.748     0.161      4.64  2.23e- 5
+##  7 B     fac2No        0.638     0.549      1.16  2.50e- 1
+##  8 B     num2          0.662     0.0889     7.45  6.80e-10
+##  9 C     (Intercept)   3.10      0.288     10.8   2.94e-15
+## 10 C     num1          0.577     0.0968     5.95  1.80e- 7
+## 11 C     fac2No        0.0877    0.415      0.211 8.33e- 1
+## 12 C     num2          0.750     0.0833     9.00  1.79e-12
 ```
 ]
 
@@ -442,15 +443,14 @@ lm_1_est
 ## # Predicted values of yn
 ## # x = num1
 ## 
-##   x predicted std.error conf.low conf.high
-##  -6    -1.768     0.946   -3.621     0.086
-##  -4    -0.831     0.735   -2.271     0.609
-##  -2     0.105     0.545   -0.962     1.173
-##   0     1.042     0.406    0.247     1.836
-##   2     1.978     0.379    1.236     2.720
-##   4     2.914     0.483    1.967     3.862
-##   6     3.851     0.659    2.558     5.143
-##   8     4.787     0.864    3.093     6.481
+##  x | Predicted |   SE |        95% CI
+## -------------------------------------
+## -4 |     -0.53 | 0.67 | [-1.85, 0.78]
+## -2 |      0.18 | 0.51 | [-0.81, 1.17]
+##  0 |      0.90 | 0.40 | [ 0.12, 1.68]
+##  2 |      1.62 | 0.40 | [ 0.83, 2.41]
+##  4 |      2.33 | 0.51 | [ 1.33, 3.34]
+##  6 |      3.05 | 0.68 | [ 1.71, 4.39]
 ## 
 ## Adjusted for:
 ## * fac1 = A
@@ -638,6 +638,10 @@ those you may find in journal articles.
 
 ```r
 library(sjPlot)
+```
+
+```
+## Install package "strengejacke" from GitHub (`devtools::install_github("strengejacke/strengejacke")`) to load all sj-packages at once!
 ```
 
 ---
@@ -1350,6 +1354,42 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -1367,17 +1407,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

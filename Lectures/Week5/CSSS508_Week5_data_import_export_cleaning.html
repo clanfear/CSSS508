@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>CSSS508, Week 5</title>
     <meta charset="utf-8" />
@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### Oct 23, 2019<br>Updated: Oct 28, 2019
+### Apr 29, 2020<br>Updated: Mar 29, 2020
 
 ---
 
@@ -630,7 +630,7 @@ summary(billboard_2000$rank)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##       1      26      51      51      76     100   18785
+##    1.00   26.00   51.00   51.05   76.00  100.00   18785
 ```
 
 This is an improvement, but we don't want to keep the 18785 rows with missing ranks (i.e. observations for weeks since entering the Hot 100 that the song was no longer on the Hot 100).
@@ -650,7 +650,7 @@ summary(billboard_2000$rank)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##     1.0    26.0    51.0    51.1    76.0   100.0
+##    1.00   26.00   51.00   51.05   76.00  100.00
 ```
 
 ---
@@ -667,7 +667,7 @@ summary(billboard_2000$week)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##     1.0     5.0    10.0    11.5    16.0    65.0
+##    1.00    5.00   10.00   11.47   16.00   65.00
 ```
 
 For more sophisticated conversion or pattern checking, you'll need to use string parsing (to be covered in week 8).
@@ -715,7 +715,7 @@ summary(billboard_2000$length)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    2.60    3.67    3.93    4.03    4.28    7.83
+##   2.600   3.667   3.933   4.031   4.283   7.833
 ```
 
 `sep = :` tells `separate()` to split the column into two where it finds a colon (`:`).
@@ -969,25 +969,25 @@ glimpse(spd_raw)
 ```
 ## Observations: 706
 ## Variables: 19
-## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 17018...
-## $ `CAD Event Number`            &lt;dbl&gt; 1.6e+10, 1.6e+10, 1.6e+10, 1.6e+...
-## $ `General Offense Number`      &lt;dbl&gt; 2.02e+09, 2.02e+09, 2.02e+09, 2....
-## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202...
-## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT",...
-## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS"...
-## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRE...
-## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25...
-## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOC...
-## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B...
-## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B...
-## $ `Census Tract`                &lt;dbl&gt; 9100, 11801, 7200, 8002, 8100, 5...
-## $ Longitude                     &lt;dbl&gt; -122, -122, -122, -122, -122, -1...
-## $ Latitude                      &lt;dbl&gt; 47.6, 47.5, 47.6, 47.6, 47.6, 47...
-## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47....
-## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIF...
-## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING",...
-## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "C...
-## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25...
+## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 1701846, 1701844, 17...
+## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 16000104108, 16000104...
+## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 2016104108, 2016104094,...
+## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202", "430", "186"...
+## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT", "TRESPASS", "D...
+## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS", "DISTURBANCES...
+## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRESPASS", "DISTUR...
+## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25/2016 11:57:22 ...
+## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOCK OF RAINIER AV...
+## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B", "U", "E", "E...
+## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B3", "B3", "U2",...
+## $ `Census Tract`                &lt;dbl&gt; 9100.1019, 11800.6020, 7200.1056, 8002.1002, 81...
+## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122.3420, -122.3411, -12...
+## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.61422, 47.61135, 47.6102...
+## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47.51985, -122.268...
+## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIFT OR SVCS)", "S...
+## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING", "TRESPASS", "B...
+## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "CRISIS CALL", "S...
+## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25/2016 09:54:23 ...
 ```
 ]
 
@@ -1018,7 +1018,7 @@ str(spd$`Event Clearance Date`)
 ```
 
 ```
-##  POSIXct[1:706], format: "2016-03-25 23:58:30" "2016-03-25 23:57:22" ...
+##  POSIXct[1:706], format: "2016-03-25 23:58:30" "2016-03-25 23:57:22" "2016-03-25 23:54:19" ...
 ```
 
 .footnote[`mdy_hms()` automatically processes datetimes in month-day-year, hour-minute-second format. It figures out separators for you!]
@@ -1132,7 +1132,7 @@ str(spd_times$`Initial Type Group`)
 ```
 
 ```
-##  chr [1:706] "THEFT" "THEFT" "TRESPASS" "CRISIS CALL" ...
+##  chr [1:706] "THEFT" "THEFT" "TRESPASS" "CRISIS CALL" "SUSPICIOUS CIRCUMSTANCES" ...
 ```
 
 ```r
@@ -1263,9 +1263,8 @@ levels(jayz_biggest$track)
 ```
 
 ```
-## [1] "I Just Wanna Love U ..." "Big Pimpin'"            
-## [3] "Anything"                "Do It Again (Put Ya ..."
-## [5] "Hey Papi"
+## [1] "I Just Wanna Love U ..." "Big Pimpin'"             "Anything"               
+## [4] "Do It Again (Put Ya ..." "Hey Papi"
 ```
 
 ```r
@@ -1287,8 +1286,8 @@ The data have no documentation (aside from what I provide), so show your detecti
 
 This homework is two parts to be completed in each of the next two weeks. It can be daunting, so do not wait until Monday to start. I recommend reading instructions closely, working with others, and using the mailing list and Slack.
 
-## PART 1 DUE: 11:59 PM, Oct 29th
-## PART 2 DUE: 11:59 PM, Nov 5th
+## PART 1 DUE: Next Week
+## PART 2 DUE: In Two Weeks
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -1336,6 +1335,42 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -1353,17 +1388,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

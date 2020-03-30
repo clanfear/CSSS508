@@ -2,7 +2,7 @@
 title: "CSSS508, Week 7"
 subtitle: "Vectorization and Functions"
 author: "Chuck Lanfear"
-date: "Nov 6, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "May 13, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -639,5 +639,5 @@ Using the provided template, you will write:
 
 There is some string processing needed—much of which you have already seen or can probably Google—but *some will come in the next lecture*. I give suggestions in the template, but I can cover string processing in detail in lab if needed before the homework is due.
 
-## PART 1 DUE: 11:59 PM, Nov 19th
-## PART 2 DUE: 11:59 PM, Nov 26th
+## PART 1 DUE: Next week
+## PART 2 DUE: In two weeks

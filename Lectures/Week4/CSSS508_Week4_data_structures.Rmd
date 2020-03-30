@@ -2,7 +2,7 @@
 title: "CSSS508, Week 4"
 subtitle: "R Data Structures"
 author: "Chuck Lanfear"
-date: "Oct 16, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Apr 22, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs

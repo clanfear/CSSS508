@@ -2,7 +2,7 @@
 title: "CSSS508, Week 1"
 subtitle: "RStudio and RMarkdown"
 author: "Chuck Lanfear"
-date: "Sep 25, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Apr 1, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -76,9 +76,9 @@ knitr::opts_chunk$set(comment = "##")
 # Logistics
 
 Location: 
-* Lecture: SAV 117 on Wednesdays, 3:30-5:20
-* Recommended Lab: SAV 117 on Mondays, 3:30-5:20
-* Office Hours: SAV 255 by Appointment
+* Lecture: [Zoom (848-704-242)](https://washington.zoom.us/j/848704242) on Wednesdays, 3:30-5:20
+* Recommended Lab: [Zoom (848-704-242)](https://washington.zoom.us/j/848704242) on Mondays, 3:30-5:20
+* Office Hours: By Appointment
 
 Materials: http://clanfear.github.io/CSSS508
 
@@ -121,7 +121,7 @@ All course materials are on the course website. This includes:
 * An R script for the slides to follow along in class.
 * PDFs of slides if you like those.
 * Homework templates (HW 4+).
-* Video recordings of a *prior term's* lectures.
+* Video recordings of the lectures and labs.
 * Useful links to other resources.
 
 If you find something on the website doesn't work, please Slack or email me.
@@ -130,7 +130,7 @@ If you find something on the website doesn't work, please Slack or email me.
 
 # Lab
 
-Lab is optional but strongly recommended. They are interactive and not recorded.
+Lab is optional but strongly recommended. They will be recorded this term.
 
 --
 
@@ -1078,8 +1078,6 @@ Write up a .Rmd file showing some exploratory analyses of the Swiss fertility da
 Mix in-line R calculations, tables, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`) and *may not hard-code any numbers referenced in your text*.
 
 Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `results` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (e.g. round `x` with `round(x, 2)`).
-
-### DUE: 11:59 PM, Tuesday, October 1st, 2019
 
 ---
 

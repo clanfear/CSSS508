@@ -11,17 +11,16 @@ output:
 Instructor: [Charles Lanfear](mailto:clanfear@uw.edu)
 
 ## Class Locations
+
+*Note for Spring 2020 there will be no in-person meetings or office hours.*
+
 **Lecture**
 
-[Sieg 117](https://www.washington.edu/maps/#!/sig): Wednesdays 3:30-5:20
+[Zoom (848-704-242)](https://washington.zoom.us/j/848704242): Wednesdays 3:30-5:20
 
 **Lab (Optional but highly recommended)**
 
-[Savery 117](https://www.washington.edu/maps/#!/sav): Mondays 3:30-5:20
-
-**My Office**
-
-[Savery 255](https://www.washington.edu/maps/#!/sav): By appointment
+[Zoom (848-704-242)](https://washington.zoom.us/j/848704242): Mondays 3:30-5:20
 
 ## Overview
 This course is intended to give students a foundational understanding of programming
@@ -57,7 +56,7 @@ code, and assignments. It will be updated continually throughout the quarter, an
 available in full after the term has ended as a reference.
 
 ### Labs
-Lab time is scheduled in [Savery 117](https://www.washington.edu/maps/#!/sav)
+Lab time is scheduled on [Zoom (848-704-242)](https://washington.zoom.us/j/848704242)
 on Mondays from 3:30 to 5:20. Attendance is optional for labs and this time should be considered a form of extended
 office hours and collaborative work time. You are highly encouraged to attend and ask questions
 about homework, lectures, or programming in R in general. Beginning in week 5, we will walk

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>CSSS508, Week 9</title>
     <meta charset="utf-8" />
@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### Nov 27, 2019<br>Updated: Nov 29, 2019
+### May 27, 2020<br>Updated: Mar 29, 2020
 
 ---
 
@@ -85,25 +85,25 @@ glimpse(spd_raw)
 ```
 ## Observations: 706
 ## Variables: 19
-## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 1701846, 1...
-## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 16000104108...
-## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 2016104108, 2...
-## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202", "4...
-## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT", "TRE...
-## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS", "DI...
-## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRESPASS...
-## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25/2016...
-## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOCK OF ...
-## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B", "U...
-## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B3", "...
-## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.106, 8002.1...
-## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122.3420, -122...
-## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.61422, 47.6113...
-## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47.51985...
-## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIFT OR ...
-## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING", "TRE...
-## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "CRISIS...
-## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25/2016...
+## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 1701846, 1701844, 17...
+## $ `CAD Event Number`            &lt;dbl&gt; 1.6e+10, 1.6e+10, 1.6e+10, 1.6e+10, 1.6e+10, 1....
+## $ `General Offense Number`      &lt;dbl&gt; 2.02e+09, 2.02e+09, 2.02e+09, 2.02e+09, 2.02e+0...
+## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202", "430", "186"...
+## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT", "TRESPASS", "D...
+## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS", "DISTURBANCES...
+## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRESPASS", "DISTUR...
+## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25/2016 11:57:22 ...
+## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOCK OF RAINIER AV...
+## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B", "U", "E", "E...
+## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B3", "B3", "U2",...
+## $ `Census Tract`                &lt;dbl&gt; 9100, 11801, 7200, 8002, 8100, 5100, 3500, 5301...
+## $ Longitude                     &lt;dbl&gt; -122, -122, -122, -122, -122, -122, -122, -122,...
+## $ Latitude                      &lt;dbl&gt; 47.6, 47.5, 47.6, 47.6, 47.6, 47.7, 47.7, 47.7,...
+## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47.51985, -122.268...
+## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIFT OR SVCS)", "S...
+## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING", "TRESPASS", "B...
+## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "CRISIS CALL", "S...
+## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25/2016 09:54:23 ...
 ```
 ]
 
@@ -133,7 +133,7 @@ Sometimes, however, we want to plot these points over existing maps.
 ]
 
 .pull-right[
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -160,7 +160,7 @@ What this package does for you:
 ---
 # Installation
 
-As of Nov 29, 2019, the current version of `ggmap` must be downloaded from GitHub.
+As of Mar 29, 2020, the current version of `ggmap` must be downloaded from GitHub.
 
 This can be done using the `devtools` package.
 
@@ -499,7 +499,7 @@ precinct_shape &lt;- st_read("./data/district/votdst.shp",
 ## Simple feature collection with 2592 features and 5 fields
 ## geometry type:  MULTIPOLYGON
 ## dimension:      XY
-## bbox:           xmin: 1220179 ymin: 31555.16 xmax: 1583562 ymax: 287678
+## bbox:           xmin: 1220000 ymin: 31600 xmax: 1580000 ymax: 288000
 ## epsg (SRID):    NA
 ## proj4string:    +proj=lcc +lat_1=47.5 +lat_2=48.73333333333333 +lat_0=47 +lon_0=-120.8333333333333 +x_0=500000.0000000001 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs
 ```
@@ -553,11 +553,11 @@ glimpse(precincts_votes_sf)
 ## Observations: 960
 ## Variables: 5
 ## Groups: Precinct [960]
-## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 11-1597"...
-## $ P_Dem    &lt;dbl&gt; 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.8325991, 0.8...
-## $ P_Rep    &lt;dbl&gt; 0.15612648, 0.07789474, 0.13418530, 0.08649469, 0.08590308...
-## $ Turnout  &lt;dbl&gt; 0.6931507, 0.7274119, 0.7347418, 0.7522831, 0.7579299, 0.7...
-## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((1273698 193..., ...
+## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 11-1597", "SEA 11-...
+## $ P_Dem    &lt;dbl&gt; 0.771, 0.817, 0.751, 0.838, 0.833, 0.815, 0.828, 0.838, 0.821, 0.820...
+## $ P_Rep    &lt;dbl&gt; 0.1561, 0.0779, 0.1342, 0.0865, 0.0859, 0.0803, 0.1109, 0.1237, 0.12...
+## $ Turnout  &lt;dbl&gt; 0.693, 0.727, 0.735, 0.752, 0.758, 0.771, 0.687, 0.672, 0.622, 0.767...
+## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((1273698 193..., MULTIPOLYG...
 ```
 ]
 
@@ -591,7 +591,7 @@ ggplot(precincts_votes_sf,
 ]
 
 .pull-right[
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-15-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-43-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -688,12 +688,12 @@ glimpse(king_county)
 ```
 ## Observations: 796
 ## Variables: 6
-## $ GEOID    &lt;chr&gt; "53033000100", "53033000100", "53033000200", "53033000200"...
-## $ NAME     &lt;chr&gt; "Census Tract 1, King County, Washington", "Census Tract 1...
-## $ variable &lt;chr&gt; "B02001_001", "B02009_001", "B02001_001", "B02009_001", "B...
-## $ estimate &lt;dbl&gt; 7963, 1550, 7973, 422, 2822, 170, 6721, 1168, 5300, 302, 3...
-## $ moe      &lt;dbl&gt; 529, 449, 377, 254, 201, 92, 454, 441, 571, 218, 165, 37, ...
-## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.2965 4..., MULTIPOLYGON ...
+## $ GEOID    &lt;chr&gt; "53033000100", "53033000100", "53033000200", "53033000200", "5303300...
+## $ NAME     &lt;chr&gt; "Census Tract 1, King County, Washington", "Census Tract 1, King Cou...
+## $ variable &lt;chr&gt; "B02001_001", "B02009_001", "B02001_001", "B02009_001", "B02001_001"...
+## $ estimate &lt;dbl&gt; 7985, 1567, 8498, 797, 2991, 142, 6560, 842, 5419, 340, 3143, 22, 81...
+## $ moe      &lt;dbl&gt; 526, 485, 435, 170, 219, 86, 423, 259, 619, 242, 189, 24, 558, 218, ...
+## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122 47.7, ..., MULTIPOLYGON (((-122 47...
 ```
 ]
 
@@ -731,23 +731,23 @@ head(king_county, 10)
 ## Simple feature collection with 10 features and 4 fields
 ## geometry type:  MULTIPOLYGON
 ## dimension:      XY
-## bbox:           xmin: -122.3799 ymin: 47.69462 xmax: -122.2551 ymax: 47.73416
+## bbox:           xmin: -122 ymin: 47.7 xmax: -122 ymax: 47.7
 ## epsg (SRID):    4269
 ## proj4string:    +proj=longlat +datum=NAD83 +no_defs
 ## # A tibble: 10 x 5
 ## # Groups:   GEOID [10]
-##    GEOID  NAME                             geometry `Total Populati~ `Any Black`
-##    &lt;chr&gt;  &lt;chr&gt;                  &lt;MULTIPOLYGON [°]&gt;            &lt;dbl&gt;       &lt;dbl&gt;
-##  1 53033~ Census Tr~ (((-122.2965 47.73378, -122.2~             7963      0.195 
-##  2 53033~ Census Tr~ (((-122.3236 47.72309, -122.3~             7973      0.0529
-##  3 53033~ Census Tr~ (((-122.3452 47.73413, -122.3~             2822      0.0602
-##  4 53033~ Census Tr~ (((-122.3609 47.73414, -122.3~             6721      0.174 
-##  5 53033~ Census Tr~ (((-122.3609 47.72507, -122.3~             5300      0.0570
-##  6 53033~ Census Tr~ (((-122.3764 47.71652, -122.3~             3052      0.0131
-##  7 53033~ Census Tr~ (((-122.345 47.72868, -122.33~             8061      0.111 
-##  8 53033~ Census Tr~ (((-122.3127 47.71944, -122.3~             4854      0.142 
-##  9 53033~ Census Tr~ (((-122.2915 47.7155, -122.29~             2582      0.0352
-## 10 53033~ Census Tr~ (((-122.285 47.7192, -122.280~             1972      0.0152
+##    GEOID   NAME                                      geometry `Total Populati~ `Any Black`
+##    &lt;chr&gt;   &lt;chr&gt;                           &lt;MULTIPOLYGON [°]&gt;            &lt;dbl&gt;       &lt;dbl&gt;
+##  1 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             7985     0.196  
+##  2 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             8498     0.0938 
+##  3 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             2991     0.0475 
+##  4 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             6560     0.128  
+##  5 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             5419     0.0627 
+##  6 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             3143     0.00700
+##  7 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             8124     0.100  
+##  8 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             5217     0.141  
+##  9 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             2710     0.0365 
+## 10 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             2009     0.0164
 ```
 ]
 
@@ -804,7 +804,7 @@ Then we can reproduce the same plot using `kc_nowater`...
 .footnote[[1] Requires the `lwgeom` pacakge: `install.packages("lwgeom")`]
 
 ---
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-54-1.svg)&lt;!-- --&gt;
 
 ---
 # State Example Data
@@ -845,7 +845,7 @@ pb_state %&gt;%
 
 ---
 
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-58-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -854,7 +854,7 @@ class: inverse
 
 Use the HW 7 template to practice making maps of the restaurant inspection data. 
 
-If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM on December 3rd.
+If you wish to submit it for bonus points, turn it in via Canvas by 11:59 PM next Tuesday.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -902,6 +902,42 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -919,17 +955,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

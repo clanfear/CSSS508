@@ -2,7 +2,7 @@
 title: "CSSS508, Week 8"
 subtitle: "Strings"
 author: "Chuck Lanfear"
-date: "Nov 20, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "May 20, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs

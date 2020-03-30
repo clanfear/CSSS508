@@ -2,7 +2,7 @@
 title: "CSSS508, Week 6"
 subtitle: "Loops"
 author: "Chuck Lanfear"
-date: "Oct 30, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "May 6, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -766,4 +766,4 @@ pmax(c(0, 2, 4), c(1, 1, 1), c(2, 2, 2))
 class: inverse
 # Homework
 
-Reminder: HW 5 Part II assigned last week is due midnight Tuesday 11/5.
+Reminder: HW 5 Part II assigned last week is due midnight Tuesday.

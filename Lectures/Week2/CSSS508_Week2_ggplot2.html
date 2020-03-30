@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>CSSS508, Week 2</title>
     <meta charset="utf-8" />
@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 2
 ## Plotting with <code>ggplot2</code>
 ### Chuck Lanfear
-### Oct 2, 2019<br>Updated: Oct 2, 2019
+### Apr 8, 2020<br>Updated: Mar 29, 2020
 
 ---
 
@@ -256,6 +256,23 @@ This will install a *large* number of R packages we will use throughout the term
 
 ```r
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
 ```
 
 ---
@@ -1259,6 +1276,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
 * geom_line(stat = "smooth", method = "loess",
 *           aes(group = continent))
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+```r
   #
   #
   #
@@ -1282,6 +1306,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line(stat = "smooth", method = "loess", 
             aes(group = continent)) +
 * facet_wrap(~ continent, nrow = 2)
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+```r
   #
   #
   #
@@ -1305,6 +1336,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 *           aes(group = continent, color = "Continent")) +
   facet_wrap(~ continent, nrow = 2) +
 * scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue"))
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+```r
   #
   #
   #
@@ -1327,6 +1365,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   facet_wrap(~ continent, nrow = 2) +
   scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
 * scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3))
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+```r
   #
   #
   #
@@ -1349,6 +1394,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   facet_wrap(~ continent, nrow = 2) +
   scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
   scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3))
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+```r
   #
   #
   #
@@ -1373,6 +1425,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
   scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
 * theme_minimal(base_size = 14) + ylab("Years") + xlab("")
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+```r
   #
   #
 ```
@@ -1396,6 +1455,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
   theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
 * ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country")
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+```r
   #
 ```
 
@@ -1419,6 +1485,10 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
   ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
 * theme(axis.text.x = element_text(angle = 45))
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
 ```
 
 ![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-71-1.svg)&lt;!-- --&gt;
@@ -1445,11 +1515,20 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 * theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45))
 ```
 
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
 ![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-72-1.svg)&lt;!-- --&gt;
 ]
 ---
 
 ## Fussy Manual Legend
+
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
 
 ![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-73-1.svg)&lt;!-- --&gt;
 
@@ -1611,9 +1690,35 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -1622,7 +1727,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
