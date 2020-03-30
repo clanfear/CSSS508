@@ -655,7 +655,7 @@ acs_2015_vars[10:18,] %>% print()
 ---
 # Getting Data
 
-```{r, include=FALSE, cache=TRUE}
+```{r, include=FALSE, cache=FALSE}
 king_county <- get_acs(geography="tract", state="WA", 
                        county="King", geometry = TRUE,
                        variables=c("B02001_001E", 
