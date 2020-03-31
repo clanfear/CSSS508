@@ -8,6 +8,7 @@ layout: default
 
 ## Important links
 
+* [Zoom Meeting for Lectures](https://washington.zoom.us/j/848704242)
 * [Canvas Page (enrolled students only)](https://canvas.uw.edu/courses/1272898)
 * [Syllabus](https://clanfear.github.io/CSSS508/docs/syllabus.html)
 * [Homework Instructions](https://clanfear.github.io/CSSS508/docs/homework.html) and grading rubric.
