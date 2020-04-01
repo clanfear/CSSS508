@@ -109,6 +109,8 @@ Yes, because:
 * Randomly assigned peers, due before following Wednesday
 * Follow the [grading rubric](https://clanfear.github.io/CSSS508/docs/peer_review.html)
 * Leave constructive comments--more than just a "good job!"
+   + On assignments 1-3 I expect *a few sentences at least*.
+   + Assignments 4+ may follow labs and need less feedback if perfect.
 * **Email me** if you want more feedback
 
 ---
@@ -254,9 +256,6 @@ The lines preceded by `##` represent the output, or result, of running the code 
 --
 
 10. Reproducibility and Model Results
---
-
-If you miss any lecture or want to see a lecture not offered this term, recordings are available on the course website.
 
 
 ---
