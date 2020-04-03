@@ -20,12 +20,6 @@ knitr::opts_chunk$set(comment = "##")
 library(dplyr)
 ```
 
-```{r xaringan-themer, include = FALSE, purl=FALSE}
-library(xaringanthemer)
-source("../csss508css.R")
-```
-
-
 # R Data Types
 
 So far we've been manipulating data frames, making visuals, and summarizing. This got you pretty far!

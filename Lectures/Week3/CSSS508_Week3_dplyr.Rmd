@@ -20,12 +20,6 @@ knitr::opts_chunk$set(comment = "##")
 library(ggplot2)
 ```
 
-```{r xaringan-themer, include = FALSE, purl=FALSE}
-library(xaringanthemer)
-source("../csss508css.R")
-```
-
-
 # Death to Spreadsheets
 
 ```{r set-options, echo=FALSE, cache=FALSE}

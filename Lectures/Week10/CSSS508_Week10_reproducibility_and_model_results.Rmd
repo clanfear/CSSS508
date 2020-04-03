@@ -19,12 +19,6 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(comment = "##")
 ```
 
-```{r xaringan-themer, include = FALSE, purl=FALSE}
-library(xaringanthemer)
-source("../csss508css.R")
-```
-
-
 ```{r, include=FALSE}
 library(tidyverse)
 library(pander)

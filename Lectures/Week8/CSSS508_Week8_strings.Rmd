@@ -19,12 +19,6 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(comment = "##")
 ```
 
-```{r xaringan-themer, include = FALSE, purl=FALSE}
-library(xaringanthemer)
-source("../csss508css.R")
-```
-
-
 # Data Today
 
 We'll use data on food safety inspections in King County from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5). 

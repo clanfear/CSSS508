@@ -21,11 +21,6 @@ library(ggplot2)
 library(dplyr)
 ```
 
-```{r xaringan-themer, include = FALSE, purl=FALSE}
-library(xaringanthemer)
-source("../csss508css.R")
-```
-
 # Bad Repetition
 
 If someone doesn't know better, they might find the means of variables in the `swiss` data by typing in a line of code for each column:
