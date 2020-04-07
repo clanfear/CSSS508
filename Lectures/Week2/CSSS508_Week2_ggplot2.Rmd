@@ -514,7 +514,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[We initialize the plot with `ggplot()` and an aesthetic.]
+.footnote[Initialize the plot with `ggplot()` and `x` and `y` aesthetics **mapped** to variables.]
 
 ---
 
@@ -540,7 +540,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Add a scatterplot.]
+.footnote[Add a scatterplot **layer**.]
 ---
 
 
@@ -565,7 +565,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Make the points large and red.]
+.footnote[**Set** aesthetics to make the points large and red.]
 ---
 
 
@@ -592,7 +592,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Capitalize the x-axis label.]
+.footnote[Add a layer to capitalize the x-axis label.]
 ---
 
 
@@ -621,7 +621,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Clean up the y-axis label.]
+.footnote[Add a layer to clean up the y-axis label.]
 ---
 
 
@@ -652,7 +652,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Add a title.]
+.footnote[Add a title layer.]
 ---
 
 
@@ -685,7 +685,7 @@ ggplot(data = China,
 ```
 ]
 
-.footnote[Pick a nicer theme.]
+.footnote[Pick a nicer theme with a new layer.]
 ---
 
 
@@ -1250,7 +1250,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) #<<
 ## 2. Lines
 
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line() #<<
   #
@@ -1269,7 +1269,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ## 3. Continent Average
 
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
   geom_line(stat = "smooth", method = "loess", #<<
@@ -1288,7 +1288,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ## 4. Facets
 
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
   geom_line(stat = "smooth", method = "loess", 
@@ -1307,7 +1307,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ## 5. Color Scale
 
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line(aes(color = "Country")) + #<<
   geom_line(stat = "smooth", method = "loess", 
@@ -1325,7 +1325,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 
 ## 6. Size Scale
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line(aes(color = "Country", size = "Country")) + #<<
   geom_line(stat = "smooth", method = "loess", 
@@ -1344,7 +1344,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ## 7. Alpha (Transparency)
 
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) + #<<
   geom_line(stat = "smooth", method = "loess", 
@@ -1364,7 +1364,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ## 8. Theme and Labels
 
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
   geom_line(stat = "smooth", method = "loess", 
@@ -1383,7 +1383,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ## 9. Title and Subtitle
 
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
   geom_line(stat = "smooth", method = "loess", 
@@ -1402,7 +1402,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ## 10. Angled Tick Values
 
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
   geom_line(stat = "smooth", method = "loess", 
@@ -1423,7 +1423,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ## 11. Legend Position
 
 .smaller[
-```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE}
+```{r, echo=TRUE, fig.height=3.5, dev='svg', fig.show="hold", warning=FALSE, message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
   geom_line(stat = "smooth", method = "loess", 
@@ -1440,7 +1440,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 
 ## Fussy Manual Legend
 
-```{r, echo=FALSE, fig.height=3.5, dev='svg'}
+```{r, echo=FALSE, fig.height=3.5, dev='svg', message=FALSE}
 ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
     geom_line(stat = "smooth", method = "loess", aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
@@ -1511,7 +1511,7 @@ ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) +
 .center[
 <img src="https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png" style="width: 80%;"/>
 ]
-.footnote[We'll build this plot in the lecture on model results!]
+.footnote[The process for this plot is documented in my [Advanced Counterfactuals slides](https://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Advanced_Counterfactuals.html#1)]
 
 ---
 class: inverse
