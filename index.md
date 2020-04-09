@@ -35,7 +35,9 @@ layout: default
        + [R Script for Lecture 1 slides](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.R)
        + [PDF of Lecture 1 slides](https://clanfear.github.io/CSSS508/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.pdf)
        + [Rmd for Lecture 1 slides](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
-   * [Lecture Video for Lecture 1](https://youtu.be/1kemjqJwF_M), recorded April 1st, 2020
+   * Lecture Video for Lecture 1, recorded April 1st, 2020
+       + [Zoom](https://washington.zoom.us/rec/share/7PNycbr77n1Jf9aS7kDjWZ59GIe9X6a80CIc_vcPn04jADGgkq_JAk5gh_HNJzZP?startTime=1585779871000)
+       + [YouTube]((https://youtu.be/1kemjqJwF_M))
    * Homework 1: Due 11:59 PM April 7th
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
        + Homework 1 Example #1: [HTML](Keys/HW1_Keys/homework_1_key_1.html) , [RMD](Keys/HW1_Keys/homework_1_key_1.Rmd)
@@ -62,8 +64,9 @@ layout: default
        + [R Script for Lecture 2 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/CSSS508_Week2_ggplot2.R)
        + [PDF of Lecture 2 slides](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_ggplot2.pdf)
        + [Rmd for Lecture 2 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/CSSS508_Week2_ggplot2.Rmd)
-   * [Lecture Video for Lecture 2](https://youtu.be/9HQYdqWEbgU), recorded April 10th, 2019
-       + For second half, see [last term's recording](https://youtu.be/1vxyNzcuswk), recorded October 3rd, 2018
+   * [Lecture Video for Lecture 2](https://youtu.be/9HQYdqWEbgU), recorded April 8th, 2020
+       + [Zoom](https://washington.zoom.us/rec/share/-MErBInp2UNIHavi12HjZf4lQILDX6a8g3Uc_PRcykYasYzRZYEsm5sR-baO6r4j?startTime=1586384848000)
+       + [YouTube](https://youtu.be/K9nLsvinZgo)
    * Homework 2: Due at 11:59PM on April 14th
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Example: HTML, RMD
