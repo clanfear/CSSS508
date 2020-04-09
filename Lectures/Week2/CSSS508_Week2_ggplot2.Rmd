@@ -476,7 +476,7 @@ Layers take arguments to control their appearance, such as point/line colors or 
 
 --
 
-* Arguments like `color`, `size`, `linetype`, `shape`, `fill`, and `alpha` can be used directly on the layers (**setting aesthetics**), e.g. `geom_point(color = "red")`. See the [`ggplot2` documentation](http://docs.ggplot2.org/current/vignettes/ggplot2-specs.html) for options. These *don't depend on the data*.
+* Arguments like `color`, `size`, `linetype`, `shape`, `fill`, and `alpha` can be used directly on the layers (**setting aesthetics**), e.g. `geom_point(color = "red")`. See the [`ggplot2` documentation](https://ggplot2.tidyverse.org/reference/index.html) for options. These *don't depend on the data*.
 
 --
 
