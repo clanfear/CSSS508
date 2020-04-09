@@ -37,7 +37,7 @@ layout: default
        + [Rmd for Lecture 1 slides](https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week1/CSSS508_Week1_RStudio_and_RMarkdown.Rmd)
    * Lecture Video for Lecture 1, recorded April 1st, 2020
        + [Zoom](https://washington.zoom.us/rec/share/7PNycbr77n1Jf9aS7kDjWZ59GIe9X6a80CIc_vcPn04jADGgkq_JAk5gh_HNJzZP?startTime=1585779871000)
-       + [YouTube]((https://youtu.be/1kemjqJwF_M))
+       + [YouTube](https://youtu.be/1kemjqJwF_M)
    * Homework 1: Due 11:59 PM April 7th
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
        + Homework 1 Example #1: [HTML](Keys/HW1_Keys/homework_1_key_1.html) , [RMD](Keys/HW1_Keys/homework_1_key_1.Rmd)
