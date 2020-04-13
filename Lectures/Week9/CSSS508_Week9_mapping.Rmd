@@ -741,7 +741,7 @@ With a simple function and boundaries of water bodies in King County, we can rep
 
 ```{r, include=FALSE, cache=TRUE}
 st_erase <- function(x, y) {
-  st_difference(x, lwgeom::st_make_valid(st_union(st_combine(y))))
+  st_difference(x, st_make_valid(st_union(st_combine(y))))
 }
 kc_water <- tigris::area_water("WA", "King", class = "sf")
 kc_nowater <- king_county %>% 
@@ -750,7 +750,7 @@ kc_nowater <- king_county %>%
 
 ```{r, eval=FALSE, purl=FALSE}
 st_erase <- function(x, y) {
-  st_difference(x, lwgeom::st_make_valid(st_union(st_combine(y))))
+  st_difference(x, st_make_valid(st_union(st_combine(y))))
 }
 kc_water <- tigris::area_water("WA", "King", class = "sf")
 kc_nowater <- king_county %>% 
@@ -760,12 +760,10 @@ kc_nowater <- king_county %>%
 * `st_combine()` merges all geometries into one
 * `st_union()` resolves internal boundaries
 * `st_difference()` subtracts `y` geometry from `x`
-* `lwgeom::st_make_valid()` fixes geometry errors from subtraction<sup>1</sup>
+* `lwgeom::st_make_valid()` fixes geometry errors from subtraction
 * `area_water()` obtains `sf` geometry of water bodies.
 
 Then we can reproduce the same plot using `kc_nowater`...
-
-.footnote[[1] Requires the `lwgeom` pacakge: `install.packages("lwgeom")`]
 
 ---
 ```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
