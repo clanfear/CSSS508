@@ -105,6 +105,7 @@ Recall last week we used the `filter()` command to subset data like so:
 ```{r}
 Canada <- gapminder %>%
     filter(country == "Canada")
+head(Canada)
 ```
 
 Excel analogue: Filter!
@@ -118,7 +119,7 @@ We can use `%in%` like `==` but for matching *any element* in the vector on its 
 
 ```{r}
 former_yugoslavia <- c("Bosnia and Herzegovina", "Croatia", 
-              "Macedonia", "Montenegro", "Serbia", "Slovenia")
+                       "Montenegro", "Serbia", "Slovenia")
 yugoslavia <- gapminder %>% filter(country %in% former_yugoslavia)
 tail(yugoslavia, 2)
 ```
@@ -704,6 +705,22 @@ Some possible questions to investigate:
     + Are especially late or early arrivals particular to some regions or airlines?
 
 **Warning:** `flights` has `r nrow(flights)` rows, so if you do a sloppy join, you can end up with **many** matches per observation and have the data *explode* in size.
+
+---
+# `dplyr` 1.0.0
+
+`dplyr` 1.0.0 will be released very soon.
+
+Nothing you've learned will suddenly disappear, but new approaches will be introduced--and eventually become the primary way to do things.
+
+These links provide examples of important changes and features.
+
+* [`dplyr` 1.0.0 overview](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-is-coming-soon/)
+* [New `summarize()` features](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-summarise/)
+* [`select()`, `rename()`, and `relocate()`](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-select-rename-relocate/)
+* [Working `across()` multiple columns](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/)
+   + Supersedes `_at()`, `_if()`, and `_all()` versions of `mutate()` and `summarize()`
+* [`rowwise()` operations](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-rowwise/)
 
 ---
 class: inverse

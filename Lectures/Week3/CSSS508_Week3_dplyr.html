@@ -13,7 +13,7 @@ class: center, top, title-slide
 # CSSS508, Week 3
 ## Manipulating and Summarizing Data
 ### Chuck Lanfear
-### Apr 15, 2020<br>Updated: Apr 11, 2020
+### Apr 15, 2020<br>Updated: Apr 15, 2020
 
 ---
 
@@ -116,6 +116,19 @@ Recall last week we used the `filter()` command to subset data like so:
 ```r
 Canada &lt;- gapminder %&gt;%
     filter(country == "Canada")
+head(Canada)
+```
+
+```
+## # A tibble: 6 x 6
+##   country continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Canada  Americas   1952    68.8 14785584    11367.
+## 2 Canada  Americas   1957    70.0 17010154    12490.
+## 3 Canada  Americas   1962    71.3 18985849    13462.
+## 4 Canada  Americas   1967    72.1 20819767    16077.
+## 5 Canada  Americas   1972    72.9 22284500    18971.
+## 6 Canada  Americas   1977    74.2 23796400    22091.
 ```
 
 Excel analogue: Filter!
@@ -130,7 +143,7 @@ We can use `%in%` like `==` but for matching *any element* in the vector on its 
 
 ```r
 former_yugoslavia &lt;- c("Bosnia and Herzegovina", "Croatia", 
-              "Macedonia", "Montenegro", "Serbia", "Slovenia")
+                       "Montenegro", "Serbia", "Slovenia")
 yugoslavia &lt;- gapminder %&gt;% filter(country %in% former_yugoslavia)
 tail(yugoslavia, 2)
 ```
@@ -921,7 +934,7 @@ Because the data are the first argument for `ggplot()`, we can pipe them straigh
 ---
 ## Wind Gusts and Delays
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-46-1.png)&lt;!-- --&gt;
 
 Check out those 1200 mph winds!&lt;sup&gt;1&lt;/sup&gt;
 
@@ -951,7 +964,7 @@ I removed `geom_point()` to focus on the mean trend produced by `geom_smooth()`.
 ---
 ## Wind Gusts and Delays: Mean Trend
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-48-1.svg)&lt;!-- --&gt;
 
 ---
 ## Tinkering Suggestions
@@ -966,6 +979,22 @@ Some possible questions to investigate:
     + Are especially late or early arrivals particular to some regions or airlines?
 
 **Warning:** `flights` has 336776 rows, so if you do a sloppy join, you can end up with **many** matches per observation and have the data *explode* in size.
+
+---
+# `dplyr` 1.0.0
+
+`dplyr` 1.0.0 will be released very soon.
+
+Nothing you've learned will suddenly disappear, but new approaches will be introduced--and eventually become the primary way to do things.
+
+These links provide examples of important changes and features.
+
+* [`dplyr` 1.0.0 overview](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-is-coming-soon/)
+* [New `summarize()` features](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-summarise/)
+* [`select()`, `rename()`, and `relocate()`](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-select-rename-relocate/)
+* [Working `across()` multiple columns](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/)
+   + Supersedes `_at()`, `_if()`, and `_all()` versions of `mutate()` and `summarize()`
+* [`rowwise()` operations](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-rowwise/)
 
 ---
 class: inverse

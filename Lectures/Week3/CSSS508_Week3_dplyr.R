@@ -16,9 +16,10 @@ gapminder %>% filter(country == "Canada") %>% head(2)
 
 Canada <- gapminder %>%
     filter(country == "Canada")
+head(Canada)
 
 former_yugoslavia <- c("Bosnia and Herzegovina", "Croatia", 
-              "Macedonia", "Montenegro", "Serbia", "Slovenia")
+                       "Montenegro", "Serbia", "Slovenia")
 yugoslavia <- gapminder %>% filter(country %in% former_yugoslavia)
 tail(yugoslavia, 2)
 
