@@ -89,7 +89,7 @@ layout: default
        + [R Script for Lecture 3 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week3/CSSS508_Week3_dplyr.R)
        + [PDF of Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.pdf)
        + [Rmd for Lecture 3 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week3/CSSS508_Week3_dplyr.Rmd)
-   * [Lecture Video for Lecture 3](https://youtu.be/qrJOFEenmLE), recorded April 17th, 2019
+   * Lecture Video for Lecture 3, recorded April 15th, 2020
        + [Zoom](https://washington.zoom.us/rec/share/1MlLBK3rrkJIerfT0kX6QbceF4K8aaa813QW_PEJzBlAu7d3v0YK3jm3GUw1fcn6?startTime=1586989683000)
        + [YouTube](https://youtu.be/nFeIg_XCP2o)
    * Homework 3: Due at 11:59PM on April 21st
@@ -110,7 +110,9 @@ layout: default
        + [R Script for Lecture 4 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week4/CSSS508_Week4_data_structures.R)
        + [PDF of Lecture 4 slides](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_Week4_data_structures.pdf)
        + [Rmd for Lecture 4 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week4/CSSS508_Week4_data_structures.Rmd)
-   * [Lecture Video for Lecture 4](https://www.youtube.com/watch?v=1hyHWi8DiWU), recorded April 24th, 2019
+   * Lecture Video for Lecture 4, recorded April 22th, 2020
+       + Zoom
+       + YouTube
    * Homework 4 (two options, complete one): Due at 11:59PM on April 28th
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
