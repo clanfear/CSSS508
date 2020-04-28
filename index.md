@@ -220,6 +220,7 @@ layout: default
    * [`ggrepel` package vignette](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html)
    * [`sf` Vignette: Overview](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)
    * [`sf` Home Page](https://r-spatial.github.io/sf/)
+   * [Tyler Morgan Wall's 3D Mapping and Visualization Masterclass](https://github.com/tylermorganwall/MusaMasterclass)
 
 ### 10. Reproducibility and Model Results
    * [Slides for Lecture 10: Reproducibility and Model Results](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.html)
