@@ -7,7 +7,7 @@ getwd()
 
 library(readr)
 
-billboard_2000_raw <- read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv")
+billboard_2000_raw <- read_csv(file = "https://clanfear.github.io/CSSS508/Lectures/Week5/data/billboard.csv")
 
 str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 
@@ -17,7 +17,7 @@ str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 bb_types <- paste(c("icccD", rep("i", 76)), collapse="") #<<
 
 billboard_2000_raw <- 
-  read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv",
+  read_csv(file = "https://clanfear.github.io/CSSS508/Lectures/Week5/data/billboard.csv",
            col_types = bb_types) #<<
 
 ## read_csv(file, guess_max=5000) # Default is 1000
@@ -109,7 +109,6 @@ billboard_trajectories <-
 billboard_trajectories
 
 billboard_2000 %>%
-    select(artist, track, weeks_at_1) %>%
     distinct(artist, track, weeks_at_1) %>%
     arrange(desc(weeks_at_1)) %>%
     head(7)
@@ -135,7 +134,7 @@ plot_by_day <-
 
 plot_by_day
 
-spd_raw <- read_csv("https://raw.githubusercontent.com/clanfear/CSSS508/master/Seattle_Police_Department_911_Incident_Response.csv")
+spd_raw <- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Department_911_Incident_Response.csv")
 
 glimpse(spd_raw)
 
@@ -171,7 +170,7 @@ time_spd_plot
 library(forcats)
 str(spd_times$`Initial Type Group`)
 spd_times$`Initial Type Group` <- 
-  parse_factor(spd_times$`Initial Type Group`, levels=NULL)
+  factor(spd_times$`Initial Type Group`)
 str(spd_times$`Initial Type Group`)
 head(as.numeric(spd_times$`Initial Type Group`))
 
