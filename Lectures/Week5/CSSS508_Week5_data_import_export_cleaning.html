@@ -4,6 +4,7 @@
     <title>CSSS508, Week 5</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,12 +14,9 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### Apr 29, 2020<br>Updated: Mar 29, 2020
+### Apr 29, 2020<br>Updated: Apr 28, 2020
 
 ---
-
-
-
 
 
 
@@ -153,7 +151,7 @@ class: inverse
 ---
 # Special Data Access Packages
 
-If you are working with a popular data source, try Googling to see if it has a devoted R package on *CRAN* or *Github* (use `devtools::install_github("user/repository")` for these). Examples:
+If you are working with a popular data source, try Googling to see if it has a devoted R package on *CRAN* or *Github* (use `remotes::install_github("user/repository")` for these). Examples:
 
 * `WDI`: World Development Indicators (World Bank)
 * `WHO`: World Health Organization API
@@ -187,7 +185,7 @@ R has a variety of built-in functions for importing data stored in text files, l
 
 `readr` function features:
 
-* Faster!
+* Faster!&lt;sup&gt;1&lt;/sup&gt;
 * Better defaults (e.g. doesn't automatically convert character data to factors)
 * A *little* smarter about dates and times
 * Handy function `problems()` you can run if there are errors
@@ -198,6 +196,8 @@ R has a variety of built-in functions for importing data stored in text files, l
 library(readr)
 ```
 
+.footnote[[1] `vroom` is even faster!]
+
 ---
 # `readr` Importing Example
 
@@ -206,7 +206,7 @@ Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 .small[
 
 ```r
-billboard_2000_raw &lt;- read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv")
+billboard_2000_raw &lt;- read_csv(file = "https://clanfear.github.io/CSSS508/Lectures/Week5/data/billboard.csv")
 ```
 
 ```
@@ -248,24 +248,24 @@ str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 ```
 
 ```
-## Classes 'tbl_df', 'tbl' and 'data.frame':	317 obs. of  17 variables:
-##  $ wk60: num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ wk61: num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ wk62: num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ wk63: num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ wk64: num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ wk65: num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ wk66: logi  NA NA NA NA NA NA ...
-##  $ wk67: logi  NA NA NA NA NA NA ...
-##  $ wk68: logi  NA NA NA NA NA NA ...
-##  $ wk69: logi  NA NA NA NA NA NA ...
-##  $ wk70: logi  NA NA NA NA NA NA ...
-##  $ wk71: logi  NA NA NA NA NA NA ...
-##  $ wk72: logi  NA NA NA NA NA NA ...
-##  $ wk73: logi  NA NA NA NA NA NA ...
-##  $ wk74: logi  NA NA NA NA NA NA ...
-##  $ wk75: logi  NA NA NA NA NA NA ...
-##  $ wk76: logi  NA NA NA NA NA NA ...
+## tibble [317 x 17] (S3: tbl_df/tbl/data.frame)
+##  $ wk60: num [1:317] NA NA NA NA NA NA NA NA NA NA ...
+##  $ wk61: num [1:317] NA NA NA NA NA NA NA NA NA NA ...
+##  $ wk62: num [1:317] NA NA NA NA NA NA NA NA NA NA ...
+##  $ wk63: num [1:317] NA NA NA NA NA NA NA NA NA NA ...
+##  $ wk64: num [1:317] NA NA NA NA NA NA NA NA NA NA ...
+##  $ wk65: num [1:317] NA NA NA NA NA NA NA NA NA NA ...
+##  $ wk66: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk67: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk68: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk69: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk70: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk71: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk72: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk73: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk74: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk75: logi [1:317] NA NA NA NA NA NA ...
+##  $ wk76: logi [1:317] NA NA NA NA NA NA ...
 ```
 ]
 
@@ -286,7 +286,7 @@ Since it encountered no values, `readr` assumed the `wk66`-`wk76` columns were *
 *bb_types &lt;- paste(c("icccD", rep("i", 76)), collapse="")
 
 billboard_2000_raw &lt;- 
-  read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv",
+  read_csv(file = "https://clanfear.github.io/CSSS508/Lectures/Week5/data/billboard.csv",
 *          col_types = bb_types)
 ```
 
@@ -304,16 +304,20 @@ read_csv(file, guess_max=5000) # Default is 1000
 
 Or you could use `read.csv()` in the `foreign` package. This is a base R alternative that is slower and a bit dumber. 
 
-With `read.csv()` you will need to specify if the data have column names (`header=TRUE`) and you'll want to use `stringsAsFactors=FALSE` to prevent character columns from becoming factors. `read_csv()` does this for us!
+With `read.csv()` you will need to specify if the data have column names (`header=TRUE`) and you'll want to use `stringsAsFactors=FALSE` to prevent character columns from becoming factors.&lt;sup&gt;1&lt;/sup&gt; `read_csv()` does this for us!
+
+.footnote[[1] This is no longer true in R 4.0.0--hallelujah!]
 
 ---
-# Excel Files
+# Spreadsheet Files
 
-The simplest thing to do with Excel files (`.xls` or `.xlsx`) is open them up, export to CSV, then import in R—and compare carefully to make sure everything worked!
+For Excel files (`.xls` or `.xlsx`), I recommend using an R package such as `readxl`. 
 
-For Excel files that might get updated and you want the changes to flow to your analysis, I recommend using an R package such as `readxl` or `openxlsx`. For Google Docs Spreadsheets, there's the `googlesheets` package.
+For Google Docs Spreadsheets, there's the `googlesheets4` package.
 
 You won't keep text formatting, color, comments, or merged cells so if these mean something in your data (*bad!*), you'll need to get creative.
+
+If an Excel sheet gives you grief (say, due to merged cells), the simplest thing is open them up, export to CSV, then import in R—and compare carefully to make sure everything worked!
 
 ---
 # Writing Delimited Files
@@ -843,7 +847,6 @@ Observation: There appears to be censoring around week 20 for songs falling out 
 
 ```r
 billboard_2000 %&gt;%
-    select(artist, track, weeks_at_1) %&gt;%
     distinct(artist, track, weeks_at_1) %&gt;%
     arrange(desc(weeks_at_1)) %&gt;%
     head(7)
@@ -928,7 +931,7 @@ To practice working with finer-grained temporal information, let's look at one d
 .smaller[
 
 ```r
-spd_raw &lt;- read_csv("https://raw.githubusercontent.com/clanfear/CSSS508/master/Seattle_Police_Department_911_Incident_Response.csv")
+spd_raw &lt;- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Department_911_Incident_Response.csv")
 ```
 
 ```
@@ -967,27 +970,27 @@ glimpse(spd_raw)
 ```
 
 ```
-## Observations: 706
-## Variables: 19
-## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 1701846, 1701844, 17...
-## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 16000104108, 16000104...
-## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 2016104108, 2016104094,...
-## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202", "430", "186"...
-## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT", "TRESPASS", "D...
-## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS", "DISTURBANCES...
-## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRESPASS", "DISTUR...
-## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25/2016 11:57:22 ...
-## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOCK OF RAINIER AV...
-## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B", "U", "E", "E...
-## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B3", "B3", "U2",...
-## $ `Census Tract`                &lt;dbl&gt; 9100.1019, 11800.6020, 7200.1056, 8002.1002, 81...
-## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122.3420, -122.3411, -12...
-## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.61422, 47.61135, 47.6102...
-## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47.51985, -122.268...
-## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIFT OR SVCS)", "S...
-## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING", "TRESPASS", "B...
-## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "CRISIS CALL", "S...
-## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25/2016 09:54:23 ...
+## Rows: 706
+## Columns: 19
+## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, ...
+## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 1...
+## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 201...
+## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245",...
+## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPL...
+## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRES...
+## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING",...
+## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "...
+## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX...
+## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B...
+## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3...
+## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.1...
+## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122....
+## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.6142...
+## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", ...
+## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SH...
+## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFT...
+## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS...
+## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "...
 ```
 ]
 
@@ -1018,7 +1021,7 @@ str(spd$`Event Clearance Date`)
 ```
 
 ```
-##  POSIXct[1:706], format: "2016-03-25 23:58:30" "2016-03-25 23:57:22" "2016-03-25 23:54:19" ...
+##  POSIXct[1:706], format: "2016-03-25 23:58:30" "2016-03-25 23:57:22" ...
 ```
 
 .footnote[`mdy_hms()` automatically processes datetimes in month-day-year, hour-minute-second format. It figures out separators for you!]
@@ -1132,17 +1135,17 @@ str(spd_times$`Initial Type Group`)
 ```
 
 ```
-##  chr [1:706] "THEFT" "THEFT" "TRESPASS" "CRISIS CALL" "SUSPICIOUS CIRCUMSTANCES" ...
+##  chr [1:706] "THEFT" "THEFT" "TRESPASS" "CRISIS CALL" ...
 ```
 
 ```r
 spd_times$`Initial Type Group` &lt;- 
-  parse_factor(spd_times$`Initial Type Group`, levels=NULL)
+  factor(spd_times$`Initial Type Group`)
 str(spd_times$`Initial Type Group`)
 ```
 
 ```
-##  Factor w/ 30 levels "THEFT","TRESPASS",..: 1 1 2 3 4 5 6 7 8 5 ...
+##  Factor w/ 30 levels "ANIMAL COMPLAINTS",..: 25 25 28 6 24 27 13 12 2 27 ...
 ```
 
 ```r
@@ -1150,7 +1153,7 @@ head(as.numeric(spd_times$`Initial Type Group`))
 ```
 
 ```
-## [1] 1 1 2 3 4 5
+## [1] 25 25 28  6 24 27
 ```
 
 ---
@@ -1263,8 +1266,9 @@ levels(jayz_biggest$track)
 ```
 
 ```
-## [1] "I Just Wanna Love U ..." "Big Pimpin'"             "Anything"               
-## [4] "Do It Again (Put Ya ..." "Hey Papi"
+## [1] "I Just Wanna Love U ..." "Big Pimpin'"            
+## [3] "Anything"                "Do It Again (Put Ya ..."
+## [5] "Hey Papi"
 ```
 
 ```r
@@ -1337,30 +1341,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {

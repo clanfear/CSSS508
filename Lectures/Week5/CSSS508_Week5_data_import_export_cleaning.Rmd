@@ -15,7 +15,7 @@ output:
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
-options(htmltools.dir.version = FALSE)
+options(htmltools.dir.version = FALSE, width=70)
 knitr::opts_chunk$set(comment = "##")
 ```
 
@@ -143,7 +143,7 @@ class: inverse
 ---
 # Special Data Access Packages
 
-If you are working with a popular data source, try Googling to see if it has a devoted R package on *CRAN* or *Github* (use `devtools::install_github("user/repository")` for these). Examples:
+If you are working with a popular data source, try Googling to see if it has a devoted R package on *CRAN* or *Github* (use `remotes::install_github("user/repository")` for these). Examples:
 
 * `WDI`: World Development Indicators (World Bank)
 * `WHO`: World Health Organization API
@@ -177,7 +177,7 @@ R has a variety of built-in functions for importing data stored in text files, l
 
 `readr` function features:
 
-* Faster!
+* Faster!<sup>1</sup>
 * Better defaults (e.g. doesn't automatically convert character data to factors)
 * A *little* smarter about dates and times
 * Handy function `problems()` you can run if there are errors
@@ -187,6 +187,8 @@ R has a variety of built-in functions for importing data stored in text files, l
 library(readr)
 ```
 
+.footnote[[1] `vroom` is even faster!]
+
 ---
 # `readr` Importing Example
 
@@ -194,7 +196,7 @@ Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 
 .small[
 ```{r, cache=TRUE}
-billboard_2000_raw <- read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv")
+billboard_2000_raw <- read_csv(file = "https://clanfear.github.io/CSSS508/Lectures/Week5/data/billboard.csv")
 ```
 ]
 
@@ -225,7 +227,7 @@ Since it encountered no values, `readr` assumed the `wk66`-`wk76` columns were *
 bb_types <- paste(c("icccD", rep("i", 76)), collapse="") #<<
 
 billboard_2000_raw <- 
-  read_csv(file = "https://github.com/clanfear/CSSS508/raw/master/Lectures/Week5/data/billboard.csv",
+  read_csv(file = "https://clanfear.github.io/CSSS508/Lectures/Week5/data/billboard.csv",
            col_types = bb_types) #<<
 ```
 
@@ -242,16 +244,20 @@ read_csv(file, guess_max=5000) # Default is 1000
 
 Or you could use `read.csv()` in the `foreign` package. This is a base R alternative that is slower and a bit dumber. 
 
-With `read.csv()` you will need to specify if the data have column names (`header=TRUE`) and you'll want to use `stringsAsFactors=FALSE` to prevent character columns from becoming factors. `read_csv()` does this for us!
+With `read.csv()` you will need to specify if the data have column names (`header=TRUE`) and you'll want to use `stringsAsFactors=FALSE` to prevent character columns from becoming factors.<sup>1</sup> `read_csv()` does this for us!
+
+.footnote[[1] This is no longer true in R 4.0.0--hallelujah!]
 
 ---
-# Excel Files
+# Spreadsheet Files
 
-The simplest thing to do with Excel files (`.xls` or `.xlsx`) is open them up, export to CSV, then import in R—and compare carefully to make sure everything worked!
+For Excel files (`.xls` or `.xlsx`), I recommend using an R package such as `readxl`. 
 
-For Excel files that might get updated and you want the changes to flow to your analysis, I recommend using an R package such as `readxl` or `openxlsx`. For Google Docs Spreadsheets, there's the `googlesheets` package.
+For Google Docs Spreadsheets, there's the `googlesheets4` package.
 
 You won't keep text formatting, color, comments, or merged cells so if these mean something in your data (*bad!*), you'll need to get creative.
+
+If an Excel sheet gives you grief (say, due to merged cells), the simplest thing is open them up, export to CSV, then import in R—and compare carefully to make sure everything worked!
 
 ---
 # Writing Delimited Files
@@ -686,7 +692,6 @@ Observation: There appears to be censoring around week 20 for songs falling out 
 
 ```{r}
 billboard_2000 %>%
-    select(artist, track, weeks_at_1) %>%
     distinct(artist, track, weeks_at_1) %>%
     arrange(desc(weeks_at_1)) %>%
     head(7)
@@ -747,7 +752,7 @@ To practice working with finer-grained temporal information, let's look at one d
 
 .smaller[
 ```{r, cache=TRUE}
-spd_raw <- read_csv("https://raw.githubusercontent.com/clanfear/CSSS508/master/Seattle_Police_Department_911_Incident_Response.csv")
+spd_raw <- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Department_911_Incident_Response.csv")
 ```
 ]
 
@@ -870,7 +875,7 @@ To find more, [look at the `forcats` manual](https://cran.r-project.org/web/pack
 library(forcats)
 str(spd_times$`Initial Type Group`)
 spd_times$`Initial Type Group` <- 
-  parse_factor(spd_times$`Initial Type Group`, levels=NULL)
+  factor(spd_times$`Initial Type Group`)
 str(spd_times$`Initial Type Group`)
 head(as.numeric(spd_times$`Initial Type Group`))
 ```
