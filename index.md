@@ -139,7 +139,7 @@ layout: default
            * Homework 5: Key: [HTML](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p1_key.html), [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p1_key.Rmd)
        + [2016 general election voting data for King County](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt) (60 MB download; save, *don't load in browser*!)
    * Data in-class:
-       + [Billboard Hot 100 data from 2000](https://raw.githubusercontent.com/hadley/tidyr/master/vignettes/billboard.csv)
+       + [Billboard Hot 100 data from 2000](https://clanfear.github.io/CSSS508/Lectures/Week5/data/billboard.csv)
        + [One day of Seattle Police Department incident data](https://raw.githubusercontent.com/clanfear/CSSS508/master/Seattle_Police_Department_911_Incident_Response.csv)
    * Data import and export:
        + [`readr` documentation](https://cran.r-project.org/web/packages/readr/readr.pdf)
