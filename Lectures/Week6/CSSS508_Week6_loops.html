@@ -799,8 +799,8 @@ data_list  &lt;- vector("list", length(file_list))
 ```
 
 ```
-##  [1] "ex_dat_1"  "ex_dat_10" "ex_dat_2"  "ex_dat_3"  "ex_dat_4"  "ex_dat_5" 
-##  [7] "ex_dat_6"  "ex_dat_7"  "ex_dat_8"  "ex_dat_9"
+##  [1] "ex_dat_1"  "ex_dat_10" "ex_dat_2"  "ex_dat_3"  "ex_dat_4" 
+##  [6] "ex_dat_5"  "ex_dat_6"  "ex_dat_7"  "ex_dat_8"  "ex_dat_9"
 ```
 
 (4) Then assign those names to the list.
@@ -865,9 +865,9 @@ glimpse(complete_data)
 ```
 ## Rows: 10,000
 ## Columns: 3
-## $ id &lt;dbl&gt; 44, 49, 50, 60, 62, 76, 81, 91, 113, 114, 116, 156, 157, 161, 17...
-## $ x  &lt;dbl&gt; 0.5156, 2.1673, -0.1216, 1.0551, 0.6660, -0.0213, 1.9835, 2.4007...
-## $ z  &lt;dbl&gt; 0.3808, 0.3460, 0.7115, 0.4344, 0.6379, 0.6739, 0.9808, 0.8740, ...
+## $ id &lt;dbl&gt; 44, 49, 50, 60, 62, 76, 81, 91, 113, 114, 116, 156, 15...
+## $ x  &lt;dbl&gt; 0.5156, 2.1673, -0.1216, 1.0551, 0.6660, -0.0213, 1.98...
+## $ z  &lt;dbl&gt; 0.3808, 0.3460, 0.7115, 0.4344, 0.6379, 0.6739, 0.9808...
 ```
 
 ---
@@ -931,7 +931,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##    5.02    0.13    5.16
+##   91.68    0.31   92.43
 ```
 
 ---
@@ -948,7 +948,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.15    0.09    0.25
+##    0.09    0.08    0.18
 ```
 
 ```r
@@ -957,10 +957,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-##   33.47    1.44   20.64
+## 1018.67    3.87  513.50
 ```
 
-The vectorized method was 33 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 1019 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples

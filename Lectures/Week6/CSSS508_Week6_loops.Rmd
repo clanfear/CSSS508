@@ -15,7 +15,7 @@ output:
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
-options(htmltools.dir.version = FALSE)
+options(htmltools.dir.version = FALSE, width = 70)
 knitr::opts_chunk$set(comment = "##")
 library(ggplot2)
 library(dplyr)
