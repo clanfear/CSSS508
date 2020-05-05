@@ -496,6 +496,18 @@ Which looks best to you?
 A model that fits well will have *low mean squared error*. Models that are either too simple or too complicated will tend to make bad predictions and thus high mean squared error.
 
 ---
+
+.image-full[
+![](img/cv1.svg)
+]
+
+---
+
+.image-full[
+![](img/cv2.svg)
+]
+
+---
 # Pre-Allocating for CV
 
 Let's split the data into $K=10$ folds. We'll make a new data frame to hold the data and sampled fold numbers that we will add predictions to later.

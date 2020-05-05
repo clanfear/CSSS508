@@ -4,6 +4,7 @@
     <title>CSSS508, Week 6</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,11 +14,9 @@ class: center, top, title-slide
 # CSSS508, Week 6
 ## Loops
 ### Chuck Lanfear
-### May 6, 2020<br>Updated: Mar 29, 2020
+### May 6, 2020<br>Updated: May 5, 2020
 
 ---
-
-
 
 
 
@@ -58,10 +57,10 @@ swiss_means
 ```
 
 ```
-##        Fertility      Agriculture      Examination        Education         Catholic 
-##             70.1             50.7             16.5             11.0             41.1 
-## Infant.Mortality 
-##             19.9
+##        Fertility      Agriculture      Examination        Education 
+##             70.1             50.7             16.5             11.0 
+##         Catholic Infant.Mortality 
+##             41.1             19.9
 ```
 
 .footnote[
@@ -621,6 +620,18 @@ Which looks best to you?
 A model that fits well will have *low mean squared error*. Models that are either too simple or too complicated will tend to make bad predictions and thus high mean squared error.
 
 ---
+
+.image-full[
+![](img/cv1.svg)
+]
+
+---
+
+.image-full[
+![](img/cv2.svg)
+]
+
+---
 # Pre-Allocating for CV
 
 Let's split the data into `\(K=10\)` folds. We'll make a new data frame to hold the data and sampled fold numbers that we will add predictions to later.
@@ -766,8 +777,9 @@ an entire directory of Excel files—to combine them into one data set.
 ```
 
 ```
-##  [1] "ex_dat_1.csv"  "ex_dat_10.csv" "ex_dat_2.csv"  "ex_dat_3.csv"  "ex_dat_4.csv" 
-##  [6] "ex_dat_5.csv"  "ex_dat_6.csv"  "ex_dat_7.csv"  "ex_dat_8.csv"  "ex_dat_9.csv"
+##  [1] "ex_dat_1.csv"  "ex_dat_10.csv" "ex_dat_2.csv"  "ex_dat_3.csv" 
+##  [5] "ex_dat_4.csv"  "ex_dat_5.csv"  "ex_dat_6.csv"  "ex_dat_7.csv" 
+##  [9] "ex_dat_8.csv"  "ex_dat_9.csv"
 ```
 
 ---
@@ -787,8 +799,8 @@ data_list  &lt;- vector("list", length(file_list))
 ```
 
 ```
-##  [1] "ex_dat_1"  "ex_dat_10" "ex_dat_2"  "ex_dat_3"  "ex_dat_4"  "ex_dat_5"  "ex_dat_6" 
-##  [8] "ex_dat_7"  "ex_dat_8"  "ex_dat_9"
+##  [1] "ex_dat_1"  "ex_dat_10" "ex_dat_2"  "ex_dat_3"  "ex_dat_4"  "ex_dat_5" 
+##  [7] "ex_dat_6"  "ex_dat_7"  "ex_dat_8"  "ex_dat_9"
 ```
 
 (4) Then assign those names to the list.
@@ -851,11 +863,11 @@ glimpse(complete_data)
 ```
 
 ```
-## Observations: 10,000
-## Variables: 3
-## $ id &lt;dbl&gt; 44, 49, 50, 60, 62, 76, 81, 91, 113, 114, 116, 156, 157, 161, 172, 181, 19...
-## $ x  &lt;dbl&gt; 0.5156, 2.1673, -0.1216, 1.0551, 0.6660, -0.0213, 1.9835, 2.4007, 2.3403, ...
-## $ z  &lt;dbl&gt; 0.3808, 0.3460, 0.7115, 0.4344, 0.6379, 0.6739, 0.9808, 0.8740, 0.0108, 0....
+## Rows: 10,000
+## Columns: 3
+## $ id &lt;dbl&gt; 44, 49, 50, 60, 62, 76, 81, 91, 113, 114, 116, 156, 157, 161, 17...
+## $ x  &lt;dbl&gt; 0.5156, 2.1673, -0.1216, 1.0551, 0.6660, -0.0213, 1.9835, 2.4007...
+## $ z  &lt;dbl&gt; 0.3808, 0.3460, 0.7115, 0.4344, 0.6379, 0.6739, 0.9808, 0.8740, ...
 ```
 
 ---
@@ -919,7 +931,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##    87.9     0.5    88.9
+##    5.02    0.13    5.16
 ```
 
 ---
@@ -936,7 +948,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.14    0.05    0.19
+##    0.15    0.09    0.25
 ```
 
 ```r
@@ -945,10 +957,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-##     628      10     468
+##   33.47    1.44   20.64
 ```
 
-The vectorized method was 628 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 33 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples
@@ -1052,30 +1064,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {
