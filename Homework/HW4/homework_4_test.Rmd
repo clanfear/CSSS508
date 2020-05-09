@@ -109,7 +109,7 @@ example2[6] <- 10
 ## 1: Coding with (Atomic) Vectors
 ```{r vectors_1}
 # 1) Use "seq()"" to create a vector of 10 numbers evenly spaced from 0 to 15.
-vec_num <- seq(1,15, length.out=10)
+vec_num <- seq(0,15, length.out=10)
 
 # 2) Use ":" to create an integer vector of the numbers 11 through 20.
 vec_int <- 11:20
@@ -134,7 +134,7 @@ fac_vec <- rev(vec_fac)
 *How'd you do?*
 ```{r vectors_1_check, echo=FALSE, message=TRUE, collapse=TRUE, comment=''}
 # DO NOT EDIT ANY PART OF THIS CHUNK
-test_x(vec_num, class="numeric",   dims=10, c_pos=10, c_val=15)
+test_x(vec_num, class="numeric",   dims=10, c_pos=4,  c_val=5)
 test_x(vec_int, class="integer",   dims=10, c_pos=5,  c_val=15)
 test_x(vec_cha, class="character", dims=10, c_pos=3,  c_val="S")
 test_x(vec_fac, class="factor",    dims=10, c_pos=7,  c_val="g")
@@ -193,8 +193,8 @@ mat_big <- rbind(mat_t, mat_3)
 ```{r matrices_1_test, echo=FALSE, message=TRUE, collapse=TRUE, comment=''}
 # DO NOT EDIT ANY PART OF THIS CHUNK
 test_x(mat_empty, class="matrix", dims=c(10,4))
-test_x(mat_1, class="matrix", dims=c(10,4), numeric=TRUE, na_check=1)
-test_x(mat_2, class="matrix", dims=c(10,4), numeric=TRUE, na_check=2)
+test_x(mat_1, class="matrix", dims=c(10,4), numeric=TRUE, na_check=1, c_pos=c(7,1), c_val = 10)
+test_x(mat_2, class="matrix", dims=c(10,4), numeric=TRUE, na_check=2, c_pos=c(3,2), c_val = 13)
 test_x(mat_3, class="matrix", dims=c(10,4), numeric=FALSE, na_check=3, c_pos=c(2,3), c_val="R")
 test_x(row_4, class="character", dims=4, numeric=FALSE, na_check=1, c_pos=2, c_val=14)
 test_x(val_6_2, class="numeric", dims=1, numeric=TRUE, na_check=1, c_pos=1, c_val=16)

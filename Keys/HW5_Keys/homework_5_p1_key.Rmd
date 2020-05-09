@@ -342,7 +342,7 @@ head(turnout_rates)
 
 ## Combining it all
 
-> Once you've calculated democratic voting percentages for *each race* you'll want to put them back together with the precinct turnout rate data using a **join**. Then you will want to make sure your data are shaped as I recommend above: One row per precincts, with columns for each of the relevant measures. If your data are in a format where you have a row for each race within each precinct ("long format"), you may find the `spread()` command useful for turning multiple rows for each precinct into single precinct rows with different columns for each race.
+> Once you've calculated democratic voting percentages for *each race* you'll want to put them back together with the precinct turnout rate data using a **join**. Then you will want to make sure your data are shaped as I recommend above: One row per precincts, with columns for each of the relevant measures. If your data are in a format where you have a row for each race within each precinct ("long format"), you may find the `pivot_wider()` command useful for turning multiple rows for each precinct into single precinct rows with different columns for each race.
 
 ```{r}
 # [YOUR CODE HERE]
@@ -365,7 +365,7 @@ head(turnout_rates)
 
 > **Do not** *label* the precincts on the horizontal axis: `scale_x_discrete(breaks=NULL)` is one method for doing this. You should, however, *arrange them on the axis in order from smallest to largest* in terms of support for the Democratic candidate for president---that is, the line plotting percentage support for Obama should be smoothly increasing from left to right. The order of the lines in the legend should follow the order of the lines at the right edge of the plot.
 
-> To do this, we need to use the "wide" version of the data (one row per precinct), and order `Precinct` based on Democratic support for the Presidential race (Hint: You will probably want to use `forcats::fct_reorder()` on `Precinct`). Then we can reshape back from "wide" to "tidy" form using `gather()` so that we have one variable giving the race---and another giving vote percentage---and can plot a separate line for each race.
+> To do this, we need to use the "wide" version of the data (one row per precinct), and order `Precinct` based on Democratic support for the Presidential race (Hint: You will probably want to use `forcats::fct_reorder()` on `Precinct`). Then we can reshape back from "wide" to "tidy" form using `pivot_longer()` so that we have one variable giving the race---and another giving vote percentage---and can plot a separate line for each race.
 
 ```{r}
 # [YOUR CODE HERE]
