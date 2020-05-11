@@ -169,8 +169,8 @@ layout: default
        + [Zoom](https://washington.zoom.us/rec/share/z5QvDerrzn1Ocq-UwmHBUZAMR5jVeaa80HIc8qYKxB4NI2eEX1HJBLmvj1qydP3Y)
        + [YouTube](https://youtu.be/qF5RaS8CR0Y)
    * Homework 5, Part 2 due at 11:59 PM on May 12th
-       + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p1_key.Rmd) (you will download this, fill in and submit on Canvas)
-       + [Homework 5: HTML Document](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5_p1_key.html)
+       + [Homework 5, Part 2: R Markdown template](https://clanfear.github.io/CSSS508/Keys/HW5_Keys/homework_5_p1_key.Rmd) (you will download this, fill in and submit on Canvas)
+       + [Homework 5, Part 2: HTML Document](https://clanfear.github.io/CSSS508/Keys/HW5_Keys/homework_5_p1_key.html)
        + Homework 5, Part 2 Key: [HTML](https://clanfear.github.io/CSSS508/Keys/HW5_Keys/homework_5_p2_key.html), [RMD](https://clanfear.github.io/CSSS508/Keys/HW5_Keys/homework_5_p2_key.Rmd)
    
 ### 7. Writing Functions
