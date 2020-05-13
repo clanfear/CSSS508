@@ -65,6 +65,10 @@ complete_data <- lapply(file_paths, read_csv) %>%
   bind_rows()
 head(complete_data, 3)
 
+library(vroom)
+complete_data <- vroom(file_paths)
+head(complete_data, 3)
+
 bucket <- function(x, quants = c(0.333, 0.667)) {
     # set low extreme, quantile points, high extreme
     new_breaks <- c(min(x)-1, quantile(x, probs = quants), max(x)+1)
@@ -170,3 +174,20 @@ gapminder_plot(cntry = "Turkey", yvar = "pop")
 ## debug(gapminder_plot)
 
 ## undebug(gapminder_plot)
+
+## render_and_print_slides <- function(week){
+##     week_dir     <- paste0(getwd(), "/Lectures/", "Week", week, "/")
+##     current_rmd  <- paste0(week_dir, stringr::str_subset(list.files(week_dir),
+##                                                      "^CSSS508_Week.*\\.Rmd$"))
+##     rmarkdown::render(current_rmd, encoding = "UTF-8")
+##     current_html <- stringr::str_replace(current_rmd,  "\\.Rmd",  "\\.html")
+##     new_pdf_file <- stringr::str_replace(current_html, "\\.html", "\\.pdf")
+##     new_r_script <- stringr::str_replace(current_html, "\\.html", "\\.R")
+##     message("Slides rendered, waiting 5 seconds.")
+##     Sys.sleep(5)
+##     message("Purling slides.")
+##     knitr::purl(input = current_rmd, output = new_r_script, documentation = 0)
+##     message("Printing from Chrome.")
+##     pagedown::chrome_print(current_html, format="pdf")
+##     message(paste0("Printing complete at ", week_dir))
+## }

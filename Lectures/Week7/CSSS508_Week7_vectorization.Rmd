@@ -257,6 +257,26 @@ class: inverse
 # An Aside on Apply functions
 
 ---
+### Don't Loop, `apply()` Yourself Instead
+
+Writing loops is challenging, particularly for new coders.
+
+Loops also require writing a lot of code and are hard to troubleshoot.
+
+--
+
+But loops aren't the only way to iterate in R.
+
+--
+
+Like a loop, `apply` functions iterate over elements of objects, except:
+
+* They don't need preallocation--you can directly assign the output.
+* They *must use a function*
+
+*Nearly anything you can do with a loop can be done more easily with the `apply` family of functions*
+
+---
 # `lapply()`: List + Functions
 
 `lapply()` is used to **apply** a function over a **l**ist of any kind (e.g. a data frame) and return a list. This is a lot easier than preparing a `for()` loop!
@@ -293,7 +313,7 @@ apply(swiss, MARGIN = 2, FUN = quantile_report)
 ```
 ]
 ---
-# Vectorized Data Loading
+# Data Loading with Loop
 
 Remember the loop for loading data files from last week?
 
@@ -312,7 +332,7 @@ head(complete_data, 3)
 ```
 
 ---
-# Vectorized Data Loading
+# Data Loading with `lapply()`
 
 Another way to load these files would be to... `lapply()` over the file names then bind the rows together. Faster and easier!
 
@@ -321,6 +341,32 @@ complete_data <- lapply(file_paths, read_csv) %>%
   bind_rows()
 head(complete_data, 3)
 ```
+
+---
+# Data Loading with `vroom`
+
+The fastest and easiest way is to use a fully vectorized data loading function, like `vroom::vroom()`!
+
+```{r, warning=FALSE, message=FALSE}
+library(vroom)
+complete_data <- vroom(file_paths)
+head(complete_data, 3)
+```
+
+Just give `vroom()` a vector of file locations and it determines their delimiter, loads them all (crazy fast), and binds them into one dataframe.
+
+---
+## From Loop to `apply()`
+
+Converting code in a loop to an `apply` function is straightforward:
+
+1. What you iterate over in the loop (e.g. `seq_along(x)`) becomes the first input.
+
+2. The body of the loop becomes a function.
+
+   * This function should take only the iterator index (e.g. `i`) as an input.
+   
+3. Assign the output to what your loop stored values in.
 
 ---
 class: inverse
@@ -619,6 +665,34 @@ I believe the best general approach is the following:
 --
 
 Once finished, if you need to do this again, *convert the prior steps into functions*!
+
+---
+# Bonus Function
+
+My lectures are rendered with a function!
+
+.smallish[
+```{r, eval=FALSE}
+render_and_print_slides <- function(week){
+    week_dir     <- paste0(getwd(), "/Lectures/", "Week", week, "/")
+    current_rmd  <- paste0(week_dir, stringr::str_subset(list.files(week_dir),
+                                                     "^CSSS508_Week.*\\.Rmd$"))
+    rmarkdown::render(current_rmd, encoding = "UTF-8")
+    current_html <- stringr::str_replace(current_rmd,  "\\.Rmd",  "\\.html")
+    new_pdf_file <- stringr::str_replace(current_html, "\\.html", "\\.pdf")
+    new_r_script <- stringr::str_replace(current_html, "\\.html", "\\.R")
+    message("Slides rendered, waiting 5 seconds.")
+    Sys.sleep(5)
+    message("Purling slides.")
+    knitr::purl(input = current_rmd, output = new_r_script, documentation = 0)
+    message("Printing from Chrome.")
+    pagedown::chrome_print(current_html, format="pdf")
+    message(paste0("Printing complete at ", week_dir))
+}
+```
+]
+
+I give it a numeric week and it (1) finds the lecture `.Rmd`, (2) knits the slides, (3) creates a `.R` file, (4) then opens the slides in Chrome and prints a PDF.
 
 ---
 class: inverse

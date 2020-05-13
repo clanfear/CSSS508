@@ -4,6 +4,7 @@
     <title>CSSS508, Week 7</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,11 +14,9 @@ class: center, top, title-slide
 # CSSS508, Week 7
 ## Vectorization and Functions
 ### Chuck Lanfear
-### May 13, 2020<br>Updated: Mar 29, 2020
+### May 13, 2020<br>Updated: May 13, 2020
 
 ---
-
-
 
 
 
@@ -67,10 +66,8 @@ colMeans(swiss)
 ```
 
 ```
-##        Fertility      Agriculture      Examination        Education         Catholic 
-##             70.1             50.7             16.5             11.0             41.1 
-## Infant.Mortality 
-##             19.9
+##        Fertility      Agriculture      Examination        Education         Catholic Infant.Mortality 
+##         70.14255         50.65957         16.48936         10.97872         41.14383         19.94255
 ```
 
 ---
@@ -259,7 +256,7 @@ smarter_first_and_last
 ##         return(c("first" = first, "last" = last))        
 ##     }
 ## }
-## &lt;environment: 0x0000025688707f98&gt;
+## &lt;environment: 0x0000019ad1388018&gt;
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -312,16 +309,34 @@ quantile_report(rnorm(10000))
 ```
 
 ```
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
-##   -2.34756   -1.65708   -1.28325   -0.67981   -0.00957    0.65952    1.26456    1.63364 
-##     Top 1% 
-##    2.37578
+##    Bottom 1%    Bottom 5%   Bottom 10%   Bottom 25%       Median      Top 25%      Top 10%       Top 5%       Top 1% 
+## -2.284019843 -1.623940025 -1.278976711 -0.666610104  0.005122541  0.679351145  1.281292483  1.627466407  2.265352162
 ```
 ]
 
 ---
 class: inverse
 # An Aside on Apply functions
+
+---
+### Don't Loop, `apply()` Yourself Instead
+
+Writing loops is challenging, particularly for new coders.
+
+Loops also require writing a lot of code and are hard to troubleshoot.
+
+--
+
+But loops aren't the only way to iterate in R.
+
+--
+
+Like a loop, `apply` functions iterate over elements of objects, except:
+
+* They don't need preallocation--you can directly assign the output.
+* They *must use a function*
+
+*Nearly anything you can do with a loop can be done more easily with the `apply` family of functions*
 
 ---
 # `lapply()`: List + Functions
@@ -337,22 +352,16 @@ lapply(swiss, FUN = quantile_report)
 
 ```
 ## $Fertility
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
-##       38.6       47.6       56.2       64.7       70.4       78.4       84.6       90.7 
-##     Top 1% 
-##       92.5 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5%     Top 1% 
+##     38.588     47.580     56.240     64.700     70.400     78.450     84.600     90.670     92.454 
 ## 
 ## $Agriculture
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
-##       4.19      15.65      17.36      35.90      54.10      67.65      76.82      84.81 
-##     Top 1% 
-##      87.95 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5%     Top 1% 
+##      4.190     15.650     17.360     35.900     54.100     67.650     76.820     84.810     87.952 
 ## 
 ## $Examination
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
-##        3.0        5.0        6.0       12.0       16.0       22.0       26.0       30.4 
-##     Top 1% 
-##       36.1
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5%     Top 1% 
+##       3.00       5.00       6.00      12.00      16.00      22.00      26.00      30.40      36.08
 ```
 ]
 
@@ -369,15 +378,15 @@ sapply(swiss, FUN = quantile_report)
 
 ```
 ##            Fertility Agriculture Examination Education Catholic Infant.Mortality
-## Bottom 1%       38.6        4.19         3.0      1.46     2.21             12.8
-## Bottom 5%       47.6       15.65         5.0      2.00     2.45             15.6
-## Bottom 10%      56.2       17.36         6.0      3.00     2.83             16.4
-## Bottom 25%      64.7       35.90        12.0      6.00     5.20             18.1
-## Median          70.4       54.10        16.0      8.00    15.14             20.0
-## Top 25%         78.4       67.65        22.0     12.00    93.12             21.7
-## Top 10%         84.6       76.82        26.0     23.20    99.00             23.7
-## Top 5%          90.7       84.81        30.4     29.00    99.61             24.5
-## Top 1%          92.5       87.95        36.1     43.34    99.87             25.8
+## Bottom 1%     38.588       4.190        3.00      1.46   2.2052           12.778
+## Bottom 5%     47.580      15.650        5.00      2.00   2.4480           15.600
+## Bottom 10%    56.240      17.360        6.00      3.00   2.8320           16.420
+## Bottom 25%    64.700      35.900       12.00      6.00   5.1950           18.150
+## Median        70.400      54.100       16.00      8.00  15.1400           20.000
+## Top 25%       78.450      67.650       22.00     12.00  93.1250           21.700
+## Top 10%       84.600      76.820       26.00     23.20  99.0000           23.680
+## Top 5%        90.670      84.810       30.40     29.00  99.6140           24.470
+## Top 1%        92.454      87.952       36.08     43.34  99.8666           25.818
 ```
 ]
 
@@ -394,19 +403,19 @@ apply(swiss, MARGIN = 2, FUN = quantile_report)
 
 ```
 ##            Fertility Agriculture Examination Education Catholic Infant.Mortality
-## Bottom 1%       38.6        4.19         3.0      1.46     2.21             12.8
-## Bottom 5%       47.6       15.65         5.0      2.00     2.45             15.6
-## Bottom 10%      56.2       17.36         6.0      3.00     2.83             16.4
-## Bottom 25%      64.7       35.90        12.0      6.00     5.20             18.1
-## Median          70.4       54.10        16.0      8.00    15.14             20.0
-## Top 25%         78.4       67.65        22.0     12.00    93.12             21.7
-## Top 10%         84.6       76.82        26.0     23.20    99.00             23.7
-## Top 5%          90.7       84.81        30.4     29.00    99.61             24.5
-## Top 1%          92.5       87.95        36.1     43.34    99.87             25.8
+## Bottom 1%     38.588       4.190        3.00      1.46   2.2052           12.778
+## Bottom 5%     47.580      15.650        5.00      2.00   2.4480           15.600
+## Bottom 10%    56.240      17.360        6.00      3.00   2.8320           16.420
+## Bottom 25%    64.700      35.900       12.00      6.00   5.1950           18.150
+## Median        70.400      54.100       16.00      8.00  15.1400           20.000
+## Top 25%       78.450      67.650       22.00     12.00  93.1250           21.700
+## Top 10%       84.600      76.820       26.00     23.20  99.0000           23.680
+## Top 5%        90.670      84.810       30.40     29.00  99.6140           24.470
+## Top 1%        92.454      87.952       36.08     43.34  99.8666           25.818
 ```
 ]
 ---
-# Vectorized Data Loading
+# Data Loading with Loop
 
 Remember the loop for loading data files from last week?
 
@@ -435,7 +444,7 @@ head(complete_data, 3)
 ```
 
 ---
-# Vectorized Data Loading
+# Data Loading with `lapply()`
 
 Another way to load these files would be to... `lapply()` over the file names then bind the rows together. Faster and easier!
 
@@ -454,6 +463,42 @@ head(complete_data, 3)
 ## 2    49  2.17  0.346
 ## 3    50 -0.122 0.711
 ```
+
+---
+# Data Loading with `vroom`
+
+The fastest and easiest way is to use a fully vectorized data loading function, like `vroom::vroom()`!
+
+
+```r
+library(vroom)
+complete_data &lt;- vroom(file_paths)
+head(complete_data, 3)
+```
+
+```
+## # A tibble: 3 x 3
+##      id      x     z
+##   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1    44  0.516 0.381
+## 2    49  2.17  0.346
+## 3    50 -0.122 0.711
+```
+
+Just give `vroom()` a vector of file locations and it determines their delimiter, loads them all (crazy fast), and binds them into one dataframe.
+
+---
+## From Loop to `apply()`
+
+Converting code in a loop to an `apply` function is straightforward:
+
+1. What you iterate over in the loop (e.g. `seq_along(x)`) becomes the first input.
+
+2. The body of the loop becomes a function.
+
+   * This function should take only the iterator index (e.g. `i`) as an input.
+   
+3. Assign the output to what your loop stored values in.
 
 ---
 class: inverse
@@ -502,7 +547,7 @@ bucketed_random_data &lt;- bucket(random_data,
 plot(x = bucketed_random_data, y = random_data, main = "Buckets and values")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -618,8 +663,8 @@ swiss %&gt;%
 ```
 
 ```
-##   Fertility Agriculture Examination Education Catholic Infant.Mortality
-## 1      5.62        2.23        2.07      1.14    0.987             6.85
+##   Fertility Agriculture Examination Education  Catholic Infant.Mortality
+## 1  5.615134    2.230597    2.066884  1.141785 0.9865478         6.846766
 ```
 
 ---
@@ -637,19 +682,19 @@ lapply(swiss, function(x) mean(x, na.rm = TRUE) / sd(x, na.rm = TRUE))
 
 ```
 ## $Fertility
-## [1] 5.62
+## [1] 5.615134
 ## 
 ## $Agriculture
-## [1] 2.23
+## [1] 2.230597
 ## 
 ## $Examination
-## [1] 2.07
+## [1] 2.066884
 ## 
 ## $Education
-## [1] 1.14
+## [1] 1.141785
 ## 
 ## $Catholic
-## [1] 0.987
+## [1] 0.9865478
 ```
 
 ---
@@ -679,12 +724,12 @@ ggplot(gapminder %&gt;% filter(country == "Afghanistan"),
 ---
 # Example of Desired Chart
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
 
 ---
 # Another Example
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-29-1.svg)&lt;!-- --&gt;
 
 ---
 # Making Country Flexible
@@ -716,7 +761,7 @@ What `cntry` does:
 gapminder_lifeplot(cntry = "Turkey")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
 
 ---
 # Making `y` Value Flexible
@@ -782,7 +827,7 @@ gapminder_plot &lt;- function(cntry, yvar) {
 gapminder_plot(cntry = "Turkey", yvar = "pop")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
 
 ---
 # Debugging
@@ -829,6 +874,35 @@ I believe the best general approach is the following:
 --
 
 Once finished, if you need to do this again, *convert the prior steps into functions*!
+
+---
+# Bonus Function
+
+My lectures are rendered with a function!
+
+.smallish[
+
+```r
+render_and_print_slides &lt;- function(week){
+    week_dir     &lt;- paste0(getwd(), "/Lectures/", "Week", week, "/")
+    current_rmd  &lt;- paste0(week_dir, stringr::str_subset(list.files(week_dir),
+                                                     "^CSSS508_Week.*\\.Rmd$"))
+    rmarkdown::render(current_rmd, encoding = "UTF-8")
+    current_html &lt;- stringr::str_replace(current_rmd,  "\\.Rmd",  "\\.html")
+    new_pdf_file &lt;- stringr::str_replace(current_html, "\\.html", "\\.pdf")
+    new_r_script &lt;- stringr::str_replace(current_html, "\\.html", "\\.R")
+    message("Slides rendered, waiting 5 seconds.")
+    Sys.sleep(5)
+    message("Purling slides.")
+    knitr::purl(input = current_rmd, output = new_r_script, documentation = 0)
+    message("Printing from Chrome.")
+    pagedown::chrome_print(current_html, format="pdf")
+    message(paste0("Printing complete at ", week_dir))
+}
+```
+]
+
+I give it a numeric week and it (1) finds the lecture `.Rmd`, (2) knits the slides, (3) creates a `.R` file, (4) then opens the slides in Chrome and prints a PDF.
 
 ---
 class: inverse
@@ -895,30 +969,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {
