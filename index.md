@@ -178,7 +178,9 @@ layout: default
        + [R script for Lecture 7 slides](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_Week7_vectorization.R)
        + [PDF of Lecture 7 slides](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_Week7_vectorization.pdf)
        + [Rmd for Lecture 7 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week7/CSSS508_Week7_vectorization.Rmd)
-   * [Lecture Video for Lecture 7](https://youtu.be/9SarwE4kBxQ), recorded May 19th
+   * Lecture Video for Lecture 7, recorded May 19th
+       + [Zoom](https://washington.zoom.us/rec/share/xNJKBOmzyk1IHdLI83OPXL8kII3daaa8gShNrPMOz4hQ8CLIRC6cgivERYr5FNE)
+       + [YouTube](https://youtu.be/SBkY-Bxxt04)
    * Homework 6, Part 1 due at 11:59 PM on TBD
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
