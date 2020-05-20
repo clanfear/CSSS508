@@ -15,15 +15,16 @@ output:
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
-options(htmltools.dir.version = FALSE)
+options(htmltools.dir.version = FALSE, width = 70)
 knitr::opts_chunk$set(comment = "##")
+set.seed(7)
 ```
 
 # Data Today
 
 We'll use data on food safety inspections in King County from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5). 
 
-Note these data are *quite large*. You will want to save them and load them from a *local directory*.
+Note these data are *fairly large*. You may want to save them and load them from a *local directory*.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -132,6 +133,8 @@ paste(1:5, "Z", sep = "*", collapse = " ~ ")
 ---
 class: inverse
 # `stringr`
+
+.img-full[![](img/stringer.jpg)]
 
 ---
 # `stringr`
@@ -276,6 +279,8 @@ str_detect(phone_test_examples, area_code_206_pattern)
 * `\\(?` means look for a left parenthesis (`\\(`), but it's optional (`?`)
 * `206` is the literal string to look for after the optional parenthesis
 
+
+
 ---
 # `str_view()`
 
@@ -300,6 +305,8 @@ restaurants %>%
            str_detect(Phone, area_code_206_pattern)) %>% 
   group_by(has_206_number) %>% tally()
 ```
+
+`str_detect()` returns `NA` for rows with missing (`NA`) phone numbers--you can't search for text in a missing value.
 
 ---
 # Extracting Patterns with `str_extract()`
@@ -372,13 +379,13 @@ Let's break down `"^[0-9]*-?[A-Z]? (1/2 )?"`:
 * `(1/2 )?` optionally matches a 1/2 followed by a space since this is apparently a thing with some address numbers
 
 ---
-# Removing the Street Numbers
+# Removing Street Numbers
 
 ```{r replace_numbers}
 restaurants <- restaurants %>% 
   mutate(street_only = str_replace(Address, address_number_pattern,
                                    replacement = ""))
-restaurants %>% distinct(street_only) %>% head(11)
+restaurants %>% distinct(street_only) %>% head(10)
 ```
 
 ---
@@ -398,7 +405,7 @@ str_replace(address_unit_test_examples, address_unit_pattern,
 ---
 # How'd the Unit regex Work?
 
-Breaking down `" (|#|STE|SUITE|SHOP|UNIT).*$"`:
+Breaking down `" (#|STE|SUITE|SHOP|UNIT).*$"`:
 
 * First we match a space
 
@@ -410,6 +417,7 @@ Breaking down `" (|#|STE|SUITE|SHOP|UNIT).*$"`:
 
 * `.*$` matches *any* character (`.`) after those words, zero or more times (`*`), until the end of the string (`$`)
 
+
 ---
 # Removing Units/Suites
 
@@ -420,15 +428,17 @@ restaurants <- restaurants %>%
 restaurants %>% distinct(street_only) %>% head(11)
 ```
 
+.pull-right[.footnote[For serious work, we would want to also look into special cases like "C-08" here.]]
+
 ---
 # Where Does Danger Lurk?
 
-Let's get one row per restaurant per date with the score, and see which streets the ones above 45 are on:
+Let's get the number of 45+ point inspections occurring on every street.
 
 ```{r failed_inspections}
 restaurants %>% 
-  distinct(Business_ID, Date, Inspection_Score, street_only) %>% 
   filter(Inspection_Score > 45) %>% 
+  distinct(Business_ID, Date, Inspection_Score, street_only) %>% 
   count(street_only) %>%
   arrange(desc(n)) %>% 
   head(n=5)
@@ -446,6 +456,78 @@ head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
 ]
 
 ---
+# Making Sentences
+
+Maybe we have a report or website where we need text dynamically generated from data.
+
+Lets prep some recent scores first.
+
+```{r, message=FALSE, warning=FALSE}
+library(lubridate)
+recent_scores <- restaurants %>%
+  select(Name, Address, City, 
+         Inspection_Score, Inspection_Date) %>% 
+  filter(!is.na(Inspection_Score)) %>% 
+  group_by(Name) %>% 
+  arrange(desc(Inspection_Score)) %>% 
+  slice(1) %>% 
+  ungroup() %>%
+  mutate_at(vars(Name, Address, City), ~ str_to_title(.)) %>%
+  mutate(Inspection_Date = mdy(Inspection_Date)) %>%
+  sample_n(3)
+```
+
+---
+## With `paste()`
+
+We can give *many* arguments to string a sentence together.
+
+```{r, message=FALSE, warning=FALSE}
+library(scales) # for ordinal day text
+recent_scores %>%
+  mutate(text_desc = 
+           paste(Name, 
+                 "is located at", Address, "in", City,
+                 "and received a score of", Inspection_Score, "on",
+                 month(Inspection_Date, label=TRUE, abbr=FALSE),
+                 paste0(ordinal(day(Inspection_Date)),","), 
+                 paste0(year(Inspection_Date), "."))) %>% 
+  select(text_desc)
+```
+
+---
+## With `glue`
+
+Or we can use `str_glue`, `paste()`'s more sophisticated sibling which uses [the `glue` package](https://glue.tidyverse.org/). Variables and functions just go inside `{ }` and you can create temporary variables for convenience.
+
+```{r}
+(score_text <- recent_scores %>%
+  mutate(text_desc = 
+           str_glue("{Name} is located at {Address} in {City} ",
+                    "and received a score of {Inspection_Score} ",
+                    "on {month(when, label=TRUE, abbr=FALSE)} ",
+                    "{ordinal(day(when))}, {year(when)}.",
+                    when = Inspection_Date)) %>% 
+  select(text_desc))
+```
+
+---
+# `str_wrap()` and `\n`
+
+The previous output will work fine for in-line Markdown, but it runs off the edge of the console. It also won't wrap in many tables and images.
+
+We can add regular linebreaks using `str_wrap()` or manually with `"\n"`.
+
+```{r}
+score_text %>% 
+  pull(text_desc) %>% 
+  str_wrap(width = 70) %>% #<<
+  paste0("\n\n") %>% # add two linebreaks as a paragraph break #<<
+  cat() # cat combines text and prints it
+```
+
+
+---
 # Other Useful `stringr` Functions
 
 `str_pad(string, width, side, pad)`: Adds "padding" to any string to make it a given minimum width.
@@ -455,6 +537,8 @@ head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
 `str_which(string, pattern)`: Returns numeric indices of elements that match the pattern.
 
 `str_replace_all(string, pattern, replacement)`: Performs multiple replacements simultaneously
+
+`str_squish(string)`: Trims spaces around a string but also removes duplicate spaces inside it.
 
 ---
 class: inverse

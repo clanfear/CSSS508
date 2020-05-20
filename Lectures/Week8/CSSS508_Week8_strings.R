@@ -95,7 +95,7 @@ str_replace(address_number_test_examples,
 restaurants <- restaurants %>% 
   mutate(street_only = str_replace(Address, address_number_pattern,
                                    replacement = ""))
-restaurants %>% distinct(street_only) %>% head(11)
+restaurants %>% distinct(street_only) %>% head(10)
 
 address_unit_pattern <- " (#|STE|SUITE|SHOP|UNIT).*$"
 address_unit_test_examples <-
@@ -110,10 +110,49 @@ restaurants <- restaurants %>%
 restaurants %>% distinct(street_only) %>% head(11)
 
 restaurants %>% 
-  distinct(Business_ID, Date, Inspection_Score, street_only) %>% 
   filter(Inspection_Score > 45) %>% 
+  distinct(Business_ID, Date, Inspection_Score, street_only) %>% 
   count(street_only) %>%
   arrange(desc(n)) %>% 
   head(n=5)
 
 head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
+
+library(lubridate)
+recent_scores <- restaurants %>%
+  select(Name, Address, City, 
+         Inspection_Score, Inspection_Date) %>% 
+  filter(!is.na(Inspection_Score)) %>% 
+  group_by(Name) %>% 
+  arrange(desc(Inspection_Score)) %>% 
+  slice(1) %>% 
+  ungroup() %>%
+  mutate_at(vars(Name, Address, City), ~ str_to_title(.)) %>%
+  mutate(Inspection_Date = mdy(Inspection_Date)) %>%
+  sample_n(3)
+
+library(scales) # for ordinal day text
+recent_scores %>%
+  mutate(text_desc = 
+           paste(Name, 
+                 "is located at", Address, "in", City,
+                 "and received a score of", Inspection_Score, "on",
+                 month(Inspection_Date, label=TRUE, abbr=FALSE),
+                 paste0(ordinal(day(Inspection_Date)),","), 
+                 paste0(year(Inspection_Date), "."))) %>% 
+  select(text_desc)
+
+(score_text <- recent_scores %>%
+  mutate(text_desc = 
+           str_glue("{Name} is located at {Address} in {City} ",
+                    "and received a score of {Inspection_Score} ",
+                    "on {month(when, label=TRUE, abbr=FALSE)} ",
+                    "{ordinal(day(when))}, {year(when)}.",
+                    when = Inspection_Date)) %>% 
+  select(text_desc))
+
+score_text %>% 
+  pull(text_desc) %>% 
+  str_wrap(width = 70) %>% #<<
+  paste0("\n\n") %>% # add two linebreaks as a paragraph break #<<
+  cat() # cat combines text and prints it

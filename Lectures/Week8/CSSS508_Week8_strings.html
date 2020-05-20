@@ -4,6 +4,7 @@
     <title>CSSS508, Week 8</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,12 +14,9 @@ class: center, top, title-slide
 # CSSS508, Week 8
 ## Strings
 ### Chuck Lanfear
-### May 20, 2020<br>Updated: Mar 29, 2020
+### May 20, 2020<br>Updated: May 19, 2020
 
 ---
-
-
-
 
 
 
@@ -27,7 +25,7 @@ class: center, top, title-slide
 
 We'll use data on food safety inspections in King County from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5). 
 
-Note these data are *quite large*. You will want to save them and load them from a *local directory*.
+Note these data are *fairly large*. You may want to save them and load them from a *local directory*.
 
 
 
@@ -51,31 +49,31 @@ glimpse(restaurants)
 ```
 
 ```
-## Observations: 258,630
-## Variables: 23
-## $ Name                       &lt;chr&gt; "@ THE SHACK, LLC ", "10 MERCER RESTAURANT", "10 M...
-## $ Program_Identifier         &lt;chr&gt; "SHACK COFFEE", "10 MERCER RESTAURANT", "10 MERCER...
-## $ Inspection_Date            &lt;chr&gt; NA, "01/24/2017", "01/24/2017", "01/24/2017", "10/...
-## $ Description                &lt;chr&gt; "Seating 0-12 - Risk Category I", "Seating 13-50 -...
-## $ Address                    &lt;chr&gt; "2920 SW AVALON WAY", "10 MERCER ST", "10 MERCER S...
-## $ City                       &lt;chr&gt; "Seattle", "Seattle", "Seattle", "Seattle", "Seatt...
-## $ Zip_Code                   &lt;chr&gt; "98126", "98109", "98109", "98109", "98109", "9810...
-## $ Phone                      &lt;chr&gt; "(206) 938-5665", NA, NA, NA, NA, NA, NA, NA, NA, ...
-## $ Longitude                  &lt;dbl&gt; -122, -122, -122, -122, -122, -122, -122, -122, -1...
-## $ Latitude                   &lt;dbl&gt; 47.6, 47.6, 47.6, 47.6, 47.6, 47.6, 47.6, 47.6, 47...
-## $ Inspection_Business_Name   &lt;chr&gt; NA, "10 MERCER RESTAURANT", "10 MERCER RESTAURANT"...
-## $ Inspection_Type            &lt;chr&gt; NA, "Routine Inspection/Field Review", "Routine In...
-## $ Inspection_Score           &lt;int&gt; NA, 10, 10, 10, 15, 15, 15, 0, 15, 15, 25, 0, 35, ...
-## $ Inspection_Result          &lt;chr&gt; NA, "Unsatisfactory", "Unsatisfactory", "Unsatisfa...
-## $ Inspection_Closed_Business &lt;chr&gt; NA, "false", "false", "false", "false", "false", "...
-## $ Violation_Type             &lt;chr&gt; NA, "blue", "blue", "red", "blue", "red", "red", N...
-## $ Violation_Description      &lt;chr&gt; NA, "4300 - Non-food contact surfaces maintained a...
-## $ Violation_Points           &lt;int&gt; 0, 3, 2, 5, 5, 5, 5, 0, 5, 10, 25, 0, 5, 5, 25, 5,...
-## $ Business_ID                &lt;chr&gt; "PR0048053", "PR0049572", "PR0049572", "PR0049572"...
-## $ Inspection_Serial_Num      &lt;chr&gt; NA, "DAHSIBSJT", "DAHSIBSJT", "DAHSIBSJT", "DASXYD...
-## $ Violation_Record_ID        &lt;chr&gt; NA, "IV43WZVLN", "IVCQ1ZIV0", "IVREK90PM", "IVWH1P...
-## $ Grade                      &lt;int&gt; NA, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2...
-## $ Date                       &lt;date&gt; NA, 2017-01-24, 2017-01-24, 2017-01-24, 2016-10-1...
+## Rows: 258,630
+## Columns: 23
+## $ Name                       [3m[38;5;246m&lt;chr&gt;[39m[23m "@ THE SHACK, LLC ", "10 MERCE...
+## $ Program_Identifier         [3m[38;5;246m&lt;chr&gt;[39m[23m "SHACK COFFEE", "10 MERCER RES...
+## $ Inspection_Date            [3m[38;5;246m&lt;chr&gt;[39m[23m NA, "01/24/2017", "01/24/2017"...
+## $ Description                [3m[38;5;246m&lt;chr&gt;[39m[23m "Seating 0-12 - Risk Category ...
+## $ Address                    [3m[38;5;246m&lt;chr&gt;[39m[23m "2920 SW AVALON WAY", "10 MERC...
+## $ City                       [3m[38;5;246m&lt;chr&gt;[39m[23m "Seattle", "Seattle", "Seattle...
+## $ Zip_Code                   [3m[38;5;246m&lt;chr&gt;[39m[23m "98126", "98109", "98109", "98...
+## $ Phone                      [3m[38;5;246m&lt;chr&gt;[39m[23m "(206) 938-5665", NA, NA, NA, ...
+## $ Longitude                  [3m[38;5;246m&lt;dbl&gt;[39m[23m -122.3709, -122.3562, -122.356...
+## $ Latitude                   [3m[38;5;246m&lt;dbl&gt;[39m[23m 47.57043, 47.62506, 47.62506, ...
+## $ Inspection_Business_Name   [3m[38;5;246m&lt;chr&gt;[39m[23m NA, "10 MERCER RESTAURANT", "1...
+## $ Inspection_Type            [3m[38;5;246m&lt;chr&gt;[39m[23m NA, "Routine Inspection/Field ...
+## $ Inspection_Score           [3m[38;5;246m&lt;int&gt;[39m[23m NA, 10, 10, 10, 15, 15, 15, 0,...
+## $ Inspection_Result          [3m[38;5;246m&lt;chr&gt;[39m[23m NA, "Unsatisfactory", "Unsatis...
+## $ Inspection_Closed_Business [3m[38;5;246m&lt;chr&gt;[39m[23m NA, "false", "false", "false",...
+## $ Violation_Type             [3m[38;5;246m&lt;chr&gt;[39m[23m NA, "blue", "blue", "red", "bl...
+## $ Violation_Description      [3m[38;5;246m&lt;chr&gt;[39m[23m NA, "4300 - Non-food contact s...
+## $ Violation_Points           [3m[38;5;246m&lt;int&gt;[39m[23m 0, 3, 2, 5, 5, 5, 5, 0, 5, 10,...
+## $ Business_ID                [3m[38;5;246m&lt;chr&gt;[39m[23m "PR0048053", "PR0049572", "PR0...
+## $ Inspection_Serial_Num      [3m[38;5;246m&lt;chr&gt;[39m[23m NA, "DAHSIBSJT", "DAHSIBSJT", ...
+## $ Violation_Record_ID        [3m[38;5;246m&lt;chr&gt;[39m[23m NA, "IV43WZVLN", "IVCQ1ZIV0", ...
+## $ Grade                      [3m[38;5;246m&lt;int&gt;[39m[23m NA, 2, 2, 2, 2, 2, 2, 2, 2, 2,...
+## $ Date                       [3m[38;5;246m&lt;date&gt;[39m[23m NA, 2017-01-24, 2017-01-24, 2...
 ```
 ]
 
@@ -227,6 +225,8 @@ paste(1:5, "Z", sep = "*", collapse = " ~ ")
 class: inverse
 # `stringr`
 
+.img-full[![](img/stringer.jpg)]
+
 ---
 # `stringr`
 
@@ -330,8 +330,8 @@ head(unique(restaurants$Name), 4)
 ```
 
 ```
-## [1] "@ THE SHACK, LLC "    "10 MERCER RESTAURANT" "100 LB CLAM"         
-## [4] "1000 SPIRITS"
+## [1] "@ THE SHACK, LLC "    "10 MERCER RESTAURANT"
+## [3] "100 LB CLAM"          "1000 SPIRITS"
 ```
 
 --
@@ -346,8 +346,8 @@ head(unique(restaurants$Name), 4)
 ```
 
 ```
-## [1] "@ THE SHACK, LLC"     "10 MERCER RESTAURANT" "100 LB CLAM"         
-## [4] "1000 SPIRITS"
+## [1] "@ THE SHACK, LLC"     "10 MERCER RESTAURANT"
+## [3] "100 LB CLAM"          "1000 SPIRITS"
 ```
 
 .footnote[`mutate_if(x, y)` applies function `y` to every column for which `x` is `TRUE`.]
@@ -438,6 +438,8 @@ str_detect(phone_test_examples, area_code_206_pattern)
 * `\\(?` means look for a left parenthesis (`\\(`), but it's optional (`?`)
 * `206` is the literal string to look for after the optional parenthesis
 
+
+
 ---
 # `str_view()`
 
@@ -473,6 +475,8 @@ restaurants %&gt;%
 ## 2 TRUE           109099
 ## 3 NA              82876
 ```
+
+`str_detect()` returns `NA` for rows with missing (`NA`) phone numbers--you can't search for text in a missing value.
 
 ---
 # Extracting Patterns with `str_extract()`
@@ -540,8 +544,8 @@ str_replace(address_number_test_examples,
 ```
 
 ```
-## [1] "THORNDYKE AVE W"   "1ST AVE"           "1ST AVE"           "1ST AVE"          
-## [5] "UNIVERSITY WAY NE" "15TH AVE NW"
+## [1] "THORNDYKE AVE W"   "1ST AVE"           "1ST AVE"          
+## [4] "1ST AVE"           "UNIVERSITY WAY NE" "15TH AVE NW"
 ```
 
 ---
@@ -572,18 +576,18 @@ Let's break down `"^[0-9]*-?[A-Z]? (1/2 )?"`:
 * `(1/2 )?` optionally matches a 1/2 followed by a space since this is apparently a thing with some address numbers
 
 ---
-# Removing the Street Numbers
+# Removing Street Numbers
 
 
 ```r
 restaurants &lt;- restaurants %&gt;% 
   mutate(street_only = str_replace(Address, address_number_pattern,
                                    replacement = ""))
-restaurants %&gt;% distinct(street_only) %&gt;% head(11)
+restaurants %&gt;% distinct(street_only) %&gt;% head(10)
 ```
 
 ```
-## # A tibble: 11 x 1
+## # A tibble: 10 x 1
 ##    street_only              
 ##    &lt;chr&gt;                    
 ##  1 SW AVALON WAY            
@@ -595,8 +599,7 @@ restaurants %&gt;% distinct(street_only) %&gt;% head(11)
 ##  7 112TH AVE NE #125        
 ##  8 NE BOTHELL WAY           
 ##  9 NW GILMAN BL C-08        
-## 10 NE 20TH ST STE 300       
-## 11 S ORCAS ST
+## 10 NE 20TH ST STE 300
 ```
 
 ---
@@ -615,14 +618,14 @@ str_replace(address_unit_test_examples, address_unit_pattern,
 ```
 
 ```
-## [1] "1ST AVE"           "RAINIER AVE S"     "FAUNTLEROY WAY SW" "4TH AVE"          
-## [5] "NW 54TH ST"
+## [1] "1ST AVE"           "RAINIER AVE S"     "FAUNTLEROY WAY SW"
+## [4] "4TH AVE"           "NW 54TH ST"
 ```
 
 ---
 # How'd the Unit regex Work?
 
-Breaking down `" (|#|STE|SUITE|SHOP|UNIT).*$"`:
+Breaking down `" (#|STE|SUITE|SHOP|UNIT).*$"`:
 
 * First we match a space
 
@@ -633,6 +636,7 @@ Breaking down `" (|#|STE|SUITE|SHOP|UNIT).*$"`:
 --
 
 * `.*$` matches *any* character (`.`) after those words, zero or more times (`*`), until the end of the string (`$`)
+
 
 ---
 # Removing Units/Suites
@@ -662,16 +666,18 @@ restaurants %&gt;% distinct(street_only) %&gt;% head(11)
 ## 11 S ORCAS ST
 ```
 
+.pull-right[.footnote[For serious work, we would want to also look into special cases like "C-08" here.]]
+
 ---
 # Where Does Danger Lurk?
 
-Let's get one row per restaurant per date with the score, and see which streets the ones above 45 are on:
+Let's get the number of 45+ point inspections occurring on every street.
 
 
 ```r
 restaurants %&gt;% 
-  distinct(Business_ID, Date, Inspection_Score, street_only) %&gt;% 
   filter(Inspection_Score &gt; 45) %&gt;% 
+  distinct(Business_ID, Date, Inspection_Score, street_only) %&gt;% 
   count(street_only) %&gt;%
   arrange(desc(n)) %&gt;% 
   head(n=5)
@@ -718,6 +724,111 @@ head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
 ]
 
 ---
+# Making Sentences
+
+Maybe we have a report or website where we need text dynamically generated from data.
+
+Lets prep some recent scores first.
+
+
+```r
+library(lubridate)
+recent_scores &lt;- restaurants %&gt;%
+  select(Name, Address, City, 
+         Inspection_Score, Inspection_Date) %&gt;% 
+  filter(!is.na(Inspection_Score)) %&gt;% 
+  group_by(Name) %&gt;% 
+  arrange(desc(Inspection_Score)) %&gt;% 
+  slice(1) %&gt;% 
+  ungroup() %&gt;%
+  mutate_at(vars(Name, Address, City), ~ str_to_title(.)) %&gt;%
+  mutate(Inspection_Date = mdy(Inspection_Date)) %&gt;%
+  sample_n(3)
+```
+
+---
+## With `paste()`
+
+We can give *many* arguments to string a sentence together.
+
+
+```r
+library(scales) # for ordinal day text
+recent_scores %&gt;%
+  mutate(text_desc = 
+           paste(Name, 
+                 "is located at", Address, "in", City,
+                 "and received a score of", Inspection_Score, "on",
+                 month(Inspection_Date, label=TRUE, abbr=FALSE),
+                 paste0(ordinal(day(Inspection_Date)),","), 
+                 paste0(year(Inspection_Date), "."))) %&gt;% 
+  select(text_desc)
+```
+
+```
+## # A tibble: 3 x 1
+##   text_desc                                                           
+##   &lt;chr&gt;                                                               
+## 1 Supreme Bean Again is located at 14424 Ambaum Bl Sw in Burien and r~
+## 2 Mandarin Garden is located at 40 E Sunset Way in Issaquah and recei~
+## 3 Flapjacks Waffle House is located at 13806 1st Ave S in Burien and ~
+```
+
+---
+## With `glue`
+
+Or we can use `str_glue`, `paste()`'s more sophisticated sibling which uses [the `glue` package](https://glue.tidyverse.org/). Variables and functions just go inside `{ }` and you can create temporary variables for convenience.
+
+
+```r
+(score_text &lt;- recent_scores %&gt;%
+  mutate(text_desc = 
+           str_glue("{Name} is located at {Address} in {City} ",
+                    "and received a score of {Inspection_Score} ",
+                    "on {month(when, label=TRUE, abbr=FALSE)} ",
+                    "{ordinal(day(when))}, {year(when)}.",
+                    when = Inspection_Date)) %&gt;% 
+  select(text_desc))
+```
+
+```
+## # A tibble: 3 x 1
+##   text_desc                                                           
+##   &lt;glue&gt;                                                              
+## 1 Supreme Bean Again is located at 14424 Ambaum Bl Sw in Burien and r~
+## 2 Mandarin Garden is located at 40 E Sunset Way in Issaquah and recei~
+## 3 Flapjacks Waffle House is located at 13806 1st Ave S in Burien and ~
+```
+
+---
+# `str_wrap()` and `\n`
+
+The previous output will work fine for in-line Markdown, but it runs off the edge of the console. It also won't wrap in many tables and images.
+
+We can add regular linebreaks using `str_wrap()` or manually with `"\n"`.
+
+
+```r
+score_text %&gt;% 
+  pull(text_desc) %&gt;% 
+* str_wrap(width = 70) %&gt;%
+* paste0("\n\n") %&gt;% # add two linebreaks as a paragraph break
+  cat() # cat combines text and prints it
+```
+
+```
+## Supreme Bean Again is located at 14424 Ambaum Bl Sw in Burien and
+## received a score of 10 on January 24th, 2017.
+## 
+##  Mandarin Garden is located at 40 E Sunset Way in Issaquah and received
+## a score of 72 on March 9th, 2007.
+## 
+##  Flapjacks Waffle House is located at 13806 1st Ave S in Burien and
+## received a score of 45 on October 3rd, 2008.
+```
+
+
+---
 # Other Useful `stringr` Functions
 
 `str_pad(string, width, side, pad)`: Adds "padding" to any string to make it a given minimum width.
@@ -727,6 +838,8 @@ head(str_split_fixed(restaurants$Violation_Description, " - ", n = 2))
 `str_which(string, pattern)`: Returns numeric indices of elements that match the pattern.
 
 `str_replace_all(string, pattern, replacement)`: Performs multiple replacements simultaneously
+
+`str_squish(string)`: Trims spaces around a string but also removes duplicate spaces inside it.
 
 ---
 class: inverse
@@ -782,30 +895,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {
