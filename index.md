@@ -184,7 +184,7 @@ layout: default
    * Homework 6, Part 1 due at 11:59 PM on TBD
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
-       + Homework 6, Part 1 Key: HTML, RMD
+       + Homework 6, Part 1 Key: [HTML](https://clanfear.github.io/CSSS508/Keys/HW6_Keys/homework_6_p1_key.html), [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Keys/HW6_Keys/homework_6_p1_key.Rmd)
    * [The R Inferno by Patrick Burns [PDF]](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf): "Circles" 2, 3, and 4 are relevant after this week's material, and Circle 8 covers a lot of miscellaneous R weird things that may trip you up.
    * [Reference material on writing functions](http://r4ds.had.co.nz/functions.html) with lots of examples
    * [Code style guide](http://adv-r.had.co.nz/Style.html) for writing functions, etc.
@@ -201,7 +201,7 @@ layout: default
        + [YouTube](https://youtu.be/q6VJlTYioek)
    * Homework 6, Part 2 due at 11:59 PM on May 26th
        + Homework 6, Part 2: [RMD](https://clanfear.github.io/CSSS508/Homework/HW6/homework_6_p1_key.Rmd)
-       + Homework 6, Part 2 Key: [RMD](https://clanfear.github.io/CSSS508/Homework/HW6/homework_6_p2_key.Rmd), [RMD](https://clanfear.github.io/CSSS508/Homework/HW6/homework_6_p2_key.Rmd)
+       + Homework 6, Part 2 Key: HTML, RMD
    * Data In-Class:
        + [Seattle restaurant inspection data from King County, cleaned.](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata)
        + [Data source, King County](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5)
