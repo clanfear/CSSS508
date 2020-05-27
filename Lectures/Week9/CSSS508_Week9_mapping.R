@@ -138,22 +138,19 @@ acs_2015_vars[10:18,] %>% print()
 king_county <- get_acs(geography="tract", state="WA", 
                        county="King", geometry = TRUE,
                        variables=c("B02001_001E", 
-                                   "B02009_001E"))
+                                   "B02009_001E"), 
+                       output="wide")
 
 
 
 glimpse(king_county)
 
-king_county <-  king_county %>% 
-  select(-moe) %>% #<<
-  group_by(GEOID) %>% 
-  spread(variable, estimate) %>% 
-  rename(`Total Population`=B02001_001,
-         `Any Black`=B02009_001) %>%
+king_county <-  king_county %>%
+  select(-ends_with("M")) %>%
+  rename(`Total Population`=B02001_001E,
+         `Any Black`=B02009_001E) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
-
-
-head(king_county, 10)
+glimpse(king_county)
 
 
 
@@ -188,12 +185,11 @@ pb_state <-
   get_acs(geography = "tract", state = "IL",
           geometry  = TRUE,
           variables = c("B02001_001E", 
-                        "B02009_001E")) %>%
-  select(-moe) %>%
-  group_by(GEOID) %>% 
-  spread(variable, estimate) %>% 
-  rename(`Total Population` = B02001_001,
-         `Any Black` = B02009_001) %>%
+                        "B02009_001E"),
+          output = "wide") %>%
+  select(-ends_with("M")) %>%
+  rename(`Total Population`=B02001_001E,
+         `Any Black`=B02009_001E) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 
 

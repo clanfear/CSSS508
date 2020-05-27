@@ -655,18 +655,20 @@ acs_2015_vars[10:18,] %>% print()
 ---
 # Getting Data
 
-```{r, include=FALSE, cache=FALSE}
+```{r, include=FALSE, cache=TRUE}
 king_county <- get_acs(geography="tract", state="WA", 
                        county="King", geometry = TRUE,
                        variables=c("B02001_001E", 
-                                   "B02009_001E"))
+                                   "B02009_001E"), 
+                       output="wide")
 ```
 
 ```{r, eval=FALSE, purl=FALSE}
 king_county <- get_acs(geography="tract", state="WA", 
                        county="King", geometry = TRUE,
                        variables=c("B02001_001E", 
-                                   "B02009_001E"))
+                                   "B02009_001E"), 
+                       output="wide")
 ```
 
 What do these look like?
@@ -677,35 +679,21 @@ glimpse(king_county)
 ```
 ]
 
-Variable names are in `variables` and values are in `estimate`.
+With `output="wide"`, **estimates** end in `E` and *error margins* in `M`.
 
 ---
 # Processing Data
 
-To get one row per precinct, we want to `spread()`<sup>1</sup> key (`variable`) and value (`estimate`) columns into separate columns for each variable. Then we `mutate()` `Any Black` into a proportion measure.
+We can drop the margins of error, rename the estimates then, `mutate()` into a proportion `Any Black` measure.
 
 ```{r}
-king_county <-  king_county %>% 
-  select(-moe) %>% #<<
-  group_by(GEOID) %>% 
-  spread(variable, estimate) %>% 
-  rename(`Total Population`=B02001_001,
-         `Any Black`=B02009_001) %>%
+king_county <-  king_county %>%
+  select(-ends_with("M")) %>%
+  rename(`Total Population`=B02001_001E,
+         `Any Black`=B02009_001E) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
-
+glimpse(king_county)
 ```
-
-.footnote[[1] `pivot_wider()` is currently broken for `sf` objects, so we must spread. I remove the *margin of error* (`moe`) column before spreading.]
-
-
----
-# The Data
-
-.smallish[
-```{r}
-head(king_county, 10)
-```
-]
 
 ---
 # Mapping Code
@@ -724,6 +712,7 @@ king_county %>%
 New functions:
 
 * `geom_sf()` draws Simple Features coordinate data.
+   * `size = NA` removes outlines
 * `coord_sf()` is used here with these arguments:
    * `crs`: Modifies the coordinate reference system (CRS); WGS84 is possibly the most commonly used CRS.
    * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
@@ -766,8 +755,8 @@ kc_nowater <- king_county %>%
 * `st_combine()` merges all geometries into one
 * `st_union()` resolves internal boundaries
 * `st_difference()` subtracts `y` geometry from `x`
-* `lwgeom::st_make_valid()` fixes geometry errors from subtraction
-* `area_water()` obtains `sf` geometry of water bodies.
+* `st_make_valid()` fixes geometry errors from subtraction
+* `area_water()` obtains `sf` geometry of water bodies
 
 Then we can reproduce the same plot using `kc_nowater`...
 
@@ -794,12 +783,11 @@ pb_state <-
   get_acs(geography = "tract", state = "IL",
           geometry  = TRUE,
           variables = c("B02001_001E", 
-                        "B02009_001E")) %>%
-  select(-moe) %>%
-  group_by(GEOID) %>% 
-  spread(variable, estimate) %>% 
-  rename(`Total Population` = B02001_001,
-         `Any Black` = B02009_001) %>%
+                        "B02009_001E"),
+          output = "wide") %>%
+  select(-ends_with("M")) %>%
+  rename(`Total Population`=B02001_001E,
+         `Any Black`=B02009_001E) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 ```
 
@@ -808,14 +796,14 @@ pb_state <-
   get_acs(geography = "tract", state = "IL",
           geometry  = TRUE,
           variables = c("B02001_001E", 
-                        "B02009_001E")) %>%
-  select(-moe) %>%
-  group_by(GEOID) %>% 
-  spread(variable, estimate) %>% 
-  rename(`Total Population` = B02001_001,
-         `Any Black` = B02009_001) %>%
+                        "B02009_001E"),
+          output = "wide") %>%
+  select(-ends_with("M")) %>%
+  rename(`Total Population`=B02001_001E,
+         `Any Black`=B02009_001E) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 ```
+
 
 ---
 # State Example Plot
@@ -823,7 +811,7 @@ pb_state <-
 ```{r, eval=FALSE, purl=FALSE}
 pb_state %>% 
   ggplot(aes(fill = `Any Black`)) + 
-  geom_sf(lwd = NA) + 
+  geom_sf(size = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
   scale_fill_continuous(name = "Any Black\n", 
                         low  = "#d4d5f9",

@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### May 27, 2020<br>Updated: May 25, 2020
+### May 27, 2020<br>Updated: May 27, 2020
 
 ---
 
@@ -679,7 +679,8 @@ acs_2015_vars[10:18,] %&gt;% print()
 king_county &lt;- get_acs(geography="tract", state="WA", 
                        county="King", geometry = TRUE,
                        variables=c("B02001_001E", 
-                                   "B02009_001E"))
+                                   "B02009_001E"), 
+                       output="wide")
 ```
 
 What do these look like?
@@ -691,69 +692,44 @@ glimpse(king_county)
 ```
 
 ```
-## Rows: 796
-## Columns: 6
-## $ GEOID    &lt;chr&gt; "53033000100", "53033000100", "53033000200", "53...
-## $ NAME     &lt;chr&gt; "Census Tract 1, King County, Washington", "Cens...
-## $ variable &lt;chr&gt; "B02001_001", "B02009_001", "B02001_001", "B0200...
-## $ estimate &lt;dbl&gt; 7985, 1567, 8498, 797, 2991, 142, 6560, 842, 541...
-## $ moe      &lt;dbl&gt; 526, 485, 435, 170, 219, 86, 423, 259, 619, 242,...
-## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.2965 4..., MUL...
+## Rows: 398
+## Columns: 7
+## $ GEOID       &lt;chr&gt; "53033032309", "53033031704", "53033032313", ...
+## $ NAME        &lt;chr&gt; "Census Tract 323.09, King County, Washington...
+## $ B02001_001E &lt;dbl&gt; 8249, 5728, 6551, 5941, 6365, 5292, 6132, 663...
+## $ B02001_001M &lt;dbl&gt; 457, 299, 365, 322, 275, 417, 602, 580, 311, ...
+## $ B02009_001E &lt;dbl&gt; 375, 633, 294, 128, 26, 80, 53, 2117, 456, 62...
+## $ B02009_001M &lt;dbl&gt; 246, 356, 260, 127, 37, 108, 65, 602, 287, 40...
+## $ geometry    &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.1532 4..., ...
 ```
 ]
 
-Variable names are in `variables` and values are in `estimate`.
+With `output="wide"`, **estimates** end in `E` and *error margins* in `M`.
 
 ---
 # Processing Data
 
-To get one row per precinct, we want to `spread()`&lt;sup&gt;1&lt;/sup&gt; key (`variable`) and value (`estimate`) columns into separate columns for each variable. Then we `mutate()` `Any Black` into a proportion measure.
+We can drop the margins of error, rename the estimates then, `mutate()` into a proportion `Any Black` measure.
 
 
 ```r
-king_county &lt;-  king_county %&gt;% 
-* select(-moe) %&gt;%
-  group_by(GEOID) %&gt;% 
-  spread(variable, estimate) %&gt;% 
-  rename(`Total Population`=B02001_001,
-         `Any Black`=B02009_001) %&gt;%
+king_county &lt;-  king_county %&gt;%
+  select(-ends_with("M")) %&gt;%
+  rename(`Total Population`=B02001_001E,
+         `Any Black`=B02009_001E) %&gt;%
   mutate(`Any Black` = `Any Black` / `Total Population`)
-```
-
-.footnote[[1] `pivot_wider()` is currently broken for `sf` objects, so we must spread. I remove the *margin of error* (`moe`) column before spreading.]
-
-
----
-# The Data
-
-.smallish[
-
-```r
-head(king_county, 10)
+glimpse(king_county)
 ```
 
 ```
-## Simple feature collection with 10 features and 4 fields
-## geometry type:  MULTIPOLYGON
-## dimension:      XY
-## bbox:           xmin: -122.3799 ymin: 47.69503 xmax: -122.2551 ymax: 47.73416
-## CRS:            4269
-## # A tibble: 10 x 5
-## # Groups:   GEOID [10]
-##    GEOID  NAME                   geometry `Total Populati~ `Any Black`
-##    &lt;chr&gt;  &lt;chr&gt;        &lt;MULTIPOLYGON [°]&gt;            &lt;dbl&gt;       &lt;dbl&gt;
-##  1 53033~ Cens~ (((-122.2965 47.73378, -~             7985     0.196  
-##  2 53033~ Cens~ (((-122.3236 47.72309, -~             8498     0.0938 
-##  3 53033~ Cens~ (((-122.3452 47.73413, -~             2991     0.0475 
-##  4 53033~ Cens~ (((-122.3609 47.73414, -~             6560     0.128  
-##  5 53033~ Cens~ (((-122.3609 47.72507, -~             5419     0.0627 
-##  6 53033~ Cens~ (((-122.3799 47.71327, -~             3143     0.00700
-##  7 53033~ Cens~ (((-122.345 47.72868, -1~             8124     0.100  
-##  8 53033~ Cens~ (((-122.3127 47.71944, -~             5217     0.141  
-##  9 53033~ Cens~ (((-122.2915 47.7155, -1~             2710     0.0365 
-## 10 53033~ Cens~ (((-122.285 47.7192, -12~             2009     0.0164
+## Rows: 398
+## Columns: 5
+## $ GEOID              &lt;chr&gt; "53033032309", "53033031704", "5303303...
+## $ NAME               &lt;chr&gt; "Census Tract 323.09, King County, Was...
+## $ `Total Population` &lt;dbl&gt; 8249, 5728, 6551, 5941, 6365, 5292, 61...
+## $ `Any Black`        &lt;dbl&gt; 0.045460056, 0.110509777, 0.044878644,...
+## $ geometry           &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.1532...
 ```
-]
 
 ---
 # Mapping Code
@@ -773,6 +749,7 @@ king_county %&gt;%
 New functions:
 
 * `geom_sf()` draws Simple Features coordinate data.
+   * `size = NA` removes outlines
 * `coord_sf()` is used here with these arguments:
    * `crs`: Modifies the coordinate reference system (CRS); WGS84 is possibly the most commonly used CRS.
    * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
@@ -800,14 +777,14 @@ kc_nowater &lt;- king_county %&gt;%
 * `st_combine()` merges all geometries into one
 * `st_union()` resolves internal boundaries
 * `st_difference()` subtracts `y` geometry from `x`
-* `lwgeom::st_make_valid()` fixes geometry errors from subtraction
-* `area_water()` obtains `sf` geometry of water bodies.
+* `st_make_valid()` fixes geometry errors from subtraction
+* `area_water()` obtains `sf` geometry of water bodies
 
 Then we can reproduce the same plot using `kc_nowater`...
 
 ---
 
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
 
 ---
 # State Example Data
@@ -822,14 +799,14 @@ pb_state &lt;-
   get_acs(geography = "tract", state = "IL",
           geometry  = TRUE,
           variables = c("B02001_001E", 
-                        "B02009_001E")) %&gt;%
-  select(-moe) %&gt;%
-  group_by(GEOID) %&gt;% 
-  spread(variable, estimate) %&gt;% 
-  rename(`Total Population` = B02001_001,
-         `Any Black` = B02009_001) %&gt;%
+                        "B02009_001E"),
+          output = "wide") %&gt;%
+  select(-ends_with("M")) %&gt;%
+  rename(`Total Population`=B02001_001E,
+         `Any Black`=B02009_001E) %&gt;%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 ```
+
 
 ---
 # State Example Plot
@@ -838,7 +815,7 @@ pb_state &lt;-
 ```r
 pb_state %&gt;% 
   ggplot(aes(fill = `Any Black`)) + 
-  geom_sf(lwd = NA) + 
+  geom_sf(size = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
   scale_fill_continuous(name = "Any Black\n", 
                         low  = "#d4d5f9",
@@ -848,7 +825,7 @@ pb_state %&gt;%
 
 ---
 
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
 
 ---
 # Multiple `geom_sf` Layers
@@ -925,7 +902,7 @@ We add the `urban_il` data as a new layer:
 
 ---
 
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-35-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
