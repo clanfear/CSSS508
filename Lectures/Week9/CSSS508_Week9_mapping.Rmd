@@ -15,7 +15,7 @@ output:
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
-options(htmltools.dir.version = FALSE)
+options(htmltools.dir.version = FALSE, width = 70)
 knitr::opts_chunk$set(comment = "##")
 ```
 
@@ -134,20 +134,25 @@ What this package does for you:
 ---
 # Installation
 
-As of `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`, the current version of `ggmap` must be downloaded from GitHub.
-
-This can be done using the `devtools` package.
+We can install `ggmap` like other packages:
 
 ```{r, eval=FALSE}
-if(!requireNamespace("devtools")) install.packages("devtools")
-devtools::install_github("dkahle/ggmap", ref = "tidyup")
+install.packages("ggmap")
 ```
+
+
+Because the map APIs it uses change frequently, sometimes you may need to get a newer development version of `ggmap` from the author's GitHub. This can be done using the `remotes` package.
+
+```{r, eval=FALSE}
+if(!requireNamespace("remotes")) install.packages("remotes")
+remotes::install_github("dkahle/ggmap", ref = "tidyup")
+```
+
+Note, this may require compilation on your computer.
 
 ```{r, message=FALSE, warning=FALSE, purl=FALSE}
 library(ggmap)
 ```
-
-This may require compilation on your computer. If you get errors during install, check with me after class or in lab.
 
 ---
 # Quick Maps with `qmplot()`
@@ -258,11 +263,9 @@ downtown <- spd_raw %>%
 Then make a dataframe of just assaults and robberies:
 ```{r}
 assaults <- downtown %>% 
-  mutate(assault_label = 
-           ifelse(`Event Clearance Group` %in%
-                  c("ASSAULTS", "ROBBERY"), 
-                  `Event Clearance Description`, "")) %>% 
-  filter(assault_label != "")
+  filter(`Event Clearance Group` %in%
+                  c("ASSAULTS", "ROBBERY")) %>%
+  mutate(assault_label = `Event Clearance Description`)
 ```
 
 ---
@@ -424,7 +427,7 @@ A [**Simple Feature**](https://en.wikipedia.org/wiki/Simple_Features) is a singl
 ---
 ## Coordinate Reference Systems
 
-**Coordinate reference systems** (**CRS**) specify what location on Earth geometry coordinates are *relative to* (i.e. what location is (0,0) when plotting).
+**Coordinate reference systems** (**CRS**) specify what location on Earth geometry coordinates are *relative to* (e.g. what location is (0,0) when plotting).
 
 --
 
@@ -432,21 +435,24 @@ The most commonly used is [**WGS84**](https://en.wikipedia.org/wiki/World_Geodet
 
 --
 
-There are two common ways to define a CRS:
+There are two common ways to define a CRS in `sf`:
 
 * [**EPSG codes**](http://spatialreference.org/ref/epsg/) (`epsg` in R)
-   * Numeric codes which *refer to a predefined projection*
-   * Ex: WGS84 is `4326`
+
+   * Numeric codes which *refer to a predefined CRS*
+   * Example: WGS84 is `4326`
 
 --
 
 * [**PROJ.4 strings**](https://proj4.org/usage/quickstart.html) (`proj4string` in R)
-   * Text strings which *define a projection*
-   * WGS84 looks like this:
+
+   * Text strings of parameters that *define a CRS*
+   * Example: NAD83(NSRS2007) / Washington North
 
 ```
-+init=epsg:4326 +proj=longlat +ellps=WGS84
-+datum=WGS84 +no_defs +towgs84=0,0,0
++proj=lcc +lat_1=48.73333333333333 +lat_2=47.5 +lat_0=47 
++lon_0=-120.8333333333333 +x_0=500000 +y_0=0 +ellps=GRS80 
++towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
 ```
 
 ---
@@ -466,7 +472,7 @@ Shapefiles actually consist of multiple individual files. There are usually at l
 
 Often there will also be a `.prj` file defining the coordinate system.
 
-.footnote[[1] This is just a dBase IV file which is an ancient and common database storage file format.]
+.footnote[[2] This is just a dBase IV file which is an ancient and common database storage file format.]
 
 ---
 class: inverse
@@ -481,11 +487,13 @@ class: inverse
 
 * `geom_sf()`: `ggplot()` layer for `sf` objects.
 
+* `st_as_sf()`: Convert a data frame into an `sf` object.
+
 * `st_join()`: Join data by spatial relationship.
 
 * `st_transform()`: Convert between CRS.
 
-* `st_set_geometry(., NULL)`: Remove geometry from a `sf` data frame. 
+* `st_drop_geometry()`: Remove geometry from a `sf` data frame. 
 
 * `st_relate()`: Compute relationships between geometries (like neighbor matrices).
 
@@ -565,15 +573,14 @@ We can plot `sf` geometry using `geom_sf()`.
 ```{r, eval=FALSE, purl=FALSE}
 ggplot(precincts_votes_sf, 
        aes(fill=P_Dem)) + #<<
-  geom_sf(color="white", #<<
-          size=0.1) +
+  geom_sf(size=NA) +
   theme_void() +
   theme(legend.position = 
           "bottom")
 ```
 
 * `fill=P_Dem` maps color inside precincts to `P_Dem`.
-* `color="white"` sets boundaries to white.
+* `size=NA` removes precinct outlines.
 * `theme_void()` removes axes and background.
 
 ]
@@ -582,8 +589,7 @@ ggplot(precincts_votes_sf,
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dev="svg", fig.height=5.5, fig.width=2.75}
 ggplot(precincts_votes_sf, 
        aes(fill=P_Dem)) + #<<
-  geom_sf(color="white", #<<
-          size=0.1) +
+  geom_sf(size=NA) +
   theme_void() +
   theme(legend.position = 
           "bottom")
@@ -706,12 +712,12 @@ head(king_county, 10)
 
 ```{r, eval=FALSE, purl=FALSE}
 king_county %>% 
-  ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(size=0.1, color="white") + 
+  ggplot(aes(fill = `Any Black`)) + 
+  geom_sf(size = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", 
-                        low="#d4d5f9",
-                        high="#00025b") + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")
 ```
 
@@ -725,12 +731,12 @@ New functions:
 ---
 ```{r king_plot, eval=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
 king_county %>% 
-  ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(size=0.1, color="white") + 
-  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", 
-                        low="#d4d5f9",
-                        high="#00025b") + 
+  ggplot(aes(fill = `Any Black`)) + 
+  geom_sf(size = NA) + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum = NA) + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")
 ```
 
@@ -766,10 +772,11 @@ kc_nowater <- king_county %>%
 Then we can reproduce the same plot using `kc_nowater`...
 
 ---
+
 ```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
   ggplot(kc_nowater, 
          aes(fill=`Any Black`)) + 
-  geom_sf(size=0, color="white") + 
+  geom_sf(size = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
   scale_fill_continuous(name="Any Black\n", 
                         low="#d4d5f9",
@@ -815,12 +822,12 @@ pb_state <-
 
 ```{r, eval=FALSE, purl=FALSE}
 pb_state %>% 
-  ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(lwd=0) + 
+  ggplot(aes(fill = `Any Black`)) + 
+  geom_sf(lwd = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", 
-                        low="#d4d5f9",
-                        high="#00025b") + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
   theme_minimal()
 ```
 
@@ -828,12 +835,85 @@ pb_state %>%
 
 ```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
 pb_state %>% 
-  ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(lwd=0) + 
+  ggplot(aes(fill = `Any Black`)) + 
+  geom_sf(size = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", 
-                        low="#d4d5f9",
-                        high="#00025b") + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
+  theme_minimal()
+```
+
+---
+# Multiple `geom_sf` Layers
+
+As with other `ggplot2` layers, we can add additional `geom_sf()` layers using new data.
+
+This is useful for...
+
+* Adding points
+    + Cities in states
+    + Crimes in police beats
+* Adding lines
+    + Street grids over tracts
+* Adding outlines or highlights
+    + Elevation contours
+    + *Showing urban boundaries*
+
+---
+# Add Urban Outlines
+
+We can use `tigris` to download urban boundaries and add them to our prior map.
+
+```{r, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+urbans <- tigris::urban_areas(cb = TRUE, class = "sf")
+glimpse(urbans)
+```
+
+.small[
+```{r, echo=FALSE}
+glimpse(urbans)
+```
+]
+
+```{r}
+urban_il <- urbans %>% filter(str_detect(NAME10, "IL"))
+```
+
+
+---
+# With Urban Outlines
+
+```{r, eval=FALSE, purl=FALSE}
+pb_state %>% 
+  ggplot(aes(fill=`Any Black`)) + 
+  geom_sf(size = NA) + 
+  geom_sf(data = urban_il, color = "black", #<<
+          fill = NA, size = 0.1, inherit.aes=FALSE) + #<<
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
+  theme_minimal()
+```
+
+We add the `urban_il` data as a new layer:
+
+* `fill=NA` removes the polygon fill
+* `size=0.1` and `color="black"` give a thin outline
+
+
+---
+
+```{r, eval=TRUE, echo=FALSE, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
+pb_state %>% 
+  ggplot(aes(fill=`Any Black`)) + 
+  geom_sf(size = NA) + 
+  geom_sf(data = urban_il, color = "black", fill = NA, size = 0.1, inherit.aes=FALSE) +
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
   theme_minimal()
 ```
 

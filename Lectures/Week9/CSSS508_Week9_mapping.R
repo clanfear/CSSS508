@@ -13,8 +13,10 @@ glimpse(spd_raw)
 
 
 
-## if(!requireNamespace("devtools")) install.packages("devtools")
-## devtools::install_github("dkahle/ggmap", ref = "tidyup")
+## install.packages("ggmap")
+
+## if(!requireNamespace("remotes")) install.packages("remotes")
+## remotes::install_github("dkahle/ggmap", ref = "tidyup")
 
 
 
@@ -47,11 +49,9 @@ downtown <- spd_raw %>%
          Longitude > -122.36, Longitude < -122.31)
 
 assaults <- downtown %>% 
-  mutate(assault_label = 
-           ifelse(`Event Clearance Group` %in%
-                  c("ASSAULTS", "ROBBERY"), 
-                  `Event Clearance Description`, "")) %>% 
-  filter(assault_label != "")
+  filter(`Event Clearance Group` %in%
+                  c("ASSAULTS", "ROBBERY")) %>%
+  mutate(assault_label = `Event Clearance Description`)
 
 
 
@@ -123,8 +123,7 @@ glimpse(precincts_votes_sf)
 
 ggplot(precincts_votes_sf, 
        aes(fill=P_Dem)) + #<<
-  geom_sf(color="white", #<<
-          size=0.1) +
+  geom_sf(size=NA) +
   theme_void() +
   theme(legend.position = 
           "bottom")
@@ -159,16 +158,16 @@ head(king_county, 10)
 
 
 king_county %>% 
-  ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(size=0.1, color="white") + 
-  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", 
-                        low="#d4d5f9",
-                        high="#00025b") + 
+  ggplot(aes(fill = `Any Black`)) + 
+  geom_sf(size = NA) + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum = NA) + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")
 
 st_erase <- function(x, y) {
-  st_difference(x, lwgeom::st_make_valid(st_union(st_combine(y))))
+  st_difference(x, st_make_valid(st_union(st_combine(y))))
 }
 kc_water <- tigris::area_water("WA", "King", class = "sf")
 kc_nowater <- king_county %>% 
@@ -178,7 +177,7 @@ kc_nowater <- king_county %>%
 
   ggplot(kc_nowater, 
          aes(fill=`Any Black`)) + 
-  geom_sf(size=0, color="white") + 
+  geom_sf(size = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
   scale_fill_continuous(name="Any Black\n", 
                         low="#d4d5f9",
@@ -202,10 +201,29 @@ pb_state <-
 
 
 pb_state %>% 
-  ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(lwd=0) + 
+  ggplot(aes(fill = `Any Black`)) + 
+  geom_sf(size = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", 
-                        low="#d4d5f9",
-                        high="#00025b") + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
+  theme_minimal()
+
+urbans <- tigris::urban_areas(cb = TRUE, class = "sf")
+glimpse(urbans)
+
+glimpse(urbans)
+
+urban_il <- urbans %>% filter(str_detect(NAME10, "IL"))
+
+
+
+pb_state %>% 
+  ggplot(aes(fill=`Any Black`)) + 
+  geom_sf(size = NA) + 
+  geom_sf(data = urban_il, color = "black", fill = NA, size = 0.1, inherit.aes=FALSE) +
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
   theme_minimal()

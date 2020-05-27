@@ -4,6 +4,7 @@
     <title>CSSS508, Week 9</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,12 +14,9 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### May 27, 2020<br>Updated: Mar 29, 2020
+### May 27, 2020<br>Updated: May 25, 2020
 
 ---
-
-
-
 
 
 
@@ -83,27 +81,27 @@ glimpse(spd_raw)
 ```
 
 ```
-## Observations: 706
-## Variables: 19
-## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 1701846, 1701844, 17...
-## $ `CAD Event Number`            &lt;dbl&gt; 1.6e+10, 1.6e+10, 1.6e+10, 1.6e+10, 1.6e+10, 1....
-## $ `General Offense Number`      &lt;dbl&gt; 2.02e+09, 2.02e+09, 2.02e+09, 2.02e+09, 2.02e+0...
-## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "202", "430", "186"...
-## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT", "TRESPASS", "D...
-## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPASS", "DISTURBANCES...
-## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "TRESPASS", "DISTUR...
-## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/25/2016 11:57:22 ...
-## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BLOCK OF RAINIER AV...
-## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", "B", "U", "E", "E...
-## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", "B3", "B3", "U2",...
-## $ `Census Tract`                &lt;dbl&gt; 9100, 11801, 7200, 8002, 8100, 5100, 3500, 5301...
-## $ Longitude                     &lt;dbl&gt; -122, -122, -122, -122, -122, -122, -122, -122,...
-## $ Latitude                      &lt;dbl&gt; 47.6, 47.5, 47.6, 47.6, 47.6, 47.7, 47.7, 47.7,...
-## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(47.51985, -122.268...
-## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPLIFT OR SVCS)", "S...
-## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING", "TRESPASS", "B...
-## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", "CRISIS CALL", "S...
-## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/25/2016 09:54:23 ...
+## Rows: 706
+## Columns: 19
+## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, ...
+## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 1...
+## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 201...
+## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245",...
+## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPL...
+## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRES...
+## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING",...
+## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "...
+## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX...
+## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B...
+## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3...
+## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.1...
+## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122....
+## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.6142...
+## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", ...
+## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SH...
+## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFT...
+## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS...
+## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "...
 ```
 ]
 
@@ -133,7 +131,7 @@ Sometimes, however, we want to plot these points over existing maps.
 ]
 
 .pull-right[
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -160,22 +158,28 @@ What this package does for you:
 ---
 # Installation
 
-As of Mar 29, 2020, the current version of `ggmap` must be downloaded from GitHub.
-
-This can be done using the `devtools` package.
+We can install `ggmap` like other packages:
 
 
 ```r
-if(!requireNamespace("devtools")) install.packages("devtools")
-devtools::install_github("dkahle/ggmap", ref = "tidyup")
+install.packages("ggmap")
 ```
+
+
+Because the map APIs it uses change frequently, sometimes you may need to get a newer development version of `ggmap` from the author's GitHub. This can be done using the `remotes` package.
+
+
+```r
+if(!requireNamespace("remotes")) install.packages("remotes")
+remotes::install_github("dkahle/ggmap", ref = "tidyup")
+```
+
+Note, this may require compilation on your computer.
 
 
 ```r
 library(ggmap)
 ```
-
-This may require compilation on your computer. If you get errors during install, check with me after class or in lab.
 
 ---
 # Quick Maps with `qmplot()`
@@ -270,11 +274,9 @@ Then make a dataframe of just assaults and robberies:
 
 ```r
 assaults &lt;- downtown %&gt;% 
-  mutate(assault_label = 
-           ifelse(`Event Clearance Group` %in%
-                  c("ASSAULTS", "ROBBERY"), 
-                  `Event Clearance Description`, "")) %&gt;% 
-  filter(assault_label != "")
+  filter(`Event Clearance Group` %in%
+                  c("ASSAULTS", "ROBBERY")) %&gt;%
+  mutate(assault_label = `Event Clearance Description`)
 ```
 
 ---
@@ -411,7 +413,7 @@ A [**Simple Feature**](https://en.wikipedia.org/wiki/Simple_Features) is a singl
 ---
 ## Coordinate Reference Systems
 
-**Coordinate reference systems** (**CRS**) specify what location on Earth geometry coordinates are *relative to* (i.e. what location is (0,0) when plotting).
+**Coordinate reference systems** (**CRS**) specify what location on Earth geometry coordinates are *relative to* (e.g. what location is (0,0) when plotting).
 
 --
 
@@ -419,21 +421,24 @@ The most commonly used is [**WGS84**](https://en.wikipedia.org/wiki/World_Geodet
 
 --
 
-There are two common ways to define a CRS:
+There are two common ways to define a CRS in `sf`:
 
 * [**EPSG codes**](http://spatialreference.org/ref/epsg/) (`epsg` in R)
-   * Numeric codes which *refer to a predefined projection*
-   * Ex: WGS84 is `4326`
+
+   * Numeric codes which *refer to a predefined CRS*
+   * Example: WGS84 is `4326`
 
 --
 
 * [**PROJ.4 strings**](https://proj4.org/usage/quickstart.html) (`proj4string` in R)
-   * Text strings which *define a projection*
-   * WGS84 looks like this:
+
+   * Text strings of parameters that *define a CRS*
+   * Example: NAD83(NSRS2007) / Washington North
 
 ```
-+init=epsg:4326 +proj=longlat +ellps=WGS84
-+datum=WGS84 +no_defs +towgs84=0,0,0
++proj=lcc +lat_1=48.73333333333333 +lat_2=47.5 +lat_0=47 
++lon_0=-120.8333333333333 +x_0=500000 +y_0=0 +ellps=GRS80 
++towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
 ```
 
 ---
@@ -453,7 +458,7 @@ Shapefiles actually consist of multiple individual files. There are usually at l
 
 Often there will also be a `.prj` file defining the coordinate system.
 
-.footnote[[1] This is just a dBase IV file which is an ancient and common database storage file format.]
+.footnote[[2] This is just a dBase IV file which is an ancient and common database storage file format.]
 
 ---
 class: inverse
@@ -468,11 +473,13 @@ class: inverse
 
 * `geom_sf()`: `ggplot()` layer for `sf` objects.
 
+* `st_as_sf()`: Convert a data frame into an `sf` object.
+
 * `st_join()`: Join data by spatial relationship.
 
 * `st_transform()`: Convert between CRS.
 
-* `st_set_geometry(., NULL)`: Remove geometry from a `sf` data frame. 
+* `st_drop_geometry()`: Remove geometry from a `sf` data frame. 
 
 * `st_relate()`: Compute relationships between geometries (like neighbor matrices).
 
@@ -499,8 +506,7 @@ precinct_shape &lt;- st_read("./data/district/votdst.shp",
 ## Simple feature collection with 2592 features and 5 fields
 ## geometry type:  MULTIPOLYGON
 ## dimension:      XY
-## bbox:           xmin: 1220000 ymin: 31600 xmax: 1580000 ymax: 288000
-## epsg (SRID):    NA
+## bbox:           xmin: 1220179 ymin: 31555.16 xmax: 1583562 ymax: 287678
 ## proj4string:    +proj=lcc +lat_1=47.5 +lat_2=48.73333333333333 +lat_0=47 +lon_0=-120.8333333333333 +x_0=500000.0000000001 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs
 ```
 
@@ -550,14 +556,14 @@ glimpse(precincts_votes_sf)
 ```
 
 ```
-## Observations: 960
-## Variables: 5
+## Rows: 960
+## Columns: 5
 ## Groups: Precinct [960]
-## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 11-1597", "SEA 11-...
-## $ P_Dem    &lt;dbl&gt; 0.771, 0.817, 0.751, 0.838, 0.833, 0.815, 0.828, 0.838, 0.821, 0.820...
-## $ P_Rep    &lt;dbl&gt; 0.1561, 0.0779, 0.1342, 0.0865, 0.0859, 0.0803, 0.1109, 0.1237, 0.12...
-## $ Turnout  &lt;dbl&gt; 0.693, 0.727, 0.735, 0.752, 0.758, 0.771, 0.687, 0.672, 0.622, 0.767...
-## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((1273698 193..., MULTIPOLYG...
+## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SE...
+## $ P_Dem    &lt;dbl&gt; 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.83...
+## $ P_Rep    &lt;dbl&gt; 0.15612648, 0.07789474, 0.13418530, 0.08649469, ...
+## $ Turnout  &lt;dbl&gt; 0.6931507, 0.7274119, 0.7347418, 0.7522831, 0.75...
+## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((127369...
 ```
 ]
 
@@ -577,21 +583,20 @@ We can plot `sf` geometry using `geom_sf()`.
 ```r
 ggplot(precincts_votes_sf, 
 *      aes(fill=P_Dem)) +
-* geom_sf(color="white",
-          size=0.1) +
+  geom_sf(size=NA) +
   theme_void() +
   theme(legend.position = 
           "bottom")
 ```
 
 * `fill=P_Dem` maps color inside precincts to `P_Dem`.
-* `color="white"` sets boundaries to white.
+* `size=NA` removes precinct outlines.
 * `theme_void()` removes axes and background.
 
 ]
 
 .pull-right[
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-43-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -686,14 +691,14 @@ glimpse(king_county)
 ```
 
 ```
-## Observations: 796
-## Variables: 6
-## $ GEOID    &lt;chr&gt; "53033000100", "53033000100", "53033000200", "53033000200", "5303300...
-## $ NAME     &lt;chr&gt; "Census Tract 1, King County, Washington", "Census Tract 1, King Cou...
-## $ variable &lt;chr&gt; "B02001_001", "B02009_001", "B02001_001", "B02009_001", "B02001_001"...
-## $ estimate &lt;dbl&gt; 7985, 1567, 8498, 797, 2991, 142, 6560, 842, 5419, 340, 3143, 22, 81...
-## $ moe      &lt;dbl&gt; 526, 485, 435, 170, 219, 86, 423, 259, 619, 242, 189, 24, 558, 218, ...
-## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122 47.7, ..., MULTIPOLYGON (((-122 47...
+## Rows: 796
+## Columns: 6
+## $ GEOID    &lt;chr&gt; "53033000100", "53033000100", "53033000200", "53...
+## $ NAME     &lt;chr&gt; "Census Tract 1, King County, Washington", "Cens...
+## $ variable &lt;chr&gt; "B02001_001", "B02009_001", "B02001_001", "B0200...
+## $ estimate &lt;dbl&gt; 7985, 1567, 8498, 797, 2991, 142, 6560, 842, 541...
+## $ moe      &lt;dbl&gt; 526, 485, 435, 170, 219, 86, 423, 259, 619, 242,...
+## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.2965 4..., MUL...
 ```
 ]
 
@@ -731,23 +736,22 @@ head(king_county, 10)
 ## Simple feature collection with 10 features and 4 fields
 ## geometry type:  MULTIPOLYGON
 ## dimension:      XY
-## bbox:           xmin: -122 ymin: 47.7 xmax: -122 ymax: 47.7
-## epsg (SRID):    4269
-## proj4string:    +proj=longlat +datum=NAD83 +no_defs
+## bbox:           xmin: -122.3799 ymin: 47.69503 xmax: -122.2551 ymax: 47.73416
+## CRS:            4269
 ## # A tibble: 10 x 5
 ## # Groups:   GEOID [10]
-##    GEOID   NAME                                      geometry `Total Populati~ `Any Black`
-##    &lt;chr&gt;   &lt;chr&gt;                           &lt;MULTIPOLYGON [°]&gt;            &lt;dbl&gt;       &lt;dbl&gt;
-##  1 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             7985     0.196  
-##  2 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             8498     0.0938 
-##  3 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             2991     0.0475 
-##  4 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             6560     0.128  
-##  5 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             5419     0.0627 
-##  6 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             3143     0.00700
-##  7 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             8124     0.100  
-##  8 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             5217     0.141  
-##  9 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             2710     0.0365 
-## 10 530330~ Census Trac~ (((-122 47.7, -122 47.7, -122 47.7, ~             2009     0.0164
+##    GEOID  NAME                   geometry `Total Populati~ `Any Black`
+##    &lt;chr&gt;  &lt;chr&gt;        &lt;MULTIPOLYGON [°]&gt;            &lt;dbl&gt;       &lt;dbl&gt;
+##  1 53033~ Cens~ (((-122.2965 47.73378, -~             7985     0.196  
+##  2 53033~ Cens~ (((-122.3236 47.72309, -~             8498     0.0938 
+##  3 53033~ Cens~ (((-122.3452 47.73413, -~             2991     0.0475 
+##  4 53033~ Cens~ (((-122.3609 47.73414, -~             6560     0.128  
+##  5 53033~ Cens~ (((-122.3609 47.72507, -~             5419     0.0627 
+##  6 53033~ Cens~ (((-122.3799 47.71327, -~             3143     0.00700
+##  7 53033~ Cens~ (((-122.345 47.72868, -1~             8124     0.100  
+##  8 53033~ Cens~ (((-122.3127 47.71944, -~             5217     0.141  
+##  9 53033~ Cens~ (((-122.2915 47.7155, -1~             2710     0.0365 
+## 10 53033~ Cens~ (((-122.285 47.7192, -12~             2009     0.0164
 ```
 ]
 
@@ -757,12 +761,12 @@ head(king_county, 10)
 
 ```r
 king_county %&gt;% 
-  ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(size=0.1, color="white") + 
+  ggplot(aes(fill = `Any Black`)) + 
+  geom_sf(size = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", 
-                        low="#d4d5f9",
-                        high="#00025b") + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
   theme_minimal() + ggtitle("Proportion Any Black")
 ```
 
@@ -786,7 +790,7 @@ With a simple function and boundaries of water bodies in King County, we can rep
 
 ```r
 st_erase &lt;- function(x, y) {
-  st_difference(x, lwgeom::st_make_valid(st_union(st_combine(y))))
+  st_difference(x, st_make_valid(st_union(st_combine(y))))
 }
 kc_water &lt;- tigris::area_water("WA", "King", class = "sf")
 kc_nowater &lt;- king_county %&gt;% 
@@ -796,15 +800,14 @@ kc_nowater &lt;- king_county %&gt;%
 * `st_combine()` merges all geometries into one
 * `st_union()` resolves internal boundaries
 * `st_difference()` subtracts `y` geometry from `x`
-* `lwgeom::st_make_valid()` fixes geometry errors from subtraction&lt;sup&gt;1&lt;/sup&gt;
+* `lwgeom::st_make_valid()` fixes geometry errors from subtraction
 * `area_water()` obtains `sf` geometry of water bodies.
 
 Then we can reproduce the same plot using `kc_nowater`...
 
-.footnote[[1] Requires the `lwgeom` pacakge: `install.packages("lwgeom")`]
-
 ---
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-54-1.svg)&lt;!-- --&gt;
+
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
 
 ---
 # State Example Data
@@ -834,18 +837,95 @@ pb_state &lt;-
 
 ```r
 pb_state %&gt;% 
-  ggplot(aes(fill=`Any Black`)) + 
-  geom_sf(lwd=0) + 
+  ggplot(aes(fill = `Any Black`)) + 
+  geom_sf(lwd = NA) + 
   coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
-  scale_fill_continuous(name="Any Black\n", 
-                        low="#d4d5f9",
-                        high="#00025b") + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
   theme_minimal()
 ```
 
 ---
 
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-58-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
+
+---
+# Multiple `geom_sf` Layers
+
+As with other `ggplot2` layers, we can add additional `geom_sf()` layers using new data.
+
+This is useful for...
+
+* Adding points
+    + Cities in states
+    + Crimes in police beats
+* Adding lines
+    + Street grids over tracts
+* Adding outlines or highlights
+    + Elevation contours
+    + *Showing urban boundaries*
+
+---
+# Add Urban Outlines
+
+We can use `tigris` to download urban boundaries and add them to our prior map.
+
+
+```r
+urbans &lt;- tigris::urban_areas(cb = TRUE, class = "sf")
+glimpse(urbans)
+```
+
+.small[
+
+```
+## Rows: 3,601
+## Columns: 9
+## $ UACE10     &lt;chr&gt; "88732", "01819", "22366", "93322", "02548", "...
+## $ AFFGEOID10 &lt;chr&gt; "400C100US88732", "400C100US01819", "400C100US...
+## $ GEOID10    &lt;chr&gt; "88732", "01819", "22366", "93322", "02548", "...
+## $ NAME10     &lt;chr&gt; "Tucson, AZ", "Alturas, CA", "Davenport, IA--I...
+## $ LSAD10     &lt;chr&gt; "75", "76", "75", "76", "76", "76", "75", "75"...
+## $ UATYP10    &lt;chr&gt; "U", "C", "U", "C", "C", "C", "U", "U", "U", "...
+## $ ALAND10    &lt;dbl&gt; 915276150, 4933312, 357345121, 45455957, 23646...
+## $ AWATER10   &lt;dbl&gt; 2078695, 16517, 21444164, 88872, 3913803, 1510...
+## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-110.8135 3..., M...
+```
+]
+
+
+```r
+urban_il &lt;- urbans %&gt;% filter(str_detect(NAME10, "IL"))
+```
+
+
+---
+# With Urban Outlines
+
+
+```r
+pb_state %&gt;% 
+  ggplot(aes(fill=`Any Black`)) + 
+  geom_sf(size = NA) + 
+* geom_sf(data = urban_il, color = "black",
+*         fill = NA, size = 0.1, inherit.aes=FALSE) +
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  scale_fill_continuous(name = "Any Black\n", 
+                        low  = "#d4d5f9",
+                        high = "#00025b") + 
+  theme_minimal()
+```
+
+We add the `urban_il` data as a new layer:
+
+* `fill=NA` removes the polygon fill
+* `size=0.1` and `color="black"` give a thin outline
+
+
+---
+
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -904,30 +984,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {
