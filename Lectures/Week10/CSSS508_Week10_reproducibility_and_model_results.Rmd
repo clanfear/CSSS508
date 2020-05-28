@@ -15,7 +15,7 @@ output:
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
-options(htmltools.dir.version = FALSE)
+options(htmltools.dir.version = FALSE, width = 70)
 knitr::opts_chunk$set(comment = "##")
 ```
 
@@ -501,7 +501,7 @@ library(sjPlot)
 
 `tab_model()` will produce tables for most models.
 
-```{r, eval=FALSE}
+```{r, eval=1}
 model_1 <- lm(mpg ~ wt, data = mtcars)
 tab_model(model_1)
 ```
@@ -526,7 +526,7 @@ The `sjPlot` package makes this easy to do: just give `tab_model()` more models!
 ---
 # Multiple `tab_model()`
 
-```{r, eval=FALSE}
+```{r, eval=c(1,2)}
 model_2 <- lm(mpg ~ hp + wt, data = mtcars)
 model_3 <- lm(mpg ~ hp + wt + factor(am), data = mtcars)
 tab_model(model_1, model_2, model_3)
@@ -566,6 +566,79 @@ knitr::include_graphics("img/sjPlot_likert.PNG")
 
 ```{r, echo=FALSE, out.width = "500px"}
 knitr::include_graphics("img/sjPlot_crosstab.PNG")
+```
+
+---
+# `gt`
+
+[RStudio's `gt` package](https://gt.rstudio.com/) is a new and powerful system for creating tables from dataframes.
+
+
+---
+# `modelsummary`
+
+The `modelsummary` package combines `broom`, `gt`, and `kableExtra` to produce tabular summaries of almost any model fit in R.
+
+An advantage of this package is that it can produce output in every common format: HTML, Markdown, $\LaTeX$, raw text, and even images (`.png` or `.jpg`).
+
+```{r, message=FALSE, warning=FALSE}
+library(modelsummary)
+```
+
+---
+# Summary Tables
+
+.small[
+.pull-left[
+```{r, eval=FALSE, echo=TRUE}
+model_list <- list("Model 1" = model_1, 
+                   "Model 2" = model_2, 
+                   "Model 3" = model_3)
+msummary(model_list)
+```
+
+Default `modelsummary` tables look a lot like `pander` tables because they are generated via Markdown.
+]
+.pull-right[
+```{r, eval=TRUE, echo=FALSE}
+model_list <- list("Model 1" = model_1, 
+                   "Model 2" = model_2, 
+                   "Model 3" = model_3)
+msummary(model_list)
+```
+]
+]
+
+---
+# PDF Output
+
+`modelsummary` can produce $\LaTeX$ for PDFs as well.<sup>1</sup>
+
+```{r, eval=FALSE}
+msummary(model_list, output = "latex")
+```
+
+.image-shorter[
+![](img/ex_table_latex.PNG)
+]
+
+.footnote[[1] Note this output will generally only work nicely in a PDF document.]
+
+---
+# Saving a `modelsummary`
+
+.image-short[
+```{r}
+msummary(model_list, output = "ex_table.png")
+```
+]
+
+---
+# `modelsummary` and `gt`
+
+```{r, eval=FALSE}
+msummary(model_list, output = "gt") %>%
+  tab_header("Summary Table", "Models of mpg")
 ```
 
 ---

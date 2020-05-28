@@ -215,7 +215,9 @@ layout: default
        + [R script for Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.R)
        + [PDF of Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.pdf)
        + [Rmd for Lecture 9 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/CSSS508_Week9_mapping.Rmd)
-   * [Lecture Video for Lecture 9](https://youtu.be/joCRAq1TiWs), recorded May 29th, 2019
+   * Lecture Video for Lecture 9, recorded May 27th, 2020
+       + [Zoom](https://washington.zoom.us/rec/share/2dEpCL2p2kxJXdbL2BzycI8HL5nXaaa81yMe_vdbzU0B_00t1XOcYbUvWRw_Gf01)
+       + [YouTube](https://youtu.be/QWOClS4J9rI)
    * Optional Homework 7: Due at 11:59 PM on June 2nd
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)

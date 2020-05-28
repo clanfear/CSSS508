@@ -4,6 +4,7 @@
     <title>CSSS508, Week 10</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,12 +14,9 @@ class: center, top, title-slide
 # CSSS508, Week 10
 ## Model Results and Reproducibility
 ### Chuck Lanfear
-### Jun 3, 2019<br>Updated: Mar 29, 2020
+### Jun 3, 2019<br>Updated: May 28, 2020
 
 ---
-
-
-
 
 
 
@@ -81,21 +79,21 @@ summary(lm_1)
 ## lm(formula = yn ~ num1 + fac1, data = ex_dat)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -8.198 -2.231 -0.235  1.911  7.386 
+##     Min      1Q  Median      3Q     Max 
+## -8.0753 -2.0108 -0.1451  1.8835  9.7235 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)    1.503      0.351    4.28  2.9e-05 ***
-## num1           0.584      0.103    5.66  5.2e-08 ***
-## fac1B          1.205      0.503    2.40    0.018 *  
-## fac1C          1.142      0.501    2.28    0.024 *  
+## (Intercept)   2.0345     0.3765   5.404 1.88e-07 ***
+## num1          0.4255     0.1086   3.917 0.000124 ***
+## fac1B         0.4295     0.5230   0.821 0.412562    
+## fac1C         0.9756     0.5252   1.857 0.064763 .  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.94 on 196 degrees of freedom
-## Multiple R-squared:  0.162,	Adjusted R-squared:  0.149 
-## F-statistic: 12.6 on 3 and 196 DF,  p-value: 1.43e-07
+## Residual standard error: 3.02 on 196 degrees of freedom
+## Multiple R-squared:  0.09234,	Adjusted R-squared:  0.07845 
+## F-statistic: 6.647 on 3 and 196 DF,  p-value: 0.0002685
 ....
 ```
 ]
@@ -122,15 +120,15 @@ summary(glm_1)
 ##     data = ex_dat)
 ## 
 ## Deviance Residuals: 
-##    Min      1Q  Median      3Q     Max  
-## -1.801  -1.077  -0.589   1.065   1.836  
+##     Min       1Q   Median       3Q      Max  
+## -1.7469  -1.0907  -0.7682   1.1500   1.6911  
 ## 
 ## Coefficients:
-##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -0.6306     0.2595   -2.43  0.01511 *  
-## num1          0.3069     0.0797    3.85  0.00012 ***
-## fac1B         0.3626     0.3582    1.01  0.31137    
-## fac1C         0.4828     0.3605    1.34  0.18048    
+##             Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept) -0.54326    0.26237  -2.071  0.03840 * 
+## num1         0.24382    0.07773   3.137  0.00171 **
+## fac1B       -0.04377    0.35742  -0.122  0.90254   
+## fac1C        0.47376    0.35982   1.317  0.18795   
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -152,12 +150,12 @@ lm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic      p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-## 1 (Intercept)    1.50      0.351      4.28 0.0000286   
-## 2 num1           0.584     0.103      5.66 0.0000000521
-## 3 fac1B          1.21      0.503      2.40 0.0175      
-## 4 fac1C          1.14      0.501      2.28 0.0237
+##   term        estimate std.error statistic     p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 (Intercept)    2.03      0.376     5.40  0.000000188
+## 2 num1           0.425     0.109     3.92  0.000124   
+## 3 fac1B          0.429     0.523     0.821 0.413      
+## 4 fac1C          0.976     0.525     1.86  0.0648
 ```
 
 Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
@@ -178,12 +176,12 @@ glm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)   -0.631    0.260      -2.43 0.0151  
-## 2 num1           0.307    0.0797      3.85 0.000119
-## 3 fac1B          0.363    0.358       1.01 0.311   
-## 4 fac1C          0.483    0.360       1.34 0.180
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)  -0.543     0.262     -2.07  0.0384 
+## 2 num1          0.244     0.0777     3.14  0.00171
+## 3 fac1B        -0.0438    0.357     -0.122 0.903  
+## 4 fac1C         0.474     0.360      1.32  0.188
 ```
 
 ---
@@ -203,10 +201,11 @@ glance(lm_1)
 
 ```
 ## # A tibble: 1 x 11
-##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC deviance
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-## 1     0.162         0.149  2.94      12.6 1.43e-7     4  -497. 1004. 1021.    1688.
-## # ... with 1 more variable: df.residual &lt;int&gt;
+##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1    0.0923        0.0784  3.02      6.65 2.69e-4     4  -503. 1016.
+## # ... with 3 more variables: BIC &lt;dbl&gt;, deviance &lt;dbl&gt;,
+## #   df.residual &lt;int&gt;
 ```
 ]
 
@@ -224,14 +223,15 @@ augment(lm_1) %&gt;% head()
 
 ```
 ## # A tibble: 6 x 10
-##       yn     num1 fac1  .fitted .se.fit .resid   .hat .sigma    .cooksd .std.resid
-##    &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-## 1 -1.52   3.44    A       3.51    0.396 -5.03  0.0182   2.92 0.0139        -1.73  
-## 2 -0.980  1.69    A       2.49    0.329 -3.47  0.0126   2.93 0.00452       -1.19  
-## 3  4.90  -0.647   C       2.27    0.413  2.64  0.0198   2.94 0.00415        0.907 
-## 4  6.05   5.53    B       5.94    0.603  0.114 0.0422   2.94 0.0000173      0.0396
-## 5  2.77   0.00818 C       2.65    0.391  0.119 0.0177   2.94 0.00000754     0.0409
-## 6  3.01  -1.92    A       0.381   0.462  2.63  0.0248   2.94 0.00524        0.908
+##        yn   num1 fac1  .fitted .se.fit .resid   .hat .sigma .cooksd
+##     &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1  3.57   -1.27  C        2.47   0.469  1.10  0.0241   3.03 8.34e-4
+## 2  5.85    0.826 A        2.39   0.361  3.46  0.0143   3.02 4.85e-3
+## 3  3.29    0.946 C        3.41   0.382 -0.122 0.0160   3.03 6.70e-6
+## 4  3.70   -2.33  B        1.47   0.578  2.23  0.0366   3.02 5.38e-3
+## 5 -0.0466  1.18  B        2.97   0.374 -3.01  0.0154   3.02 3.94e-3
+## 6  8.32    2.64  B        3.59   0.381  4.73  0.0159   3.01 1.01e-2
+## # ... with 1 more variable: .std.resid &lt;dbl&gt;
 ```
 ]
 
@@ -251,18 +251,18 @@ The real advantage of `broom` becomes apparent when running many models at once.
 ## # Groups:   fac1 [3]
 ##    fac1  term        estimate std.error statistic  p.value
 ##    &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1 A     (Intercept)   1.09      0.362      3.02  3.42e- 3
-##  2 A     num1          0.423     0.111      3.81  2.73e- 4
-##  3 A     fac2No        0.903     0.478      1.89  6.24e- 2
-##  4 A     num2          0.705     0.0686    10.3   4.39e-16
-##  5 B     (Intercept)   1.63      0.461      3.54  8.12e- 4
-##  6 B     num1          0.748     0.161      4.64  2.23e- 5
-##  7 B     fac2No        0.638     0.549      1.16  2.50e- 1
-##  8 B     num2          0.662     0.0889     7.45  6.80e-10
-##  9 C     (Intercept)   3.10      0.288     10.8   2.94e-15
-## 10 C     num1          0.577     0.0968     5.95  1.80e- 7
-## 11 C     fac2No        0.0877    0.415      0.211 8.33e- 1
-## 12 C     num2          0.750     0.0833     9.00  1.79e-12
+##  1 A     (Intercept)    1.02     0.365       2.80 6.67e- 3
+##  2 A     num1           0.382    0.132       2.90 5.00e- 3
+##  3 A     fac2No         0.915    0.508       1.80 7.65e- 2
+##  4 A     num2           0.670    0.0856      7.82 5.50e-11
+##  5 B     (Intercept)    1.89     0.498       3.79 3.44e- 4
+##  6 B     num1           0.472    0.149       3.16 2.45e- 3
+##  7 B     fac2No         1.49     0.572       2.61 1.14e- 2
+##  8 B     num2           0.661    0.0932      7.09 1.39e- 9
+##  9 C     (Intercept)    2.66     0.398       6.68 9.46e- 9
+## 10 C     num1           0.564    0.114       4.95 6.63e- 6
+## 11 C     fac2No         0.517    0.472       1.10 2.78e- 1
+## 12 C     num2           0.743    0.0727     10.2  1.15e-14
 ```
 ]
 
@@ -445,12 +445,13 @@ lm_1_est
 ## 
 ##  x | Predicted |   SE |        95% CI
 ## -------------------------------------
-## -4 |     -0.53 | 0.67 | [-1.85, 0.78]
-## -2 |      0.18 | 0.51 | [-0.81, 1.17]
-##  0 |      0.90 | 0.40 | [ 0.12, 1.68]
-##  2 |      1.62 | 0.40 | [ 0.83, 2.41]
-##  4 |      2.33 | 0.51 | [ 1.33, 3.34]
-##  6 |      3.05 | 0.68 | [ 1.71, 4.39]
+## -6 |     -1.50 | 0.87 | [-3.21, 0.20]
+## -4 |     -0.49 | 0.67 | [-1.81, 0.83]
+## -2 |      0.53 | 0.50 | [-0.45, 1.52]
+##  0 |      1.55 | 0.39 | [ 0.78, 2.32]
+##  2 |      2.57 | 0.40 | [ 1.79, 3.34]
+##  4 |      3.58 | 0.51 | [ 2.58, 4.59]
+##  6 |      4.60 | 0.69 | [ 3.26, 5.95]
 ## 
 ## Adjusted for:
 ## * fac1 = A
@@ -652,7 +653,7 @@ library(sjPlot)
 
 ```r
 model_1 &lt;- lm(mpg ~ wt, data = mtcars)
-tab_model(model_1)
+## tab_model(model_1)
 ```
 
 &lt;img src="img/sjPlot_table.PNG" width="400px" /&gt;
@@ -674,7 +675,7 @@ The `sjPlot` package makes this easy to do: just give `tab_model()` more models!
 ```r
 model_2 &lt;- lm(mpg ~ hp + wt, data = mtcars)
 model_3 &lt;- lm(mpg ~ hp + wt + factor(am), data = mtcars)
-tab_model(model_1, model_2, model_3)
+## tab_model(model_1, model_2, model_3)
 ```
 
 &lt;img src="img/sjPlot_mtable.PNG" width="1280px" /&gt;
@@ -703,6 +704,501 @@ based publication-ready social science data visualization. All graphical functio
 # `sjPlot` Example: Crosstabs
 
 &lt;img src="img/sjPlot_crosstab.PNG" width="500px" /&gt;
+
+---
+# `gt`
+
+[RStudio's `gt` package](https://gt.rstudio.com/) is a new and powerful system for creating tables from dataframes.
+
+
+---
+# `modelsummary`
+
+The `modelsummary` package combines `broom`, `gt`, and `kableExtra` to produce tabular summaries of almost any model fit in R.
+
+An advantage of this package is that it can produce output in every common format: HTML, Markdown, `\(\LaTeX\)`, raw text, and even images (`.png` or `.jpg`).
+
+
+```r
+library(modelsummary)
+```
+
+---
+
+.small[
+.pull-left[
+
+```r
+model_list &lt;- list("Model 1" = model_1, 
+                   "Model 2" = model_2, 
+                   "Model 3" = model_3)
+msummary(model_list)
+```
+]
+.pull-right[
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#cvdnnwplyd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#cvdnnwplyd .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cvdnnwplyd .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#cvdnnwplyd .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#cvdnnwplyd .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cvdnnwplyd .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cvdnnwplyd .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#cvdnnwplyd .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#cvdnnwplyd .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#cvdnnwplyd .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#cvdnnwplyd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#cvdnnwplyd .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#cvdnnwplyd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#cvdnnwplyd .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#cvdnnwplyd .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#cvdnnwplyd .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#cvdnnwplyd .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#cvdnnwplyd .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#cvdnnwplyd .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cvdnnwplyd .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#cvdnnwplyd .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cvdnnwplyd .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#cvdnnwplyd .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cvdnnwplyd .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cvdnnwplyd .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#cvdnnwplyd .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cvdnnwplyd .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#cvdnnwplyd .gt_left {
+  text-align: left;
+}
+
+#cvdnnwplyd .gt_center {
+  text-align: center;
+}
+
+#cvdnnwplyd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#cvdnnwplyd .gt_font_normal {
+  font-weight: normal;
+}
+
+#cvdnnwplyd .gt_font_bold {
+  font-weight: bold;
+}
+
+#cvdnnwplyd .gt_font_italic {
+  font-style: italic;
+}
+
+#cvdnnwplyd .gt_super {
+  font-size: 65%;
+}
+
+#cvdnnwplyd .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="cvdnnwplyd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">       </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Model 1</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Model 2</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Model 3</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">(Intercept)</td>
+      <td class="gt_row gt_left">37.285</td>
+      <td class="gt_row gt_left">37.227</td>
+      <td class="gt_row gt_left">34.003</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left"></td>
+      <td class="gt_row gt_left">(1.878)</td>
+      <td class="gt_row gt_left">(1.599)</td>
+      <td class="gt_row gt_left">(2.643)</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">wt</td>
+      <td class="gt_row gt_left">-5.344</td>
+      <td class="gt_row gt_left">-3.878</td>
+      <td class="gt_row gt_left">-2.879</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left"></td>
+      <td class="gt_row gt_left">(0.559)</td>
+      <td class="gt_row gt_left">(0.633)</td>
+      <td class="gt_row gt_left">(0.905)</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">hp</td>
+      <td class="gt_row gt_left"></td>
+      <td class="gt_row gt_left">-0.032</td>
+      <td class="gt_row gt_left">-0.037</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left"></td>
+      <td class="gt_row gt_left"></td>
+      <td class="gt_row gt_left">(0.009)</td>
+      <td class="gt_row gt_left">(0.010)</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">factor(am)1</td>
+      <td class="gt_row gt_left"></td>
+      <td class="gt_row gt_left"></td>
+      <td class="gt_row gt_left">2.084</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;"></td>
+      <td class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;"></td>
+      <td class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;"></td>
+      <td class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(1.376)</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Num.Obs.</td>
+      <td class="gt_row gt_left">32</td>
+      <td class="gt_row gt_left">32</td>
+      <td class="gt_row gt_left">32</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">R2</td>
+      <td class="gt_row gt_left">0.753</td>
+      <td class="gt_row gt_left">0.827</td>
+      <td class="gt_row gt_left">0.840</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Adj.R2</td>
+      <td class="gt_row gt_left">0.745</td>
+      <td class="gt_row gt_left">0.815</td>
+      <td class="gt_row gt_left">0.823</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">AIC</td>
+      <td class="gt_row gt_left">166.0</td>
+      <td class="gt_row gt_left">156.7</td>
+      <td class="gt_row gt_left">156.1</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">BIC</td>
+      <td class="gt_row gt_left">170.4</td>
+      <td class="gt_row gt_left">162.5</td>
+      <td class="gt_row gt_left">163.5</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Log.Lik.</td>
+      <td class="gt_row gt_left">-80.015</td>
+      <td class="gt_row gt_left">-74.326</td>
+      <td class="gt_row gt_left">-73.067</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+]
+]
+
+---
+# PDF Output
+
+`modelsummary` can produce `\(\LaTeX\)` for PDFs as well.&lt;sup&gt;1&lt;/sup&gt;
+
+
+```r
+msummary(model_list, output = "latex")
+```
+
+.image-shorter[
+![](img/ex_table_latex.PNG)
+]
+
+.footnote[[1] Note this output will generally only work nicely in a PDF document.]
+
+---
+# Saving a `modelsummary`
+
+.image-short[
+
+```r
+msummary(model_list, output = "ex_table.png")
+```
+
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+]
 
 ---
 # LaTeX Tables
@@ -758,7 +1254,7 @@ corrplot(
 ---
 ## Correlogram
 
-![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -1356,30 +1852,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {

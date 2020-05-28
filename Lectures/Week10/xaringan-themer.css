@@ -259,6 +259,18 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+.image-short img {
+  height: 400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.image-shorter img {
+  height: 320px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .title-slide {
   background-image: url(https://clanfear.github.io/CSSS508/Lectures/img/UWCSSSBG1_white.svg), url(https://clanfear.github.io/CSSS508/Lectures/img/title_slide_img.png);
   background-position: center center, center bottom;
