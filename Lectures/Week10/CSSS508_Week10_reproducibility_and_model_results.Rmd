@@ -54,7 +54,7 @@ ex_dat <- data.frame(num1 = rnorm(200, 1, 2),
 
 * Tidy model output with `broom`
 * Visualizing models with `ggeffects`
-* Making regression tables
+* Tables with `sjPlot`, `gt`, and `modelsummary`
 
 ### Reproducible Research
 
@@ -492,7 +492,7 @@ generally publication ready.
 The `sjPlot` package produces `html` tables that look more like
 those you may find in journal articles.
 
-```{r table_packages}
+```{r table_packages, message=FALSE, warning=FALSE, results='hide'}
 library(sjPlot)
 ```
 
@@ -501,16 +501,9 @@ library(sjPlot)
 
 `tab_model()` will produce tables for most models.
 
-```{r, eval=1}
+```{r, eval=TRUE}
 model_1 <- lm(mpg ~ wt, data = mtcars)
 tab_model(model_1)
-```
-
-```{r, echo=FALSE, out.width="400px"}
-# If you're seeing this, you are looking in my presentation files.
-# I actually have to call on a saved image here because sjPlot
-# doesn't display properly in .Rpres slides for some reason.
-knitr::include_graphics("img/sjPlot_table.PNG")
 ```
 
 ---
@@ -526,18 +519,13 @@ The `sjPlot` package makes this easy to do: just give `tab_model()` more models!
 ---
 # Multiple `tab_model()`
 
-```{r, eval=c(1,2)}
+.small[
+```{r}
 model_2 <- lm(mpg ~ hp + wt, data = mtcars)
 model_3 <- lm(mpg ~ hp + wt + factor(am), data = mtcars)
 tab_model(model_1, model_2, model_3)
 ```
-
-```{r, echo=FALSE, out.width = "1280px"}
-# If you're seeing this, you are looking in my presentation files.
-# I actually have to call on a saved image here because sjPlot
-# doesn't display properly in .Rpres slides for some reason.
-knitr::include_graphics("img/sjPlot_mtable.PNG")
-```
+]
 
 ---
 # `sjPlot` does a lot more
@@ -571,8 +559,524 @@ knitr::include_graphics("img/sjPlot_crosstab.PNG")
 ---
 # `gt`
 
-[RStudio's `gt` package](https://gt.rstudio.com/) is a new and powerful system for creating tables from dataframes.
+If you need to more customizability or different output types, [RStudio's `gt` package](https://gt.rstudio.com/) is a new and powerful system for creating tables from dataframes. We'll use `dplyr`'s built-in `starwars` data for some examples.
 
+.smallish[
+```{r}
+library(gt)
+tes_chars <- starwars %>% 
+  unnest(films) %>% 
+  unnest(starships, keep_empty=TRUE) %>% 
+  filter(films == "The Empire Strikes Back") %>% 
+  select(name, species, starships, mass, height) %>%
+  distinct(name, .keep_all = TRUE) %>%
+  mutate(starships = ifelse(name == "Obi-Wan Kenobi" | is.na(starships), 
+                            "No Ship", starships))
+glimpse(tes_chars)
+```
+]
+
+---
+
+
+.pull-left[
+
+## Initialize
+
+.small[
+```{r, eval=FALSE}
+tes_chars %>%
+  gt() 
+
+```
+]
+]
+.smallest[
+.pull-right[
+.image-full[
+```{r, echo=FALSE}
+tes_chars %>%
+  gt() %>% 
+  gtsave("img/sw_table_1.png")
+```
+]
+]
+]
+---
+count: false
+
+.pull-left[
+
+## 2: Grouping
+
+.small[
+```{r, eval=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt()
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+```{r, echo=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt() %>% gtsave("img/sw_table_2.png")
+```
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## 3: Rownames
+
+.small[
+```{r, eval=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name")
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+```{r, echo=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  gtsave("img/sw_table_3.png")
+```
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Header
+
+.small[
+```{r, eval=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) 
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+```{r, echo=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>% gtsave("img/sw_table_4.png")
+```
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Spanner
+
+.small[
+```{r, eval=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) 
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+```{r, echo=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>% gtsave("img/sw_table_5.png")
+```
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Column Labels
+
+.small[
+```{r, eval=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  )
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+```{r, echo=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>% gtsave("img/sw_table_6.png")
+```
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Number Format
+
+.small[
+```{r, eval=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0) 
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+```{r, echo=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>% gtsave("img/sw_table_7.png")
+```
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Align Columns
+
+.small[
+```{r, eval=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  )
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+```{r, echo=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>% gtsave("img/sw_table_8.png")
+```
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Reorder Groups
+
+.small[
+```{r, eval=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>%
+  row_group_order(
+    groups = c("X-wing", 
+               "Millennium Falcon")
+  )
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+```{r, echo=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>%
+  row_group_order(
+    groups = c("X-wing", 
+               "Millennium Falcon")
+  ) %>% gtsave("img/sw_table_9.png")
+```
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+### Big Improvement!
+
+.image-full[
+```{r, echo=FALSE}
+tes_chars %>%
+  gt() %>% 
+  gtsave("img/sw_table_1.png")
+```
+]
+]
+.pull-right[
+.image-tall[
+```{r, echo=FALSE}
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>%
+  row_group_order(
+    groups = c("X-wing", 
+               "Millennium Falcon")
+  ) %>% gtsave("img/sw_table_9.png")
+```
+
+]
+]
+
+---
+# LaTeX Tables
+
+`gt` is a very new package and is somewhat finicky when used in `.pdf` documents.
+
+For tables in $\LaTeX$—as is needed for `.pdf` files—I recommend also looking into the `stargazer` or `kableExtra` packages.
+
+--
+
+Like `gt`, `kableExtra` allows the construction of complex tables in either HTML or $\LaTeX$ using
+additive syntax similar to `ggplot2` and `dplyr`.
+
+`stargazer` produces nicely formatted $\LaTeX$ tables but is idiosyncratic and doesn't support some models.
+
+--
+
+If you want to edit $\LaTeX$ documents, you can do it in R using Sweave documents (.Rnw).
+Alternatively, you may want to work in a dedicated $\LaTeX$ editor. I recommend [Overleaf](http://www.overleaf.com)
+for this purpose.
+
+--
+
+RMarkdown has support for a fair amount of basic $\LaTeX$ syntax if you aren't trying to 
+get too fancy!
 
 ---
 # `modelsummary`
@@ -612,17 +1116,18 @@ msummary(model_list)
 ---
 # PDF Output
 
-`modelsummary` can produce $\LaTeX$ for PDFs as well.<sup>1</sup>
+`output = "latex"` produces `kableExtra` based output well-suited to PDFs.<sup>1</sup>
 
 ```{r, eval=FALSE}
 msummary(model_list, output = "latex")
 ```
 
+
 .image-shorter[
 ![](img/ex_table_latex.PNG)
 ]
 
-.footnote[[1] Note this output will generally only work nicely in a PDF document.]
+For customization, I recommend referring to [`modelsummary`'s documentation](https://vincentarelbundock.github.io/modelsummary/articles/customization.html).
 
 ---
 # Saving a `modelsummary`
@@ -636,46 +1141,44 @@ msummary(model_list, output = "ex_table.png")
 ---
 # `modelsummary` and `gt`
 
+
+.pull-left[
+
+You can select `gt` output to enable modifying summaries with `gt` functions.
+
+.small[
 ```{r, eval=FALSE}
 msummary(model_list, output = "gt") %>%
-  tab_header("Summary Table", "Models of mpg")
+  tab_header(
+    title = "Table 1. Linear Models", 
+    subtitle = "DV: Miles per Gallon"
+  )
 ```
+]
 
----
-# LaTeX Tables
+Note that `gt`'s $LaTeX$ support for PDFs is immature--this format is better for HTML or image output.
 
-For tables in $\LaTeX$—as is needed for `.pdf` files—I recommend looking into the `gt`, `stargazer`, or `kableExtra` packages.
 
---
-
-`gt` and `kableExtra` allow the construction of complex tables in either HTML or $\LaTeX$ using
-additive syntax similar to `ggplot2` and `dplyr`.
-
-`stargazer` produces nicely formatted $\LaTeX$ tables but is idiosyncratic.
-
---
-
-If you want to edit $\LaTeX$ documents, you can do it in R using Sweave documents (.Rnw).
-Alternatively, you may want to work in a dedicated $\LaTeX$ editor. I recommend [Overleaf](http://www.overleaf.com)
-for this purpose.
-
---
-
-RMarkdown has support for a fair amount of basic $\LaTeX$ syntax if you aren't trying to 
-get too fancy!
-
---
-
-Another approach I have used is to manually format $\LaTeX$ tables but use in-line R calls to 
-fill in the values dynamically. This gets you the *exact* format you want but without 
-forcing you to update values any time something changes.
+]
+.pull-right[
+.image-full[
+```{r, echo=FALSE}
+msummary(model_list, output = "gt") %>%
+  tab_header(
+    title = "Table 1. Linear Models", 
+    subtitle = "DV: Miles per Gallon"
+  ) %>%
+  gtsave("img/gt_summary.png")
+```
+]
+]
 
 ---
 # Bonus: `corrplot`
 
 The `corrplot` package has functions for displaying correlograms.
 
-These make visualizing the correlations between variables in a data set easier.
+These make interpreting the correlations between variables in a data set easier than conventional correlation tables.
 
 The first argument is a call to `cor()`, the base R function for generating a correlation matrix.
 
@@ -1230,17 +1733,15 @@ A lot!
 If you...
 
 * have no stats background yet - **SOC504: Applied Social Statistics**
-* want to learn more social science computing - **SOC590: Big Data and Population Processes** <sup>1</sup>
 * have (only) finished SOC506 - **CSSS510: Maximum Likelihood**
 * want to master visualization - **CSSS569: Visualizing Data**
-* study events or durations - **CSSS544: Event History Analysis** <sup>2</sup>
+* study events or durations - **CSSS544: Event History Analysis** <sup>1</sup>
 * want to use network data - **CSSS567: Social Network Analysis**
 * want to work with spatial data - **CSSS554: Spatial Statistics**
 * want to work with time series - **CSSS512: Time Series and Panel Data**
 
 .footnote[
-[1] We're hoping to offer that again soon!<br>
-[2] Also a great maximum likelihood introduction.
+[1] Also a great maximum likelihood introduction.
 ]
 
 ---

@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 10
 ## Model Results and Reproducibility
 ### Chuck Lanfear
-### Jun 3, 2019<br>Updated: May 28, 2020
+### Jun 3, 2019<br>Updated: May 30, 2020
 
 ---
 
@@ -29,7 +29,7 @@ class: center, top, title-slide
 
 * Tidy model output with `broom`
 * Visualizing models with `ggeffects`
-* Making regression tables
+* Tables with `sjPlot`, `gt`, and `modelsummary`
 
 ### Reproducible Research
 
@@ -79,21 +79,21 @@ summary(lm_1)
 ## lm(formula = yn ~ num1 + fac1, data = ex_dat)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -8.0753 -2.0108 -0.1451  1.8835  9.7235 
+##      Min       1Q   Median       3Q      Max 
+## -10.0194  -1.5574  -0.0843   1.5624   6.6325 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   2.0345     0.3765   5.404 1.88e-07 ***
-## num1          0.4255     0.1086   3.917 0.000124 ***
-## fac1B         0.4295     0.5230   0.821 0.412562    
-## fac1C         0.9756     0.5252   1.857 0.064763 .  
+## (Intercept)  1.30221    0.33684   3.866  0.00015 ***
+## num1         0.54575    0.09778   5.582 7.86e-08 ***
+## fac1B        0.84985    0.45896   1.852  0.06558 .  
+## fac1C        2.35733    0.45512   5.180 5.50e-07 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.02 on 196 degrees of freedom
-## Multiple R-squared:  0.09234,	Adjusted R-squared:  0.07845 
-## F-statistic: 6.647 on 3 and 196 DF,  p-value: 0.0002685
+## Residual standard error: 2.644 on 196 degrees of freedom
+## Multiple R-squared:  0.2309,	Adjusted R-squared:  0.2191 
+## F-statistic: 19.61 on 3 and 196 DF,  p-value: 3.686e-11
 ....
 ```
 ]
@@ -121,14 +121,14 @@ summary(glm_1)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -1.7469  -1.0907  -0.7682   1.1500   1.6911  
+## -1.9632  -0.9996  -0.5093   0.9828   2.3032  
 ## 
 ## Coefficients:
-##             Estimate Std. Error z value Pr(&gt;|z|)   
-## (Intercept) -0.54326    0.26237  -2.071  0.03840 * 
-## num1         0.24382    0.07773   3.137  0.00171 **
-## fac1B       -0.04377    0.35742  -0.122  0.90254   
-## fac1C        0.47376    0.35982   1.317  0.18795   
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -1.19884    0.29885  -4.012 6.03e-05 ***
+## num1         0.31267    0.08783   3.560 0.000371 ***
+## fac1B        0.57592    0.37543   1.534 0.125022    
+## fac1C        1.85557    0.39651   4.680 2.87e-06 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -150,12 +150,12 @@ lm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic     p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-## 1 (Intercept)    2.03      0.376     5.40  0.000000188
-## 2 num1           0.425     0.109     3.92  0.000124   
-## 3 fac1B          0.429     0.523     0.821 0.413      
-## 4 fac1C          0.976     0.525     1.86  0.0648
+##   term        estimate std.error statistic      p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1 (Intercept)    1.30     0.337       3.87 0.000150    
+## 2 num1           0.546    0.0978      5.58 0.0000000786
+## 3 fac1B          0.850    0.459       1.85 0.0656      
+## 4 fac1C          2.36     0.455       5.18 0.000000550
 ```
 
 Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
@@ -176,12 +176,12 @@ glm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-## 1 (Intercept)  -0.543     0.262     -2.07  0.0384 
-## 2 num1          0.244     0.0777     3.14  0.00171
-## 3 fac1B        -0.0438    0.357     -0.122 0.903  
-## 4 fac1C         0.474     0.360      1.32  0.188
+##   term        estimate std.error statistic    p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 (Intercept)   -1.20     0.299      -4.01 0.0000603 
+## 2 num1           0.313    0.0878      3.56 0.000371  
+## 3 fac1B          0.576    0.375       1.53 0.125     
+## 4 fac1C          1.86     0.397       4.68 0.00000287
 ```
 
 ---
@@ -201,9 +201,9 @@ glance(lm_1)
 
 ```
 ## # A tibble: 1 x 11
-##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;
-## 1    0.0923        0.0784  3.02      6.65 2.69e-4     4  -503. 1016.
+##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.231         0.219  2.64      19.6 3.69e-11     4  -476.  962.
 ## # ... with 3 more variables: BIC &lt;dbl&gt;, deviance &lt;dbl&gt;,
 ## #   df.residual &lt;int&gt;
 ```
@@ -223,14 +223,14 @@ augment(lm_1) %&gt;% head()
 
 ```
 ## # A tibble: 6 x 10
-##        yn   num1 fac1  .fitted .se.fit .resid   .hat .sigma .cooksd
-##     &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-## 1  3.57   -1.27  C        2.47   0.469  1.10  0.0241   3.03 8.34e-4
-## 2  5.85    0.826 A        2.39   0.361  3.46  0.0143   3.02 4.85e-3
-## 3  3.29    0.946 C        3.41   0.382 -0.122 0.0160   3.03 6.70e-6
-## 4  3.70   -2.33  B        1.47   0.578  2.23  0.0366   3.02 5.38e-3
-## 5 -0.0466  1.18  B        2.97   0.374 -3.01  0.0154   3.02 3.94e-3
-## 6  8.32    2.64  B        3.59   0.381  4.73  0.0159   3.01 1.01e-2
+##        yn     num1 fac1  .fitted .se.fit .resid   .hat .sigma .cooksd
+##     &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1  4.30    3.14e-1 C        3.83   0.332  0.468 0.0158   2.65 1.27e-4
+## 2  2.22    7.79e-4 A        1.30   0.337  0.921 0.0162   2.65 5.08e-4
+## 3 -2.68   -2.71e+0 C        2.18   0.493 -4.86  0.0348   2.63 3.15e-2
+## 4 -0.0123  1.60e+0 C        4.53   0.327 -4.55  0.0153   2.63 1.17e-2
+## 5 -0.0926  3.62e+0 A        3.28   0.407 -3.37  0.0237   2.64 1.01e-2
+## 6  0.957  -1.68e+0 B        1.24   0.435 -0.278 0.0270   2.65 7.91e-5
 ## # ... with 1 more variable: .std.resid &lt;dbl&gt;
 ```
 ]
@@ -251,18 +251,18 @@ The real advantage of `broom` becomes apparent when running many models at once.
 ## # Groups:   fac1 [3]
 ##    fac1  term        estimate std.error statistic  p.value
 ##    &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1 A     (Intercept)    1.02     0.365       2.80 6.67e- 3
-##  2 A     num1           0.382    0.132       2.90 5.00e- 3
-##  3 A     fac2No         0.915    0.508       1.80 7.65e- 2
-##  4 A     num2           0.670    0.0856      7.82 5.50e-11
-##  5 B     (Intercept)    1.89     0.498       3.79 3.44e- 4
-##  6 B     num1           0.472    0.149       3.16 2.45e- 3
-##  7 B     fac2No         1.49     0.572       2.61 1.14e- 2
-##  8 B     num2           0.661    0.0932      7.09 1.39e- 9
-##  9 C     (Intercept)    2.66     0.398       6.68 9.46e- 9
-## 10 C     num1           0.564    0.114       4.95 6.63e- 6
-## 11 C     fac2No         0.517    0.472       1.10 2.78e- 1
-## 12 C     num2           0.743    0.0727     10.2  1.15e-14
+##  1 A     (Intercept)    0.884    0.325       2.72 8.40e- 3
+##  2 A     num1           0.472    0.108       4.36 4.74e- 5
+##  3 A     fac2No         0.685    0.413       1.66 1.02e- 1
+##  4 A     num2           0.679    0.0717      9.47 8.57e-14
+##  5 B     (Intercept)    1.59     0.295       5.38 1.25e- 6
+##  6 B     num1           0.508    0.114       4.46 3.56e- 5
+##  7 B     fac2No         1.23     0.433       2.84 6.07e- 3
+##  8 B     num2           0.567    0.0779      7.27 7.83e-10
+##  9 C     (Intercept)    2.53     0.402       6.30 3.28e- 8
+## 10 C     num1           0.368    0.130       2.83 6.32e- 3
+## 11 C     fac2No         1.70     0.492       3.45 9.92e- 4
+## 12 C     num2           0.772    0.0883      8.74 1.79e-12
 ```
 ]
 
@@ -443,15 +443,16 @@ lm_1_est
 ## # Predicted values of yn
 ## # x = num1
 ## 
-##  x | Predicted |   SE |        95% CI
-## -------------------------------------
-## -6 |     -1.50 | 0.87 | [-3.21, 0.20]
-## -4 |     -0.49 | 0.67 | [-1.81, 0.83]
-## -2 |      0.53 | 0.50 | [-0.45, 1.52]
-##  0 |      1.55 | 0.39 | [ 0.78, 2.32]
-##  2 |      2.57 | 0.40 | [ 1.79, 3.34]
-##  4 |      3.58 | 0.51 | [ 2.58, 4.59]
-##  6 |      4.60 | 0.69 | [ 3.26, 5.95]
+##  x | Predicted |   SE |         95% CI
+## --------------------------------------
+## -6 |     -2.53 | 0.84 | [-4.17, -0.89]
+## -4 |     -1.46 | 0.67 | [-2.78, -0.14]
+## -2 |     -0.39 | 0.53 | [-1.44,  0.65]
+##  0 |      0.67 | 0.43 | [-0.18,  1.52]
+##  2 |      1.74 | 0.41 | [ 0.94,  2.54]
+##  4 |      2.81 | 0.48 | [ 1.88,  3.74]
+##  6 |      3.87 | 0.60 | [ 2.70,  5.05]
+##  8 |      4.94 | 0.75 | [ 3.46,  6.42]
 ## 
 ## Adjusted for:
 ## * fac1 = A
@@ -641,10 +642,6 @@ those you may find in journal articles.
 library(sjPlot)
 ```
 
-```
-## Install package "strengejacke" from GitHub (`devtools::install_github("strengejacke/strengejacke")`) to load all sj-packages at once!
-```
-
 ---
 # `sjPlot` Tables
 
@@ -653,10 +650,42 @@ library(sjPlot)
 
 ```r
 model_1 &lt;- lm(mpg ~ wt, data = mtcars)
-## tab_model(model_1)
+tab_model(model_1)
 ```
 
-&lt;img src="img/sjPlot_table.PNG" width="400px" /&gt;
+&lt;table style="border-collapse:collapse; border:none;"&gt;
+&lt;tr&gt;
+&lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;mpg&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;p&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;37.29&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;33.45&amp;nbsp;&amp;ndash;&amp;nbsp;41.12&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;wt&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;-5.34&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;-6.49&amp;nbsp;&amp;ndash;&amp;nbsp;-4.20&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;32&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.753 / 0.745&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
 
 ---
 # Multi-Model Tables with `sjTable`
@@ -671,14 +700,96 @@ The `sjPlot` package makes this easy to do: just give `tab_model()` more models!
 ---
 # Multiple `tab_model()`
 
+.small[
 
 ```r
 model_2 &lt;- lm(mpg ~ hp + wt, data = mtcars)
 model_3 &lt;- lm(mpg ~ hp + wt + factor(am), data = mtcars)
-## tab_model(model_1, model_2, model_3)
+tab_model(model_1, model_2, model_3)
 ```
 
-&lt;img src="img/sjPlot_mtable.PNG" width="1280px" /&gt;
+&lt;table style="border-collapse:collapse; border:none;"&gt;
+&lt;tr&gt;
+&lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;mpg&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;mpg&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;mpg&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;p&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7"&gt;p&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col8"&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col9"&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  0"&gt;p&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;37.29&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;33.45&amp;nbsp;&amp;ndash;&amp;nbsp;41.12&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;37.23&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;33.96&amp;nbsp;&amp;ndash;&amp;nbsp;40.50&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;34.00&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;28.59&amp;nbsp;&amp;ndash;&amp;nbsp;39.42&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;wt&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;-5.34&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;-6.49&amp;nbsp;&amp;ndash;&amp;nbsp;-4.20&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;-3.88&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;-5.17&amp;nbsp;&amp;ndash;&amp;nbsp;-2.58&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;-2.88&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;-4.73&amp;nbsp;&amp;ndash;&amp;nbsp;-1.02&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;0.004&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;hp&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;-0.03&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;-0.05&amp;nbsp;&amp;ndash;&amp;nbsp;-0.01&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;-0.04&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;-0.06&amp;nbsp;&amp;ndash;&amp;nbsp;-0.02&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;am [1]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;2.08&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;-0.74&amp;nbsp;&amp;ndash;&amp;nbsp;4.90&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;0.141&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;32&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;32&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;32&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.753 / 0.745&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.827 / 0.815&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.840 / 0.823&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
+]
 
 ---
 # `sjPlot` does a lot more
@@ -708,8 +819,385 @@ based publication-ready social science data visualization. All graphical functio
 ---
 # `gt`
 
-[RStudio's `gt` package](https://gt.rstudio.com/) is a new and powerful system for creating tables from dataframes.
+If you need to more customizability or different output types, [RStudio's `gt` package](https://gt.rstudio.com/) is a new and powerful system for creating tables from dataframes. We'll use `dplyr`'s built-in `starwars` data for some examples.
 
+.smallish[
+
+```r
+library(gt)
+tes_chars &lt;- starwars %&gt;% 
+  unnest(films) %&gt;% 
+  unnest(starships, keep_empty=TRUE) %&gt;% 
+  filter(films == "The Empire Strikes Back") %&gt;% 
+  select(name, species, starships, mass, height) %&gt;%
+  distinct(name, .keep_all = TRUE) %&gt;%
+  mutate(starships = ifelse(name == "Obi-Wan Kenobi" | is.na(starships), 
+                            "No Ship", starships))
+glimpse(tes_chars)
+```
+
+```
+## Rows: 16
+## Columns: 5
+## $ name      &lt;chr&gt; "Luke Skywalker", "C-3PO", "R2-D2", "Darth Vade...
+## $ species   &lt;chr&gt; "Human", "Droid", "Droid", "Human", "Human", "H...
+## $ starships &lt;chr&gt; "X-wing", "No Ship", "No Ship", "TIE Advanced x...
+## $ mass      &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 77.0, 112.0, 80....
+## $ height    &lt;int&gt; 172, 167, 96, 202, 150, 182, 228, 180, 170, 66,...
+```
+]
+
+---
+
+
+.pull-left[
+
+## Initialize
+
+.small[
+
+```r
+tes_chars %&gt;%
+  gt() 
+```
+]
+]
+.smallest[
+.pull-right[
+.image-full[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+]
+]
+]
+---
+count: false
+
+.pull-left[
+
+## 2: Grouping
+
+.small[
+
+```r
+tes_chars %&gt;% 
+  group_by(starships) %&gt;%
+  gt()
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## 3: Rownames
+
+.small[
+
+```r
+tes_chars %&gt;% 
+  group_by(starships) %&gt;%
+  gt(rowname_col = "name")
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Header
+
+.small[
+
+```r
+tes_chars %&gt;% 
+  group_by(starships) %&gt;%
+  gt(rowname_col = "name") %&gt;%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) 
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Spanner
+
+.small[
+
+```r
+tes_chars %&gt;% 
+  group_by(starships) %&gt;%
+  gt(rowname_col = "name") %&gt;%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %&gt;%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) 
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-40-1.png)&lt;!-- --&gt;
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Column Labels
+
+.small[
+
+```r
+tes_chars %&gt;% 
+  group_by(starships) %&gt;%
+  gt(rowname_col = "name") %&gt;%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %&gt;%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %&gt;%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  )
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-42-1.png)&lt;!-- --&gt;
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Number Format
+
+.small[
+
+```r
+tes_chars %&gt;% 
+  group_by(starships) %&gt;%
+  gt(rowname_col = "name") %&gt;%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %&gt;%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %&gt;%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %&gt;%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0) 
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Align Columns
+
+.small[
+
+```r
+tes_chars %&gt;% 
+  group_by(starships) %&gt;%
+  gt(rowname_col = "name") %&gt;%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %&gt;%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %&gt;%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %&gt;%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %&gt;%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  )
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-46-1.png)&lt;!-- --&gt;
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+## Reorder Groups
+
+.small[
+
+```r
+tes_chars %&gt;% 
+  group_by(starships) %&gt;%
+  gt(rowname_col = "name") %&gt;%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %&gt;%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %&gt;%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %&gt;%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %&gt;%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %&gt;%
+  row_group_order(
+    groups = c("X-wing", 
+               "Millennium Falcon")
+  )
+```
+]
+]
+.smallest[
+.pull-right[
+.image-tall[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-48-1.png)&lt;!-- --&gt;
+
+]
+]
+]
+
+---
+count: false
+
+.pull-left[
+
+### Big Improvement!
+
+.image-full[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-49-1.png)&lt;!-- --&gt;
+]
+]
+.pull-right[
+.image-tall[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-50-1.png)&lt;!-- --&gt;
+
+]
+]
+
+---
+# LaTeX Tables
+
+`gt` is a very new package and is somewhat finicky when used in `.pdf` documents.
+
+For tables in `\(\LaTeX\)`—as is needed for `.pdf` files—I recommend also looking into the `stargazer` or `kableExtra` packages.
+
+--
+
+Like `gt`, `kableExtra` allows the construction of complex tables in either HTML or `\(\LaTeX\)` using
+additive syntax similar to `ggplot2` and `dplyr`.
+
+`stargazer` produces nicely formatted `\(\LaTeX\)` tables but is idiosyncratic and doesn't support some models.
+
+--
+
+If you want to edit `\(\LaTeX\)` documents, you can do it in R using Sweave documents (.Rnw).
+Alternatively, you may want to work in a dedicated `\(\LaTeX\)` editor. I recommend [Overleaf](http://www.overleaf.com)
+for this purpose.
+
+--
+
+RMarkdown has support for a fair amount of basic `\(\LaTeX\)` syntax if you aren't trying to 
+get too fancy!
 
 ---
 # `modelsummary`
@@ -724,6 +1212,7 @@ library(modelsummary)
 ```
 
 ---
+# Summary Tables
 
 .small[
 .pull-left[
@@ -734,13 +1223,15 @@ model_list &lt;- list("Model 1" = model_1,
                    "Model 3" = model_3)
 msummary(model_list)
 ```
+
+Default `modelsummary` tables look a lot like `pander` tables because they are generated via Markdown.
 ]
 .pull-right[
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cvdnnwplyd .gt_table {
+#oxfwjzcxqi .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -763,7 +1254,7 @@ msummary(model_list)
   border-left-color: #D3D3D3;
 }
 
-#cvdnnwplyd .gt_heading {
+#oxfwjzcxqi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -775,7 +1266,7 @@ msummary(model_list)
   border-right-color: #D3D3D3;
 }
 
-#cvdnnwplyd .gt_title {
+#oxfwjzcxqi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -785,7 +1276,7 @@ msummary(model_list)
   border-bottom-width: 0;
 }
 
-#cvdnnwplyd .gt_subtitle {
+#oxfwjzcxqi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -795,13 +1286,13 @@ msummary(model_list)
   border-top-width: 0;
 }
 
-#cvdnnwplyd .gt_bottom_border {
+#oxfwjzcxqi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cvdnnwplyd .gt_col_headings {
+#oxfwjzcxqi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -816,7 +1307,7 @@ msummary(model_list)
   border-right-color: #D3D3D3;
 }
 
-#cvdnnwplyd .gt_col_heading {
+#oxfwjzcxqi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -836,7 +1327,7 @@ msummary(model_list)
   overflow-x: hidden;
 }
 
-#cvdnnwplyd .gt_column_spanner_outer {
+#oxfwjzcxqi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -848,15 +1339,15 @@ msummary(model_list)
   padding-right: 4px;
 }
 
-#cvdnnwplyd .gt_column_spanner_outer:first-child {
+#oxfwjzcxqi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cvdnnwplyd .gt_column_spanner_outer:last-child {
+#oxfwjzcxqi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cvdnnwplyd .gt_column_spanner {
+#oxfwjzcxqi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -868,7 +1359,7 @@ msummary(model_list)
   width: 100%;
 }
 
-#cvdnnwplyd .gt_group_heading {
+#oxfwjzcxqi .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -890,7 +1381,7 @@ msummary(model_list)
   vertical-align: middle;
 }
 
-#cvdnnwplyd .gt_empty_group_heading {
+#oxfwjzcxqi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -905,19 +1396,19 @@ msummary(model_list)
   vertical-align: middle;
 }
 
-#cvdnnwplyd .gt_striped {
+#oxfwjzcxqi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cvdnnwplyd .gt_from_md > :first-child {
+#oxfwjzcxqi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cvdnnwplyd .gt_from_md > :last-child {
+#oxfwjzcxqi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cvdnnwplyd .gt_row {
+#oxfwjzcxqi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -936,7 +1427,7 @@ msummary(model_list)
   overflow-x: hidden;
 }
 
-#cvdnnwplyd .gt_stub {
+#oxfwjzcxqi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -948,7 +1439,7 @@ msummary(model_list)
   padding-left: 12px;
 }
 
-#cvdnnwplyd .gt_summary_row {
+#oxfwjzcxqi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -958,7 +1449,7 @@ msummary(model_list)
   padding-right: 5px;
 }
 
-#cvdnnwplyd .gt_first_summary_row {
+#oxfwjzcxqi .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -968,7 +1459,7 @@ msummary(model_list)
   border-top-color: #D3D3D3;
 }
 
-#cvdnnwplyd .gt_grand_summary_row {
+#oxfwjzcxqi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -978,7 +1469,7 @@ msummary(model_list)
   padding-right: 5px;
 }
 
-#cvdnnwplyd .gt_first_grand_summary_row {
+#oxfwjzcxqi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -988,7 +1479,7 @@ msummary(model_list)
   border-top-color: #D3D3D3;
 }
 
-#cvdnnwplyd .gt_table_body {
+#oxfwjzcxqi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -997,7 +1488,7 @@ msummary(model_list)
   border-bottom-color: #D3D3D3;
 }
 
-#cvdnnwplyd .gt_footnotes {
+#oxfwjzcxqi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1011,13 +1502,13 @@ msummary(model_list)
   border-right-color: #D3D3D3;
 }
 
-#cvdnnwplyd .gt_footnote {
+#oxfwjzcxqi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#cvdnnwplyd .gt_sourcenotes {
+#oxfwjzcxqi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1031,46 +1522,46 @@ msummary(model_list)
   border-right-color: #D3D3D3;
 }
 
-#cvdnnwplyd .gt_sourcenote {
+#oxfwjzcxqi .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#cvdnnwplyd .gt_left {
+#oxfwjzcxqi .gt_left {
   text-align: left;
 }
 
-#cvdnnwplyd .gt_center {
+#oxfwjzcxqi .gt_center {
   text-align: center;
 }
 
-#cvdnnwplyd .gt_right {
+#oxfwjzcxqi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cvdnnwplyd .gt_font_normal {
+#oxfwjzcxqi .gt_font_normal {
   font-weight: normal;
 }
 
-#cvdnnwplyd .gt_font_bold {
+#oxfwjzcxqi .gt_font_bold {
   font-weight: bold;
 }
 
-#cvdnnwplyd .gt_font_italic {
+#oxfwjzcxqi .gt_font_italic {
   font-style: italic;
 }
 
-#cvdnnwplyd .gt_super {
+#oxfwjzcxqi .gt_super {
   font-size: 65%;
 }
 
-#cvdnnwplyd .gt_footnote_marks {
+#oxfwjzcxqi .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cvdnnwplyd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="oxfwjzcxqi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -1175,18 +1666,19 @@ msummary(model_list)
 ---
 # PDF Output
 
-`modelsummary` can produce `\(\LaTeX\)` for PDFs as well.&lt;sup&gt;1&lt;/sup&gt;
+`output = "latex"` produces `kableExtra` based output well-suited to PDFs.&lt;sup&gt;1&lt;/sup&gt;
 
 
 ```r
 msummary(model_list, output = "latex")
 ```
 
+
 .image-shorter[
 ![](img/ex_table_latex.PNG)
 ]
 
-.footnote[[1] Note this output will generally only work nicely in a PDF document.]
+For customization, I recommend referring to [`modelsummary`'s documentation](https://vincentarelbundock.github.io/modelsummary/articles/customization.html).
 
 ---
 # Saving a `modelsummary`
@@ -1197,44 +1689,44 @@ msummary(model_list, output = "latex")
 msummary(model_list, output = "ex_table.png")
 ```
 
-![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-55-1.png)&lt;!-- --&gt;
 ]
 
 ---
-# LaTeX Tables
+# `modelsummary` and `gt`
 
-For tables in `\(\LaTeX\)`—as is needed for `.pdf` files—I recommend looking into the `gt`, `stargazer`, or `kableExtra` packages.
 
---
+.pull-left[
 
-`gt` and `kableExtra` allow the construction of complex tables in either HTML or `\(\LaTeX\)` using
-additive syntax similar to `ggplot2` and `dplyr`.
+You can select `gt` output to enable modifying summaries with `gt` functions.
 
-`stargazer` produces nicely formatted `\(\LaTeX\)` tables but is idiosyncratic.
+.small[
 
---
+```r
+msummary(model_list, output = "gt") %&gt;%
+  tab_header(
+    title = "Table 1. Linear Models", 
+    subtitle = "DV: Miles per Gallon"
+  )
+```
+]
 
-If you want to edit `\(\LaTeX\)` documents, you can do it in R using Sweave documents (.Rnw).
-Alternatively, you may want to work in a dedicated `\(\LaTeX\)` editor. I recommend [Overleaf](http://www.overleaf.com)
-for this purpose.
+Note that `gt`'s `\(LaTeX\)` support for PDFs is immature--this format is better for HTML or image output.
 
---
 
-RMarkdown has support for a fair amount of basic `\(\LaTeX\)` syntax if you aren't trying to 
-get too fancy!
-
---
-
-Another approach I have used is to manually format `\(\LaTeX\)` tables but use in-line R calls to 
-fill in the values dynamically. This gets you the *exact* format you want but without 
-forcing you to update values any time something changes.
+]
+.pull-right[
+.image-full[
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-57-1.png)&lt;!-- --&gt;
+]
+]
 
 ---
 # Bonus: `corrplot`
 
 The `corrplot` package has functions for displaying correlograms.
 
-These make visualizing the correlations between variables in a data set easier.
+These make interpreting the correlations between variables in a data set easier than conventional correlation tables.
 
 The first argument is a call to `cor()`, the base R function for generating a correlation matrix.
 
@@ -1254,7 +1746,7 @@ corrplot(
 ---
 ## Correlogram
 
-![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-59-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -1787,17 +2279,15 @@ A lot!
 If you...
 
 * have no stats background yet - **SOC504: Applied Social Statistics**
-* want to learn more social science computing - **SOC590: Big Data and Population Processes** &lt;sup&gt;1&lt;/sup&gt;
 * have (only) finished SOC506 - **CSSS510: Maximum Likelihood**
 * want to master visualization - **CSSS569: Visualizing Data**
-* study events or durations - **CSSS544: Event History Analysis** &lt;sup&gt;2&lt;/sup&gt;
+* study events or durations - **CSSS544: Event History Analysis** &lt;sup&gt;1&lt;/sup&gt;
 * want to use network data - **CSSS567: Social Network Analysis**
 * want to work with spatial data - **CSSS554: Spatial Statistics**
 * want to work with time series - **CSSS512: Time Series and Panel Data**
 
 .footnote[
-[1] We're hoping to offer that again soon!&lt;br&gt;
-[2] Also a great maximum likelihood introduction.
+[1] Also a great maximum likelihood introduction.
 ]
 
 ---
