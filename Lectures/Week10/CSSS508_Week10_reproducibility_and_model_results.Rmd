@@ -54,7 +54,7 @@ ex_dat <- data.frame(num1 = rnorm(200, 1, 2),
 
 * Tidy model output with `broom`
 * Visualizing models with `ggeffects`
-* Tables with `sjPlot`, `gt`, and `modelsummary`
+* Tables with `gt`, `modelsummary`, and `gtsummary`
 
 ### Reproducible Research
 
@@ -484,77 +484,18 @@ pander(summary(lm_1))
 Table: Fitting linear model: mpg ~ wt + hp
 
 ---
-# `sjPlot`
+# Advanced Tables
 
 `pander` tables are great for basic `rmarkdown` documents, but they're not 
 generally publication ready.
 
-The `sjPlot` package produces `html` tables that look more like
-those you may find in journal articles.
+We're going to talk about a few different approaches for making nicer tables:
 
-```{r table_packages, message=FALSE, warning=FALSE, results='hide'}
-library(sjPlot)
-```
+* `gt` from RStudio for general table construction
 
----
-# `sjPlot` Tables
+* `modelsummary` for creating model tables
 
-`tab_model()` will produce tables for most models.
-
-```{r, eval=TRUE}
-model_1 <- lm(mpg ~ wt, data = mtcars)
-tab_model(model_1)
-```
-
----
-# Multi-Model Tables with `sjTable`
-
-Often in journal articles you will see a single table that compares multiple models.
-
-Typically, authors will start with a simple model on the left, then add variables, 
-until they have their most complex model on the right.
-
-The `sjPlot` package makes this easy to do: just give `tab_model()` more models!
-
----
-# Multiple `tab_model()`
-
-.small[
-```{r}
-model_2 <- lm(mpg ~ hp + wt, data = mtcars)
-model_3 <- lm(mpg ~ hp + wt + factor(am), data = mtcars)
-tab_model(model_1, model_2, model_3)
-```
-]
-
----
-# `sjPlot` does a lot more
-
-The `sjPlot` package does *a lot* more than just make pretty tables. It is a rabbit hole
-of *incredibly* powerful and useful functions for displaying descriptive and inferential results.
-
-View the [package website](http://www.strengejacke.de/sjPlot/) for extensive documentation.
-
-`sjPlot` is a bit more complicated than `ggeffects` but can do just about everything 
-it can do as well; they were written by the same author!
-
-`sjPlot` is fairly new but offers a fairly comprehensive solution for `ggplot`
-based publication-ready social science data visualization. All graphical functions in
-`sjPlot` are based on `ggplot2`, so it should not take terribly long to figure out.
-
----
-# `sjPlot` Example: Likert plots
-
-```{r, echo=FALSE, out.width = "600px"}
-knitr::include_graphics("img/sjPlot_likert.PNG")
-```
-
----
-# `sjPlot` Example: Crosstabs
-
-```{r, echo=FALSE, out.width = "500px"}
-knitr::include_graphics("img/sjPlot_crosstab.PNG")
-```
+* `gtsummary` for creating data summaries
 
 ---
 # `gt`
@@ -590,6 +531,9 @@ tes_chars %>%
 
 ```
 ]
+
+`gt()` just renders the dataframe as a table using markdown.
+
 ]
 .smallest[
 .pull-right[
@@ -616,6 +560,9 @@ tes_chars %>%
   gt()
 ```
 ]
+
+If we `group_by()` first, the levels of the grouping variable become grouping rows in the table.
+
 ]
 .smallest[
 .pull-right[
@@ -644,6 +591,9 @@ tes_chars %>%
   gt(rowname_col = "name")
 ```
 ]
+
+Designating a `rowname_col` removes that column's name and divides the values from the measures to the right.
+
 ]
 .smallest[
 .pull-right[
@@ -677,6 +627,9 @@ tes_chars %>%
   ) 
 ```
 ]
+
+`tab_header()` can add titles and subtitles.
+
 ]
 .smallest[
 .pull-right[
@@ -717,6 +670,9 @@ tes_chars %>%
   ) 
 ```
 ]
+
+A `tab_spanner()` lets us group columns together.
+
 ]
 .smallest[
 .pull-right[
@@ -766,6 +722,9 @@ tes_chars %>%
   )
 ```
 ]
+
+We can directly change column names with `cols_label()`
+
 ]
 .smallest[
 .pull-right[
@@ -823,6 +782,9 @@ tes_chars %>%
     decimals = 0) 
 ```
 ]
+
+We can adjust cell formats too.
+
 ]
 .smallest[
 .pull-right[
@@ -1054,11 +1016,11 @@ tes_chars %>%
 ]
 
 ---
-# LaTeX Tables
+# $\LaTeX$ Tables
 
 `gt` is a very new package and is somewhat finicky when used in `.pdf` documents.
 
-For tables in $\LaTeX$—as is needed for `.pdf` files—I recommend also looking into the `stargazer` or `kableExtra` packages.
+For tables in $\LaTeX$—as is needed for `.pdf` files—I recommend also looking into the `kableExtra` or `stargazer` packages.
 
 --
 
@@ -1089,25 +1051,68 @@ An advantage of this package is that it can produce output in every common forma
 library(modelsummary)
 ```
 
+Its key function is `msummary()` or `modelsummary()` which creates summary tables of models.
+
+You can then build on it using either `gt` or `kableExtra` functions, depending on the selected output format.
+
 ---
-# Summary Tables
+
+.pull-left[
+## `msummary`
+
+Like `pander()`, `msummary()` takes a model as an object to make a table.
 
 .small[
-.pull-left[
 ```{r, eval=FALSE, echo=TRUE}
-model_list <- list("Model 1" = model_1, 
-                   "Model 2" = model_2, 
-                   "Model 3" = model_3)
-msummary(model_list)
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+msummary(mod_1)
 ```
+]
 
-Default `modelsummary` tables look a lot like `pander` tables because they are generated via Markdown.
+Note default `modelsummary` look like `pander` tables because they use Markdown.
 ]
 .pull-right[
+.small[
 ```{r, eval=TRUE, echo=FALSE}
-model_list <- list("Model 1" = model_1, 
-                   "Model 2" = model_2, 
-                   "Model 3" = model_3)
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+msummary(mod_1)
+```
+]
+]
+
+
+---
+.pull-left[
+## `msummary`
+
+You can present multiple models in `msummary` using named lists:
+
+.small[
+```{r, eval=FALSE, echo=TRUE}
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+mod_2 <- lm(mpg ~ hp + wt, data = mtcars)
+mod_3 <- lm(mpg ~ hp + wt + factor(am), 
+            data = mtcars)
+model_list <- list("Model 1" = mod_1, 
+                   "Model 2" = mod_2, 
+                   "Model 3" = mod_3)
+msummary(model_list)
+```
+]
+
+This allows you to produce the common (and often bad) journal format where one starts with a nonsensical "naive model" then works up to the "full model" justified by the front end of the paper.
+
+]
+.pull-right[
+.small[
+```{r, eval=TRUE, echo=FALSE}
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+mod_2 <- lm(mpg ~ hp + wt, data = mtcars)
+mod_3 <- lm(mpg ~ hp + wt + factor(am), 
+            data = mtcars)
+model_list <- list("Model 1" = mod_1, 
+                   "Model 2" = mod_2, 
+                   "Model 3" = mod_3)
 msummary(model_list)
 ```
 ]
@@ -1169,6 +1174,114 @@ msummary(model_list, output = "gt") %>%
     subtitle = "DV: Miles per Gallon"
   ) %>%
   gtsave("img/gt_summary.png")
+```
+]
+]
+
+---
+# `gtsummary`
+
+The `gtsummary` package is similar to `modelsummary` in that it takes advantage of `broom`, `gt`, and `kableExtra` to provide a flexible table-making framework.
+
+While `gtsummary` can also produce model tables like `modelsummary`, it also produces descriptive statistic tables for dataframes.<sup>1</sup>
+
+```{r}
+library(gtsummary)
+```
+
+.footnote[[1] I prefer `modelsummary`'s syntax most model tables.]
+
+---
+
+.pull-left[
+## `tbl_summary()`
+
+By default, `gtsummary` tables provide:
+
+* Frequencies for categorical and binary variables
+* Quantiles of the form "50% (25%, 75%)" for continuous variables
+* Sample size
+
+```{r, eval=FALSE}
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary() 
+```
+]
+
+.pull-right[
+.smaller[
+```{r, echo=FALSE}
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary()
+```
+]
+]
+
+---
+
+.pull-left[
+## Grouping
+
+You can provide a `by = ` argument to do grouped descriptives.
+
+```{r, eval=FALSE}
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am") 
+```
+]
+
+.pull-right[
+.smaller[
+```{r, echo=FALSE}
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am")
+```
+]
+]
+
+---
+
+.pull-left[
+## Adding `gt`
+
+If you select `gt` output, you can dress it up with `gt` functions.
+
+.small[
+```{r, eval=FALSE}
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am") %>%
+  as_gt() %>%
+  tab_spanner(
+    label = "Transmission", 
+    columns = starts_with("stat_")
+  ) %>%
+  tab_header(
+    title = "Motor Trend Cars", 
+    subtitle = "Descriptive Statistics"
+  )
+```
+]
+
+`starts\_with("stat\_")` here selects the statistic columns created by `tbl_summary()`.
+]
+
+.pull-right[
+.smaller[
+```{r, echo=FALSE}
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am") %>%
+  as_gt() %>%
+  tab_spanner(label = "Transmission", 
+              columns = starts_with("stat_")) %>%
+  tab_header("Motor Trend Cars", 
+             subtitle = "Descriptive Statistics") %>%
+  gtsave("img/gtsummary.png")
 ```
 ]
 ]
@@ -1498,7 +1611,7 @@ For research to be reproducible, it must also be *portable*. Portable software o
 ---
 # Divide and Conquer
 
-Often you do not want to include all the code for a project in a single `.Rmd` file:
+Often you do not want to include all code for a project in one `.Rmd` file:
 
    * The code takes too long to knit.
    * The file is so long it is difficult to read.
@@ -1514,10 +1627,11 @@ There are two ways to deal with this:
 
 --
 
-2. Use `source()` to run external `.R` scripts.
+2. Use `source()` to run external `.R` scripts when the `.Rmd` knits.
 
    + This can be used to run large files that aren't impractically slow.
    + Also good for loading project-specific functions.
+
 
 ---
 # The Way of Many Files
@@ -1569,6 +1683,8 @@ This means...
 Every stage (oval) has an unambiguous input and output. Everything that precedes a given stage is a **dependency**—something required to run it.
 
 ![](img/pipeline.svg)
+
+.footnote[Note: [`drake` is a terrific package for managing R research pipelines.](https://docs.ropensci.org/drake/)]
 
 ---
 class: inverse
@@ -1747,3 +1863,88 @@ If you...
 ---
 class: inverse
 # Thank you!
+
+---
+class: inverse
+count: false
+# Supplementary Material
+
+---
+count: false
+# `sjPlot`
+
+`pander` tables are great for basic `rmarkdown` documents, but they're not 
+generally publication ready.
+
+The `sjPlot` package produces `html` tables that look more like
+those you may find in journal articles.
+
+```{r table_packages, message=FALSE, warning=FALSE, results='hide'}
+library(sjPlot)
+```
+
+---
+count: false
+# `sjPlot` Tables
+
+`tab_model()` will produce tables for most models.
+
+```{r, eval=TRUE}
+model_1 <- lm(mpg ~ wt, data = mtcars)
+tab_model(model_1)
+```
+
+---
+count: false
+# Multi-Model Tables with `sjTable`
+
+Often in journal articles you will see a single table that compares multiple models.
+
+Typically, authors will start with a simple model on the left, then add variables, 
+until they have their most complex model on the right.
+
+The `sjPlot` package makes this easy to do: just give `tab_model()` more models!
+
+---
+count: false
+# Multiple `tab_model()`
+
+.small[
+```{r}
+model_2 <- lm(mpg ~ hp + wt, data = mtcars)
+model_3 <- lm(mpg ~ hp + wt + factor(am), data = mtcars)
+tab_model(model_1, model_2, model_3)
+```
+]
+
+---
+count: false
+# `sjPlot` does a lot more
+
+The `sjPlot` package does *a lot* more than just make pretty tables. It is a rabbit hole
+of *incredibly* powerful and useful functions for displaying descriptive and inferential results.
+
+View the [package website](http://www.strengejacke.de/sjPlot/) for extensive documentation.
+
+`sjPlot` is a bit more complicated than `ggeffects` but can do just about everything 
+it can do as well; they were written by the same author!
+
+`sjPlot` is fairly new but offers a fairly comprehensive solution for `ggplot`
+based publication-ready social science data visualization. All graphical functions in
+`sjPlot` are based on `ggplot2`, so it should not take terribly long to figure out.
+
+---
+count: false
+# `sjPlot` Example: Likert plots
+
+```{r, echo=FALSE, out.width = "600px"}
+knitr::include_graphics("img/sjPlot_likert.PNG")
+```
+
+---
+count: false
+# `sjPlot` Example: Crosstabs
+
+```{r, echo=FALSE, out.width = "500px"}
+knitr::include_graphics("img/sjPlot_crosstab.PNG")
+```
