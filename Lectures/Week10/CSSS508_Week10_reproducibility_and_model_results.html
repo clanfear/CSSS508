@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 10
 ## Model Results and Reproducibility
 ### Chuck Lanfear
-### Jun 3, 2019<br>Updated: Jun 2, 2020
+### Jun 3, 2020<br>Updated: Jun 6, 2020
 
 ---
 
@@ -80,20 +80,20 @@ summary(lm_1)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -7.7664 -1.9910  0.0933  2.0581  9.2138 
+## -8.3352 -1.9641  0.1392  2.0636  8.2546 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  1.53318    0.36826   4.163 4.70e-05 ***
-## num1         0.41929    0.09649   4.345 2.23e-05 ***
-## fac1B        0.25829    0.49472   0.522    0.602    
-## fac1C        2.16572    0.52827   4.100 6.06e-05 ***
+## (Intercept)   0.8961     0.3931   2.280 0.023712 *  
+## num1          0.6038     0.1030   5.860 1.93e-08 ***
+## fac1B         0.8728     0.5165   1.690 0.092615 .  
+## fac1C         1.7762     0.5208   3.411 0.000786 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.932 on 196 degrees of freedom
-## Multiple R-squared:  0.1685,	Adjusted R-squared:  0.1558 
-## F-statistic: 13.24 on 3 and 196 DF,  p-value: 6.588e-08
+## Residual standard error: 2.975 on 196 degrees of freedom
+## Multiple R-squared:  0.1835,	Adjusted R-squared:  0.171 
+## F-statistic: 14.68 on 3 and 196 DF,  p-value: 1.159e-08
 ....
 ```
 ]
@@ -121,14 +121,14 @@ summary(glm_1)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -1.8282  -1.0428  -0.6934   1.0823   1.7338  
+## -2.1854  -1.0126   0.3937   1.0402   2.0782  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -0.8788     0.2752  -3.193 0.001407 ** 
-## num1          0.2122     0.0728   2.915 0.003559 ** 
-## fac1B         0.4703     0.3560   1.321 0.186428    
-## fac1C         1.3441     0.3891   3.454 0.000552 ***
+## (Intercept) -0.91519    0.30407  -3.010  0.00261 ** 
+## num1         0.44697    0.09067   4.930 8.24e-07 ***
+## fac1B        0.44469    0.38059   1.168  0.24263    
+## fac1C        1.02254    0.39236   2.606  0.00916 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -150,12 +150,12 @@ lm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic   p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1 (Intercept)    1.53     0.368      4.16  0.0000470
-## 2 num1           0.419    0.0965     4.35  0.0000223
-## 3 fac1B          0.258    0.495      0.522 0.602    
-## 4 fac1C          2.17     0.528      4.10  0.0000606
+##   term        estimate std.error statistic      p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1 (Intercept)    0.896     0.393      2.28 0.0237      
+## 2 num1           0.604     0.103      5.86 0.0000000193
+## 3 fac1B          0.873     0.516      1.69 0.0926      
+## 4 fac1C          1.78      0.521      3.41 0.000786
 ```
 
 Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
@@ -176,12 +176,12 @@ glm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)   -0.879    0.275      -3.19 0.00141 
-## 2 num1           0.212    0.0728      2.91 0.00356 
-## 3 fac1B          0.470    0.356       1.32 0.186   
-## 4 fac1C          1.34     0.389       3.45 0.000552
+##   term        estimate std.error statistic     p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 (Intercept)   -0.915    0.304      -3.01 0.00261    
+## 2 num1           0.447    0.0907      4.93 0.000000824
+## 3 fac1B          0.445    0.381       1.17 0.243      
+## 4 fac1C          1.02     0.392       2.61 0.00916
 ```
 
 ---
@@ -203,7 +203,7 @@ glance(lm_1)
 ## # A tibble: 1 x 11
 ##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC
 ##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.169         0.156  2.93      13.2 6.59e-8     4  -497. 1004.
+## 1     0.183         0.171  2.98      14.7 1.16e-8     4  -500. 1010.
 ## # ... with 3 more variables: BIC &lt;dbl&gt;, deviance &lt;dbl&gt;,
 ## #   df.residual &lt;int&gt;
 ```
@@ -225,12 +225,12 @@ augment(lm_1) %&gt;% head()
 ## # A tibble: 6 x 10
 ##      yn   num1 fac1  .fitted .se.fit .resid   .hat .sigma .cooksd
 ##   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-## 1  3.34 -1.11  B        1.33   0.401  2.01  0.0187   2.94 2.29e-3
-## 2  5.83  3.72  C        5.26   0.465  0.569 0.0252   2.94 2.50e-4
-## 3  3.38  1.44  B        2.40   0.338  0.980 0.0133   2.94 3.80e-4
-## 4  1.50 -0.339 A        1.39   0.376  0.106 0.0165   2.94 5.55e-6
-## 5  3.56  0.441 C        3.88   0.389 -0.324 0.0176   2.94 5.56e-5
-## 6  6.59  4.68  B        3.75   0.479  2.84  0.0267   2.93 6.58e-3
+## 1  2.00  2.48  A       2.40    0.394 -0.395 0.0175   2.98 7.97e-5
+## 2 -2.03 -0.374 A       0.670   0.407 -2.70  0.0187   2.98 4.00e-3
+## 3  2.18  1.94  B       2.94    0.368 -0.760 0.0153   2.98 2.57e-4
+## 4  2.06 -1.19  C       1.95    0.427  0.108 0.0206   2.98 7.01e-6
+## 5  4.88  4.05  C       5.12    0.482 -0.240 0.0263   2.98 4.52e-5
+## 6  2.55  5.65  C       6.08    0.603 -3.54  0.0411   2.97 1.58e-2
 ## # ... with 1 more variable: .std.resid &lt;dbl&gt;
 ```
 ]
@@ -251,18 +251,18 @@ The real advantage of `broom` becomes apparent when running many models at once.
 ## # Groups:   fac1 [3]
 ##    fac1  term        estimate std.error statistic  p.value
 ##    &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1 A     (Intercept)    0.547    0.387       1.41 1.62e- 1
-##  2 A     num1           0.439    0.136       3.23 1.97e- 3
-##  3 A     fac2No         0.978    0.517       1.89 6.30e- 2
-##  4 A     num2           0.699    0.0795      8.78 1.75e-12
-##  5 B     (Intercept)    1.94     0.367       5.29 1.26e- 6
-##  6 B     num1           0.469    0.111       4.22 6.90e- 5
-##  7 B     fac2No         0.601    0.486       1.24 2.21e- 1
-##  8 B     num2           0.636    0.0833      7.63 7.47e-11
-##  9 C     (Intercept)    2.77     0.419       6.62 1.71e- 8
-## 10 C     num1           0.632    0.121       5.24 2.72e- 6
-## 11 C     fac2No         0.938    0.559       1.68 9.88e- 2
-## 12 C     num2           0.685    0.101       6.76 1.02e- 8
+##  1 A     (Intercept)    0.776    0.386       2.01 4.88e- 2
+##  2 A     num1           0.601    0.112       5.37 1.37e- 6
+##  3 A     fac2No         0.498    0.491       1.01 3.15e- 1
+##  4 A     num2           0.636    0.0781      8.14 2.79e-11
+##  5 B     (Intercept)    1.95     0.420       4.65 1.68e- 5
+##  6 B     num1           0.438    0.142       3.07 3.08e- 3
+##  7 B     fac2No         0.672    0.557       1.21 2.32e- 1
+##  8 B     num2           0.741    0.0974      7.61 1.47e-10
+##  9 C     (Intercept)    2.73     0.369       7.39 4.15e-10
+## 10 C     num1           0.621    0.124       4.99 4.95e- 6
+## 11 C     fac2No         0.647    0.495       1.31 1.96e- 1
+## 12 C     num2           0.816    0.0910      8.96 7.53e-13
 ```
 ]
 
@@ -445,14 +445,14 @@ lm_1_est
 ## 
 ##  x | Predicted |   SE |         95% CI
 ## --------------------------------------
-## -8 |     -2.22 | 1.01 | [-4.19, -0.25]
-## -6 |     -1.41 | 0.81 | [-3.01,  0.18]
-## -4 |     -0.61 | 0.63 | [-1.85,  0.63]
-## -2 |      0.20 | 0.47 | [-0.72,  1.13]
-##  0 |      1.01 | 0.37 | [ 0.29,  1.73]
-##  2 |      1.82 | 0.36 | [ 1.11,  2.53]
-##  4 |      2.63 | 0.46 | [ 1.73,  3.53]
-##  6 |      3.44 | 0.62 | [ 2.23,  4.65]
+## -6 |     -2.05 | 0.81 | [-3.64, -0.45]
+## -4 |     -1.04 | 0.63 | [-2.28,  0.20]
+## -2 |     -0.04 | 0.48 | [-0.98,  0.90]
+##  0 |      0.97 | 0.39 | [ 0.20,  1.73]
+##  2 |      1.97 | 0.41 | [ 1.17,  2.77]
+##  4 |      2.97 | 0.52 | [ 1.95,  4.00]
+##  6 |      3.98 | 0.69 | [ 2.63,  5.32]
+##  8 |      4.98 | 0.87 | [ 3.27,  6.69]
 ## 
 ## Adjusted for:
 ## * fac1 = A
@@ -1085,7 +1085,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jgrvftazhk .gt_table {
+#zjwxfrekgv .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1108,7 +1108,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-left-color: #D3D3D3;
 }
 
-#jgrvftazhk .gt_heading {
+#zjwxfrekgv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1120,7 +1120,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-right-color: #D3D3D3;
 }
 
-#jgrvftazhk .gt_title {
+#zjwxfrekgv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1130,7 +1130,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-bottom-width: 0;
 }
 
-#jgrvftazhk .gt_subtitle {
+#zjwxfrekgv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1140,13 +1140,13 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-top-width: 0;
 }
 
-#jgrvftazhk .gt_bottom_border {
+#zjwxfrekgv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jgrvftazhk .gt_col_headings {
+#zjwxfrekgv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1161,7 +1161,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-right-color: #D3D3D3;
 }
 
-#jgrvftazhk .gt_col_heading {
+#zjwxfrekgv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1181,7 +1181,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   overflow-x: hidden;
 }
 
-#jgrvftazhk .gt_column_spanner_outer {
+#zjwxfrekgv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1193,15 +1193,15 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   padding-right: 4px;
 }
 
-#jgrvftazhk .gt_column_spanner_outer:first-child {
+#zjwxfrekgv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jgrvftazhk .gt_column_spanner_outer:last-child {
+#zjwxfrekgv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jgrvftazhk .gt_column_spanner {
+#zjwxfrekgv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1213,7 +1213,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   width: 100%;
 }
 
-#jgrvftazhk .gt_group_heading {
+#zjwxfrekgv .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1235,7 +1235,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   vertical-align: middle;
 }
 
-#jgrvftazhk .gt_empty_group_heading {
+#zjwxfrekgv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1250,19 +1250,19 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   vertical-align: middle;
 }
 
-#jgrvftazhk .gt_striped {
+#zjwxfrekgv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jgrvftazhk .gt_from_md > :first-child {
+#zjwxfrekgv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jgrvftazhk .gt_from_md > :last-child {
+#zjwxfrekgv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jgrvftazhk .gt_row {
+#zjwxfrekgv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1281,7 +1281,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   overflow-x: hidden;
 }
 
-#jgrvftazhk .gt_stub {
+#zjwxfrekgv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1293,7 +1293,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   padding-left: 12px;
 }
 
-#jgrvftazhk .gt_summary_row {
+#zjwxfrekgv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1303,7 +1303,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   padding-right: 5px;
 }
 
-#jgrvftazhk .gt_first_summary_row {
+#zjwxfrekgv .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1313,7 +1313,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-top-color: #D3D3D3;
 }
 
-#jgrvftazhk .gt_grand_summary_row {
+#zjwxfrekgv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1323,7 +1323,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   padding-right: 5px;
 }
 
-#jgrvftazhk .gt_first_grand_summary_row {
+#zjwxfrekgv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1333,7 +1333,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-top-color: #D3D3D3;
 }
 
-#jgrvftazhk .gt_table_body {
+#zjwxfrekgv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1342,7 +1342,7 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-bottom-color: #D3D3D3;
 }
 
-#jgrvftazhk .gt_footnotes {
+#zjwxfrekgv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1356,13 +1356,13 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-right-color: #D3D3D3;
 }
 
-#jgrvftazhk .gt_footnote {
+#zjwxfrekgv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jgrvftazhk .gt_sourcenotes {
+#zjwxfrekgv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1376,46 +1376,46 @@ Note default `modelsummary` look like `pander` tables because they use Markdown.
   border-right-color: #D3D3D3;
 }
 
-#jgrvftazhk .gt_sourcenote {
+#zjwxfrekgv .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jgrvftazhk .gt_left {
+#zjwxfrekgv .gt_left {
   text-align: left;
 }
 
-#jgrvftazhk .gt_center {
+#zjwxfrekgv .gt_center {
   text-align: center;
 }
 
-#jgrvftazhk .gt_right {
+#zjwxfrekgv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jgrvftazhk .gt_font_normal {
+#zjwxfrekgv .gt_font_normal {
   font-weight: normal;
 }
 
-#jgrvftazhk .gt_font_bold {
+#zjwxfrekgv .gt_font_bold {
   font-weight: bold;
 }
 
-#jgrvftazhk .gt_font_italic {
+#zjwxfrekgv .gt_font_italic {
   font-style: italic;
 }
 
-#jgrvftazhk .gt_super {
+#zjwxfrekgv .gt_super {
   font-size: 65%;
 }
 
-#jgrvftazhk .gt_footnote_marks {
+#zjwxfrekgv .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jgrvftazhk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="zjwxfrekgv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -1501,7 +1501,7 @@ This allows you to produce the common (and often bad) journal format where one s
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#gjmceuyius .gt_table {
+#aactdwqcni .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1524,7 +1524,7 @@ This allows you to produce the common (and often bad) journal format where one s
   border-left-color: #D3D3D3;
 }
 
-#gjmceuyius .gt_heading {
+#aactdwqcni .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1536,7 +1536,7 @@ This allows you to produce the common (and often bad) journal format where one s
   border-right-color: #D3D3D3;
 }
 
-#gjmceuyius .gt_title {
+#aactdwqcni .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1546,7 +1546,7 @@ This allows you to produce the common (and often bad) journal format where one s
   border-bottom-width: 0;
 }
 
-#gjmceuyius .gt_subtitle {
+#aactdwqcni .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1556,13 +1556,13 @@ This allows you to produce the common (and often bad) journal format where one s
   border-top-width: 0;
 }
 
-#gjmceuyius .gt_bottom_border {
+#aactdwqcni .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gjmceuyius .gt_col_headings {
+#aactdwqcni .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1577,7 +1577,7 @@ This allows you to produce the common (and often bad) journal format where one s
   border-right-color: #D3D3D3;
 }
 
-#gjmceuyius .gt_col_heading {
+#aactdwqcni .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1597,7 +1597,7 @@ This allows you to produce the common (and often bad) journal format where one s
   overflow-x: hidden;
 }
 
-#gjmceuyius .gt_column_spanner_outer {
+#aactdwqcni .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1609,15 +1609,15 @@ This allows you to produce the common (and often bad) journal format where one s
   padding-right: 4px;
 }
 
-#gjmceuyius .gt_column_spanner_outer:first-child {
+#aactdwqcni .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gjmceuyius .gt_column_spanner_outer:last-child {
+#aactdwqcni .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gjmceuyius .gt_column_spanner {
+#aactdwqcni .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1629,7 +1629,7 @@ This allows you to produce the common (and often bad) journal format where one s
   width: 100%;
 }
 
-#gjmceuyius .gt_group_heading {
+#aactdwqcni .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1651,7 +1651,7 @@ This allows you to produce the common (and often bad) journal format where one s
   vertical-align: middle;
 }
 
-#gjmceuyius .gt_empty_group_heading {
+#aactdwqcni .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1666,19 +1666,19 @@ This allows you to produce the common (and often bad) journal format where one s
   vertical-align: middle;
 }
 
-#gjmceuyius .gt_striped {
+#aactdwqcni .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gjmceuyius .gt_from_md > :first-child {
+#aactdwqcni .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gjmceuyius .gt_from_md > :last-child {
+#aactdwqcni .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gjmceuyius .gt_row {
+#aactdwqcni .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1697,7 +1697,7 @@ This allows you to produce the common (and often bad) journal format where one s
   overflow-x: hidden;
 }
 
-#gjmceuyius .gt_stub {
+#aactdwqcni .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1709,7 +1709,7 @@ This allows you to produce the common (and often bad) journal format where one s
   padding-left: 12px;
 }
 
-#gjmceuyius .gt_summary_row {
+#aactdwqcni .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1719,7 +1719,7 @@ This allows you to produce the common (and often bad) journal format where one s
   padding-right: 5px;
 }
 
-#gjmceuyius .gt_first_summary_row {
+#aactdwqcni .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1729,7 +1729,7 @@ This allows you to produce the common (and often bad) journal format where one s
   border-top-color: #D3D3D3;
 }
 
-#gjmceuyius .gt_grand_summary_row {
+#aactdwqcni .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1739,7 +1739,7 @@ This allows you to produce the common (and often bad) journal format where one s
   padding-right: 5px;
 }
 
-#gjmceuyius .gt_first_grand_summary_row {
+#aactdwqcni .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1749,7 +1749,7 @@ This allows you to produce the common (and often bad) journal format where one s
   border-top-color: #D3D3D3;
 }
 
-#gjmceuyius .gt_table_body {
+#aactdwqcni .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1758,7 +1758,7 @@ This allows you to produce the common (and often bad) journal format where one s
   border-bottom-color: #D3D3D3;
 }
 
-#gjmceuyius .gt_footnotes {
+#aactdwqcni .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1772,13 +1772,13 @@ This allows you to produce the common (and often bad) journal format where one s
   border-right-color: #D3D3D3;
 }
 
-#gjmceuyius .gt_footnote {
+#aactdwqcni .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#gjmceuyius .gt_sourcenotes {
+#aactdwqcni .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1792,46 +1792,46 @@ This allows you to produce the common (and often bad) journal format where one s
   border-right-color: #D3D3D3;
 }
 
-#gjmceuyius .gt_sourcenote {
+#aactdwqcni .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#gjmceuyius .gt_left {
+#aactdwqcni .gt_left {
   text-align: left;
 }
 
-#gjmceuyius .gt_center {
+#aactdwqcni .gt_center {
   text-align: center;
 }
 
-#gjmceuyius .gt_right {
+#aactdwqcni .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gjmceuyius .gt_font_normal {
+#aactdwqcni .gt_font_normal {
   font-weight: normal;
 }
 
-#gjmceuyius .gt_font_bold {
+#aactdwqcni .gt_font_bold {
   font-weight: bold;
 }
 
-#gjmceuyius .gt_font_italic {
+#aactdwqcni .gt_font_italic {
   font-style: italic;
 }
 
-#gjmceuyius .gt_super {
+#aactdwqcni .gt_super {
   font-size: 65%;
 }
 
-#gjmceuyius .gt_footnote_marks {
+#aactdwqcni .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="gjmceuyius" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="aactdwqcni" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -2030,7 +2030,7 @@ mtcars %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#togsfhcskk .gt_table {
+#zhugoqklgb .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2053,7 +2053,7 @@ mtcars %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#togsfhcskk .gt_heading {
+#zhugoqklgb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2065,7 +2065,7 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#togsfhcskk .gt_title {
+#zhugoqklgb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2075,7 +2075,7 @@ mtcars %&gt;%
   border-bottom-width: 0;
 }
 
-#togsfhcskk .gt_subtitle {
+#zhugoqklgb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2085,13 +2085,13 @@ mtcars %&gt;%
   border-top-width: 0;
 }
 
-#togsfhcskk .gt_bottom_border {
+#zhugoqklgb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#togsfhcskk .gt_col_headings {
+#zhugoqklgb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2106,7 +2106,7 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#togsfhcskk .gt_col_heading {
+#zhugoqklgb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2126,7 +2126,7 @@ mtcars %&gt;%
   overflow-x: hidden;
 }
 
-#togsfhcskk .gt_column_spanner_outer {
+#zhugoqklgb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2138,15 +2138,15 @@ mtcars %&gt;%
   padding-right: 4px;
 }
 
-#togsfhcskk .gt_column_spanner_outer:first-child {
+#zhugoqklgb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#togsfhcskk .gt_column_spanner_outer:last-child {
+#zhugoqklgb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#togsfhcskk .gt_column_spanner {
+#zhugoqklgb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2158,7 +2158,7 @@ mtcars %&gt;%
   width: 100%;
 }
 
-#togsfhcskk .gt_group_heading {
+#zhugoqklgb .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2180,7 +2180,7 @@ mtcars %&gt;%
   vertical-align: middle;
 }
 
-#togsfhcskk .gt_empty_group_heading {
+#zhugoqklgb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2195,19 +2195,19 @@ mtcars %&gt;%
   vertical-align: middle;
 }
 
-#togsfhcskk .gt_striped {
+#zhugoqklgb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#togsfhcskk .gt_from_md > :first-child {
+#zhugoqklgb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#togsfhcskk .gt_from_md > :last-child {
+#zhugoqklgb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#togsfhcskk .gt_row {
+#zhugoqklgb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2226,7 +2226,7 @@ mtcars %&gt;%
   overflow-x: hidden;
 }
 
-#togsfhcskk .gt_stub {
+#zhugoqklgb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2238,7 +2238,7 @@ mtcars %&gt;%
   padding-left: 12px;
 }
 
-#togsfhcskk .gt_summary_row {
+#zhugoqklgb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2248,7 +2248,7 @@ mtcars %&gt;%
   padding-right: 5px;
 }
 
-#togsfhcskk .gt_first_summary_row {
+#zhugoqklgb .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2258,7 +2258,7 @@ mtcars %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#togsfhcskk .gt_grand_summary_row {
+#zhugoqklgb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2268,7 +2268,7 @@ mtcars %&gt;%
   padding-right: 5px;
 }
 
-#togsfhcskk .gt_first_grand_summary_row {
+#zhugoqklgb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2278,7 +2278,7 @@ mtcars %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#togsfhcskk .gt_table_body {
+#zhugoqklgb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2287,7 +2287,7 @@ mtcars %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#togsfhcskk .gt_footnotes {
+#zhugoqklgb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2301,13 +2301,13 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#togsfhcskk .gt_footnote {
+#zhugoqklgb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#togsfhcskk .gt_sourcenotes {
+#zhugoqklgb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2321,46 +2321,46 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#togsfhcskk .gt_sourcenote {
+#zhugoqklgb .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#togsfhcskk .gt_left {
+#zhugoqklgb .gt_left {
   text-align: left;
 }
 
-#togsfhcskk .gt_center {
+#zhugoqklgb .gt_center {
   text-align: center;
 }
 
-#togsfhcskk .gt_right {
+#zhugoqklgb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#togsfhcskk .gt_font_normal {
+#zhugoqklgb .gt_font_normal {
   font-weight: normal;
 }
 
-#togsfhcskk .gt_font_bold {
+#zhugoqklgb .gt_font_bold {
   font-weight: bold;
 }
 
-#togsfhcskk .gt_font_italic {
+#zhugoqklgb .gt_font_italic {
   font-style: italic;
 }
 
-#togsfhcskk .gt_super {
+#zhugoqklgb .gt_super {
   font-size: 65%;
 }
 
-#togsfhcskk .gt_footnote_marks {
+#zhugoqklgb .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="togsfhcskk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="zhugoqklgb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -2458,7 +2458,7 @@ mtcars %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#hzwzlehwjm .gt_table {
+#oggncujdbl .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2481,7 +2481,7 @@ mtcars %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#hzwzlehwjm .gt_heading {
+#oggncujdbl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2493,7 +2493,7 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#hzwzlehwjm .gt_title {
+#oggncujdbl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2503,7 +2503,7 @@ mtcars %&gt;%
   border-bottom-width: 0;
 }
 
-#hzwzlehwjm .gt_subtitle {
+#oggncujdbl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2513,13 +2513,13 @@ mtcars %&gt;%
   border-top-width: 0;
 }
 
-#hzwzlehwjm .gt_bottom_border {
+#oggncujdbl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hzwzlehwjm .gt_col_headings {
+#oggncujdbl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2534,7 +2534,7 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#hzwzlehwjm .gt_col_heading {
+#oggncujdbl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2554,7 +2554,7 @@ mtcars %&gt;%
   overflow-x: hidden;
 }
 
-#hzwzlehwjm .gt_column_spanner_outer {
+#oggncujdbl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2566,15 +2566,15 @@ mtcars %&gt;%
   padding-right: 4px;
 }
 
-#hzwzlehwjm .gt_column_spanner_outer:first-child {
+#oggncujdbl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hzwzlehwjm .gt_column_spanner_outer:last-child {
+#oggncujdbl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hzwzlehwjm .gt_column_spanner {
+#oggncujdbl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2586,7 +2586,7 @@ mtcars %&gt;%
   width: 100%;
 }
 
-#hzwzlehwjm .gt_group_heading {
+#oggncujdbl .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2608,7 +2608,7 @@ mtcars %&gt;%
   vertical-align: middle;
 }
 
-#hzwzlehwjm .gt_empty_group_heading {
+#oggncujdbl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2623,19 +2623,19 @@ mtcars %&gt;%
   vertical-align: middle;
 }
 
-#hzwzlehwjm .gt_striped {
+#oggncujdbl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hzwzlehwjm .gt_from_md > :first-child {
+#oggncujdbl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hzwzlehwjm .gt_from_md > :last-child {
+#oggncujdbl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hzwzlehwjm .gt_row {
+#oggncujdbl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2654,7 +2654,7 @@ mtcars %&gt;%
   overflow-x: hidden;
 }
 
-#hzwzlehwjm .gt_stub {
+#oggncujdbl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2666,7 +2666,7 @@ mtcars %&gt;%
   padding-left: 12px;
 }
 
-#hzwzlehwjm .gt_summary_row {
+#oggncujdbl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2676,7 +2676,7 @@ mtcars %&gt;%
   padding-right: 5px;
 }
 
-#hzwzlehwjm .gt_first_summary_row {
+#oggncujdbl .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2686,7 +2686,7 @@ mtcars %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#hzwzlehwjm .gt_grand_summary_row {
+#oggncujdbl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2696,7 +2696,7 @@ mtcars %&gt;%
   padding-right: 5px;
 }
 
-#hzwzlehwjm .gt_first_grand_summary_row {
+#oggncujdbl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2706,7 +2706,7 @@ mtcars %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#hzwzlehwjm .gt_table_body {
+#oggncujdbl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2715,7 +2715,7 @@ mtcars %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#hzwzlehwjm .gt_footnotes {
+#oggncujdbl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2729,13 +2729,13 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#hzwzlehwjm .gt_footnote {
+#oggncujdbl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#hzwzlehwjm .gt_sourcenotes {
+#oggncujdbl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2749,46 +2749,46 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#hzwzlehwjm .gt_sourcenote {
+#oggncujdbl .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#hzwzlehwjm .gt_left {
+#oggncujdbl .gt_left {
   text-align: left;
 }
 
-#hzwzlehwjm .gt_center {
+#oggncujdbl .gt_center {
   text-align: center;
 }
 
-#hzwzlehwjm .gt_right {
+#oggncujdbl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hzwzlehwjm .gt_font_normal {
+#oggncujdbl .gt_font_normal {
   font-weight: normal;
 }
 
-#hzwzlehwjm .gt_font_bold {
+#oggncujdbl .gt_font_bold {
   font-weight: bold;
 }
 
-#hzwzlehwjm .gt_font_italic {
+#oggncujdbl .gt_font_italic {
   font-style: italic;
 }
 
-#hzwzlehwjm .gt_super {
+#oggncujdbl .gt_super {
   font-size: 65%;
 }
 
-#hzwzlehwjm .gt_footnote_marks {
+#oggncujdbl .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="hzwzlehwjm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="oggncujdbl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>

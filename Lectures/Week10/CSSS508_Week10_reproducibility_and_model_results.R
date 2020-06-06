@@ -102,28 +102,381 @@ panderOptions("table.style", "rmarkdown")
 
 ## pander(summary(lm_1))
 
-library(sjPlot)
+library(gt)
+tes_chars <- starwars %>% 
+  unnest(films) %>% 
+  unnest(starships, keep_empty=TRUE) %>% 
+  filter(films == "The Empire Strikes Back") %>% 
+  select(name, species, starships, mass, height) %>%
+  distinct(name, .keep_all = TRUE) %>%
+  mutate(starships = ifelse(name == "Obi-Wan Kenobi" | is.na(starships), 
+                            "No Ship", starships))
+glimpse(tes_chars)
 
-## model_1 <- lm(mpg ~ wt, data = mtcars)
-## tab_model(model_1)
+## tes_chars %>%
+##   gt()
+## 
 
-# If you're seeing this, you are looking in my presentation files.
-# I actually have to call on a saved image here because sjPlot
-# doesn't display properly in .Rpres slides for some reason.
-knitr::include_graphics("img/sjPlot_table.PNG")
+tes_chars %>%
+  gt() %>% 
+  gtsave("img/sw_table_1.png")
 
-## model_2 <- lm(mpg ~ hp + wt, data = mtcars)
-## model_3 <- lm(mpg ~ hp + wt + factor(am), data = mtcars)
-## tab_model(model_1, model_2, model_3)
+## tes_chars %>%
+##   group_by(starships) %>%
+##   gt()
 
-# If you're seeing this, you are looking in my presentation files.
-# I actually have to call on a saved image here because sjPlot
-# doesn't display properly in .Rpres slides for some reason.
-knitr::include_graphics("img/sjPlot_mtable.PNG")
+tes_chars %>% 
+  group_by(starships) %>%
+  gt() %>% gtsave("img/sw_table_2.png")
 
-knitr::include_graphics("img/sjPlot_likert.PNG")
+## tes_chars %>%
+##   group_by(starships) %>%
+##   gt(rowname_col = "name")
 
-knitr::include_graphics("img/sjPlot_crosstab.PNG")
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  gtsave("img/sw_table_3.png")
+
+## tes_chars %>%
+##   group_by(starships) %>%
+##   gt(rowname_col = "name") %>%
+##   tab_header(
+##     title = "Star Wars Characters",
+##     subtitle = "The Empire Strikes Back"
+##   )
+
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>% gtsave("img/sw_table_4.png")
+
+## tes_chars %>%
+##   group_by(starships) %>%
+##   gt(rowname_col = "name") %>%
+##   tab_header(
+##     title = "Star Wars Characters",
+##     subtitle = "The Empire Strikes Back"
+##   ) %>%
+##   tab_spanner(
+##     label = "Vitals",
+##     columns = vars(mass, height)
+##   )
+
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>% gtsave("img/sw_table_5.png")
+
+## tes_chars %>%
+##   group_by(starships) %>%
+##   gt(rowname_col = "name") %>%
+##   tab_header(
+##     title = "Star Wars Characters",
+##     subtitle = "The Empire Strikes Back"
+##   ) %>%
+##   tab_spanner(
+##     label = "Vitals",
+##     columns = vars(mass, height)
+##   ) %>%
+##   cols_label(
+##     mass = "Mass (kg)",
+##     height = "Height (cm)",
+##     species = "Species"
+##   )
+
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>% gtsave("img/sw_table_6.png")
+
+## tes_chars %>%
+##   group_by(starships) %>%
+##   gt(rowname_col = "name") %>%
+##   tab_header(
+##     title = "Star Wars Characters",
+##     subtitle = "The Empire Strikes Back"
+##   ) %>%
+##   tab_spanner(
+##     label = "Vitals",
+##     columns = vars(mass, height)
+##   ) %>%
+##   cols_label(
+##     mass = "Mass (kg)",
+##     height = "Height (cm)",
+##     species = "Species"
+##   ) %>%
+##   fmt_number(
+##     columns = vars(mass),
+##     decimals = 0)
+
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>% gtsave("img/sw_table_7.png")
+
+## tes_chars %>%
+##   group_by(starships) %>%
+##   gt(rowname_col = "name") %>%
+##   tab_header(
+##     title = "Star Wars Characters",
+##     subtitle = "The Empire Strikes Back"
+##   ) %>%
+##   tab_spanner(
+##     label = "Vitals",
+##     columns = vars(mass, height)
+##   ) %>%
+##   cols_label(
+##     mass = "Mass (kg)",
+##     height = "Height (cm)",
+##     species = "Species"
+##   ) %>%
+##   fmt_number(
+##     columns = vars(mass),
+##     decimals = 0
+##   ) %>%
+##   cols_align(
+##     align = "center",
+##     columns = vars(species, mass, height)
+##   )
+
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>% gtsave("img/sw_table_8.png")
+
+## tes_chars %>%
+##   group_by(starships) %>%
+##   gt(rowname_col = "name") %>%
+##   tab_header(
+##     title = "Star Wars Characters",
+##     subtitle = "The Empire Strikes Back"
+##   ) %>%
+##   tab_spanner(
+##     label = "Vitals",
+##     columns = vars(mass, height)
+##   ) %>%
+##   cols_label(
+##     mass = "Mass (kg)",
+##     height = "Height (cm)",
+##     species = "Species"
+##   ) %>%
+##   fmt_number(
+##     columns = vars(mass),
+##     decimals = 0
+##   ) %>%
+##   cols_align(
+##     align = "center",
+##     columns = vars(species, mass, height)
+##   ) %>%
+##   row_group_order(
+##     groups = c("X-wing",
+##                "Millennium Falcon")
+##   )
+
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>%
+  row_group_order(
+    groups = c("X-wing", 
+               "Millennium Falcon")
+  ) %>% gtsave("img/sw_table_9.png")
+
+tes_chars %>%
+  gt() %>% 
+  gtsave("img/sw_table_1.png")
+
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>%
+  row_group_order(
+    groups = c("X-wing", 
+               "Millennium Falcon")
+  ) %>% gtsave("img/sw_table_9.png")
+
+library(modelsummary)
+
+## mod_1 <- lm(mpg ~ wt, data = mtcars)
+## msummary(mod_1)
+
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+msummary(mod_1)
+
+## mod_1 <- lm(mpg ~ wt, data = mtcars)
+## mod_2 <- lm(mpg ~ hp + wt, data = mtcars)
+## mod_3 <- lm(mpg ~ hp + wt + factor(am),
+##             data = mtcars)
+## model_list <- list("Model 1" = mod_1,
+##                    "Model 2" = mod_2,
+##                    "Model 3" = mod_3)
+## msummary(model_list)
+
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+mod_2 <- lm(mpg ~ hp + wt, data = mtcars)
+mod_3 <- lm(mpg ~ hp + wt + factor(am), 
+            data = mtcars)
+model_list <- list("Model 1" = mod_1, 
+                   "Model 2" = mod_2, 
+                   "Model 3" = mod_3)
+msummary(model_list)
+
+## msummary(model_list, output = "latex")
+
+msummary(model_list, output = "ex_table.png")
+
+## msummary(model_list, output = "gt") %>%
+##   tab_header(
+##     title = "Table 1. Linear Models",
+##     subtitle = "DV: Miles per Gallon"
+##   )
+
+msummary(model_list, output = "gt") %>%
+  tab_header(
+    title = "Table 1. Linear Models", 
+    subtitle = "DV: Miles per Gallon"
+  ) %>%
+  gtsave("img/gt_summary.png")
+
+library(gtsummary)
+
+## mtcars %>%
+##   select(1:9) %>%
+##   tbl_summary()
+
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary()
+
+## mtcars %>%
+##   select(1:9) %>%
+##   tbl_summary(by = "am")
+
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am")
+
+## mtcars %>%
+##   select(1:9) %>%
+##   tbl_summary(by = "am") %>%
+##   as_gt() %>%
+##   tab_spanner(
+##     label = "Transmission",
+##     columns = starts_with("stat_")
+##   ) %>%
+##   tab_header(
+##     title = "Motor Trend Cars",
+##     subtitle = "Descriptive Statistics"
+##   )
+
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am") %>%
+  as_gt() %>%
+  tab_spanner(label = "Transmission", 
+              columns = starts_with("stat_")) %>%
+  tab_header("Motor Trend Cars", 
+             subtitle = "Descriptive Statistics") %>%
+  gtsave("img/gtsummary.png")
 
 ## library(corrplot)
 ## corrplot(
@@ -135,3 +488,16 @@ knitr::include_graphics("img/sjPlot_crosstab.PNG")
 
 library(corrplot)
 corrplot(cor(mtcars), addCoef.col = "white", addCoefasPercent=T, type="upper", order="FPC")
+
+library(sjPlot)
+
+model_1 <- lm(mpg ~ wt, data = mtcars)
+tab_model(model_1)
+
+model_2 <- lm(mpg ~ hp + wt, data = mtcars)
+model_3 <- lm(mpg ~ hp + wt + factor(am), data = mtcars)
+tab_model(model_1, model_2, model_3)
+
+knitr::include_graphics("img/sjPlot_likert.PNG")
+
+knitr::include_graphics("img/sjPlot_crosstab.PNG")
