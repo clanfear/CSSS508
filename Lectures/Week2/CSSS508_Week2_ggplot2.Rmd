@@ -2,7 +2,7 @@
 title: "CSSS508, Week 2"
 subtitle: "Plotting with `ggplot2`"
 author: "Chuck Lanfear"
-date: "Apr 8, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Oct 7, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -1479,11 +1479,11 @@ If you didn't manually set font sizes, these will usually come out at a reasonab
 .footnote[[1] I still do this for quick emails of simple plots. Bad me!]
 
 ---
-# Bonus Plot
+# Bonus Plots
 
 `ggplot2` is well suited to making complex, publication ready plots.
 
-This is the complete syntax for one plot from a recent article of mine.<sup>1</sup>
+This is the complete syntax for one plot from an article of mine.<sup>1</sup>
 
 .small[
 ```{r, eval=FALSE}
@@ -1506,12 +1506,26 @@ ggplot(estimated_pes, aes(x = Target, y = PE, group = Reporter)) +
 .footnote[
 [1] [Lanfear, Charles C., Lindsey R. Beach, Timothy A. Thomas. 2018. "Formal Social Control in Changing Neighborhoods: Racial Implications of Neighborhood Context on Reactive Policing." *City & Community* 17(4):1075-1099](https://onlinelibrary.wiley.com/doi/10.1111/cico.12346)
 ]
+
 ---
 
-.center[
-<img src="https://raw.githubusercontent.com/clanfear/CSSS508/master/Lectures/Week2/img/arrest_pe_plot.png" style="width: 80%;"/>
+.image-full[
+![](img/arrest_pe_plot.png)
 ]
+
 .footnote[The process for this plot is documented in my [Advanced Counterfactuals slides](https://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Advanced_Counterfactuals.html#1)]
+
+--
+
+*You can also gussy things up a bit...*
+
+---
+
+.image-full[
+![](img/crime_rr_plot.svg)
+]
+
+.footnote[The code for this one is a bit *trickier*.]
 
 ---
 class: inverse

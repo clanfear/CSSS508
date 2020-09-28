@@ -38,7 +38,7 @@ layout: default
    * Lecture Video for Lecture 1, recorded April 1st, 2020
        + [Zoom](https://washington.zoom.us/rec/share/7PNycbr77n1Jf9aS7kDjWZ59GIe9X6a80CIc_vcPn04jADGgkq_JAk5gh_HNJzZP?startTime=1585779871000)
        + [YouTube](https://youtu.be/1kemjqJwF_M)
-   * Homework 1: Due 11:59 PM April 7th
+   * Homework 1:
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
        + Homework 1 Example #1: [HTML](Keys/HW1_Keys/homework_1_key_1.html) , [RMD](Keys/HW1_Keys/homework_1_key_1.Rmd)
        + Homework 1 Example #2: [HTML](Keys/HW1_Keys/homework_1_key_2.html), [RMD](Keys/HW1_Keys/homework_1_key_2.Rmd)
@@ -67,7 +67,7 @@ layout: default
    * [Lecture Video for Lecture 2](https://youtu.be/9HQYdqWEbgU), recorded April 8th, 2020
        + [Zoom](https://washington.zoom.us/rec/share/-MErBInp2UNIHavi12HjZf4lQILDX6a8g3Uc_PRcykYasYzRZYEsm5sR-baO6r4j?startTime=1586384848000)
        + [YouTube](https://youtu.be/K9nLsvinZgo)
-   * Homework 2: Due at 11:59PM on April 14th
+   * Homework 2:
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Example: HTML, RMD
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
@@ -92,7 +92,7 @@ layout: default
    * Lecture Video for Lecture 3, recorded April 15th, 2020
        + [Zoom](https://washington.zoom.us/rec/share/1MlLBK3rrkJIerfT0kX6QbceF4K8aaa813QW_PEJzBlAu7d3v0YK3jm3GUw1fcn6?startTime=1586989683000)
        + [YouTube](https://youtu.be/nFeIg_XCP2o)
-   * Homework 3: Due at 11:59PM on April 21st
+   * Homework 3:
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
        + Homework 3 Example: HTML, RMD
@@ -113,7 +113,7 @@ layout: default
    * Lecture Video for Lecture 4, recorded April 22th, 2020
        + [Zoom](https://washington.zoom.us/rec/play/tJMkdrygrD43HYKVuQSDAfItW9TpKfmsgCZMr_AJzhyxUHgAM1vwYbFHMedxUusfW4IKuYXHq01hnLdi)
        + [YouTube](https://youtu.be/yp8e9i9WXwk)
-   * Homework 4 (two options, complete one): Due at 11:59PM on April 28th
+   * Homework 4 (two options, complete one):
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: R Data Structures, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4/homework_4.html)
@@ -133,7 +133,7 @@ layout: default
    * Lecture Video for Lecture 5, recorded April 29th, 2020
        + [Zoom](https://washington.zoom.us/rec/share/3vxnC-zb939JAdLVuUj6CrYdDKLET6a80yga86YEy06CimIqHHFpDeHOtmEadovj?startTime=1588199220000)
        + [YouTube](https://youtu.be/wm7uLtG0Q9I)
-   * Homework 5, Part 1 due at 11:59 PM on May 5th
+   * Homework 5, Part 1:
        + [Homework 5: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/homework_5.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
            * Homework 5, Part 1: Key: [HTML](https://clanfear.github.io/CSSS508/Keys/HW5_Keys/homework_5_p1_key.html), [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Keys/HW5_Keys/homework_5_p1_key.Rmd)
@@ -168,7 +168,7 @@ layout: default
    * Lecture Video for Lecture 6, recorded May 6th, 2020
        + [Zoom](https://washington.zoom.us/rec/share/z5QvDerrzn1Ocq-UwmHBUZAMR5jVeaa80HIc8qYKxB4NI2eEX1HJBLmvj1qydP3Y)
        + [YouTube](https://youtu.be/qF5RaS8CR0Y)
-   * Homework 5, Part 2 due at 11:59 PM on May 12th
+   * Homework 5, Part 2:
        + [Homework 5, Part 2: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Keys/HW5_Keys/homework_5_p1_key.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5, Part 2: HTML Document](https://clanfear.github.io/CSSS508/Keys/HW5_Keys/homework_5_p1_key.html)
        + Homework 5, Part 2 Key: [HTML](https://clanfear.github.io/CSSS508/Keys/HW5_Keys/homework_5_p2_key.html), [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Keys/HW5_Keys/homework_5_p2_key.Rmd)
@@ -181,7 +181,7 @@ layout: default
    * Lecture Video for Lecture 7, recorded May 19th
        + [Zoom](https://washington.zoom.us/rec/share/xNJKBOmzyk1IHdLI83OPXL8kII3daaa8gShNrPMOz4hQ8CLIRC6cgivERYr5FNE)
        + [YouTube](https://youtu.be/SBkY-Bxxt04)
-   * Homework 6, Part 1 due at 11:59 PM on TBD
+   * Homework 6, Part 1:
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
        + Homework 6, Part 1 Key: [HTML](https://clanfear.github.io/CSSS508/Keys/HW6_Keys/homework_6_p1_key.html), [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Keys/HW6_Keys/homework_6_p1_key.Rmd)
@@ -199,7 +199,7 @@ layout: default
    * Lecture Video for Lecture 8, recorded May 20th, 2020
        + [Zoom](https://washington.zoom.us/rec/share/6tQoKpXi2HlOQ4nH1nvSfYsYJpjUT6a81HIdqKEOxBqpj9hNq_g-GKKBkAGWUvux)
        + [YouTube](https://youtu.be/q6VJlTYioek)
-   * Homework 6, Part 2 due at 11:59 PM on May 26th
+   * Homework 6, Part 2:
        + Homework 6, Part 2: [RMD](https://clanfear.github.io/CSSS508/Homework/HW6/homework_6_p1_key.Rmd)
        + Homework 6, Part 2 Key: HTML, RMD
    * Data In-Class:
@@ -218,7 +218,7 @@ layout: default
    * Lecture Video for Lecture 9, recorded May 27th, 2020
        + [Zoom](https://washington.zoom.us/rec/share/2dEpCL2p2kxJXdbL2BzycI8HL5nXaaa81yMe_vdbzU0B_00t1XOcYbUvWRw_Gf01)
        + [YouTube](https://youtu.be/QWOClS4J9rI)
-   * Optional Homework 7: Due at 11:59 PM on June 2nd
+   * Optional Homework 7:
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
        + [Seattle restaurant inspection data since 2012](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata) (CSV, about 16 MB) from King County

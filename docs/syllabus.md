@@ -12,7 +12,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu)
 
 ## Class Locations
 
-*Note for Spring 2020 there will be no in-person meetings or office hours.*
+*Note for the time being there will be no in-person meetings or office hours.*
 
 **Lecture**
 
@@ -23,6 +23,7 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu)
 [Zoom (848-704-242)](https://washington.zoom.us/j/848704242): Mondays 3:30-5:20
 
 ## Overview
+
 This course is intended to give students a foundational understanding of programming
 in the statistical language R. This knowledge is intended to be broadly useful wherever
 you encounter data in your education and career. General topics we will focus on include:
@@ -40,6 +41,7 @@ applicable to other programming languages and research in general, such as logic
 algorithmic thinking.
 
 ### Prerequisites
+
 No specific courses are required and I anticipate this will be the first course in 
 which most students encounter programming. Programming is difficult and can
 be learned effectively only through time, effort, and exposure. Trial and error is a
@@ -56,6 +58,7 @@ code, and assignments. It will be updated continually throughout the quarter, an
 available in full after the term has ended as a reference.
 
 ### Labs
+
 Lab time is scheduled on [Zoom (848-704-242)](https://washington.zoom.us/j/848704242)
 on Mondays from 3:30 to 5:20. Attendance is optional for labs and this time should be considered a form of extended
 office hours and collaborative work time. You are highly encouraged to attend and ask questions
@@ -92,6 +95,7 @@ at least 60% of the available points. There will be approximately 7 graded homew
 one nearly every week. There are 4 points possible for each week that features a homework.
 
 ### [Homework](https://clanfear.github.io/CSSS508/docs/homework.html): 75% (3 points)
+
 These must be turned in as knitted markdown documents which we will learn to create and for which
 templates are provided. They will be graded on a 0 to 3 point scale based
 on a simple effort-focused rubric found on the course website. These are designed
@@ -101,6 +105,7 @@ your code yourself and do not copy work wholesale. You can learn a lot from repl
 others' code but you will learn nothing if you copy it without knowing how it works.
 
 ### [Peer Review](https://clanfear.github.io/CSSS508/docs/peer_review.html): 25% (1 point)
+
 Each week an assignment is due, students will be randomly assigned to grade another
 student's assignment following the 0 to 3 rubric. They will be expected to provide
 constructive feedback and commentary if something new was learned; reading others' 
@@ -110,6 +115,7 @@ Each peer review is worth 1 point and will be evaluated by the instructor on a b
 "good" / "not good" scale. 
 
 ## Course Texts
+
 There are no texts you are required to purchase for this course. The main recommended
 texts are available online:
 
@@ -149,10 +155,11 @@ community. Nearly any question you have about programming in R has probably alre
 been asked and answered here, and if not, this is the place to ask.
 
 ## Software
+
 This is a course in R programming, so you will be expected to use R. You are welcome
 to use lab computers, however R and RStudio are free software, so you are strongly
 urged to use your own computer so that you will be more comfortable and have easy
-access. In terms of R packages, this course will ephasize the [`tidyverse`](https://tidyverse.org) family of 
+access. In terms of R packages, this course will emphasize the [`tidyverse`](https://tidyverse.org) family of 
 packages for manipulating and displaying data. You can acquire R from the
 [Comprehensive R Archive Network (CRAN)](https://cran.rstudio.com/) and RStudio from
 the [RStudio home page](https://www.rstudio.com/products/rstudio/download/) (you want

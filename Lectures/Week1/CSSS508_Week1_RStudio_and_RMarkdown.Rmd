@@ -2,7 +2,7 @@
 title: "CSSS508, Week 1"
 subtitle: "RStudio and RMarkdown"
 author: "Chuck Lanfear"
-date: "Apr 1, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Sep 30, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -1067,6 +1067,7 @@ pander(head(swiss, 5), style = "rmarkdown", split.tables = 120)
 ]
 
 .footnote[`split.tables = 120` tells `pander` to break a table into multiple tables if it will be over 120 characters wide. Adjust this to get widths *just right*.]
+
 ---
 class: inverse
 

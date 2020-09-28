@@ -4,6 +4,7 @@
     <title>CSSS508, Week 1</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 1
 ## RStudio and RMarkdown
 ### Chuck Lanfear
-### Apr 1, 2020<br>Updated: Apr 1, 2020
+### Sep 30, 2020<br>Updated: Sep 28, 2020
 
 ---
 
@@ -937,7 +938,7 @@ Fancier option: Use this instead to take today's date and make it read nicely:&l
 
     date: "`r format(Sys.Date(), format='%B %d, %Y')`"
 
-.footnote[[1] `format(Sys.Date(), format='%B %d, %Y')` says "format system date as month name (`%B`), day-of-month (`%d`), and four-digit year (`%Y`): April 01, 2020. See `?strptime` for these format codes.]
+.footnote[[1] `format(Sys.Date(), format='%B %d, %Y')` says "format system date as month name (`%B`), day-of-month (`%d`), and four-digit year (`%Y`): September 28, 2020. See `?strptime` for these format codes.]
 ---
 class: inverse
 
@@ -1197,6 +1198,7 @@ pander(head(swiss, 5), style = "rmarkdown", split.tables = 120)
 ]
 
 .footnote[`split.tables = 120` tells `pander` to break a table into multiple tables if it will be over 120 characters wide. Adjust this to get widths *just right*.]
+
 ---
 class: inverse
 
@@ -1274,30 +1276,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {
