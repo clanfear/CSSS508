@@ -44,7 +44,7 @@ knitr::opts_chunk$set(comment = "##")
 
 --
 
-* 6th Year Sociology PhD student
+* Sociology PhD student
 
 --
 
