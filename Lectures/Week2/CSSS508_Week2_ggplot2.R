@@ -356,9 +356,9 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
     theme_gray(base_size = 20) #<<
 
 lifeExp_by_year +
-  theme(legend.position = c(0.8, 0.25)) +
+  theme(legend.position = c(0.8, 0.2)) +
   scale_color_manual(
-    name = "Which\ncontinent\nare we\nlooking at?", # \n adds a line break #<<
+    name = "Which continent are\nwe looking at?", # \n adds a line break #<<
     values = c("Africa" = "seagreen", "Americas" = "turquoise1", 
                "Asia" = "royalblue", "Europe" = "violetred1", "Oceania" = "yellow"))
 
