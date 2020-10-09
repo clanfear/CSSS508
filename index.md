@@ -42,6 +42,7 @@ layout: default
        + [Homework 1 Instructions](https://clanfear.github.io/CSSS508/Homework/HW1/homework_1.html)
        + Homework 1 Example #1: [HTML](Keys/HW1_Keys/homework_1_key_1.html) , [RMD](Keys/HW1_Keys/homework_1_key_1.Rmd)
        + Homework 1 Example #2: [HTML](Keys/HW1_Keys/homework_1_key_2.html), [RMD](Keys/HW1_Keys/homework_1_key_2.Rmd)
+       + Lab 1 Video: [Zoom](https://washington.zoom.us/rec/share/JttdIjmfBWO6yXgSHlVeXXDpxDZDYXL8VXnwvr9auRGlkD43oYFzfCFUJMWY5hOC.fMey0jcfiBuVrx9L?startTime=1601936998000), [YouTube](https://youtu.be/ybAedC9T7ys)
    * [Get R](https://cran.r-project.org/)
    * [Get RStudio](https://www.rstudio.com/)
    * [R Markdown Installation](https://bookdown.org/yihui/rmarkdown/installation.html#installation) - Also has LaTeX installation instructions
