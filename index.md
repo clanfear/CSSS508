@@ -72,7 +72,7 @@ layout: default
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Example: HTML, RMD
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
-   * [`ggplot2` documentation](http://docs.ggplot2.org/current/)
+   * [`ggplot2` Website](https://ggplot2.tidyverse.org/)
    * [`ggplot2` Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
    * [The ggplot Flipbook](https://evamaerey.github.io/ggplot_flipbook/ggplot_flipbook_xaringan.html) by [Gina Reynolds](https://github.com/EvaMaeRey)
    * [Cookbook for R graph reference](http://www.cookbook-r.com/Graphs/)
