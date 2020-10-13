@@ -68,10 +68,9 @@ ifelse(example > 0, "Positive", "Not Positive")
 
 yugoslavia %>% mutate(short_country = 
                  ifelse(country == "Bosnia and Herzegovina", 
-                        "B and H", as.character(country))) %>%
-    select(short_country, year, pop) %>%
-    arrange(year, short_country) %>%
-    head(3)
+                        "B and H", as.character(country))) %>% #<<
+    select(country, short_country, year, pop) %>%
+    arrange(year, short_country) %>% head(3)
 
 yugoslavia %>% 
   mutate(country = recode(country, 
@@ -99,12 +98,26 @@ yugoslavia %>%
               range_life_exp = max(lifeExp) - min(lifeExp))
 
 yugoslavia %>%
-    filter(year == 1982) %>%
-    summarize_at(vars(lifeExp, pop), list(mean = mean, sd = sd))
+  filter(year == 1982) %>%
+  summarize(across(c(lifeExp, pop), list(avg = ~mean(.), sd = ~sd(.))))
 
-## dataframe %>% summarize_all(list(~mean(.), ~sd(.)))
+## yugoslavia %>%
+##   filter(year == 1982) %>%
+##   summarize(
+##     across(
+##       c(lifeExp, pop),
+##       list(
+##         avg = ~mean(.),
+##         sd = ~sd(.)
+##       )
+##     )
+##   )
 
-## dataframe %>% summarize_if(is.numeric, list(~mean(.), ~sd(.)))
+## dataframe %>%
+##   summarize(across(everything(), list(mean = ~mean(.), sd = ~sd(.))))
+
+## dataframe %>%
+##   summarize(across(where(is.numeric), list(mean = ~mean(.), sd = ~sd(.))))
 
 yugoslavia %>%
   group_by(year) %>% #<<

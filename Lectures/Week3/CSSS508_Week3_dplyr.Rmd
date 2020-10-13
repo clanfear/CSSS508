@@ -2,7 +2,7 @@
 title: "CSSS508, Week 3"
 subtitle: "Manipulating and Summarizing Data"
 author: "Chuck Lanfear"
-date: "Apr 15, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Oct 14, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -58,7 +58,6 @@ gapminder %>% filter(country == "Canada") %>% head(2)
 Pipes save us typing, make code readable, and allow chaining like above, so we use them *all the time* when manipulating data frames.
 
 ---
-
 # Using Pipes
 
 
@@ -245,7 +244,6 @@ yugoslavia %>%
 * You can include spaces or use reserved words if you put backticks around the name. Spaces can be worth including when preparing data for `ggplot2` or `pander` since you don't have to rename axes or table headings.
 
 ---
-
 ## Column Name with Space Example
 
 ```{r}
@@ -304,19 +302,21 @@ ifelse(example > 0, "Positive", "Not Positive")
 ---
 # `ifelse()` Example
 
-
+.smallish[
 ```{r}
 yugoslavia %>% mutate(short_country = 
                  ifelse(country == "Bosnia and Herzegovina", 
-                        "B and H", as.character(country))) %>%
-    select(short_country, year, pop) %>%
-    arrange(year, short_country) %>%
-    head(3)
+                        "B and H", as.character(country))) %>% #<<
+    select(country, short_country, year, pop) %>%
+    arrange(year, short_country) %>% head(3)
 ```
+]
 
-Read this as "For each row, if country equals 'Bosnia and Herzegovina, make `short_country` equal to 'B and H', otherwise make it equal to that row's value of `country`."
+Read this as "For each row, if `country` equals 'Bosnia and Herzegovina, make `short_country` equal to 'B and H', otherwise make it equal to that row's value of `country`."
 
 This is a simple way to change some values but not others!
+
+Note: `country` is a factor--use `as.character()` to convert to character.
 
 ---
 # `recode()`
@@ -416,40 +416,68 @@ yugoslavia %>%
 These new variables are calculated using *all of the rows* in `yugoslavia`
 
 ---
-# Avoiding Repetition: 
+# Avoiding Repetition
 
-### `summarize_at()`
+### `summarize(across())`
 
 
-Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_at()`, put the variables to compute over first in `vars()` (like `select()` syntax) and put the functions to use in a `list()` after.
+Maybe you need to calculate the mean and standard deviation of a bunch of columns. With **`across()`**, put the variables to compute over first (using `c()` or `select()` syntax) and put the functions to use in a `list()` after.
 
+.smallish[
 ```{r}
 yugoslavia %>%
-    filter(year == 1982) %>%
-    summarize_at(vars(lifeExp, pop), list(mean = mean, sd = sd))
+  filter(year == 1982) %>%
+  summarize(across(c(lifeExp, pop), list(avg = ~mean(.), sd = ~sd(.))))
+```
+]
+
+Note it automatically names the summarized variables based on the names given in `list()`.
+
+---
+# Whoa, too many `(` and `)`
+
+It can get hard to read code with lots of **nested** functions--functions inside others.
+
+Break things up when it gets confusing!
+
+```{r, eval = FALSE}
+yugoslavia %>%
+  filter(year == 1982) %>%
+  summarize(
+    across( 
+      c(lifeExp, pop), 
+      list(
+        avg = ~mean(.), 
+        sd = ~sd(.)
+      )
+    )
+  )
 ```
 
-You can also use `purrr` syntax (e.g. `~ mean(.)`) and it will automatically name the outputs.
+RStudio also helps you by tracking parentheses: Put your cursor after a `)` and see!
 
 ---
 # Avoiding Repetition
 
-### Other functions:
+There are additional ways to use `across()` for repetitive operations:
 
+* `across(everything())` will summarize / mutate *all* variables sent to it in the same way. For instance, getting the mean and standard deviation of an entire dataframe:
 
-There are additional `dplyr` functions similar to `summarize_at()`:
-
-* `summarize_all()` and `mutate_all()` summarize / mutate *all* variables sent to them in the same way. For instance, getting the mean and standard deviation of an entire dataframe (using `purrr` style functions):
-
+.smallish[
 ```{r, eval=FALSE}
-dataframe %>% summarize_all(list(~mean(.), ~sd(.)))
+dataframe %>% 
+  summarize(across(everything(), list(mean = ~mean(.), sd = ~sd(.))))
 ```
+]
 
-* `summarize_if()` and `mutate_if()` summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:
+* `across(where())` will summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:
 
+.smallish[
 ```{r, eval=FALSE}
-dataframe %>% summarize_if(is.numeric, list(~mean(.), ~sd(.)))
+dataframe %>% 
+  summarize(across(where(is.numeric), list(mean = ~mean(.), sd = ~sd(.))))
 ```
+]
 
 You can use all of these to avoid typing out the same code repeatedly!
 
@@ -705,22 +733,6 @@ Some possible questions to investigate:
     + Are especially late or early arrivals particular to some regions or airlines?
 
 **Warning:** `flights` has `r nrow(flights)` rows, so if you do a sloppy join, you can end up with **many** matches per observation and have the data *explode* in size.
-
----
-# `dplyr` 1.0.0
-
-`dplyr` 1.0.0 will be released very soon.
-
-Nothing you've learned will suddenly disappear, but new approaches will be introduced--and eventually become the primary way to do things.
-
-These links provide examples of important changes and features.
-
-* [`dplyr` 1.0.0 overview](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-is-coming-soon/)
-* [New `summarize()` features](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-summarise/)
-* [`select()`, `rename()`, and `relocate()`](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-select-rename-relocate/)
-* [Working `across()` multiple columns](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/)
-   + Supersedes `_at()`, `_if()`, and `_all()` versions of `mutate()` and `summarize()`
-* [`rowwise()` operations](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-rowwise/)
 
 ---
 class: inverse

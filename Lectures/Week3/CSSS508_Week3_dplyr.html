@@ -4,6 +4,7 @@
     <title>CSSS508, Week 3</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 3
 ## Manipulating and Summarizing Data
 ### Chuck Lanfear
-### Apr 15, 2020<br>Updated: Apr 15, 2020
+### Oct 14, 2020<br>Updated: Oct 13, 2020
 
 ---
 
@@ -65,7 +66,6 @@ gapminder %&gt;% filter(country == "Canada") %&gt;% head(2)
 Pipes save us typing, make code readable, and allow chaining like above, so we use them *all the time* when manipulating data frames.
 
 ---
-
 # Using Pipes
 
 
@@ -389,7 +389,6 @@ yugoslavia %&gt;%
 * You can include spaces or use reserved words if you put backticks around the name. Spaces can be worth including when preparing data for `ggplot2` or `pander` since you don't have to rename axes or table headings.
 
 ---
-
 ## Column Name with Space Example
 
 
@@ -479,29 +478,31 @@ ifelse(example &gt; 0, "Positive", "Not Positive")
 ---
 # `ifelse()` Example
 
-
+.smallish[
 
 ```r
 yugoslavia %&gt;% mutate(short_country = 
                  ifelse(country == "Bosnia and Herzegovina", 
-                        "B and H", as.character(country))) %&gt;%
-    select(short_country, year, pop) %&gt;%
-    arrange(year, short_country) %&gt;%
-    head(3)
+*                       "B and H", as.character(country))) %&gt;%
+    select(country, short_country, year, pop) %&gt;%
+    arrange(year, short_country) %&gt;% head(3)
 ```
 
 ```
-## # A tibble: 3 x 3
-##   short_country  year     pop
-##   &lt;chr&gt;         &lt;int&gt;   &lt;int&gt;
-## 1 B and H        1952 2791000
-## 2 Croatia        1952 3882229
-## 3 Montenegro     1952  413834
+## # A tibble: 3 x 4
+##   country                short_country  year     pop
+##   &lt;fct&gt;                  &lt;chr&gt;         &lt;int&gt;   &lt;int&gt;
+## 1 Bosnia and Herzegovina B and H        1952 2791000
+## 2 Croatia                Croatia        1952 3882229
+## 3 Montenegro             Montenegro     1952  413834
 ```
+]
 
-Read this as "For each row, if country equals 'Bosnia and Herzegovina, make `short_country` equal to 'B and H', otherwise make it equal to that row's value of `country`."
+Read this as "For each row, if `country` equals 'Bosnia and Herzegovina, make `short_country` equal to 'B and H', otherwise make it equal to that row's value of `country`."
 
 This is a simple way to change some values but not others!
+
+Note: `country` is a factor--use `as.character()` to convert to character.
 
 ---
 # `recode()`
@@ -648,50 +649,79 @@ yugoslavia %&gt;%
 These new variables are calculated using *all of the rows* in `yugoslavia`
 
 ---
-# Avoiding Repetition: 
+# Avoiding Repetition
 
-### `summarize_at()`
+### `summarize(across())`
 
 
-Maybe you need to calculate the mean and standard deviation of a bunch of columns. With `summarize_at()`, put the variables to compute over first in `vars()` (like `select()` syntax) and put the functions to use in a `list()` after.
+Maybe you need to calculate the mean and standard deviation of a bunch of columns. With **`across()`**, put the variables to compute over first (using `c()` or `select()` syntax) and put the functions to use in a `list()` after.
 
+.smallish[
 
 ```r
 yugoslavia %&gt;%
-    filter(year == 1982) %&gt;%
-    summarize_at(vars(lifeExp, pop), list(mean = mean, sd = sd))
+  filter(year == 1982) %&gt;%
+  summarize(across(c(lifeExp, pop), list(avg = ~mean(.), sd = ~sd(.))))
 ```
 
 ```
 ## # A tibble: 1 x 4
-##   lifeExp_mean pop_mean lifeExp_sd   pop_sd
-##          &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-## 1         71.3  4008537       1.60 3237282.
+##   lifeExp_avg lifeExp_sd pop_avg   pop_sd
+##         &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+## 1        71.3       1.60 4008537 3237282.
+```
+]
+
+Note it automatically names the summarized variables based on the names given in `list()`.
+
+---
+# Whoa, too many `(` and `)`
+
+It can get hard to read code with lots of **nested** functions--functions inside others.
+
+Break things up when it gets confusing!
+
+
+```r
+yugoslavia %&gt;%
+  filter(year == 1982) %&gt;%
+  summarize(
+    across( 
+      c(lifeExp, pop), 
+      list(
+        avg = ~mean(.), 
+        sd = ~sd(.)
+      )
+    )
+  )
 ```
 
-You can also use `purrr` syntax (e.g. `~ mean(.)`) and it will automatically name the outputs.
+RStudio also helps you by tracking parentheses: Put your cursor after a `)` and see!
 
 ---
 # Avoiding Repetition
 
-### Other functions:
+There are additional ways to use `across()` for repetitive operations:
 
+* `across(everything())` will summarize / mutate *all* variables sent to it in the same way. For instance, getting the mean and standard deviation of an entire dataframe:
 
-There are additional `dplyr` functions similar to `summarize_at()`:
-
-* `summarize_all()` and `mutate_all()` summarize / mutate *all* variables sent to them in the same way. For instance, getting the mean and standard deviation of an entire dataframe (using `purrr` style functions):
-
+.smallish[
 
 ```r
-dataframe %&gt;% summarize_all(list(~mean(.), ~sd(.)))
+dataframe %&gt;% 
+  summarize(across(everything(), list(mean = ~mean(.), sd = ~sd(.))))
 ```
+]
 
-* `summarize_if()` and `mutate_if()` summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:
+* `across(where())` will summarize / mutate all variables that satisfy some logical condition. For instance, summarizing every numeric column in a dataframe at once:
 
+.smallish[
 
 ```r
-dataframe %&gt;% summarize_if(is.numeric, list(~mean(.), ~sd(.)))
+dataframe %&gt;% 
+  summarize(across(where(is.numeric), list(mean = ~mean(.), sd = ~sd(.))))
 ```
+]
 
 You can use all of these to avoid typing out the same code repeatedly!
 
@@ -719,6 +749,10 @@ yugoslavia %&gt;%
               total_pop         = sum(pop),
               total_gdp_per_cap = sum(pop*gdpPercap)/total_pop) %&gt;%
     head(5)
+```
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
 ```
 
 ```
@@ -934,7 +968,7 @@ Because the data are the first argument for `ggplot()`, we can pipe them straigh
 ---
 ## Wind Gusts and Delays
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-46-1.png)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-54-1.png)&lt;!-- --&gt;
 
 Check out those 1200 mph winds!&lt;sup&gt;1&lt;/sup&gt;
 
@@ -964,7 +998,7 @@ I removed `geom_point()` to focus on the mean trend produced by `geom_smooth()`.
 ---
 ## Wind Gusts and Delays: Mean Trend
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-48-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-56-1.svg)&lt;!-- --&gt;
 
 ---
 ## Tinkering Suggestions
@@ -979,22 +1013,6 @@ Some possible questions to investigate:
     + Are especially late or early arrivals particular to some regions or airlines?
 
 **Warning:** `flights` has 336776 rows, so if you do a sloppy join, you can end up with **many** matches per observation and have the data *explode* in size.
-
----
-# `dplyr` 1.0.0
-
-`dplyr` 1.0.0 will be released very soon.
-
-Nothing you've learned will suddenly disappear, but new approaches will be introduced--and eventually become the primary way to do things.
-
-These links provide examples of important changes and features.
-
-* [`dplyr` 1.0.0 overview](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-is-coming-soon/)
-* [New `summarize()` features](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-summarise/)
-* [`select()`, `rename()`, and `relocate()`](https://www.tidyverse.org/blog/2020/03/dplyr-1-0-0-select-rename-relocate/)
-* [Working `across()` multiple columns](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/)
-   + Supersedes `_at()`, `_if()`, and `_all()` versions of `mutate()` and `summarize()`
-* [`rowwise()` operations](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-rowwise/)
 
 ---
 class: inverse
