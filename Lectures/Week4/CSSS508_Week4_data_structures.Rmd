@@ -2,7 +2,7 @@
 title: "CSSS508, Week 4"
 subtitle: "R Data Structures"
 author: "Chuck Lanfear"
-date: "Apr 22, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Oct 21, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -565,7 +565,13 @@ To invert an invertible square matrix, use `solve()`.
 f_matrix %*% g_matrix
 ```
 
+--
+
 Note the [floating point imprecision](https://floating-point-gui.de/basic/): The off-diagonals are *very close to zero* rather than actually zero!
+
+--
+
+Be careful testing for equality of numbers after calculations--imprecision produces strange results!
 
 ---
 # Diagonal Matrices

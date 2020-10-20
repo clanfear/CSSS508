@@ -4,6 +4,7 @@
     <title>CSSS508, Week 4</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chuck Lanfear" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 4
 ## R Data Structures
 ### Chuck Lanfear
-### Apr 22, 2020<br>Updated: Apr 22, 2020
+### Oct 21, 2020<br>Updated: Oct 19, 2020
 
 ---
 
@@ -1000,7 +1001,13 @@ f_matrix %*% g_matrix
 ## [2,]    0  1.000000e+00
 ```
 
+--
+
 Note the [floating point imprecision](https://floating-point-gui.de/basic/): The off-diagonals are *very close to zero* rather than actually zero!
+
+--
+
+Be careful testing for equality of numbers after calculations--imprecision produces strange results!
 
 ---
 # Diagonal Matrices
