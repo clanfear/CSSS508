@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 3
 ## Manipulating and Summarizing Data
 ### Chuck Lanfear
-### Oct 14, 2020<br>Updated: Oct 13, 2020
+### Oct 14, 2020<br>Updated: Oct 19, 2020
 
 ---
 
@@ -968,7 +968,7 @@ Because the data are the first argument for `ggplot()`, we can pipe them straigh
 ---
 ## Wind Gusts and Delays
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-54-1.png)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
 
 Check out those 1200 mph winds!&lt;sup&gt;1&lt;/sup&gt;
 
@@ -998,7 +998,7 @@ I removed `geom_point()` to focus on the mean trend produced by `geom_smooth()`.
 ---
 ## Wind Gusts and Delays: Mean Trend
 
-![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-56-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week3_dplyr_files/figure-html/unnamed-chunk-39-1.svg)&lt;!-- --&gt;
 
 ---
 ## Tinkering Suggestions
@@ -1008,9 +1008,8 @@ Some possible questions to investigate:
 * What are the names of the most common destination airports?
 * Which airlines fly from NYC to your home city?
 * Is there a relationship between departure delays and precipitation?
-* Use the time zone data in `airports` to convert flight arrival times to NYC local time.
-    + What is the distribution of arrival times for flights leaving NYC over a 24 hour period?
-    + Are especially late or early arrivals particular to some regions or airlines?
+*  What is the distribution of departure times for flights leaving NYC over a 24 hour period?
+    + Are especially late or early arrivals departures to some regions or for some airlines?
 
 **Warning:** `flights` has 336776 rows, so if you do a sloppy join, you can end up with **many** matches per observation and have the data *explode* in size.
 

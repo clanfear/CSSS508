@@ -70,7 +70,7 @@ layout: default
        + [YouTube](https://youtu.be/ko7HdCW4o5s)
    * Homework 2:
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
-       + Homework 2 Example: HTML, RMD
+       + Homework 2 Example: [HTML](Keys/HW2_Keys/homework_2_key_1.html), [RMD](Keys/HW2_Keys/homework_2_key_1.Rmd)
        + Lab 2 Video: [Zoom](https://washington.zoom.us/rec/share/qPr1CyA92vJ-aT4pM4zb9aQwMuQNhLZDmnzCxD6-As3y5g7mccTien3Mq2ntVIbD.Ow5uZJzTsLR827LS), [YouTube](https://youtu.be/-8WFMRLaYT0)
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
    * [`ggplot2` Website](https://ggplot2.tidyverse.org/)
@@ -98,6 +98,7 @@ layout: default
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
        + Homework 3 Example: HTML, RMD
+       + Lab 3 Video: [Zoom](https://washington.zoom.us/rec/share/7x71374KufkE_OmVpVC9Q6FebBbaBjcwoIqWEEGpn2b938ZLZE33f77u-f38-wq_.fbUewv5mTO_cxILJ?startTime=1603146423000), [YouTube](https://youtu.be/A6hMfcwUdIU)
    * Reading: **[Data Transformation chapter in R for Data Science](http://r4ds.had.co.nz/transform.html)**
    * [A cautionary tale about Excel](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history)
    * `dplyr` stuff:

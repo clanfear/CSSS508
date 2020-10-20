@@ -728,9 +728,8 @@ Some possible questions to investigate:
 * What are the names of the most common destination airports?
 * Which airlines fly from NYC to your home city?
 * Is there a relationship between departure delays and precipitation?
-* Use the time zone data in `airports` to convert flight arrival times to NYC local time.
-    + What is the distribution of arrival times for flights leaving NYC over a 24 hour period?
-    + Are especially late or early arrivals particular to some regions or airlines?
+*  What is the distribution of departure times for flights leaving NYC over a 24 hour period?
+    + Are especially late or early arrivals departures to some regions or for some airlines?
 
 **Warning:** `flights` has `r nrow(flights)` rows, so if you do a sloppy join, you can end up with **many** matches per observation and have the data *explode* in size.
 
