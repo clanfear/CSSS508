@@ -149,7 +149,7 @@ layout: default
        + [`readr` documentation](https://cran.r-project.org/web/packages/readr/readr.pdf)
        + [Column types in readr](https://cran.r-project.org/web/packages/readr/vignettes/column-types.html)
        + [Using `dput()` when asking for help](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example)
-       + [`readxl`](https://github.com/hadley/readxl) and [`openxlsx`](https://cran.r-project.org/web/packages/openxlsx/vignettes/Introduction.pdf) packages for Excel
+       + [`readxl`](https://readxl.tidyverse.org/) and [`writexl`](https://docs.ropensci.org/writexl/) packages for Excel
    * General data access and cleaning:
        + [New York Times article on "data janitor" work](http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html)
        + [Quartz guide to bad data: a must read!](http://qz.com/572338/the-quartz-guide-to-bad-data/)
