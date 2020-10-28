@@ -125,6 +125,7 @@ layout: default
            * [Homework 4: Linear Regression, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4_regression/HW4_regression.Rmd) (you will download this, fill in and submit on Canvas)
            * [Homework 4: Linear Regression, HTML Document](https://clanfear.github.io/CSSS508/Homework/HW4_regression/HW4_regression.html)
            * Homework 4: Linear Regression, Key: [HTML](https://clanfear.github.io/CSSS508/Keys/HW4_Keys/homework_4_regression_key.html), [RMD](https://clanfear.github.io/CSSS508/Keys/HW4_Keys/homework_4_regression_key.Rmd)
+       + Lab 4 Video: [Zoom](https://washington.zoom.us/rec/share/a-Ecjzv9qjF9TMocXRyaq4eMrZrHLdFdknhX1DtROq5gkfcOicU_vwcHns3sS9mZ.0NV8Z8KSfmCTpzh7?startTime=1603751226000), [YouTube](https://youtu.be/LwPXDVpZFKk)
    * [Setting up swirl for practice](http://swirlstats.com/students.html)
    * Reading: **[Data Structures chapter in Advanced R](http://adv-r.had.co.nz/Data-structures.html)**
 

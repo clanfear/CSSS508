@@ -22,6 +22,8 @@ billboard_2000_raw <-
 
 ## read_csv(file, guess_max=5000) # Default is 1000
 
+## vroom::vroom(file)
+
 ## write_csv(billboard_2000_raw, path = "billboard_data.csv")
 
 dput(head(cars, 8))
@@ -37,7 +39,8 @@ pander(head(billboard_2000_raw[,1:10], 12), split.tables=120, style="rmarkdown")
 library(tidyr); library(dplyr)
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", values_to = "rank") #<<
+               names_to ="week", 
+               values_to = "rank") #<<
 dim(billboard_2000)
 
 head(billboard_2000)
@@ -46,9 +49,14 @@ summary(billboard_2000$rank)
 
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", values_to = "rank", 
+               names_to ="week", 
+               values_to = "rank", 
                values_drop_na = TRUE) #<<
 summary(billboard_2000$rank)
+
+dim(billboard_2000)
+
+summary(billboard_2000$week)
 
 billboard_2000 <- billboard_2000 %>%
     mutate(week = parse_number(week)) #<<
@@ -56,11 +64,12 @@ summary(billboard_2000$week)
 
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", values_to = "rank",
+               names_to ="week", 
+               values_to = "rank",
                values_drop_na = TRUE,
                names_prefix = "wk", #<<
-               names_ptypes = list("week" =numeric(0))) #<<
-head(billboard_2000)
+               names_transform = list(week = as.integer))  #<<
+head(billboard_2000, 3)
 
 billboard_2000 <- billboard_2000 %>%
     separate(time, into = c("minutes", "seconds"),
@@ -69,33 +78,29 @@ billboard_2000 <- billboard_2000 %>%
     select(-minutes, -seconds)
 summary(billboard_2000$length)
 
-(too_long_data <- data.frame(Group = c(rep("A", 3), rep("B", 3)),
-                             Statistic = rep(c("Mean", "Median", "SD"), 2),
-                             Value = c(1.28, 1.0, 0.72, 2.81, 2, 1.33)))
+(too_long_data <- 
+   data.frame(Group     = c(rep("A", 3), rep("B", 3)),
+              Statistic = rep(c("Mean", "Median", "SD"), 2),
+              Value     = c(1.28, 1.0, 0.72, 2.81, 2, 1.33)))
 
 (just_right_data <- too_long_data %>%
     pivot_wider(names_from = Statistic, values_from = Value))
 
-# find best rank for each song
-best_rank <- billboard_2000 %>%
-    group_by(artist, track) %>%
-    summarize(min_rank = min(rank), #<<
-              weeks_at_1 = sum(rank == 1)) %>%
-    mutate(`Peak rank` = ifelse(min_rank == 1,
-                                "Hit #1",
-                                "Didn't #1"))
-
-# merge onto original data
 billboard_2000 <- billboard_2000 %>%
-    left_join(best_rank, by = c("artist", "track"))
+    group_by(artist, track) %>%
+    mutate(`Weeks at #1` = sum(rank == 1),
+           `Peak Rank`   = ifelse(any(rank == 1), #<<
+                                  "Hit #1",
+                                  "Didn't #1")) %>%
+    ungroup() #<<
 
 library(ggplot2)
 billboard_trajectories <- 
   ggplot(data = billboard_2000,
          aes(x = week, y = rank, group = track,
-             color = `Peak rank`)
+             color = `Peak Rank`)
          ) +
-  geom_line(aes(size = `Peak rank`), alpha = 0.4) +
+  geom_line(aes(size = `Peak Rank`), alpha = 0.4) +
     # rescale time: early weeks more important
   scale_x_log10(breaks = seq(0, 70, 10)) + 
   scale_y_reverse() + # want rank 1 on top, not bottom
@@ -109,8 +114,8 @@ billboard_trajectories <-
 billboard_trajectories
 
 billboard_2000 %>%
-    distinct(artist, track, weeks_at_1) %>%
-    arrange(desc(weeks_at_1)) %>%
+    distinct(artist, track, `Weeks at #1`) %>%
+    arrange(desc(`Weeks at #1`)) %>%
     head(7)
 
 billboard_2000 <- billboard_2000 %>%
@@ -174,19 +179,12 @@ spd_times$`Initial Type Group` <-
 str(spd_times$`Initial Type Group`)
 head(as.numeric(spd_times$`Initial Type Group`))
 
-spd_vol <- spd_times %>% 
-  group_by(`Initial Type Group`) %>%
-  summarize(n_events = n()) %>% 
-  arrange(desc(n_events)) #<<
-
-# set levels using order from sorted frequency table
-spd_times_2 <- spd_times %>% 
+spd_times <- spd_times %>% 
   mutate(`Initial Type Group` = 
-         factor(`Initial Type Group`,
-                      levels = spd_vol$`Initial Type Group`)) #<<
+         fct_infreq(`Initial Type Group`))
+head(levels(spd_times$`Initial Type Group`),4)
 
-# replot
-time_spd_plot_2 <- ggplot(spd_times_2, aes(x = hour)) +
+time_spd_plot_2 <- ggplot(spd_times, aes(x = hour)) +
   geom_histogram(binwidth = 2) +
   facet_wrap( ~ `Initial Type Group`) +
   theme_minimal() +

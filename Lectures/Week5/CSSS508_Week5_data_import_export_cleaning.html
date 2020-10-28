@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### Apr 29, 2020<br>Updated: Apr 28, 2020
+### Apr 29, 2020<br>Updated: Oct 28, 2020
 
 ---
 
@@ -210,7 +210,8 @@ billboard_2000_raw &lt;- read_csv(file = "https://clanfear.github.io/CSSS508/Lec
 ```
 
 ```
-## Parsed with column specification:
+## 
+## -- Column specification ----------------------------------------------
 ## cols(
 ##   .default = col_double(),
 ##   artist = col_character(),
@@ -229,10 +230,7 @@ billboard_2000_raw &lt;- read_csv(file = "https://clanfear.github.io/CSSS508/Lec
 ##   wk75 = col_logical(),
 ##   wk76 = col_logical()
 ## )
-```
-
-```
-## See spec(...) for full column specifications.
+## [36mi[39m Use `spec()` for the full column specifications.
 ```
 ]
 
@@ -304,20 +302,35 @@ read_csv(file, guess_max=5000) # Default is 1000
 
 Or you could use `read.csv()` in the `foreign` package. This is a base R alternative that is slower and a bit dumber. 
 
-With `read.csv()` you will need to specify if the data have column names (`header=TRUE`) and you'll want to use `stringsAsFactors=FALSE` to prevent character columns from becoming factors.&lt;sup&gt;1&lt;/sup&gt; `read_csv()` does this for us!
+--
 
-.footnote[[1] This is no longer true in R 4.0.0--hallelujah!]
+Another alternative would be using `vroom`, a package for high-speed reading of text data like `.csv` files.
+
+
+```r
+vroom::vroom(file)
+```
+
+One advantage of `vroom`: You can give it a vector of filenames and it will read every file and combine them into one dataframe.
+
+`vroom` has less error checking than `readr`, though, so best to use on files you have examined first.
 
 ---
 # Spreadsheet Files
 
-For Excel files (`.xls` or `.xlsx`), I recommend using an R package such as `readxl`. 
+For Excel files (`.xls` or `.xlsx`), I recommend using `readxl` and `writexl`. 
 
 For Google Docs Spreadsheets, there's the `googlesheets4` package.
+
+--
 
 You won't keep text formatting, color, comments, or merged cells so if these mean something in your data (*bad!*), you'll need to get creative.
 
 If an Excel sheet gives you grief (say, due to merged cells), the simplest thing is open them up, export to CSV, then import in R—and compare carefully to make sure everything worked!
+
+--
+
+If you need to programmatically work with non-tabular Excel sheets--particularly if you need to retain meaningful formatting--look to the powerful but complex `unpivotr` and `tidyxl` packages.
 
 ---
 # Writing Delimited Files
@@ -336,16 +349,23 @@ This saved the data we pulled off the web in a file called `billboard_data.csv` 
 
 Exporting to a `.csv` drops R metadata, such as whether a variable is a character or factor. You can save objects (data frames, lists, etc.) in R formats to preserve this.
 
+--
+
 * `.Rds` format:
+
     + Used for single objects, doesn't save original the object name
     + Save: `write_rds(old_object_name, "path.Rds")`
     + Load: `new_object_name &lt;- read_rds("path.Rds")`
+    
+--
+
 * `.Rdata` or `.Rda` format:
+
     + Used for saving multiple files where the original object names are preserved
     + Save: `save(object1, object2, ... , file = "path.Rdata")`
     + Load: `load("path.Rdata")` *without assignment operator*
 
-I pretty much always just save as `.Rdata`.
+I pretty much always just save as `.Rdata`--but that is personal preference.
 
 ---
 # `dput()`
@@ -398,7 +418,11 @@ with a delimiter or fixed format that R can handle!
 
 ---
 class: inverse
-# Cleaning Data
+# Tidying Data
+
+.image-full[
+![](img/tidyr.svg)
+]
 
 ---
 # Initial Spot Checks
@@ -588,7 +612,8 @@ Let's use `pivot_longer()` to get the week and rank variables out of their curre
 library(tidyr); library(dplyr)
 billboard_2000 &lt;- billboard_2000_raw %&gt;%
   pivot_longer(starts_with("wk"), 
-*              names_to ="week", values_to = "rank")
+               names_to ="week", 
+*              values_to = "rank")
 dim(billboard_2000)
 ```
 
@@ -647,7 +672,8 @@ The argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with m
 ```r
 billboard_2000 &lt;- billboard_2000_raw %&gt;%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", values_to = "rank", 
+               names_to ="week", 
+               values_to = "rank", 
 *              values_drop_na = TRUE)
 summary(billboard_2000$rank)
 ```
@@ -657,8 +683,34 @@ summary(billboard_2000$rank)
 ##    1.00   26.00   51.00   51.05   76.00  100.00
 ```
 
+No more `NA` values!
+
+
+```r
+dim(billboard_2000)
+```
+
+```
+## [1] 5307    7
+```
+And way fewer rows!
+
 ---
 # `parse_number()`
+
+The week column is character, but should be numeric.
+
+
+```r
+summary(billboard_2000$week)
+```
+
+```
+##    Length     Class      Mode 
+##      5307 character character
+```
+
+--
 
 `tidyr` provides a convenience function to grab just the numeric information from a column that mixes text and numbers:
 
@@ -683,24 +735,24 @@ For more sophisticated conversion or pattern checking, you'll need to use string
 ```r
 billboard_2000 &lt;- billboard_2000_raw %&gt;%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", values_to = "rank",
+               names_to ="week", 
+               values_to = "rank",
                values_drop_na = TRUE,
 *              names_prefix = "wk",
-*              names_ptypes = list("week" =numeric(0)))
-head(billboard_2000)
+*              names_transform = list(week = as.integer))
+head(billboard_2000, 3)
 ```
 
 ```
-## # A tibble: 6 x 7
+## # A tibble: 3 x 7
 ##    year artist track                   time  date.entered  week  rank
-##   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;chr&gt; &lt;date&gt;       &lt;dbl&gt; &lt;int&gt;
+##   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;chr&gt; &lt;date&gt;       &lt;int&gt; &lt;int&gt;
 ## 1  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       1    87
 ## 2  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       2    82
 ## 3  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       3    72
-## 4  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       4    77
-## 5  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       5    87
-## 6  2000 2 Pac  Baby Don't Cry (Keep... 4:22  2000-02-26       6    94
 ```
+
+We use `names_prefix` to remove `"wk"` from the values, and `names_transform` to convert into an integer number. 
 
 ---
 # `separate()`
@@ -722,7 +774,7 @@ summary(billboard_2000$length)
 ##   2.600   3.667   3.933   4.031   4.283   7.833
 ```
 
-`sep = :` tells `separate()` to split the column into two where it finds a colon (`:`).
+`sep = ":"` tells `separate()` to split the column into two where it finds a colon (`:`).
 
 Then we add `seconds / 60` to `minutes` to produce a numeric `length` in minutes.
 
@@ -752,12 +804,12 @@ A common cue to use `pivot_wider()` is having measurements of different quantiti
 ---
 # Before `pivot_wider()`
 
-.smallish[
 
 ```r
-(too_long_data &lt;- data.frame(Group = c(rep("A", 3), rep("B", 3)),
-                             Statistic = rep(c("Mean", "Median", "SD"), 2),
-                             Value = c(1.28, 1.0, 0.72, 2.81, 2, 1.33)))
+(too_long_data &lt;- 
+   data.frame(Group     = c(rep("A", 3), rep("B", 3)),
+              Statistic = rep(c("Mean", "Median", "SD"), 2),
+              Value     = c(1.28, 1.0, 0.72, 2.81, 2, 1.33)))
 ```
 
 ```
@@ -769,7 +821,6 @@ A common cue to use `pivot_wider()` is having measurements of different quantiti
 ## 5     B    Median  2.00
 ## 6     B        SD  1.33
 ```
-]
 
 ---
 # After `pivot_wider()`
@@ -783,7 +834,7 @@ A common cue to use `pivot_wider()` is having measurements of different quantiti
 ```
 ## # A tibble: 2 x 4
 ##   Group  Mean Median    SD
-##   &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
 ## 1 A      1.28      1  0.72
 ## 2 B      2.81      2  1.33
 ```
@@ -795,21 +846,20 @@ Let's look at songs that hit #1 at some point and look how they got there versus
 
 
 ```r
-# find best rank for each song
-best_rank &lt;- billboard_2000 %&gt;%
-    group_by(artist, track) %&gt;%
-*   summarize(min_rank = min(rank),
-              weeks_at_1 = sum(rank == 1)) %&gt;%
-    mutate(`Peak rank` = ifelse(min_rank == 1,
-                                "Hit #1",
-                                "Didn't #1"))
-
-# merge onto original data
 billboard_2000 &lt;- billboard_2000 %&gt;%
-    left_join(best_rank, by = c("artist", "track"))
+    group_by(artist, track) %&gt;%
+    mutate(`Weeks at #1` = sum(rank == 1),
+*          `Peak Rank`   = ifelse(any(rank == 1),
+                                  "Hit #1",
+                                  "Didn't #1")) %&gt;%
+*   ungroup()
 ```
 
-.footnote[Note that because the "highest" rank is *numerically lowest* (1), we are summarizing with `min()`.]
+Things to note:
+
+* `any(min_rank==1)` checks to see if *any* value of `rank` is equal to one for the given `artist` and `track`
+
+* `ungroup()` here removes the grouping made by `group_by()`.
 
 ---
 # Charts of 2000: `ggplot2`
@@ -820,9 +870,9 @@ library(ggplot2)
 billboard_trajectories &lt;- 
   ggplot(data = billboard_2000,
          aes(x = week, y = rank, group = track,
-             color = `Peak rank`)
+             color = `Peak Rank`)
          ) +
-  geom_line(aes(size = `Peak rank`), alpha = 0.4) +
+  geom_line(aes(size = `Peak Rank`), alpha = 0.4) +
     # rescale time: early weeks more important
   scale_x_log10(breaks = seq(0, 70, 10)) + 
   scale_y_reverse() + # want rank 1 on top, not bottom
@@ -837,7 +887,7 @@ billboard_trajectories &lt;-
 ---
 # Charts of 2000: Beauty!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-92-1.svg)&lt;!-- --&gt;
 
 Observation: There appears to be censoring around week 20 for songs falling out of the top 50 that I'd want to follow up on.
 
@@ -847,22 +897,22 @@ Observation: There appears to be censoring around week 20 for songs falling out 
 
 ```r
 billboard_2000 %&gt;%
-    distinct(artist, track, weeks_at_1) %&gt;%
-    arrange(desc(weeks_at_1)) %&gt;%
+    distinct(artist, track, `Weeks at #1`) %&gt;%
+    arrange(desc(`Weeks at #1`)) %&gt;%
     head(7)
 ```
 
 ```
 ## # A tibble: 7 x 3
-##   artist              track                   weeks_at_1
-##   &lt;chr&gt;               &lt;chr&gt;                        &lt;int&gt;
-## 1 Destiny's Child     Independent Women Pa...         11
-## 2 Santana             Maria, Maria                    10
-## 3 Aguilera, Christina Come On Over Baby (A...          4
-## 4 Madonna             Music                            4
-## 5 Savage Garden       I Knew I Loved You               4
-## 6 Destiny's Child     Say My Name                      3
-## 7 Iglesias, Enrique   Be With You                      3
+##   artist              track                   `Weeks at #1`
+##   &lt;chr&gt;               &lt;chr&gt;                           &lt;int&gt;
+## 1 Destiny's Child     Independent Women Pa...            11
+## 2 Santana             Maria, Maria                       10
+## 3 Aguilera, Christina Come On Over Baby (A...             4
+## 4 Madonna             Music                               4
+## 5 Savage Garden       I Knew I Loved You                  4
+## 6 Destiny's Child     Say My Name                         3
+## 7 Iglesias, Enrique   Be With You                         3
 ```
 
 ---
@@ -885,7 +935,7 @@ billboard_2000 %&gt;% arrange(artist, track, week) %&gt;%
 ```
 ## # A tibble: 4 x 5
 ##   artist date.entered  week date        rank
-##   &lt;chr&gt;  &lt;date&gt;       &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;
+##   &lt;chr&gt;  &lt;date&gt;       &lt;int&gt; &lt;date&gt;     &lt;int&gt;
 ## 1 2 Pac  2000-02-26       1 2000-02-26    87
 ## 2 2 Pac  2000-02-26       2 2000-03-04    82
 ## 3 2 Pac  2000-02-26       3 2000-03-11    72
@@ -919,7 +969,7 @@ plot_by_day &lt;-
 ---
 # Calendar Time Plot!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-29-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-96-1.svg)&lt;!-- --&gt;
 
 We see some of the entry dates are before 2000---presumably songs still charting during 2000 that came out earlier. 
 
@@ -935,7 +985,8 @@ spd_raw &lt;- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Depart
 ```
 
 ```
-## Parsed with column specification:
+## 
+## -- Column specification ----------------------------------------------
 ## cols(
 ##   `CAD CDW ID` = col_double(),
 ##   `CAD Event Number` = col_double(),
@@ -1024,7 +1075,8 @@ str(spd$`Event Clearance Date`)
 ##  POSIXct[1:706], format: "2016-03-25 23:58:30" "2016-03-25 23:57:22" ...
 ```
 
-.footnote[`mdy_hms()` automatically processes datetimes in month-day-year, hour-minute-second format. It figures out separators for you!]
+.footnote[`mdy_hms()` processes datetimes in month-day-year, hour-minute-second format. It figures out separators for you!]
+
 ---
 # An Aside on Time
 
@@ -1090,7 +1142,7 @@ time_spd_plot &lt;- ggplot(spd_times, aes(x = hour)) +
 ---
 ## SPD Event Clearances, March 25
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-103-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -1159,21 +1211,26 @@ head(as.numeric(spd_times$`Initial Type Group`))
 ---
 ## Releveling by Frequency
 
+`fct_infreq()` reorders the factor levels by the frequency they appear in the data.
+
 
 ```r
-spd_vol &lt;- spd_times %&gt;% 
-  group_by(`Initial Type Group`) %&gt;%
-  summarize(n_events = n()) %&gt;% 
-* arrange(desc(n_events))
-
-# set levels using order from sorted frequency table
-spd_times_2 &lt;- spd_times %&gt;% 
+spd_times &lt;- spd_times %&gt;% 
   mutate(`Initial Type Group` = 
-         factor(`Initial Type Group`,
-*                     levels = spd_vol$`Initial Type Group`))
+         fct_infreq(`Initial Type Group`))
+head(levels(spd_times$`Initial Type Group`),4)
+```
 
-# replot
-time_spd_plot_2 &lt;- ggplot(spd_times_2, aes(x = hour)) +
+```
+## [1] "SUSPICIOUS CIRCUMSTANCES" "TRAFFIC RELATED CALLS"   
+## [3] "THEFT"                    "DISTURBANCES"
+```
+Now the most common levels are first! Time to replot.
+
+
+
+```r
+time_spd_plot_2 &lt;- ggplot(spd_times, aes(x = hour)) +
   geom_histogram(binwidth = 2) +
   facet_wrap( ~ `Initial Type Group`) +
   theme_minimal() +
@@ -1184,12 +1241,12 @@ time_spd_plot_2 &lt;- ggplot(spd_times_2, aes(x = hour)) +
 ---
 # Better Ordered Plot
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-39-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-107-1.svg)&lt;!-- --&gt;
 
 ---
 # Other Ways to Reorder
 
-Another way to reorder a factor is through the `fct_reorder()` function:
+A general way to reorder a factor is through the `fct_reorder()` function:
 
 
 ```r
@@ -1229,7 +1286,7 @@ jayz_bad_legend &lt;-
 
 ---
 ## Jay-Z with Bad Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-42-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-110-1.svg)&lt;!-- --&gt;
 
 ---
 ## Better Ordering for Jay-Z
@@ -1249,9 +1306,11 @@ jayz_good_legend &lt;-
   xlab("Week") + ylab("Rank")
 ```
 
+This *reorders* `track` based on `rank`'s `min()` value.
+
 ---
 ## Jay-Z with Good Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-44-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-112-1.svg)&lt;!-- --&gt;
 
 ---
 # Dropping Unused Levels
