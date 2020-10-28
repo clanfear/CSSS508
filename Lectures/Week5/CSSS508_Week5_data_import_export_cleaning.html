@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### Apr 29, 2020<br>Updated: Oct 28, 2020
+### Oct 28, 2020<br>Updated: Oct 28, 2020
 
 ---
 
@@ -230,7 +230,7 @@ billboard_2000_raw &lt;- read_csv(file = "https://clanfear.github.io/CSSS508/Lec
 ##   wk75 = col_logical(),
 ##   wk76 = col_logical()
 ## )
-## [36mi[39m Use `spec()` for the full column specifications.
+## i Use `spec()` for the full column specifications.
 ```
 ]
 
@@ -887,7 +887,7 @@ billboard_trajectories &lt;-
 ---
 # Charts of 2000: Beauty!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-92-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
 
 Observation: There appears to be censoring around week 20 for songs falling out of the top 50 that I'd want to follow up on.
 
@@ -918,6 +918,10 @@ billboard_2000 %&gt;%
 ---
 class: inverse
 # Dates and Times
+
+.image-full[
+![](img/lubridate.svg)
+]
 
 ---
 # Getting Usable Dates
@@ -969,7 +973,7 @@ plot_by_day &lt;-
 ---
 # Calendar Time Plot!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-96-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
 
 We see some of the entry dates are before 2000---presumably songs still charting during 2000 that came out earlier. 
 
@@ -1142,7 +1146,7 @@ time_spd_plot &lt;- ggplot(spd_times, aes(x = hour)) +
 ---
 ## SPD Event Clearances, March 25
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-103-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-37-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -1241,7 +1245,7 @@ time_spd_plot_2 &lt;- ggplot(spd_times, aes(x = hour)) +
 ---
 # Better Ordered Plot
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-107-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-41-1.svg)&lt;!-- --&gt;
 
 ---
 # Other Ways to Reorder
@@ -1286,7 +1290,7 @@ jayz_bad_legend &lt;-
 
 ---
 ## Jay-Z with Bad Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-110-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-44-1.svg)&lt;!-- --&gt;
 
 ---
 ## Better Ordering for Jay-Z
@@ -1310,7 +1314,7 @@ This *reorders* `track` based on `rank`'s `min()` value.
 
 ---
 ## Jay-Z with Good Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-112-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-46-1.svg)&lt;!-- --&gt;
 
 ---
 # Dropping Unused Levels

@@ -2,7 +2,7 @@
 title: "CSSS508, Week 5"
 subtitle: "Importing, Exporting, and Cleaning Data"
 author: "Chuck Lanfear"
-date: "Apr 29, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Oct 28, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -195,7 +195,7 @@ library(readr)
 Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 
 .small[
-```{r, cache=TRUE}
+```{r}
 billboard_2000_raw <- read_csv(file = "https://clanfear.github.io/CSSS508/Lectures/Week5/data/billboard.csv")
 ```
 ]
@@ -743,6 +743,10 @@ billboard_2000 %>%
 ---
 class: inverse
 # Dates and Times
+
+.image-full[
+![](img/lubridate.svg)
+]
 
 ---
 # Getting Usable Dates
