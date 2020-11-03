@@ -165,7 +165,7 @@ layout: default
        + [Lots on factors from Jenny Bryan](http://stat545-ubc.github.io/block014_factors.html)
        
 ### 6. Using Loops
-   * [Slides for Lecture 6: Looping with `for()` loops](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_Week6_loops.html)
+   * [Slides for Lecture 6: Loops](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_Week6_loops.html)
        + [R script for Lecture 6 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week6/CSSS508_Week6_loops.R)
        + [PDF of Lecture 6 slides](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_Week6_loops.pdf)
        + [Rmd for Lecture 6 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week6/CSSS508_Week6_loops.Rmd)
@@ -215,7 +215,7 @@ layout: default
    * [Blog post explaining `paste()`](https://trinkerrstuff.wordpress.com/2013/09/15/paste-paste0-and-sprintf-2) for combining strings
    
 ### 9. Working with Geographical Data
-   * [Slides for Lecture 9: Mapping and labels in `ggplot2`](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.html)
+   * [Slides for Lecture 9: Mapping with `ggplot2` and `sf`](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.html)
        + [R script for Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.R)
        + [PDF of Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.pdf)
        + [Rmd for Lecture 9 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/CSSS508_Week9_mapping.Rmd)
@@ -237,7 +237,7 @@ layout: default
    * [Tyler Morgan Wall's 3D Mapping and Visualization Masterclass](https://github.com/tylermorganwall/MusaMasterclass)
 
 ### 10. Reproducibility and Model Results
-   * [Slides for Lecture 10: Reproducibility and Model Results](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.html)
+   * [Slides for Lecture 10: Reproducibility and model results](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.html)
       + [PDF of Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.pdf)
       + [Rmd for Lecture 10 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.Rmd)
    * Lecture Video for Week 10
