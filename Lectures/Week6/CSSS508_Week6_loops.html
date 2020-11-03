@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 6
 ## Loops
 ### Chuck Lanfear
-### May 6, 2020<br>Updated: May 5, 2020
+### Nov 4, 2020<br>Updated: Nov 3, 2020
 
 ---
 
@@ -373,7 +373,7 @@ Let's simulate some fake data for this using the `rnorm()` function to generate 
 
 
 ```r
-set.seed(98115) # Making sure values always the same
+set.seed(98105) # Making sure values always the same
 n &lt;- 300
 x &lt;- rnorm(n, mean = 5, sd = 4)
 sim_data &lt;- 
@@ -382,6 +382,8 @@ sim_data &lt;-
 ```
 
 This generates a dataframe of 300 observations where `y` is dependent on `x`, with some uncorrelated, normally-distributed residual (from `rnorm()`).
+
+--
 
 Aside: If you followed the 2014 scandal in political science when a grad student faked data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
 
@@ -522,17 +524,17 @@ head(predicted_data, 10)
 ```
 
 ```
-##         x      y intercept only  linear quadratic  cubic
-## 1   6.330  1.521         -0.464 -0.4005    -1.117 -1.106
-## 2   5.984  1.437         -0.464 -0.4256    -1.155 -1.149
-## 3   6.501  0.887         -0.464 -0.3881    -1.093 -1.081
-## 4   3.788 -1.928         -0.464 -0.5851    -1.135 -1.153
-## 5  -1.064  1.880         -0.464 -0.9375     0.530  0.536
-## 6   7.371 -0.514         -0.464 -0.3249    -0.932 -0.911
-## 7   8.393 -1.167         -0.464 -0.2506    -0.651 -0.622
-## 8   0.886 -0.668         -0.464 -0.7959    -0.408 -0.431
-## 9  11.062 -1.781         -0.464 -0.0568     0.550  0.571
-## 10 -0.796  0.771         -0.464 -0.9180     0.379  0.380
+##        x      y intercept only linear quadratic  cubic
+## 1  -5.80  6.140         -0.372  0.160     4.985  4.983
+## 2   9.26 -0.790         -0.372 -0.579    -0.312 -0.312
+## 3   1.40  1.177         -0.372 -0.194    -0.568 -0.567
+## 4   5.23 -1.833         -0.372 -0.381    -1.266 -1.266
+## 5  12.24  1.608         -0.372 -0.726     1.516  1.517
+## 6   8.30 -2.778         -0.372 -0.532    -0.694 -0.694
+## 7   9.66  1.185         -0.372 -0.599    -0.118 -0.118
+## 8  10.25 -0.351         -0.372 -0.628     0.192  0.192
+## 9   9.44  1.592         -0.372 -0.588    -0.228 -0.228
+## 10  1.46 -1.329         -0.372 -0.197    -0.591 -0.590
 ```
 
 ---
@@ -545,21 +547,23 @@ We can use `tidyr::pivot_longer()` to tidy the predictions, then set the levels 
 ```r
 library(tidyr)
 tidy_predicted_data &lt;- predicted_data %&gt;%
-*   pivot_longer(3:6, names_to="Model", values_to="Prediction") %&gt;%
+    pivot_longer(3:6, 
+                 names_to="Model", 
+*                values_to="Prediction") %&gt;%
 *   mutate(Model = factor(Model, levels = names(models)))
 head(tidy_predicted_data) # Displaying some rows
 ```
 
 ```
 ## # A tibble: 6 x 4
-##       x     y Model          Prediction
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;               &lt;dbl&gt;
-## 1  6.33  1.52 intercept only     -0.464
-## 2  6.33  1.52 linear             -0.400
-## 3  6.33  1.52 quadratic          -1.12 
-## 4  6.33  1.52 cubic              -1.11 
-## 5  5.98  1.44 intercept only     -0.464
-## 6  5.98  1.44 linear             -0.426
+##       x      y Model          Prediction
+##   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;               &lt;dbl&gt;
+## 1 -5.80  6.14  intercept only     -0.372
+## 2 -5.80  6.14  linear              0.160
+## 3 -5.80  6.14  quadratic           4.98 
+## 4 -5.80  6.14  cubic               4.98 
+## 5  9.26 -0.790 intercept only     -0.372
+## 6  9.26 -0.790 linear             -0.579
 ```
 ]
 
@@ -570,10 +574,10 @@ We'll use `ggplot2` to plot these tidied up predictions. You'll see us use multi
 
 
 ```r
-ggplot(data = sim_data, # Original data!
-       aes(x = x,
-           y = y)) +
-    geom_point() + # Original data as points
+ggplot() +
+*   geom_point(data = sim_data, # Original data as points
+               aes(x = x, 
+                   y = y)) + 
 *   geom_line(data = tidy_predicted_data, # Predicted data!
               aes(x     = x, 
                   y     = Prediction, 
@@ -652,13 +656,13 @@ head(CV_predictions)
 ```
 
 ```
-##       x      y fold intercept only linear quadratic cubic
-## 1  6.33  1.521    9             NA     NA        NA    NA
-## 2  5.98  1.437    5             NA     NA        NA    NA
-## 3  6.50  0.887    8             NA     NA        NA    NA
-## 4  3.79 -1.928    3             NA     NA        NA    NA
-## 5 -1.06  1.880    1             NA     NA        NA    NA
-## 6  7.37 -0.514    6             NA     NA        NA    NA
+##       x     y fold intercept only linear quadratic cubic
+## 1 -5.80  6.14    7             NA     NA        NA    NA
+## 2  9.26 -0.79    4             NA     NA        NA    NA
+## 3  1.40  1.18    6             NA     NA        NA    NA
+## 4  5.23 -1.83    4             NA     NA        NA    NA
+## 5 12.24  1.61    5             NA     NA        NA    NA
+## 6  8.30 -2.78    3             NA     NA        NA    NA
 ```
 ]
 
@@ -704,7 +708,7 @@ CV_MSE
 
 ```
 ## intercept only         linear      quadratic          cubic 
-##          1.953          1.910          0.955          0.981
+##           2.56           2.60           1.06           1.06
 ```
 
 Based on these results, which model would you choose?
@@ -900,7 +904,7 @@ num_flips # follows negative binomial distribution
 ```
 
 ```
-## [1] 11
+## [1] 6
 ```
 
 ---
@@ -931,7 +935,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##   91.68    0.31   92.43
+##    4.72    0.10    4.85
 ```
 
 ---
@@ -948,7 +952,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.09    0.08    0.18
+##    0.15    0.17    0.33
 ```
 
 ```r
@@ -957,10 +961,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-## 1018.67    3.87  513.50
+##  31.467   0.588  14.697
 ```
 
-The vectorized method was 1019 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 31 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples
@@ -1009,6 +1013,45 @@ pmax(c(0, 2, 4), c(1, 1, 1), c(2, 2, 2))
 ```
 ## [1] 2 2 4
 ```
+
+---
+# Vectorized File Loading
+
+`vroom` is a package with vectorized loading of delimited files like `.csv` files.
+
+.smallish[
+
+```r
+complete_data_vroom &lt;- vroom::vroom(list.files("./example_data/", full.names=T))
+```
+
+```
+## Rows: 10,000
+## Columns: 3
+## Delimiter: ","
+## dbl [3]: id, x, z
+## 
+## Use `spec()` to retrieve the guessed column specification
+## Pass a specification to the `col_types` argument to quiet this message
+```
+]
+
+.smallish[
+
+```r
+glimpse(complete_data_vroom)
+```
+
+```
+## Rows: 10,000
+## Columns: 3
+## $ id &lt;dbl&gt; 44, 49, 50, 60, 62, 76, 81, 91, 113, 114, 116, 156, 15...
+## $ x  &lt;dbl&gt; 0.5156, 2.1673, -0.1216, 1.0551, 0.6660, -0.0213, 1.98...
+## $ z  &lt;dbl&gt; 0.3808, 0.3460, 0.7115, 0.4344, 0.6379, 0.6739, 0.9808...
+```
+]
+
+This replaced our entire data loading loop with one line!
 
 ---
 class: inverse

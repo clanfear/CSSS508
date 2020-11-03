@@ -2,7 +2,7 @@
 title: "CSSS508, Week 6"
 subtitle: "Loops"
 author: "Chuck Lanfear"
-date: "May 6, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Nov 4, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -290,8 +290,8 @@ After we do this, we'll try something more advanced with loops: **Cross-validati
 
 Let's simulate some fake data for this using the `rnorm()` function to generate random values from a normal distribution.
 
-```{r, cache=TRUE}
-set.seed(98115) # Making sure values always the same
+```{r, cache=FALSE}
+set.seed(98105) # Making sure values always the same
 n <- 300
 x <- rnorm(n, mean = 5, sd = 4)
 sim_data <- 
@@ -300,6 +300,8 @@ sim_data <-
 ```
 
 This generates a dataframe of 300 observations where `y` is dependent on `x`, with some uncorrelated, normally-distributed residual (from `rnorm()`).
+
+--
 
 Aside: If you followed the 2014 scandal in political science when a grad student faked data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
 
@@ -426,7 +428,9 @@ We can use `tidyr::pivot_longer()` to tidy the predictions, then set the levels 
 ```{r, warning=FALSE, message=FALSE}
 library(tidyr)
 tidy_predicted_data <- predicted_data %>%
-    pivot_longer(3:6, names_to="Model", values_to="Prediction") %>% #<<
+    pivot_longer(3:6, 
+                 names_to="Model", 
+                 values_to="Prediction") %>% #<<
     mutate(Model = factor(Model, levels = names(models))) #<<
 head(tidy_predicted_data) # Displaying some rows
 ```
@@ -438,10 +442,10 @@ head(tidy_predicted_data) # Displaying some rows
 We'll use `ggplot2` to plot these tidied up predictions. You'll see us use multiple data sets on the same plot: Look at the `geom_line()` call.
 
 ```{r, eval=FALSE}
-ggplot(data = sim_data, # Original data!
-       aes(x = x,
-           y = y)) +
-    geom_point() + # Original data as points
+ggplot() +
+    geom_point(data = sim_data, # Original data as points #<<
+               aes(x = x, 
+                   y = y)) + 
     geom_line(data = tidy_predicted_data, # Predicted data! #<<
               aes(x     = x, 
                   y     = Prediction, 
@@ -768,6 +772,25 @@ cumsum(1:7)
 ```{r}
 pmax(c(0, 2, 4), c(1, 1, 1), c(2, 2, 2))
 ```
+
+---
+# Vectorized File Loading
+
+`vroom` is a package with vectorized loading of delimited files like `.csv` files.
+
+.smallish[
+```{r}
+complete_data_vroom <- vroom::vroom(list.files("./example_data/", full.names=T))
+```
+]
+
+.smallish[
+```{r}
+glimpse(complete_data_vroom)
+```
+]
+
+This replaced our entire data loading loop with one line!
 
 ---
 class: inverse
