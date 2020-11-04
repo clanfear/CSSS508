@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 6
 ## Loops
 ### Chuck Lanfear
-### Nov 4, 2020<br>Updated: Nov 3, 2020
+### Nov 4, 2020<br>Updated: Nov 4, 2020
 
 ---
 
@@ -37,6 +37,8 @@ c(mean1, mean2 mean3, mean4, mean5, man6)
 ```
 
 Can you spot the problems?
+
+--
 
 How upset would they be if the `swiss` data had 200 columns instead of 6?
 
@@ -115,6 +117,8 @@ class: inverse
 `for()` loops are the most general kind of *loop*, found in pretty much every programming language.
 
 "**For** each of these values—in order—do *this*"
+
+--
 
 Conceptually:
 
@@ -383,9 +387,8 @@ sim_data &lt;-
 
 This generates a dataframe of 300 observations where `y` is dependent on `x`, with some uncorrelated, normally-distributed residual (from `rnorm()`).
 
---
 
-Aside: If you followed the 2014 scandal in political science when a grad student faked data for a publication in *Science*, [it is believed he used the `rnorm()` function](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) to add noise to an existing dataset to get his values.
+.footnote[If you followed the 2014 scandal in political science when a grad student faked data for a publication in *Science*, [it is believed he used the `rnorm()` function](https://osf.io/preprints/metaarxiv/qy2se/) to add noise to an existing dataset to get his values.]
 
 ---
 # Plot of `sim_data`
@@ -935,7 +938,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##    4.72    0.10    4.85
+##    4.64    0.16    4.79
 ```
 
 ---
@@ -952,7 +955,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.15    0.17    0.33
+##    0.17    0.11    0.28
 ```
 
 ```r
@@ -961,10 +964,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-##  31.467   0.588  14.697
+##   27.29    1.45   17.11
 ```
 
-The vectorized method was 31 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 27 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples
