@@ -169,9 +169,9 @@ layout: default
        + [R script for Lecture 6 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week6/CSSS508_Week6_loops.R)
        + [PDF of Lecture 6 slides](http://clanfear.github.io/CSSS508/Lectures/Week6/CSSS508_Week6_loops.pdf)
        + [Rmd for Lecture 6 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week6/CSSS508_Week6_loops.Rmd)
-   * Lecture Video for Lecture 6, recorded May 6th, 2020
-       + [Zoom](https://washington.zoom.us/rec/share/z5QvDerrzn1Ocq-UwmHBUZAMR5jVeaa80HIc8qYKxB4NI2eEX1HJBLmvj1qydP3Y)
-       + [YouTube](https://youtu.be/qF5RaS8CR0Y)
+   * Lecture Video for Lecture 6, recorded November 4th, 2020
+       + [Zoom](https://washington.zoom.us/rec/share/MRFv3SVNOrzTCQ_IEiSKbNMmLAZOu-n-rFjd6PtXppsvxjUX3X-YfC0j8Tv_ncCF.QTTef0-KhnAJx12F?startTime=1604532374000)
+       + [YouTube](https://youtu.be/JDmHmC0-olw)
    * Homework 5, Part 2:
        + [Homework 5, Part 2: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Keys/HW5_Keys/homework_5_p1_key.Rmd) (you will download this, fill in and submit on Canvas)
        + [Homework 5, Part 2: HTML Document](https://clanfear.github.io/CSSS508/Keys/HW5_Keys/homework_5_p1_key.html)
