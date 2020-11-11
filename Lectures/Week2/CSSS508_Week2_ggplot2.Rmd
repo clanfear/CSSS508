@@ -329,16 +329,52 @@ We'll use these a lot so don't worry too much right now!
 
 # Multiple Conditions Example
 
-Let's say we want observations from Oman after 1980 and through 2000.
-
---
 
 ```{r}
 gapminder %>%
-    filter(country == "Oman" &
-           year > 1980 &
-           year <= 2000 )
+    filter(country == "Oman" & year > 1980)
 ```
+
+---
+# Multiple Conditions
+
+.pull-left[
+
+### And: `&`
+
+```{r, eval=FALSE}
+gapminder %>% 
+  filter(country == "Oman" &
+         year > 1980)
+```
+
+.image-100[
+![](img/country_and_year.svg)
+]
+
+*Give me rows where the country is Oman **and** the year is after 1980.*
+
+]
+
+--
+
+.pull-right[
+
+### Or: `|`
+
+```{r, eval=FALSE}
+gapminder %>%
+  filter(country == "Oman" |
+         year > 1980)
+```
+
+.image-100[
+![](img/country_or_year.svg)
+]
+
+*Give me rows where the country is Oman **or** the year is after 1980... or **both**.*
+
+]
 
 ---
 

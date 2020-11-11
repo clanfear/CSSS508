@@ -253,6 +253,9 @@ body {
 .image-75 img {
   width: 75%;
 }
+.image-100 img {
+  width: 100%;
+}
 .image-full img {
   height: 480px;
   display: block;

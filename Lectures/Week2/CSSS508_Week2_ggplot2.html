@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 2
 ## Plotting with <code>ggplot2</code>
 ### Chuck Lanfear
-### Oct 7, 2020<br>Updated: Oct 7, 2020
+### Oct 7, 2020<br>Updated: Nov 11, 2020
 
 ---
 
@@ -257,6 +257,23 @@ This will install a *large* number of R packages we will use throughout the term
 library(dplyr)
 ```
 
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
 ---
 
 # Wait, was that an error?
@@ -382,27 +399,67 @@ We'll use these a lot so don't worry too much right now!
 
 # Multiple Conditions Example
 
-Let's say we want observations from Oman after 1980 and through 2000.
-
---
 
 
 ```r
 gapminder %&gt;%
-    filter(country == "Oman" &amp;
-           year &gt; 1980 &amp;
-           year &lt;= 2000 )
+    filter(country == "Oman" &amp; year &gt; 1980)
 ```
 
 ```
-## # A tibble: 4 x 6
+## # A tibble: 6 x 6
 ##   country continent  year lifeExp     pop gdpPercap
 ##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
 ## 1 Oman    Asia       1982    62.7 1301048    12955.
 ## 2 Oman    Asia       1987    67.7 1593882    18115.
 ## 3 Oman    Asia       1992    71.2 1915208    18617.
 ## 4 Oman    Asia       1997    72.5 2283635    19702.
+## 5 Oman    Asia       2002    74.2 2713462    19775.
+## 6 Oman    Asia       2007    75.6 3204897    22316.
 ```
+
+---
+# Multiple Conditions
+
+.pull-left[
+
+### And: `&amp;`
+
+
+```r
+gapminder %&gt;% 
+  filter(country == "Oman" &amp;
+         year &gt; 1980)
+```
+
+.image-100[
+![](img/country_and_year.svg)
+]
+
+*Give me rows where the country is Oman **and** the year is after 1980.*
+
+]
+
+--
+
+.pull-right[
+
+### Or: `|`
+
+
+```r
+gapminder %&gt;%
+  filter(country == "Oman" |
+         year &gt; 1980)
+```
+
+.image-100[
+![](img/country_or_year.svg)
+]
+
+*Give me rows where the country is Oman **or** the year is after 1980... or **both**.*
+
+]
 
 ---
 
@@ -457,7 +514,7 @@ plot(lifeExp ~ year,
 ]
 
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -489,7 +546,7 @@ ggplot(data = China,
 ]
 
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-20-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -581,7 +638,7 @@ Now let's see all this jargon in action.
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-20-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-22-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Initialize the plot with `ggplot()` and `x` and `y` aesthetics **mapped** to variables.]
@@ -604,7 +661,7 @@ ggplot(data = China,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-22-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-24-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Add a scatterplot **layer**.]
@@ -626,7 +683,7 @@ ggplot(data = China,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-24-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[**Set** aesthetics to make the points large and red.]
@@ -649,7 +706,7 @@ ggplot(data = China,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Add a layer to capitalize the x-axis label.]
@@ -673,7 +730,7 @@ ggplot(data = China,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Add a layer to clean up the y-axis label.]
@@ -698,7 +755,7 @@ ggplot(data = China,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-32-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Add a title layer.]
@@ -724,7 +781,7 @@ ggplot(data = China,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-32-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Pick a nicer theme with a new layer.]
@@ -750,7 +807,7 @@ ggplot(data = China,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Increase the base text size.]
@@ -782,7 +839,7 @@ We have a plot we like for China...
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[We can't tell countries apart! Maybe we could follow *lines*?]
@@ -808,7 +865,7 @@ ggplot(data = gapminder,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-40-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[`ggplot2` doesn't know how to connect the lines!]
@@ -835,7 +892,7 @@ ggplot(data = gapminder,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-40-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-42-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[That looks more reasonable... but the lines are too thick!]
@@ -861,7 +918,7 @@ ggplot(data = gapminder,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-42-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-44-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Much better... but maybe we can do highlight regional differences?]
@@ -889,7 +946,7 @@ ggplot(data = gapminder,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-44-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-46-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Patterns are obvious... but why not separate continents completely?]
@@ -918,7 +975,7 @@ ggplot(data = gapminder,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-46-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-48-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Now the text is too big!]
@@ -946,7 +1003,7 @@ ggplot(data = gapminder,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-48-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-50-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Better, but could bring that legend in.]
@@ -976,7 +1033,7 @@ ggplot(data = gapminder,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-50-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-52-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Better... but do we even need it?]
@@ -1005,7 +1062,7 @@ ggplot(data = gapminder,
 ]
 ]
 .pull-right[
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-52-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-54-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Looking good!]
@@ -1043,7 +1100,7 @@ The graph won't be displayed when you do this. You can show the graph using a si
 lifeExp_by_year
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-54-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-56-1.svg)&lt;!-- --&gt;
 
 ---
 
@@ -1055,7 +1112,7 @@ lifeExp_by_year +
     theme(legend.position = "bottom")
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-55-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-57-1.svg)&lt;!-- --&gt;
 
 
 ---
@@ -1071,7 +1128,7 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
     geom_point()
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-56-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-58-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1086,7 +1143,7 @@ ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
 *   geom_point(position = position_jitter(width = 0.5, height = 2))
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-57-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-59-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1113,7 +1170,7 @@ ggplot(data = China, aes(x = year, y = gdpPercap)) +
     xlim(1940, 2010) + ggtitle("Chinese GDP per capita")
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-58-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-60-1.svg)&lt;!-- --&gt;
 
 ---
 
@@ -1127,7 +1184,7 @@ ggplot(data = China, aes(x = year, y = lifeExp)) +
 *   theme_gray(base_size = 20)
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-59-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-61-1.svg)&lt;!-- --&gt;
 
 ---
 
@@ -1173,7 +1230,7 @@ lifeExp_by_year +
                "Asia" = "royalblue", "Europe" = "violetred1", "Oceania" = "yellow"))
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-60-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-62-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1221,7 +1278,7 @@ Wow, there's a lot going on here!
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-62-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-64-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -1244,7 +1301,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-63-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-65-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1266,7 +1323,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-64-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-66-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1288,7 +1345,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-65-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-67-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1310,7 +1367,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-66-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-68-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1331,7 +1388,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-67-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-69-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1353,7 +1410,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-68-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-70-1.svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -1376,7 +1433,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-69-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-71-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1398,7 +1455,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   #
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-70-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-72-1.svg)&lt;!-- --&gt;
 ]
 ---
 
@@ -1420,7 +1477,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 * theme(axis.text.x = element_text(angle = 45))
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-71-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-73-1.svg)&lt;!-- --&gt;
 ]
 
 .footnote[Note: Fewer values might be better than angled labels!]
@@ -1444,13 +1501,13 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 * theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45))
 ```
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-72-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-74-1.svg)&lt;!-- --&gt;
 ]
 ---
 
 ## Fussy Manual Legend
 
-![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-73-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week2_ggplot2_files/figure-html/unnamed-chunk-75-1.svg)&lt;!-- --&gt;
 
 Observation: One could use `filter()` to identify the countries with dips in life expectancy and investigate.
 
