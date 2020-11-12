@@ -21,9 +21,15 @@ gapminder$pop %>% mean() %>% log()
 gapminder %>% filter(country == "Oman")
 
 gapminder %>%
-    filter(country == "Oman" &
-           year > 1980 &
-           year <= 2000 )
+    filter(country == "Oman" & year > 1980)
+
+## gapminder %>%
+##   filter(country == "Oman" &
+##          year > 1980)
+
+## gapminder %>%
+##   filter(country == "Oman" |
+##          year > 1980)
 
 China <- gapminder %>% filter(country == "China")
 head(China, 4)

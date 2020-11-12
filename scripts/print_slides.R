@@ -15,7 +15,7 @@ render_and_print_slides <- function(week){
     message(paste0("Printing complete at ", week_dir))
 }
 
-build_course <- function(lectures = 1:11){
+build_course <- function(lectures = 1:10){
     for(i in lectures){
         render_and_print_slides(i)
     }

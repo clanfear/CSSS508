@@ -57,7 +57,7 @@ names(a_vector) <- names_to_use
 # with setNames: first arg = values, second = names
 (a_vector <- setNames(numeric(5), names_to_use))
 
-set.seed(98115) # Making sure values always the same
+set.seed(98105) # Making sure values always the same
 n <- 300
 x <- rnorm(n, mean = 5, sd = 4)
 sim_data <- 
@@ -93,14 +93,16 @@ head(predicted_data, 10)
 
 library(tidyr)
 tidy_predicted_data <- predicted_data %>%
-    pivot_longer(3:6, names_to="Model", values_to="Prediction") %>% #<<
+    pivot_longer(3:6, 
+                 names_to="Model", 
+                 values_to="Prediction") %>% #<<
     mutate(Model = factor(Model, levels = names(models))) #<<
 head(tidy_predicted_data) # Displaying some rows
 
-## ggplot(data = sim_data, # Original data!
-##        aes(x = x,
-##            y = y)) +
-##     geom_point() + # Original data as points
+## ggplot() +
+##     geom_point(data = sim_data, # Original data as points #<<
+##                aes(x = x,
+##                    y = y)) +
 ##     geom_line(data = tidy_predicted_data, # Predicted data! #<<
 ##               aes(x     = x,
 ##                   y     = Prediction,
@@ -217,3 +219,7 @@ rowSums(a_matrix)
 cumsum(1:7)
 
 pmax(c(0, 2, 4), c(1, 1, 1), c(2, 2, 2))
+
+complete_data_vroom <- vroom::vroom(list.files("./example_data/", full.names=T))
+
+glimpse(complete_data_vroom)

@@ -171,6 +171,18 @@ gapminder_plot <- function(cntry, yvar) {
 
 gapminder_plot(cntry = "Turkey", yvar = "pop")
 
+us_ca <- c("Canada", "United States")
+gapminder %>% filter(country %in% us_ca) %>% distinct(country) %>% head(2)
+
+gapminder %>% filter(!country %in% us_ca) %>% distinct(country) %>% head(2)
+
+`%!in%` <- Negate(`%in%`)
+
+gapminder %>% 
+  filter(country %!in% us_ca) %>% # Our new operator! #<<
+  distinct(country) %>% 
+  head(2)
+
 ## debug(gapminder_plot)
 
 ## undebug(gapminder_plot)

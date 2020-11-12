@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 6
 ## Loops
 ### Chuck Lanfear
-### Nov 4, 2020<br>Updated: Nov 4, 2020
+### Nov 4, 2020<br>Updated: Nov 11, 2020
 
 ---
 
@@ -938,7 +938,7 @@ for(position in 1:length(my_vector)) {
 
 ```
 ##    user  system elapsed 
-##    4.64    0.16    4.79
+##   93.78    0.12   94.34
 ```
 
 ---
@@ -955,7 +955,7 @@ new_vector &lt;- my_vector + 1
 
 ```
 ##    user  system elapsed 
-##    0.17    0.11    0.28
+##    0.13    0.03    0.15
 ```
 
 ```r
@@ -964,10 +964,10 @@ for_time / vec_time
 
 ```
 ##    user  system elapsed 
-##   27.29    1.45   17.11
+##     721       4     629
 ```
 
-The vectorized method was 27 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
+The vectorized method was 721 times as fast! Vector/matrix arithmetic is implemented using fast, optimized functions that a `for()` loop can't compete with.
 
 ---
 # Vectorization Examples

@@ -2,7 +2,7 @@
 title: "CSSS508, Week 7"
 subtitle: "Vectorization and Functions"
 author: "Chuck Lanfear"
-date: "May 13, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Nov 18, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -69,7 +69,7 @@ Loops are very powerful and applicable in almost any situation.
 
 --
 
-They are also slow and require writing more code than vectorized commands.
+They are also often slower and require writing more code than vectorized commands.
 
 --
 
@@ -111,13 +111,14 @@ class: inverse
 ---
 # Why Write Your Own Functions?
 
-Functions can encapsulate repeated actions such as:
+Functions can encapsulate actions you might perform often, such as:
 
 --
 
 * Given a vector, compute some special summary stats
 * Given a vector and definition of "invalid" values, replace with `NA`
 * Templates for favorite `ggplot`s used in reports
+* Defining a new logical operator
 
 --
 
@@ -622,6 +623,45 @@ gapminder_plot <- function(cntry, yvar) {
 gapminder_plot(cntry = "Turkey", yvar = "pop")
 ```
 
+---
+# `%in%`
+
+`%in%` returns `TRUE` where elements on its left equal any element on the right.
+
+.smallish[
+```{r}
+us_ca <- c("Canada", "United States")
+gapminder %>% filter(country %in% us_ca) %>% distinct(country) %>% head(2)
+```
+]
+
+We can invert this to get the opposite, but it looks a bit awkward:
+
+.smallish[
+```{r}
+gapminder %>% filter(!country %in% us_ca) %>% distinct(country) %>% head(2)
+```
+]
+
+---
+# `%!in%`
+
+We can *invert* or **negate**<sup>1</sup> `%in%` to get a "not in" operator:
+
+```{r}
+`%!in%` <- Negate(`%in%`)
+```
+
+Note to make a new operator, you need to put it in backticks.
+
+```{r}
+gapminder %>% 
+  filter(country %!in% us_ca) %>% # Our new operator! #<<
+  distinct(country) %>% 
+  head(2)
+```
+
+.footnote[[1] `Negate()` produces logical negations of *functions*, inverting their output.<br> e.g.: `isnt.numeric <- Negate(is.numeric)` ]
 ---
 # Debugging
 

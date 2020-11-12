@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 1
 ## RStudio and RMarkdown
 ### Chuck Lanfear
-### Sep 30, 2020<br>Updated: Sep 30, 2020
+### Sep 30, 2020<br>Updated: Nov 11, 2020
 
 ---
 
@@ -938,7 +938,7 @@ Fancier option: Use this instead to take today's date and make it read nicely:&l
 
     date: "`r format(Sys.Date(), format='%B %d, %Y')`"
 
-.footnote[[1] `format(Sys.Date(), format='%B %d, %Y')` says "format system date as month name (`%B`), day-of-month (`%d`), and four-digit year (`%Y`): September 30, 2020. See `?strptime` for these format codes.]
+.footnote[[1] `format(Sys.Date(), format='%B %d, %Y')` says "format system date as month name (`%B`), day-of-month (`%d`), and four-digit year (`%Y`): November 11, 2020. See `?strptime` for these format codes.]
 ---
 class: inverse
 
@@ -1026,7 +1026,7 @@ summary(cars)
 hist(cars$speed) # Histogram
 ```
 
-&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-8-1.png" height="330px" /&gt;
+&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-56-1.png" height="330px" /&gt;
 ]
 
 .pull-right[
@@ -1035,7 +1035,7 @@ hist(cars$speed) # Histogram
 hist(cars$dist)
 ```
 
-&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-9-1.png" height="330px" /&gt;
+&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-57-1.png" height="330px" /&gt;
 ]
 
 ---
@@ -1050,7 +1050,7 @@ hist(cars$dist,
      main = "Observed stopping distances of cars") # Title
 ```
 
-&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-10-1.png" height="400px" /&gt;
+&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-58-1.png" height="400px" /&gt;
 
 
 ---
@@ -1093,7 +1093,7 @@ abline(h = dist_mean, col = "firebrick")
 abline(v = speed_mean, col = "cornflowerblue")
 ```
 
-&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-12-1.png" height="330px" /&gt;
+&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-60-1.png" height="330px" /&gt;
 ]
 
 .pull-right[
@@ -1130,7 +1130,7 @@ You might experiment with [colors](http://www.stat.columbia.edu/~tzheng/files/Rc
       main = "Pairwise comparisons of Swiss variables")
 ```
 
-&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-13-1.png" height="340px" /&gt;
+&lt;img src="CSSS508_Week1_RStudio_and_RMarkdown_files/figure-html/unnamed-chunk-61-1.png" height="340px" /&gt;
 
 .pull-right30[
 .footnote[`pairs()` is a pairwise scatterplot function. Good for a quick look at small datasets, but mostly useless for larger data.]
