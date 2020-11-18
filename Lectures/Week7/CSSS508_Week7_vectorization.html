@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 7
 ## Vectorization and Functions
 ### Chuck Lanfear
-### Nov 18, 2020<br>Updated: Nov 11, 2020
+### Nov 18, 2020<br>Updated: Nov 18, 2020
 
 ---
 
@@ -67,9 +67,9 @@ colMeans(swiss)
 
 ```
 ##        Fertility      Agriculture      Examination        Education 
-##             70.1             50.7             16.5             11.0 
+##         70.14255         50.65957         16.48936         10.97872 
 ##         Catholic Infant.Mortality 
-##             41.1             19.9
+##         41.14383         19.94255
 ```
 
 ---
@@ -259,7 +259,7 @@ smarter_first_and_last
 ##         return(c("first" = first, "last" = last))        
 ##     }
 ## }
-## &lt;environment: 0x000002335b9fb848&gt;
+## &lt;bytecode: 0x0000000016ac1130&gt;
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -312,10 +312,10 @@ quantile_report(rnorm(10000))
 ```
 
 ```
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
-##   -2.34863   -1.64252   -1.28831   -0.65889   -0.00165    0.67332 
-##    Top 10%     Top 5%     Top 1% 
-##    1.28503    1.63437    2.27336
+##    Bottom 1%    Bottom 5%   Bottom 10%   Bottom 25%       Median      Top 25% 
+## -2.357639442 -1.643088269 -1.280548908 -0.684945703  0.005375761  0.685349425 
+##      Top 10%       Top 5%       Top 1% 
+##  1.304916169  1.647236680  2.298880127
 ```
 ]
 
@@ -341,7 +341,7 @@ Like a loop, `apply` functions iterate over elements of objects, except:
 * They don't need preallocation--you can directly assign the output.
 * They *must use a function*
 
-*Nearly anything you can do with a loop can be done more easily with the `apply` family of functions*
+*Nearly anything you can do with an explicit loop can be done more easily with the `apply` family of functions*
 
 ---
 # `lapply()`: List + Functions
@@ -357,27 +357,27 @@ lapply(swiss, FUN = quantile_report)
 
 ```
 ## $Fertility
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
-##       38.6       47.6       56.2       64.7       70.4       78.4 
-##    Top 10%     Top 5%     Top 1% 
-##       84.6       90.7       92.5 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10% 
+##     38.588     47.580     56.240     64.700     70.400     78.450     84.600 
+##     Top 5%     Top 1% 
+##     90.670     92.454 
 ## 
 ## $Agriculture
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
-##       4.19      15.65      17.36      35.90      54.10      67.65 
-##    Top 10%     Top 5%     Top 1% 
-##      76.82      84.81      87.95 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10% 
+##      4.190     15.650     17.360     35.900     54.100     67.650     76.820 
+##     Top 5%     Top 1% 
+##     84.810     87.952 
 ## 
 ## $Examination
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
-##        3.0        5.0        6.0       12.0       16.0       22.0 
-##    Top 10%     Top 5%     Top 1% 
-##       26.0       30.4       36.1
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10% 
+##       3.00       5.00       6.00      12.00      16.00      22.00      26.00 
+##     Top 5%     Top 1% 
+##      30.40      36.08
 ```
 ]
 
 ---
-#  `sapply()`: Simple `lapply()` 
+## `sapply()`: Simple `lapply()` 
 
 A downside to `lapply()` is that lists are hard to work with. `sapply()` **s**implifies the output by making each element a column in a matrix... usually:
 
@@ -389,25 +389,25 @@ sapply(swiss, FUN = quantile_report)
 
 ```
 ##            Fertility Agriculture Examination Education Catholic
-## Bottom 1%       38.6        4.19         3.0      1.46     2.21
-## Bottom 5%       47.6       15.65         5.0      2.00     2.45
-## Bottom 10%      56.2       17.36         6.0      3.00     2.83
-## Bottom 25%      64.7       35.90        12.0      6.00     5.20
-## Median          70.4       54.10        16.0      8.00    15.14
-## Top 25%         78.4       67.65        22.0     12.00    93.12
-## Top 10%         84.6       76.82        26.0     23.20    99.00
-## Top 5%          90.7       84.81        30.4     29.00    99.61
-## Top 1%          92.5       87.95        36.1     43.34    99.87
+## Bottom 1%     38.588       4.190        3.00      1.46   2.2052
+## Bottom 5%     47.580      15.650        5.00      2.00   2.4480
+## Bottom 10%    56.240      17.360        6.00      3.00   2.8320
+## Bottom 25%    64.700      35.900       12.00      6.00   5.1950
+## Median        70.400      54.100       16.00      8.00  15.1400
+## Top 25%       78.450      67.650       22.00     12.00  93.1250
+## Top 10%       84.600      76.820       26.00     23.20  99.0000
+## Top 5%        90.670      84.810       30.40     29.00  99.6140
+## Top 1%        92.454      87.952       36.08     43.34  99.8666
 ##            Infant.Mortality
-## Bottom 1%              12.8
-## Bottom 5%              15.6
-## Bottom 10%             16.4
-## Bottom 25%             18.1
-## Median                 20.0
-## Top 25%                21.7
-## Top 10%                23.7
-## Top 5%                 24.5
-## Top 1%                 25.8
+## Bottom 1%            12.778
+## Bottom 5%            15.600
+## Bottom 10%           16.420
+## Bottom 25%           18.150
+## Median               20.000
+## Top 25%              21.700
+## Top 10%              23.680
+## Top 5%               24.470
+## Top 1%               25.818
 ```
 ]
 
@@ -424,25 +424,25 @@ apply(swiss, MARGIN = 2, FUN = quantile_report)
 
 ```
 ##            Fertility Agriculture Examination Education Catholic
-## Bottom 1%       38.6        4.19         3.0      1.46     2.21
-## Bottom 5%       47.6       15.65         5.0      2.00     2.45
-## Bottom 10%      56.2       17.36         6.0      3.00     2.83
-## Bottom 25%      64.7       35.90        12.0      6.00     5.20
-## Median          70.4       54.10        16.0      8.00    15.14
-## Top 25%         78.4       67.65        22.0     12.00    93.12
-## Top 10%         84.6       76.82        26.0     23.20    99.00
-## Top 5%          90.7       84.81        30.4     29.00    99.61
-## Top 1%          92.5       87.95        36.1     43.34    99.87
+## Bottom 1%     38.588       4.190        3.00      1.46   2.2052
+## Bottom 5%     47.580      15.650        5.00      2.00   2.4480
+## Bottom 10%    56.240      17.360        6.00      3.00   2.8320
+## Bottom 25%    64.700      35.900       12.00      6.00   5.1950
+## Median        70.400      54.100       16.00      8.00  15.1400
+## Top 25%       78.450      67.650       22.00     12.00  93.1250
+## Top 10%       84.600      76.820       26.00     23.20  99.0000
+## Top 5%        90.670      84.810       30.40     29.00  99.6140
+## Top 1%        92.454      87.952       36.08     43.34  99.8666
 ##            Infant.Mortality
-## Bottom 1%              12.8
-## Bottom 5%              15.6
-## Bottom 10%             16.4
-## Bottom 25%             18.1
-## Median                 20.0
-## Top 25%                21.7
-## Top 10%                23.7
-## Top 5%                 24.5
-## Top 1%                 25.8
+## Bottom 1%            12.778
+## Bottom 5%            15.600
+## Bottom 10%           16.420
+## Bottom 25%           18.150
+## Median               20.000
+## Top 25%              21.700
+## Top 10%              23.680
+## Top 5%               24.470
+## Top 1%               25.818
 ```
 ]
 ---
@@ -532,8 +532,41 @@ Converting code in a loop to an `apply` function is straightforward:
 3. Assign the output to what your loop stored values in.
 
 ---
+# Loop vs. Apply
+
+
+```r
+loop_vec &lt;- numeric(5)         # Preallocation!
+for(x in seq_along(loop_vec)){ # Change x to 1,2,3,4,5
+  loop_vec[x] &lt;- x^2           # Write x squared to loop_vec
+}
+loop_vec
+```
+
+```
+## [1]  1  4  9 16 25
+```
+
+`seq_along(loop_vec)` is just `1:5`, but we need the empty `loop_vec` to store results.
+
+--
+
+
+```r
+# No preallocation, just iterate over 1:5 and assign output!
+apply_vec &lt;- sapply(1:5, function(x){x^2})
+apply_vec
+```
+
+```
+## [1]  1  4  9 16 25
+```
+
+For apply functions, we don't need to prellocate, so we just `sapply()` over `1:5` directly.
+
+---
 class: inverse
-# Back to Making functions!
+## Back to Making and Using Functions!
 
 ---
 # Example: Discretizing Continuous Data
@@ -578,11 +611,11 @@ bucketed_random_data &lt;- bucket(random_data,
 plot(x = bucketed_random_data, y = random_data, main = "Buckets and values")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-21-1.svg)&lt;!-- --&gt;
 ]
 
 ---
-# Example: Removing Bad Data
+# Impossible Values
 
 Let's say we have data where impossible values occur:
 
@@ -637,14 +670,14 @@ remove_extremes(school_data$pr_passing_exam, low = 0, high = 1)
 ---
 # `dplyr::mutate_at()`
 
-`dplyr` functions `mutate_at()` and `summarize_at()` take an argument `funs()`. This will apply our function to every variable (besides `school`) to update the columns in `school_data`:
+The `dplyr` function `across()` allows us to a function to every variable (besides `school`) to update the columns in `school_data`:
 
 .smallish[
 
 ```r
 library(dplyr)
 school_data %&gt;%
-   mutate_at(vars(-school), ~ remove_extremes(x = ., low = 0, high = 1))
+   mutate(across(-school, ~ remove_extremes(x = ., low = 0, high = 1)))
 ```
 
 ```
@@ -687,18 +720,18 @@ swiss %&gt;%
 
 You can skip naming your function in `dplyr` if you won't use it again. Code below will return the mean divided by the standard deviation for each variable in `swiss`:
 
+.smallish[
 
 ```r
 swiss %&gt;%
-    summarize_all( ~ mean(., na.rm = TRUE) / sd(., na.rm = TRUE))
+    summarize(across(everything(), ~ mean(., na.rm=TRUE) / sd(., na.rm=TRUE)))
 ```
 
 ```
-##   Fertility Agriculture Examination Education Catholic
-## 1      5.62        2.23        2.07      1.14    0.987
-##   Infant.Mortality
-## 1             6.85
+##   Fertility Agriculture Examination Education  Catholic Infant.Mortality
+## 1  5.615134    2.230597    2.066884  1.141785 0.9865478         6.846766
 ```
+]
 
 ---
 # Anonymous `lapply()`
@@ -715,23 +748,29 @@ lapply(swiss, function(x) mean(x, na.rm = TRUE) / sd(x, na.rm = TRUE))
 
 ```
 ## $Fertility
-## [1] 5.62
+## [1] 5.615134
 ## 
 ## $Agriculture
-## [1] 2.23
+## [1] 2.230597
 ## 
 ## $Examination
-## [1] 2.07
+## [1] 2.066884
 ## 
 ## $Education
-## [1] 1.14
+## [1] 1.141785
 ## 
 ## $Catholic
-## [1] 0.987
+## [1] 0.9865478
 ```
 
 ---
-# Example: `ggplot2` Templates
+class: inverse
+# Extended Example:
+
+## `ggplot2` Templates
+
+---
+# Flexible `ggplot2`
 
 Let's say you have a particular way you like your charts:
 
@@ -757,12 +796,12 @@ ggplot(gapminder %&gt;% filter(country == "Afghanistan"),
 ---
 # Example of Desired Chart
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
 
 ---
 # Another Example
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-29-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
 
 ---
 # Making Country Flexible
@@ -794,7 +833,7 @@ What `cntry` does:
 gapminder_lifeplot(cntry = "Turkey")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
 
 ---
 # Making `y` Value Flexible
@@ -860,10 +899,14 @@ gapminder_plot &lt;- function(cntry, yvar) {
 gapminder_plot(cntry = "Turkey", yvar = "pop")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
 
 ---
-# `%in%`
+class: inverse
+# Making an Operator
+
+---
+# Opposite of `%in%`
 
 `%in%` returns `TRUE` where elements on its left equal any element on the right.
 
@@ -910,7 +953,7 @@ We can *invert* or **negate**&lt;sup&gt;1&lt;/sup&gt; `%in%` to get a "not in" o
 `%!in%` &lt;- Negate(`%in%`)
 ```
 
-Note to make a new operator, you need to put it in backticks.
+To make a new operator, you need to put it in backticks.
 
 
 ```r
@@ -929,6 +972,11 @@ gapminder %&gt;%
 ```
 
 .footnote[[1] `Negate()` produces logical negations of *functions*, inverting their output.&lt;br&gt; e.g.: `isnt.numeric &lt;- Negate(is.numeric)` ]
+
+---
+class: inverse
+# Wrapping Up
+
 ---
 # Debugging
 
@@ -1013,13 +1061,14 @@ class: inverse
 Using the provided template, you will write: 
 
 1. A loop (or `lapply()`) to read in the data from multiple files.
+   * Don't just use `vroom()`!
 2. Functions to clean up the data 
 3. A function to visualize ridership over the first year.
 
 There is some string processing needed—much of which you have already seen or can probably Google—but *some will come in the next lecture*. I give suggestions in the template, but I can cover string processing in detail in lab if needed before the homework is due.
 
-## PART 1 DUE: Next week
-## PART 2 DUE: In two weeks
+### PART 1 DUE: Next week
+### PART 2 DUE: In two weeks
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

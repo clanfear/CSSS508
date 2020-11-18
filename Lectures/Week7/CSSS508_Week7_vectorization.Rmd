@@ -275,7 +275,7 @@ Like a loop, `apply` functions iterate over elements of objects, except:
 * They don't need preallocation--you can directly assign the output.
 * They *must use a function*
 
-*Nearly anything you can do with a loop can be done more easily with the `apply` family of functions*
+*Nearly anything you can do with an explicit loop can be done more easily with the `apply` family of functions*
 
 ---
 # `lapply()`: List + Functions
@@ -293,7 +293,7 @@ lapply(swiss, FUN = quantile_report)[1:3]
 ]
 
 ---
-#  `sapply()`: Simple `lapply()` 
+## `sapply()`: Simple `lapply()` 
 
 A downside to `lapply()` is that lists are hard to work with. `sapply()` **s**implifies the output by making each element a column in a matrix... usually:
 
@@ -370,8 +370,31 @@ Converting code in a loop to an `apply` function is straightforward:
 3. Assign the output to what your loop stored values in.
 
 ---
+# Loop vs. Apply
+
+```{r}
+loop_vec <- numeric(5)         # Preallocation!
+for(x in seq_along(loop_vec)){ # Change x to 1,2,3,4,5
+  loop_vec[x] <- x^2           # Write x squared to loop_vec
+}
+loop_vec
+```
+
+`seq_along(loop_vec)` is just `1:5`, but we need the empty `loop_vec` to store results.
+
+--
+
+```{r}
+# No preallocation, just iterate over 1:5 and assign output!
+apply_vec <- sapply(1:5, function(x){x^2})
+apply_vec
+```
+
+For apply functions, we don't need to prellocate, so we just `sapply()` over `1:5` directly.
+
+---
 class: inverse
-# Back to Making functions!
+## Back to Making and Using Functions!
 
 ---
 # Example: Discretizing Continuous Data
@@ -416,7 +439,7 @@ plot(x = bucketed_random_data, y = random_data, main = "Buckets and values")
 ]
 
 ---
-# Example: Removing Bad Data
+# Impossible Values
 
 Let's say we have data where impossible values occur:
 
@@ -451,13 +474,13 @@ remove_extremes(school_data$pr_passing_exam, low = 0, high = 1)
 ---
 # `dplyr::mutate_at()`
 
-`dplyr` functions `mutate_at()` and `summarize_at()` take an argument `funs()`. This will apply our function to every variable (besides `school`) to update the columns in `school_data`:
+The `dplyr` function `across()` allows us to a function to every variable (besides `school`) to update the columns in `school_data`:
 
 .smallish[
 ```{r, message=FALSE, warning=FALSE}
 library(dplyr)
 school_data %>%
-   mutate_at(vars(-school), ~ remove_extremes(x = ., low = 0, high = 1))
+   mutate(across(-school, ~ remove_extremes(x = ., low = 0, high = 1)))
 ```
 ]
 
@@ -479,10 +502,12 @@ swiss %>%
 
 You can skip naming your function in `dplyr` if you won't use it again. Code below will return the mean divided by the standard deviation for each variable in `swiss`:
 
+.smallish[
 ```{r}
 swiss %>%
-    summarize_all( ~ mean(., na.rm = TRUE) / sd(., na.rm = TRUE))
+    summarize(across(everything(), ~ mean(., na.rm=TRUE) / sd(., na.rm=TRUE)))
 ```
+]
 
 ---
 # Anonymous `lapply()`
@@ -500,7 +525,13 @@ lapply(swiss, function(x) mean(x, na.rm = TRUE) / sd(x, na.rm = TRUE))[1:5]
 ```
 
 ---
-# Example: `ggplot2` Templates
+class: inverse
+# Extended Example:
+
+## `ggplot2` Templates
+
+---
+# Flexible `ggplot2`
 
 Let's say you have a particular way you like your charts:
 
@@ -621,10 +652,15 @@ gapminder_plot <- function(cntry, yvar) {
 
 ```{r, warning=FALSE, message=FALSE, echo=TRUE, fig.height = 4, dev="svg"}
 gapminder_plot(cntry = "Turkey", yvar = "pop")
+
 ```
 
 ---
-# `%in%`
+class: inverse
+# Making an Operator
+
+---
+# Opposite of `%in%`
 
 `%in%` returns `TRUE` where elements on its left equal any element on the right.
 
@@ -652,7 +688,7 @@ We can *invert* or **negate**<sup>1</sup> `%in%` to get a "not in" operator:
 `%!in%` <- Negate(`%in%`)
 ```
 
-Note to make a new operator, you need to put it in backticks.
+To make a new operator, you need to put it in backticks.
 
 ```{r}
 gapminder %>% 
@@ -662,6 +698,11 @@ gapminder %>%
 ```
 
 .footnote[[1] `Negate()` produces logical negations of *functions*, inverting their output.<br> e.g.: `isnt.numeric <- Negate(is.numeric)` ]
+
+---
+class: inverse
+# Wrapping Up
+
 ---
 # Debugging
 
@@ -743,10 +784,11 @@ class: inverse
 Using the provided template, you will write: 
 
 1. A loop (or `lapply()`) to read in the data from multiple files.
+   * Don't just use `vroom()`!
 2. Functions to clean up the data 
 3. A function to visualize ridership over the first year.
 
 There is some string processing needed—much of which you have already seen or can probably Google—but *some will come in the next lecture*. I give suggestions in the template, but I can cover string processing in detail in lab if needed before the homework is due.
 
-## PART 1 DUE: Next week
-## PART 2 DUE: In two weeks
+### PART 1 DUE: Next week
+### PART 2 DUE: In two weeks
