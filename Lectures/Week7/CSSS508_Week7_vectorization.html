@@ -66,10 +66,10 @@ colMeans(swiss)
 ```
 
 ```
-##        Fertility      Agriculture      Examination        Education 
-##         70.14255         50.65957         16.48936         10.97872 
-##         Catholic Infant.Mortality 
-##         41.14383         19.94255
+##        Fertility      Agriculture      Examination        Education         Catholic 
+##         70.14255         50.65957         16.48936         10.97872         41.14383 
+## Infant.Mortality 
+##         19.94255
 ```
 
 ---
@@ -259,7 +259,7 @@ smarter_first_and_last
 ##         return(c("first" = first, "last" = last))        
 ##     }
 ## }
-## &lt;bytecode: 0x0000000016ac1130&gt;
+## &lt;environment: 0x00000271d5890750&gt;
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -312,10 +312,10 @@ quantile_report(rnorm(10000))
 ```
 
 ```
-##    Bottom 1%    Bottom 5%   Bottom 10%   Bottom 25%       Median      Top 25% 
-## -2.357639442 -1.643088269 -1.280548908 -0.684945703  0.005375761  0.685349425 
-##      Top 10%       Top 5%       Top 1% 
-##  1.304916169  1.647236680  2.298880127
+##    Bottom 1%    Bottom 5%   Bottom 10%   Bottom 25%       Median      Top 25%      Top 10% 
+## -2.296856650 -1.592822114 -1.254632159 -0.664463030  0.008466021  0.672067463  1.272096342 
+##       Top 5%       Top 1% 
+##  1.635784628  2.268843744
 ```
 ]
 
@@ -357,22 +357,22 @@ lapply(swiss, FUN = quantile_report)
 
 ```
 ## $Fertility
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10% 
-##     38.588     47.580     56.240     64.700     70.400     78.450     84.600 
-##     Top 5%     Top 1% 
-##     90.670     92.454 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
+##     38.588     47.580     56.240     64.700     70.400     78.450     84.600     90.670 
+##     Top 1% 
+##     92.454 
 ## 
 ## $Agriculture
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10% 
-##      4.190     15.650     17.360     35.900     54.100     67.650     76.820 
-##     Top 5%     Top 1% 
-##     84.810     87.952 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
+##      4.190     15.650     17.360     35.900     54.100     67.650     76.820     84.810 
+##     Top 1% 
+##     87.952 
 ## 
 ## $Examination
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10% 
-##       3.00       5.00       6.00      12.00      16.00      22.00      26.00 
-##     Top 5%     Top 1% 
-##      30.40      36.08
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
+##       3.00       5.00       6.00      12.00      16.00      22.00      26.00      30.40 
+##     Top 1% 
+##      36.08
 ```
 ]
 
@@ -388,26 +388,16 @@ sapply(swiss, FUN = quantile_report)
 ```
 
 ```
-##            Fertility Agriculture Examination Education Catholic
-## Bottom 1%     38.588       4.190        3.00      1.46   2.2052
-## Bottom 5%     47.580      15.650        5.00      2.00   2.4480
-## Bottom 10%    56.240      17.360        6.00      3.00   2.8320
-## Bottom 25%    64.700      35.900       12.00      6.00   5.1950
-## Median        70.400      54.100       16.00      8.00  15.1400
-## Top 25%       78.450      67.650       22.00     12.00  93.1250
-## Top 10%       84.600      76.820       26.00     23.20  99.0000
-## Top 5%        90.670      84.810       30.40     29.00  99.6140
-## Top 1%        92.454      87.952       36.08     43.34  99.8666
-##            Infant.Mortality
-## Bottom 1%            12.778
-## Bottom 5%            15.600
-## Bottom 10%           16.420
-## Bottom 25%           18.150
-## Median               20.000
-## Top 25%              21.700
-## Top 10%              23.680
-## Top 5%               24.470
-## Top 1%               25.818
+##            Fertility Agriculture Examination Education Catholic Infant.Mortality
+## Bottom 1%     38.588       4.190        3.00      1.46   2.2052           12.778
+## Bottom 5%     47.580      15.650        5.00      2.00   2.4480           15.600
+## Bottom 10%    56.240      17.360        6.00      3.00   2.8320           16.420
+## Bottom 25%    64.700      35.900       12.00      6.00   5.1950           18.150
+## Median        70.400      54.100       16.00      8.00  15.1400           20.000
+## Top 25%       78.450      67.650       22.00     12.00  93.1250           21.700
+## Top 10%       84.600      76.820       26.00     23.20  99.0000           23.680
+## Top 5%        90.670      84.810       30.40     29.00  99.6140           24.470
+## Top 1%        92.454      87.952       36.08     43.34  99.8666           25.818
 ```
 ]
 
@@ -423,26 +413,16 @@ apply(swiss, MARGIN = 2, FUN = quantile_report)
 ```
 
 ```
-##            Fertility Agriculture Examination Education Catholic
-## Bottom 1%     38.588       4.190        3.00      1.46   2.2052
-## Bottom 5%     47.580      15.650        5.00      2.00   2.4480
-## Bottom 10%    56.240      17.360        6.00      3.00   2.8320
-## Bottom 25%    64.700      35.900       12.00      6.00   5.1950
-## Median        70.400      54.100       16.00      8.00  15.1400
-## Top 25%       78.450      67.650       22.00     12.00  93.1250
-## Top 10%       84.600      76.820       26.00     23.20  99.0000
-## Top 5%        90.670      84.810       30.40     29.00  99.6140
-## Top 1%        92.454      87.952       36.08     43.34  99.8666
-##            Infant.Mortality
-## Bottom 1%            12.778
-## Bottom 5%            15.600
-## Bottom 10%           16.420
-## Bottom 25%           18.150
-## Median               20.000
-## Top 25%              21.700
-## Top 10%              23.680
-## Top 5%               24.470
-## Top 1%               25.818
+##            Fertility Agriculture Examination Education Catholic Infant.Mortality
+## Bottom 1%     38.588       4.190        3.00      1.46   2.2052           12.778
+## Bottom 5%     47.580      15.650        5.00      2.00   2.4480           15.600
+## Bottom 10%    56.240      17.360        6.00      3.00   2.8320           16.420
+## Bottom 25%    64.700      35.900       12.00      6.00   5.1950           18.150
+## Median        70.400      54.100       16.00      8.00  15.1400           20.000
+## Top 25%       78.450      67.650       22.00     12.00  93.1250           21.700
+## Top 10%       84.600      76.820       26.00     23.20  99.0000           23.680
+## Top 5%        90.670      84.810       30.40     29.00  99.6140           24.470
+## Top 1%        92.454      87.952       36.08     43.34  99.8666           25.818
 ```
 ]
 ---
