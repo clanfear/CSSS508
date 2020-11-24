@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 8
 ## Strings
 ### Chuck Lanfear
-### May 20, 2020<br>Updated: Nov 11, 2020
+### Nov 25, 2020<br>Updated: Nov 24, 2020
 
 ---
 
@@ -59,8 +59,8 @@ glimpse(restaurants)
 ## $ City                       &lt;chr&gt; "Seattle", "Seattle", "Seattle...
 ## $ Zip_Code                   &lt;chr&gt; "98126", "98109", "98109", "98...
 ## $ Phone                      &lt;chr&gt; "(206) 938-5665", NA, NA, NA, ...
-## $ Longitude                  &lt;dbl&gt; -122, -122, -122, -122, -122, ...
-## $ Latitude                   &lt;dbl&gt; 47.6, 47.6, 47.6, 47.6, 47.6, ...
+## $ Longitude                  &lt;dbl&gt; -122.3709, -122.3562, -122.356...
+## $ Latitude                   &lt;dbl&gt; 47.57043, 47.62506, 47.62506, ...
 ## $ Inspection_Business_Name   &lt;chr&gt; NA, "10 MERCER RESTAURANT", "1...
 ## $ Inspection_Type            &lt;chr&gt; NA, "Routine Inspection/Field ...
 ## $ Inspection_Score           &lt;int&gt; NA, 10, 10, 10, 15, 15, 15, 0,...
@@ -311,7 +311,7 @@ head(unique(restaurants$City))
 
 ```r
 restaurants &lt;- restaurants %&gt;%
-    mutate_at(vars(Name, Address, City), ~str_to_upper(.))
+    mutate(across(c(Name, Address, City), ~str_to_upper(.)))
 head(unique(restaurants$City))
 ```
 
@@ -340,8 +340,8 @@ Any character column is potentially affected. We can use the `str_trim()` functi
 
 
 ```r
-# use mutate_if to trim all the character columns
-*restaurants &lt;- restaurants %&gt;% mutate_if(is.character, str_trim)
+restaurants &lt;- restaurants %&gt;% 
+* mutate(across(where(is.character), ~str_trim(.)))
 head(unique(restaurants$Name), 4)
 ```
 
@@ -350,7 +350,7 @@ head(unique(restaurants$Name), 4)
 ## [3] "100 LB CLAM"          "1000 SPIRITS"
 ```
 
-.footnote[`mutate_if(x, y)` applies function `y` to every column for which `x` is `TRUE`.]
+.footnote[`across(where(x), ~ y)` applies function `y` to every column for which function `x` returns `TRUE`.]
 
 ---
 class: inverse
@@ -457,14 +457,16 @@ Just be careful to not load an entire long vector / variable or it may crash RSt
 as it tries to render a massive page!
 
 ---
-# How Many Rows Have Non-206 Numbers?
+# `str_detect()`
+
+Perhaps we want to know how many phone numbers aren't in the 206 area code?
 
 
 ```r
 restaurants %&gt;% 
   mutate(has_206_number = 
            str_detect(Phone, area_code_206_pattern)) %&gt;% 
-  group_by(has_206_number) %&gt;% tally()
+  count(has_206_number) 
 ```
 
 ```
@@ -479,10 +481,13 @@ restaurants %&gt;%
 `str_detect()` returns `NA` for rows with missing (`NA`) phone numbers--you can't search for text in a missing value.
 
 ---
-# Extracting Patterns with `str_extract()`
+# `str_extract()`
+
+`str_extract()` extracts substrings that match a regex.
 
 Let's extract the [directional part of Seattle](https://en.wikipedia.org/wiki/Street_layout_of_Seattle#Directionals) of addresses: N, NW, SE, none, etc.
 
+--
 
 
 ```r
@@ -508,7 +513,7 @@ str_extract(direction_examples, direction_pattern)
 restaurants %&gt;% 
   distinct(Address) %&gt;% 
   mutate(city_region = 
-          str_trim(str_extract(Address, direction_pattern))) %&gt;% 
+*         str_trim(str_extract(Address, direction_pattern))) %&gt;%
   count(city_region) %&gt;% arrange(desc(n))
 ```
 
@@ -526,6 +531,11 @@ restaurants %&gt;%
 ## 8 NW            438
 ## 9 W             235
 ```
+.pull-right[
+.footnote[
+A common operation is to `str_extract()` something with extra spaces and then `str_trim()` them out.
+]
+]
 
 ---
 # `str_replace()`: Replacing
@@ -534,19 +544,32 @@ Maybe we want to do a street-level analysis of inspections (e.g. compare The Ave
 
 
 ```r
-address_number_pattern &lt;- "^[0-9]*-?[A-Z]? (1/2 )?"
-address_number_test_examples &lt;- 
+number_pattern &lt;- "^[0-9]*-?[A-Z]? (1/2 )?"
+number_examples &lt;- 
   c("2812 THORNDYKE AVE W", "1ST AVE", "10A 1ST AVE", 
     "10-A 1ST AVE", "5201-B UNIVERSITY WAY NE",
     "7040 1/2 15TH AVE NW")
-str_replace(address_number_test_examples, 
-            address_number_pattern, replacement = "")
+str_replace(number_examples, number_pattern, replacement = "")
 ```
 
 ```
 ## [1] "THORNDYKE AVE W"   "1ST AVE"           "1ST AVE"          
 ## [4] "1ST AVE"           "UNIVERSITY WAY NE" "15TH AVE NW"
 ```
+--
+
+We can also use the shortcut `str_remove()`:
+
+
+```r
+str_remove(number_examples, number_pattern)
+```
+
+```
+## [1] "THORNDYKE AVE W"   "1ST AVE"           "1ST AVE"          
+## [4] "1ST AVE"           "UNIVERSITY WAY NE" "15TH AVE NW"
+```
+
 
 ---
 # How Does the Building Number regex Work?
@@ -581,8 +604,7 @@ Let's break down `"^[0-9]*-?[A-Z]? (1/2 )?"`:
 
 ```r
 restaurants &lt;- restaurants %&gt;% 
-  mutate(street_only = str_replace(Address, address_number_pattern,
-                                   replacement = ""))
+  mutate(street_only = str_remove(Address, number_pattern))
 restaurants %&gt;% distinct(street_only) %&gt;% head(10)
 ```
 
@@ -609,12 +631,11 @@ Getting rid of unit/suite references is tricky, but a decent attempt would be to
 
 
 ```r
-address_unit_pattern &lt;- " (#|STE|SUITE|SHOP|UNIT).*$"
-address_unit_test_examples &lt;-
+unit_pattern &lt;- " (#|STE|SUITE|SHOP|UNIT).*$"
+unit_examples &lt;-
   c("1ST AVE", "RAINIER AVE S #A", "FAUNTLEROY WAY SW STE 108", 
     "4TH AVE #100C", "NW 54TH ST")
-str_replace(address_unit_test_examples, address_unit_pattern,
-            replacement = "")
+str_remove(unit_examples, unit_pattern)
 ```
 
 ```
@@ -644,8 +665,8 @@ Breaking down `" (#|STE|SUITE|SHOP|UNIT).*$"`:
 
 ```r
 restaurants &lt;- restaurants %&gt;% 
-  mutate(street_only = str_trim(str_replace(street_only, 
-                       address_unit_pattern, replacement = "")))
+  mutate(street_only = 
+           str_trim(str_remove(street_only, unit_pattern)))
 restaurants %&gt;% distinct(street_only) %&gt;% head(11)
 ```
 
