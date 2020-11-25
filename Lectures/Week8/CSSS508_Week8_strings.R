@@ -42,13 +42,13 @@ str_length("weasels")
 
 head(unique(restaurants$City))
 restaurants <- restaurants %>%
-    mutate_at(vars(Name, Address, City), ~str_to_upper(.))
+    mutate(across(c(Name, Address, City), ~str_to_upper(.)))
 head(unique(restaurants$City))
 
 head(unique(restaurants$Name), 4)
 
-# use mutate_if to trim all the character columns
-restaurants <- restaurants %>% mutate_if(is.character, str_trim) #<<
+restaurants <- restaurants %>% 
+  mutate(across(where(is.character), ~str_trim(.))) #<<
 head(unique(restaurants$Name), 4)
 
 coffee <- restaurants %>% 
@@ -71,7 +71,7 @@ str_detect(phone_test_examples, area_code_206_pattern)
 restaurants %>% 
   mutate(has_206_number = 
            str_detect(Phone, area_code_206_pattern)) %>% 
-  group_by(has_206_number) %>% tally()
+  count(has_206_number) 
 
 direction_pattern <- " (N|NW|NE|S|SW|SE|W|E)( |$)"
 direction_examples <- c("2812 THORNDYKE AVE W", "512 NW 65TH ST",
@@ -81,32 +81,31 @@ str_extract(direction_examples, direction_pattern)
 restaurants %>% 
   distinct(Address) %>% 
   mutate(city_region = 
-          str_trim(str_extract(Address, direction_pattern))) %>% 
+          str_trim(str_extract(Address, direction_pattern))) %>% #<<
   count(city_region) %>% arrange(desc(n))
 
-address_number_pattern <- "^[0-9]*-?[A-Z]? (1/2 )?"
-address_number_test_examples <- 
+number_pattern <- "^[0-9]*-?[A-Z]? (1/2 )?"
+number_examples <- 
   c("2812 THORNDYKE AVE W", "1ST AVE", "10A 1ST AVE", 
     "10-A 1ST AVE", "5201-B UNIVERSITY WAY NE",
     "7040 1/2 15TH AVE NW")
-str_replace(address_number_test_examples, 
-            address_number_pattern, replacement = "")
+str_replace(number_examples, number_pattern, replacement = "")
+
+str_remove(number_examples, number_pattern)
 
 restaurants <- restaurants %>% 
-  mutate(street_only = str_replace(Address, address_number_pattern,
-                                   replacement = ""))
+  mutate(street_only = str_remove(Address, number_pattern))
 restaurants %>% distinct(street_only) %>% head(10)
 
-address_unit_pattern <- " (#|STE|SUITE|SHOP|UNIT).*$"
-address_unit_test_examples <-
+unit_pattern <- " (#|STE|SUITE|SHOP|UNIT).*$"
+unit_examples <-
   c("1ST AVE", "RAINIER AVE S #A", "FAUNTLEROY WAY SW STE 108", 
     "4TH AVE #100C", "NW 54TH ST")
-str_replace(address_unit_test_examples, address_unit_pattern,
-            replacement = "")
+str_remove(unit_examples, unit_pattern)
 
 restaurants <- restaurants %>% 
-  mutate(street_only = str_trim(str_replace(street_only, 
-                       address_unit_pattern, replacement = "")))
+  mutate(street_only = 
+           str_trim(str_remove(street_only, unit_pattern)))
 restaurants %>% distinct(street_only) %>% head(11)
 
 restaurants %>% 

@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 7
 ## Vectorization and Functions
 ### Chuck Lanfear
-### Nov 18, 2020<br>Updated: Nov 18, 2020
+### Nov 18, 2020<br>Updated: Nov 24, 2020
 
 ---
 
@@ -66,10 +66,8 @@ colMeans(swiss)
 ```
 
 ```
-##        Fertility      Agriculture      Examination        Education         Catholic 
-##         70.14255         50.65957         16.48936         10.97872         41.14383 
-## Infant.Mortality 
-##         19.94255
+##        Fertility      Agriculture      Examination        Education         Catholic Infant.Mortality 
+##         70.14255         50.65957         16.48936         10.97872         41.14383         19.94255
 ```
 
 ---
@@ -259,7 +257,7 @@ smarter_first_and_last
 ##         return(c("first" = first, "last" = last))        
 ##     }
 ## }
-## &lt;environment: 0x00000271d5890750&gt;
+## &lt;environment: 0x000001ff87606bf0&gt;
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -313,9 +311,9 @@ quantile_report(rnorm(10000))
 
 ```
 ##    Bottom 1%    Bottom 5%   Bottom 10%   Bottom 25%       Median      Top 25%      Top 10% 
-## -2.296856650 -1.592822114 -1.254632159 -0.664463030  0.008466021  0.672067463  1.272096342 
+## -2.333593597 -1.642744909 -1.291610989 -0.672982453 -0.006031143  0.660022100  1.243566697 
 ##       Top 5%       Top 1% 
-##  1.635784628  2.268843744
+##  1.607643031  2.325196350
 ```
 ]
 
@@ -357,22 +355,16 @@ lapply(swiss, FUN = quantile_report)
 
 ```
 ## $Fertility
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
-##     38.588     47.580     56.240     64.700     70.400     78.450     84.600     90.670 
-##     Top 1% 
-##     92.454 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5%     Top 1% 
+##     38.588     47.580     56.240     64.700     70.400     78.450     84.600     90.670     92.454 
 ## 
 ## $Agriculture
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
-##      4.190     15.650     17.360     35.900     54.100     67.650     76.820     84.810 
-##     Top 1% 
-##     87.952 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5%     Top 1% 
+##      4.190     15.650     17.360     35.900     54.100     67.650     76.820     84.810     87.952 
 ## 
 ## $Examination
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5% 
-##       3.00       5.00       6.00      12.00      16.00      22.00      26.00      30.40 
-##     Top 1% 
-##      36.08
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5%     Top 1% 
+##       3.00       5.00       6.00      12.00      16.00      22.00      26.00      30.40      36.08
 ```
 ]
 
