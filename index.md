@@ -200,7 +200,7 @@ layout: default
        + [R script for Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_Week8_strings.R)
        + [PDF of Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_Week8_strings.pdf)
        + [Rmd for Lecture 8 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week8/CSSS508_Week8_strings.Rmd)
-   * Lecture Video for Lecture 8, recorded May 20th, 2020
+   * Lecture Video for Lecture 8, recorded November 25th, 2020
        + [Zoom](https://washington.zoom.us/rec/share/6tQoKpXi2HlOQ4nH1nvSfYsYJpjUT6a81HIdqKEOxBqpj9hNq_g-GKKBkAGWUvux)
        + [YouTube](https://youtu.be/q6VJlTYioek)
    * Homework 6, Part 2:
