@@ -204,7 +204,7 @@ layout: default
        + [Zoom](https://washington.zoom.us/rec/share/6tQoKpXi2HlOQ4nH1nvSfYsYJpjUT6a81HIdqKEOxBqpj9hNq_g-GKKBkAGWUvux)
        + [YouTube](https://youtu.be/q6VJlTYioek)
    * Homework 6, Part 2:
-       + Homework 6, Part 2: [RMD](https://clanfear.github.io/CSSS508/Homework/HW6/homework_6_p1_key.Rmd)
+       + Homework 6, Part 2: [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Keys/HW6_Keys/homework_6_p1_key.Rmd)
        + Homework 6, Part 2 Key: HTML, RMD
    * Data In-Class:
        + [Seattle restaurant inspection data from King County, cleaned.](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata)
