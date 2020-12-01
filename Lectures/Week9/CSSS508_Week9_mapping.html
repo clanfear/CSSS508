@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### May 27, 2020<br>Updated: May 27, 2020
+### Dec 2, 2020<br>Updated: Dec 1, 2020
 
 ---
 
@@ -30,7 +30,7 @@ class: center, top, title-slide
 
 ### Advanced Mapping
 * `sf`: [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) geometry for R
-* `tidycensus` for obtaining Census Bureau data
+* `tidycensus` and `tigris` for obtaining Census Bureau data and shapefiles
 
 ---
 # Mapping in R: A quick plug
@@ -119,7 +119,7 @@ This is ideal when you don't need to place points over some map for reference.
 ggplot(spd_raw, 
        aes(Longitude, Latitude)) + 
   geom_point() + 
-  coord_fixed() +
+  coord_fixed() + # evenly spaces x and y
   ggtitle("Seattle Police Incidents",
           subtitle="March 25, 2016") +
   theme_classic()
@@ -280,9 +280,9 @@ assaults &lt;- downtown %&gt;%
 ```
 
 ---
-# Plotting with Labels
-
 .pull-left[
+# Labels
+
 Now let's plot the events and label them with `geom_label()` (`geom_text()` without background or border):
 
 .smallish[
@@ -296,7 +296,7 @@ qmplot(data = downtown,
 *      alpha = I(0.5)) +
   geom_label(data = assaults,
        aes(label = assault_label),
-       size=2.5)
+       size=2)
 ```
 ]
 
@@ -308,9 +308,9 @@ Placing the arguments for `color=` and `alpha=` inside `I()` prevents them from 
 ]
 
 ---
+.pull-left[
 # `ggrepel`
 
-.pull-left[
 You can also try `geom_label_repel()` or `geom_text_repel()` in the `ggrepel` package to fix or reduce overlaps (total space is limited here):
 
 .small[
@@ -330,7 +330,7 @@ qmplot(data =
     fill = "black", 
     color = "white", 
     segment.color = "black",
-    size=2.5)
+    size=2)
 ```
 ]
 ]
@@ -507,7 +507,7 @@ precinct_shape &lt;- st_read("./data/district/votdst.shp",
 ## geometry type:  MULTIPOLYGON
 ## dimension:      XY
 ## bbox:           xmin: 1220179 ymin: 31555.16 xmax: 1583562 ymax: 287678
-## proj4string:    +proj=lcc +lat_1=47.5 +lat_2=48.73333333333333 +lat_0=47 +lon_0=-120.8333333333333 +x_0=500000.0000000001 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs
+## projected CRS:  NAD83(HARN) / Washington North (ftUS)
 ```
 
 [If following along, click here to download a zip of the shapefile.](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/data/district.zip)
@@ -596,7 +596,9 @@ ggplot(precincts_votes_sf,
 ]
 
 .pull-right[
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
+.image-100[
+&lt;img src="CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-16-1.png" width="360" /&gt;
+]
 ]
 
 ---
@@ -694,13 +696,13 @@ glimpse(king_county)
 ```
 ## Rows: 398
 ## Columns: 7
-## $ GEOID       &lt;chr&gt; "53033032309", "53033031704", "53033032313", ...
-## $ NAME        &lt;chr&gt; "Census Tract 323.09, King County, Washington...
-## $ B02001_001E &lt;dbl&gt; 8249, 5728, 6551, 5941, 6365, 5292, 6132, 663...
-## $ B02001_001M &lt;dbl&gt; 457, 299, 365, 322, 275, 417, 602, 580, 311, ...
-## $ B02009_001E &lt;dbl&gt; 375, 633, 294, 128, 26, 80, 53, 2117, 456, 62...
-## $ B02009_001M &lt;dbl&gt; 246, 356, 260, 127, 37, 108, 65, 602, 287, 40...
-## $ geometry    &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.1532 4..., ...
+## $ GEOID       &lt;chr&gt; "53033031705", "53033032212", "53033032322", ...
+## $ NAME        &lt;chr&gt; "Census Tract 317.05, King County, Washington...
+## $ B02001_001E &lt;dbl&gt; 4271, 8337, 3560, 8498, 2009, 3224, 7634, 401...
+## $ B02001_001M &lt;dbl&gt; 266, 563, 165, 435, 129, 196, 847, 415, 396, ...
+## $ B02009_001E &lt;dbl&gt; 469, 116, 94, 797, 33, 32, 247, 88, 268, 8, 1...
+## $ B02009_001M &lt;dbl&gt; 345, 80, 65, 170, 29, 42, 151, 114, 140, 12, ...
+## $ geometry    &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.1336 4..., ...
 ```
 ]
 
@@ -724,11 +726,11 @@ glimpse(king_county)
 ```
 ## Rows: 398
 ## Columns: 5
-## $ GEOID              &lt;chr&gt; "53033032309", "53033031704", "5303303...
-## $ NAME               &lt;chr&gt; "Census Tract 323.09, King County, Was...
-## $ `Total Population` &lt;dbl&gt; 8249, 5728, 6551, 5941, 6365, 5292, 61...
-## $ `Any Black`        &lt;dbl&gt; 0.045460056, 0.110509777, 0.044878644,...
-## $ geometry           &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.1532...
+## $ GEOID              &lt;chr&gt; "53033031705", "53033032212", "5303303...
+## $ NAME               &lt;chr&gt; "Census Tract 317.05, King County, Was...
+## $ `Total Population` &lt;dbl&gt; 4271, 8337, 3560, 8498, 2009, 3224, 76...
+## $ `Any Black`        &lt;dbl&gt; 0.109810349, 0.013913878, 0.026404494,...
+## $ geometry           &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.1336...
 ```
 
 ---
@@ -755,6 +757,7 @@ New functions:
    * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
 
 ---
+
 ![](CSSS508_Week9_mapping_files/figure-html/king_plot-1.svg)&lt;!-- --&gt;
 
 ---
@@ -783,7 +786,6 @@ kc_nowater &lt;- king_county %&gt;%
 Then we can reproduce the same plot using `kc_nowater`...
 
 ---
-
 ![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
 
 ---
@@ -859,15 +861,15 @@ glimpse(urbans)
 ```
 ## Rows: 3,601
 ## Columns: 9
-## $ UACE10     &lt;chr&gt; "88732", "01819", "22366", "93322", "02548", "...
-## $ AFFGEOID10 &lt;chr&gt; "400C100US88732", "400C100US01819", "400C100US...
-## $ GEOID10    &lt;chr&gt; "88732", "01819", "22366", "93322", "02548", "...
-## $ NAME10     &lt;chr&gt; "Tucson, AZ", "Alturas, CA", "Davenport, IA--I...
-## $ LSAD10     &lt;chr&gt; "75", "76", "75", "76", "76", "76", "75", "75"...
-## $ UATYP10    &lt;chr&gt; "U", "C", "U", "C", "C", "C", "U", "U", "U", "...
-## $ ALAND10    &lt;dbl&gt; 915276150, 4933312, 357345121, 45455957, 23646...
-## $ AWATER10   &lt;dbl&gt; 2078695, 16517, 21444164, 88872, 3913803, 1510...
-## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-110.8135 3..., M...
+## $ UACE10     &lt;chr&gt; "18856", "83116", "79363", "96670", "97750", "...
+## $ AFFGEOID10 &lt;chr&gt; "400C100US18856", "400C100US83116", "400C100US...
+## $ GEOID10    &lt;chr&gt; "18856", "83116", "79363", "96670", "97750", "...
+## $ NAME10     &lt;chr&gt; "Colorado Springs, CO", "South Bend, IN--MI", ...
+## $ LSAD10     &lt;chr&gt; "75", "75", "75", "75", "75", "76", "75", "75"...
+## $ UATYP10    &lt;chr&gt; "U", "U", "U", "U", "U", "C", "U", "U", "U", "...
+## $ ALAND10    &lt;dbl&gt; 486995256, 417310226, 137815683, 835565506, 34...
+## $ AWATER10   &lt;dbl&gt; 962957, 8281569, 141396, 6442279, 1377397, 151...
+## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-104.6051 3..., M...
 ```
 ]
 

@@ -6,7 +6,7 @@ glimpse(spd_raw)
 ## ggplot(spd_raw,
 ##        aes(Longitude, Latitude)) +
 ##   geom_point() +
-##   coord_fixed() +
+##   coord_fixed() + # evenly spaces x and y
 ##   ggtitle("Seattle Police Incidents",
 ##           subtitle="March 25, 2016") +
 ##   theme_classic()
@@ -63,7 +63,7 @@ qmplot(data = downtown,
        alpha = I(0.5)) + 
   geom_label(data = assaults,
        aes(label = assault_label),
-       size=2.5)
+       size=2)
 
 
 
@@ -81,7 +81,7 @@ qmplot(data =
     fill = "black", 
     color = "white", 
     segment.color = "black",
-    size=2.5)
+    size=2)
 
 
 
@@ -126,7 +126,7 @@ ggplot(precincts_votes_sf,
   geom_sf(size=NA) +
   theme_void() +
   theme(legend.position = 
-          "bottom")
+          "right")
 
 library(tidycensus)
 

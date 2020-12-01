@@ -2,7 +2,7 @@
 title: "CSSS508, Week 9"
 subtitle: "Mapping"
 author: "Chuck Lanfear"
-date: "May 27, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Dec 2, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -28,7 +28,7 @@ knitr::opts_chunk$set(comment = "##")
 
 ### Advanced Mapping
 * `sf`: [Simple Features](https://en.wikipedia.org/wiki/Simple_Features) geometry for R
-* `tidycensus` for obtaining Census Bureau data
+* `tidycensus` and `tigris` for obtaining Census Bureau data and shapefiles
 
 ---
 # Mapping in R: A quick plug
@@ -63,7 +63,7 @@ In Week 5, we looked at types of incidents the Seattle Police Department respond
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 ```
-```{r read_spd_data, cache=TRUE, message=FALSE, warning=FALSE}
+```{r read_spd_data, cache=FALSE, message=FALSE, warning=FALSE}
 spd_raw <- read_csv("https://clanfear.github.io/CSSS508/Seattle_Police_Department_911_Incident_Response.csv")
 ```
 
@@ -89,7 +89,7 @@ This is ideal when you don't need to place points over some map for reference.
 ggplot(spd_raw, 
        aes(Longitude, Latitude)) + 
   geom_point() + 
-  coord_fixed() +
+  coord_fixed() + # evenly spaces x and y
   ggtitle("Seattle Police Incidents",
           subtitle="March 25, 2016") +
   theme_classic()
@@ -269,9 +269,9 @@ assaults <- downtown %>%
 ```
 
 ---
-# Plotting with Labels
-
 .pull-left[
+# Labels
+
 Now let's plot the events and label them with `geom_label()` (`geom_text()` without background or border):
 
 .smallish[
@@ -284,7 +284,7 @@ qmplot(data = downtown,
        alpha = I(0.5)) +  #<<
   geom_label(data = assaults,
        aes(label = assault_label),
-       size=2.5)
+       size=2)
 ```
 ]
 
@@ -292,7 +292,7 @@ Placing the arguments for `color=` and `alpha=` inside `I()` prevents them from 
 ]
 
 .pull-right[
-```{r labels_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 5, fig.width=2.5, dev="svg"}
+```{r labels_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 6, fig.width=3, dev="svg"}
 qmplot(data = downtown,
        x = Longitude,
        y = Latitude,
@@ -301,14 +301,14 @@ qmplot(data = downtown,
        alpha = I(0.5)) + 
   geom_label(data = assaults,
        aes(label = assault_label),
-       size=2.5)
+       size=2)
 ```
 ]
 
 ---
+.pull-left[
 # `ggrepel`
 
-.pull-left[
 You can also try `geom_label_repel()` or `geom_text_repel()` in the `ggrepel` package to fix or reduce overlaps (total space is limited here):
 
 .small[
@@ -327,13 +327,13 @@ qmplot(data =
     fill = "black", 
     color = "white", 
     segment.color = "black",
-    size=2.5)
+    size=2)
 ```
 ]
 ]
 
 .pull-right[
-```{r ggrepel_2, echo=FALSE, message = FALSE, cache=TRUE, warning=FALSE, fig.height = 5, fig.width=2.5, dev="svg"}
+```{r ggrepel_2, echo=FALSE, message = FALSE, cache=TRUE, warning=FALSE, fig.height = 6, fig.width=3, dev="svg"}
 library(ggrepel)
 qmplot(data = 
     downtown,
@@ -348,7 +348,7 @@ qmplot(data =
     fill = "black", 
     color = "white", 
     segment.color = "black",
-    size=2.5)
+    size=2)
 ```
 ]
 
@@ -508,7 +508,7 @@ We will work with the voting data from Homework 5. You can obtain a shape file o
 
 We can load the file using `st_read()`.
 
-```{r, cache=T, message=FALSE, warning=FALSE}
+```{r, cache=TRUE, message=FALSE, warning=FALSE}
 precinct_shape <- st_read("./data/district/votdst.shp",
                           stringsAsFactors = F) %>% 
   select(Precinct=NAME, geometry)
@@ -586,14 +586,16 @@ ggplot(precincts_votes_sf,
 ]
 
 .pull-right[
-```{r, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dev="svg", fig.height=5.5, fig.width=2.75}
+.image-100[
+```{r, echo=FALSE, message=FALSE, warning=FALSE, cache=FALSE, dev="png", fig.retina=5, fig.width = 5, fig.height=8}
 ggplot(precincts_votes_sf, 
        aes(fill=P_Dem)) + #<<
   geom_sf(size=NA) +
   theme_void() +
   theme(legend.position = 
-          "bottom")
+          "right")
 ```
+]
 ]
 
 ---
@@ -718,7 +720,8 @@ New functions:
    * `datum=NA`: Removes graticule lines, which are geographical lines such as meridians and parallels.
 
 ---
-```{r king_plot, eval=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
+
+```{r king_plot, eval=TRUE, echo=FALSE, dev="svg", fig.height = 6}
 king_county %>% 
   ggplot(aes(fill = `Any Black`)) + 
   geom_sf(size = NA) + 
@@ -734,7 +737,7 @@ king_county %>%
 
 With a simple function and boundaries of water bodies in King County, we can replace water with empty space.
 
-```{r, include=FALSE, cache=TRUE}
+```{r, include=FALSE, cache=FALSE}
 st_erase <- function(x, y) {
   st_difference(x, st_make_valid(st_union(st_combine(y))))
 }
@@ -761,8 +764,7 @@ kc_nowater <- king_county %>%
 Then we can reproduce the same plot using `kc_nowater`...
 
 ---
-
-```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
+```{r, eval=TRUE, echo=FALSE, dev="svg", dpi = 300, fig.height = 6}
   ggplot(kc_nowater, 
          aes(fill=`Any Black`)) + 
   geom_sf(size = NA) + 
@@ -778,7 +780,7 @@ Then we can reproduce the same plot using `kc_nowater`...
 
 Let's do this again, but for the entire state of Illinois.
 
-```{r, include=FALSE, cache=TRUE}
+```{r, include=FALSE, cache=FALSE}
 pb_state <- 
   get_acs(geography = "tract", state = "IL",
           geometry  = TRUE,
@@ -821,7 +823,7 @@ pb_state %>%
 
 ---
 
-```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
+```{r, cache=FALSE, echo=FALSE, fig.height = 6, dev="svg"}
 pb_state %>% 
   ggplot(aes(fill = `Any Black`)) + 
   geom_sf(size = NA) + 
@@ -853,7 +855,7 @@ This is useful for...
 
 We can use `tigris` to download urban boundaries and add them to our prior map.
 
-```{r, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r, cache=FALSE, message=FALSE, warning=FALSE, results='hide'}
 urbans <- tigris::urban_areas(cb = TRUE, class = "sf")
 glimpse(urbans)
 ```
@@ -893,7 +895,7 @@ We add the `urban_il` data as a new layer:
 
 ---
 
-```{r, eval=TRUE, echo=FALSE, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
+```{r, eval=TRUE, echo=FALSE, cache=FALSE, echo=FALSE, fig.height = 6, dev="svg"}
 pb_state %>% 
   ggplot(aes(fill=`Any Black`)) + 
   geom_sf(size = NA) + 
