@@ -220,8 +220,8 @@ layout: default
        + [PDF of Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.pdf)
        + [Rmd for Lecture 9 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/CSSS508_Week9_mapping.Rmd)
    * Lecture Video for Lecture 9, recorded May 27th, 2020
-       + [Zoom](https://washington.zoom.us/rec/share/2dEpCL2p2kxJXdbL2BzycI8HL5nXaaa81yMe_vdbzU0B_00t1XOcYbUvWRw_Gf01)
-       + [YouTube](https://youtu.be/QWOClS4J9rI)
+       + [Zoom](https://washington.zoom.us/rec/share/p_6LmL0H5DmVQ9CXwAR_PH9INKPl6O5dGt0dZqqSawIJw-Ri4qb1VVzP2o1j6dBT._TlQ64d8Y0Tg_W95)
+       + [YouTube](https://youtu.be/gBRnVifHB3Y)
    * Optional Homework 7:
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
