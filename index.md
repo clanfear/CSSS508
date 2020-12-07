@@ -225,7 +225,7 @@ layout: default
    * Optional Homework 7:
        + [Homework 7: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7.Rmd)
        + [Homework 7: HTML File](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
-       + [Seattle restaurant inspection data since 2012](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata) (CSV, about 16 MB) from King County
+       + [Seattle restaurant inspection data since 2012](http://clanfear.github.io/CSSS508/Lectures/Week8/restaurants.Rdata) (Rdata file) from King County
        + Homework 7 Key: [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW7/homework_7_key.Rmd), [HTML](http://clanfear.github.io/CSSS508/Homework/HW7/homework_7.html)
    * Suggested text: [Applied Spatial Data Analysis with R](http://www.springer.com/us/book/9781461476177)  by Bivand et al.
    * [RSpatial.org](http://www.rspatial.org/index.html): Massive resource for spatial analysis in R
