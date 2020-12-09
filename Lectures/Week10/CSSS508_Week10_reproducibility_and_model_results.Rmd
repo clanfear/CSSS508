@@ -2,7 +2,7 @@
 title: "CSSS508, Week 10"
 subtitle: "Model Results and Reproducibility"
 author: "Chuck Lanfear"
-date: "Jun 3, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Dec 8, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -100,10 +100,8 @@ summary(lm_1)
 ---
 # Model Output Varies!
 
-.smallish[
 Each type of model also produces somewhat different output, so you can't just reuse
 the same code to handle output from every model.
-]
 
 .smaller[
 ```{r, op}
@@ -115,7 +113,7 @@ summary(glm_1)
 ---
 # `broom::tidy()`
 
-`tidy()` produces the similar output, but as a dataframe.
+`tidy()` produces similar output, but as a dataframe.
 
 ```{r}
 lm_1 %>% tidy()
@@ -163,18 +161,23 @@ augment(lm_1) %>% head()
 ```
 ]
 
+See `?augment.lm` for examples of what `augment()` can do.
+
 ---
 # The Power of `broom`
 
 The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `fac1`:
 
-.small[
+.smallish[
 ```{r}
-ex_dat %>% group_by(fac1) %>% do(tidy(lm(yn ~  num1 + fac2 + num2, data = .))) #<<
+ex_dat %>% 
+  nest_by(fac1) %>% #<<
+  mutate(model = list(lm(yn ~  num1 + fac2, data = data))) %>%  
+  summarize(tidy(model), .groups = "drop")
 ```
 ]
 
-.footnote[`do()` repeats whatever is inside it once for each level of the variable(s) in `group_by()` then puts them together as a data frame.]
+.footnote[`nest_by()` nests data into a list column by levels of `fac1`.]
 
 ---
 class: inverse
@@ -189,7 +192,7 @@ I have used `geom_smooth()` in many past examples.
 
 --
 
-Note, however, that most regression models are conditional mean models, such as ordinary least squares, generalized linear models. 
+Note, however, that most regression models are conditional mean models, such as ordinary least squares and generalized linear models. 
 
 --
 

@@ -41,7 +41,10 @@ glance(lm_1)
 
 augment(lm_1) %>% head()
 
-ex_dat %>% group_by(fac1) %>% do(tidy(lm(yn ~  num1 + fac2 + num2, data = .))) #<<
+ex_dat %>% 
+  nest_by(fac1) %>% #<<
+  mutate(model = list(lm(yn ~  num1 + fac2, data = data))) %>%  
+  summarize(tidy(model), .groups = "drop")
 
 library(gapminder)
 
