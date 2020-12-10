@@ -219,7 +219,7 @@ layout: default
        + [R script for Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.R)
        + [PDF of Lecture 9 slides](http://clanfear.github.io/CSSS508/Lectures/Week9/CSSS508_Week9_mapping.pdf)
        + [Rmd for Lecture 9 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/CSSS508_Week9_mapping.Rmd)
-   * Lecture Video for Lecture 9, recorded May 27th, 2020
+   * Lecture Video for Lecture 9, recorded December 2nd, 2020
        + [Zoom](https://washington.zoom.us/rec/share/p_6LmL0H5DmVQ9CXwAR_PH9INKPl6O5dGt0dZqqSawIJw-Ri4qb1VVzP2o1j6dBT._TlQ64d8Y0Tg_W95)
        + [YouTube](https://youtu.be/gBRnVifHB3Y)
    * Optional Homework 7:
@@ -240,9 +240,9 @@ layout: default
    * [Slides for Lecture 10: Reproducibility and model results](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.html)
       + [PDF of Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.pdf)
       + [Rmd for Lecture 10 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.Rmd)
-   * Lecture Video for Week 10
-       + [Zoom](https://washington.zoom.us/rec/share/9JUuMZz50X5JfLPNxHj4WI0dAZb4X6a80yge_vsLnR7G-0HLz0LqR5RH9_4zEt2s)
-       + [YouTube](https://youtu.be/SYa0FVPPi2Y)
+   * Lecture Video for Week 10, recorded December 9th, 2020
+       + [Zoom](https://washington.zoom.us/rec/share/a1simgomwoMiNz5E3DrthXmGNW3fncEi3o89lR8MmWjbniVhMj3A90wxnFJjYQGP.w4bsxphxQ1rbLl78?startTime=1607556423000)
+       + [YouTube](https://youtu.be/yTV5hzzaMfM)
    * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
    * [Initial Steps Toward Reproducible Research](https://kbroman.org/steps2rr/) by Karl Broman
    * [The Plain Person's Guide to Plain Text Social Science](http://plain-text.co) by Kieran Healy
