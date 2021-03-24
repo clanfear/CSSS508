@@ -75,7 +75,7 @@ has a large number of students but no teaching assistant, so students are encour
 and expected to assist one another with technical problems, both in and out of class.
 Diagnosing problems in others' code is a very effective way to improve your understanding of programming.
 
-#### [Mailing List](mailto:csss508a_sp20@uw.edu)
+#### [Mailing List](mailto:csss508a_sp21@uw.edu)
 
 This course features a mailing list for asking questions. I encourage
 you to use this list as your primary means of answering *long technical questions*. To use the mailing list, address your email to `csss508a_sp20@uw.edu`

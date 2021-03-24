@@ -13,7 +13,7 @@ layout: default
 * [Syllabus](https://clanfear.github.io/CSSS508/docs/syllabus.html)
 * [Homework Instructions](https://clanfear.github.io/CSSS508/docs/homework.html) and grading rubric.
 * [Peer Review Instructions](https://clanfear.github.io/CSSS508/docs/peer_review.html) and suggestions for reading code.
-* [Class Mailing List](mailto:csss508a_sp19@uw.edu)
+* [Class Mailing List](mailto:csss508a_sp21@uw.edu)
 * [Class Slack Channel](https://uwcsss508.slack.com/)
 * [R and RStudio Installation Instructions](https://clanfear.github.io/CSSS508/docs/installation.html)
 * [Enabling compilation of packages](https://clanfear.github.io/CSSS508/docs/compiling.html)

@@ -284,16 +284,34 @@ This may be confusing... we'll cover it more later!
 # `filter` Data Frames
 
 ```{r}
-gapminder %>% filter(country == "Oman")
+gapminder %>% filter(country == "Algeria")
 ```
 
 What is this doing?
 
 ---
 
+# How Expressions Work
+
+What does `country == "Algeria"` actually do? 
+
+--
+
+```{r}
+head(gapminder$country == "Algeria", 50) # display first 50 elements
+```
+
+--
+
+It returns a vector of `TRUE` or `FALSE` values.
+
+When used with the subset operator (`[]`), elements for which a `TRUE` is given are returned while those corresponding to `FALSE` are dropped.
+
+---
+
 # Logical Operators
 
-We used `==` for testing "equals": `country == "Oman"`.
+We used `==` for testing "equals": `country == "Algeria"`.
 
 --
 

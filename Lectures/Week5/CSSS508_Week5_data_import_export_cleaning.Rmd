@@ -538,7 +538,7 @@ billboard_2000 <- billboard_2000_raw %>%
 dim(billboard_2000)
 ```
 
-`starts_with()` and other helper functions from `dplyr::select()` work here too.
+`starts_with()` and other syntax and helper functions from `dplyr::select()` work here too.
 
 We could instead use: `pivot_longer(wk1:wk76, names_to = "week", values_to = "rank")` to pull out these contiguous columns.
 

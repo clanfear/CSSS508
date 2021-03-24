@@ -120,7 +120,7 @@ paste0(1:5, letters[1:5])
 
 `sep=` controls what happens when doing entry-wise squishing of vectors you give to `paste()`, while `collapse=` controls if/how they go from a vector to a single string.
 
-Here are some examples; make sure you understand how each set of arguments produce their results:
+Here are some examples; make sure you understand how each set of arguments produces its results:
 
 ```{r paste_practice, eval=TRUE, results="hold"}
 paste(letters[1:5], collapse = "!")
@@ -278,7 +278,6 @@ str_detect(phone_test_examples, area_code_206_pattern)
 * `^` is a metacharacter meaning "look only at the *beginning* of the string"
 * `\\(?` means look for a left parenthesis (`\\(`), but it's optional (`?`)
 * `206` is the literal string to look for after the optional parenthesis
-
 
 
 ---

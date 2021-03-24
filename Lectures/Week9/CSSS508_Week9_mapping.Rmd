@@ -497,7 +497,9 @@ class: inverse
 
 * `st_relate()`: Compute relationships between geometries (like neighbor matrices).
 
-* `st_interpolate_aw()`: Areal-weighted interpolation of polygons.
+* `st_interpolate_aw()`: Areal-weighted interpolation of polygons.<sup>1</sup>
+
+.footnote[[1] I recommend the dedicated `areal` package for this though!]
 
 ---
 # Loading Data
@@ -613,7 +615,6 @@ Census for variables, then download them and automatically format them as tidy d
 --
 
 This package utilizes the Census API, so you will need to obtain a [Census API key](https://api.census.gov/data/key_signup.html).
-I talk more about APIs in the Social Media Data and Text Mining lecture.
 
 **Application Program Interface (API)**: A type of computer interface that exists as the 
 "native" method of communication between computers, often via http (usable via `httr` package).
@@ -621,6 +622,12 @@ I talk more about APIs in the Social Media Data and Text Mining lecture.
 * APIs make accessing data easy while allowing websites to control access.
 
 See [the developer's GitHub page](https://walkerke.github.io/tidycensus/articles/basic-usage.html) for detailed instructions.
+
+```{r, eval=FALSE, echo=FALSE}
+# If following along, you can install with this
+# Note you'll ALSO need to go get a Census API key above
+install.packages("tidycensus")
+```
 
 ---
 # Key `tidycensus` Functions

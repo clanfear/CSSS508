@@ -16,6 +16,7 @@ output:
 
 ```{r setup, include=FALSE, purl=FALSE}
 options(htmltools.dir.version = FALSE)
+options(width=70)
 knitr::opts_chunk$set(comment = "##")
 ```
 
@@ -229,7 +230,6 @@ NAME <- function(ARGUMENT1, ARGUMENT2=DEFAULT){
 --
 * **Body**: The actual operations inside the function.
 --
-
 * **Return Value**: The output inside `return()`. Could be a vector, list, data frame, another function, or even nothing
     + If unspecified, will be the last thing calculated (maybe not what you want?)
     
@@ -413,35 +413,51 @@ Maybe you often want to bucket variables in your data into groups based on quant
 ---
 # Bucketing Function
 
-There's already a function in R called `cut()` that does this, but you need to tell it cutpoints or the number of buckets.
+There's already a function in R called `cut()` that does this, but you need to tell it breaks or the number of buckets.
 
-Let's make a convenience function that calls `cut()` using quantiles for splitting and returns an integer:
+Let's make a function that calls `cut()` using quantiles (`quants`) for splitting and returns integers:
 
 ```{r}
-bucket <- function(x, quants = c(0.333, 0.667)) {
+bucket <- function(x, quants = c(0.333, 0.667)) { #<<
     # set low extreme, quantile points, high extreme
-    new_breaks <- c(min(x)-1, quantile(x, probs = quants), max(x)+1)
+    new_breaks <- c(min(x)-1, quantile(x, probs = quants), max(x)+1) #<<
     # labels = FALSE will return integer codes instead of ranges
     return(cut(x, breaks = new_breaks, labels = FALSE))
 }
 ```
 
+--
+
+By default this will produce *three buckets*:
+1. Anything below 33.3rd percentile
+2. Anthing from 33.3rd to 66.7th
+3. Anything above 66.7th
+
+--
+
+.pull-right[
+.footnote[
+To capture all high/low values, we start with `min(x)-1` and end with `max(x)+1`.
+]
+]
+
 ---
 # Trying Out `bucket()`
 
 .smallish[
-```{r, fig.height=4, dev="svg"}
-random_data <- rnorm(100)
-bucketed_random_data <- bucket(random_data, 
-                          quants = c(0.05, 0.25, 0.5, 0.75, 0.95))
-plot(x = bucketed_random_data, y = random_data, main = "Buckets and values")
+```{r, fig.height=3.5, dev="svg"}
+dat <- rnorm(100)
+dat_quants <- c(0.05, 0.25, 0.5, 0.75, 0.95)
+bucketed_dat <- bucket(dat, quants = dat_quants)
+plot(x = bucketed_dat, y = dat, main = "Buckets and values", pch = 16)
+abline(h = quantile(dat, dat_quants), lty = "dashed", col = "red")
 ```
 ]
 
 ---
-# Impossible Values
+# Example: Removing Bad Data
 
-Let's say we have data where impossible values occur:
+Let's say we have data where impossible values occur:<sup>1</sup>
 
 .smallish[
 ```{r}
@@ -451,6 +467,8 @@ Let's say we have data where impossible values occur:
   pr_free_lunch = c(0.33,   99, 0.25, 0.05, 0.12, 0.09, 0.22,  -13, 0.21, 99)))
 ```
 ]
+
+.footnote[[1] Different types of missing data are often coded this way in survey and administrative data sets.]
 
 ---
 # Function to Remove Extreme Values
@@ -472,7 +490,7 @@ remove_extremes(school_data$pr_passing_exam, low = 0, high = 1)
 ```
 
 ---
-# `dplyr::mutate_at()`
+# `dplyr::across()`
 
 The `dplyr` function `across()` allows us to a function to every variable (besides `school`) to update the columns in `school_data`:
 
@@ -485,11 +503,11 @@ school_data %>%
 ]
 
 ---
-# Standard and Non-Standard Evaluation
+# (Non-)Standard  Evaluation
 
 `dplyr` uses what is called **non-standard evaluation** that lets you refer to "naked" variables (no quotes around them) like `school`.
 
-`dplyr` verbs (like `mutate()`) recently started supporting *standard evaluation* allowing you to use quoted object names as well. This makes programming with `dplyr` easier.
+`dplyr` verbs (like `mutate()`) recently started supporting **standard evaluation** allowing you to use quoted object names as well. This makes writing functions and loops with `dplyr` easier.
 
 ```{r}
 swiss %>%
@@ -512,7 +530,7 @@ swiss %>%
 ---
 # Anonymous `lapply()`
 
-Like with `dplyr`, you can use anonymous functions in `lapply()`, but a difference is you'll need to have the `function()` part at the beginning:
+Like with `dplyr`, you can use anonymous functions in `lapply()`<sup>1</sup>, but a difference is you'll need to have the `function()` part at the beginning:
 
 .smallish[
 ```{r, eval=FALSE}
@@ -521,8 +539,15 @@ lapply(swiss, function(x) mean(x, na.rm = TRUE) / sd(x, na.rm = TRUE))
 ]
 
 ```{r, echo=FALSE}
+# This is me sneakily restricting output to 5 values
 lapply(swiss, function(x) mean(x, na.rm = TRUE) / sd(x, na.rm = TRUE))[1:5]
 ```
+
+.pull-right[
+.footnote[
+[1] Note that `lapply()` produces a list as output. You could instead use `sapply()` to get a vector.
+]
+]
 
 ---
 class: inverse
@@ -613,12 +638,12 @@ Now let's allow the user to say which variable they want on the y-axis. How we c
 
 .smallish[
 ```{r}
-y_axis_label <- c("lifeExp" = "Life expectancy",
-                  "pop" = "Population (millions)",
+y_axis_label <- c("lifeExp"   = "Life expectancy",
+                  "pop"       = "Population (millions)",
                   "gdpPercap" = "GDP per capita, USD")
-title_text <- c("lifeExp" = "Life expectancy in ",
-                "pop" = "Population of ",
-                "gdpPercap" = "GDP per capita in ")
+title_text   <- c("lifeExp"   = "Life expectancy in ",
+                  "pop"       = "Population of ",
+                  "gdpPercap" = "GDP per capita in ")
 # example use:
 y_axis_label["pop"]
 title_text["pop"]
@@ -631,11 +656,11 @@ title_text["pop"]
 `ggplot()` is usually looking for "naked" variables, but we can tell it to take them as quoted strings (standard evaluation) using `aes_string()` instead of `aes()`, which is handy when making functions:
 ```{r}
 gapminder_plot <- function(cntry, yvar) {
-    y_axis_label <- c("lifeExp" = "Life expectancy",
-                      "pop" = "Population (millions)",
+    y_axis_label <- c("lifeExp"   = "Life expectancy",
+                      "pop"       = "Population (millions)",
                       "gdpPercap" = "GDP per capita, USD")[yvar] #<<
-    title_text   <- c("lifeExp" = "Life expectancy in ",
-                      "pop" = "Population of ",
+    title_text   <- c("lifeExp"   = "Life expectancy in ",
+                      "pop"       = "Population of ",
                       "gdpPercap" = "GDP per capita in ")[yvar] #<<
     ggplot(gapminder %>% filter(country == cntry) %>% #<<
              mutate(pop = pop / 1000000),
