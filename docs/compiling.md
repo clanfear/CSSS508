@@ -28,11 +28,13 @@ On a PC, you need to obtain a toolchain for compiling. The easiest way to do thi
 
 1. [Browse to this page](https://cran.r-project.org/bin/windows/Rtools/).
 
-2. Download the newest Rtools installer.
+2. Download the newest 64-bit Rtools installer.
 
 3. Run the file to install, following all onscreen instructions. If you are unsure about anything, leave the default settings.
 
-4. You can now compile R packages!
+4. [Go back to this page](https://cran.r-project.org/bin/windows/Rtools/). Follow the remaining instructions. But, first, run `Sys.which("make")` and see if it finds a `make.exe` file. If so, you're good to go. If not, do the path stuff.
+
+5. You can now compile R packages!
 
 # Troubleshooting
 

@@ -2,7 +2,7 @@
 title: "CSSS508, Week 1"
 subtitle: "RStudio and RMarkdown"
 author: "Chuck Lanfear"
-date: "Sep 30, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Mar 31, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -99,19 +99,18 @@ Yes, because:
 * You will write your reports better knowing others will see them
 --
 
-* You earn alternate approaches to the same problem
---
+* You learn alternate approaches to the same problem
 
-* It is a practical necessity: **40+ students, no TA**
+--
 
 ### Format:
 
-* Randomly assigned peers, due before following Wednesday
+* Randomly assigned peers, due before the following Wednesday
 * Follow the [grading rubric](https://clanfear.github.io/CSSS508/docs/peer_review.html)
 * Leave constructive comments--more than just a "good job!"
    + On assignments 1-3 I expect *a few sentences at least*.
    + Assignments 4+ may follow labs and need less feedback if perfect.
-* **Email me** if you want more feedback
+* **Email us** if you want more feedback
 
 ---
 
@@ -146,7 +145,7 @@ homework or not.
 ### Labs 4+
 
 In the latter two-thirds of the course, we will *walk through homeworks together*. 
-This provides students a guided walk through the more complex homeworks.
+This provides students guidance through the more complex homeworks.
 
 This gives students the option of (1) working independently on homeworks for maximum
 learning, (2) reserving homeworks for lab if they are too challenging or time consuming, or
@@ -180,8 +179,6 @@ drop.unused.levels = TRUE) : variable lengths differ
 </pre>
 </blockquote>
 
-.footnote[Try to use fixed-width font for code in emails.]
-
 ---
 
 # Slack Channel
@@ -194,10 +191,7 @@ Use it like the mailing list to ask questions, particularly for *short questions
 
 Use the mailing list for *long questions* or those requiring you to attach a file.
 
-In addition, I encourage you to use Slack *during class* to ask quick questions
-of other students and share links.
-
-Don't be afraid to answer each others' questions!
+I encourage you to answer each others' questions!
 
 ---
 
@@ -274,21 +268,26 @@ If one already knows Stata or similar software, why use R?
 --
 
 * R is *free*, so you don't need a terminal server.
+
 --
 
 * R has a *very* large community.
+
 --
 
 * R can handle virtually any data format.
+
 --
 
 * R makes replication easy.
+
 --
 
 * R is a *language* so it can do *everything*.
+
 --
 
-* R is a good stepping stone to other languages like Python.
+* R skills transfer to other languages like Python and Julia.
 
 ---
 
@@ -298,19 +297,32 @@ R Studio is a "front-end" or integrated development environment (IDE) for R that
 
 --
 
-RStudio can:
+We'll show RStudio can...
 --
 
-* Organize your code, output, and plots.
+* Organize your code, output, and plots
+
 --
 
-* Auto-complete code and highlight syntax.
+* Auto-complete code and highlight syntax
+
 --
 
-* Help view data and objects.
+* Help view data and objects
+
 --
 
-* Enable easy integration of R code into documents.
+* Enable easy integration of R code into documents with **R Markdown**
+
+--
+
+It can also...
+
+* Manage `git` repositories
+
+* Run interactive tutorials
+
+* Handle other languages like C++, Python, SQL, HTML, and shell scripting
 
 ---
 

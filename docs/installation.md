@@ -2,7 +2,7 @@
 
 This document walks you through installing R and RStudio on your personal computer.
 
-In the instructions below, anywhere it says (version), there will be a series of numbers such as `3.5.1`. The specific version does not matter, but we want to always use the most recent one.
+In the instructions below, anywhere it says (version), there will be a series of numbers such as `4.0.4`. The specific version does not matter, but we want to always use the most recent one.
 
 ## Installing R
 
@@ -43,8 +43,7 @@ In the instructions below, anywhere it says (version), there will be a series of
 ### Windows
 
 1. Go to the [Installers page](https://www.rstudio.com/products/rstudio/download/#download).
-   * Scroll to "Installers for Supported Platforms"
-   * Click `RStudio (version) - Windows Vista/7/8/10` to download: Whatever version is listed will be the most current.
+   * Click `Download RStudio for Windows` or, under All Installers, the link next to  `Windows 10/8` to download: Whatever version is listed will be the most current.
 
 2. Run the installer.
    * If the installer asks, grant it administrative privileges to install.
@@ -55,13 +54,13 @@ In the instructions below, anywhere it says (version), there will be a series of
    * We will use the RStudio icon to load RStudio and use R.
 
 4. Open RStudio and verify it loads.
+   * In the bottom-left panel of RStudio, you should see something vaguely like the image at the end of this document.
    * If there are any problems, email me at [clanfear@uw.edu](mailto:clanfear@uw.edu)
 
 ### MacOS
 
 1. Go to the [Installers page](https://www.rstudio.com/products/rstudio/download/#download).
-   * Scroll to "Installers for Supported Platforms"
-   * Click `RStudio (version) - MacOS X 10.6+ (64-bit)` to download: Whatever version is listed will be the most current.
+   * Click `Download RStudio for MacOS` or, under All Installers, the link next to `macOS 10.13+` to download: Whatever version is listed will be the most current.
 
 2. Run the installer.
    * Follow the on-screen instructions.
@@ -78,6 +77,6 @@ When you open RStudio, you should see something similar to this in the bottom-le
 
 ![](https://raw.githubusercontent.com/clanfear/CSSS508/master/docs/img/r_first_load.PNG)
 
-If so, your installation was successful!
+If so, your installation was successful! If not, post on Slack or the mailing list.
 
 
