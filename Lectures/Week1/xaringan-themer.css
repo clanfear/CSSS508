@@ -264,3 +264,12 @@ body {
   background-position: center center, center bottom;
   background-size: contain, contain;
 }
+/* Ripped blink from stack overflow result */
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

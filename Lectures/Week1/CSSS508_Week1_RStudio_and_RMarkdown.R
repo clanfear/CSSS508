@@ -27,7 +27,7 @@ summary(cars)
 
 library(knitr)
 
-x <- sqrt(77) # <- is how we assign variables
+x <- sqrt(77) # <- is how we assign objects
 
 head(cars, 5) # prints first 5 rows, see tail() too
 

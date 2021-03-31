@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 1
 ## RStudio and RMarkdown
 ### Chuck Lanfear
-### Mar 31, 2020<br>Updated: Mar 28, 2021
+### Mar 31, 2020<br>Updated: Mar 31, 2021
 
 ---
 
@@ -46,7 +46,7 @@ class: center, top, title-slide
 
 --
 
-* Sociology PhD student
+* 7th (and last) Year Sociology PhD student
 
 --
 
@@ -74,13 +74,53 @@ class: center, top, title-slide
 
   + I think programming is incredibly important
 
+
+---
+# Who is that guy?
+
+**Breon Haskett**
+
+* Rhymes with Neon
+
+--
+
+* 4th Year Sociology PhD Student
+
+--
+
+* Research
+
+--
+  + Labor, Collective Action, Pay Setting Institutions
+
+--
+  + Econometrics, Counterfactual Reasoning, Computational Data Collection
+
+--
+  + Reproducible Research
+
+--
+
+* About Me
+
+--
+  + Also, I write code every day
+
+--
+  + A nerd, but only between the hours of 9 - 6
+
+--
+  + Social Science programming is magical
+
 ---
 # Logistics
 
 Location: 
 * Lecture: [Zoom (848-704-242)](https://washington.zoom.us/j/848704242) on Wednesdays, 3:30-5:20
 * Recommended Lab: [Zoom (848-704-242)](https://washington.zoom.us/j/848704242) on Mondays, 3:30-5:20
-* Office Hours: By Appointment
+* Office Hours: 
+   * Breon: Thursdays, 11 - 12
+   * Chuck: By appointment
 
 Materials: http://clanfear.github.io/CSSS508
 
@@ -161,6 +201,10 @@ Don't ask like this:
 
 &gt; tried lm(y~x) but it iddn't work wat do
 
+.footnote[
+Note: If you're not enrolled but want to be on the mailing list, email me!
+]
+
 --
 
 Instead, ask like this: 
@@ -181,6 +225,8 @@ drop.unused.levels = TRUE) : variable lengths differ
 &lt;/pre&gt;
 &lt;/blockquote&gt;
 
+
+
 ---
 
 # Slack Channel
@@ -194,6 +240,10 @@ Use it like the mailing list to ask questions, particularly for *short questions
 Use the mailing list for *long questions* or those requiring you to attach a file.
 
 I encourage you to answer each others' questions!
+
+.footnote[
+Note: If you're not enrolled but want to be Slack, email me!
+]
 
 ---
 
@@ -398,7 +448,11 @@ There are several ways to run R code in RStudio:
 
 --
 
-* With your **caret** on a line you want to run, hit `Ctrl+Enter` or `⌘+Enter`. Note your caret moves to the next line, so you can run code sequentially with repeated presses.
+* With your **caret**&lt;sup&gt;1&lt;/sup&gt; on a line you want to run, hit `Ctrl+Enter` or `⌘+Enter`. Note your caret moves to the next line, so you can run code sequentially with repeated presses.
+
+.footnote[
+This thing is the caret: .blink_me[`|`]
+]
 
 --
 
@@ -910,7 +964,7 @@ Maybe we've saved a variable in a chunk we want to reference in the text:
 
 
 ```r
-x &lt;- sqrt(77) # &lt;- is how we assign variables
+x &lt;- sqrt(77) # &lt;- is how we assign objects
 ```
 --
 
@@ -950,7 +1004,7 @@ Fancier option: Use this instead to take today's date and make it read nicely:&l
 
     date: "`r format(Sys.Date(), format='%B %d, %Y')`"
 
-.footnote[[1] `format(Sys.Date(), format='%B %d, %Y')` says "format system date as month name (`%B`), day-of-month (`%d`), and four-digit year (`%Y`): March 28, 2021. See `?strptime` for these format codes.]
+.footnote[[1] `format(Sys.Date(), format='%B %d, %Y')` says "format system date as month name (`%B`), day-of-month (`%d`), and four-digit year (`%Y`): March 31, 2021. See `?strptime` for these format codes.]
 ---
 class: inverse
 
