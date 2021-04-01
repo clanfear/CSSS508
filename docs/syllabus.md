@@ -22,6 +22,10 @@ Instructor: [Charles Lanfear](mailto:clanfear@uw.edu)
 
 [Zoom (848-704-242)](https://washington.zoom.us/j/848704242): Mondays 3:30-5:20
 
+**Breon's Office Hours**
+
+[Zoom 978-924-54845](https://washington.zoom.us/j/97892454845): Thursday 11:00-12:00
+
 ## Overview
 
 This course is intended to give students a foundational understanding of programming
