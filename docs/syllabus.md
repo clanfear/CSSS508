@@ -10,7 +10,7 @@ output:
 
 Instructor: [Charles Lanfear](mailto:clanfear@uw.edu)
 
-## Class Locations
+## Class Locations 
 
 *Note for the time being there will be no in-person meetings or office hours.*
 
