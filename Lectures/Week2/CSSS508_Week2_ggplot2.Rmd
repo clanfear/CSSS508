@@ -2,7 +2,7 @@
 title: "CSSS508, Week 2"
 subtitle: "Plotting with `ggplot2`"
 author: "Chuck Lanfear"
-date: "Oct 7, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "April 7, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -15,7 +15,7 @@ output:
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
-options(htmltools.dir.version = FALSE)
+options(htmltools.dir.version = FALSE, width = 70)
 knitr::opts_chunk$set(comment = "##")
 ```
 
@@ -1153,30 +1153,6 @@ lifeExp_by_year +
 
 ---
 
-## Common Problem: Overplotting
-
-Often we want a scatterplot of things that have discrete units. All those dots plot over each other!
-
-.small[
-```{r, fig.height=4, dev='svg'}
-ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
-    geom_point()
-```
-]
----
-
-## Fixing Overplotting with Jitter
-
-Inside `geom_point()`, `position = position_jitter(width=a, height=b)` shifts points up to `a` units horizontally and `b` units vertically.
-
-.small[
-```{r, fig.height=4, dev='svg'}
-ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
-    geom_point(position = position_jitter(width = 0.5, height = 2)) #<<
-```
-]
----
-
 # Changing the Axes
 
 We can modify the axes in a variety of ways, such as:
@@ -1600,20 +1576,6 @@ class: inverse
 
 * Affordable in print
 ]
-
----
-
-# Tinkering Suggestions
-
-Experiment with making some graphs in `ggplot2` of the Gapminder data. You can look at a subset of the data using `filter()` to limit rows, plot different $x$ and $y$ variables, facet by a factor, etc.
-
-Some other options:
-
-* `geom_histogram()`, `geom_density()`, `geom_boxplot()` (see the [Cookbook for R site](http://www.cookbook-r.com/Graphs/Plotting_distributions_%28ggplot2%29/) for a reference)
-
-* `geom_smooth()` for adding loess or regression lines (see the [`ggplot2` documentation](http://docs.ggplot2.org/current/geom_smooth.html))
-
-* Install [Jeff Arnold's `ggthemes` package](https://github.com/jrnold/ggthemes), load it, and try `theme_economist()`, `theme_stata()`, `theme_excel()` instead of no theme or `theme_bw()`
 
 ---
 class: inverse

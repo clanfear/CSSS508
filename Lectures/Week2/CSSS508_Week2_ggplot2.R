@@ -18,7 +18,9 @@ log(mean(gapminder$pop))
 
 gapminder$pop %>% mean() %>% log()
 
-gapminder %>% filter(country == "Oman")
+gapminder %>% filter(country == "Algeria")
+
+head(gapminder$country == "Algeria", 50) # display first 50 elements
 
 gapminder %>%
     filter(country == "Oman" & year > 1980)
@@ -343,12 +345,6 @@ lifeExp_by_year
 
 lifeExp_by_year +
     theme(legend.position = "bottom")
-
-ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
-    geom_point()
-
-ggplot(data = gapminder, aes(x = continent, y = year, color = continent)) +
-    geom_point(position = position_jitter(width = 0.5, height = 2)) #<<
 
 ggplot(data = China, aes(x = year, y = gdpPercap)) +
     geom_line() +
