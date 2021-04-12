@@ -65,9 +65,9 @@ layout: default
        + [R Script for Lecture 2 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/CSSS508_Week2_ggplot2.R)
        + [PDF of Lecture 2 slides](https://clanfear.github.io/CSSS508/Lectures/Week2/CSSS508_Week2_ggplot2.pdf)
        + [Rmd for Lecture 2 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week2/CSSS508_Week2_ggplot2.Rmd)
-   * Lecture Video for Lecture 2, recorded October 7th, 2020
-       + [Zoom](https://washington.zoom.us/rec/share/-g74hVzDnQwsgoYgc1H7h9V2NowcJCfv0xpAPSTzKkyhOL6NRPbIiJLTpsPj2u5s.JYiG5XH6bPVn3O6S?startTime=1602109844000)
-       + [YouTube](https://youtu.be/ko7HdCW4o5s)
+   * Lecture Video for Lecture 2, recorded April 7th, 2021
+       + [Zoom](https://washington.zoom.us/rec/share/cWgRZvLkZ7T6JiscanOwHb7le8n1LNpCm2eKlf-ebOd8hnuE6ouRS5lFqQe9VtSs.q0owwo12HTmQ5As2)
+       + [YouTube](https://youtu.be/CvHwQb25NZQ)
    * Homework 2:
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Example: [HTML](Keys/HW2_Keys/homework_2_key_1.html), [RMD](Keys/HW2_Keys/homework_2_key_1.Rmd)
