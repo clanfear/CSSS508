@@ -71,7 +71,7 @@ layout: default
    * Homework 2:
        + [Homework 2 Instructions](https://clanfear.github.io/CSSS508/Homework/HW2/homework_2.html)
        + Homework 2 Example: [HTML](Keys/HW2_Keys/homework_2_key_1.html), [RMD](Keys/HW2_Keys/homework_2_key_1.Rmd)
-       + Lab 2 Video: [Zoom](https://washington.zoom.us/rec/share/qPr1CyA92vJ-aT4pM4zb9aQwMuQNhLZDmnzCxD6-As3y5g7mccTien3Mq2ntVIbD.Ow5uZJzTsLR827LS), [YouTube](https://youtu.be/-8WFMRLaYT0)
+       + Lab 2 Video: [Zoom](https://washington.zoom.us/rec/share/QDHNSElYpz1784iyaw6FNDfYyhvaPVbImL4_GZ7mASQkHZFEYnxDq8XyrvdKBkcr.qbRNmrFcPHl8iArN), [YouTube](https://www.youtube.com/watch?v=RhyVKggSmMY)
    * Reading: **[Visualization chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)**
    * [`ggplot2` Website](https://ggplot2.tidyverse.org/)
    * [`ggplot2` Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
