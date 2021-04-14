@@ -2,7 +2,7 @@
 title: "CSSS508, Week 3"
 subtitle: "Manipulating and Summarizing Data"
 author: "Chuck Lanfear"
-date: "Oct 14, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Apr 14, 2021<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -612,7 +612,7 @@ Need to get more complicated? Break it into multiple operations.
 ## `nycflights13` Data
 
 We'll use data in the [`nycflights13` package](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf). Install and load it:
-```{r}
+```{r, message = FALSE, warning = FALSE}
 # install.packages("nycflights13") # Uncomment to run
 library(nycflights13)
 ```
