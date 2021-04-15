@@ -91,9 +91,9 @@ layout: default
        + [R Script for Lecture 3 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week3/CSSS508_Week3_dplyr.R)
        + [PDF of Lecture 3 slides](https://clanfear.github.io/CSSS508/Lectures/Week3/CSSS508_Week3_dplyr.pdf)
        + [Rmd for Lecture 3 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week3/CSSS508_Week3_dplyr.Rmd)
-   * Lecture Video for Lecture 3, recorded October 14th, 2020
-       + [Zoom](https://washington.zoom.us/rec/share/Z2zM_HNvqI8n8Wu-FETVv8SBdxyMQEKGZmqc1P8DoIccQOdrhoGOkbnOUsiIlHOq.Y6fOhP0ec4Zl2f_q?startTime=1602714413000)
-       + [YouTube](https://youtu.be/DB9rcVwvPMQ)
+   * Lecture Video for Lecture 3, recorded April 14th, 2021
+       + [Zoom](https://washington.zoom.us/rec/share/TiLXSn538pm9iBphYyW_Eqh2Km_FBBcGyKfqB2TY2rvn-GkKlsKvLCKeOQZ8DGBG.YY8AGaKqZaviZ_M0)
+       + [YouTube](https://youtu.be/119PCaj0wyA)
    * Homework 3:
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
