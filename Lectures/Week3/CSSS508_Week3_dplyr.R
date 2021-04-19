@@ -39,6 +39,10 @@ yugoslavia %>% select(-continent, -pop, -lifeExp) %>% head(4)
 ## DYS %>% select(starts_with("married"))
 ## DYS %>% select(ends_with("18"))
 
+gapminder %>% select(where(is.numeric)) %>% head(3)
+
+gapminder %>% select(where(is.factor)) %>% head(3)
+
 yugoslavia %>%
     select(Life_Expectancy = lifeExp) %>%
     head(4)

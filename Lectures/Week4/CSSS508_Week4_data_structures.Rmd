@@ -2,7 +2,7 @@
 title: "CSSS508, Week 4"
 subtitle: "R Data Structures"
 author: "Chuck Lanfear"
-date: "Oct 21, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Apr 21, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -68,7 +68,7 @@ If you mix character and numeric data, the resulting vector will be *character*.
 
 When doing arithmetic operations on vectors, R handles these *element-wise*:
 ```{r}
-c(1, 2, 3) + c(4, 5, 6)
+c(1, 2, 3) + c(4, 5, 6) # = c(1+4, 2+5, 3+6)
 c(1, 2, 3, 4)^3 # exponentiation with ^
 ```
 
@@ -79,7 +79,7 @@ Common operations: `*`, `/`, `exp()` = $e^x$, `log()` = $\log_e(x)$
 
 If we work with vectors of different lengths, R will **recycle** the shorter one by repeating it to make it match up with the longer one:
 ```{r}
-c(0.5, 3) * c(1, 2, 3, 4)
+c(0.5, 3) * c(1, 2, 3, 4) # = c(0.5*1, 3*2, 0.5*3, 3*4)
 c(0.5, 3, 0.5, 3) * c(1, 2, 3, 4) # same thing
 ```
 
@@ -87,9 +87,14 @@ c(0.5, 3, 0.5, 3) * c(1, 2, 3, 4) # same thing
 # Scalars as Recycling
 
 A special case of recycling involves arithmetic with **scalars** (a single number). These are vectors of length 1 that are recycled to make a longer vector:
+
 ```{r}
 3 * c(-1, 0, 1, 2) + 1
 ```
+
+Note R obeys order of operations: Multiplication/division occurs before addition.
+
+You can use parentheses to control order manually!
 
 ---
 # Warning on Recycling
@@ -97,7 +102,7 @@ A special case of recycling involves arithmetic with **scalars** (a single numbe
 Recycling doesn't work so well with vectors of incommensurate lengths:
 
 ```{r, warning=TRUE}
-c(1, 2, 3, 4) + c(0.5, 1.5, 2.5)
+c(1, 2, 3, 4) + c(0.5, 1.5, 2.5) # = c(1+0.5, 2+1.5, 3+2.5, 4+0.5)
 ```
 
 Try not to let R's recycling behavior catch you by surprise!
@@ -136,7 +141,7 @@ The `scale()` function performs the above operation!
 ---
 # Types of Vectors
 
-`class()` or `str()` will tell you what kind of vector you have. There are a few common types of vectors:
+`class()`,  `typeof`, and `str()` will tell you what kind of vector you have. There are a few common types of vectors:
 
 --
 
