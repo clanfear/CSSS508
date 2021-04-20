@@ -98,7 +98,7 @@ layout: default
        + [Homework 3 Instructions](https://clanfear.github.io/CSSS508/Homework/HW3/homework_3.html)
        + [nycflights13 documentation](https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf)
        + Homework 3 Example: HTML, RMD
-       + Lab 3 Video: [Zoom](https://washington.zoom.us/rec/share/7x71374KufkE_OmVpVC9Q6FebBbaBjcwoIqWEEGpn2b938ZLZE33f77u-f38-wq_.fbUewv5mTO_cxILJ?startTime=1603146423000), [YouTube](https://youtu.be/A6hMfcwUdIU)
+       + Lab 3 Video: [Zoom](https://washington.zoom.us/rec/share/1zkVUYZ5GrKHCiU2KiH9JOku7gKWXMw8xzaBxV6bI9Y3o-WzmhnV_byb5swlNc0.Iuby5s1GBHtyjTWh), [YouTube](https://youtu.be/fQ2x1bMH1a0)
    * Reading: **[Data Transformation chapter in R for Data Science](http://r4ds.had.co.nz/transform.html)**
    * [A cautionary tale about Excel](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history)
    * `dplyr` stuff:
