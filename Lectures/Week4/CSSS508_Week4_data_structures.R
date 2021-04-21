@@ -1,3 +1,7 @@
+options(htmltools.dir.version = FALSE, width = 70)
+knitr::opts_chunk$set(comment = "##")
+library(dplyr)
+
 c(1, 3, 7, -0.5)
 
 length(c(1, 3, 7, -0.5))
