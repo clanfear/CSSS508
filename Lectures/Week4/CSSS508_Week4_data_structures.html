@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 4
 ## R Data Structures
 ### Chuck Lanfear
-### Apr 21, 2020<br>Updated: Apr 18, 2021
+### Apr 21, 2021<br>Updated: Apr 21, 2021
 
 ---
 
@@ -1133,6 +1133,17 @@ str(my_list[[1]])
 Note that you can only select a single element at a time using `[[ ]]`, because this would have to return *multiple objects*!
 
 An R function can only return one object at a time—otherwise operations like assignment would be impossible.
+
+---
+# `[x]` versus `[[x]]`
+
+.image-100[
+![](img/pepper.png)
+]
+
+`[x]` chooses elements but keeps the list, while `[[x]]` extracts the element from the list.
+
+.footnote[Source: Hadley Wickham]
 
 ---
 # Subsetted Lists Can Be of Length &gt; 1

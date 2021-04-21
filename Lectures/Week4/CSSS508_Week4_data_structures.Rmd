@@ -2,7 +2,7 @@
 title: "CSSS508, Week 4"
 subtitle: "R Data Structures"
 author: "Chuck Lanfear"
-date: "Apr 21, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Apr 21, 2021<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -631,6 +631,17 @@ str(my_list[[1]])
 Note that you can only select a single element at a time using `[[ ]]`, because this would have to return *multiple objects*!
 
 An R function can only return one object at a time—otherwise operations like assignment would be impossible.
+
+---
+# `[x]` versus `[[x]]`
+
+.image-100[
+![](img/pepper.png)
+]
+
+`[x]` chooses elements but keeps the list, while `[[x]]` extracts the element from the list.
+
+.footnote[Source: Hadley Wickham]
 
 ---
 # Subsetted Lists Can Be of Length > 1
