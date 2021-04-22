@@ -113,9 +113,9 @@ layout: default
        + [R Script for Lecture 4 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week4/CSSS508_Week4_data_structures.R)
        + [PDF of Lecture 4 slides](https://clanfear.github.io/CSSS508/Lectures/Week4/CSSS508_Week4_data_structures.pdf)
        + [Rmd for Lecture 4 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week4/CSSS508_Week4_data_structures.Rmd)
-   * Lecture Video for Lecture 4, recorded October 21st, 2020
-       + [Zoom](https://washington.zoom.us/rec/share/dihHn8HygshJDp4GNwXkDp5WjPvRGtV2Lc7WOuWtqQAlDfJB_c_KZYKeYN6IWmSy.zTtHrmD4UjTObTHW?startTime=1603319072000)
-       + [YouTube](https://youtu.be/A3ahStQc-sg)
+   * Lecture Video for Lecture 4, recorded April 21st, 2021
+       + [Zoom](https://washington.zoom.us/rec/share/TW1krQYmrWCpPD8zjlaiYD52LUkKayP3roulNdWdJMwWKqXWsTuKokInyqYJtxoW.KFWQFoU9F8dhG5D0)
+       + [YouTube](https://youtu.be/2-zBRkY3nQQ)
    * Homework 4 (two options, complete one):
        + Homework 4: R Data Structures (Less Advanced)
            * [Homework 4: R Data Structures, R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW4/homework_4.Rmd) (you will download this, fill in and submit on Canvas)
