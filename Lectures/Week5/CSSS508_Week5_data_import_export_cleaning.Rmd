@@ -2,7 +2,7 @@
 title: "CSSS508, Week 5"
 subtitle: "Importing, Exporting, and Cleaning Data"
 author: "Chuck Lanfear"
-date: "Oct 28, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "Apr 28, 2021<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs

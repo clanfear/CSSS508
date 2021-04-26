@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### Oct 28, 2020<br>Updated: Nov 11, 2020
+### Apr 28, 2021<br>Updated: Apr 26, 2021
 
 ---
 
@@ -230,7 +230,7 @@ billboard_2000_raw &lt;- read_csv(file = "https://clanfear.github.io/CSSS508/Lec
 ##   wk75 = col_logical(),
 ##   wk76 = col_logical()
 ## )
-## [36mi[39m Use `spec()` for the full column specifications.
+## i Use `spec()` for the full column specifications.
 ```
 ]
 
@@ -246,7 +246,7 @@ str(billboard_2000_raw[, 65:ncol(billboard_2000_raw)])
 ```
 
 ```
-## tibble [317 x 17] (S3: tbl_df/tbl/data.frame)
+## tibble[,17] [317 x 17] (S3: tbl_df/tbl/data.frame)
 ##  $ wk60: num [1:317] NA NA NA NA NA NA NA NA NA NA ...
 ##  $ wk61: num [1:317] NA NA NA NA NA NA NA NA NA NA ...
 ##  $ wk62: num [1:317] NA NA NA NA NA NA NA NA NA NA ...
@@ -621,7 +621,7 @@ dim(billboard_2000)
 ## [1] 24092     7
 ```
 
-`starts_with()` and other helper functions from `dplyr::select()` work here too.
+`starts_with()` and other syntax and helper functions from `dplyr::select()` work here too.
 
 We could instead use: `pivot_longer(wk1:wk76, names_to = "week", values_to = "rank")` to pull out these contiguous columns.
 
@@ -1027,25 +1027,25 @@ glimpse(spd_raw)
 ```
 ## Rows: 706
 ## Columns: 19
-## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, ...
-## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 1...
-## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 201...
-## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245",...
-## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPL...
-## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRES...
-## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING",...
-## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "...
-## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX...
-## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B...
-## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3...
-## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.1...
-## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122....
-## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.6142...
-## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", ...
-## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SH...
-## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFT...
-## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS...
-## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "...
+## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 170~
+## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 1600~
+## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 201610~
+## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "2~
+## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT~
+## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPAS~
+## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "T~
+## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/~
+## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BL~
+## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", ~
+## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", ~
+## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.106,~
+## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122.342~
+## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.61422, ~
+## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(4~
+## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPL~
+## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING~
+## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", ~
+## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/~
 ```
 ]
 
