@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 5
 ## Importing, Exporting, and Cleaning Data
 ### Chuck Lanfear
-### Apr 28, 2021<br>Updated: Apr 26, 2021
+### Apr 28, 2021<br>Updated: Apr 28, 2021
 
 ---
 
@@ -470,7 +470,7 @@ First things to check after loading new data:
 ---
 # Slightly Messy Data
 
-| **Program**     | **Female** | **Male** |
+| **Program**     | **Woman** | **Man** |
 |-----------------|-----------:|---------:|
 | Evans School    |     10     |    6    |
 | Arts &amp; Sciences |      5     |    6    |
@@ -485,7 +485,7 @@ First things to check after loading new data:
     + Program, gender
 * What are the values?
     + Program: Evans School, Arts &amp; Sciences, Public Health, Other
-    + Gender: Female, Male -- **in the column headings, not its own column!**
+    + Gender: Woman, Man -- **in the column headings, not its own column!**
     + Count: **spread over two columns!**
 
 ---
@@ -493,14 +493,14 @@ First things to check after loading new data:
 
 | **Program**     | **Gender** | **Count** |
 |-----------------|-----------:|---------:|
-| Evans School    |     Female |    10   |
-| Evans School    |     Male   |    6    |
-| Arts &amp; Sciences |     Female |    5    |
-| Arts &amp; Sciences |     Male   |    6    |
-| Public Health   |     Female |    2    |
-| Public Health   |     Male   |    3    |
-| Other           |     Female |    5    |
-| Other           |     Male   |    1    |
+| Evans School    |     Woman |    10   |
+| Evans School    |     Man   |    6    |
+| Arts &amp; Sciences |     Woman |    5    |
+| Arts &amp; Sciences |     Man   |    6    |
+| Public Health   |     Woman |    2    |
+| Public Health   |     Man   |    3    |
+| Other           |     Woman |    5    |
+| Other           |     Man   |    1    |
 
 Each variable is a column.
 
@@ -565,7 +565,9 @@ Week columns continue up to `wk76`!
 2. The values for a single variable are in their own column.
 --
 
-3. There is only one value per cell.
+3. There is only one value per cell.&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] What *one value* means is subjective--it could be an entire dataset.]
 
 --
 
@@ -612,7 +614,7 @@ Let's use `pivot_longer()` to get the week and rank variables out of their curre
 library(tidyr); library(dplyr)
 billboard_2000 &lt;- billboard_2000_raw %&gt;%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", 
+               names_to  = "week", 
 *              values_to = "rank")
 dim(billboard_2000)
 ```
@@ -672,8 +674,8 @@ The argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with m
 ```r
 billboard_2000 &lt;- billboard_2000_raw %&gt;%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", 
-               values_to = "rank", 
+               names_to       = "week", 
+               values_to      = "rank", 
 *              values_drop_na = TRUE)
 summary(billboard_2000$rank)
 ```
@@ -735,10 +737,10 @@ For more sophisticated conversion or pattern checking, you'll need to use string
 ```r
 billboard_2000 &lt;- billboard_2000_raw %&gt;%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", 
-               values_to = "rank",
-               values_drop_na = TRUE,
-*              names_prefix = "wk",
+               names_to        = "week", 
+               values_to       = "rank",
+               values_drop_na  = TRUE,
+*              names_prefix    = "wk",
 *              names_transform = list(week = as.integer))
 head(billboard_2000, 3)
 ```
@@ -887,7 +889,7 @@ billboard_trajectories &lt;-
 ---
 # Charts of 2000: Beauty!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-61-1.svg)&lt;!-- --&gt;
 
 Observation: There appears to be censoring around week 20 for songs falling out of the top 50 that I'd want to follow up on.
 
@@ -973,7 +975,7 @@ plot_by_day &lt;-
 ---
 # Calendar Time Plot!
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-65-1.svg)&lt;!-- --&gt;
 
 We see some of the entry dates are before 2000---presumably songs still charting during 2000 that came out earlier. 
 
@@ -1146,7 +1148,7 @@ time_spd_plot &lt;- ggplot(spd_times, aes(x = hour)) +
 ---
 ## SPD Event Clearances, March 25
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-37-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-72-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -1195,13 +1197,16 @@ str(spd_times$`Initial Type Group`)
 ```
 
 ```r
-spd_times$`Initial Type Group` &lt;- 
-  factor(spd_times$`Initial Type Group`)
-str(spd_times$`Initial Type Group`)
+spd_times &lt;- spd_times %&gt;% 
+  mutate(`Initial Type Group` = factor(`Initial Type Group`))
+head(spd_times$`Initial Type Group`)
 ```
 
 ```
-##  Factor w/ 30 levels "ANIMAL COMPLAINTS",..: 25 25 28 6 24 27 13 12 2 27 ...
+## [1] THEFT                    THEFT                   
+## [3] TRESPASS                 CRISIS CALL             
+## [5] SUSPICIOUS CIRCUMSTANCES TRAFFIC RELATED CALLS   
+## 30 Levels: ANIMAL COMPLAINTS ASSAULTS AUTO RECOVERIES ... WEAPONS CALLS
 ```
 
 ```r
@@ -1245,7 +1250,7 @@ time_spd_plot_2 &lt;- ggplot(spd_times, aes(x = hour)) +
 ---
 # Better Ordered Plot
 
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-41-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-76-1.svg)&lt;!-- --&gt;
 
 ---
 # Other Ways to Reorder
@@ -1290,7 +1295,7 @@ jayz_bad_legend &lt;-
 
 ---
 ## Jay-Z with Bad Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-44-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-79-1.svg)&lt;!-- --&gt;
 
 ---
 ## Better Ordering for Jay-Z
@@ -1314,7 +1319,7 @@ This *reorders* `track` based on `rank`'s `min()` value.
 
 ---
 ## Jay-Z with Good Legend Order
-![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-46-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week5_data_import_export_cleaning_files/figure-html/unnamed-chunk-81-1.svg)&lt;!-- --&gt;
 
 ---
 # Dropping Unused Levels

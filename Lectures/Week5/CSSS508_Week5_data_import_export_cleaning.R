@@ -39,7 +39,7 @@ pander(head(billboard_2000_raw[,1:10], 12), split.tables=120, style="rmarkdown")
 library(tidyr); library(dplyr)
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", 
+               names_to  = "week", 
                values_to = "rank") #<<
 dim(billboard_2000)
 
@@ -49,8 +49,8 @@ summary(billboard_2000$rank)
 
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", 
-               values_to = "rank", 
+               names_to       = "week", 
+               values_to      = "rank", 
                values_drop_na = TRUE) #<<
 summary(billboard_2000$rank)
 
@@ -64,10 +64,10 @@ summary(billboard_2000$week)
 
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", 
-               values_to = "rank",
-               values_drop_na = TRUE,
-               names_prefix = "wk", #<<
+               names_to        = "week", 
+               values_to       = "rank",
+               values_drop_na  = TRUE,
+               names_prefix    = "wk", #<<
                names_transform = list(week = as.integer))  #<<
 head(billboard_2000, 3)
 
@@ -174,9 +174,9 @@ time_spd_plot
 # install.packages("forcats")
 library(forcats)
 str(spd_times$`Initial Type Group`)
-spd_times$`Initial Type Group` <- 
-  factor(spd_times$`Initial Type Group`)
-str(spd_times$`Initial Type Group`)
+spd_times <- spd_times %>% 
+  mutate(`Initial Type Group` = factor(`Initial Type Group`))
+head(spd_times$`Initial Type Group`)
 head(as.numeric(spd_times$`Initial Type Group`))
 
 spd_times <- spd_times %>% 

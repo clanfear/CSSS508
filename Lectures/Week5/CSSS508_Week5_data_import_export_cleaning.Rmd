@@ -403,7 +403,7 @@ First things to check after loading new data:
 ---
 # Slightly Messy Data
 
-| **Program**     | **Female** | **Male** |
+| **Program**     | **Woman** | **Man** |
 |-----------------|-----------:|---------:|
 | Evans School    |     10     |    6    |
 | Arts & Sciences |      5     |    6    |
@@ -418,7 +418,7 @@ First things to check after loading new data:
     + Program, gender
 * What are the values?
     + Program: Evans School, Arts & Sciences, Public Health, Other
-    + Gender: Female, Male -- **in the column headings, not its own column!**
+    + Gender: Woman, Man -- **in the column headings, not its own column!**
     + Count: **spread over two columns!**
 
 ---
@@ -426,14 +426,14 @@ First things to check after loading new data:
 
 | **Program**     | **Gender** | **Count** |
 |-----------------|-----------:|---------:|
-| Evans School    |     Female |    10   |
-| Evans School    |     Male   |    6    |
-| Arts & Sciences |     Female |    5    |
-| Arts & Sciences |     Male   |    6    |
-| Public Health   |     Female |    2    |
-| Public Health   |     Male   |    3    |
-| Other           |     Female |    5    |
-| Other           |     Male   |    1    |
+| Evans School    |     Woman |    10   |
+| Evans School    |     Man   |    6    |
+| Arts & Sciences |     Woman |    5    |
+| Arts & Sciences |     Man   |    6    |
+| Public Health   |     Woman |    2    |
+| Public Health   |     Man   |    3    |
+| Other           |     Woman |    5    |
+| Other           |     Man   |    1    |
 
 Each variable is a column.
 
@@ -487,7 +487,9 @@ Week columns continue up to `wk76`!
 2. The values for a single variable are in their own column.
 --
 
-3. There is only one value per cell.
+3. There is only one value per cell.<sup>1</sup>
+
+.footnote[[1] What *one value* means is subjective--it could be an entire dataset.]
 
 --
 
@@ -533,7 +535,7 @@ Let's use `pivot_longer()` to get the week and rank variables out of their curre
 library(tidyr); library(dplyr)
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", 
+               names_to  = "week", 
                values_to = "rank") #<<
 dim(billboard_2000)
 ```
@@ -569,8 +571,8 @@ The argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with m
 ```{r}
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", 
-               values_to = "rank", 
+               names_to       = "week", 
+               values_to      = "rank", 
                values_drop_na = TRUE) #<<
 summary(billboard_2000$rank)
 ```
@@ -609,10 +611,10 @@ For more sophisticated conversion or pattern checking, you'll need to use string
 ```{r}
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(starts_with("wk"), 
-               names_to ="week", 
-               values_to = "rank",
-               values_drop_na = TRUE,
-               names_prefix = "wk", #<<
+               names_to        = "week", 
+               values_to       = "rank",
+               values_drop_na  = TRUE,
+               names_prefix    = "wk", #<<
                names_transform = list(week = as.integer))  #<<
 head(billboard_2000, 3)
 ```
@@ -922,9 +924,9 @@ To find more, [look at the `forcats` manual](https://cran.r-project.org/web/pack
 # install.packages("forcats")
 library(forcats)
 str(spd_times$`Initial Type Group`)
-spd_times$`Initial Type Group` <- 
-  factor(spd_times$`Initial Type Group`)
-str(spd_times$`Initial Type Group`)
+spd_times <- spd_times %>% 
+  mutate(`Initial Type Group` = factor(`Initial Type Group`))
+head(spd_times$`Initial Type Group`)
 head(as.numeric(spd_times$`Initial Type Group`))
 ```
 
