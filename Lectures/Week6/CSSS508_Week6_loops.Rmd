@@ -2,7 +2,7 @@
 title: "CSSS508, Week 6"
 subtitle: "Loops"
 author: "Chuck Lanfear"
-date: "Nov 4, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "May 5, 2021<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -14,7 +14,7 @@ output:
       titleSlideClass: ["center","top"]
 ---
 
-```{r setup, include=FALSE, purl=FALSE}
+```{r setup, include=FALSE, purl=TRUE}
 options(htmltools.dir.version = FALSE, width = 70)
 knitr::opts_chunk$set(comment = "##")
 library(ggplot2)
@@ -237,7 +237,7 @@ Examples of what to pre-allocate based on what you store:
 # Pre-Allocation: Numeric
 
 ```{r}
-iters <- 10 # Set number of interations
+iters  <- 10 # Set number of interations
 output <- numeric(iters) # Pre-allocate numeric vector 
 
 for(i in 1:iters) { # Run code below iters times
@@ -248,9 +248,11 @@ output # Display output
 
 Steps:
 
-1. Set a number of iterations
+1. Set a number of iterations<sup>1</sup>
 2. Pre-allocated a numeric vector of that length
 3. Ran ten iterations where the output is a mathematical function of each iteration number.
+
+.footnote[[1] We could skip this, but it is useful if you want to make code flexible.]
 
 ---
 # `setNames()`
@@ -432,11 +434,15 @@ We can use `tidyr::pivot_longer()` to tidy the predictions, then set the levels 
 library(tidyr)
 tidy_predicted_data <- predicted_data %>%
     pivot_longer(3:6, 
-                 names_to="Model", 
-                 values_to="Prediction") %>% #<<
+                 names_to  = "Model", 
+                 values_to = "Prediction") %>% #<<
     mutate(Model = factor(Model, levels = names(models))) #<<
 head(tidy_predicted_data) # Displaying some rows
 ```
+]
+
+.pull-right40[
+.footnote[`levels = names(models)` sets the `Model` levels to be in the same order as our original vector!]
 ]
 
 ---
@@ -710,7 +716,7 @@ num_flips <- 0
 while(num_heads < 4) {
   coin_flip <- rbinom(n = 1, size = 1, prob = 0.5)
   if (coin_flip == 1) { num_heads <- num_heads + 1 }
-    num_flips <- num_flips + 1
+  num_flips <- num_flips + 1
 }
 num_flips # follows negative binomial distribution
 ```

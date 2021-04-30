@@ -1,3 +1,8 @@
+options(htmltools.dir.version = FALSE, width = 70)
+knitr::opts_chunk$set(comment = "##")
+library(ggplot2)
+library(dplyr)
+
 ## mean1 <- mean(swiss$Fertility)
 ## mean2 <- mean(swiss$Agriculture)
 ## mean3 <- mean(swissExamination)
@@ -41,7 +46,7 @@ for(a in seq_along(some_letters)) {
 }
 a # The object `a` contains the number of the last iteration
 
-iters <- 10 # Set number of interations
+iters  <- 10 # Set number of interations
 output <- numeric(iters) # Pre-allocate numeric vector 
 
 for(i in 1:iters) { # Run code below iters times
@@ -94,8 +99,8 @@ head(predicted_data, 10)
 library(tidyr)
 tidy_predicted_data <- predicted_data %>%
     pivot_longer(3:6, 
-                 names_to="Model", 
-                 values_to="Prediction") %>% #<<
+                 names_to  = "Model", 
+                 values_to = "Prediction") %>% #<<
     mutate(Model = factor(Model, levels = names(models))) #<<
 head(tidy_predicted_data) # Displaying some rows
 
@@ -195,7 +200,7 @@ num_flips <- 0
 while(num_heads < 4) {
   coin_flip <- rbinom(n = 1, size = 1, prob = 0.5)
   if (coin_flip == 1) { num_heads <- num_heads + 1 }
-    num_flips <- num_flips + 1
+  num_flips <- num_flips + 1
 }
 num_flips # follows negative binomial distribution
 
