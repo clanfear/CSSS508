@@ -142,6 +142,7 @@ layout: default
        + [Homework 5: HTML Document](https://clanfear.github.io/CSSS508/Homework/HW5/homework_5.html)
            * Homework 5, Part 1: Key: [HTML](https://clanfear.github.io/CSSS508/Keys/HW5_Keys/homework_5_p1_key.html), [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Keys/HW5_Keys/homework_5_p1_key.Rmd)
        + [2016 general election voting data for King County](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW5/king_county_elections_2016.txt) (60 MB download; save, *don't load in browser*!)
+       + Lab 5 Video: [Zoom](https://washington.zoom.us/rec/share/4X97iuNKSfom2Og-jfeX8UP_t5vEjZRlFf8P216d1WCAQ_NEmBN7tJN8bo_zGRAd.OxvNe_et9V18U5QM?startTime=1620080961000), [YouTube](https://youtu.be/hgW-K9GcZ04)
    * Data in-class:
        + [Billboard Hot 100 data from 2000](https://clanfear.github.io/CSSS508/Lectures/Week5/data/billboard.csv)
        + [One day of Seattle Police Department incident data](https://raw.githubusercontent.com/clanfear/CSSS508/master/Seattle_Police_Department_911_Incident_Response.csv)
