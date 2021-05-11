@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 7
 ## Vectorization and Functions
 ### Chuck Lanfear
-### Nov 18, 2020<br>Updated: Nov 24, 2020
+### May 12, 2021<br>Updated: May 10, 2021
 
 ---
 
@@ -66,8 +66,10 @@ colMeans(swiss)
 ```
 
 ```
-##        Fertility      Agriculture      Examination        Education         Catholic Infant.Mortality 
-##         70.14255         50.65957         16.48936         10.97872         41.14383         19.94255
+##        Fertility      Agriculture      Examination        Education 
+##         70.14255         50.65957         16.48936         10.97872 
+##         Catholic Infant.Mortality 
+##         41.14383         19.94255
 ```
 
 ---
@@ -257,7 +259,7 @@ smarter_first_and_last
 ##         return(c("first" = first, "last" = last))        
 ##     }
 ## }
-## &lt;environment: 0x000001ff87606bf0&gt;
+## &lt;environment: 0x0000025fb02e1a40&gt;
 ```
 
 You can also put your cursor over a function in your syntax and hit `F2`.
@@ -284,8 +286,8 @@ NAME &lt;- function(ARGUMENT1, ARGUMENT2=DEFAULT){
     + `x`, `na.rm` values won't exist in R outside of the function
 --
 * **Body**: The actual operations inside the function.
---
 
+--
 * **Return Value**: The output inside `return()`. Could be a vector, list, data frame, another function, or even nothing
     + If unspecified, will be the last thing calculated (maybe not what you want?)
     
@@ -310,10 +312,10 @@ quantile_report(rnorm(10000))
 ```
 
 ```
-##    Bottom 1%    Bottom 5%   Bottom 10%   Bottom 25%       Median      Top 25%      Top 10% 
-## -2.333593597 -1.642744909 -1.291610989 -0.672982453 -0.006031143  0.660022100  1.243566697 
-##       Top 5%       Top 1% 
-##  1.607643031  2.325196350
+##   Bottom 1%   Bottom 5%  Bottom 10%  Bottom 25%      Median 
+## -2.35998953 -1.63409731 -1.27663027 -0.67563794  0.01016977 
+##     Top 25%     Top 10%      Top 5%      Top 1% 
+##  0.68542513  1.28627131  1.64362732  2.33335930
 ```
 ]
 
@@ -355,16 +357,22 @@ lapply(swiss, FUN = quantile_report)
 
 ```
 ## $Fertility
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5%     Top 1% 
-##     38.588     47.580     56.240     64.700     70.400     78.450     84.600     90.670     92.454 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
+##     38.588     47.580     56.240     64.700     70.400     78.450 
+##    Top 10%     Top 5%     Top 1% 
+##     84.600     90.670     92.454 
 ## 
 ## $Agriculture
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5%     Top 1% 
-##      4.190     15.650     17.360     35.900     54.100     67.650     76.820     84.810     87.952 
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
+##      4.190     15.650     17.360     35.900     54.100     67.650 
+##    Top 10%     Top 5%     Top 1% 
+##     76.820     84.810     87.952 
 ## 
 ## $Examination
-##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25%    Top 10%     Top 5%     Top 1% 
-##       3.00       5.00       6.00      12.00      16.00      22.00      26.00      30.40      36.08
+##  Bottom 1%  Bottom 5% Bottom 10% Bottom 25%     Median    Top 25% 
+##       3.00       5.00       6.00      12.00      16.00      22.00 
+##    Top 10%     Top 5%     Top 1% 
+##      26.00      30.40      36.08
 ```
 ]
 
@@ -380,16 +388,26 @@ sapply(swiss, FUN = quantile_report)
 ```
 
 ```
-##            Fertility Agriculture Examination Education Catholic Infant.Mortality
-## Bottom 1%     38.588       4.190        3.00      1.46   2.2052           12.778
-## Bottom 5%     47.580      15.650        5.00      2.00   2.4480           15.600
-## Bottom 10%    56.240      17.360        6.00      3.00   2.8320           16.420
-## Bottom 25%    64.700      35.900       12.00      6.00   5.1950           18.150
-## Median        70.400      54.100       16.00      8.00  15.1400           20.000
-## Top 25%       78.450      67.650       22.00     12.00  93.1250           21.700
-## Top 10%       84.600      76.820       26.00     23.20  99.0000           23.680
-## Top 5%        90.670      84.810       30.40     29.00  99.6140           24.470
-## Top 1%        92.454      87.952       36.08     43.34  99.8666           25.818
+##            Fertility Agriculture Examination Education Catholic
+## Bottom 1%     38.588       4.190        3.00      1.46   2.2052
+## Bottom 5%     47.580      15.650        5.00      2.00   2.4480
+## Bottom 10%    56.240      17.360        6.00      3.00   2.8320
+## Bottom 25%    64.700      35.900       12.00      6.00   5.1950
+## Median        70.400      54.100       16.00      8.00  15.1400
+## Top 25%       78.450      67.650       22.00     12.00  93.1250
+## Top 10%       84.600      76.820       26.00     23.20  99.0000
+## Top 5%        90.670      84.810       30.40     29.00  99.6140
+## Top 1%        92.454      87.952       36.08     43.34  99.8666
+##            Infant.Mortality
+## Bottom 1%            12.778
+## Bottom 5%            15.600
+## Bottom 10%           16.420
+## Bottom 25%           18.150
+## Median               20.000
+## Top 25%              21.700
+## Top 10%              23.680
+## Top 5%               24.470
+## Top 1%               25.818
 ```
 ]
 
@@ -405,16 +423,26 @@ apply(swiss, MARGIN = 2, FUN = quantile_report)
 ```
 
 ```
-##            Fertility Agriculture Examination Education Catholic Infant.Mortality
-## Bottom 1%     38.588       4.190        3.00      1.46   2.2052           12.778
-## Bottom 5%     47.580      15.650        5.00      2.00   2.4480           15.600
-## Bottom 10%    56.240      17.360        6.00      3.00   2.8320           16.420
-## Bottom 25%    64.700      35.900       12.00      6.00   5.1950           18.150
-## Median        70.400      54.100       16.00      8.00  15.1400           20.000
-## Top 25%       78.450      67.650       22.00     12.00  93.1250           21.700
-## Top 10%       84.600      76.820       26.00     23.20  99.0000           23.680
-## Top 5%        90.670      84.810       30.40     29.00  99.6140           24.470
-## Top 1%        92.454      87.952       36.08     43.34  99.8666           25.818
+##            Fertility Agriculture Examination Education Catholic
+## Bottom 1%     38.588       4.190        3.00      1.46   2.2052
+## Bottom 5%     47.580      15.650        5.00      2.00   2.4480
+## Bottom 10%    56.240      17.360        6.00      3.00   2.8320
+## Bottom 25%    64.700      35.900       12.00      6.00   5.1950
+## Median        70.400      54.100       16.00      8.00  15.1400
+## Top 25%       78.450      67.650       22.00     12.00  93.1250
+## Top 10%       84.600      76.820       26.00     23.20  99.0000
+## Top 5%        90.670      84.810       30.40     29.00  99.6140
+## Top 1%        92.454      87.952       36.08     43.34  99.8666
+##            Infant.Mortality
+## Bottom 1%            12.778
+## Bottom 5%            15.600
+## Bottom 10%           16.420
+## Bottom 25%           18.150
+## Median               20.000
+## Top 25%              21.700
+## Top 10%              23.680
+## Top 5%               24.470
+## Top 1%               25.818
 ```
 ]
 ---
@@ -557,19 +585,34 @@ Maybe you often want to bucket variables in your data into groups based on quant
 ---
 # Bucketing Function
 
-There's already a function in R called `cut()` that does this, but you need to tell it cutpoints or the number of buckets.
+There's already a function in R called `cut()` that does this, but you need to tell it breaks or the number of buckets.
 
-Let's make a convenience function that calls `cut()` using quantiles for splitting and returns an integer:
+Let's make a function that calls `cut()` using quantiles (`quants`) for splitting and returns integers:
 
 
 ```r
-bucket &lt;- function(x, quants = c(0.333, 0.667)) {
+*bucket &lt;- function(x, quants = c(0.333, 0.667)) {
     # set low extreme, quantile points, high extreme
-    new_breaks &lt;- c(min(x)-1, quantile(x, probs = quants), max(x)+1)
+*   new_breaks &lt;- c(min(x)-1, quantile(x, probs = quants), max(x)+1)
     # labels = FALSE will return integer codes instead of ranges
     return(cut(x, breaks = new_breaks, labels = FALSE))
 }
 ```
+
+--
+
+By default this will produce *three buckets*:
+1. Anything below 33.3rd percentile
+2. Anthing from 33.3rd to 66.7th
+3. Anything above 66.7th
+
+--
+
+.pull-right[
+.footnote[
+To capture all high/low values, we start with `min(x)-1` and end with `max(x)+1`.
+]
+]
 
 ---
 # Trying Out `bucket()`
@@ -577,19 +620,20 @@ bucket &lt;- function(x, quants = c(0.333, 0.667)) {
 .smallish[
 
 ```r
-random_data &lt;- rnorm(100)
-bucketed_random_data &lt;- bucket(random_data, 
-                          quants = c(0.05, 0.25, 0.5, 0.75, 0.95))
-plot(x = bucketed_random_data, y = random_data, main = "Buckets and values")
+dat &lt;- rnorm(100)
+dat_quants &lt;- c(0.05, 0.25, 0.5, 0.75, 0.95)
+bucketed_dat &lt;- bucket(dat, quants = dat_quants)
+plot(x = bucketed_dat, y = dat, main = "Buckets and values", pch = 16)
+abline(h = quantile(dat, dat_quants), lty = "dashed", col = "red")
 ```
 
 ![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-21-1.svg)&lt;!-- --&gt;
 ]
 
 ---
-# Impossible Values
+# Example: Removing Bad Data
 
-Let's say we have data where impossible values occur:
+Let's say we have data where impossible values occur:&lt;sup&gt;1&lt;/sup&gt;
 
 .smallish[
 
@@ -614,6 +658,8 @@ Let's say we have data where impossible values occur:
 ## 10      j           99.00         99.00
 ```
 ]
+
+.footnote[[1] Different types of missing data are often coded this way in survey and administrative data sets.]
 
 ---
 # Function to Remove Extreme Values
@@ -640,7 +686,7 @@ remove_extremes(school_data$pr_passing_exam, low = 0, high = 1)
 ```
 
 ---
-# `dplyr::mutate_at()`
+# `dplyr::across()`
 
 The `dplyr` function `across()` allows us to a function to every variable (besides `school`) to update the columns in `school_data`:
 
@@ -668,11 +714,11 @@ school_data %&gt;%
 ]
 
 ---
-# Standard and Non-Standard Evaluation
+# (Non-)Standard  Evaluation
 
 `dplyr` uses what is called **non-standard evaluation** that lets you refer to "naked" variables (no quotes around them) like `school`.
 
-`dplyr` verbs (like `mutate()`) recently started supporting *standard evaluation* allowing you to use quoted object names as well. This makes programming with `dplyr` easier.
+`dplyr` verbs (like `mutate()`) recently started supporting **standard evaluation** allowing you to use quoted object names as well. This makes writing functions and loops with `dplyr` easier.
 
 
 ```r
@@ -700,15 +746,17 @@ swiss %&gt;%
 ```
 
 ```
-##   Fertility Agriculture Examination Education  Catholic Infant.Mortality
-## 1  5.615134    2.230597    2.066884  1.141785 0.9865478         6.846766
+##   Fertility Agriculture Examination Education  Catholic
+## 1  5.615134    2.230597    2.066884  1.141785 0.9865478
+##   Infant.Mortality
+## 1         6.846766
 ```
 ]
 
 ---
 # Anonymous `lapply()`
 
-Like with `dplyr`, you can use anonymous functions in `lapply()`, but a difference is you'll need to have the `function()` part at the beginning:
+Like with `dplyr`, you can use anonymous functions in `lapply()`&lt;sup&gt;1&lt;/sup&gt;, but a difference is you'll need to have the `function()` part at the beginning:
 
 .smallish[
 
@@ -734,6 +782,12 @@ lapply(swiss, function(x) mean(x, na.rm = TRUE) / sd(x, na.rm = TRUE))
 ## $Catholic
 ## [1] 0.9865478
 ```
+
+.pull-right[
+.footnote[
+[1] Note that `lapply()` produces a list as output. You could instead use `sapply()` to get a vector.
+]
+]
 
 ---
 class: inverse
@@ -808,6 +862,16 @@ gapminder_lifeplot(cntry = "Turkey")
 ![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
 
 ---
+# Testing Plot Function
+
+
+```r
+gapminder_lifeplot(cntry = "Rwanda")
+```
+
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
+
+---
 # Making `y` Value Flexible
 
 Now let's allow the user to say which variable they want on the y-axis. How we can get the right labels for the axis and title? We can use a named character vector to serve as a "lookup table" inside the function:
@@ -815,12 +879,12 @@ Now let's allow the user to say which variable they want on the y-axis. How we c
 .smallish[
 
 ```r
-y_axis_label &lt;- c("lifeExp" = "Life expectancy",
-                  "pop" = "Population (millions)",
+y_axis_label &lt;- c("lifeExp"   = "Life expectancy",
+                  "pop"       = "Population (millions)",
                   "gdpPercap" = "GDP per capita, USD")
-title_text &lt;- c("lifeExp" = "Life expectancy in ",
-                "pop" = "Population of ",
-                "gdpPercap" = "GDP per capita in ")
+title_text   &lt;- c("lifeExp"   = "Life expectancy in ",
+                  "pop"       = "Population of ",
+                  "gdpPercap" = "GDP per capita in ")
 # example use:
 y_axis_label["pop"]
 ```
@@ -847,11 +911,11 @@ title_text["pop"]
 
 ```r
 gapminder_plot &lt;- function(cntry, yvar) {
-    y_axis_label &lt;- c("lifeExp" = "Life expectancy",
-                      "pop" = "Population (millions)",
+    y_axis_label &lt;- c("lifeExp"   = "Life expectancy",
+                      "pop"       = "Population (millions)",
 *                     "gdpPercap" = "GDP per capita, USD")[yvar]
-    title_text   &lt;- c("lifeExp" = "Life expectancy in ",
-                      "pop" = "Population of ",
+    title_text   &lt;- c("lifeExp"   = "Life expectancy in ",
+                      "pop"       = "Population of ",
 *                     "gdpPercap" = "GDP per capita in ")[yvar]
 *   ggplot(gapminder %&gt;% filter(country == cntry) %&gt;%
              mutate(pop = pop / 1000000),
@@ -871,7 +935,17 @@ gapminder_plot &lt;- function(cntry, yvar) {
 gapminder_plot(cntry = "Turkey", yvar = "pop")
 ```
 
-![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-37-1.svg)&lt;!-- --&gt;
+
+---
+# Testing `gapminder_plot()`
+
+
+```r
+gapminder_plot(cntry = "Rwanda", yvar = "gdpPercap")
+```
+
+![](CSSS508_Week7_vectorization_files/figure-html/unnamed-chunk-38-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse

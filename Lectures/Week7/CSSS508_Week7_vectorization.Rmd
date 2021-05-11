@@ -2,7 +2,7 @@
 title: "CSSS508, Week 7"
 subtitle: "Vectorization and Functions"
 author: "Chuck Lanfear"
-date: "Nov 18, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "May 12, 2021<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -229,6 +229,7 @@ NAME <- function(ARGUMENT1, ARGUMENT2=DEFAULT){
     + `x`, `na.rm` values won't exist in R outside of the function
 --
 * **Body**: The actual operations inside the function.
+
 --
 * **Return Value**: The output inside `return()`. Could be a vector, list, data frame, another function, or even nothing
     + If unspecified, will be the last thing calculated (maybe not what you want?)
@@ -632,6 +633,13 @@ gapminder_lifeplot(cntry = "Turkey")
 ```
 
 ---
+# Testing Plot Function
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE, fig.height = 4, dev="svg"}
+gapminder_lifeplot(cntry = "Rwanda")
+```
+
+---
 # Making `y` Value Flexible
 
 Now let's allow the user to say which variable they want on the y-axis. How we can get the right labels for the axis and title? We can use a named character vector to serve as a "lookup table" inside the function:
@@ -677,6 +685,14 @@ gapminder_plot <- function(cntry, yvar) {
 
 ```{r, warning=FALSE, message=FALSE, echo=TRUE, fig.height = 4, dev="svg"}
 gapminder_plot(cntry = "Turkey", yvar = "pop")
+
+```
+
+---
+# Testing `gapminder_plot()`
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE, fig.height = 4, dev="svg"}
+gapminder_plot(cntry = "Rwanda", yvar = "gdpPercap")
 
 ```
 
