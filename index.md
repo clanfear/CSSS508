@@ -27,6 +27,7 @@ layout: default
 * [Intermediate R Workshop](https://youtu.be/pSWaOOniVBk), recorded Jan. 31, 2019, with [companion webpage](https://clanfear.github.io/Intermediate_R_Workshop/).
 * [What They Forgot to Teach You About R](https://whattheyforgot.org/) by Jenny Bryan and Jim Hester. Great information on best practices for managing projects and R itself.
 * [Teacups, Giraffes, and Statistics](https://tinystats.github.io/teacups-giraffes-and-statistics/index.html), an illustrated and interactive introduction to R and statistics.
+* [The Epidemiologist R Handbook](https://epirhandbook.com/index.html), an online textbook introducing modern R approaches for epidemiology.
 
 ## Weekly lecture notes and links:
 
