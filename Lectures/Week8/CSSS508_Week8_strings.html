@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 8
 ## Strings
 ### Chuck Lanfear
-### Nov 25, 2020<br>Updated: Nov 24, 2020
+### May 19, 2021<br>Updated: May 18, 2021
 
 ---
 
@@ -51,29 +51,29 @@ glimpse(restaurants)
 ```
 ## Rows: 258,630
 ## Columns: 23
-## $ Name                       &lt;chr&gt; "@ THE SHACK, LLC ", "10 MERCE...
-## $ Program_Identifier         &lt;chr&gt; "SHACK COFFEE", "10 MERCER RES...
-## $ Inspection_Date            &lt;chr&gt; NA, "01/24/2017", "01/24/2017"...
-## $ Description                &lt;chr&gt; "Seating 0-12 - Risk Category ...
-## $ Address                    &lt;chr&gt; "2920 SW AVALON WAY", "10 MERC...
-## $ City                       &lt;chr&gt; "Seattle", "Seattle", "Seattle...
-## $ Zip_Code                   &lt;chr&gt; "98126", "98109", "98109", "98...
-## $ Phone                      &lt;chr&gt; "(206) 938-5665", NA, NA, NA, ...
-## $ Longitude                  &lt;dbl&gt; -122.3709, -122.3562, -122.356...
-## $ Latitude                   &lt;dbl&gt; 47.57043, 47.62506, 47.62506, ...
-## $ Inspection_Business_Name   &lt;chr&gt; NA, "10 MERCER RESTAURANT", "1...
-## $ Inspection_Type            &lt;chr&gt; NA, "Routine Inspection/Field ...
-## $ Inspection_Score           &lt;int&gt; NA, 10, 10, 10, 15, 15, 15, 0,...
-## $ Inspection_Result          &lt;chr&gt; NA, "Unsatisfactory", "Unsatis...
-## $ Inspection_Closed_Business &lt;chr&gt; NA, "false", "false", "false",...
-## $ Violation_Type             &lt;chr&gt; NA, "blue", "blue", "red", "bl...
-## $ Violation_Description      &lt;chr&gt; NA, "4300 - Non-food contact s...
-## $ Violation_Points           &lt;int&gt; 0, 3, 2, 5, 5, 5, 5, 0, 5, 10,...
-## $ Business_ID                &lt;chr&gt; "PR0048053", "PR0049572", "PR0...
-## $ Inspection_Serial_Num      &lt;chr&gt; NA, "DAHSIBSJT", "DAHSIBSJT", ...
-## $ Violation_Record_ID        &lt;chr&gt; NA, "IV43WZVLN", "IVCQ1ZIV0", ...
-## $ Grade                      &lt;int&gt; NA, 2, 2, 2, 2, 2, 2, 2, 2, 2,...
-## $ Date                       &lt;date&gt; NA, 2017-01-24, 2017-01-24, 2...
+## $ Name                       &lt;chr&gt; "@ THE SHACK, LLC ", "10 MERCER R~
+## $ Program_Identifier         &lt;chr&gt; "SHACK COFFEE", "10 MERCER RESTAU~
+## $ Inspection_Date            &lt;chr&gt; NA, "01/24/2017", "01/24/2017", "~
+## $ Description                &lt;chr&gt; "Seating 0-12 - Risk Category I",~
+## $ Address                    &lt;chr&gt; "2920 SW AVALON WAY", "10 MERCER ~
+## $ City                       &lt;chr&gt; "Seattle", "Seattle", "Seattle", ~
+## $ Zip_Code                   &lt;chr&gt; "98126", "98109", "98109", "98109~
+## $ Phone                      &lt;chr&gt; "(206) 938-5665", NA, NA, NA, NA,~
+## $ Longitude                  &lt;dbl&gt; -122, -122, -122, -122, -122, -12~
+## $ Latitude                   &lt;dbl&gt; 47.6, 47.6, 47.6, 47.6, 47.6, 47.~
+## $ Inspection_Business_Name   &lt;chr&gt; NA, "10 MERCER RESTAURANT", "10 M~
+## $ Inspection_Type            &lt;chr&gt; NA, "Routine Inspection/Field Rev~
+## $ Inspection_Score           &lt;int&gt; NA, 10, 10, 10, 15, 15, 15, 0, 15~
+## $ Inspection_Result          &lt;chr&gt; NA, "Unsatisfactory", "Unsatisfac~
+## $ Inspection_Closed_Business &lt;chr&gt; NA, "false", "false", "false", "f~
+## $ Violation_Type             &lt;chr&gt; NA, "blue", "blue", "red", "blue"~
+## $ Violation_Description      &lt;chr&gt; NA, "4300 - Non-food contact surf~
+## $ Violation_Points           &lt;int&gt; 0, 3, 2, 5, 5, 5, 5, 0, 5, 10, 25~
+## $ Business_ID                &lt;chr&gt; "PR0048053", "PR0049572", "PR0049~
+## $ Inspection_Serial_Num      &lt;chr&gt; NA, "DAHSIBSJT", "DAHSIBSJT", "DA~
+## $ Violation_Record_ID        &lt;chr&gt; NA, "IV43WZVLN", "IVCQ1ZIV0", "IV~
+## $ Grade                      &lt;int&gt; NA, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,~
+## $ Date                       &lt;date&gt; NA, 2017-01-24, 2017-01-24, 2017~
 ```
 ]
 
@@ -202,7 +202,7 @@ paste0(1:5, letters[1:5])
 
 `sep=` controls what happens when doing entry-wise squishing of vectors you give to `paste()`, while `collapse=` controls if/how they go from a vector to a single string.
 
-Here are some examples; make sure you understand how each set of arguments produce their results:
+Here are some examples; make sure you understand how each set of arguments produces its results:
 
 
 ```r
@@ -437,7 +437,6 @@ str_detect(phone_test_examples, area_code_206_pattern)
 * `^` is a metacharacter meaning "look only at the *beginning* of the string"
 * `\\(?` means look for a left parenthesis (`\\(`), but it's optional (`?`)
 * `206` is the literal string to look for after the optional parenthesis
-
 
 
 ---
