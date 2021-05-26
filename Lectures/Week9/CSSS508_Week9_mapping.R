@@ -16,7 +16,7 @@ glimpse(spd_raw)
 ## install.packages("ggmap")
 
 ## if(!requireNamespace("remotes")) install.packages("remotes")
-## remotes::install_github("dkahle/ggmap", ref = "tidyup")
+## remotes::install_github("dkahle/ggmap")
 
 
 
@@ -45,13 +45,13 @@ qmplot(data = spd_raw,
   theme(legend.position = "bottom")
 
 downtown <- spd_raw %>%
-  filter(Latitude > 47.58, Latitude < 47.64,
+  filter(Latitude  >   47.58, Latitude  <   47.64,
          Longitude > -122.36, Longitude < -122.31)
 
 assaults <- downtown %>% 
   filter(`Event Clearance Group` %in%
                   c("ASSAULTS", "ROBBERY")) %>%
-  mutate(assault_label = `Event Clearance Description`)
+  rename(assault_label = `Event Clearance Description`)
 
 
 
@@ -87,13 +87,12 @@ qmplot(data =
 
 library(sf)
 
-precinct_shape <- st_read("./data/district/votdst.shp",
-                          stringsAsFactors = F) %>% 
+precinct_shape <- st_read("./data/district/votdst.shp") %>% 
   select(Precinct=NAME, geometry)
 
 precincts_votes_sf <- 
   read_csv("./data/king_county_elections_2016.txt") %>%
-  filter(Race=="US President & Vice President",
+  filter(Race == "US President & Vice President" &
          str_detect(Precinct, "SEA ")) %>% 
   select(Precinct, CounterType, SumOfCount) %>%
   group_by(Precinct) %>%
@@ -106,9 +105,10 @@ precincts_votes_sf <-
            recode(CounterType, 
                   `Donald J. Trump & Michael R. Pence` = "Trump",
                   `Hillary Clinton & Tim Kaine` = "Clinton",
-                  `Registered Voters`="RegisteredVoters",
+                  `Registered Voters`= "RegisteredVoters",
                   `Times Counted` = "TotalVotes")) %>%
-  spread(CounterType, SumOfCount) %>%
+  pivot_wider(names_from = CounterType, 
+              values_from = SumOfCount) %>%
   mutate(P_Dem = Clinton / TotalVotes, 
          P_Rep = Trump / TotalVotes, 
          Turnout = TotalVotes / RegisteredVoters) %>%
@@ -126,7 +126,11 @@ ggplot(precincts_votes_sf,
   geom_sf(size=NA) +
   theme_void() +
   theme(legend.position = 
-          "right")
+          "bottom")
+
+## # If following along, you can install with this
+## # Note you'll ALSO need to go get a Census API key above
+## install.packages("tidycensus")
 
 library(tidycensus)
 
@@ -135,11 +139,11 @@ library(tidycensus)
 acs_2015_vars <- load_variables(2015, "acs5")
 acs_2015_vars[10:18,] %>% print() 
 
-king_county <- get_acs(geography="tract", state="WA", 
-                       county="King", geometry = TRUE,
-                       variables=c("B02001_001E", 
-                                   "B02009_001E"), 
-                       output="wide")
+king_county <- get_acs(geography = "tract",   state = "WA", 
+                       county    = "King", geometry = TRUE,
+                       variables = c("B02001_001E", 
+                                     "B02009_001E"), 
+                       output    = "wide")
 
 
 
@@ -147,8 +151,8 @@ glimpse(king_county)
 
 king_county <-  king_county %>%
   select(-ends_with("M")) %>%
-  rename(`Total Population`=B02001_001E,
-         `Any Black`=B02009_001E) %>%
+  rename(`Total Population`= B02001_001E,
+         `Any Black`       = B02009_001E) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 glimpse(king_county)
 
@@ -166,7 +170,7 @@ king_county %>%
 st_erase <- function(x, y) {
   st_difference(x, st_make_valid(st_union(st_combine(y))))
 }
-kc_water <- tigris::area_water("WA", "King", class = "sf")
+kc_water   <- tigris::area_water("WA", "King", class = "sf")
 kc_nowater <- king_county %>% 
   st_erase(kc_water)
 
@@ -188,8 +192,8 @@ pb_state <-
                         "B02009_001E"),
           output = "wide") %>%
   select(-ends_with("M")) %>%
-  rename(`Total Population`=B02001_001E,
-         `Any Black`=B02009_001E) %>%
+  rename(`Total Population` = B02001_001E,
+         `Any Black`        = B02009_001E) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 
 

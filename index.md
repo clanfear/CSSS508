@@ -184,9 +184,9 @@ layout: default
        + [R script for Lecture 7 slides](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_Week7_vectorization.R)
        + [PDF of Lecture 7 slides](http://clanfear.github.io/CSSS508/Lectures/Week7/CSSS508_Week7_vectorization.pdf)
        + [Rmd for Lecture 7 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week7/CSSS508_Week7_vectorization.Rmd)
-   * Lecture Video for Lecture 7, recorded November 18th, 2020
-       + [Zoom](https://washington.zoom.us/rec/share/jUzgb6Om5Me2W3PXyb9WKr8nkD_WKKKGfHsu_xoobnxgicj_D7GSSFFDrLIgh3zW.gRsVrBrY0fvd6YwT?startTime=1605742104000)
-       + [YouTube](https://youtu.be/xlD9TWE2HhI)
+   * Lecture Video for Lecture 7, recorded May 12th, 2021
+       + [Zoom](https://washington.zoom.us/rec/share/XgXwNj-vI7i_lpiIBuB_1BEFulFbxbDCPQSSgHuvI7WlJzKyE_c9vCgUYJyFI2vm.2CVmfEtvjkHGmDXV?startTime=1620858604000)
+       + [YouTube](https://youtu.be/Qq1VFydPlNw)
    * Homework 6, Part 1:
        + [Homework 6, Part 1: R Markdown template](https://raw.githubusercontent.com/clanfear/CSSS508/master/Homework/HW6/homework_6.Rmd)
        + [Pronto! bike share data from fall 2014 through fall 2015](https://s3.amazonaws.com/pronto-data/open_data_year_one.zip)
@@ -202,9 +202,9 @@ layout: default
        + [R script for Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_Week8_strings.R)
        + [PDF of Lecture 8 slides](http://clanfear.github.io/CSSS508/Lectures/Week8/CSSS508_Week8_strings.pdf)
        + [Rmd for Lecture 8 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week8/CSSS508_Week8_strings.Rmd)
-   * Lecture Video for Lecture 8, recorded November 25th, 2020
-       + [Zoom](https://washington.zoom.us/rec/share/I5VymFWQqQM78-CBWXjldxAJ9LnuhfrJ4mR42f_uT9dQumQDTUV_yeE3mMK5AQWG.mSPPbI8h-SC8xBwN?startTime=1606346922000)
-       + [YouTube](https://youtu.be/q6VJlTYioek)
+   * Lecture Video for Lecture 8, recorded May 19th, 2021
+       + [Zoom](https://washington.zoom.us/rec/share/RG_UitXYFfU00tqHVlNSPTeV2wqa6wolw_vGXyToBCreuQM2SITL7Dda5XLRYmI0.g3BUk2B5JkbyTHpm?startTime=1621463290000)
+       + [YouTube](https://youtu.be/cfLXurY-hQ0)
    * Homework 6, Part 2:
        + Homework 6, Part 2: [RMD](https://raw.githubusercontent.com/clanfear/CSSS508/master/Keys/HW6_Keys/homework_6_p1_key.Rmd)
        + Homework 6, Part 2 Key: HTML, RMD

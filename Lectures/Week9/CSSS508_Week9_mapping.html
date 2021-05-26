@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### Dec 2, 2020<br>Updated: Dec 8, 2020
+### May 26, 2021<br>Updated: May 25, 2021
 
 ---
 
@@ -42,13 +42,13 @@ class: center, top, title-slide
 ]
 
 .pull-right[
-If you are interested in mapping, GIS, and geospatial analysis in R, *acquire this book*.
+This is great if you are interested in mapping, GIS, and geospatial analysis in R--[but new things are on the way!](https://keen-swartz-3146c4.netlify.app/).
 
-[RSpatial.org](http://rspatial.org/) is a great resource as well.
+[RSpatial.org](http://rspatial.org/) is also great.
 
 You may also consider taking Jon Wakefield's **CSSS 554: Statistical Methods for Spatial Data**, however it is challenging and focuses more heavily on statistics than mapping.
 
-[CSDE offers workshops](https://csde.washington.edu/training/workshops/) using [QGIS](https://qgis.org/en/site/) and/or ArcGIS. I recommend QGIS because it is free software with an extensive feature set and large user community.
+[CSDE offers workshops](https://csde.washington.edu/training/workshops/) using [QGIS](https://qgis.org/en/site/) and/or ArcGIS. I recommend QGIS because it is free software with an extensive feature set.
 ]
 
 ---
@@ -83,25 +83,25 @@ glimpse(spd_raw)
 ```
 ## Rows: 706
 ## Columns: 19
-## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, ...
-## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 1...
-## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 201...
-## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245",...
-## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPL...
-## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRES...
-## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING",...
-## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "...
-## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX...
-## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B...
-## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3...
-## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.1...
-## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122....
-## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.6142...
-## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", ...
-## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SH...
-## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFT...
-## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS...
-## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "...
+## $ `CAD CDW ID`                  [3m[38;5;246m&lt;dbl&gt;[39m[23m 1701856, 1701857, 1701853, 170~
+## $ `CAD Event Number`            [3m[38;5;246m&lt;dbl&gt;[39m[23m 16000104006, 16000103970, 1600~
+## $ `General Offense Number`      [3m[38;5;246m&lt;dbl&gt;[39m[23m 2016104006, 2016103970, 201610~
+## $ `Event Clearance Code`        [3m[38;5;246m&lt;chr&gt;[39m[23m "063", "064", "161", "245", "2~
+## $ `Event Clearance Description` [3m[38;5;246m&lt;chr&gt;[39m[23m "THEFT - CAR PROWL", "SHOPLIFT~
+## $ `Event Clearance SubGroup`    [3m[38;5;246m&lt;chr&gt;[39m[23m "CAR PROWL", "THEFT", "TRESPAS~
+## $ `Event Clearance Group`       [3m[38;5;246m&lt;chr&gt;[39m[23m "CAR PROWL", "SHOPLIFTING", "T~
+## $ `Event Clearance Date`        [3m[38;5;246m&lt;chr&gt;[39m[23m "03/25/2016 11:58:30 PM", "03/~
+## $ `Hundred Block Location`      [3m[38;5;246m&lt;chr&gt;[39m[23m "S KING ST / 8 AV S", "92XX BL~
+## $ `District/Sector`             [3m[38;5;246m&lt;chr&gt;[39m[23m "K", "S", "D", "M", "M", "B", ~
+## $ `Zone/Beat`                   [3m[38;5;246m&lt;chr&gt;[39m[23m "K3", "S3", "D2", "M1", "M3", ~
+## $ `Census Tract`                [3m[38;5;246m&lt;dbl&gt;[39m[23m 9100.102, 11800.602, 7200.106,~
+## $ Longitude                     [3m[38;5;246m&lt;dbl&gt;[39m[23m -122.3225, -122.2680, -122.342~
+## $ Latitude                      [3m[38;5;246m&lt;dbl&gt;[39m[23m 47.59835, 47.51985, 47.61422, ~
+## $ `Incident Location`           [3m[38;5;246m&lt;chr&gt;[39m[23m "(47.598347, -122.32245)", "(4~
+## $ `Initial Type Description`    [3m[38;5;246m&lt;chr&gt;[39m[23m "THEFT (DOES NOT INCLUDE SHOPL~
+## $ `Initial Type Subgroup`       [3m[38;5;246m&lt;chr&gt;[39m[23m "OTHER PROPERTY", "SHOPLIFTING~
+## $ `Initial Type Group`          [3m[38;5;246m&lt;chr&gt;[39m[23m "THEFT", "THEFT", "TRESPASS", ~
+## $ `At Scene Time`               [3m[38;5;246m&lt;chr&gt;[39m[23m "03/25/2016 10:25:51 PM", "03/~
 ```
 ]
 
@@ -131,7 +131,7 @@ Sometimes, however, we want to plot these points over existing maps.
 ]
 
 .pull-right[
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -141,7 +141,7 @@ class: inverse
 ---
 # `ggmap`
 
-`ggmap` is a package that works with `ggplot2` to plot spatial data directly on map images downloaded from Google Maps&lt;sup&gt;1&lt;/sup&gt;, OpenStreetMap, and Stamen Maps (good artistic/minimal options).
+`ggmap` is a package that works with `ggplot2` to plot spatial data directly on map images downloaded from Google Maps&lt;sup&gt;1&lt;/sup&gt; and Stamen Maps (good artistic/minimal options).
 
 What this package does for you:
 
@@ -153,7 +153,7 @@ What this package does for you:
 
 4. Additional functions for interacting with Google Maps (e.g. getting distances by bike)
 
-.footnote[[1] [Requires an API Key now.](https://cloud.google.com/maps-platform/)]
+.footnote[[1] [Requires a Google API Key.](https://cloud.google.com/maps-platform/)]
 
 ---
 # Installation
@@ -171,7 +171,7 @@ Because the map APIs it uses change frequently, sometimes you may need to get a 
 
 ```r
 if(!requireNamespace("remotes")) install.packages("remotes")
-remotes::install_github("dkahle/ggmap", ref = "tidyup")
+remotes::install_github("dkahle/ggmap")
 ```
 
 Note, this may require compilation on your computer.
@@ -214,7 +214,6 @@ Both `qmplot()` and `qmap()` are wrappers for a function called `get_map()` that
 * `zoom=` a zoom level (3 = continent, 10 = city, 21 = building)
 * `source=` 
     + `"google"`: Google Maps for general purpose maps&lt;sup&gt;1&lt;/sup&gt;
-    + `"osm"`: OpenStreetMaps, general purpose but open access
     + `"stamen"`: Aesthetically pleasing alternatives based on OpenStreetMaps
 * `maptype=`
     + Google types: `"terrain"`, `"terrain-background"`, `"satellite"`, `"roadmap"`, `"hybrid"`
@@ -265,7 +264,7 @@ First filter to downtown based on values "eyeballed" from our earlier map:
 
 ```r
 downtown &lt;- spd_raw %&gt;%
-  filter(Latitude &gt; 47.58, Latitude &lt; 47.64,
+  filter(Latitude  &gt;   47.58, Latitude  &lt;   47.64,
          Longitude &gt; -122.36, Longitude &lt; -122.31)
 ```
 
@@ -276,7 +275,7 @@ Then make a dataframe of just assaults and robberies:
 assaults &lt;- downtown %&gt;% 
   filter(`Event Clearance Group` %in%
                   c("ASSAULTS", "ROBBERY")) %&gt;%
-  mutate(assault_label = `Event Clearance Description`)
+  rename(assault_label = `Event Clearance Description`)
 ```
 
 ---
@@ -483,7 +482,9 @@ class: inverse
 
 * `st_relate()`: Compute relationships between geometries (like neighbor matrices).
 
-* `st_interpolate_aw()`: Areal-weighted interpolation of polygons.
+* `st_interpolate_aw()`: Areal-weighted interpolation of polygons.&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] I recommend the dedicated `areal` package for this though!]
 
 ---
 # Loading Data
@@ -496,18 +497,17 @@ We can load the file using `st_read()`.
 
 
 ```r
-precinct_shape &lt;- st_read("./data/district/votdst.shp",
-                          stringsAsFactors = F) %&gt;% 
+precinct_shape &lt;- st_read("./data/district/votdst.shp") %&gt;% 
   select(Precinct=NAME, geometry)
 ```
 
 ```
 ## Reading layer `votdst' from data source `C:\Users\cclan\OneDrive\GitHub\CSSS508\Lectures\Week9\data\district\votdst.shp' using driver `ESRI Shapefile'
 ## Simple feature collection with 2592 features and 5 fields
-## geometry type:  MULTIPOLYGON
-## dimension:      XY
-## bbox:           xmin: 1220179 ymin: 31555.16 xmax: 1583562 ymax: 287678
-## projected CRS:  NAD83(HARN) / Washington North (ftUS)
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 1220179 ymin: 31555.16 xmax: 1583562 ymax: 287678
+## Projected CRS: NAD83(HARN) / Washington North (ftUS)
 ```
 
 [If following along, click here to download a zip of the shapefile.](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week9/data/district.zip)
@@ -520,7 +520,7 @@ precinct_shape &lt;- st_read("./data/district/votdst.shp",
 ```r
 precincts_votes_sf &lt;- 
   read_csv("./data/king_county_elections_2016.txt") %&gt;%
-  filter(Race=="US President &amp; Vice President",
+  filter(Race == "US President &amp; Vice President" &amp;
          str_detect(Precinct, "SEA ")) %&gt;% 
   select(Precinct, CounterType, SumOfCount) %&gt;%
   group_by(Precinct) %&gt;%
@@ -533,9 +533,10 @@ precincts_votes_sf &lt;-
            recode(CounterType, 
                   `Donald J. Trump &amp; Michael R. Pence` = "Trump",
                   `Hillary Clinton &amp; Tim Kaine` = "Clinton",
-                  `Registered Voters`="RegisteredVoters",
+                  `Registered Voters`= "RegisteredVoters",
                   `Times Counted` = "TotalVotes")) %&gt;%
-  spread(CounterType, SumOfCount) %&gt;%
+  pivot_wider(names_from = CounterType, 
+              values_from = SumOfCount) %&gt;%
   mutate(P_Dem = Clinton / TotalVotes, 
          P_Rep = Trump / TotalVotes, 
          Turnout = TotalVotes / RegisteredVoters) %&gt;%
@@ -559,11 +560,11 @@ glimpse(precincts_votes_sf)
 ## Rows: 960
 ## Columns: 5
 ## Groups: Precinct [960]
-## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SE...
-## $ P_Dem    &lt;dbl&gt; 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.83...
-## $ P_Rep    &lt;dbl&gt; 0.15612648, 0.07789474, 0.13418530, 0.08649469, ...
-## $ Turnout  &lt;dbl&gt; 0.6931507, 0.7274119, 0.7347418, 0.7522831, 0.75...
-## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((127369...
+## $ Precinct [3m[38;5;246m&lt;chr&gt;[39m[23m "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 1~
+## $ P_Dem    [3m[38;5;246m&lt;dbl&gt;[39m[23m 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.83259~
+## $ P_Rep    [3m[38;5;246m&lt;dbl&gt;[39m[23m 0.15612648, 0.07789474, 0.13418530, 0.08649469, 0.0~
+## $ Turnout  [3m[38;5;246m&lt;dbl&gt;[39m[23m 0.6931507, 0.7274119, 0.7347418, 0.7522831, 0.75792~
+## $ geometry [3m[38;5;246m&lt;MULTIPOLYGON [US_survey_foot]&gt;[39m[23m MULTIPOLYGON (((1273698 1~
 ```
 ]
 
@@ -582,8 +583,8 @@ We can plot `sf` geometry using `geom_sf()`.
 
 ```r
 ggplot(precincts_votes_sf, 
-*      aes(fill=P_Dem)) +
-  geom_sf(size=NA) +
+*      aes(fill = P_Dem)) +
+  geom_sf(size = NA) +
   theme_void() +
   theme(legend.position = 
           "bottom")
@@ -597,7 +598,7 @@ ggplot(precincts_votes_sf,
 
 .pull-right[
 .image-100[
-&lt;img src="CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-16-1.png" width="360" /&gt;
+&lt;img src="CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-25-1.png" width="360" /&gt;
 ]
 ]
 
@@ -616,7 +617,6 @@ Census for variables, then download them and automatically format them as tidy d
 --
 
 This package utilizes the Census API, so you will need to obtain a [Census API key](https://api.census.gov/data/key_signup.html).
-I talk more about APIs in the Social Media Data and Text Mining lecture.
 
 **Application Program Interface (API)**: A type of computer interface that exists as the 
 "native" method of communication between computers, often via http (usable via `httr` package).
@@ -624,6 +624,8 @@ I talk more about APIs in the Social Media Data and Text Mining lecture.
 * APIs make accessing data easy while allowing websites to control access.
 
 See [the developer's GitHub page](https://walkerke.github.io/tidycensus/articles/basic-usage.html) for detailed instructions.
+
+
 
 ---
 # Key `tidycensus` Functions
@@ -678,11 +680,11 @@ acs_2015_vars[10:18,] %&gt;% print()
 
 
 ```r
-king_county &lt;- get_acs(geography="tract", state="WA", 
-                       county="King", geometry = TRUE,
-                       variables=c("B02001_001E", 
-                                   "B02009_001E"), 
-                       output="wide")
+king_county &lt;- get_acs(geography = "tract",   state = "WA", 
+                       county    = "King", geometry = TRUE,
+                       variables = c("B02001_001E", 
+                                     "B02009_001E"), 
+                       output    = "wide")
 ```
 
 What do these look like?
@@ -696,13 +698,13 @@ glimpse(king_county)
 ```
 ## Rows: 398
 ## Columns: 7
-## $ GEOID       &lt;chr&gt; "53033031705", "53033032212", "53033032322", ...
-## $ NAME        &lt;chr&gt; "Census Tract 317.05, King County, Washington...
-## $ B02001_001E &lt;dbl&gt; 4271, 8337, 3560, 8498, 2009, 3224, 7634, 401...
-## $ B02001_001M &lt;dbl&gt; 266, 563, 165, 435, 129, 196, 847, 415, 396, ...
-## $ B02009_001E &lt;dbl&gt; 469, 116, 94, 797, 33, 32, 247, 88, 268, 8, 1...
-## $ B02009_001M &lt;dbl&gt; 345, 80, 65, 170, 29, 42, 151, 114, 140, 12, ...
-## $ geometry    &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.1336 4..., ...
+## $ GEOID       &lt;chr&gt; "53033011300", "53033004900", "53033026801", "53~
+## $ NAME        &lt;chr&gt; "Census Tract 113, King County, Washington", "Ce~
+## $ B02001_001E &lt;dbl&gt; 6656, 7489, 6056, 3739, 3687, 3854, 4362, 3991, ~
+## $ B02001_001M &lt;dbl&gt; 447, 605, 642, 192, 236, 271, 388, 430, 442, 286~
+## $ B02009_001E &lt;dbl&gt; 951, 66, 571, 189, 141, 54, 757, 302, 1058, 163,~
+## $ B02009_001M &lt;dbl&gt; 370, 61, 432, 123, 141, 76, 449, 266, 384, 170, ~
+## $ geometry    &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.3551 4..., MUL~
 ```
 ]
 
@@ -717,8 +719,8 @@ We can drop the margins of error, rename the estimates then, `mutate()` into a p
 ```r
 king_county &lt;-  king_county %&gt;%
   select(-ends_with("M")) %&gt;%
-  rename(`Total Population`=B02001_001E,
-         `Any Black`=B02009_001E) %&gt;%
+  rename(`Total Population`= B02001_001E,
+         `Any Black`       = B02009_001E) %&gt;%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 glimpse(king_county)
 ```
@@ -726,11 +728,11 @@ glimpse(king_county)
 ```
 ## Rows: 398
 ## Columns: 5
-## $ GEOID              &lt;chr&gt; "53033031705", "53033032212", "5303303...
-## $ NAME               &lt;chr&gt; "Census Tract 317.05, King County, Was...
-## $ `Total Population` &lt;dbl&gt; 4271, 8337, 3560, 8498, 2009, 3224, 76...
-## $ `Any Black`        &lt;dbl&gt; 0.109810349, 0.013913878, 0.026404494,...
-## $ geometry           &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.1336...
+## $ GEOID              &lt;chr&gt; "53033011300", "53033004900", "5303302680~
+## $ NAME               &lt;chr&gt; "Census Tract 113, King County, Washingto~
+## $ `Total Population` &lt;dbl&gt; 6656, 7489, 6056, 3739, 3687, 3854, 4362,~
+## $ `Any Black`        &lt;dbl&gt; 0.142878606, 0.008812926, 0.094286658, 0.~
+## $ geometry           &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.3551 4.~
 ```
 
 ---
@@ -741,7 +743,7 @@ glimpse(king_county)
 king_county %&gt;% 
   ggplot(aes(fill = `Any Black`)) + 
   geom_sf(size = NA) + 
-  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum = NA) + 
   scale_fill_continuous(name = "Any Black\n", 
                         low  = "#d4d5f9",
                         high = "#00025b") + 
@@ -786,7 +788,7 @@ kc_nowater &lt;- king_county %&gt;%
 Then we can reproduce the same plot using `kc_nowater`...
 
 ---
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
 
 ---
 # State Example Data
@@ -827,7 +829,7 @@ pb_state %&gt;%
 
 ---
 
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-40-1.svg)&lt;!-- --&gt;
 
 ---
 # Multiple `geom_sf` Layers
@@ -861,15 +863,15 @@ glimpse(urbans)
 ```
 ## Rows: 3,601
 ## Columns: 9
-## $ UACE10     &lt;chr&gt; "18856", "83116", "79363", "96670", "97750", "...
-## $ AFFGEOID10 &lt;chr&gt; "400C100US18856", "400C100US83116", "400C100US...
-## $ GEOID10    &lt;chr&gt; "18856", "83116", "79363", "96670", "97750", "...
-## $ NAME10     &lt;chr&gt; "Colorado Springs, CO", "South Bend, IN--MI", ...
-## $ LSAD10     &lt;chr&gt; "75", "75", "75", "75", "75", "76", "75", "75"...
-## $ UATYP10    &lt;chr&gt; "U", "U", "U", "U", "U", "C", "U", "U", "U", "...
-## $ ALAND10    &lt;dbl&gt; 486995256, 417310226, 137815683, 835565506, 34...
-## $ AWATER10   &lt;dbl&gt; 962957, 8281569, 141396, 6442279, 1377397, 151...
-## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-104.6051 3..., M...
+## $ UACE10     &lt;chr&gt; "18856", "83116", "79363", "96670", "97750", "574~
+## $ AFFGEOID10 &lt;chr&gt; "400C100US18856", "400C100US83116", "400C100US793~
+## $ GEOID10    &lt;chr&gt; "18856", "83116", "79363", "96670", "97750", "574~
+## $ NAME10     &lt;chr&gt; "Colorado Springs, CO", "South Bend, IN--MI", "Sa~
+## $ LSAD10     &lt;chr&gt; "75", "75", "75", "75", "75", "76", "75", "75", "~
+## $ UATYP10    &lt;chr&gt; "U", "U", "U", "U", "U", "C", "U", "U", "U", "C",~
+## $ ALAND10    &lt;dbl&gt; 486995256, 417310226, 137815683, 835565506, 34223~
+## $ AWATER10   &lt;dbl&gt; 962957, 8281569, 141396, 6442279, 1377397, 151536~
+## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-104.6051 3..., MULT~
 ```
 ]
 
@@ -904,7 +906,7 @@ We add the `urban_il` data as a new layer:
 
 ---
 
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-35-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-45-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse

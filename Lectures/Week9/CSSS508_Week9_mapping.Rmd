@@ -2,7 +2,7 @@
 title: "CSSS508, Week 9"
 subtitle: "Mapping"
 author: "Chuck Lanfear"
-date: "Dec 2, 2020<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
+date: "May 26, 2021<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -40,13 +40,13 @@ knitr::opts_chunk$set(comment = "##")
 ]
 
 .pull-right[
-If you are interested in mapping, GIS, and geospatial analysis in R, *acquire this book*.
+This is great if you are interested in mapping, GIS, and geospatial analysis in R--[but new things are on the way!](https://keen-swartz-3146c4.netlify.app/).
 
-[RSpatial.org](http://rspatial.org/) is a great resource as well.
+[RSpatial.org](http://rspatial.org/) is also great.
 
 You may also consider taking Jon Wakefield's **CSSS 554: Statistical Methods for Spatial Data**, however it is challenging and focuses more heavily on statistics than mapping.
 
-[CSDE offers workshops](https://csde.washington.edu/training/workshops/) using [QGIS](https://qgis.org/en/site/) and/or ArcGIS. I recommend QGIS because it is free software with an extensive feature set and large user community.
+[CSDE offers workshops](https://csde.washington.edu/training/workshops/) using [QGIS](https://qgis.org/en/site/) and/or ArcGIS. I recommend QGIS because it is free software with an extensive feature set.
 ]
 
 ---
@@ -117,7 +117,7 @@ class: inverse
 ---
 # `ggmap`
 
-`ggmap` is a package that works with `ggplot2` to plot spatial data directly on map images downloaded from Google Maps<sup>1</sup>, OpenStreetMap, and Stamen Maps (good artistic/minimal options).
+`ggmap` is a package that works with `ggplot2` to plot spatial data directly on map images downloaded from Google Maps<sup>1</sup> and Stamen Maps (good artistic/minimal options).
 
 What this package does for you:
 
@@ -129,7 +129,7 @@ What this package does for you:
 
 4. Additional functions for interacting with Google Maps (e.g. getting distances by bike)
 
-.footnote[[1] [Requires an API Key now.](https://cloud.google.com/maps-platform/)]
+.footnote[[1] [Requires a Google API Key.](https://cloud.google.com/maps-platform/)]
 
 ---
 # Installation
@@ -145,7 +145,7 @@ Because the map APIs it uses change frequently, sometimes you may need to get a 
 
 ```{r, eval=FALSE}
 if(!requireNamespace("remotes")) install.packages("remotes")
-remotes::install_github("dkahle/ggmap", ref = "tidyup")
+remotes::install_github("dkahle/ggmap")
 ```
 
 Note, this may require compilation on your computer.
@@ -174,7 +174,7 @@ All I provided was numeric latitude and longitude, and it placed the data points
 ]
 
 .pull-right[
-```{r qmplot, cache=TRUE, message = FALSE, echo=FALSE, fig.height = 5, fig.width=2.5, dev="svg"}
+```{r qmplot, cache=FALSE, message = FALSE, echo=FALSE, fig.height = 5, fig.width=2.5, dev="svg"}
 qmplot(data = spd_raw, x = Longitude, y = Latitude, color = I("#342c5c"), alpha = I(0.5))
 ```
 ]
@@ -188,7 +188,6 @@ Both `qmplot()` and `qmap()` are wrappers for a function called `get_map()` that
 * `zoom=` a zoom level (3 = continent, 10 = city, 21 = building)
 * `source=` 
     + `"google"`: Google Maps for general purpose maps<sup>1</sup>
-    + `"osm"`: OpenStreetMaps, general purpose but open access
     + `"stamen"`: Aesthetically pleasing alternatives based on OpenStreetMaps
 * `maptype=`
     + Google types: `"terrain"`, `"terrain-background"`, `"satellite"`, `"roadmap"`, `"hybrid"`
@@ -227,7 +226,7 @@ qmplot(data = spd_raw, geom = "blank",
 ]
 
 .pull-right[
-```{r quick_plot_density_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 5, fig.width=2.5, dev="svg"}
+```{r quick_plot_density_2, echo=FALSE, message = FALSE, cache=FALSE, fig.height = 5, fig.width=2.5, dev="svg"}
 qmplot(data = spd_raw, 
   geom = "blank", 
   x = Longitude,
@@ -255,7 +254,7 @@ Let's label the assaults and robberies specifically in downtown:
 First filter to downtown based on values "eyeballed" from our earlier map:
 ```{r flag_assaults}
 downtown <- spd_raw %>%
-  filter(Latitude > 47.58, Latitude < 47.64,
+  filter(Latitude  >   47.58, Latitude  <   47.64,
          Longitude > -122.36, Longitude < -122.31)
 ```
 
@@ -265,7 +264,7 @@ Then make a dataframe of just assaults and robberies:
 assaults <- downtown %>% 
   filter(`Event Clearance Group` %in%
                   c("ASSAULTS", "ROBBERY")) %>%
-  mutate(assault_label = `Event Clearance Description`)
+  rename(assault_label = `Event Clearance Description`)
 ```
 
 ---
@@ -292,7 +291,7 @@ Placing the arguments for `color=` and `alpha=` inside `I()` prevents them from 
 ]
 
 .pull-right[
-```{r labels_2, echo=FALSE, message = FALSE, cache=TRUE, fig.height = 6, fig.width=3, dev="svg"}
+```{r labels_2, echo=FALSE, message = FALSE, cache=FALSE, fig.height = 6, fig.width=3, dev="svg"}
 qmplot(data = downtown,
        x = Longitude,
        y = Latitude,
@@ -333,7 +332,7 @@ qmplot(data =
 ]
 
 .pull-right[
-```{r ggrepel_2, echo=FALSE, message = FALSE, cache=TRUE, warning=FALSE, fig.height = 6, fig.width=3, dev="svg"}
+```{r ggrepel_2, echo=FALSE, message = FALSE, cache=FALSE, warning=FALSE, fig.height = 6, fig.width=3, dev="svg"}
 library(ggrepel)
 qmplot(data = 
     downtown,
@@ -510,9 +509,8 @@ We will work with the voting data from Homework 5. You can obtain a shape file o
 
 We can load the file using `st_read()`.
 
-```{r, cache=TRUE, message=FALSE, warning=FALSE}
-precinct_shape <- st_read("./data/district/votdst.shp",
-                          stringsAsFactors = F) %>% 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+precinct_shape <- st_read("./data/district/votdst.shp") %>% 
   select(Precinct=NAME, geometry)
 ```
 
@@ -522,10 +520,10 @@ precinct_shape <- st_read("./data/district/votdst.shp",
 # Voting Data: Processing
 
 .small[
-```{r, cache=TRUE, message=FALSE, warning=FALSE}
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 precincts_votes_sf <- 
   read_csv("./data/king_county_elections_2016.txt") %>%
-  filter(Race=="US President & Vice President",
+  filter(Race == "US President & Vice President" &
          str_detect(Precinct, "SEA ")) %>% 
   select(Precinct, CounterType, SumOfCount) %>%
   group_by(Precinct) %>%
@@ -538,9 +536,10 @@ precincts_votes_sf <-
            recode(CounterType, 
                   `Donald J. Trump & Michael R. Pence` = "Trump",
                   `Hillary Clinton & Tim Kaine` = "Clinton",
-                  `Registered Voters`="RegisteredVoters",
+                  `Registered Voters`= "RegisteredVoters",
                   `Times Counted` = "TotalVotes")) %>%
-  spread(CounterType, SumOfCount) %>%
+  pivot_wider(names_from = CounterType, 
+              values_from = SumOfCount) %>%
   mutate(P_Dem = Clinton / TotalVotes, 
          P_Rep = Trump / TotalVotes, 
          Turnout = TotalVotes / RegisteredVoters) %>%
@@ -574,8 +573,8 @@ We can plot `sf` geometry using `geom_sf()`.
 
 ```{r, eval=FALSE, purl=FALSE}
 ggplot(precincts_votes_sf, 
-       aes(fill=P_Dem)) + #<<
-  geom_sf(size=NA) +
+       aes(fill = P_Dem)) + #<<
+  geom_sf(size = NA) +
   theme_void() +
   theme(legend.position = 
           "bottom")
@@ -595,7 +594,7 @@ ggplot(precincts_votes_sf,
   geom_sf(size=NA) +
   theme_void() +
   theme(legend.position = 
-          "right")
+          "bottom")
 ```
 ]
 ]
@@ -654,7 +653,7 @@ install.packages("tidycensus")
 library(tidycensus)
 ```
 
-```{r, cache=TRUE, message=FALSE, warning=FALSE}
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 library(tidycensus)
 # census_api_key("PUT YOUR KEY HERE", install=TRUE)
 acs_2015_vars <- load_variables(2015, "acs5")
@@ -665,19 +664,19 @@ acs_2015_vars[10:18,] %>% print()
 # Getting Data
 
 ```{r, include=FALSE, cache=TRUE}
-king_county <- get_acs(geography="tract", state="WA", 
-                       county="King", geometry = TRUE,
-                       variables=c("B02001_001E", 
-                                   "B02009_001E"), 
-                       output="wide")
+king_county <- get_acs(geography = "tract",   state = "WA", 
+                       county    = "King", geometry = TRUE,
+                       variables = c("B02001_001E", 
+                                     "B02009_001E"), 
+                       output    = "wide")
 ```
 
 ```{r, eval=FALSE, purl=FALSE}
-king_county <- get_acs(geography="tract", state="WA", 
-                       county="King", geometry = TRUE,
-                       variables=c("B02001_001E", 
-                                   "B02009_001E"), 
-                       output="wide")
+king_county <- get_acs(geography = "tract",   state = "WA", 
+                       county    = "King", geometry = TRUE,
+                       variables = c("B02001_001E", 
+                                     "B02009_001E"), 
+                       output    = "wide")
 ```
 
 What do these look like?
@@ -698,8 +697,8 @@ We can drop the margins of error, rename the estimates then, `mutate()` into a p
 ```{r}
 king_county <-  king_county %>%
   select(-ends_with("M")) %>%
-  rename(`Total Population`=B02001_001E,
-         `Any Black`=B02009_001E) %>%
+  rename(`Total Population`= B02001_001E,
+         `Any Black`       = B02009_001E) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 glimpse(king_county)
 ```
@@ -711,7 +710,7 @@ glimpse(king_county)
 king_county %>% 
   ggplot(aes(fill = `Any Black`)) + 
   geom_sf(size = NA) + 
-  coord_sf(crs = "+proj=longlat +datum=WGS84", datum=NA) + 
+  coord_sf(crs = "+proj=longlat +datum=WGS84", datum = NA) + 
   scale_fill_continuous(name = "Any Black\n", 
                         low  = "#d4d5f9",
                         high = "#00025b") + 
@@ -748,7 +747,7 @@ With a simple function and boundaries of water bodies in King County, we can rep
 st_erase <- function(x, y) {
   st_difference(x, st_make_valid(st_union(st_combine(y))))
 }
-kc_water <- tigris::area_water("WA", "King", class = "sf")
+kc_water   <- tigris::area_water("WA", "King", class = "sf")
 kc_nowater <- king_county %>% 
   st_erase(kc_water)
 ```
@@ -787,7 +786,7 @@ Then we can reproduce the same plot using `kc_nowater`...
 
 Let's do this again, but for the entire state of Illinois.
 
-```{r, include=FALSE, cache=FALSE}
+```{r, include=FALSE, cache=TRUE}
 pb_state <- 
   get_acs(geography = "tract", state = "IL",
           geometry  = TRUE,
@@ -795,8 +794,8 @@ pb_state <-
                         "B02009_001E"),
           output = "wide") %>%
   select(-ends_with("M")) %>%
-  rename(`Total Population`=B02001_001E,
-         `Any Black`=B02009_001E) %>%
+  rename(`Total Population` = B02001_001E,
+         `Any Black`        = B02009_001E) %>%
   mutate(`Any Black` = `Any Black` / `Total Population`)
 ```
 
@@ -830,7 +829,7 @@ pb_state %>%
 
 ---
 
-```{r, cache=FALSE, echo=FALSE, fig.height = 6, dev="svg"}
+```{r, cache=TRUE, echo=FALSE, fig.height = 6, dev="svg"}
 pb_state %>% 
   ggplot(aes(fill = `Any Black`)) + 
   geom_sf(size = NA) + 
