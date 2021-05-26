@@ -14,7 +14,7 @@ class: center, top, title-slide
 # CSSS508, Week 9
 ## Mapping
 ### Chuck Lanfear
-### May 26, 2021<br>Updated: May 25, 2021
+### May 26, 2021<br>Updated: May 26, 2021
 
 ---
 
@@ -83,25 +83,25 @@ glimpse(spd_raw)
 ```
 ## Rows: 706
 ## Columns: 19
-## $ `CAD CDW ID`                  [3m[38;5;246m&lt;dbl&gt;[39m[23m 1701856, 1701857, 1701853, 170~
-## $ `CAD Event Number`            [3m[38;5;246m&lt;dbl&gt;[39m[23m 16000104006, 16000103970, 1600~
-## $ `General Offense Number`      [3m[38;5;246m&lt;dbl&gt;[39m[23m 2016104006, 2016103970, 201610~
-## $ `Event Clearance Code`        [3m[38;5;246m&lt;chr&gt;[39m[23m "063", "064", "161", "245", "2~
-## $ `Event Clearance Description` [3m[38;5;246m&lt;chr&gt;[39m[23m "THEFT - CAR PROWL", "SHOPLIFT~
-## $ `Event Clearance SubGroup`    [3m[38;5;246m&lt;chr&gt;[39m[23m "CAR PROWL", "THEFT", "TRESPAS~
-## $ `Event Clearance Group`       [3m[38;5;246m&lt;chr&gt;[39m[23m "CAR PROWL", "SHOPLIFTING", "T~
-## $ `Event Clearance Date`        [3m[38;5;246m&lt;chr&gt;[39m[23m "03/25/2016 11:58:30 PM", "03/~
-## $ `Hundred Block Location`      [3m[38;5;246m&lt;chr&gt;[39m[23m "S KING ST / 8 AV S", "92XX BL~
-## $ `District/Sector`             [3m[38;5;246m&lt;chr&gt;[39m[23m "K", "S", "D", "M", "M", "B", ~
-## $ `Zone/Beat`                   [3m[38;5;246m&lt;chr&gt;[39m[23m "K3", "S3", "D2", "M1", "M3", ~
-## $ `Census Tract`                [3m[38;5;246m&lt;dbl&gt;[39m[23m 9100.102, 11800.602, 7200.106,~
-## $ Longitude                     [3m[38;5;246m&lt;dbl&gt;[39m[23m -122.3225, -122.2680, -122.342~
-## $ Latitude                      [3m[38;5;246m&lt;dbl&gt;[39m[23m 47.59835, 47.51985, 47.61422, ~
-## $ `Incident Location`           [3m[38;5;246m&lt;chr&gt;[39m[23m "(47.598347, -122.32245)", "(4~
-## $ `Initial Type Description`    [3m[38;5;246m&lt;chr&gt;[39m[23m "THEFT (DOES NOT INCLUDE SHOPL~
-## $ `Initial Type Subgroup`       [3m[38;5;246m&lt;chr&gt;[39m[23m "OTHER PROPERTY", "SHOPLIFTING~
-## $ `Initial Type Group`          [3m[38;5;246m&lt;chr&gt;[39m[23m "THEFT", "THEFT", "TRESPASS", ~
-## $ `At Scene Time`               [3m[38;5;246m&lt;chr&gt;[39m[23m "03/25/2016 10:25:51 PM", "03/~
+## $ `CAD CDW ID`                  &lt;dbl&gt; 1701856, 1701857, 1701853, 170~
+## $ `CAD Event Number`            &lt;dbl&gt; 16000104006, 16000103970, 1600~
+## $ `General Offense Number`      &lt;dbl&gt; 2016104006, 2016103970, 201610~
+## $ `Event Clearance Code`        &lt;chr&gt; "063", "064", "161", "245", "2~
+## $ `Event Clearance Description` &lt;chr&gt; "THEFT - CAR PROWL", "SHOPLIFT~
+## $ `Event Clearance SubGroup`    &lt;chr&gt; "CAR PROWL", "THEFT", "TRESPAS~
+## $ `Event Clearance Group`       &lt;chr&gt; "CAR PROWL", "SHOPLIFTING", "T~
+## $ `Event Clearance Date`        &lt;chr&gt; "03/25/2016 11:58:30 PM", "03/~
+## $ `Hundred Block Location`      &lt;chr&gt; "S KING ST / 8 AV S", "92XX BL~
+## $ `District/Sector`             &lt;chr&gt; "K", "S", "D", "M", "M", "B", ~
+## $ `Zone/Beat`                   &lt;chr&gt; "K3", "S3", "D2", "M1", "M3", ~
+## $ `Census Tract`                &lt;dbl&gt; 9100.102, 11800.602, 7200.106,~
+## $ Longitude                     &lt;dbl&gt; -122.3225, -122.2680, -122.342~
+## $ Latitude                      &lt;dbl&gt; 47.59835, 47.51985, 47.61422, ~
+## $ `Incident Location`           &lt;chr&gt; "(47.598347, -122.32245)", "(4~
+## $ `Initial Type Description`    &lt;chr&gt; "THEFT (DOES NOT INCLUDE SHOPL~
+## $ `Initial Type Subgroup`       &lt;chr&gt; "OTHER PROPERTY", "SHOPLIFTING~
+## $ `Initial Type Group`          &lt;chr&gt; "THEFT", "THEFT", "TRESPASS", ~
+## $ `At Scene Time`               &lt;chr&gt; "03/25/2016 10:25:51 PM", "03/~
 ```
 ]
 
@@ -131,7 +131,7 @@ Sometimes, however, we want to plot these points over existing maps.
 ]
 
 .pull-right[
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -560,11 +560,11 @@ glimpse(precincts_votes_sf)
 ## Rows: 960
 ## Columns: 5
 ## Groups: Precinct [960]
-## $ Precinct [3m[38;5;246m&lt;chr&gt;[39m[23m "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 1~
-## $ P_Dem    [3m[38;5;246m&lt;dbl&gt;[39m[23m 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.83259~
-## $ P_Rep    [3m[38;5;246m&lt;dbl&gt;[39m[23m 0.15612648, 0.07789474, 0.13418530, 0.08649469, 0.0~
-## $ Turnout  [3m[38;5;246m&lt;dbl&gt;[39m[23m 0.6931507, 0.7274119, 0.7347418, 0.7522831, 0.75792~
-## $ geometry [3m[38;5;246m&lt;MULTIPOLYGON [US_survey_foot]&gt;[39m[23m MULTIPOLYGON (((1273698 1~
+## $ Precinct &lt;chr&gt; "SEA 11-1256", "SEA 11-1550", "SEA 11-1552", "SEA 1~
+## $ P_Dem    &lt;dbl&gt; 0.7707510, 0.8168421, 0.7507987, 0.8376328, 0.83259~
+## $ P_Rep    &lt;dbl&gt; 0.15612648, 0.07789474, 0.13418530, 0.08649469, 0.0~
+## $ Turnout  &lt;dbl&gt; 0.6931507, 0.7274119, 0.7347418, 0.7522831, 0.75792~
+## $ geometry &lt;MULTIPOLYGON [US_survey_foot]&gt; MULTIPOLYGON (((1273698 1~
 ```
 ]
 
@@ -598,7 +598,7 @@ ggplot(precincts_votes_sf,
 
 .pull-right[
 .image-100[
-&lt;img src="CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-25-1.png" width="360" /&gt;
+&lt;img src="CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-16-1.png" width="360" /&gt;
 ]
 ]
 
@@ -788,7 +788,7 @@ kc_nowater &lt;- king_county %&gt;%
 Then we can reproduce the same plot using `kc_nowater`...
 
 ---
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-27-1.svg)&lt;!-- --&gt;
 
 ---
 # State Example Data
@@ -829,7 +829,7 @@ pb_state %&gt;%
 
 ---
 
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-40-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
 
 ---
 # Multiple `geom_sf` Layers
@@ -906,7 +906,7 @@ We add the `urban_il` data as a new layer:
 
 ---
 
-![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-45-1.svg)&lt;!-- --&gt;
+![](CSSS508_Week9_mapping_files/figure-html/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
 
 ---
 class: inverse
