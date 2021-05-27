@@ -1,0 +1,223 @@
+---
+title: "HW 6: Pronto!"
+author: "YOUR NAME"
+date: "November 7th, 2018"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Instructions
+
+> Pronto! is Seattle's bike sharing program, which launched in fall 2014. You may have seen the green bike docks around campus. It was also [in the news frequently](http://www.king5.com/news/local/seattle/city-launches-investigation-into-sdot-director-over-pronto-ties/97249954) and [eventually shut down](http://www.seattletimes.com/seattle-news/transportation/seattle-pronto-bike-share-shutting-down-friday/).
+
+> You will be using data from the [2015 Pronto Cycle Share Data Challenge](https://www.prontocycleshare.com/datachallenge). These are available for download as a 75 MB ZIP file from <https://s3.amazonaws.com/pronto-data/open_data_year_one.zip>. Once unzipped, the folder containing all the files is around 900 MB. The `open_data_year_one` folder contains a `README.txt` file that you should reference for documentation. **Place the `open_data_year_one` folder in the same directory as this template.**
+
+> Questions for you to answer are as quoted blocks of text. Put your code used to address these questions and any comments you have below each block. Remember the guiding DRY principle: **Don't Repeat Yourself!**
+
+
+# PART 1
+
+> The next section asks you to load the data with a loop. As an advanced alternative, you may optionally skip this and load the data using a vectorized method like `lapply()`.
+
+## Loading the Data with a Loop
+
+> Make sure the `open_data_year_one` folder is in the same directory as this template. Use the `list.files()` on the `open_data_year_one` folder to return a character vector giving all the files in that folder, and store it to an object called `files_in_year_one`. Then use subsetting on `files_in_year_one` to remove the entries for `README.txt` (which isn't data) and for `2015_status_data.csv` (which is massive and doesn't have interesting information, so we're going to exclude it). Thus, `files_in_year_one` should be a **character vector with three entries**.
+
+```{r}
+library(stringr)
+
+files_in_year_one <- list.files("open_data_year_one")[-c(2,5)]
+
+files_in_year_one <- str_subset(list.files("open_data_year_one"), 
+                                "station|trip|weather")
+```
+
+> We want to read the remaining .csv files into data frames stored in a **list** called `data_list`. Preallocate this using `data_list <- vector("list", length(files_in_year_one))`.
+
+```{r}
+data_list <- vector("list", length(files_in_year_one))
+```
+
+> We would like the names of the list entries to be simpler than the file names. For example, we want to read the `2015_station_data.csv` file into `data_list[["station_data"]]`, and `2015_trip_data.csv` into `data_list[["trip_data"]]`. So, you should make a new vector called `data_list_names` giving the names of the objects to read in these CSV files to using `files_in_year_one`. Use the `str_sub()` function in `library(stringr)` to keep the portion of the `files_in_year_one` entries starting from the sixth character (which will drop the `2015_` part) and stopping at number of characters of each filename string, minus 4 (which will drop the `.csv` part). Remember to load `stringr` with `library` and use `?str_sub` in the console to get help on the function. 
+
+```{r}
+data_list_names <- str_sub(files_in_year_one, 6, -5)
+data_list_names <- str_remove_all(files_in_year_one, "2015_|\\.csv")
+```
+
+> Set the names for `data_list` using the `names()` function and the `data_list_names` vector.
+
+```{r}
+names(data_list) <- data_list_names
+```
+
+> Then, write a `for()` loop that uses `read_csv()` from the `readr` package to read in all the CSV files contained in the ZIP file, `seq_along`ing the `files_in_year_one` vector. Store each of these files to its corresponding entry in `data_list`. The [data download demo](https://rebeccaferrell.github.io/CSSS508/Lectures/data_download_demo.html) might be a helpful reference.
+
+> You will want to use the `cache=TRUE` chunk option for this chunk---otherwise you'll have to wait for the data to get read in every single time you knit. You will also want to make sure you are using `read_csv()` in the `readr` package and not base R's `read.csv()` as `readr`'s version is faster, gives you a progress bar, and won't convert all character variables to factors automatically.
+
+```{r}
+library(readr)
+for(i in seq_along(files_in_year_one)){
+  data_list[[i]] <- read_csv(paste0("open_data_year_one/", files_in_year_one[i]))
+}
+str(data_list)
+```
+
+```{r}
+file_paths <- paste0("open_data_year_one/", files_in_year_one)
+data_list  <- lapply(file_paths, read_csv)
+names(data_list) <- data_list_names
+```
+
+## Fixing Data Types
+
+> Run `str()` on `data_list` and look at how the variables came in from using `read_csv()`. Most should be okay, but some of the dates and times may be stored as character rather than dates or `POSIXct` date-time values. We also have lots of missing values for `gender` in the trip data because users who are not annual members do not report gender. 
+
+> First, patch up the missing values for `gender` in `data_list[["trip_data"]]`: if a user is a `Short-Term Pass Holder`, then put `"Unknown"` as their `gender`. Don't make new objects, but rather modify the entries in `data_list` directly (e.g. `data_list[["trip_data"]] <- data_list[["trip_data"]] %>% mutate(...)`.
+
+```{r}
+library(dplyr)
+data_list[["trip_data"]] %>%
+  count(gender, usertype)
+```
+
+> Now, use `dplyr`'s `mutate_at()` and/or `mutate()`, functions from the `lubridate` package, and the `factor` function to (1) fix any date/times, as well as to (2) convert the `usertype` and `gender` variables to factor variables from the trip data. *Don't make new objects*, but rather modify the entries in `data_list` directly.
+
+```{r}
+data_list[["trip_data"]] <- data_list[["trip_data"]] %>%
+  mutate(gender = ifelse(usertype == "Short-Term Pass Holder", "Unknown", gender)) 
+```
+
+```{r}
+library(lubridate)
+
+data_list[["trip_data"]]  <- data_list[["trip_data"]] %>%
+  mutate(across(c(starttime, stoptime), mdy_hm))
+
+data_list[["trip_data"]] %>% glimpse()
+```
+
+```{r}
+data_list[["weather_data"]] <- data_list[["weather_data"]] %>%
+  mutate(Date = mdy(Date))
+
+data_list[["weather_data"]] %>% glimpse()
+
+```
+
+
+# PART 2
+
+## Identifying Trip Regions
+
+> The `terminal`, `to_station_id`, and `from_station_id` columns in `data_list[["station_data"]]` and `data_list[["trip_data"]]` have a two or three character code followed by a hyphen and a numeric code. These character codes convey the broad geographic region of the stations (e.g. `CBD` is Central Business District, `PS` is Pioneer Square, `ID` is International District). Write a function called `region_extract()` that can extract these region codes by taking *a character vector* as **input** and *returning another character vector* as **output** that just has these initial character codes. For example, if I run `region_extract(x = c("CBD-11", "ID-01"))`, it should give me as output a *character vector* with first entry `"CBD"` and second entry `"ID"` (e.g. `"CBD" "ID"`).
+
+> Note: if you cannot get this working and need to move on with your life, try writing your function to just take the first two characters using `str_sub()` and use that.
+
+```{r}
+library(stringr)
+example_vector <- c("CBD-11", "ID-01")
+
+str_extract(example_vector, "^[A-Z]*")
+
+region_extract <- function(x){
+  return(str_extract(x, "^[A-Z]*"))
+}
+
+region_extract(example_vector)
+
+```
+
+> Then on `data_list[["station_data"]]` and `data_list[["trip_data"]]`, make new columns called `terminal_region`, `to_station_region`, and `from_station_region` using your `region_extract()` function.
+
+```{r}
+data_list[["station_data"]] <- data_list[["station_data"]] %>% 
+  mutate(terminal_region = region_extract(terminal))
+```
+
+```{r}
+data_list[["trip_data"]] <- data_list[["trip_data"]] %>% 
+  mutate(to_station_region   = region_extract(to_station_id),
+         from_station_region = region_extract(from_station_id))
+```
+
+
+## Identifying Rainy Days
+
+> The `Events` column in `data_list[["weather_data"]]` mentions if there was rain, thunderstorms, fog, etc. On some days you can see multiple weather events. Add a column to this data frame called `Rain` that takes the value `"Rain"` if there was rain, and `"No rain"` otherwise. You will need to use some string parsing since `"Rain"` is not always at the beginning of the string. The function `str_detect()` may be useful here, but again, if you are running short on time, just look for `"Rain"` at the beginning using `str_sub()` as a working but imperfect approach. Then convert the `Rain` variable to a factor.
+
+```{r}
+data_list[["weather_data"]] %>% count(Events)
+
+data_list[["weather_data"]] <- data_list[["weather_data"]] %>%
+  mutate(Rain = ifelse(str_detect(Events, "Rain"), "Rain", "No rain"),
+         Rain = ifelse(is.na(Rain), "No rain", Rain))
+
+data_list[["weather_data"]] %>% count(Events, Rain)
+```
+
+## Merging Rainy Weather and Trips
+
+> You have bike station region information now, and rainy weather information. Make a new data frame called `trips_weather` that joins `data_list[["trip_data"]]` with `data_list[["weather_data"]]` by trip start date so that the `Rain` column is added to the trip-level data (just the `Rain` column please, *none of the rest of the weather info*). You may need to do some date manipulation and extraction as seen in Week 5 slides to get a date variable from the `starttime` column that you can use in merging.
+
+```{r}
+data_list[["trip_data"]] %>% glimpse()
+data_list[["weather_data"]] %>% glimpse()
+
+trips_weather <- data_list[["trip_data"]] %>%
+  mutate(Date = as.Date(starttime)) %>%
+  inner_join(data_list[["weather_data"]] %>% 
+              select(Date, Rain))
+glimpse(trips_weather)
+```
+
+## Making a Summarizing and Plotting Function
+
+> Now for the grand finale. Write a function `daily_rain_rides()` that takes as input:
+
+> * `region_code`: a region code (e.g. `"CBD"`, `"UW"`)
+> * `direction`: indicates whether we are thinking of trips `"from"` or  `"to"` a region
+
+> and inside the function does the following:
+
+> * Filters the data to trips that came **from** stations with that region code or went **to** stations with that region code (depending on the values of `direction` and `region_code`). For example, if I say `region_code = "BT"` (for Belltown) and `direction = "from"`, then I want to keep rows for trips whose `from_station_region` is equal to `"BT"`.
+
+> * Makes a data frame called `temp_df` with one row per day counting how many trips were in `region_code` going `direction`. This should have columns for trip starting date, how many trips there were that day, and whether there was rain or not that day. You'll need to use `group_by()` and `summarize()`.
+
+> * Uses `temp_df` to make a `ggplot` scatterplot (`geom_point`) with trip starting date on the horizontal axis, number of trips on the vertical axis, and points colored `"black"` for days with no rain and `"deepskyblue"` for days with rain. Make sure the legend is clear and that the x axis is easy to understand without being overly labeled (control this with `scale_x_date`). The title of the plot should be customized to say which region code is shown and which direction is analyzed (e.g. "Daily rides going **to** **SLU**") using `paste0()`. Feel free to use whatever themeing you like on the plot or other tweaks to make it look great.
+* Returns the `ggplot` object with all its layers.
+
+> I have created a *skeleton* for this function. Fill in your code as needed and **remember to set `eval=TRUE` in the chunk after you've written the function**.
+
+```{r, eval=TRUE}
+library(ggplot2)
+daily_rain_rides <- function(region_code, direction){
+  if(direction == "to"){
+    temp_df <- trips_weather %>% 
+      filter(to_station_region == region_code)
+  } else if (direction == "from"){
+    temp_df <- trips_weather %>% 
+      filter(from_station_region == region_code)
+  }
+  temp_df <- temp_df %>% count(Date, Rain)
+  ggplot(temp_df, aes(x = Date, y = n, color = Rain)) + 
+    geom_point() + 
+    ylab("Number of Rides") + 
+    scale_color_manual(name = "Weather",
+                       values = c("No rain" = "black", "Rain" = "deepskyblue")) +
+    ggtitle(paste0("Daily rides going ", direction, " ", region_code)) +
+    geom_smooth(method = "loess", formula = "y ~ x") + 
+    theme_minimal()
+}
+
+```
+
+> Then, test out your function: make *three plots* using `daily_rain_rides()`, trying out different values of the region code and direction to show it works.
+
+```{r}
+daily_rain_rides(region_code = "SLU", direction = "from")
+daily_rain_rides(region_code = "CBD", direction = "to")
+daily_rain_rides(region_code = "BT", direction = "from")
+```
