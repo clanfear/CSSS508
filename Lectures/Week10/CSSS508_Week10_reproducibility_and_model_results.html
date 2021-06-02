@@ -81,21 +81,21 @@ summary(lm_1)
 ## lm(formula = yn ~ num1 + fac1, data = ex_dat)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -10.1771  -2.0103  -0.0811   1.6890   7.2231 
+##     Min      1Q  Median      3Q     Max 
+## -9.9971 -1.7452 -0.1423  2.1099  7.4219 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   1.3615     0.3930   3.464 0.000654 ***
-## num1          0.5679     0.1010   5.621 6.45e-08 ***
-## fac1B         0.2523     0.5248   0.481 0.631157    
-## fac1C         2.2759     0.5143   4.425 1.60e-05 ***
+## (Intercept)   1.1632     0.3826   3.041  0.00268 ** 
+## num1          0.6932     0.1044   6.643 2.96e-10 ***
+## fac1B         0.7495     0.5177   1.448  0.14932    
+## fac1C         2.2360     0.5009   4.464 1.36e-05 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.954 on 196 degrees of freedom
-## Multiple R-squared:  0.2243,	Adjusted R-squared:  0.2124 
-## F-statistic: 18.89 on 3 and 196 DF,  p-value: 8.356e-11
+## Residual standard error: 2.945 on 196 degrees of freedom
+## Multiple R-squared:  0.2364,	Adjusted R-squared:  0.2247 
+## F-statistic: 20.22 on 3 and 196 DF,  p-value: 1.849e-11
 ....
 ```
 ]
@@ -120,15 +120,15 @@ summary(glm_1)
 ##     data = ex_dat)
 ## 
 ## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.0280  -0.9812   0.4580   1.0034   2.0158  
+##    Min      1Q  Median      3Q     Max  
+## -1.994  -1.056  -0.421   1.020   2.207  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -0.80694    0.29457  -2.739 0.006156 ** 
-## num1         0.30977    0.08158   3.797 0.000146 ***
-## fac1B        0.11899    0.38050   0.313 0.754484    
-## fac1C        1.49541    0.39076   3.827 0.000130 ***
+## (Intercept) -1.09058    0.30014  -3.634 0.000280 ***
+## num1         0.38134    0.08786   4.340 1.42e-05 ***
+## fac1B        0.49142    0.37958   1.295 0.195450    
+## fac1C        1.29566    0.37993   3.410 0.000649 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -150,12 +150,12 @@ lm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic      p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-## 1 (Intercept)    1.36      0.393     3.46  0.000654    
-## 2 num1           0.568     0.101     5.62  0.0000000645
-## 3 fac1B          0.252     0.525     0.481 0.631       
-## 4 fac1C          2.28      0.514     4.43  0.0000160
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    1.16      0.383      3.04 2.68e- 3
+## 2 num1           0.693     0.104      6.64 2.96e-10
+## 3 fac1B          0.749     0.518      1.45 1.49e- 1
+## 4 fac1C          2.24      0.501      4.46 1.36e- 5
 ```
 
 Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
@@ -176,12 +176,12 @@ glm_1 %&gt;% tidy()
 
 ```
 ## # A tibble: 4 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)   -0.807    0.295     -2.74  0.00616 
-## 2 num1           0.310    0.0816     3.80  0.000146
-## 3 fac1B          0.119    0.380      0.313 0.754   
-## 4 fac1C          1.50     0.391      3.83  0.000130
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   -1.09     0.300      -3.63 0.000280 
+## 2 num1           0.381    0.0879      4.34 0.0000142
+## 3 fac1B          0.491    0.380       1.29 0.195    
+## 4 fac1C          1.30     0.380       3.41 0.000649
 ```
 
 ---
@@ -203,7 +203,7 @@ glance(lm_1)
 ## # A tibble: 1 x 12
 ##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC
 ##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.224         0.212  2.95      18.9 8.36e-11     3  -498. 1007.
+## 1     0.236         0.225  2.95      20.2 1.85e-11     3  -498. 1006.
 ## # ... with 4 more variables: BIC &lt;dbl&gt;, deviance &lt;dbl&gt;,
 ## #   df.residual &lt;int&gt;, nobs &lt;int&gt;
 ```
@@ -223,14 +223,14 @@ augment(lm_1) %&gt;% head()
 
 ```
 ## # A tibble: 6 x 9
-##      yn    num1 fac1  .fitted .resid   .hat .sigma  .cooksd .std.resid
-##   &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
-## 1  1.51  1.05   A       1.96  -0.449 0.0164   2.96  9.78e-5    -0.153 
-## 2  6.76  0.272  C       3.79   2.97  0.0143   2.95  3.72e-3     1.01  
-## 3  3.16 -0.0735 C       3.60  -0.437 0.0150   2.96  8.44e-5    -0.149 
-## 4 -1.15 -3.05   A      -0.371 -0.774 0.0362   2.96  6.69e-4    -0.267 
-## 5  6.04  4.63   C       6.27  -0.229 0.0303   2.96  4.86e-5    -0.0789
-## 6 -2.42 -2.09   A       0.175 -2.60  0.0280   2.96  5.74e-3    -0.893
+##      yn   num1 fac1  .fitted .resid   .hat .sigma  .cooksd .std.resid
+##   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+## 1 -1.10  2.26  B        3.48 -4.58  0.0176   2.93 0.0111       -1.57 
+## 2  4.62 -2.52  C        1.65  2.97  0.0301   2.94 0.00815       1.02 
+## 3 -2.40  0.101 B        1.98 -4.39  0.0181   2.94 0.0104       -1.50 
+## 4  3.42  3.01  B        4.00 -0.578 0.0202   2.95 0.000203     -0.198
+## 5  8.07  0.512 C        3.75  4.32  0.0146   2.94 0.00810       1.48 
+## 6  5.50  2.12  C        4.87  0.634 0.0158   2.95 0.000189      0.217
 ```
 ]
 
@@ -252,17 +252,17 @@ ex_dat %&gt;%
 
 ```
 ## # A tibble: 9 x 6
-##   fac1  term        estimate std.error statistic     p.value
-##   &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-## 1 A     (Intercept)    1.27      0.709     1.79  0.0786     
-## 2 A     num1           0.394     0.210     1.88  0.0657     
-## 3 A     fac2No         0.483     0.868     0.556 0.580      
-## 4 B     (Intercept)    1.18      0.469     2.52  0.0143     
-## 5 B     num1           0.521     0.167     3.12  0.00273    
-## 6 B     fac2No         1.03      0.710     1.45  0.152      
-## 7 C     (Intercept)    2.23      0.407     5.49  0.000000630
-## 8 C     num1           0.718     0.137     5.26  0.00000157 
-## 9 C     fac2No         2.62      0.559     4.68  0.0000140
+##   fac1  term        estimate std.error statistic       p.value
+##   &lt;fct&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+## 1 A     (Intercept)  0.00555     0.636   0.00873 0.993        
+## 2 A     num1         0.797       0.215   3.71    0.000433     
+## 3 A     fac2No       2.26        0.788   2.87    0.00558      
+## 4 B     (Intercept)  1.39        0.587   2.37    0.0211       
+## 5 B     num1         0.713       0.171   4.17    0.000103     
+## 6 B     fac2No       0.945       0.751   1.26    0.213        
+## 7 C     (Intercept)  3.04        0.464   6.55    0.00000000968
+## 8 C     num1         0.693       0.153   4.52    0.0000257    
+## 9 C     fac2No       0.690       0.606   1.14    0.259
 ```
 ]
 
@@ -442,16 +442,16 @@ lm_1_est
 ## # Predicted values of yn
 ## # x = num1
 ## 
-##  x | Predicted |         95% CI
-## -------------------------------
-## -6 |     -1.68 | [-3.26, -0.11]
-## -4 |     -0.71 | [-1.96,  0.54]
-## -2 |      0.27 | [-0.71,  1.25]
-##  0 |      1.25 | [ 0.45,  2.05]
-##  2 |      2.23 | [ 1.44,  3.02]
-##  4 |      3.20 | [ 2.26,  4.15]
-##  6 |      4.18 | [ 2.97,  5.40]
-##  8 |      5.16 | [ 3.63,  6.69]
+##  x | Predicted |        95% CI
+## ------------------------------
+## -6 |     -0.68 | [-2.23, 0.87]
+## -4 |      0.03 | [-1.16, 1.22]
+## -2 |      0.73 | [-0.15, 1.61]
+##  0 |      1.43 | [ 0.75, 2.12]
+##  2 |      2.14 | [ 1.41, 2.87]
+##  4 |      2.84 | [ 1.87, 3.81]
+##  6 |      3.55 | [ 2.24, 4.85]
+##  8 |      4.25 | [ 2.58, 5.93]
 ## 
 ## Adjusted for:
 ## * fac1 = A
@@ -1314,6 +1314,10 @@ msummary(model_list, output = "ex_table.png")
 ```
 ]
 
+To save a `modelsummary` object as a file, just provide a path to the `output =` argument.
+
+Specifying a suffix (e.g., `.png` or `.pdf`) will control the output format.
+
 ---
 # `modelsummary` and `gt`
 
@@ -1333,18 +1337,12 @@ msummary(model_list, output = "gt") %&gt;%
 ```
 ]
 
-Note that `gt`'s `\(LaTeX\)` support for PDFs is immature--this format is better for HTML or image output.
+Note that `gt`'s support for PDF output is immature--this format is better for HTML or image output.
 
 
 ]
 .pull-right[
 .image-full[
-
-```
-## Warning: The `.dots` argument of `group_by()` is deprecated as of
-## dplyr 1.0.0.
-```
-
 ![](CSSS508_Week10_reproducibility_and_model_results_files/figure-html/unnamed-chunk-55-1.png)&lt;!-- --&gt;
 ]
 ]
@@ -1388,7 +1386,7 @@ mtcars %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#pkjmxuztrh .gt_table {
+#wqyicfvrtk .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1413,7 +1411,7 @@ mtcars %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#pkjmxuztrh .gt_heading {
+#wqyicfvrtk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1425,7 +1423,7 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#pkjmxuztrh .gt_title {
+#wqyicfvrtk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1435,7 +1433,7 @@ mtcars %&gt;%
   border-bottom-width: 0;
 }
 
-#pkjmxuztrh .gt_subtitle {
+#wqyicfvrtk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1445,13 +1443,13 @@ mtcars %&gt;%
   border-top-width: 0;
 }
 
-#pkjmxuztrh .gt_bottom_border {
+#wqyicfvrtk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pkjmxuztrh .gt_col_headings {
+#wqyicfvrtk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1466,7 +1464,7 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#pkjmxuztrh .gt_col_heading {
+#wqyicfvrtk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1486,7 +1484,7 @@ mtcars %&gt;%
   overflow-x: hidden;
 }
 
-#pkjmxuztrh .gt_column_spanner_outer {
+#wqyicfvrtk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1498,15 +1496,15 @@ mtcars %&gt;%
   padding-right: 4px;
 }
 
-#pkjmxuztrh .gt_column_spanner_outer:first-child {
+#wqyicfvrtk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pkjmxuztrh .gt_column_spanner_outer:last-child {
+#wqyicfvrtk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pkjmxuztrh .gt_column_spanner {
+#wqyicfvrtk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1518,7 +1516,7 @@ mtcars %&gt;%
   width: 100%;
 }
 
-#pkjmxuztrh .gt_group_heading {
+#wqyicfvrtk .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1540,7 +1538,7 @@ mtcars %&gt;%
   vertical-align: middle;
 }
 
-#pkjmxuztrh .gt_empty_group_heading {
+#wqyicfvrtk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1555,15 +1553,15 @@ mtcars %&gt;%
   vertical-align: middle;
 }
 
-#pkjmxuztrh .gt_from_md > :first-child {
+#wqyicfvrtk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pkjmxuztrh .gt_from_md > :last-child {
+#wqyicfvrtk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pkjmxuztrh .gt_row {
+#wqyicfvrtk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1582,7 +1580,7 @@ mtcars %&gt;%
   overflow-x: hidden;
 }
 
-#pkjmxuztrh .gt_stub {
+#wqyicfvrtk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1594,7 +1592,7 @@ mtcars %&gt;%
   padding-left: 12px;
 }
 
-#pkjmxuztrh .gt_summary_row {
+#wqyicfvrtk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1604,7 +1602,7 @@ mtcars %&gt;%
   padding-right: 5px;
 }
 
-#pkjmxuztrh .gt_first_summary_row {
+#wqyicfvrtk .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1614,7 +1612,7 @@ mtcars %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#pkjmxuztrh .gt_grand_summary_row {
+#wqyicfvrtk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1624,7 +1622,7 @@ mtcars %&gt;%
   padding-right: 5px;
 }
 
-#pkjmxuztrh .gt_first_grand_summary_row {
+#wqyicfvrtk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1634,11 +1632,11 @@ mtcars %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#pkjmxuztrh .gt_striped {
+#wqyicfvrtk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pkjmxuztrh .gt_table_body {
+#wqyicfvrtk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1647,7 +1645,7 @@ mtcars %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#pkjmxuztrh .gt_footnotes {
+#wqyicfvrtk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1661,13 +1659,13 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#pkjmxuztrh .gt_footnote {
+#wqyicfvrtk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#pkjmxuztrh .gt_sourcenotes {
+#wqyicfvrtk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1681,46 +1679,46 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#pkjmxuztrh .gt_sourcenote {
+#wqyicfvrtk .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#pkjmxuztrh .gt_left {
+#wqyicfvrtk .gt_left {
   text-align: left;
 }
 
-#pkjmxuztrh .gt_center {
+#wqyicfvrtk .gt_center {
   text-align: center;
 }
 
-#pkjmxuztrh .gt_right {
+#wqyicfvrtk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pkjmxuztrh .gt_font_normal {
+#wqyicfvrtk .gt_font_normal {
   font-weight: normal;
 }
 
-#pkjmxuztrh .gt_font_bold {
+#wqyicfvrtk .gt_font_bold {
   font-weight: bold;
 }
 
-#pkjmxuztrh .gt_font_italic {
+#wqyicfvrtk .gt_font_italic {
   font-style: italic;
 }
 
-#pkjmxuztrh .gt_super {
+#wqyicfvrtk .gt_super {
   font-size: 65%;
 }
 
-#pkjmxuztrh .gt_footnote_marks {
+#wqyicfvrtk .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="pkjmxuztrh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="wqyicfvrtk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -1818,7 +1816,7 @@ mtcars %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#rtbgoldpub .gt_table {
+#sqketivvan .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1843,7 +1841,7 @@ mtcars %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#rtbgoldpub .gt_heading {
+#sqketivvan .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1855,7 +1853,7 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rtbgoldpub .gt_title {
+#sqketivvan .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1865,7 +1863,7 @@ mtcars %&gt;%
   border-bottom-width: 0;
 }
 
-#rtbgoldpub .gt_subtitle {
+#sqketivvan .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1875,13 +1873,13 @@ mtcars %&gt;%
   border-top-width: 0;
 }
 
-#rtbgoldpub .gt_bottom_border {
+#sqketivvan .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rtbgoldpub .gt_col_headings {
+#sqketivvan .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1896,7 +1894,7 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rtbgoldpub .gt_col_heading {
+#sqketivvan .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1916,7 +1914,7 @@ mtcars %&gt;%
   overflow-x: hidden;
 }
 
-#rtbgoldpub .gt_column_spanner_outer {
+#sqketivvan .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1928,15 +1926,15 @@ mtcars %&gt;%
   padding-right: 4px;
 }
 
-#rtbgoldpub .gt_column_spanner_outer:first-child {
+#sqketivvan .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rtbgoldpub .gt_column_spanner_outer:last-child {
+#sqketivvan .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rtbgoldpub .gt_column_spanner {
+#sqketivvan .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1948,7 +1946,7 @@ mtcars %&gt;%
   width: 100%;
 }
 
-#rtbgoldpub .gt_group_heading {
+#sqketivvan .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1970,7 +1968,7 @@ mtcars %&gt;%
   vertical-align: middle;
 }
 
-#rtbgoldpub .gt_empty_group_heading {
+#sqketivvan .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1985,15 +1983,15 @@ mtcars %&gt;%
   vertical-align: middle;
 }
 
-#rtbgoldpub .gt_from_md > :first-child {
+#sqketivvan .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rtbgoldpub .gt_from_md > :last-child {
+#sqketivvan .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rtbgoldpub .gt_row {
+#sqketivvan .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2012,7 +2010,7 @@ mtcars %&gt;%
   overflow-x: hidden;
 }
 
-#rtbgoldpub .gt_stub {
+#sqketivvan .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2024,7 +2022,7 @@ mtcars %&gt;%
   padding-left: 12px;
 }
 
-#rtbgoldpub .gt_summary_row {
+#sqketivvan .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2034,7 +2032,7 @@ mtcars %&gt;%
   padding-right: 5px;
 }
 
-#rtbgoldpub .gt_first_summary_row {
+#sqketivvan .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2044,7 +2042,7 @@ mtcars %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#rtbgoldpub .gt_grand_summary_row {
+#sqketivvan .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2054,7 +2052,7 @@ mtcars %&gt;%
   padding-right: 5px;
 }
 
-#rtbgoldpub .gt_first_grand_summary_row {
+#sqketivvan .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2064,11 +2062,11 @@ mtcars %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#rtbgoldpub .gt_striped {
+#sqketivvan .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rtbgoldpub .gt_table_body {
+#sqketivvan .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2077,7 +2075,7 @@ mtcars %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#rtbgoldpub .gt_footnotes {
+#sqketivvan .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2091,13 +2089,13 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rtbgoldpub .gt_footnote {
+#sqketivvan .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#rtbgoldpub .gt_sourcenotes {
+#sqketivvan .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2111,46 +2109,46 @@ mtcars %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rtbgoldpub .gt_sourcenote {
+#sqketivvan .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#rtbgoldpub .gt_left {
+#sqketivvan .gt_left {
   text-align: left;
 }
 
-#rtbgoldpub .gt_center {
+#sqketivvan .gt_center {
   text-align: center;
 }
 
-#rtbgoldpub .gt_right {
+#sqketivvan .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rtbgoldpub .gt_font_normal {
+#sqketivvan .gt_font_normal {
   font-weight: normal;
 }
 
-#rtbgoldpub .gt_font_bold {
+#sqketivvan .gt_font_bold {
   font-weight: bold;
 }
 
-#rtbgoldpub .gt_font_italic {
+#sqketivvan .gt_font_italic {
   font-style: italic;
 }
 
-#rtbgoldpub .gt_super {
+#sqketivvan .gt_super {
   font-size: 65%;
 }
 
-#rtbgoldpub .gt_footnote_marks {
+#sqketivvan .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="rtbgoldpub" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="sqketivvan" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>

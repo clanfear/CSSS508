@@ -1165,6 +1165,10 @@ msummary(model_list, output = "ex_table.png")
 ```
 ]
 
+To save a `modelsummary` object as a file, just provide a path to the `output =` argument.
+
+Specifying a suffix (e.g., `.png` or `.pdf`) will control the output format.
+
 ---
 # `modelsummary` and `gt`
 
@@ -1174,7 +1178,7 @@ msummary(model_list, output = "ex_table.png")
 You can select `gt` output to enable modifying summaries with `gt` functions.
 
 .small[
-```{r, eval=FALSE, message = FALSE, warning=FALSE}
+```{r, eval=FALSE}
 msummary(model_list, output = "gt") %>%
   tab_header(
     title = "Table 1. Linear Models", 
@@ -1183,13 +1187,13 @@ msummary(model_list, output = "gt") %>%
 ```
 ]
 
-Note that `gt`'s $LaTeX$ support for PDFs is immature--this format is better for HTML or image output.
+Note that `gt`'s support for PDF output is immature--this format is better for HTML or image output.
 
 
 ]
 .pull-right[
 .image-full[
-```{r, echo=FALSE}
+```{r, echo=FALSE, message = FALSE, warning=FALSE}
 msummary(model_list, output = "gt") %>%
   tab_header(
     title = "Table 1. Linear Models", 
