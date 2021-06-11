@@ -242,9 +242,9 @@ layout: default
    * [Slides for Lecture 10: Reproducibility and model results](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.html)
       + [PDF of Lecture 10 slides](http://clanfear.github.io/CSSS508/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.pdf)
       + [Rmd for Lecture 10 slides](https://github.com/clanfear/CSSS508/raw/master/Lectures/Week10/CSSS508_Week10_reproducibility_and_model_results.Rmd)
-   * Lecture Video for Week 10, recorded December 9th, 2020
-       + [Zoom](https://washington.zoom.us/rec/share/a1simgomwoMiNz5E3DrthXmGNW3fncEi3o89lR8MmWjbniVhMj3A90wxnFJjYQGP.w4bsxphxQ1rbLl78?startTime=1607556423000)
-       + [YouTube](https://youtu.be/yTV5hzzaMfM)
+   * Lecture Video for Week 10, recorded June 2nd, 2021
+       + [Zoom](https://washington.zoom.us/rec/share/I5V8PpvD8Fh8VdscccM2Pgp1EdCGqQ9yLFr7sqQqVcfva7bEVyrYqPAZ69VtKxoh.DO_jEbMp_5p2_RN8)
+       + [YouTube](https://youtu.be/_KzGphvgfO8)
    * Reading: [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
    * [Initial Steps Toward Reproducible Research](https://kbroman.org/steps2rr/) by Karl Broman
    * [The Plain Person's Guide to Plain Text Social Science](http://plain-text.co) by Kieran Healy
